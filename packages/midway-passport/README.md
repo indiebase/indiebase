@@ -122,6 +122,7 @@ import { Body, Controller, Post } from '@midwayjs/decorator';
 import { LocalPassportControl } from './local.control';
 import { JwtPassportControl } from './jwt.control';
 import { ILogger } from '@midwayjs/logger';
+import { Jwt } from '@deskbtm/midway-jwt';
 
 @Provide()
 @Controller('/test')
@@ -142,6 +143,13 @@ export class TestPackagesController {
     console.log(body);
     return body;
   }
+
+  @Post('/gen-jwt')
+  async genJwt() {
+    return {
+      t: await this.jwt.sign({ msg: 'Hello Midway' }),
+    };
+  }
 }
 
 @Provide()
@@ -154,4 +162,4 @@ export class Test1PackagesController {}
 
 ## 相关
 
-[midway-jwt](../midway-jwt/README.md)
+[@deskbtm/midway-jwt](../midway-jwt/README.md)

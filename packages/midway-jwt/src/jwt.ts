@@ -1,4 +1,4 @@
-import { Config, Init, Provide } from '@midwayjs/decorator';
+import { Config, Provide } from '@midwayjs/decorator';
 import * as jwt from 'jsonwebtoken';
 import type {
   GetPublicKeyOrSecret,

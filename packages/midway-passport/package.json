@@ -1,13 +1,13 @@
 {
   "name": "@deskbtm/midway-passport",
-  "version": "0.0.1-alpha1",
-  "description": "",
+  "version": "0.0.1-alpha.13",
+  "description": "midway passport",
   "main": "src/index.ts",
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "main": "index.js",
     "typings": "index.d.ts",
-    "directory": "dist",
-    "registry": "https://registry.npmjs.org/"
+    "directory": "dist"
   },
   "scripts": {
     "build": "midway-bin build -c",
@@ -15,7 +15,9 @@
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
     "lint:fix": "mwts fix",
-    "prepare": "build"
+    "prepack": "rimraf dist && npm run build && ncp README.md dist/README.md && ncp package.json dist/package.json && ncp LICENSE dist/LICENSE",
+    "postpublish": "rimraf dist",
+    "ver": "standard-version"
   },
   "keywords": [
     "midwayjs",
@@ -23,10 +25,15 @@
     "passport"
   ],
   "author": "Nwabc",
-  "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts"
-  ],
+  "repository": {
+    "url": "https://github.com/Nawbc/megumin-mgmt"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": "please use pnpm",
+    "yarn": "please use pnpm",
+    "pnpm": ">=6.0.0"
+  },
   "license": "MIT",
   "devDependencies": {
     "@midwayjs/cli": "^1.2.38",
@@ -34,14 +41,15 @@
     "@midwayjs/decorator": "^2.3.0",
     "@midwayjs/mock": "^2.13.2",
     "@types/jest": "^26.0.10",
+    "@types/koa-passport": "^4.0.2",
     "@types/node": "14",
     "@types/passport": "^1.0.7",
-    "@types/koa-passport": "^4.0.2",
     "cross-env": "^6.0.0",
     "jest": "^26.4.0",
     "mwts": "^1.0.5",
     "ts-jest": "^26.2.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "standard-version": "^9.3.2"
   },
   "peerDependencies": {
     "egg-passport": "^2.1.1",

@@ -1,5 +1,9 @@
 ## 开始
 
+安装 `npm i @desbtm/midway-jwt `
+
+可配合 [@deskbtm/midway-passport](https://github.com/Nawbc/megumin-mgmt/tree/master/packages/midway-passport) 使用
+
 config.{env}.ts
 
 ```ts

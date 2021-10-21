@@ -1,9 +1,10 @@
 {
   "name": "@deskbtm/midway-jwt",
-  "version": "0.0.10",
-  "description": "",
+  "version": "0.0.1-alpha.13",
+  "description": "midway jwt",
   "main": "src/index.ts",
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "main": "index.js",
     "typings": "index.d.ts",
     "directory": "dist"
@@ -11,11 +12,11 @@
   "scripts": {
     "start": "midway-bin dev -f ./src/index.ts",
     "build": "midway-bin build -c",
-    "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
     "lint:fix": "mwts fix",
-    "prepublishOnly": "npm run build",
+    "prepack": "rimraf dist && npm run build && ncp README.md dist/README.md && ncp package.json dist/package.json && ncp LICENSE dist/LICENSE",
+    "postpublish": "rimraf dist",
     "ver": "standard-version"
   },
   "keywords": [
@@ -23,11 +24,16 @@
     "midway-jwt",
     "jwt"
   ],
-  "author": "",
-  "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts"
-  ],
+  "author": "Nawbc",
+  "repository": {
+    "url": "https://github.com/Nawbc/megumin-mgmt"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": "please use pnpm",
+    "yarn": "please use pnpm",
+    "pnpm": ">=6.0.0"
+  },
   "license": "MIT",
   "devDependencies": {
     "@midwayjs/cli": "^1.2.38",
@@ -41,10 +47,10 @@
     "jest": "^26.4.0",
     "mwts": "^1.0.5",
     "ts-jest": "^26.2.0",
-    "typescript": "^4.0.0"
+    "typescript": "^4.0.0",
+    "standard-version": "^9.3.2"
   },
   "dependencies": {
-    "jsonwebtoken": "^8.5.1",
-    "standard-version": "^9.3.2"
+    "jsonwebtoken": "^8.5.1"
   }
 }
