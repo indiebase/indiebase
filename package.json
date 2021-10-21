@@ -1,6 +1,6 @@
 {
   "name": "megumin-mgmt",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "",
   "private": true,
   "dependencies": {
@@ -67,7 +67,8 @@
     "lint:fix": "mwts fix",
     "ci": "npm run cov",
     "build": "midway-bin build -c",
-    "check": "luckyeye"
+    "check": "luckyeye",
+    "preinstall": "npx only-allow pnpm"
   },
   "midway-bin-clean": [
     ".vscode/.tsbuildinfo",
