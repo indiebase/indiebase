@@ -2,16 +2,27 @@
   "name": "@deskbtm/midway-jwt",
   "version": "0.0.1-alpha1",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "index.js",
+    "typings": "index.d.ts",
+    "directory": "dist",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "start": "midway-bin dev -f ./src/index.ts",
     "build": "midway-bin build -c",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
-    "lint:fix": "mwts fix"
+    "lint:fix": "mwts fix",
+    "prepare": "build"
   },
-  "keywords": [],
+  "keywords": [
+    "midwayjs",
+    "midway-jwt",
+    "jwt"
+  ],
   "author": "",
   "files": [
     "dist/**/*.js",

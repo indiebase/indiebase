@@ -1,5 +1,5 @@
 {
-  "name": "@deskbtm/midway-view-handlebars",
+  "name": "midway-view-handlebars",
   "version": "0.0.1-alpha1",
   "description": "",
   "main": "index.ts",

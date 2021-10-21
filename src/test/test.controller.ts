@@ -1,4 +1,4 @@
-import { Frontier } from '@deskbtm/midway-passport/express';
+import { Frontier } from '@deskbtm/midway-passport/src/express';
 import { ALL, Provide, Logger, Get, Inject } from '@midwayjs/decorator';
 import { Body, Controller, Post } from '@midwayjs/decorator';
 import { LocalPassportControl } from '@/auth/local.control';

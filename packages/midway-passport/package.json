@@ -2,16 +2,27 @@
   "name": "@deskbtm/midway-passport",
   "version": "0.0.1-alpha1",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "index.js",
+    "typings": "index.d.ts",
+    "directory": "dist",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "midway-bin build -c",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
-    "lint:fix": "mwts fix"
+    "lint:fix": "mwts fix",
+    "prepare": "build"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "midwayjs",
+    "midway-passport",
+    "passport"
+  ],
+  "author": "Nwabc",
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts"

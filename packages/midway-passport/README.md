@@ -80,7 +80,7 @@ export class JwtStrategy extends ExpressPassportStrategyAdapter(Strategy, 'jwt')
 `local.control.ts`
 
 ```ts
-import { PassportControl } from 'packages/midway-passport';
+import { PassportControl } from '@deskbtm/midway-passport';
 
 export class LocalPassportControl extends PassportControl {
   name = 'local';
@@ -98,7 +98,7 @@ export class LocalPassportControl extends PassportControl {
 `jwt.control.ts`
 
 ```ts
-import { PassportControl } from 'packages/midway-passport';
+import { PassportControl } from '@deskbtm/midway-passport';
 
 export class LocalPassportControl extends PassportControl {
   name = 'jwt';
@@ -119,7 +119,8 @@ export class LocalPassportControl extends PassportControl {
 import { Frontier } from '@deskbtm/midway-passport/express';
 import { ALL, Provide, Logger, Get, Inject } from '@midwayjs/decorator';
 import { Body, Controller, Post } from '@midwayjs/decorator';
-import { LocalPassportControl } from '@/auth/local.control';
+import { LocalPassportControl } from './local.control';
+import { JwtPassportControl } from './jwt.control';
 import { ILogger } from '@midwayjs/logger';
 
 @Provide()
@@ -142,6 +143,11 @@ export class TestPackagesController {
     return body;
   }
 }
+
+@Provide()
+@Controller('/test1')
+@Frontier(JwtPassportControl)
+export class Test1PackagesController {}
 ```
 
 在 StrategyAdapter 中支持 1. 使用 BootStrategy 中的 useParams。2. 通过 StrategyAdapter 的第三个参数，两种方式传递 options。
