@@ -3,7 +3,7 @@ export interface PassportControlConstructor {
 }
 export abstract class PassportControl {
   public abstract name: string;
-  public abstract inspect(...args: any[]): void;
+  public abstract auth(...args: any[]): void;
   public abstract onError(...args: any[]): void;
 }
 

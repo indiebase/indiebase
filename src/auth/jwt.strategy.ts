@@ -12,6 +12,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 })
 export class JwtStrategy extends ExpressPassportStrategyAdapter(Strategy, 'jwt') {
   async verify(payload) {
+    console.log(payload);
     return payload;
   }
 }

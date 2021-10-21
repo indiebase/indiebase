@@ -17,5 +17,9 @@ export default appInfo => {
     replaceEggLogger: true,
   };
 
+  config.view = {
+    root: `${appInfo.baseDir}/app/view,${appInfo.baseDir}/app/view2`,
+  };
+
   return config;
 };

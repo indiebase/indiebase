@@ -75,7 +75,7 @@ export function Frontier(Control: PassportControlConstructor, options?: {}): Met
       return function (...args) {
         const { ctx } = this[REQUEST_OBJ_CTX_KEY];
         try {
-          koaPassport.authenticate(control.name, options, control.inspect)(ctx, null);
+          koaPassport.authenticate(control.name, options, control.auth)(ctx, null);
         } catch (error) {
           control.onError(error);
         }

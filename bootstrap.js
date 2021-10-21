@@ -11,6 +11,7 @@ const devHttpsConfig = {
 const web = new WebFramework().configure({
   hostname: '127.0.0.1',
   port: process.env.PORT || 1031,
+
   ...devHttpsConfig,
 });
 

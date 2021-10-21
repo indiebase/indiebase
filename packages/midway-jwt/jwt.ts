@@ -20,7 +20,7 @@ export class Jwt {
   @Config('jwt')
   private _config: any;
 
-  public signSync(payload: JwtPayload, options?: SignOptions, secret?: Secret) {
+  public signSync(payload: JwtPayload, options?: SignOptions, secret?: Secret): string | void {
     if (!secret) {
       secret = this._config?.secret;
     }
@@ -36,11 +36,7 @@ export class Jwt {
    *
    * @async
    */
-  public async sign(
-    payload: JwtPayload,
-    options?: SignOptions,
-    secret?: Secret
-  ) {
+  public async sign(payload: JwtPayload, options?: SignOptions, secret?: Secret): Promise<string | void> {
     if (!secret) {
       secret = this._config?.secret;
     }

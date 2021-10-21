@@ -82,7 +82,7 @@ export function Frontier(Control: PassportControlConstructor, options?: {}): Met
     const handle = function (method) {
       return function (...args) {
         const { req, res } = this[REQUEST_OBJ_CTX_KEY];
-        passport.authenticate(control.name, options, control.inspect)(req, res, control.onError);
+        passport.authenticate(control.name, options, control.auth)(req, res, control.onError);
         return method.apply(this, [...args]);
       };
     };

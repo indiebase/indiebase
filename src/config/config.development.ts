@@ -48,7 +48,7 @@ export default appInfo => {
     port: 3306,
     username: 'root',
     password: 'dev123456',
-    database: 'lonely-mgmt-midway-dev',
+    database: 'megumin-dev',
     synchronize: true,
     logging: false,
   };
@@ -64,15 +64,15 @@ export default appInfo => {
     db: 2,
   };
 
-  config.mailer = {
-    
-  };
+  config.mailer = {};
 
   config.security = {
     csrf: false,
   };
 
-  config.others = {};
+  config.others = {
+    whileListDomain: [],
+  };
 
   return config;
 };
