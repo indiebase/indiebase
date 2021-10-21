@@ -33,6 +33,11 @@ import { BootStrategy } from '@deskbtm/midway-passport';
 // koa 为 @deskbtm/midway-passport/koa KoaPassportStrategyAdapter
 import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/express';
 import { Strategy } from 'passport-local';
+import { Repository } from 'typeorm';
+import { ILogger } from '@midwayjs/logger';
+import { InjectEntityModel } from '@midwayjs/orm';
+import { Logger } from '@midwayjs/decorator';
+import { UserEntity } from './user';
 
 @BootStrategy({
   async useParams() {
@@ -43,9 +48,23 @@ import { Strategy } from 'passport-local';
 })
 // ExpressPassportStrategyAdapter 支持自定义name
 export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'local') {
+  @InjectEntityModel(UserEntity)
+  photoModel: Repository<UserEntity>;
+
+  @Logger('dash')
+  logger: ILogger;
+
   // 通过 verify 钩子来获取有效负载  并且此函数必须有返回参数
   // 详情见对应的Strategy
   async verify(username, password) {
+    const user = await this.photoModel.findOne({ username });
+
+    this.logger.info('user from db', user);
+
+    if (!user) {
+      throw new Error('not found user ' + username);
+    }
+
     return {
       username,
       password,
@@ -129,6 +148,9 @@ import { Jwt } from '@deskbtm/midway-jwt';
 export class TestPackagesController {
   @Logger('dash')
   logger: ILogger;
+
+  @Inject()
+  jwt: Jwt;
 
   @Post('/local-passport')
   @Frontier(LocalPassportControl)

@@ -1,6 +1,6 @@
 import { UserEntity } from '@/rbac/user';
 import { BootStrategy } from '@deskbtm/midway-passport';
-import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/express';
+import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/src/express';
 import { Logger } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { InjectEntityModel } from '@midwayjs/orm';

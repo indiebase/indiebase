@@ -1,4 +1,4 @@
-import { PassportControl } from 'packages/midway-passport';
+import { PassportControl } from '@deskbtm/midway-passport';
 
 export class JwtPassportControl extends PassportControl {
   name = 'jwt';

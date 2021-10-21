@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@deskbtm/midway-jwt": "link:packages\\midway-jwt",
-    "@deskbtm/midway-passport": "^0.0.1-alpha.1",
+    "@deskbtm/midway-passport": "link:packages\\midway-passport",
     "@midwayjs/bootstrap": "^2.13.2",
     "@midwayjs/core": "^2.13.2",
     "@midwayjs/decorator": "^2.13.2",

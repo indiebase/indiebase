@@ -1,5 +1,5 @@
 import { BootStrategy } from '@deskbtm/midway-passport';
-import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/express';
+import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/src/express';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 @BootStrategy({
