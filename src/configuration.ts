@@ -14,7 +14,7 @@ import * as cors from 'cors';
   imports: [
     jwt,
     passport,
-    orm,
+    // orm,
     {
       component: swagger,
       enabledEnvironment: ['development'],

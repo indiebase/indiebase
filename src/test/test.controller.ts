@@ -1,8 +1,5 @@
-import { Frontier } from '@deskbtm/midway-passport/src/express';
 import { ALL, Provide, Logger, Get, Inject } from '@midwayjs/decorator';
 import { Body, Controller, Post } from '@midwayjs/decorator';
-import { LocalPassportControl } from '@/auth/local.control';
-import { JwtPassportControl } from '@/auth/jwt.control';
 import { ILogger } from '@midwayjs/logger';
 import { Jwt } from '@deskbtm/midway-jwt';
 
@@ -23,17 +20,12 @@ export class TestPackagesController {
     // this.ctx.render()
   }
 
-  @Post('/local-passport')
-  @Frontier(LocalPassportControl)
+  @Post('/local-passport', { middleware: ['localPassportMiddleware'] })
   async localPassport(@Body(ALL) body) {
-    console.log('dmeomodmeo');
-    // console.log(this.ctx.req);
-    // console.log(this.ctx.req.user);
     return body;
   }
 
   @Post('/jwt-passport')
-  @Frontier(JwtPassportControl)
   async jwtPassport(@Body(ALL) body) {
     return body;
   }

@@ -1,6 +1,5 @@
-import { REQUEST_OBJ_CTX_KEY } from '@midwayjs/core';
-import { PassportControlConstructor } from './control';
 import * as passport from 'passport';
+import { IWebMiddleware, Middleware } from '@midwayjs/express';
 
 export interface Class<T = any> {
   new (...args: any[]): T;
@@ -64,45 +63,46 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
   return TmpStrategy;
 }
 
+export interface ExpressPassportMiddleware {
+  setOptions?(...args: any[]): Promise<null | Record<string, any>>;
+}
+
 /**
  *
- * Express
- *
- * @param {PassportControlConstructor} Sentry 处理校验
- * @param options 请查看相应策略authenticate的参数
+ * Express Passport 中间件
  *
  */
-export function Frontier(Control: PassportControlConstructor, options?: {}): MethodDecorator & ClassDecorator {
-  return function (Target, _targetKey: string, descriptor: TypedPropertyDescriptor<any>) {
-    const control = new Control();
-    if (!control.name) {
-      throw new Error('[Sentry]: target needs name property');
-    }
+export abstract class ExpressPassportMiddleware implements IWebMiddleware {
+  /**
+   *
+   * @param args  verify() 中返回的参数 @see {ExpressPassportStrategyAdapter}
+   */
+  protected abstract auth(...args: any[]): Promise<Record<any, any>>;
 
-    const handle = function (method) {
-      return function (...args) {
-        const { req, res } = this[REQUEST_OBJ_CTX_KEY];
-        passport.authenticate(control.name, options, control.auth)(req, res, control.onError);
-        return method.apply(this, [...args]);
-      };
-    };
+  /**
+   * 鉴权名
+   */
+  protected abstract strategy: string;
 
-    if (descriptor) {
-      const method = descriptor.value;
-      if (typeof method === 'function') {
-        descriptor.value = handle(method);
-      } else {
-        throw new Error('[Frontier]: target needs to be function');
-      }
-    } else {
-      for (const key of Reflect.ownKeys(Target.prototype)) {
-        const method = Target.prototype[key];
-        if (key === 'constructor' || typeof method !== 'function') {
-          continue;
+  protected abstract onError(...args: any[]): void;
+  //@ts-ignore
+  protected abstract setOptions(...args: any[]): Promise<null | Record<string, any>>;
+
+  resolve(): Middleware {
+    return async (req, res, next) => {
+      ['strategy', 'auth'].forEach(n => {
+        if (this[n]) {
+          throw new Error(`[PassportMiddleware]: missing ${n} property`);
         }
+      });
 
-        Target.prototype[key] = handle(method);
-      }
-    }
-  } as any;
+      const options = (await this.setOptions()) as any;
+
+      passport.authenticate(this.strategy, this?.setOptions() as any, async (...d) => {
+        const user = await this.auth(...d);
+        req.user = user;
+        next();
+      })(req, res, this?.onError);
+    };
+  }
 }

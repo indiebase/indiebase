@@ -23,9 +23,9 @@ export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'loc
   logger: ILogger;
 
   async verify(username, password) {
-    const user = await this.photoModel.findOne({ username });
+    // const user = await this.photoModel.findOne({ username });
 
-    this.logger.info('user from db', user);
+    this.logger.info('user from db');
 
     // if (!user) {
     //   throw new Error('not found user ' + username);

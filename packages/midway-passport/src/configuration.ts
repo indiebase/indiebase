@@ -36,6 +36,8 @@ export class PassportConfiguration implements ILifeCycle {
   async onReady(_container: IMidwayContainer, app: IMidwayApplication) {
     await this.handleBootStrategy(app);
 
+    // Reflect.getMetadata('frontier');
+
     if (Array.isArray((app as any).middleware)) {
       // 初始化 Connect-based 应用
       (app as any).middleware.push(require('koa-passport').initialize());
