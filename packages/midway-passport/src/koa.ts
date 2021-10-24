@@ -19,7 +19,7 @@ type ExternalOverride = {
  * @param rest Strategy 其余参数
  * @returns {Strategy}
  */
-export function KoaPassportStrategyAdapter<T extends Class<any> = any>(
+export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
   Strategy: T,
   name?: string,
   ...syncArgs: any[]
@@ -68,14 +68,23 @@ export function Frontier(Control: PassportControlConstructor, options?: {}): Met
   return function (Target, _targetKey: string, descriptor: TypedPropertyDescriptor<any>) {
     const control = new Control();
     if (!control.name) {
-      throw new Error('[Sentry]: target needs name property');
+      throw new Error('[Frontier]: target needs name property');
     }
 
     const handle = function (method) {
       return function (...args) {
-        const { ctx } = this[REQUEST_OBJ_CTX_KEY];
+        const { ctx, request } = this[REQUEST_OBJ_CTX_KEY];
         try {
-          koaPassport.authenticate(control.name, options, control.auth)(ctx, null);
+          if (ctx) {
+            koaPassport.authenticate(control.name, options, control.auth)(ctx, null);
+          } else {
+            // 支持 Egg
+            if (request) {
+              koaPassport.authenticate(control.name, options, control.auth)(request.ctx, null);
+            } else {
+              throw new Error('[Frontier]: not support current Framework');
+            }
+          }
         } catch (error) {
           control.onError(error);
         }

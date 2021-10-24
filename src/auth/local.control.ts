@@ -7,7 +7,8 @@ export class LocalPassportControl extends PassportControl {
     console.log(err);
   }
 
-  public auth(_err, data): void {
+  public auth(_err, data) {
     console.log('local inspect data', data);
+    return data;
   }
 }

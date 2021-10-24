@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import * as jwt from '@deskbtm/midway-jwt';
-import { ILifeCycle } from '@midwayjs/core';
+import { ILifeCycle, IMidwayContainer } from '@midwayjs/core';
 import { IMidwayLogger } from '@midwayjs/logger';
 import { App, Config, Configuration, Logger } from '@midwayjs/decorator';
 import { IMidwayExpressApplication } from '@midwayjs/express';

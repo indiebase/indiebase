@@ -9,6 +9,7 @@ config.{env}.ts
 ```ts
 config.jwt = {
   secret: 'dev123456',
+  expiresIn: '10d', // https://github.com/vercel/ms
 };
 ```
 

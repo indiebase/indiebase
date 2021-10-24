@@ -2,6 +2,12 @@ const WebFramework = require('@midwayjs/express').Framework;
 const { Bootstrap } = require('@midwayjs/bootstrap');
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
+const { defaults } = require('joi/lib/common.js');
+
+/**
+ * @see {@link https://www.yuque.com/midwayjs/midway_v2/validate#Njpv0}
+ */
+defaults.allowUnknown = true;
 
 const devHttpsConfig = {
   cert: readFileSync(resolve(__dirname, process.env.CERT_PATH || 'key/dev.pem')),
@@ -10,7 +16,7 @@ const devHttpsConfig = {
 
 const web = new WebFramework().configure({
   hostname: '127.0.0.1',
-  port: process.env.PORT || 1031,
+  port: process.env.PORT || 6666,
 
   ...devHttpsConfig,
 });

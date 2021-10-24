@@ -7,7 +7,8 @@ export class JwtPassportControl extends PassportControl {
     throw new Error('Method not implemented.');
   }
 
-  public auth(_err, data): void {
+  public async auth(_err, data) {
     console.log('jwt inspect data', data);
+    return data;
   }
 }

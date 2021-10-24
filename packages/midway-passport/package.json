@@ -1,6 +1,6 @@
 {
   "name": "@deskbtm/midway-passport",
-  "version": "0.0.1-alpha.15",
+  "version": "0.0.1-alpha.16",
   "description": "midway passport",
   "main": "src/index.ts",
   "publishConfig": {
@@ -24,15 +24,9 @@
     "midway-passport",
     "passport"
   ],
-  "author": "Nwabc",
+  "author": "Nawbc",
   "repository": {
     "url": "https://github.com/Nawbc/megumin-mgmt"
-  },
-  "engines": {
-    "node": ">=12.0.0",
-    "npm": "please use pnpm",
-    "yarn": "please use pnpm",
-    "pnpm": ">=6.0.0"
   },
   "license": "MIT",
   "devDependencies": {
@@ -52,7 +46,6 @@
     "standard-version": "^9.3.2"
   },
   "peerDependencies": {
-    "egg-passport": "^2.1.1",
     "koa-passport": "^4.1.4",
     "passport": "^0.5.0"
   }

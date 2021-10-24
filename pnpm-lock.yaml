@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@deskbtm/midway-jwt': link:packages\midway-jwt
-  '@deskbtm/midway-passport': ^0.0.1-alpha.1
+  '@deskbtm/midway-passport': link:packages\midway-passport
   '@midwayjs/bootstrap': ^2.13.2
   '@midwayjs/cli': ^1.2.83
   '@midwayjs/core': ^2.13.2
@@ -36,6 +36,7 @@ specifiers:
   koa-passport: ^4.1.4
   mwts: ^1.2.2
   mysql: ^2.18.1
+  nodemailer: ^6.7.0
   passport: ^0.5.0
   passport-jwt: ^4.0.0
   passport-local: ^1.0.0
@@ -64,6 +65,7 @@ dependencies:
   koa-bodyparser: registry.nlark.com/koa-bodyparser/4.3.0
   koa-passport: 4.1.4
   mysql: 2.18.1
+  nodemailer: registry.npmmirror.com/nodemailer/6.7.0
   passport: registry.npmmirror.com/passport/0.5.0
   passport-jwt: 4.0.0
   passport-local: 1.0.0
@@ -11995,6 +11997,13 @@ packages:
     name: node-fetch
     version: 2.6.2
     engines: {node: 4.x || >=6.0.0}
+    dev: false
+
+  registry.npmmirror.com/nodemailer/6.7.0:
+    resolution: {integrity: sha1-hmFHIsTgwz0bWwKuy5DW1imTKw0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/nodemailer/download/nodemailer-6.7.0.tgz}
+    name: nodemailer
+    version: 6.7.0
+    engines: {node: '>=6.0.0'}
     dev: false
 
   registry.npmmirror.com/passport/0.3.2:

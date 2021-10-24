@@ -26,6 +26,9 @@ export class TestPackagesController {
   @Post('/local-passport')
   @Frontier(LocalPassportControl)
   async localPassport(@Body(ALL) body) {
+    console.log('dmeomodmeo');
+    // console.log(this.ctx.req);
+    // console.log(this.ctx.req.user);
     return body;
   }
 
@@ -37,6 +40,7 @@ export class TestPackagesController {
 
   @Post('/gen-jwt')
   async genJwt() {
+    console.log(this);
     return {
       t: await this.jwt.sign({ msg: 'Hello Midway' }),
     };

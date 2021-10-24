@@ -1,6 +1,6 @@
 # midway-passport 使用文档
 
-Passport 的目的是请求进行身份验证，其中它通过一组可扩展称为插件的*策略* 。`midway-passport` 对 Passport 进行了封装，目前支持`Express`，`Koa` ，理论上支持`Egg` 未验证。此外请使用`Typescript`开发。
+Passport 的目的是请求进行身份验证，其中它通过一组可扩展称为插件的*策略* 。`midway-passport` 对 Passport 进行了封装，目前支持`Express`，`Koa`，`Egg` 。此外推荐使用`Typescript`开发。
 
 ## 准备
 
@@ -30,7 +30,7 @@ npm i koa-passport
 
 ```ts
 import { BootStrategy } from '@deskbtm/midway-passport';
-// koa 为 @deskbtm/midway-passport/koa KoaPassportStrategyAdapter
+// Egg, Koa 为 @deskbtm/midway-passport/koa KoaPassportStrategyAdapter
 import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/express';
 import { Strategy } from 'passport-local';
 import { Repository } from 'typeorm';

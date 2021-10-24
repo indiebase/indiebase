@@ -15,7 +15,7 @@ export class PassportConfiguration implements ILifeCycle {
 
     const bootStrategies = listModule(BOOTSTRATEGY_KEY);
 
-    for (const Strategy of bootStrategies) {
+    for await (const Strategy of bootStrategies) {
       const id = getProviderId(Strategy);
       const data = getClassMetadata(BOOTSTRATEGY_KEY, Strategy);
 
@@ -29,7 +29,7 @@ export class PassportConfiguration implements ILifeCycle {
        * get中的 getManagedResolverFactory.create会创建实例
        * 注意midway @see {managedResolverFactory.ts} 中 create函数的args会判定是否是Array
        */
-      !!p ? ctx.get(id, [p]) : ctx.get(id);
+      !!p ? await ctx.getAsync(id, [p]) : await ctx.getAsync(id);
     }
   }
 

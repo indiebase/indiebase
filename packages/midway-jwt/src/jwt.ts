@@ -20,14 +20,24 @@ export class Jwt {
   @Config('jwt')
   private _config: any;
 
-  public signSync(payload: JwtPayload, options?: SignOptions, secret?: Secret): string | void {
+  public signSync(payload: JwtPayload, options: SignOptions = {}, secret?: Secret): string | void {
+    let expiresIn;
     if (!secret) {
       secret = this._config?.secret;
     }
-
     if (!secret) {
       throw new Error('[midway-jwt]: provide the jwt secret please');
     }
+
+    if (options.expiresIn) {
+      expiresIn = options.expiresIn;
+    }
+
+    if (this._config.expiresIn) {
+      expiresIn = this._config.expiresIn;
+    }
+
+    options.expiresIn = expiresIn;
 
     return jwt.sign(payload, secret, options);
   }
@@ -36,7 +46,8 @@ export class Jwt {
    *
    * @async
    */
-  public async sign(payload: JwtPayload, options?: SignOptions, secret?: Secret): Promise<string | void> {
+  public async sign(payload: JwtPayload, options: SignOptions = {}, secret?: Secret): Promise<string | void> {
+    let expiresIn;
     if (!secret) {
       secret = this._config?.secret;
     }
@@ -44,6 +55,16 @@ export class Jwt {
     if (!secret) {
       throw new Error('[midway-jwt]: provide the jwt secret please');
     }
+
+    if (options.expiresIn) {
+      expiresIn = options.expiresIn;
+    }
+
+    if (this._config.expiresIn) {
+      expiresIn = this._config.expiresIn;
+    }
+
+    options.expiresIn = expiresIn;
 
     return new Promise((resolve, reject) => {
       jwt.sign(payload, secret, options, (err, encoded) => {

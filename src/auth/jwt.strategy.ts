@@ -1,9 +1,10 @@
 import { BootStrategy } from '@deskbtm/midway-passport';
 import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/src/express';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 
 @BootStrategy({
-  async useParams({ configuration }) {
+  async useParams({ configuration }): Promise<StrategyOptions> {
+    console.log(configuration.jwt.secret);
     return {
       secretOrKey: configuration.jwt.secret,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

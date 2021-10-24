@@ -1,6 +1,6 @@
 {
   "name": "@deskbtm/midway-jwt",
-  "version": "0.0.1-alpha.14",
+  "version": "0.0.1-alpha.15",
   "description": "midway jwt",
   "main": "src/index.ts",
   "publishConfig": {
@@ -27,12 +27,6 @@
   "author": "Nawbc",
   "repository": {
     "url": "https://github.com/Nawbc/megumin-mgmt"
-  },
-  "engines": {
-    "node": ">=12.0.0",
-    "npm": "please use pnpm",
-    "yarn": "please use pnpm",
-    "pnpm": ">=6.0.0"
   },
   "license": "MIT",
   "devDependencies": {
