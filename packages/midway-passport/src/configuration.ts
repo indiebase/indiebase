@@ -1,5 +1,16 @@
-import { Context, ILifeCycle, IMidwayApplication, IMidwayContainer } from '@midwayjs/core';
-import { Configuration, getClassMetadata, getProviderId, Inject, listModule } from '@midwayjs/decorator';
+import {
+  Context,
+  ILifeCycle,
+  IMidwayApplication,
+  IMidwayContainer,
+} from '@midwayjs/core';
+import {
+  Configuration,
+  getClassMetadata,
+  getProviderId,
+  Inject,
+  listModule,
+} from '@midwayjs/decorator';
 import { BOOTSTRATEGY_KEY } from './contants';
 
 @Configuration({
@@ -34,13 +45,13 @@ export class PassportConfiguration implements ILifeCycle {
   }
 
   async onReady(_container: IMidwayContainer, app: IMidwayApplication) {
+    await this.handleBootStrategy(app);
+
+    // Reflect.getMetadata('frontier');
+
     if (Array.isArray((app as any).middleware)) {
       // 初始化 Connect-based 应用
       (app as any).middleware.push(require('koa-passport').initialize());
-    } else {
-      (app as any)?.use(require('passport').initialize());
     }
-
-    await this.handleBootStrategy(app);
   }
 }

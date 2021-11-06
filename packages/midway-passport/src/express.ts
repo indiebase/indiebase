@@ -1,6 +1,6 @@
-import { defaultOptions } from './options';
 import * as passport from 'passport';
 import { Context, IWebMiddleware, Middleware } from '@midwayjs/express';
+import { defaultOptions } from './options';
 
 interface Class<T = any> {
   new (...args: any[]): T;
@@ -32,7 +32,6 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
     constructor(...asyncArgs: any[]) {
       const cb = async (...params: any[]) => {
         const done = params[params.length - 1];
-        console.log(done);
         try {
           const result = await this.verify(...params);
           if (Array.isArray(result)) {
@@ -67,7 +66,6 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
 
 export interface ExpressPassportMiddleware {
   setOptions?(ctx?: Context): Promise<null | Record<string, any>>;
-  auth?(ctx: Context, ...args: any[]): Promise<Record<any, any>>;
 }
 
 /**
@@ -80,8 +78,10 @@ export abstract class ExpressPassportMiddleware implements IWebMiddleware {
    *
    * @param args  verify() 中返回的参数 @see {ExpressPassportStrategyAdapter}
    */
-  //@ts-ignore
-  protected abstract auth(ctx: Context, ...args: any[]): Promise<Record<any, any>>;
+  protected abstract auth(
+    ctx: Context,
+    ...args: any[]
+  ): Promise<Record<any, any>>;
 
   /**
    * 鉴权名
@@ -90,29 +90,28 @@ export abstract class ExpressPassportMiddleware implements IWebMiddleware {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  protected abstract setOptions<T = any>(ctx?: Context): Promise<T & typeof defaultOptions>;
+  protected abstract setOptions(
+    ctx?: Context
+  ): Promise<null | Record<string, any>>;
 
   resolve(): Middleware {
     return async (req, res, next) => {
-      ['strategy'].forEach(n => {
+      ['strategy', 'auth'].forEach(n => {
         if (!this[n]) {
           throw new Error(`[PassportMiddleware]: missing ${n} property`);
         }
       });
 
-      const options = { ...defaultOptions, ...(this.setOptions ? await this.setOptions(req as any) : null) };
-      passport.authenticate(
-        this.strategy,
-        options,
-        this.auth
-          ? async (...d) => {
-              const result = await this.auth(req as any, ...d);
-              console.log(options.presetProperty);
-              req[options.presetProperty] = result;
-              next();
-            }
-          : null
-      )(req, res, next);
+      const options = {
+        ...defaultOptions,
+        ...(this.setOptions ? await this.setOptions(req as any) : null),
+      };
+
+      passport.authenticate(this.strategy, options, async (...d) => {
+        const user = await this.auth(req as any, ...d);
+        req.user = user;
+        next();
+      })(req, res);
     };
   }
 }

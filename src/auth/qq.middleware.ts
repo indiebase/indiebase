@@ -1,8 +1,8 @@
 import { Provide } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
+import { WebPassportMiddleware } from '@deskbtm/midway-passport';
 
 @Provide('qq')
-export class QQPassportMiddleware extends ExpressPassportMiddleware {
+export class QQPassportMiddleware extends WebPassportMiddleware {
   strategy: string = 'qq';
 
   async auth(_ctx, ...d) {

@@ -1,8 +1,8 @@
 import { Provide } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
+import { WebPassportMiddleware } from '@deskbtm/midway-passport';
 
 @Provide('github')
-export class GithubPassportMiddleware extends ExpressPassportMiddleware {
+export class GithubPassportMiddleware extends WebPassportMiddleware {
   strategy: string = 'github';
 
   async setOptions() {

@@ -1,9 +1,9 @@
 import { Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
+import { WebPassportMiddleware } from '@deskbtm/midway-passport';
+import { Context } from '@midwayjs/koa';
 
 @Provide('gitlab')
-@Scope(ScopeEnum.Singleton)
-export class GitlabPassportMiddleware extends ExpressPassportMiddleware {
+export class GitlabPassportMiddleware extends WebPassportMiddleware {
   strategy: string = 'gitlab';
 
   async setOptions() {
@@ -17,7 +17,10 @@ export class GitlabPassportMiddleware extends ExpressPassportMiddleware {
 }
 
 @Provide('gitlab2')
-@Scope(ScopeEnum.Singleton)
-export class Gitlab2PassportMiddleware extends ExpressPassportMiddleware {
+export class Gitlab2PassportMiddleware extends WebPassportMiddleware {
   strategy: string = 'gitlab';
+
+  public auth(ctx: Context, ...args: any[]) {
+    throw new Error('Method not implemented.');
+  }
 }

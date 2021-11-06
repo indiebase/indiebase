@@ -1,9 +1,18 @@
 import { MidwayConfigService } from '@midwayjs/core';
-import { saveClassMetadata, saveModule, saveProviderId, Scope, ScopeEnum, generateRandomId } from '@midwayjs/decorator';
+import {
+  saveClassMetadata,
+  saveModule,
+  saveProviderId,
+  Scope,
+  ScopeEnum,
+  generateRandomId,
+} from '@midwayjs/decorator';
 import { BOOTSTRATEGY_KEY } from './contants';
 
 export interface BootStrategyParams {
-  useParams?: (config?: MidwayConfigService) => Promise<Record<string, any>> | Record<string, any>;
+  useParams?: (
+    config?: MidwayConfigService
+  ) => Promise<Record<string, any>> | Record<string, any>;
 }
 
 /**

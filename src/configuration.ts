@@ -3,7 +3,7 @@ import * as jwt from '@deskbtm/midway-jwt';
 import { ILifeCycle, IMidwayContainer } from '@midwayjs/core';
 import { IMidwayLogger } from '@midwayjs/logger';
 import { App, Config, Configuration, Logger } from '@midwayjs/decorator';
-import { IMidwayExpressApplication } from '@midwayjs/express';
+import { IMidwayWebApplication } from '@midwayjs/web';
 import * as passport from '@deskbtm/midway-passport';
 import * as orm from '@midwayjs/orm';
 import * as express from 'express';
@@ -26,7 +26,7 @@ import * as bodyparser from 'koa-bodyparser';
 })
 export class ContainerLifeCycle implements ILifeCycle {
   @App()
-  app: IMidwayExpressApplication;
+  app: IMidwayWebApplication;
 
   @Logger()
   logger: IMidwayLogger;
@@ -47,17 +47,17 @@ export class ContainerLifeCycle implements ILifeCycle {
     // this.app.use(bodyparser());
 
     // cors
-    this.app.use(
-      cors({
-        origin: this.others.whiteListDomain,
-        credentials: true,
-        methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-      })
-    );
+    // this.app.use(
+    //   cors({
+    //     origin: this.others.whiteListDomain,
+    //     credentials: true,
+    //     methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+    //   })
+    // );
 
-    // bodyparser
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
+    // // bodyparser
+    // this.app.use(express.json());
+    // this.app.use(express.urlencoded({ extended: true }));
 
     // 设置log
     this.app.createLogger('dash', {

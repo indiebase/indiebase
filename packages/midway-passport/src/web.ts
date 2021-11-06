@@ -1,5 +1,6 @@
 import type { Context, IMidwayKoaNext, IWebMiddleware } from '@midwayjs/koa';
 import * as koaPassport from 'koa-passport';
+import { defaultOptions } from './options';
 
 interface Class<T = any> {
   new (...args: any[]): T;
@@ -77,8 +78,11 @@ export abstract class WebPassportMiddleware implements IWebMiddleware {
    */
   public abstract strategy: string;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  protected abstract setOptions(ctx?: Context): Promise<null | Record<string, any>>;
+  protected abstract setOptions(
+    ctx?: Context
+  ): Promise<null | Record<string, any>>;
 
   resolve() {
     return async (ctx: Context, next: IMidwayKoaNext) => {
@@ -87,7 +91,11 @@ export abstract class WebPassportMiddleware implements IWebMiddleware {
           throw new Error(`[PassportMiddleware]: missing ${n} property`);
         }
       });
-      const options = (this.setOptions ? await this.setOptions(ctx) : null) as any;
+
+      const options = {
+        ...defaultOptions,
+        ...(this.setOptions ? await this.setOptions(ctx) : null),
+      };
 
       await new Promise(resolve => {
         koaPassport.authenticate(this.strategy, options, async (...d) => {

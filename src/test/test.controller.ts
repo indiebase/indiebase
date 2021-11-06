@@ -2,7 +2,7 @@ import { Provide, Logger, Get, Inject } from '@midwayjs/decorator';
 import { Controller, Post } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { Jwt } from '@deskbtm/midway-jwt';
-import { Context } from '@midwayjs/express';
+import { Context } from '@midwayjs/web';
 
 @Provide()
 @Controller('/test')
