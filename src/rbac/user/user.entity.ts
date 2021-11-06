@@ -22,26 +22,20 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  /**
-   * jaccount 账户 唯一
-   */
-  @Column('varchar', { unique: true })
-  account: string;
-
   @Column('varchar', { unique: true })
   username: string;
 
   @Column('varchar', { select: false })
   password: string;
 
-  @Column('int', { default: 1 })
-  disable?: boolean;
+  // @Column('int', { default: 1 })
+  // disable?: boolean;
 
-  @Column('boolean', { default: false })
-  followedBilibili?: boolean;
+  // @Column('boolean', { default: false })
+  // followedBilibili?: boolean;
 
-  @Column('varchar', { default: null })
-  bilibiliUid?: string;
+  // @Column('varchar', { default: null })
+  // bilibiliUid?: string;
 
   // // 无中间实体表的配置
   // @ManyToMany((type) => RoleEntity, (role) => role.users, { cascade: true })

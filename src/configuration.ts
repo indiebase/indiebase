@@ -9,12 +9,13 @@ import * as orm from '@midwayjs/orm';
 import * as express from 'express';
 import * as swagger from '@midwayjs/swagger';
 import * as cors from 'cors';
+import * as bodyparser from 'koa-bodyparser';
 
 @Configuration({
   imports: [
     jwt,
     passport,
-    // orm,
+    orm,
     {
       component: swagger,
       enabledEnvironment: ['development'],
@@ -42,6 +43,8 @@ export class ContainerLifeCycle implements ILifeCycle {
     this.logger.info('ENV:', env);
     this.logger.info('DIR:', dir);
     this.logger.info('MAX_LISTENERS:', ls);
+
+    // this.app.use(bodyparser());
 
     // cors
     this.app.use(

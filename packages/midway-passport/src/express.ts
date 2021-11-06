@@ -1,12 +1,13 @@
+import { defaultOptions } from './options';
 import * as passport from 'passport';
-import { IWebMiddleware, Middleware } from '@midwayjs/express';
+import { Context, IWebMiddleware, Middleware } from '@midwayjs/express';
 
-export interface Class<T = any> {
+interface Class<T = any> {
   new (...args: any[]): T;
 }
 
 type ExternalOverride = {
-  verify(...args: any[]): Promise<{}>;
+  verify(...args: any[]): Promise<Record<string, any>>;
 };
 
 /**
@@ -31,6 +32,7 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
     constructor(...asyncArgs: any[]) {
       const cb = async (...params: any[]) => {
         const done = params[params.length - 1];
+        console.log(done);
         try {
           const result = await this.verify(...params);
           if (Array.isArray(result)) {
@@ -58,13 +60,14 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
      * @protected
      * @param args
      */
-    protected abstract verify(...args: any[]): {};
+    protected abstract verify(...args: any[]): Record<string, any>;
   }
   return TmpStrategy;
 }
 
 export interface ExpressPassportMiddleware {
-  setOptions?(...args: any[]): Promise<null | Record<string, any>>;
+  setOptions?(ctx?: Context): Promise<null | Record<string, any>>;
+  auth?(ctx: Context, ...args: any[]): Promise<Record<any, any>>;
 }
 
 /**
@@ -77,32 +80,39 @@ export abstract class ExpressPassportMiddleware implements IWebMiddleware {
    *
    * @param args  verify() 中返回的参数 @see {ExpressPassportStrategyAdapter}
    */
-  protected abstract auth(...args: any[]): Promise<Record<any, any>>;
+  //@ts-ignore
+  protected abstract auth(ctx: Context, ...args: any[]): Promise<Record<any, any>>;
 
   /**
    * 鉴权名
    */
   protected abstract strategy: string;
 
-  protected abstract onError(...args: any[]): void;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  protected abstract setOptions(...args: any[]): Promise<null | Record<string, any>>;
+  protected abstract setOptions<T = any>(ctx?: Context): Promise<T & typeof defaultOptions>;
 
   resolve(): Middleware {
     return async (req, res, next) => {
-      ['strategy', 'auth'].forEach(n => {
-        if (this[n]) {
+      ['strategy'].forEach(n => {
+        if (!this[n]) {
           throw new Error(`[PassportMiddleware]: missing ${n} property`);
         }
       });
 
-      const options = (await this.setOptions()) as any;
-
-      passport.authenticate(this.strategy, this?.setOptions() as any, async (...d) => {
-        const user = await this.auth(...d);
-        req.user = user;
-        next();
-      })(req, res, this?.onError);
+      const options = { ...defaultOptions, ...(this.setOptions ? await this.setOptions(req as any) : null) };
+      passport.authenticate(
+        this.strategy,
+        options,
+        this.auth
+          ? async (...d) => {
+              const result = await this.auth(req as any, ...d);
+              console.log(options.presetProperty);
+              req[options.presetProperty] = result;
+              next();
+            }
+          : null
+      )(req, res, next);
     };
   }
 }

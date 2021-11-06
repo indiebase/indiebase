@@ -1,5 +1,5 @@
 import { App, Configuration } from '@midwayjs/decorator';
-import { Application } from '@midwayjs/express';
+import { Application } from '@midwayjs/koa';
 
 @Configuration({
   conflictCheck: true,

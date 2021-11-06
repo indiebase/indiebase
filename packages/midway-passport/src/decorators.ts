@@ -3,7 +3,7 @@ import { saveClassMetadata, saveModule, saveProviderId, Scope, ScopeEnum, genera
 import { BOOTSTRATEGY_KEY } from './contants';
 
 export interface BootStrategyParams {
-  useParams?: (config?: MidwayConfigService) => Promise<{}> | {};
+  useParams?: (config?: MidwayConfigService) => Promise<Record<string, any>> | Record<string, any>;
 }
 
 /**

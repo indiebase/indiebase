@@ -1,43 +1,63 @@
-# midway-passport 使用文档
-
-Passport 的目的是请求进行身份验证，其中它通过一组可扩展称为插件的*策略* 。`midway-passport` 对 Passport 进行了封装，目前支持`Express`，`Koa`，`Egg` 。此外推荐使用`Typescript`开发。
+身份验证是大多数 Web 应用程序的重要组成部分。因此 Midway 封装了目前 Nodejs 中最流行的 Passport 库。
+Passport 是通过称为策略的可扩展插件进行身份验证请求。Passport 不挂载路由或假设任何特定的数据库，这最大限度地提高了灵活性并允许开发人员做出应用程序级别的决策。
 
 ## 准备
 
-1. 安装 `npm i @deskbtm/midway-passport`
+1. 安装 `npm i @midwayjs/passport`
 
 ```bash
-Express
+@midwayjs/express
 npm i passport
 ```
 
 ```bash
-Koa, Egg
+@midwayjs/koa, @midwayjs/web
 npm i koa-passport
 ```
 
 2. 开启相对应框架的 bodyparser
 
-## 开始
+## 使用
 
-首先请对[Passport](https://www.npmjs.com/package/passport)进行简单了解
+这里我们以本地认证，和 Jwt 作为演示。
+​
 
-##### 以本地, Jwt 为例
+首先
 
-首先我们用`ExpressPassportStrategyAdapter` 创建一个 Strategy，其次再用`@BootStrategy`来启动此策路
+```bash
+// configuration.ts
 
-`local.strategy.ts`
+import { join } from 'path';
+import * as jwt from '@midwayjs/jwt';
+import { ILifeCycle,} from '@midwayjs/core';
+import { Configuration } from '@midwayjs/decorator';
+import * as passport from '@midwayjs/passport';
 
-```ts
-import { BootStrategy } from '@deskbtm/midway-passport';
-// Egg, Koa 为 @deskbtm/midway-passport/koa KoaPassportStrategyAdapter
-import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/express';
-import { Strategy } from 'passport-local';
+@Configuration({
+  imports: [
+    jwt,
+    passport,
+  ],
+  importConfigs: [join(__dirname, './config')],
+  conflictCheck: true,
+})
+export class ContainerLifeCycle implements ILifeCycle {}
+
+```
+
+### e.g. 本地
+
+我们可以通过`@BootStrategy`和派生`ExpressPassportStrategyAdapter`来自启动一个策略。通过 verify 钩子来获取有效负载，并且此函数必须有返回值，其参数并不明确，可以参考对应的 Strategy 或者通过展开符打印查看。
+PS. Koa，Egg 请使用`WebPassportStrategyAdapter`。
+
+```typescript
+// local-strategy.ts
+
+import { BootStrategy, ExpressPassportStrategyAdapter } from '@midwayjs/passport';
 import { Repository } from 'typeorm';
-import { ILogger } from '@midwayjs/logger';
 import { InjectEntityModel } from '@midwayjs/orm';
-import { Logger } from '@midwayjs/decorator';
 import { UserEntity } from './user';
+import * as bcrypt from 'bcrypt';
 
 @BootStrategy({
   async useParams() {
@@ -46,23 +66,14 @@ import { UserEntity } from './user';
     };
   },
 })
-// ExpressPassportStrategyAdapter 支持自定义name
 export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'local') {
   @InjectEntityModel(UserEntity)
-  photoModel: Repository<UserEntity>;
+  userModel: Repository<UserEntity>;
 
-  @Logger('dash')
-  logger: ILogger;
-
-  // 通过 verify 钩子来获取有效负载  并且此函数必须有返回参数
-  // 详情见对应的Strategy
   async verify(username, password) {
-    const user = await this.photoModel.findOne({ username });
-
-    this.logger.info('user from db', user);
-
-    if (!user) {
-      throw new Error('not found user ' + username);
+    const user = await this.userModel.findOne({ username });
+    if (await bcrypt.compare(password, user.password)) {
+      throw new Error('error password ' + username);
     }
 
     return {
@@ -73,11 +84,78 @@ export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'loc
 }
 ```
 
-`jwt.strategy.ts`
+之后派生`ExpressPassportMiddleware`出一个中间件。PS. Koa，Egg 使用`WebPassportMiddleware`
 
-```ts
-import { BootStrategy } from '@deskbtm/midway-passport';
-import { ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport/express';
+```typescript
+// local-middleware.ts
+
+import { Inject, Provide } from '@midwayjs/decorator';
+import { ExpressPassportMiddleware } from '@midwayjs/passport';
+import { Context } from '@midwayjs/express';
+
+@Provide('local') // 此处可以使用一个简短的identifier
+export class LocalPassportMiddleware extends ExpressPassportMiddleware {
+  // required
+  strategy: string = 'local';
+
+  // 设置 AuthenticateOptions
+  async setOptions(ctx?: Context): AuthenticateOptions {
+    return {
+      failureRedirect: '/login'
+      session: false,
+      presetProperty: 'user'
+    };
+  }
+
+  // required
+  // 首个参数为Context, 剩余参数请看 passport.authenticate
+  // auth返回值默认会被挂到req.user上，当然你可以设置presetProperty来更改
+  // PS. 获取上下文实例可以使用 ctx.requestContext.get<xxx>('xxx');
+  async auth(_ctx, _err, data): Promise<Record<any, any>> {
+    return data;
+  }
+}
+```
+
+```typescript
+// controller.ts
+
+import { Provide, Post, Inject, Controller } from '@midwayjs/decorator';
+
+@Provide()
+@Controller('/')
+export class LocalController {
+  @Post('/passport/local', { middleware: ['local'] })
+  async localPassport() {
+    console.log('local user: ', this.ctx.req.user);
+    return this.ctx.req.user;
+  }
+}
+```
+
+使用 curl 模拟一次请求。
+
+```bash
+curl -X POST http://localhost:7001/passport/local -d '{"username": "demo", "pwd": "1234"}' -H "Content-Type: application/json"
+
+结果 {"username": "demo", "pwd": "1234"}
+```
+
+### e.g. Jwt
+
+首先你需要安装`npm i @midwayjs/jwt`，然后在 config.ts 中配置。PS. 默认未加密，请不要吧敏感信息存放在 payload 中。
+
+```typescript
+export const jwt = {
+  secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
+  expiresIn: '2d', // https://github.com/vercel/ms
+};
+```
+
+```typescript
+// jwt-strategy.ts
+
+import { BootStrategy, ExpressPassportStrategyAdapter } from '@midwayjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 @BootStrategy({
@@ -96,92 +174,129 @@ export class JwtStrategy extends ExpressPassportStrategyAdapter(Strategy, 'jwt')
 }
 ```
 
-`local.control.ts`
+```typescript
+// jwt-middleware.ts
 
-```ts
-import { PassportControl } from '@deskbtm/midway-passport';
-
-export class LocalPassportControl extends PassportControl {
-  name = 'local';
-
-  public onError(err): void {
-    console.log(err);
-  }
-  // 具体请看 passport.authenticate
-  public auth(_err, data): void {
-    console.log('local authenticate data', data);
-  }
-}
-```
-
-`jwt.control.ts`
-
-```ts
-import { PassportControl } from '@deskbtm/midway-passport';
-
-export class LocalPassportControl extends PassportControl {
-  name = 'jwt';
-
-  public onError(err): void {
-    console.log(err);
-  }
-
-  public auth(_err, data): void {
-    console.log('jwt authenticate data', data);
-  }
-}
-```
-
-`test.controller.ts`
-
-```ts
-import { Frontier } from '@deskbtm/midway-passport/express';
-import { ALL, Provide, Logger, Get, Inject } from '@midwayjs/decorator';
-import { Body, Controller, Post } from '@midwayjs/decorator';
-import { LocalPassportControl } from './local.control';
-import { JwtPassportControl } from './jwt.control';
-import { ILogger } from '@midwayjs/logger';
-import { Jwt } from '@deskbtm/midway-jwt';
+import { Provide } from '@midwayjs/decorator';
+import { ExpressPassportMiddleware } from '@midwayjs/passport';
 
 @Provide()
-@Controller('/test')
-export class TestPackagesController {
-  @Logger('dash')
-  logger: ILogger;
+export class JwtPassportMiddleware extends ExpressPassportMiddleware {
+  strategy: string = 'jwt';
+
+  async auth(_ctx, _err, data) {
+    return data;
+  }
+}
+```
+
+```typescript
+import { Provide, Post, Inject } from '@midwayjs/decorator';
+import { Controller, Post } from '@midwayjs/decorator';
+import { Jwt } from '@midwayjs/jwt';
+
+@Provide()
+@Controller('/')
+export class JwtController {
 
   @Inject()
   jwt: Jwt;
 
-  @Post('/local-passport')
-  @Frontier(LocalPassportControl)
-  async localPassport(@Body(ALL) body) {
-    console.log(body);
-    return body;
+  @Inject();
+  ctx: any;
+
+  @Post('/passport/jwt', { middleware: ['jwtPassportMiddleware'] })
+  async jwtPassport() {
+    console.log('jwt user: ', this.ctx.req.user);
+    return this.ctx.req.user;
   }
 
-  @Post('/jwt-passport')
-  @Frontier(JwtPassportControl)
-  async jwtPassport(@Body(ALL) body) {
-    console.log(body);
-    return body;
-  }
-
-  @Post('/gen-jwt')
+  @Post('/jwt')
   async genJwt() {
     return {
       t: await this.jwt.sign({ msg: 'Hello Midway' }),
     };
   }
 }
-
-@Provide()
-@Controller('/test1')
-@Frontier(JwtPassportControl)
-export class Test1PackagesController {}
 ```
 
-在 StrategyAdapter 中支持 1. 使用 BootStrategy 中的 useParams。2. 通过 StrategyAdapter 的第三个参数，两种方式传递 options。
+使用 curl 模拟请求
 
-## 相关
+```bash
+curl -X POST http://127.0.0.1:7001/jwt
 
-[@deskbtm/midway-jwt](../midway-jwt/README.md)
+结果 {"t": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+
+curl http://127.0.0.1:7001/passport/jwt -H "Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+结果 {"msg": "Hello Midway","iat": 1635468727,"exp": 1635468827}
+
+```
+
+## 自定义其他策略
+
+`@midwayjs/passport`支持自定义[其他策略](http://www.passportjs.org/packages/)，这里以 github oauth 为例。
+首先 `npm i passport-github`，之后编写如下代码：
+
+```typescript
+// github-strategy.ts
+
+import { BootStrategy, ExpressPassportStrategyAdapter } from '@midwayjs/passport';
+import { Strategy, StrategyOptions } from 'passport-github';
+
+const GITHUB_CLIENT_ID = 'xxxxxx',
+  GITHUB_CLIENT_SECRET = 'xxxxxxxx';
+
+@BootStrategy({
+  async useParams({ configuration }): Promise<StrategyOptions> {
+    return {
+      clientID: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+      callbackURL: 'https://127.0.0.1:7001/auth/github/cb',
+    };
+  },
+})
+export class GithubStrategy extends ExpressPassportStrategyAdapter(Strategy, 'github') {
+  async verify(...payload) {
+    return payload;
+  }
+}
+```
+
+```typescript
+// github-middleware.ts
+
+import { ExpressPassportMiddleware } from '@midwayjs/passport';
+
+@Provide()
+export class GithubPassportMiddleware extends ExpressPassportMiddleware {
+  strategy: string = 'github';
+
+  async auth(_ctx, ...data) {
+    return data;
+  }
+}
+```
+
+```typescript
+// controller.ts
+
+import { Provide, Get, Inject } from '@midwayjs/decorator';
+
+@Provide()
+@Controller('/oauth')
+export class AuthController {
+  @Inject()
+  ctx: any;
+
+  @Get('/github', { middleware: ['githubPassportMiddleware'] })
+  async githubOAuth() {}
+
+  @Get('/github/cb', { middleware: ['githubPassportMiddleware'] })
+  async githubOAuthCallback() {
+    return this.ctx.req.user;
+  }
+}
+```
+
+​
