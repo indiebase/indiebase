@@ -11,7 +11,6 @@ export class GitlabPassportMiddleware extends WebPassportMiddleware {
   }
 
   async auth(...d) {
-    console.log(d, '=================');
     return d;
   }
 }
@@ -20,7 +19,5 @@ export class GitlabPassportMiddleware extends WebPassportMiddleware {
 export class Gitlab2PassportMiddleware extends WebPassportMiddleware {
   strategy: string = 'gitlab';
 
-  public auth(ctx: Context, ...args: any[]) {
-    throw new Error('Method not implemented.');
-  }
+  public auth(ctx: Context, ...args: any[]) {}
 }

@@ -1,15 +1,12 @@
 import { join, resolve } from 'path';
 import * as jwt from '@deskbtm/midway-jwt';
-import { ILifeCycle, IMidwayContainer } from '@midwayjs/core';
+import { ILifeCycle } from '@midwayjs/core';
 import { IMidwayLogger } from '@midwayjs/logger';
 import { App, Config, Configuration, Logger } from '@midwayjs/decorator';
 import { IMidwayWebApplication } from '@midwayjs/web';
 import * as passport from '@deskbtm/midway-passport';
 import * as orm from '@midwayjs/orm';
-import * as express from 'express';
 import * as swagger from '@midwayjs/swagger';
-import * as cors from 'cors';
-import * as bodyparser from 'koa-bodyparser';
 
 @Configuration({
   imports: [

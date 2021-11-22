@@ -1,4 +1,4 @@
-import { Provide, Logger, Get, Inject } from '@midwayjs/decorator';
+import { Provide, Logger, Get, Inject, Aspect, IMethodAspect, JoinPoint } from '@midwayjs/decorator';
 import { Controller, Post } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { Jwt } from '@deskbtm/midway-jwt';
@@ -23,12 +23,13 @@ export class TestPackagesController {
 
   @Post('/local-passport', { middleware: ['localPassportMiddleware'] })
   async localPassport() {
-    console.log('local user: ', this.ctx.req.user);
     return this.ctx.req.user;
   }
 
   @Post('/jwt-passport', { middleware: ['jwtPassportMiddleware'] })
   async jwtPassport() {
+    throw new Error('demo');
+
     return this.ctx.req.demo;
   }
 
@@ -37,6 +38,14 @@ export class TestPackagesController {
     return {
       t: await this.jwt.sign({ msg: 'Hello Midway' }),
     };
+  }
+}
+
+@Provide()
+@Aspect(TestPackagesController)
+export class ReportInfo implements IMethodAspect {
+  afterThrow(joinPoint: JoinPoint, error: Error) {
+    console.log(joinPoint, error);
   }
 }
 
@@ -79,6 +88,7 @@ export class AuthController {
   //   return this.ctx.req.user;
   // }
 }
+
 @Provide()
 @Controller('/auth1')
 export class Auth1Controller {
@@ -92,7 +102,6 @@ export class Auth1Controller {
 
   @Get('/gitlab-cb', { middleware: ['gitlab'] })
   async qqOAuthCallback() {
-    console.log(this.ctx.req.user, '999999999999999999');
     return this.ctx.req.user;
   }
 

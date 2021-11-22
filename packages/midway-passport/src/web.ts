@@ -80,9 +80,7 @@ export abstract class WebPassportMiddleware implements IWebMiddleware {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  protected abstract setOptions(
-    ctx?: Context
-  ): Promise<null | Record<string, any>>;
+  protected abstract setOptions(ctx?: Context): Promise<null | Record<string, any>>;
 
   resolve() {
     return async (ctx: Context, next: IMidwayKoaNext) => {
@@ -100,7 +98,7 @@ export abstract class WebPassportMiddleware implements IWebMiddleware {
       await new Promise(resolve => {
         koaPassport.authenticate(this.strategy, options, async (...d) => {
           const user = await this.auth(ctx, ...d);
-          (ctx.req as any).user = user;
+          ctx.req[options.presetProperty] = user;
           resolve(null);
         })(ctx, null);
       });

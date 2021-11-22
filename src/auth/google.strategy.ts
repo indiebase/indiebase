@@ -1,4 +1,4 @@
-// import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+// import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 // import { Strategy, StrategyOptions } from 'passport-google';
 
 // @BootStrategy({
@@ -9,7 +9,7 @@
 //     };
 //   },
 // })
-// export class GoogleStrategy extends ExpressPassportStrategyAdapter(Strategy, 'google') {
+// export class GoogleStrategy extends WebPassportStrategyAdapter(Strategy, 'google') {
 //   async verify(...payload) {
 //     return payload;
 //   }

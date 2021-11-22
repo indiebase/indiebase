@@ -1,4 +1,4 @@
-import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, StrategyOptions } from 'passport-github2';
 
 @BootStrategy({
@@ -10,7 +10,7 @@ import { Strategy, StrategyOptions } from 'passport-github2';
     };
   },
 })
-export class GithubStrategy extends ExpressPassportStrategyAdapter(Strategy, 'github') {
+export class GithubStrategy extends WebPassportStrategyAdapter(Strategy, 'github') {
   async verify(...payload) {
     return payload;
   }

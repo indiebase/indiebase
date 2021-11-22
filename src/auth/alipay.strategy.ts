@@ -1,4 +1,4 @@
-import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, StrategyOptions } from 'passport-alipay2';
 
 @BootStrategy({
@@ -20,7 +20,7 @@ import { Strategy, StrategyOptions } from 'passport-alipay2';
     };
   },
 })
-export class AlipayStrategy extends ExpressPassportStrategyAdapter(Strategy, 'alipay') {
+export class AlipayStrategy extends WebPassportStrategyAdapter(Strategy, 'alipay') {
   async verify(...payload) {
     return payload;
   }

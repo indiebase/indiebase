@@ -18,7 +18,6 @@ export class UserController {
   @Validate()
   async register(@Body(ALL) body: UserRegisterDto) {
     // this.userService.
-    console.log(body);
 
     return;
   }

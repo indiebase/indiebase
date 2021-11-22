@@ -12,6 +12,7 @@ export class JwtPassportMiddleware extends WebPassportMiddleware {
   }
 
   async auth(_ctx, _err, data) {
+    // throw new Error('demo');
     return data;
   }
 }

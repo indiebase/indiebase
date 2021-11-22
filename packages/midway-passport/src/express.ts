@@ -78,10 +78,7 @@ export abstract class ExpressPassportMiddleware implements IWebMiddleware {
    *
    * @param args  verify() 中返回的参数 @see {ExpressPassportStrategyAdapter}
    */
-  protected abstract auth(
-    ctx: Context,
-    ...args: any[]
-  ): Promise<Record<any, any>>;
+  protected abstract auth(ctx: Context, ...args: any[]): Promise<Record<any, any>>;
 
   /**
    * 鉴权名
@@ -90,9 +87,7 @@ export abstract class ExpressPassportMiddleware implements IWebMiddleware {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
-  protected abstract setOptions(
-    ctx?: Context
-  ): Promise<null | Record<string, any>>;
+  protected abstract setOptions(ctx?: Context): Promise<null | Record<string, any>>;
 
   resolve(): Middleware {
     return async (req, res, next) => {
@@ -109,7 +104,7 @@ export abstract class ExpressPassportMiddleware implements IWebMiddleware {
 
       passport.authenticate(this.strategy, options, async (...d) => {
         const user = await this.auth(req as any, ...d);
-        req.user = user;
+        req[options.presetProperty] = user;
         next();
       })(req, res);
     };

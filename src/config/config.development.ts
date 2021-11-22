@@ -15,7 +15,7 @@ export default appInfo => {
   // @deskbtm/midway-jwt
   config.jwt = {
     secret: 'dev123456',
-    expiresIn: '100s',
+    expiresIn: '100d',
   };
 
   config.view = {

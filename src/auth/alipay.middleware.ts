@@ -10,7 +10,6 @@ export class AlipayPassportMiddleware extends WebPassportMiddleware {
   // }
 
   async auth(_ctx, ...d) {
-    console.log(d);
     return d;
   }
 }

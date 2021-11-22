@@ -4,8 +4,8 @@
   "description": "",
   "private": true,
   "dependencies": {
-    "@deskbtm/midway-jwt": "link:packages\\midway-jwt",
-    "@deskbtm/midway-passport": "link:packages\\midway-passport",
+    "@deskbtm/midway-jwt": "workspace:^0.0.1-alpha.15",
+    "@deskbtm/midway-passport": "workspace:^0.0.1-alpha.16",
     "@midwayjs/bootstrap": "^2.13.2",
     "@midwayjs/core": "^2.13.2",
     "@midwayjs/decorator": "^2.13.2",
@@ -20,7 +20,6 @@
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "egg": "^2.30.0",
-    "egg-passport": "^2.1.1",
     "egg-scripts": "^2.14.0",
     "koa-bodyparser": "^4.3.0",
     "koa-passport": "^4.1.4",
@@ -40,7 +39,7 @@
     "typeorm": "^0.2.38"
   },
   "devDependencies": {
-    "@midwayjs/cli": "^1.2.83",
+    "@midwayjs/cli": "^1.2.87",
     "@midwayjs/egg-ts-helper": "^1.0.1",
     "@midwayjs/luckyeye": "^1.0.0",
     "@midwayjs/mock": "^2.13.2",

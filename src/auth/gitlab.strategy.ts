@@ -1,4 +1,4 @@
-import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, StrategyOptions } from 'passport-oauth2';
 
 @BootStrategy({
@@ -12,7 +12,7 @@ import { Strategy, StrategyOptions } from 'passport-oauth2';
     };
   },
 })
-export class GitlabStrategy extends ExpressPassportStrategyAdapter(Strategy, 'gitlab') {
+export class GitlabStrategy extends WebPassportStrategyAdapter(Strategy, 'gitlab') {
   async verify(...payload) {
     return payload;
   }

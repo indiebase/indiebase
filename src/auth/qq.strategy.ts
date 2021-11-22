@@ -1,4 +1,4 @@
-import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, StrategyOptions } from 'passport-qq';
 
 @BootStrategy({
@@ -10,7 +10,7 @@ import { Strategy, StrategyOptions } from 'passport-qq';
     };
   },
 })
-export class QQStrategy extends ExpressPassportStrategyAdapter(Strategy, 'qq') {
+export class QQStrategy extends WebPassportStrategyAdapter(Strategy, 'qq') {
   async verify(...payload) {
     return payload;
   }

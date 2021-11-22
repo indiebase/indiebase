@@ -2,7 +2,7 @@ import { UserEntity } from '@/rbac/user';
 import { Logger } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { InjectEntityModel } from '@midwayjs/orm';
-import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy } from 'passport-local';
 import { Repository } from 'typeorm';
 
@@ -13,7 +13,7 @@ import { Repository } from 'typeorm';
     };
   },
 })
-export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'local') {
+export class LocalStrategy extends WebPassportStrategyAdapter(Strategy, 'local') {
   @InjectEntityModel(UserEntity)
   photoModel: Repository<UserEntity>;
 
@@ -22,7 +22,6 @@ export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'loc
 
   async verify(username, password) {
     // const user = await this.photoModel.findOne({ username });
-    console.log(username, password);
 
     this.logger.info('user from db');
 
