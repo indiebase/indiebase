@@ -1,12 +1,16 @@
 import { join, resolve } from 'path';
-import * as jwt from '@deskbtm/midway-jwt';
+import * as jwt from '@midwayjs/jwt';
 import { ILifeCycle } from '@midwayjs/core';
 import { IMidwayLogger } from '@midwayjs/logger';
 import { App, Config, Configuration, Logger } from '@midwayjs/decorator';
-import { IMidwayWebApplication } from '@midwayjs/web';
-import * as passport from '@deskbtm/midway-passport';
+import { IMidwayExpressApplication } from '@midwayjs/express';
+import * as passport from '@midwayjs/passport';
 import * as orm from '@midwayjs/orm';
 import * as swagger from '@midwayjs/swagger';
+import * as express from 'express';
+import cors = require('cors');
+
+const app = express();
 
 @Configuration({
   imports: [
@@ -23,7 +27,7 @@ import * as swagger from '@midwayjs/swagger';
 })
 export class ContainerLifeCycle implements ILifeCycle {
   @App()
-  app: IMidwayWebApplication;
+  app: IMidwayExpressApplication;
 
   @Logger()
   logger: IMidwayLogger;
@@ -44,17 +48,17 @@ export class ContainerLifeCycle implements ILifeCycle {
     // this.app.use(bodyparser());
 
     // cors
-    // this.app.use(
-    //   cors({
-    //     origin: this.others.whiteListDomain,
-    //     credentials: true,
-    //     methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-    //   })
-    // );
+    this.app.use(
+      cors({
+        origin: this.others.whiteListDomain,
+        credentials: true,
+        methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
+      })
+    );
 
     // // bodyparser
-    // this.app.use(express.json());
-    // this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
 
     // 设置log
     this.app.createLogger('dash', {

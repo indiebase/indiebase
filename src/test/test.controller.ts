@@ -1,7 +1,7 @@
 import { Provide, Logger, Get, Inject, Aspect, IMethodAspect, JoinPoint } from '@midwayjs/decorator';
 import { Controller, Post } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
-import { Jwt } from '@deskbtm/midway-jwt';
+import { Jwt } from '@midwayjs/jwt';
 import { Context } from '@midwayjs/web';
 
 @Provide()

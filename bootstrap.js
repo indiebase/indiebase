@@ -1,4 +1,4 @@
-const WebFramework = require('@midwayjs/web').Framework;
+const WebFramework = require('@midwayjs/express').Framework;
 const { Bootstrap } = require('@midwayjs/bootstrap');
 const { readFileSync } = require('fs');
 const { resolve } = require('path');

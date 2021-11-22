@@ -12,7 +12,7 @@ export default appInfo => {
     logging: false,
   };
 
-  // @deskbtm/midway-jwt
+  // @midwayjs/jwt
   config.jwt = {
     secret: 'dev123456',
     expiresIn: '100d',

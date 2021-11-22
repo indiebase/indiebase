@@ -1,9 +1,9 @@
 import { Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
-import { WebPassportMiddleware } from '@deskbtm/midway-passport';
+import { ExpressPassportMiddleware } from '@midwayjs/passport';
 import { Context } from '@midwayjs/koa';
 
 @Provide('gitlab')
-export class GitlabPassportMiddleware extends WebPassportMiddleware {
+export class GitlabPassportMiddleware extends ExpressPassportMiddleware {
   strategy: string = 'gitlab';
 
   async setOptions() {
@@ -16,7 +16,7 @@ export class GitlabPassportMiddleware extends WebPassportMiddleware {
 }
 
 @Provide('gitlab2')
-export class Gitlab2PassportMiddleware extends WebPassportMiddleware {
+export class Gitlab2PassportMiddleware extends ExpressPassportMiddleware {
   strategy: string = 'gitlab';
 
   public auth(ctx: Context, ...args: any[]) {}

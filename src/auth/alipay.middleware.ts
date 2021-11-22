@@ -1,8 +1,8 @@
 import { Provide } from '@midwayjs/decorator';
-import { WebPassportMiddleware } from '@deskbtm/midway-passport';
+import { ExpressPassportMiddleware } from '@midwayjs/passport';
 
 @Provide('alipay')
-export class AlipayPassportMiddleware extends WebPassportMiddleware {
+export class AlipayPassportMiddleware extends ExpressPassportMiddleware {
   strategy: string = 'alipay';
 
   // async setOptions() {
