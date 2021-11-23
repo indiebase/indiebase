@@ -9,6 +9,7 @@
   "editor.formatOnSave": true,
   "cSpell.ignoreWords": [
     "nestjs",
-    "qrcode"
+    "qrcode",
+    "midwayjs"
   ]
 }

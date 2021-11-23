@@ -8,9 +8,7 @@ import * as passport from '@midwayjs/passport';
 import * as orm from '@midwayjs/orm';
 import * as swagger from '@midwayjs/swagger';
 import * as express from 'express';
-import cors = require('cors');
-
-const app = express();
+import * as cors from 'cors';
 
 @Configuration({
   imports: [
@@ -44,8 +42,6 @@ export class ContainerLifeCycle implements ILifeCycle {
     this.logger.info('ENV:', env);
     this.logger.info('DIR:', dir);
     this.logger.info('MAX_LISTENERS:', ls);
-
-    // this.app.use(bodyparser());
 
     // cors
     this.app.use(
