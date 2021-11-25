@@ -1,8 +1,8 @@
 {
-  "name": "@deskbtm/midway-jwt",
-  "description": "midway jwt component",
+  "name": "@deskbtm/midway-filter",
+  "description": "midway filter component",
   "version": "2.0.0-alpha.1",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "publishConfig": {
     "main": "dist/index.js",
     "typings": "dist/index.d.ts"

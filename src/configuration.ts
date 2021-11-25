@@ -1,10 +1,10 @@
 import { join, resolve } from 'path';
-import * as jwt from '@midwayjs/jwt';
+import * as jwt from '@deskbtm/midway-jwt';
 import { ILifeCycle } from '@midwayjs/core';
 import { IMidwayLogger } from '@midwayjs/logger';
 import { App, Config, Configuration, Logger } from '@midwayjs/decorator';
 import { IMidwayExpressApplication } from '@midwayjs/express';
-import * as passport from '@midwayjs/passport';
+import * as passport from '@deskbtm/midway-passport';
 import * as orm from '@midwayjs/orm';
 import * as swagger from '@midwayjs/swagger';
 import * as express from 'express';

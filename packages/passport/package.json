@@ -1,9 +1,12 @@
 {
   "name": "@midwayjs/passport",
   "description": "midway passport component",
-  "version": "0.0.1-alpha.15",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "version": "2.0.0-alpha.1",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts"
+  },
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts"

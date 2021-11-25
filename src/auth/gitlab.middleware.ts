@@ -1,5 +1,5 @@
 import { Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@midwayjs/passport';
+import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
 import { Context } from '@midwayjs/koa';
 
 @Provide('gitlab')

@@ -1,5 +1,5 @@
 import { Provide } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@midwayjs/passport';
+import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
 
 @Provide('alipay')
 export class AlipayPassportMiddleware extends ExpressPassportMiddleware {

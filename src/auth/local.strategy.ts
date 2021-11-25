@@ -2,7 +2,7 @@ import { UserEntity } from '@/rbac/user';
 import { Logger } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { InjectEntityModel } from '@midwayjs/orm';
-import { BootStrategy, WebPassportStrategyAdapter } from '@midwayjs/passport';
+import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy } from 'passport-local';
 import { Repository } from 'typeorm';
 

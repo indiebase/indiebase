@@ -1,4 +1,7 @@
-import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import {
+  BootStrategy,
+  WebPassportStrategyAdapter,
+} from '../../../../../passport/src/';
 import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 
 @BootStrategy({

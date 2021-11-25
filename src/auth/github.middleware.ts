@@ -1,5 +1,5 @@
 import { Provide } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@midwayjs/passport';
+import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
 
 @Provide('github')
 export class GithubPassportMiddleware extends ExpressPassportMiddleware {

@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "dependencies": {
-    "@midwayjs/jwt": "workspace:^0.0.1-alpha.14",
-    "@midwayjs/passport": "workspace:^0.0.1-alpha.15",
+    "@deskbtm/midway-jwt": "workspace:^2.0.0-alpha.1",
+    "@deskbtm/midway-passport": "workspace:^2.0.0-alpha.1",
+    "@deskbtm/midway-filter": "workspace:^2.0.0-alpha.1",
     "@midwayjs/bootstrap": "^2.13.2",
     "@midwayjs/core": "^2.13.2",
     "@midwayjs/decorator": "^2.13.2",
