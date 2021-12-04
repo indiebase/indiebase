@@ -1,4 +1,4 @@
-import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, StrategyOptions } from 'passport-oauth2';
 
 @BootStrategy({
@@ -8,11 +8,11 @@ import { Strategy, StrategyOptions } from 'passport-oauth2';
       clientSecret: '96d12cf3cbedcea1dc1031ae351b2672182d9a89677ccaa355db56357af4d4bc',
       tokenURL: 'https://gitlab.com/oauth/token',
       authorizationURL: 'https://gitlab.com/oauth/authorize',
-      callbackURL: 'https://127.0.0.1:6666/auth1/gitlab-cb',
+      callbackURL: 'https://127.0.0.1:8001/auth1/gitlab-cb',
     };
   },
 })
-export class GitlabStrategy extends WebPassportStrategyAdapter(Strategy, 'gitlab') {
+export class GitlabStrategy extends ExpressPassportStrategyAdapter(Strategy, 'gitlab') {
   async verify(...payload) {
     return payload;
   }

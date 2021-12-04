@@ -2,7 +2,8 @@ import { Provide, Logger, Get, Inject, Aspect, IMethodAspect, JoinPoint } from '
 import { Controller, Post } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { Jwt } from '@deskbtm/midway-jwt';
-import { Context } from '@midwayjs/web';
+import { Context } from '@midwayjs/express';
+import { CreateApiDoc } from '@midwayjs/swagger';
 
 @Provide()
 @Controller('/test')
@@ -101,6 +102,34 @@ export class Auth1Controller {
   }
 
   @Get('/gitlab-cb', { middleware: ['gitlab'] })
+  async qqOAuthCallback() {
+    return this.ctx.req.user;
+  }
+
+  // @Get('/google-oauth', { middleware: ['google'] })
+  // async googleOAuth() {
+  //   return {};
+  // }
+
+  // @Get('/google-cb', { middleware: ['google'] })
+  // async googleOAuthCallback() {
+  //   console.log(this.ctx.req.user);
+  //   return this.ctx.req.user;
+  // }
+}
+@Provide()
+@Controller('/auth2')
+export class Auth2Controller {
+  @Inject()
+  ctx: Context | any;
+
+  // @(CreateApiDoc().summary('get user').description('This is a open api for get user').build())
+  @Get('/qq-oauth', { middleware: ['qq'] })
+  async qqOAuth() {
+    return { name: 'demo' };
+  }
+
+  @Get('/qq-cb')
   async qqOAuthCallback() {
     return this.ctx.req.user;
   }

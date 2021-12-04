@@ -10,6 +10,10 @@
   "cSpell.ignoreWords": [
     "nestjs",
     "qrcode",
-    "midwayjs"
+    "midwayjs",
+    "deskbtm",
+    "Popconfirm",
+    "Pressable",
+    "recyclerlistview"
   ]
 }

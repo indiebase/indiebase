@@ -37,7 +37,7 @@ export class ContainerLifeCycle implements ILifeCycle {
     const env = this.app.getEnv(),
       dir = this.app.getAppDir(),
       ls = this.app.getMaxListeners();
-    const isProduction = env === 'prodcution';
+    const isProduction = env === 'production';
 
     this.logger.info('ENV:', env);
     this.logger.info('DIR:', dir);

@@ -1,17 +1,18 @@
-import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, StrategyOptions } from 'passport-qq';
 
 @BootStrategy({
   async useParams({ configuration }): Promise<StrategyOptions> {
     return {
-      clientID: '101980624',
-      clientSecret: '1f2428a87b3184739dc9a0af77b7c1ca',
-      callbackURL: 'https://127.0.0.1:6666/auth1/qq-cb',
+      clientID: '101977103',
+      clientSecret: 'd38770bc179694166df618aaf3f9c638',
+      callbackURL: 'https://127.0.0.1:8001/auth2/qq-cb',
     };
   },
 })
-export class QQStrategy extends WebPassportStrategyAdapter(Strategy, 'qq') {
+export class QQStrategy extends ExpressPassportStrategyAdapter(Strategy, 'qq') {
   async verify(...payload) {
+    console.log(payload);
     return payload;
   }
 }

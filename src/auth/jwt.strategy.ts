@@ -1,4 +1,4 @@
-import { BootStrategy, WebPassportStrategyAdapter } from '@deskbtm/midway-passport';
+import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
 import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 
 @BootStrategy({
@@ -9,7 +9,7 @@ import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
     };
   },
 })
-export class JwtStrategy extends WebPassportStrategyAdapter(Strategy, 'jwt') {
+export class JwtStrategy extends ExpressPassportStrategyAdapter(Strategy, 'jwt') {
   async verify(payload) {
     return payload;
   }

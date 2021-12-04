@@ -69,7 +69,7 @@
     "run": "egg-scripts start --daemon --title=my-midway-project --framework=@midwayjs/web",
     "stop": "egg-scripts stop --title=my-midway-project",
     "start_build": "npm run build && cross-env NODE_ENV=development midway-bin dev",
-    "start": "cross-env MIDWAY_SERVER_ENV=development midway-bin dev --ts -f bootstrap.js --port 6666",
+    "start": "cross-env MIDWAY_SERVER_ENV=development midway-bin dev --ts -f bootstrap.js --port 8001",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
