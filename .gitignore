@@ -1,6 +1,5 @@
 logs
 temp
-key
 *.production.*
 
 npm-debug.log
