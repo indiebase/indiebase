@@ -3,11 +3,11 @@ export default appInfo => {
 
   config.orm = {
     type: 'mysql',
-    host: '127.0.0.1',
-    port: 3306,
+    host: '192.168.94.2',
+    port: 31254,
     username: 'root',
-    password: 'dev123456',
-    database: 'megumin-dev',
+    password: 'zWZTueiwJy',
+    database: 'letscollab-dev',
     synchronize: true,
     logging: false,
   };

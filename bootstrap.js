@@ -16,9 +16,11 @@ const devHttpsConfig = {
 
 const web = new WebFramework().configure({
   hostname: '127.0.0.1',
-  port: process.env.PORT || 6666,
+  port: process.env.PORT || 9888,
 
   ...devHttpsConfig,
 });
 
 Bootstrap.load(web).run();
+
+const a = 1 + 1;

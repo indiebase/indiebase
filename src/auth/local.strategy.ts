@@ -1,4 +1,4 @@
-import { UserEntity } from '@/rbac/user';
+// import { UserEntity } from '@/rbac/user';
 import { Logger } from '@midwayjs/decorator';
 import { ILogger } from '@midwayjs/logger';
 import { InjectEntityModel } from '@midwayjs/orm';
@@ -14,8 +14,8 @@ import { Repository } from 'typeorm';
   },
 })
 export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'local') {
-  @InjectEntityModel(UserEntity)
-  photoModel: Repository<UserEntity>;
+  // @InjectEntityModel(UserEntity)
+  // photoModel: Repository<UserEntity>;
 
   @Logger('dash')
   logger: ILogger;

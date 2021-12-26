@@ -1,0 +1,39 @@
+{
+  "name": "@deskbtm/midway-jwt",
+  "description": "midway jwt component",
+  "version": "2.0.0-alpha.1",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --require=ts-node/register ../../node_modules/jest/bin/jest.js",
+    "cov": "node --require=ts-node/register ../../node_modules/.bin/jest --coverage --forceExit"
+  },
+  "keywords": [
+    "midway",
+    "jsonwebtoken",
+    "jwt"
+  ],
+  "author": "Nawbc",
+  "license": "MIT",
+  "devDependencies": {
+    "@midwayjs/core": "^2.14.0",
+    "@midwayjs/decorator": "^2.14.0",
+    "@midwayjs/express": "^2.14.0",
+    "@midwayjs/koa": "^2.14.0",
+    "@midwayjs/mock": "^2.14.0",
+    "@midwayjs/web": "^2.14.0",
+    "@types/jsonwebtoken": "^8.5.5",
+    "passport-jwt": "^4.0.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}

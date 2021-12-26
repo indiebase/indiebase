@@ -8,3 +8,5 @@ https://nawb.deskbtm.com/more/lonely-mgmt/start
 
 - [midway-jwt](./packages/midway-jwt/README.md)
 - [midway-passport](./packages/midway-passport/README.md)
+
+first_party 中的包使用 MIT 开源协议
