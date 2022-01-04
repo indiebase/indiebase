@@ -1,35 +1,28 @@
 身份验证是大多数Web应用程序的重要组成部分。因此Midway封装了目前Nodejs中最流行的Passport库。
 Passport是通过称为策略的可扩展插件进行身份验证请求。Passport 不挂载路由或假设任何特定的数据库，这最大限度地提高了灵活性并允许开发人员做出应用程序级别的决策。
 
-
 ## 准备
 
-
 1. 安装 `npm i @midwayjs/passport`
-
-
 
 ```bash
 @midwayjs/express
 npm i passport
 ```
 
-
 ```bash
 @midwayjs/koa, @midwayjs/web
 npm i koa-passport
 ```
 
-
 2. 开启相对应框架的 bodyparser
 
-
-
 ## 使用
+
 这里我们以本地认证，和Jwt作为演示。
-​
 
 首先
+
 ```bash
 // configuration.ts
 
@@ -50,9 +43,12 @@ import * as passport from '@midwayjs/passport';
 export class ContainerLifeCycle implements ILifeCycle {}
 
 ```
+
 ### e.g. 本地
-我们可以通过`@BootStrategy`和派生`ExpressPassportStrategyAdapter`来自启动一个策略。通过 verify 钩子来获取有效负载，并且此函数必须有返回值，其参数并不明确，可以参考对应的Strategy或者通过展开符打印查看。
-PS. Koa，Egg请使用`WebPassportStrategyAdapter`。
+
+我们可以通过 `@BootStrategy`和派生 `ExpressPassportStrategyAdapter`来自启动一个策略。通过 verify 钩子来获取有效负载，并且此函数必须有返回值，其参数并不明确，可以参考对应的Strategy或者通过展开符打印查看。
+PS. Koa，Egg请使用 `WebPassportStrategyAdapter`。
+
 ```typescript
 // local-strategy.ts
 
@@ -87,7 +83,9 @@ export class LocalStrategy extends ExpressPassportStrategyAdapter(Strategy, 'loc
 }
 
 ```
-之后派生`ExpressPassportMiddleware`出一个中间件。PS. Koa，Egg 使用`WebPassportMiddleware`
+
+之后派生 `ExpressPassportMiddleware`出一个中间件。PS. Koa，Egg 使用 `WebPassportMiddleware`
+
 ```typescript
 // local-middleware.ts
 
@@ -117,6 +115,7 @@ export class LocalPassportMiddleware extends ExpressPassportMiddleware {
   }
 }
 ```
+
 ```typescript
 // controller.ts
 
@@ -133,20 +132,26 @@ export class LocalController {
   }
 }
 ```
+
 使用curl 模拟一次请求。
+
 ```bash
 curl -X POST http://localhost:7001/passport/local -d '{"username": "demo", "pwd": "1234"}' -H "Content-Type: application/json"
 
 结果 {"username": "demo", "pwd": "1234"}
 ```
+
 ### e.g. Jwt
-首先你需要安装`npm i @midwayjs/jwt`，然后在 config.ts 中配置。PS.  默认未加密，请不要吧敏感信息存放在payload中。
+
+首先你需要安装 `npm i @midwayjs/jwt`，然后在 config.ts 中配置。PS.  默认未加密，请不要吧敏感信息存放在payload中。
+
 ```typescript
 export const jwt = {
 	secret: 'xxxxxxxxxxxxxx', // fs.readFileSync('xxxxx.key')
   expiresIn: '2d'   // https://github.com/vercel/ms
 }
 ```
+
 ```typescript
 // jwt-strategy.ts
 
@@ -169,6 +174,7 @@ export class JwtStrategy extends ExpressPassportStrategyAdapter(Strategy, 'jwt')
 }
 
 ```
+
 ```typescript
 // jwt-middleware.ts
 
@@ -184,6 +190,7 @@ export class JwtPassportMiddleware extends ExpressPassportMiddleware {
   }
 }
 ```
+
 ```typescript
 import { Provide, Post, Inject } from '@midwayjs/decorator';
 import { Controller, Post } from '@midwayjs/decorator';
@@ -213,7 +220,9 @@ export class JwtController {
   }
 }
 ```
+
 使用curl模拟请求
+
 ```bash
 curl -X POST http://127.0.0.1:7001/jwt
 
@@ -224,11 +233,12 @@ curl http://127.0.0.1:7001/passport/jwt -H "Authorization: Bearer xxxxxxxxxxxxxx
 结果 {"msg": "Hello Midway","iat": 1635468727,"exp": 1635468827}
 
 ```
-## 自定义其他策略
 
+## 自定义其他策略
 
 `@midwayjs/passport`支持自定义[其他策略](http://www.passportjs.org/packages/)，这里以github oauth为例。
 首先 `npm i passport-github`，之后编写如下代码：
+
 ```typescript
 // github-strategy.ts
 
@@ -253,6 +263,7 @@ export class GithubStrategy extends ExpressPassportStrategyAdapter(Strategy, 'gi
 }
 
 ```
+
 ```typescript
 // github-middleware.ts
 
@@ -267,6 +278,7 @@ export class GithubPassportMiddleware extends ExpressPassportMiddleware {
   }
 }
 ```
+
 ```typescript
 // controller.ts
 
@@ -288,5 +300,3 @@ export class AuthController {
 }
 
 ```
-​
-

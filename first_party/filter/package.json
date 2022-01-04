@@ -1,5 +1,5 @@
 {
-  "name": "@deskbtm/midway-filter",
+  "name": "@letscollab/midway-filter",
   "description": "midway filter component",
   "version": "2.0.0-alpha.1",
   "main": "index.ts",

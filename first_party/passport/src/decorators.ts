@@ -1,17 +1,4 @@
-import { MidwayConfigService } from '@midwayjs/core';
-import {
-  saveClassMetadata,
-  saveModule,
-  saveProviderId,
-  Scope,
-  ScopeEnum,
-  generateRandomId,
-} from '@midwayjs/decorator';
-import { BOOTSTRATEGY_KEY } from './contants';
-
-export interface BootStrategyParams {
-  useParams?: (config?: MidwayConfigService) => Promise<Record<string, any>> | Record<string, any>;
-}
+import { Scope, ScopeEnum } from '@midwayjs/decorator';
 
 /**
  *
@@ -20,16 +7,16 @@ export interface BootStrategyParams {
  * @param {Strategy} Target passport策略
  * @method
  */
-export const BootStrategy = function (options?: BootStrategyParams): any {
+export const BootStrategy = function (): any {
   return Target => {
     if (typeof Target === 'function') {
-      saveProviderId(generateRandomId(), Target);
-      /**
-       * @see {@link PassportConfiguration}
-       */
-      saveModule(BOOTSTRATEGY_KEY, Target);
-      saveClassMetadata(BOOTSTRATEGY_KEY, options, Target);
-      Scope(ScopeEnum.Request)(Target);
+      // saveProviderId(generateRandomId(), Target);
+      // /**
+      //  * @see {@link PassportConfiguration}
+      //  */
+      // saveModule(BOOTSTRATEGY_KEY, Target);
+      // saveClassMetadata(BOOTSTRATEGY_KEY, options, Target);
+      Scope(ScopeEnum.Singleton)(Target);
     } else {
       throw new Error('[BootStrategy]: attach target must be class');
     }

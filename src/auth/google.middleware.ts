@@ -1,5 +1,5 @@
 // import { Provide } from '@midwayjs/decorator';
-// import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
+// import { ExpressPassportMiddleware } from '@letscollab/midway-passport';
 
 // @Provide('google')
 // export class GooglePassportMiddleware extends ExpressPassportMiddleware {

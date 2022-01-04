@@ -1,13 +1,14 @@
 import * as passport from 'passport';
 import { Context, IWebMiddleware, Middleware } from '@midwayjs/express';
-import { defaultOptions } from './options';
+import { Init } from '@midwayjs/decorator';
+import DefaultConfig from './config/default.config';
 
 interface Class<T = any> {
   new (...args: any[]): T;
 }
 
 type ExternalOverride = {
-  verify(...args: any[]): Promise<Record<string, any>>;
+  inspect(...args: any[]): Promise<Record<string, any>>;
 };
 
 /**
@@ -22,14 +23,17 @@ type ExternalOverride = {
 export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
   Strategy: T,
   name?: string,
-  ...syncArgs: any[]
+  ...params: any[]
 ): { new (...args): InstanceType<T> & ExternalOverride } {
   /**
    * @abstract
    * @private
    */
-  abstract class TmpStrategy extends Strategy {
-    constructor(...asyncArgs: any[]) {
+  abstract class InnerStrategy extends Strategy {
+    private strategy: passport.Strategy;
+
+    @Init()
+    protected init() {
       const cb = async (...params: any[]) => {
         const done = params[params.length - 1];
         try {
@@ -44,8 +48,10 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
         }
       };
 
+      const strategyParams = params.length > 0 ? params : this?.useParams();
+
       // 优先使用同步参数
-      super(...(syncArgs.length > 0 ? syncArgs : asyncArgs), cb);
+      this.strategy = new Strategy(strategyParams, cb);
 
       if (name) {
         passport.use(name, this as any);
@@ -59,13 +65,34 @@ export function ExpressPassportStrategyAdapter<T extends Class<any> = any>(
      * @protected
      * @param args
      */
-    protected abstract verify(...args: any[]): Record<string, any>;
+    protected abstract inspect(...args: any[]): Record<string, any>;
+
+    protected abstract useParams(): any[];
+
+    /**
+     *
+     * @returns passport.Strategy
+     */
+    public getStrategy(): passport.Strategy {
+      return this.strategy;
+    }
   }
-  return TmpStrategy;
+  return InnerStrategy;
 }
 
-export interface ExpressPassportMiddleware {
-  setOptions?(ctx?: Context): Promise<null | Record<string, any>>;
+abstract class AbstractExpressPassportMiddleware {
+  /**
+   *
+   * @param args  verify() 中返回的参数 @see {ExpressPassportStrategyAdapter}
+   */
+  protected abstract auth(...args: any[]): Promise<any>;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  protected useOptions(): Promise<typeof DefaultConfig | Record<string, any>>;
+}
+
+export interface ExpressPassportMiddlewareImpl {
+  new (): AbstractExpressPassportMiddleware;
 }
 
 /**
@@ -73,45 +100,34 @@ export interface ExpressPassportMiddleware {
  * Express Passport 中间件
  *
  */
-export abstract class ExpressPassportMiddleware implements IWebMiddleware {
-  /**
-   *
-   * @param args  verify() 中返回的参数 @see {ExpressPassportStrategyAdapter}
-   */
-  protected abstract auth(
-    ctx: Context,
-    ...args: any[]
-  ): Promise<Record<any, any>>;
 
-  /**
-   * 鉴权名
-   */
-  protected abstract strategy: string;
+export const ExpressPassportMiddleware = function (
+  strategy: string
+): ExpressPassportMiddlewareImpl {
+  abstract class InnerExpressPassportMiddleware
+    extends AbstractExpressPassportMiddleware
+    implements IWebMiddleware
+  {
+    resolve(): Middleware {
+      return async (req, res, next) => {
+        ['strategy', 'auth'].forEach(n => {
+          if (!this[n]) {
+            throw new Error(`[PassportMiddleware]: missing ${n} property`);
+          }
+        });
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  protected abstract setOptions(
-    ctx?: Context
-  ): Promise<null | Record<string, any>>;
+        const options = {
+          ...(this.useOptions ? await this.useOptions() : null),
+        };
 
-  resolve(): Middleware {
-    return async (req, res, next) => {
-      ['strategy', 'auth'].forEach(n => {
-        if (!this[n]) {
-          throw new Error(`[PassportMiddleware]: missing ${n} property`);
-        }
-      });
-
-      const options = {
-        ...defaultOptions,
-        ...(this.setOptions ? await this.setOptions(req as any) : null),
+        passport.authenticate(strategy, options, async (...d) => {
+          const user = await this.auth(req as any, ...d);
+          req[options.presetProperty] = user;
+          next();
+        })(req, res);
       };
-
-      passport.authenticate(this.strategy, options, async (...d) => {
-        const user = await this.auth(req as any, ...d);
-        req[options.presetProperty] = user;
-        next();
-      })(req, res);
-    };
+    }
   }
-}
+
+  return InnerExpressPassportMiddleware as any;
+};

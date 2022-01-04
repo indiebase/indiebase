@@ -1,4 +1,4 @@
-export const defaultOptions = {
+export default {
   session: false,
   presetProperty: 'user',
 };

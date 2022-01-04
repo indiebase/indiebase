@@ -1,18 +1,18 @@
-import { Provide } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
+// import { Provide } from '@midwayjs/decorator';
+// import { ExpressPassportMiddleware } from '@letscollab/midway-passport';
 
-@Provide()
-export class JwtPassportMiddleware extends ExpressPassportMiddleware {
-  strategy: string = 'jwt';
+// @Provide()
+// export class JwtPassportMiddleware extends ExpressPassportMiddleware {
+//   strategy: string = 'jwt';
 
-  async setOptions() {
-    return {
-      presetProperty: 'demo',
-    };
-  }
+//   async setOptions() {
+//     return {
+//       presetProperty: 'demo',
+//     };
+//   }
 
-  async auth(_ctx, _err, data) {
-    // throw new Error('demo');
-    return data;
-  }
-}
+//   async auth(_ctx, _err, data) {
+//     // throw new Error('demo');
+//     return data;
+//   }
+// }

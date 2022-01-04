@@ -1,3 +1,6 @@
+import { DefaultConfig } from '@midwayjs/grpc';
+import { join } from 'path';
+
 export default appInfo => {
   const config: any = {};
 
@@ -12,7 +15,7 @@ export default appInfo => {
     logging: false,
   };
 
-  // @deskbtm/midway-jwt
+  // @letscollab/midway-jwt
   config.jwt = {
     secret: 'dev123456',
     expiresIn: '100d',
@@ -38,6 +41,16 @@ export default appInfo => {
   config.others = {
     whileListDomain: [],
   };
+
+  config.grpc = {
+    services: [
+      {
+        url: '127.0.0.1:9801',
+        protoPath: join(__dirname, '../../packages/auth/proto/helloworld.proto'),
+        package: 'helloworld',
+      },
+    ],
+  } as DefaultConfig;
 
   return config;
 };

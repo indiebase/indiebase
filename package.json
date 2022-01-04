@@ -4,9 +4,6 @@
   "description": "",
   "private": true,
   "dependencies": {
-    "@deskbtm/midway-jwt": "workspace:^2.0.0-alpha.1",
-    "@deskbtm/midway-passport": "workspace:^2.0.0-alpha.1",
-    "@deskbtm/midway-filter": "workspace:^2.0.0-alpha.1",
     "@midwayjs/bootstrap": "^2.14.0",
     "@midwayjs/core": "^2.14.0",
     "@midwayjs/decorator": "^2.14.0",
@@ -31,11 +28,11 @@
   },
   "devDependencies": {
     "@midwayjs/cli": "^1.2.92",
-    "@midwayjs/web": "^2.14.0",
-    "@midwayjs/koa": "^2.14.0",
     "@midwayjs/egg-ts-helper": "^1.2.1",
+    "@midwayjs/koa": "^2.14.0",
     "@midwayjs/luckyeye": "^1.0.3",
     "@midwayjs/mock": "^2.14.0",
+    "@midwayjs/web": "^2.14.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/jest": "^27.0.3",
@@ -46,21 +43,21 @@
     "@types/passport-jwt": "^3.0.6",
     "@types/passport-local": "^1.0.34",
     "cross-env": "^7.0.3",
-    "jest": "^26.4.0",
-    "mwts": "^1.2.2",
-    "ts-jest": "^26.2.0",
-    "typescript": "^4.0.0",
     "egg": "^2.33.1",
     "egg-scripts": "^2.15.2",
+    "jest": "^26.4.0",
     "koa-bodyparser": "^4.3.0",
     "koa-passport": "^4.1.4",
-    "passport-gitlab2": "^5.0.0"
+    "mwts": "^1.2.2",
+    "passport-gitlab2": "^5.0.0",
+    "ts-jest": "^26.2.0",
+    "typescript": "^4.5.4"
   },
   "engines": {
-    "node": ">=12.0.0",
-    "npm": "please use pnpm",
-    "yarn": "please use pnpm",
-    "pnpm": ">=6.0.0"
+    "node": ">= 14.16.0",
+    "npm": "please-use-yarn",
+    "yarn": ">2.0.0",
+    "pnpm": "please-use-yarn"
   },
   "scripts": {
     "boot": "cross-env NODE_ENV=production node ./bootstrap.js",
@@ -71,12 +68,13 @@
     "lint": "mwts check",
     "lint:fix": "mwts fix",
     "ci": "npm run cov",
-    "check": "luckyeye",
-    "preinstall": "npx only-allow pnpm"
+    "check": "luckyeye"
   },
   "workspaces": [
-    "packages/**",
-    "first_party/**"
+    "packages/*",
+    "first_party/*",
+    "third_party/midway/packages/*",
+    "third_party/midway/packages-serverless/*"
   ],
   "midway-bin-clean": [
     ".vscode/.tsbuildinfo",

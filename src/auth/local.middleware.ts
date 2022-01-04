@@ -1,11 +1,9 @@
-import { Provide } from '@midwayjs/decorator';
-import { ExpressPassportMiddleware } from '@deskbtm/midway-passport';
+// import { Provide } from '@midwayjs/decorator';
+// import { ExpressPassportMiddleware } from '@letscollab/midway-passport';
 
-@Provide()
-export class LocalPassportMiddleware extends ExpressPassportMiddleware {
-  public strategy: string = 'local';
-
-  public async auth(ctx, err, data) {
-    return data;
-  }
-}
+// @Provide()
+// export class LocalPassportMiddleware extends ExpressPassportMiddleware('local') {
+//   public async auth(err, data) {
+//     return data;
+//   }
+// }

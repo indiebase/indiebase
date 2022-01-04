@@ -1,4 +1,4 @@
-// import { BootStrategy, ExpressPassportStrategyAdapter } from '@deskbtm/midway-passport';
+// import { BootStrategy, ExpressPassportStrategyAdapter } from '@letscollab/midway-passport';
 // import { Strategy, StrategyOptions } from 'passport-google';
 
 // @BootStrategy({

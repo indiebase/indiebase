@@ -1,5 +1,5 @@
 {
-  "name": "@deskbtm/midway-passport",
+  "name": "@letscollab/midway-passport",
   "description": "midway passport component",
   "version": "2.0.0-alpha.1",
   "main": "src/index.ts",
