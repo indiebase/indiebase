@@ -1,6 +1,7 @@
 logs
 temp
 *.production.*
+build/
 
 npm-debug.log
 yarn-error.log

@@ -12,11 +12,10 @@
     "@midwayjs/grpc": "^2.14.0"
   },
   "devDependencies": {
-    "@midwayjs/cli": "^1.2.92",
+    "@midwayjs/cli": "^1.2.93",
     "@midwayjs/grpc-helper": "^1.0.7",
     "@midwayjs/luckyeye": "^1.0.3",
     "@midwayjs/mock": "^2.14.0",
-    "@midwayjs/ncc": "^0.22.2-1",
     "@types/jest": "^26.0.10",
     "@types/node": "14",
     "cross-env": "^7.0.3",
@@ -38,7 +37,6 @@
     "lint:fix": "mwts fix",
     "ci": "npm run cov",
     "build": "midway-bin build -c",
-    "ncc": "ncc build",
     "check": "luckyeye",
     "generate": "tsproto --path proto --output src/domain"
   },

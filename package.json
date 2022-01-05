@@ -72,9 +72,7 @@
   },
   "workspaces": [
     "packages/*",
-    "first_party/*",
-    "third_party/midway/packages/*",
-    "third_party/midway/packages-serverless/*"
+    "first_party/*"
   ],
   "midway-bin-clean": [
     ".vscode/.tsbuildinfo",

@@ -1,3 +1,0 @@
-export { PassportConfiguration as Configuration } from './configuration';
-export * from './decorators';
-export * from './express';

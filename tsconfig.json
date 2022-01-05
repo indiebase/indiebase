@@ -12,8 +12,6 @@
     "stripInternal": true,
     "skipLibCheck": true,
     "noImplicitOverride": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
     "pretty": true,
     "declaration": true,
     "typeRoots": [
