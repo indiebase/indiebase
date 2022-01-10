@@ -6,16 +6,16 @@
   "private": true,
   "dependencies": {
     "@grpc/grpc-js": "^1.4.5",
-    "@midwayjs/bootstrap": "^2.14.0",
-    "@midwayjs/core": "^2.14.0",
-    "@midwayjs/decorator": "^2.14.0",
-    "@midwayjs/grpc": "^2.14.0"
+    "@midwayjs/bootstrap": "^3.0.0-beta.15",
+    "@midwayjs/core": "^3.0.0-beta.15",
+    "@midwayjs/decorator": "^3.0.0-beta.15",
+    "@midwayjs/grpc": "^3.0.0-beta.15"
   },
   "devDependencies": {
     "@midwayjs/cli": "^1.2.93",
     "@midwayjs/grpc-helper": "^1.0.7",
     "@midwayjs/luckyeye": "^1.0.3",
-    "@midwayjs/mock": "^2.14.0",
+    "@midwayjs/mock": "^3.0.0-beta.15",
     "@types/jest": "^26.0.10",
     "@types/node": "14",
     "cross-env": "^7.0.3",
