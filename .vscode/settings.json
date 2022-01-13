@@ -15,5 +15,8 @@
     "Popconfirm",
     "Pressable",
     "recyclerlistview"
-  ]
+  ],
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }
