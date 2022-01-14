@@ -6,3 +6,4 @@ microk8s ctr images tag registry.aliyuncs.com/google_containers/metrics-server:v
 microk8s ctr images pull docker.io/liangjw/ingress-nginx-controller:v1.0.0-alpha.2
 microk8s ctr images tag docker.io/liangjw/ingress-nginx-controller:v1.0.0-alpha.2 k8s.gcr.io/ingress-nginx/controller:v1.0.0-alpha.2
 
+helm install minio/minio:RELEASE.2021-02-14T04-01-33Z --namespace minio --create-namespace --generate-name
