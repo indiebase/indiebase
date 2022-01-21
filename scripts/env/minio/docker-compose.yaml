@@ -6,7 +6,6 @@ secrets:
   access_key:
     external: true
 
-# Settings and configurations that are common for all containers
 x-minio-common: &minio-common
   image: quay.io/minio/minio:RELEASE.2022-01-08T03-11-54Z
   command: server --console-address ":9001" /data1
@@ -21,10 +20,6 @@ x-minio-common: &minio-common
     interval: 30s
     timeout: 20s
     retries: 3
-
-# starts 4 docker containers running minio server instances.
-# using nginx reverse proxy, load balancing, you can access
-# it through port 9000.
 services:
   minio1:
     <<: *minio-common
@@ -44,8 +39,6 @@ services:
     depends_on:
       - minio1
 
-## By default this config uses default local driver,
-## For custom volumes replace with volume driver configuration.
 volumes:
   data1-1:
   data1-2:
