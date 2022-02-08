@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  nacos:
+    image: nacos/nacos-server:v2.0.4
+    env_file:
+      - ./nacos.env
+    volumes:
+      - ~/.mysql/logs:/home/nacos/logs
+    ports:
+      - '10847:8848'
+      - '11848:9848'
+      - '11555:9555'
+    depends_on:
+      - mysql
+    restart: always
+
+  mysql:
+    image: nacos/nacos-mysql:8.0.16
+    env_file:
+      - ./mysql.env
+    volumes:
+      - ~/.mysql/data:/var/lib/mysql
+    ports:
+      - '3306:3306'
