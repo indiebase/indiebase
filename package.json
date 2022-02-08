@@ -6,10 +6,10 @@
   "private": true,
   "license": "AGPL-3.0",
   "engines": {
-    "node": ">=14.16.1 <15",
-    "npm": "please use pnpm",
-    "yarn": "please use pnpm",
-    "pnpm": ">=6.0.0"
+    "node": ">= 16.0.0",
+    "npm": "please-use-yarn",
+    "yarn": ">2.0.0",
+    "pnpm": "please-use-yarn"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -19,10 +19,6 @@
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "release": "standard-version",
-    "deploy": "pm2 deploy ecosystem.config.js production",
-    "setup": "pm2 deploy ecosystem.config.js production setup",
-    "deploy:demo": "pm2 deploy ecosystem.demo.config.js demo",
-    "setup:demo": "pm2 deploy ecosystem.demo.config.js demo setup",
     "migration:generate": "cross-env NODE_ENV=production typeorm migration:generate -n SchemaMigration",
     "migration:create": "cross-env NODE_ENV=production typeorm migration:create -n SchemaMigration",
     "migration:run": "cross-env NODE_ENV=production ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run",
@@ -62,6 +58,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "rimraf": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.3.0",
     "semver": "^7.3.5",
@@ -71,8 +68,8 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^8.1.1",
-    "@nestjs/schematics": "^8.0.3",
-    "@nestjs/testing": "^8.0.6",
+    "@nestjs/schematics": "^8.0.5",
+    "@nestjs/testing": "^8.2.6",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cron": "^1.7.3",
