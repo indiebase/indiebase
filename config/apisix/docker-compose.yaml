@@ -3,7 +3,6 @@ version: '3.7'
 services:
   apisix-dashboard:
     image: apache/apisix-dashboard:2.10.1-alpine
-    restart: always
     volumes:
       - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
@@ -13,24 +12,24 @@ services:
 
   apisix:
     image: apache/apisix:2.11.0-alpine
-    restart: always
     volumes:
-      - ./apisix_log:/usr/local/apisix/logs
+      - apisix_logs:/usr/local/apisix/logs
       - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
-    #network_mode: host
     ports:
-      - '10080:9080/tcp'
-      - '10091:9091/tcp'
-      - '10443:9443/tcp'
-      - '10092:9092/tcp'
+      - '13320:9080/tcp'
+      - '13321:9091/tcp'
+      - '13322:9443/tcp'
+      - '13323:9092/tcp'
+    deploy:
+      restart_policy:
+        condition: on-failure
     networks:
       - apisix
 
   etcd:
     image: bitnami/etcd:3.4.15
-    restart: always
     volumes:
       - etcd_data:/bitnami/etcd
     environment:
@@ -43,33 +42,32 @@ services:
     networks:
       - apisix
 
-  web1:
-    image: nginx:1.21.5-alpine
-    restart: always
-    volumes:
-      - ./upstream/web1.conf:/etc/nginx/nginx.conf
-    ports:
-      - '13332:80/tcp'
-    environment:
-      - NGINX_PORT=80
-    networks:
-      - apisix
+  # web1:
+  #   image: nginx:1.21.5-alpine
 
-  web2:
-    image: nginx:1.21.5-alpine
-    restart: always
-    volumes:
-      - ./upstream/web2.conf:/etc/nginx/nginx.conf
-    ports:
-      - '13333:80/tcp'
-    environment:
-      - NGINX_PORT=80
-    networks:
-      - apisix
+  #   volumes:
+  #     - ./upstream/web1.conf:/etc/nginx/nginx.conf
+  #   ports:
+  #     - '13332:80/tcp'
+  #   environment:
+  #     - NGINX_PORT=80
+  #   networks:
+  #     - apisix
+
+  # web2:
+  #   image: nginx:1.21.5-alpine
+
+  #   volumes:
+  #     - ./upstream/web2.conf:/etc/nginx/nginx.conf
+  #   ports:
+  #     - '13333:80/tcp'
+  #   environment:
+  #     - NGINX_PORT=80
+  #   networks:
+  #     - apisix
 
   prometheus:
     image: prom/prometheus:v2.25.0
-    restart: always
     volumes:
       - ./prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -79,7 +77,6 @@ services:
 
   grafana:
     image: grafana/grafana:7.3.7
-    restart: always
     ports:
       - '13335:3000'
     volumes:
@@ -97,3 +94,4 @@ networks:
 volumes:
   etcd_data:
     driver: local
+  apisix_logs:
