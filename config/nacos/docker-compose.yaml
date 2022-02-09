@@ -10,9 +10,12 @@ services:
       - '13324:8848'
       - '13325:9848'
       - '13326:9555'
+    deploy:
+      restart_policy:
+        condition: on-failure
     depends_on:
       - mysql
-    restart: always
+    
 
   mysql:
     image: nacos/nacos-mysql:8.0.16
@@ -21,7 +24,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - '13330:3306'
+      - '3306:3306'
 
 volumes:
   mysql_data:
