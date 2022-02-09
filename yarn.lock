@@ -889,13 +889,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab/service-auth@workspace:packages/auth"
   dependencies:
-    "@nestjs/cli": ^8.0.0
+    "@nestjs/cli": ^8.2.0
     "@nestjs/common": ^8.2.6
     "@nestjs/core": ^8.2.6
     "@nestjs/microservices": ^8.2.6
-    "@nestjs/platform-express": ^8.0.0
-    "@nestjs/schematics": ^8.0.0
-    "@nestjs/testing": ^8.0.0
+    "@nestjs/platform-express": ^8.2.6
+    "@nestjs/schematics": ^8.0.5
+    "@nestjs/testing": ^8.2.6
     "@types/express": ^4.17.13
     "@types/jest": 27.0.2
     "@types/node": ^16.0.0
@@ -908,7 +908,6 @@ __metadata:
     jest: ^27.2.5
     prettier: ^2.3.2
     reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
     rxjs: ^7.2.0
     source-map-support: ^0.5.20
     supertest: ^6.1.3
@@ -939,7 +938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/cli@npm:^8.0.0, @nestjs/cli@npm:^8.1.1":
+"@nestjs/cli@npm:^8.1.1, @nestjs/cli@npm:^8.2.0":
   version: 8.2.0
   resolution: "@nestjs/cli@npm:8.2.0"
   dependencies:
@@ -1178,7 +1177,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-express@npm:^8.0.0, @nestjs/platform-express@npm:^8.2.6":
+"@nestjs/platform-express@npm:^8.2.6":
   version: 8.2.6
   resolution: "@nestjs/platform-express@npm:8.2.6"
   dependencies:
@@ -1208,7 +1207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/schematics@npm:^8.0.0, @nestjs/schematics@npm:^8.0.3":
+"@nestjs/schematics@npm:^8.0.3, @nestjs/schematics@npm:^8.0.5":
   version: 8.0.5
   resolution: "@nestjs/schematics@npm:8.0.5"
   dependencies:
@@ -1245,7 +1244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/testing@npm:^8.0.0, @nestjs/testing@npm:^8.0.6":
+"@nestjs/testing@npm:^8.2.6":
   version: 8.2.6
   resolution: "@nestjs/testing@npm:8.2.6"
   dependencies:
@@ -2099,6 +2098,17 @@ __metadata:
     "@typescript-eslint/types": 5.10.2
     eslint-visitor-keys: ^3.0.0
   checksum: f80caa1f0d71da096e9e18728b76046286cad691b178c0d101b71e5b553ee4a427ae2c2f8b9bc789dce266f62b026b7ca88ddafd52fde4f0dbb24e05765629b7
+  languageName: node
+  linkType: hard
+
+"@vercel/ncc@npm:^0.33.1":
+  version: 0.33.1
+  resolution: "@vercel/ncc@npm:0.33.1"
+  dependencies:
+    node-gyp: latest
+  bin:
+    ncc: dist/ncc/cli.js
+  checksum: 62af9ce257df1ac61acff4facfbb8f3f367a4df02705d608fe43ec5e9fa231e3fcb06a9e494c4e3b3e76441d97cc547aa2c434a5706a02d05f18c32c19dd7929
   languageName: node
   linkType: hard
 
@@ -7226,9 +7236,9 @@ __metadata:
     "@nestjs/passport": ^8.1.0
     "@nestjs/platform-express": ^8.2.6
     "@nestjs/schedule": ^1.0.1
-    "@nestjs/schematics": ^8.0.3
+    "@nestjs/schematics": ^8.0.5
     "@nestjs/swagger": ^5.2.0
-    "@nestjs/testing": ^8.0.6
+    "@nestjs/testing": ^8.2.6
     "@nestjs/typeorm": ^8.0.3
     "@types/bcrypt": ^5.0.0
     "@types/cookie-parser": ^1.4.2
@@ -7246,6 +7256,7 @@ __metadata:
     "@types/uuid": ^8.3.1
     "@typescript-eslint/eslint-plugin": 4.31.1
     "@typescript-eslint/parser": 4.31.1
+    "@vercel/ncc": ^0.33.1
     aws-sdk: ^2.999.0
     bcrypt: ^5.0.1
     class-transformer: ^0.4.0
@@ -7275,6 +7286,7 @@ __metadata:
     passport-local: ^1.0.0
     prettier: ^2.4.0
     reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
     rxjs: ^7.3.0
     semver: ^7.3.5
     standard-version: ^9.3.1

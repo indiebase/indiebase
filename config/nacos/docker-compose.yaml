@@ -5,11 +5,11 @@ services:
     env_file:
       - ./nacos.env
     volumes:
-      - ~/.mysql/logs:/home/nacos/logs
+      - mysql_logs:/home/nacos/logs
     ports:
-      - '10847:8848'
-      - '11848:9848'
-      - '11555:9555'
+      - '13324:8848'
+      - '13325:9848'
+      - '13326:9555'
     depends_on:
       - mysql
     restart: always
@@ -19,6 +19,10 @@ services:
     env_file:
       - ./mysql.env
     volumes:
-      - ~/.mysql/data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     ports:
-      - '3306:3306'
+      - '13330:3306'
+
+volumes:
+  mysql_data:
+  mysql_logs:
