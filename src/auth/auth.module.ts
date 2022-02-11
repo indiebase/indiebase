@@ -7,7 +7,9 @@ import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from '@/rbac';
 
-const JwtPassportModule = PassportModule.register({ defaultStrategy: 'jwt' });
+const JwtPassportModule = PassportModule.register({
+  defaultStrategy: 'jwt',
+});
 
 @Module({
   imports: [

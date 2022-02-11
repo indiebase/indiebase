@@ -2,7 +2,7 @@ Target:
 
 相对于 OpenCollective, letscollab 用于管理私有独立项目的财政, letscollab 初始目的是作为管理 Nawb 的辅助产品.
 
-对于想作独立项目的 founder:
+对于独立项目的 Founder:
 通过 letscollab 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目,
 
 对于拥有激情和业余时间的编程爱好者:
