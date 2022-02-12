@@ -10,5 +10,8 @@
   "cSpell.ignoreWords": [
     "nestjs",
     "qrcode"
-  ]
+  ],
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }

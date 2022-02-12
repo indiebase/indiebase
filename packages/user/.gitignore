@@ -1,21 +1,12 @@
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
 # compiled output
-**/node_modules/*
-**/dist/*
-**/build/*
-src/migration
-temp
+/dist
+/node_modules
+
 # Logs
 logs
 *.log
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
@@ -42,6 +33,3 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-assets/sandbox/*
-package-lock.json
