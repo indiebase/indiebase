@@ -3,16 +3,26 @@ import {
   OnModuleDestroy,
   OnModuleInit,
   Logger,
+  Inject,
 } from '@nestjs/common';
-import { NacosNamingClient, NacosNamingClientOptions } from 'nacos';
+import * as nacos from 'nacos';
+import type {
+  NacosNamingClient,
+  NacosNamingClientOptions,
+} from './nacos-naming.interface';
+import { NACOS_NAMING_OPTIONS } from './nacos.constants';
+import { NacosLogger } from './nacos.logger';
 
 @Injectable()
 export class NacosNamingService implements OnModuleInit, OnModuleDestroy {
   #client: NacosNamingClient;
-  #logger = new Logger('NacosNamingService');
+  #logger = new NacosLogger('NacosNamingService');
 
-  constructor(options?: NacosNamingClientOptions) {
-    this.#client = new NacosNamingClient({
+  constructor(
+    @Inject(NACOS_NAMING_OPTIONS)
+    options?: NacosNamingClientOptions,
+  ) {
+    this.#client = new (nacos as any).NacosNamingClient({
       ...options,
       logger: this.#logger,
     });

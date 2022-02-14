@@ -27,6 +27,7 @@
     "@nestjs/microservices": "^8.2.6",
     "@nestjs/passport": "^8.1.0",
     "@nestjs/platform-express": "^8.2.6",
+    "nestjs-minio": "^2.1.13",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
