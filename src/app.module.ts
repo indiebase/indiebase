@@ -15,7 +15,7 @@ import { Connection } from 'typeorm';
 import { RateLimitMiddleware } from '@/middleware';
 import configure from '@/config';
 import { S3Module, ObsModule } from '@/modules';
-d
+
 @Module({
   imports: [
     ObsModule,

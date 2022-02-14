@@ -1,6 +1,6 @@
 import type { Provider } from '@nestjs/common';
-import type { NacosNamingClientOptions, ClientOptions } from 'nacos';
-import { NACOS_CONFIG_OPTIONS, NACOS_NAMING_OPTIONS } from './nacos.contants';
+import type { ClientOptions } from 'nacos';
+import { NACOS_CONFIG_OPTIONS, NACOS_NAMING_OPTIONS } from './nacos.constants';
 
 export const createNacosNamingClientProvider = function (
   options?: ClientOptions,
