@@ -1,3 +1,4 @@
+import { DemoModule } from './../packages/user/src/demo.module';
 import { SiteModule } from '@/website';
 import { POSSESSION_GET_CHILD_NODE, RbacModule } from '@/rbac';
 import { Endpoint } from 'aws-sdk';
@@ -18,6 +19,7 @@ import { S3Module, ObsModule } from '@/modules';
 
 @Module({
   imports: [
+    DemoModule,
     ObsModule,
     SiteModule,
     RbacModule,

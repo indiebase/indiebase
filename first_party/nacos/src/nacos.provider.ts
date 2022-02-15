@@ -23,11 +23,13 @@ export const createNacosConfigClientProvider = function (
 ): Provider {
   return {
     provide: NACOS_CONFIG_OPTIONS,
-    useClass: Object,
+    useValue: options,
   };
 };
 
-export const createNacosConfigClientProviderAsync = function (): Provider {
+export const createNacosConfigClientProviderAsync = function (
+  options?: ClientOptions & Provider,
+): Provider {
   return {
     provide: '',
     useClass: Object,
