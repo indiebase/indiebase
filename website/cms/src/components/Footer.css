@@ -1,0 +1,9 @@
+.com-footer {
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .com-footer {
+    font-size: 12px;
+  }
+}

@@ -1,7 +1,10 @@
 import { NacosConfigService } from './nacos-config.service';
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { ClientOptions } from 'nacos';
-import { createNacosConfigClientProvider } from './nacos.provider';
+import {
+  createNacosConfigClientProvider,
+  createNacosConfigClientProviderAsync,
+} from './nacos.provider';
 
 @Module({})
 export class NacosConfigModule {
@@ -9,17 +12,21 @@ export class NacosConfigModule {
     const provider = createNacosConfigClientProvider(options);
     return {
       module: NacosConfigModule,
-      providers: [NacosConfigService, provider],
+      providers: [provider, NacosConfigService],
       exports: [NacosConfigService],
       global: true,
     };
   }
 
-  public static forRootAsync(options): DynamicModule {
+  public static forRootAsync(
+    options?: ClientOptions & Provider,
+  ): DynamicModule {
+    const provider = createNacosConfigClientProviderAsync(options);
     return {
       module: NacosConfigModule,
-      imports: [NacosConfigService],
+      providers: [provider, NacosConfigService],
       exports: [NacosConfigService],
+      global: true,
     };
   }
 }
