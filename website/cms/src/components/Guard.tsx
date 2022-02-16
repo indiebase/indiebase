@@ -40,7 +40,7 @@ export const Guard: FC<any> = observer(function (props) {
         } else {
           ctx.setLogin(false);
         }
-        location.pathname === '/' && h.push('/home');
+        // location.pathname === '/' && h.push('/home');
         return;
       }
       ctx.setLogin(false);
@@ -59,7 +59,7 @@ export const Guard: FC<any> = observer(function (props) {
 
         location.href = '/home';
       }
-      location.pathname === '/' && h.push('/home');
+      // location.pathname === '/' && h.push('/home');
     })();
   }, []);
 

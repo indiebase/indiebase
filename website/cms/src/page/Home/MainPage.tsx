@@ -3,7 +3,7 @@ import ProLayout, {
   RouteContext,
   RouteContextType,
 } from '@ant-design/pro-layout';
-import { Route, Switch, useNavigate } from 'react-router-dom';
+import { Route, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '@/provider';
 import { Button } from 'antd';
 import { getJaccountAuthCode } from '@/common';
@@ -35,7 +35,7 @@ export const HomeRightNav: FC<any> = (props) => {
                   style={{ marginRight: value.isMobile ? 10 : 20 }}
                   onClick={() => {
                     console.log(h);
-                    h.push('/dash');
+                    // h.push('/dash');
                   }}
                 >
                   进入管理台
@@ -107,7 +107,7 @@ export const MainPage: FC = function () {
         return (
           <a
             onClick={() => {
-              h.push(item.path || '/');
+              // h.push(item.path || '/');
             }}
           >
             {dom}
@@ -126,11 +126,11 @@ export const MainPage: FC = function () {
         },
       }}
     >
-      <Switch>
+      {/* <Switch>
         {flatHomeRoutes.map((r, i) => {
           return <Route key={i} {...r} />;
         })}
-      </Switch>
+      </Switch> */}
     </ProLayout>
   );
 };

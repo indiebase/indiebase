@@ -1,9 +1,14 @@
 import type { Provider } from '@nestjs/common';
 import type { ClientOptions } from 'nacos';
+import type { NacosConfigClientAsyncOptions } from './nacos-config.interface';
+import type {
+  NacosNamingClientAsyncOptions,
+  NacosNamingClientOptions,
+} from './nacos-naming.interface';
 import { NACOS_CONFIG_OPTIONS, NACOS_NAMING_OPTIONS } from './nacos.constants';
 
 export const createNacosNamingClientProvider = function (
-  options?: ClientOptions,
+  options?: NacosNamingClientOptions,
 ): Provider {
   return {
     provide: NACOS_NAMING_OPTIONS,
@@ -11,10 +16,13 @@ export const createNacosNamingClientProvider = function (
   };
 };
 
-export const createNacosNamingClientProviderAsync = function (): Provider {
+export const createNacosNamingClientProviderAsync = function (
+  options?: NacosNamingClientAsyncOptions,
+): Provider {
   return {
-    provide: '',
-    useClass: Object,
+    provide: NACOS_NAMING_OPTIONS,
+    useFactory: options.useFactory,
+    inject: options.inject,
   };
 };
 
@@ -28,10 +36,11 @@ export const createNacosConfigClientProvider = function (
 };
 
 export const createNacosConfigClientProviderAsync = function (
-  options?: ClientOptions & Provider,
+  options?: NacosConfigClientAsyncOptions,
 ): Provider {
   return {
-    provide: '',
-    useClass: Object,
+    provide: NACOS_CONFIG_OPTIONS,
+    useFactory: options.useFactory,
+    inject: options.inject,
   };
 };

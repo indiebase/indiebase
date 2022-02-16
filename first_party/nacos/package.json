@@ -5,10 +5,9 @@
   "author": "Nawbc",
   "private": true,
   "license": "Apache-2.0",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "main": "./dist/index.js",
     "access": "public"
   },
   "scripts": {

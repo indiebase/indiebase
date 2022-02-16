@@ -9,7 +9,8 @@
   "editor.formatOnSave": true,
   "cSpell.ignoreWords": [
     "nestjs",
-    "qrcode"
+    "qrcode",
+    "Nacos"
   ],
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"

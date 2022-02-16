@@ -19,6 +19,14 @@ export interface NacosNamingClientOptions {
   endpoint?: string;
   vipSrvRefInterMillis?: number;
 }
+export interface NacosNamingClientAsyncOptions<T = NacosNamingClientOptions> {
+  /**
+   * Factory function that returns an instance of the provider to be injected.
+   */
+  useFactory: (...args: any[]) => T;
+
+  inject?: any[];
+}
 
 export interface NacosNamingInstanceOptions {
   instanceId?: string;

@@ -7,7 +7,7 @@ import {
   CrownOutlined,
   GlobalOutlined,
 } from '@ant-design/icons';
-import { PublishPage } from '@/page/AdminDashboard/match';
+// import { PublishPage } from '@/page/AdminDashboard/match';
 import { BannerPage } from './website/BannerPage';
 import { PossessionPage } from './rbac/PossessionPage';
 import { RolePage } from './rbac/RolePage';
@@ -50,13 +50,13 @@ export const adminDashboardRoute: Route = {
           path: '/dash/match/publish',
           name: '赛事发布',
           exact: true,
-          component: PublishPage,
+          // component: PublishPage,
         },
         {
           path: '/dash/match/publish1',
           name: '赛事通知',
           exact: true,
-          component: PublishPage,
+          // component: PublishPage,
         },
       ],
     },

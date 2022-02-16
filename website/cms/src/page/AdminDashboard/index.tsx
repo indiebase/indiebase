@@ -54,7 +54,7 @@ export const AdminDashboard: FC = function () {
         return (
           <a
             onClick={() => {
-              h.push(item.path || '/');
+              // h.push(item.path || '/');
             }}
           >
             {dom}
