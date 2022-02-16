@@ -2,7 +2,6 @@ import {
   Injectable,
   OnModuleDestroy,
   OnModuleInit,
-  Logger,
   Inject,
 } from '@nestjs/common';
 import * as nacos from 'nacos';

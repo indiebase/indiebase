@@ -46,5 +46,7 @@ export class AppModule implements OnModuleInit {
     );
     console.log('---------getConfig complete----------');
     console.log('current content => ' + content);
+
+    // this.nacosConfigService.client.subscribe();
   }
 }

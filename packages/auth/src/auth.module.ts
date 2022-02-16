@@ -1,12 +1,19 @@
 import { JwtModule } from '@nestjs/jwt';
-// import { AuthService } from './auth.service';
-// import { JwtStrategy } from './jwt.strategy';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-
-import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import AuthController from './auth.controller';
-// import { UserModule } from '@/rbac';
+import { SERVICE_NAME, USER_CLIENT } from './auth.constants';
+import {
+  NacosNamingModule,
+  NacosConfigModule,
+  NacosNamingService,
+  NacosConfigService,
+  NacosConfigClientOptions,
+} from '@letscollab/nestjs-nacos';
+import { resolve } from 'path';
+import configure from '@/config';
 
 const JwtPassportModule = PassportModule.register({
   defaultStrategy: 'jwt',
@@ -14,8 +21,40 @@ const JwtPassportModule = PassportModule.register({
 
 @Module({
   imports: [
-    // forwardRef(() => UserModule),
     JwtPassportModule,
+    ConfigModule.forRoot({
+      envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
+      isGlobal: true,
+      load: configure,
+    }),
+    NacosNamingModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverList: '0.0.0.0:13324',
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
+    NacosConfigModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverAddr: '0.0.0.0:13324',
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
+    ClientsModule.register([
+      {
+        name: USER_CLIENT,
+        transport: Transport.TCP,
+        options: {
+          host: 'localhost',
+          port: 4010,
+        },
+      },
+    ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
@@ -26,7 +65,29 @@ const JwtPassportModule = PassportModule.register({
     }),
   ],
   controllers: [AuthController],
-  providers: [],
   exports: [JwtPassportModule],
 })
-export class AuthModule {}
+export class AuthModule implements OnModuleInit {
+  constructor(
+    private readonly nacosNamingService: NacosNamingService,
+    private readonly nacosConfigService: NacosConfigService,
+  ) {}
+
+  async onModuleInit() {
+    await this.nacosNamingService.client.registerInstance(SERVICE_NAME, {
+      ip: '1.1.1.1',
+      port: 11111,
+    });
+
+    const dataId = 'nacos.test.1';
+    const group = 'DEFAULT_GROUP';
+    const str = `example_test_${Math.random()}_${Date.now()}`;
+
+    await this.nacosConfigService.client.publishSingle(dataId, group, str);
+    const content = await this.nacosConfigService.client.getConfig(
+      dataId,
+      group,
+    );
+    console.log('current content => ' + content);
+  }
+}

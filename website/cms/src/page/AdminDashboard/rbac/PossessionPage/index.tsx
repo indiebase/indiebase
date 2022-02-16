@@ -99,7 +99,7 @@ const columns: ProColumns<PossessionFormData>[] = [
               if (res.code > 0) {
                 message.success(res.message);
               }
-              action.reload();
+              // action.reload();
             }}
             okText="确认"
             cancelText="取消"

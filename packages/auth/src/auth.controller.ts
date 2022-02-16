@@ -1,10 +1,18 @@
-import { Controller } from '@nestjs/common';
+import { NacosConfigService } from '@letscollab/nestjs-nacos';
+import { Controller, Get, Query } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 
-@Controller()
+@Controller('auth')
 export default class AuthController {
+  constructor(private nacosConfigService: NacosConfigService) {}
+
   @MessagePattern({ cmd: 'sum' })
   async demo() {
     return 'demo';
+  }
+
+  @Get()
+  async demo1() {
+    console.log(this.nacosConfigService);
   }
 }

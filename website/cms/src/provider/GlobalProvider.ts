@@ -26,7 +26,7 @@ export class GlobalProvider {
     this.user = user;
   }
 
-  isLogin: boolean;
+  isLogin: boolean = false;
 
   setLogin(d: boolean) {
     this.isLogin = d;

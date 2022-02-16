@@ -51,7 +51,7 @@ export const UserEditModal: FC<CreateUserModalProps> = function (props) {
         </Button>
       }
       onFinish={async (val) => {
-        return props.onFinish(val, ref);
+        return props.onFinish(val, );
       }}
       onVisibleChange={async (visible) => {
         if (visible) {
@@ -124,7 +124,7 @@ export const UserEditModal: FC<CreateUserModalProps> = function (props) {
           placeholder="点击添加角色"
           // initialValue={}
           // request
-          options={roles}
+          // options={roles}
           fieldProps={{
             mode: 'multiple',
             // fieldNames: {

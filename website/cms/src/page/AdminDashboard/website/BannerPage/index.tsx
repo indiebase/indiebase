@@ -56,7 +56,7 @@ const columns: ProColumns<BannerFormData>[] = [
               if (data.code > 0) {
                 message.success(data.message);
               }
-              action.reload();
+              // action.reload();
             }}
             okText="确认"
             cancelText="取消"
@@ -86,7 +86,7 @@ const columns: ProColumns<BannerFormData>[] = [
             if (data.code > 0) {
               message.success(data.message);
             }
-            action.reload();
+            // // action.reload();
           }}
           okText="确认"
           cancelText="取消"
@@ -104,7 +104,7 @@ const columns: ProColumns<BannerFormData>[] = [
             if (data.code > 0) {
               message.success(data.message);
             }
-            action.reload();
+            // // action.reload();
           }}
           okText="确认"
           cancelText="取消"

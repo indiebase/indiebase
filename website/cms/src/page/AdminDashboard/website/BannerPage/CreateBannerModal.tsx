@@ -32,7 +32,7 @@ export const CreateBannerModal: FC<CreateGoodsModalProps> = function (props) {
         </Button>
       }
       onFinish={async (val) => {
-        if (val?.imgUri[0]) {
+        if (val.imgUri?.[0]) {
           val.imgUri = (val.imgUri[0] as any).response?.data?.Location;
         }
 

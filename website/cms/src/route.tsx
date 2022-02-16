@@ -3,7 +3,7 @@ import { NotFoundPage } from './components/404';
 import { AdminDashboard } from './page/AdminDashboard';
 import { MainPage } from './page/Home/MainPage';
 
-export const route: RouteProps[] = [
+export const route = [
   {
     path: '/dash',
     component: AdminDashboard,

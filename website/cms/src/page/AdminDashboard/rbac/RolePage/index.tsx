@@ -69,7 +69,7 @@ const columns: ProColumns<RoleFormData>[] = [
 
         if (res.code > 0) {
           message.success(res.message);
-          action.reload();
+          // action.reload();
           fRef?.current?.resetFields();
           return true;
         }
@@ -91,7 +91,7 @@ const columns: ProColumns<RoleFormData>[] = [
               if (res.code > 0) {
                 message.success(res.message);
               }
-              action.reload();
+              // action.reload();
             }}
             okText="确认"
             cancelText="取消"
