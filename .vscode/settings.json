@@ -11,8 +11,5 @@
     "nestjs",
     "qrcode",
     "Nacos"
-  ],
-  "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
+  ]
 }
