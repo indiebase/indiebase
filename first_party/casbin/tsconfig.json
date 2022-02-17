@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "module": "CommonJS",
     "declaration": true,
-    "removeComments": true,
+    "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -18,13 +19,19 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "noImplicitOverride": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "pretty": true
+  },
+  "paths": {
+    "@/*": [
+      "src/*"
+    ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
   ]
 }

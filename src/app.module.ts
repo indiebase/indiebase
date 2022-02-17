@@ -1,19 +1,13 @@
 import { DemoModule } from './../packages/user/src/demo.module';
 import { SiteModule } from '@/website';
-import { POSSESSION_GET_CHILD_NODE, RbacModule } from '@/rbac';
+import { RbacModule } from '@/rbac';
 import { Endpoint } from 'aws-sdk';
 
-import {
-  Module,
-  MiddlewareConsumer,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { resolve } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Connection } from 'typeorm';
-import { RateLimitMiddleware } from '@/middleware';
 import configure from '@/config';
 import { S3Module, ObsModule } from '@/modules';
 

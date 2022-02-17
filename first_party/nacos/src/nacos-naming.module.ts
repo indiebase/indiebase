@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { NacosNamingService } from './nacos-naming.service';
 import {
   createNacosNamingClientProvider,
@@ -10,6 +10,7 @@ import {
 } from './nacos-naming.interface';
 
 @Module({})
+@Global()
 export class NacosNamingModule {
   public static forRoot(options?: NacosNamingClientOptions): DynamicModule {
     const provider = createNacosNamingClientProvider(options);
@@ -17,7 +18,6 @@ export class NacosNamingModule {
       module: NacosNamingModule,
       providers: [provider, NacosNamingService],
       exports: [NacosNamingService],
-      global: true,
     };
   }
 
@@ -30,7 +30,7 @@ export class NacosNamingModule {
       module: NacosNamingModule,
       providers: [provider, NacosNamingService],
       exports: [NacosNamingService],
-      global: true,
+      imports: options.imports ?? [],
     };
   }
 }
