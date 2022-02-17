@@ -4,16 +4,25 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import AuthController from './auth.controller';
-import { SERVICE_NAME, USER_CLIENT } from './auth.constants';
+import {
+  NACOS_DATA_ID,
+  NACOS_GROUP,
+  // NACOS_GROUP,
+  // NACOS_GROUP,
+  SERVICE_NAME,
+  USER_CLIENT,
+} from '@/auth.constants';
 import {
   NacosNamingModule,
   NacosConfigModule,
   NacosNamingService,
   NacosConfigService,
-  NacosConfigClientOptions,
 } from '@letscollab/nestjs-nacos';
 import { resolve } from 'path';
 import configure from '@/config';
+import { CasbinModule } from '@letscollab/nestjs-casbin';
+import { NacosUtils } from '@letscollab/utils';
+import TypeormAdapter from 'typeorm-adapter';
 
 const JwtPassportModule = PassportModule.register({
   defaultStrategy: 'jwt',
@@ -31,19 +40,35 @@ const JwtPassportModule = PassportModule.register({
       inject: [ConfigService],
       useFactory(config: ConfigService) {
         return {
-          serverList: '0.0.0.0:13324',
+          serverList: config.get('nacos.serverList'),
           namespace: config.get('nacos.namespace'),
         };
       },
     }),
     NacosConfigModule.forRootAsync({
+      imports: [],
       inject: [ConfigService],
       useFactory(config: ConfigService) {
         return {
-          serverAddr: '0.0.0.0:13324',
+          serverAddr: config.get('nacos.serverList'),
           namespace: config.get('nacos.namespace'),
         };
       },
+    }),
+    CasbinModule.forRootAsync({
+      imports: [NacosConfigModule],
+      useFactory: async (nacosConfigService: NacosConfigService) => {
+        const options = await NacosUtils.getConfig(
+          nacosConfigService,
+          NACOS_DATA_ID,
+        );
+
+        return {
+          model: resolve(__dirname, '../model/auth.conf'),
+          adapter: TypeormAdapter.newAdapter(options.casbin.db),
+        };
+      },
+      inject: [NacosConfigService],
     }),
     ClientsModule.register([
       {
@@ -79,11 +104,17 @@ export class AuthModule implements OnModuleInit {
       port: 11111,
     });
 
-    const dataId = 'nacos.test.1';
+    const dataId = 'service-auth-mysql';
     const group = 'DEFAULT_GROUP';
-    const str = `example_test_${Math.random()}_${Date.now()}`;
+    // const str = {
+    //   name: 'demo',
+    // };
 
-    await this.nacosConfigService.client.publishSingle(dataId, group, str);
+    // await this.nacosConfigService.client.publishSingle(
+    //   dataId,
+    //   group,
+    //   JSON.stringify(str),
+    // );
     const content = await this.nacosConfigService.client.getConfig(
       dataId,
       group,

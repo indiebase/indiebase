@@ -21,7 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@letscollab/nestjs-casbin": "workspace:^",
     "@letscollab/nestjs-nacos": "workspace:^",
+    "@letscollab/utils": "workspace:^",
     "@nestjs/common": "^8.2.6",
     "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.2.6",
@@ -30,7 +32,8 @@
     "@nestjs/passport": "^8.1.0",
     "@nestjs/platform-express": "^8.2.6",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm-adapter": "^1.4.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.2.0",
@@ -54,7 +57,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.5.5"
   },
   "jest": {
     "moduleFileExtensions": [

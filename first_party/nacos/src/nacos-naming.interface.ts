@@ -1,3 +1,4 @@
+import { DynamicModule, ForwardReference, Type } from '@nestjs/common';
 import Base from 'sdk-base';
 
 export interface NacosNamingClientOptions {
@@ -26,6 +27,10 @@ export interface NacosNamingClientAsyncOptions<T = NacosNamingClientOptions> {
   useFactory: (...args: any[]) => T;
 
   inject?: any[];
+
+  imports?: Array<
+    Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference
+  >;
 }
 
 export interface NacosNamingInstanceOptions {

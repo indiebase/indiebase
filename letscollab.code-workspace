@@ -1,0 +1,38 @@
+{
+  "folders": [
+    {
+      "name": "✨ letscollab",
+      "path": "."
+    },
+    {
+      "name": "@letscollab/nestjs-casbin",
+      "path": "first_party/casbin"
+    },
+    {
+      "name": "@letscollab/nestjs-nacos",
+      "path": "first_party/nacos"
+    },
+    {
+      "name": "📦 @letscollab/service-auth",
+      "path": "packages/auth"
+    },
+    {
+      "name": "📦 @letscollab/service-user",
+      "path": "packages/user"
+    },
+    {
+      "name": "📦 @letscollab/utils",
+      "path": "packages/utils"
+    },
+    {
+      "name": "🚀 cms",
+      "path": "website/cms"
+    }
+  ],
+  "settings": {
+    "cSpell.words": [
+      "nacos",
+      "nestjs"
+    ]
+  }
+}

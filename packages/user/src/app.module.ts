@@ -8,6 +8,7 @@ import {
   NacosNamingService,
   NacosConfigService,
 } from '@letscollab/nestjs-nacos';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -18,6 +19,13 @@ import {
     NacosConfigModule.forRoot({
       serverAddr: '0.0.0.0:13324',
       namespace: 'abea31e1-648f-496f-80d1-6811953572d7',
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [NacosConfigModule],
+      inject: [NacosConfigService],
+      async useFactory(nacosConfigService: NacosConfigService) {
+        return {};
+      },
     }),
     DemoModule,
   ],

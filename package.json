@@ -106,8 +106,7 @@
   },
   "workspaces": [
     "packages/*",
-    "first_party/*",
-    "website/*"
+    "first_party/*"
   ],
   "jest": {
     "moduleFileExtensions": [

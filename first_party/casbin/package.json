@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nestjs-nacos",
+  "name": "@letscollab/nestjs-casbin",
   "version": "0.0.1",
   "description": "nestjs nacos module",
   "author": "Nawbc",
@@ -26,7 +26,7 @@
   "dependencies": {
     "@nestjs/common": "^8.2.6",
     "@nestjs/core": "^8.2.6",
-    "nacos": "^2.2.1",
+    "casbin": "^5.13.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

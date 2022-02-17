@@ -35,7 +35,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - '13337:9000'
+      - ' :9000'
       - '13338:9001'
     depends_on:
       - minio

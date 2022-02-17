@@ -10,9 +10,4 @@ export default class AuthController {
   async demo() {
     return 'demo';
   }
-
-  @Get()
-  async demo1() {
-    console.log(this.nacosConfigService);
-  }
 }
