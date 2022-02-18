@@ -12,5 +12,8 @@
     "qrcode",
     "Nacos",
     "nestjs"
-  ]
+  ],
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }
