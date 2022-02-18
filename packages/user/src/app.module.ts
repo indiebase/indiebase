@@ -1,4 +1,3 @@
-import { DemoModule } from './demo.module';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,25 +8,74 @@ import {
   NacosConfigService,
 } from '@letscollab/nestjs-nacos';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import {
+  NACOS_USER_DATA_ID,
+  NACOS_AUTH_DATA_ID,
+  SERVICE_NAME,
+} from './app.constants';
+import { NacosUtils } from '@letscollab/utils';
+import { resolve } from 'path';
+import configure from '@/config';
 
 @Module({
   imports: [
-    NacosNamingModule.forRoot({
-      serverList: '0.0.0.0:13324',
-      namespace: 'abea31e1-648f-496f-80d1-6811953572d7',
+    ConfigModule.forRoot({
+      envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
+      isGlobal: true,
+      load: configure,
     }),
-    NacosConfigModule.forRoot({
-      serverAddr: '0.0.0.0:13324',
-      namespace: 'abea31e1-648f-496f-80d1-6811953572d7',
+    NacosNamingModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverList: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
+    NacosConfigModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverAddr: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
+        };
+      },
     }),
     TypeOrmModule.forRootAsync({
       imports: [NacosConfigModule],
       inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
-        return {};
+        const configs = await NacosUtils.getConfig(
+          nacosConfigService,
+          NACOS_USER_DATA_ID,
+        );
+        return configs.mysql;
       },
     }),
-    DemoModule,
+    // ClientsModule.registerAsync([
+    //   {
+    //     name: 'MATH_SERVICE',
+    //     imports: [NacosConfigModule],
+    //     inject: [NacosConfigService],
+    //     async useFactory(nacosConfigService: NacosConfigService) {
+    //       const configs = await NacosUtils.getConfig(
+    //         nacosConfigService,
+    //         NACOS_AUTH_DATA_ID,
+    //       );
+    //       return {
+    //         transport: Transport.TCP,
+    //         options: {
+    //           port: configs.app.authMicroservicePort,
+    //         },
+    //       };
+    //     },
+    //   },
+    // ]),
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -38,23 +86,9 @@ export class AppModule implements OnModuleInit {
     private nacosConfigService: NacosConfigService,
   ) {}
   async onModuleInit() {
-    await this.nacosNamingService.client.registerInstance('demo1', {
+    await this.nacosNamingService.client.registerInstance(SERVICE_NAME, {
       ip: '1.1.1.1',
-      port: 11111,
+      port: 2222,
     });
-
-    const dataId = 'nacos.test.1';
-    const group = 'DEFAULT_GROUP';
-    const str = `example_test_${Math.random()}_${Date.now()}`;
-
-    await this.nacosConfigService.client.publishSingle(dataId, group, str);
-    const content = await this.nacosConfigService.client.getConfig(
-      dataId,
-      group,
-    );
-    console.log('---------getConfig complete----------');
-    console.log('current content => ' + content);
-
-    // this.nacosConfigService.client.subscribe();
   }
 }

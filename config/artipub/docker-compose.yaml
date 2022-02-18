@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  app:
+    image: 'tanliyuan123/artipub:1.3.0'
+    environment:
+      MONGO_HOST: 'mongo'
+      ARTIPUB_API_ADDRESS: 'http://0.0.0.0:13340'
+    ports:
+      - '13341:8000'
+      - '13340:3000'
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
