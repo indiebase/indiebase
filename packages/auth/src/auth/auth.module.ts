@@ -8,8 +8,10 @@ import {
   NacosConfigModule,
   NacosConfigService,
 } from '@letscollab/nestjs-nacos';
-import { NACOS_DATA_ID } from '@/app.constants';
+import { NACOS_AUTH_DATA_ID, USER_SERVICE_NAME } from '@/app.constants';
 import { NacosUtils } from '@letscollab/utils';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { AuthController } from './auth.controller';
 const PassportModule = ForwardPassportModule.register({
   defaultStrategy: 'jwt',
 });
@@ -18,18 +20,38 @@ const PassportModule = ForwardPassportModule.register({
   imports: [
     PassportModule,
     NacosConfigModule,
+    ClientsModule.registerAsync([
+      {
+        name: USER_SERVICE_NAME,
+        imports: [NacosConfigModule],
+        inject: [NacosConfigService],
+        async useFactory(nacosConfigService: NacosConfigService) {
+          const configs = await NacosUtils.getConfig(
+            nacosConfigService,
+            NACOS_AUTH_DATA_ID,
+          );
+          return {
+            transport: Transport.TCP,
+            options: {
+              port: configs.app.userMicroservicePort,
+            },
+          };
+        },
+      },
+    ]),
     JwtModule.registerAsync({
       imports: [NacosConfigModule],
       inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
         const options = await NacosUtils.getConfig(
           nacosConfigService,
-          NACOS_DATA_ID,
+          NACOS_AUTH_DATA_ID,
         );
         return options?.jwt;
       },
     }),
   ],
+  controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService, LocalStrategy, JwtStrategy],
 })

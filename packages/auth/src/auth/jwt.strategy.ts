@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { NacosConfigService } from '@letscollab/nestjs-nacos';
 import { NacosUtils } from '@letscollab/utils';
-import { NACOS_DATA_ID } from '@/app.constants';
+import { NACOS_AUTH_DATA_ID } from '@/app.constants';
 
 export interface JwtPayload {
   roles: string[];
@@ -30,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       ) => {
         const options = await NacosUtils.getConfig(
           nacosConfigService,
-          NACOS_DATA_ID,
+          NACOS_AUTH_DATA_ID,
         );
         console.log(options?.jwt.secret);
         return options?.jwt.secret;

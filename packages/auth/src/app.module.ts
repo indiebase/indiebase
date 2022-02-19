@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import AppController from './app.controller';
-import { NACOS_DATA_ID, SERVICE_NAME } from './app.constants';
+import { NACOS_AUTH_DATA_ID, AUTH_SERVICE_NAME } from './app.constants';
 import { resolve } from 'path';
 import configure from './config';
 import { CasbinModule } from '@letscollab/nestjs-casbin';
@@ -51,7 +51,7 @@ import {
       useFactory: async (nacosConfigService: NacosConfigService) => {
         const options = await NacosUtils.getConfig(
           nacosConfigService,
-          NACOS_DATA_ID,
+          NACOS_AUTH_DATA_ID,
         );
 
         return {
@@ -80,7 +80,7 @@ export class AppModule implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.nacosNamingService.client.registerInstance(SERVICE_NAME, {
+    await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
       ip: '1.1.1.1',
       port: 11111,
     });
