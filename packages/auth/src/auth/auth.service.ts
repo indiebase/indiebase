@@ -1,16 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { USER_SERVICE_NAME } from '@/app.constants';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { JwtService } from '@nestjs/jwt';
+import { ClientProxy } from '@nestjs/microservices';
+import { AvailableUserInfo } from './auth.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-
+    @Inject(USER_SERVICE_NAME)
+    private readonly client: ClientProxy,
     private readonly config: ConfigService,
   ) {}
-  async validateUser(_username: string, _password: string): Promise<any> {
+  async validateUser(info: AvailableUserInfo): Promise<any> {
+    console.log(info, '===========================');
     // const admin = await this.adminSrv.findByNameWithPwd(username);
     // // this.adminSrv.createUser
     // if (admin) {

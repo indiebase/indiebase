@@ -2,14 +2,17 @@ import { NacosConfigService } from '@letscollab/nestjs-nacos';
 import { NacosUtils } from '@letscollab/utils';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
-import { NACOS_DATA_ID } from './app.constants';
+import { NACOS_AUTH_DATA_ID } from './app.constants';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const nacosConfigService: NacosConfigService =
     app.get<NacosConfigService>(NacosConfigService);
-  const config = await NacosUtils.getConfig(nacosConfigService, NACOS_DATA_ID);
+  const config = await NacosUtils.getConfig(
+    nacosConfigService,
+    NACOS_AUTH_DATA_ID,
+  );
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
