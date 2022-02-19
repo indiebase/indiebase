@@ -16,12 +16,12 @@ x-minio-common: &minio-common
     MINIO_ACCESS_KEY_FILE: /run/secrets/access_key
     MINIO_SECRET_KEY_FILE: /run/secrets/secret_key
 
-x-logging:  &loki-logging  
-  driver: loki  
-  options:    
-    loki-url: "http://YOUR_IP:3100/loki/api/v1/push"    
-    max-size: "50m"    
-    max-file: "10" 
+x-logging: &loki-logging
+  driver: loki
+  options:
+    loki-url: 'http://YOUR_IP:3100/loki/api/v1/push'
+    max-size: '50m'
+    max-file: '10'
 
 services:
   apisix-dashboard:
@@ -85,7 +85,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
-    logging:  *loki-logging
+    logging: *loki-logging
     networks:
       - apisix
       - loki
@@ -147,7 +147,7 @@ services:
 
   portainer:
     image: portainer/portainer-ce:2.11.0
-    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
     ports:
       - '13331:9443'
     volumes:
@@ -157,11 +157,11 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      
+
   loki:
     image: grafana/loki:2.4.1
     ports:
-      - "13339:3100"
+      - '13339:3100'
     command: -config.file=/etc/loki/local-config.yaml -frontend.instance-addr=127.0.0.1
     networks:
       - loki
@@ -173,7 +173,6 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
-
 
 networks:
   apisix:
@@ -194,4 +193,3 @@ volumes:
   minio_data1_1:
   minio_data1_2:
   loki_logs:
-
