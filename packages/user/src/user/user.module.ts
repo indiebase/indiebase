@@ -39,3 +39,5 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   providers: [UserService],
 })
 export class UserModule {}
+
+// https://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@github.com/NawbExplorer/letscollab.git
