@@ -37,8 +37,8 @@ export interface NacosNamingInstanceOptions {
   instanceId?: string;
   clusterName?: string;
   serviceName?: string;
-  ip: string;
-  port: number;
+  ip?: string;
+  port?: number;
   weight?: number;
   ephemeral?: boolean;
   enabled?: boolean;
@@ -65,7 +65,7 @@ export interface NacosNamingClient extends Base {
 
   getAllInstances(
     serviceName: string,
-    instance: NacosNamingInstanceOptions,
+    instance?: NacosNamingInstanceOptions,
     groupName?: string,
     clusters?: string,
     subscribe?: boolean,
@@ -73,7 +73,7 @@ export interface NacosNamingClient extends Base {
 
   selectInstances(
     serviceName: string,
-    instance: NacosNamingInstanceOptions,
+    instance?: NacosNamingInstanceOptions,
     groupName?: string,
     clusters?: string,
     subscribe?: boolean,

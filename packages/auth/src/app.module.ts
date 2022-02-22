@@ -49,14 +49,14 @@ import {
     CasbinModule.forRootAsync({
       imports: [NacosConfigModule],
       useFactory: async (nacosConfigService: NacosConfigService) => {
-        const options = await NacosUtils.getConfig(
+        const configs = await NacosUtils.getConfig(
           nacosConfigService,
           NACOS_AUTH_DATA_ID,
         );
 
         return {
           model: resolve(__dirname, '../model/auth.conf'),
-          adapter: TypeOrmAdapter.newAdapter(options.casbin.db),
+          adapter: TypeOrmAdapter.newAdapter(configs.casbin.db),
         };
       },
       inject: [NacosConfigService],
@@ -80,19 +80,16 @@ export class AppModule implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
-      ip: '1.1.1.1',
-      port: 11111,
-    });
-
-    // const str = {
-    //   name: 'demo',
-    // };
-
-    // await this.nacosConfigService.client.publishSingle(
-    //   dataId,
-    //   group,
-    //   JSON.stringify(str),
+    // const configs = await NacosUtils.getConfig(
+    //   this.nacosConfigService,
+    //   NACOS_AUTH_DATA_ID,
     // );
+    // await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
+    //   ip: '0.0.0.0',
+    //   port: configs.app.authMicroservicePort,
+    // });
+    // this.nacosNamingService.client.subscribe(AUTH_SERVICE_NAME, (...e) => {
+    //   console.log(e);
+    // });
   }
 }

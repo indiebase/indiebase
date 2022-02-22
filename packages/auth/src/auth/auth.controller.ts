@@ -7,16 +7,10 @@ import { LocalAuthGuard } from './local.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @MessagePattern({ role: 'auth', cmd: 'check' })
+  @MessagePattern({ cmd: 'sum' })
   async loggedIn(data) {
-    try {
-      const res = this.authService.validateUser(data.jwt);
-
-      return res;
-    } catch (e) {
-      Logger.log(e);
-      return false;
-    }
+    console.log(data);
+    return '1233333333333333333333';
   }
 
   @Get('demo')

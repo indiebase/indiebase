@@ -21,14 +21,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         imports: [NacosConfigModule],
         inject: [NacosConfigService],
         async useFactory(nacosConfigService: NacosConfigService) {
-          const configs = await NacosUtils.getConfig(
-            nacosConfigService,
-            NACOS_AUTH_DATA_ID,
-          );
           return {
             transport: Transport.TCP,
             options: {
-              port: configs.app.authMicroservicePort,
+              port: 23332,
             },
           };
         },
@@ -39,5 +35,3 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   providers: [UserService],
 })
 export class UserModule {}
-
-// https://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@github.com/NawbExplorer/letscollab.git

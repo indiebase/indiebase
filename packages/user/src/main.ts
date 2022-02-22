@@ -7,20 +7,14 @@ import { NACOS_USER_DATA_ID } from './app.constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const nacosConfigService: NacosConfigService =
-    app.get<NacosConfigService>(NacosConfigService);
-  const config = await NacosUtils.getConfig(
-    nacosConfigService,
-    NACOS_USER_DATA_ID,
-  );
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
-      port: config.app.userMicroservicePort,
+      port: 23334,
     },
   });
-  await app.listen(config.app.httpPort);
+  await app.listen(23333);
 }
 
 bootstrap();
