@@ -41,6 +41,10 @@ Port: `13335:3000`
 
 #### loki
 
+安装驱动
+
+`docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions`
+
 Port: `13339:3100`
 
 ### 应用

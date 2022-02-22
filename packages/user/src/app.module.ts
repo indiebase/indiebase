@@ -11,9 +11,11 @@ import { NACOS_USER_DATA_ID, USER_SERVICE_NAME } from './app.constants';
 import { NacosUtils } from '@letscollab/utils';
 import { resolve } from 'path';
 import configure from '@/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
+    UserModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
@@ -53,11 +55,21 @@ import configure from '@/config';
   ],
 })
 export class AppModule implements OnModuleInit {
-  constructor(private nacosNamingService: NacosNamingService) {}
+  constructor(
+    private nacosNamingService: NacosNamingService,
+    private readonly nacosConfigService: NacosConfigService,
+  ) {}
   async onModuleInit() {
-    await this.nacosNamingService.client.registerInstance(USER_SERVICE_NAME, {
-      ip: '1.1.1.1',
-      port: 2222,
-    });
+    // const configs = await NacosUtils.getConfig(
+    //   this.nacosConfigService,
+    //   NACOS_USER_DATA_ID,
+    // );
+    // await this.nacosNamingService.client.registerInstance(USER_SERVICE_NAME, {
+    //   ip: '0.0.0.0',
+    //   port: configs.app.userMicroservicePort,
+    // });
+    // this.nacosNamingService.client.subscribe(USER_SERVICE_NAME, (...e) => {
+    //   console.log(e);
+    // });
   }
 }

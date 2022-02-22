@@ -5,28 +5,12 @@
       "path": "."
     },
     {
-      "name": "@letscollab/nestjs-casbin",
-      "path": "first_party/casbin"
+      "name": "city-night",
+      "path": "first_party/city-night"
     },
     {
-      "name": "@letscollab/nestjs-nacos",
-      "path": "first_party/nacos"
-    },
-    {
-      "name": "📦 @letscollab/service-auth",
-      "path": "packages/auth"
-    },
-    {
-      "name": "📦 @letscollab/service-user",
-      "path": "packages/user"
-    },
-    {
-      "name": "📦 @letscollab/utils",
-      "path": "packages/utils"
-    },
-    {
-      "name": "🚀 cms",
-      "path": "website/cms"
+      "name": "🚀 @letscollab/app",
+      "path": "app"
     }
   ],
   "settings": {
