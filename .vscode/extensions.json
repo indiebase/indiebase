@@ -1,5 +1,6 @@
 {
   "recommendations": [
-    "folke.vscode-monorepo-workspace"
+    "folke.vscode-monorepo-workspace",
+    "streetsidesoftware.code-spell-checker"
   ]
 }

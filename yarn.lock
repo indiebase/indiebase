@@ -2232,6 +2232,7 @@ __metadata:
     "@emotion/react": ^11.8.1
     "@emotion/styled": ^11.8.1
     "@mui/material": ^5.4.3
+    "@mui/system": ^5.4.3
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
     "@svgr/webpack": ^5.5.0
     "@testing-library/jest-dom": ^5.16.2
@@ -3226,6 +3227,16 @@ __metadata:
   dependencies:
     defer-to-connect: ^1.0.1
   checksum: 4d9158061c5f397c57b4988cde33a163244e4f02df16364f103971957a32886beb104d6180902cbe8b38cb940e234d9f98a4e486200deca621923f62f50a06fe
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:^1.54.0":
+  version: 1.54.0
+  resolution: "@tabler/icons@npm:1.54.0"
+  peerDependencies:
+    react: ^16.x || 17.x
+    react-dom: ^16.x || 17.x
+  checksum: 5129525c9a26fc1dd6d8dd92ea0fd26a0d8291640b894c54157f041ee6ebc0c98f74a7f95d2feee0077820945715843981873739a0edae798ea4f1c5bf3432f0
   languageName: node
   linkType: hard
 
@@ -11610,6 +11621,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "letscollab@workspace:."
   dependencies:
+    "@tabler/icons": ^1.54.0
     "@typescript-eslint/eslint-plugin": 4.31.1
     "@typescript-eslint/parser": 4.31.1
     "@vercel/ncc": ^0.33.1
