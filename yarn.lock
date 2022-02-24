@@ -2267,6 +2267,7 @@ __metadata:
     browserslist: ^4.18.1
     camelcase: ^6.2.1
     case-sensitive-paths-webpack-plugin: ^2.4.0
+    city-night: "workspace:^"
     css-loader: ^6.5.1
     css-minimizer-webpack-plugin: ^3.2.0
     deepdash-es: ^5.3.9
@@ -5794,7 +5795,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"city-night@workspace:first_party/city-night":
+"city-night@workspace:^, city-night@workspace:first_party/city-night":
   version: 0.0.0-use.local
   resolution: "city-night@workspace:first_party/city-night"
   dependencies:

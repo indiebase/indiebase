@@ -6,15 +6,8 @@ import { DashboardLayout } from '@/dashboard/layout/DashboardLayout';
 export const AppRootRoutes: FC<any> = function () {
   return useRoutes([
     {
-      path: '/home',
-      element: <MainPage />,
-      children: [
-        {
-          path: 'dashboard',
-          element: <div></div>,
-        },
-        { path: 'tasks', element: <div></div> },
-      ],
+      path: '/',
+      children: [{ path: 'home', element: <MainPage /> }],
     },
     { path: '/dashboard', element: <DashboardLayout /> },
   ]);
