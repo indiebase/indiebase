@@ -1,9 +1,5 @@
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-/*
-https://docs.nestjs.com/modules
-*/
-
 import { Module } from '@nestjs/common';
 import { NACOS_AUTH_DATA_ID, AUTH_SERVICE_NAME } from '@/app.constants';
 import {

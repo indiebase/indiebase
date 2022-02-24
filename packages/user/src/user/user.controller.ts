@@ -1,7 +1,3 @@
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { AUTH_SERVICE_NAME, USER_SERVICE_NAME } from '@/app.constants';
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';

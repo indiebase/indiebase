@@ -2,7 +2,7 @@
   "name": "city-night",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/index.ts",
+  "main": "./src/index.tsx",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
