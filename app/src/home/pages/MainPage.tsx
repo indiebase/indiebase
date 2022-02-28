@@ -9,7 +9,7 @@ export const MainPage: FC<any> = function () {
 
   return (
     <div>
-      <TextParticle text="letscollab" resolution={5} />
+      <TextParticle text="Lc" resolution={5} />
       <Button
         onClick={() => {
           navigate('dashboard');
