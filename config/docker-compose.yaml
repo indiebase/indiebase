@@ -81,6 +81,7 @@ services:
       - './grafana/provisioning:/etc/grafana/provisioning'
       - './grafana/dashboards:/var/lib/grafana/dashboards'
       - './grafana/config/grafana.ini:/etc/grafana/grafana.ini'
+      - 'grafana_data:/var/lib/grafana'
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
@@ -193,6 +194,7 @@ volumes:
   etcd_data:
     driver: local
   mysql_data:
+  grafana_data:
   portainer_data:
   apisix_logs:
   mysql_logs:

@@ -1,16 +1,12 @@
 {
   "folders": [
     {
-      "name": "✨ letscollab",
-      "path": "."
+      "name": "🚀 @letscollab/app",
+      "path": "app"
     },
     {
       "name": "city-night",
       "path": "first_party/city-night"
-    },
-    {
-      "name": "🚀 @letscollab/app",
-      "path": "app"
     }
   ],
   "settings": {

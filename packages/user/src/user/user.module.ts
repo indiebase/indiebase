@@ -17,10 +17,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         imports: [NacosConfigModule],
         inject: [NacosConfigService],
         async useFactory(nacosConfigService: NacosConfigService) {
+          const configs = await NacosUtils.getConfig(
+            nacosConfigService,
+            NACOS_AUTH_DATA_ID,
+          );
           return {
             transport: Transport.TCP,
             options: {
-              port: 23332,
+              port: configs.app.authMicroservicePort,
             },
           };
         },
