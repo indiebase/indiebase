@@ -60,14 +60,14 @@ export class AppModule implements OnModuleInit {
     private readonly nacosConfigService: NacosConfigService,
   ) {}
   async onModuleInit() {
-    // const configs = await NacosUtils.getConfig(
-    //   this.nacosConfigService,
-    //   NACOS_USER_DATA_ID,
-    // );
-    // await this.nacosNamingService.client.registerInstance(USER_SERVICE_NAME, {
-    //   ip: '0.0.0.0',
-    //   port: configs.app.userMicroservicePort,
-    // });
+    const configs = await NacosUtils.getConfig(
+      this.nacosConfigService,
+      NACOS_USER_DATA_ID,
+    );
+    await this.nacosNamingService.client.registerInstance(USER_SERVICE_NAME, {
+      ip: '0.0.0.0',
+      port: configs.app.userMicroservicePort,
+    });
     // this.nacosNamingService.client.subscribe(USER_SERVICE_NAME, (...e) => {
     //   console.log(e);
     // });

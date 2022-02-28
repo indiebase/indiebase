@@ -1,13 +1,11 @@
-import { UserModule } from './../../user/src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import AppController from './app.controller';
-import { NACOS_AUTH_DATA_ID, AUTH_SERVICE_NAME } from './app.constants';
+import { AUTH_SERVICE_NAME } from './app.constants';
 import { resolve } from 'path';
 import configure from './config';
-import { CasbinModule } from '@letscollab/nestjs-casbin';
-import { NacosUtils } from '@letscollab/utils';
+import { CasbinModule, CasbinService } from '@letscollab/nestjs-casbin';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { AuthModule } from '@/auth/auth.module';
 import {
@@ -19,7 +17,6 @@ import {
 
 @Module({
   imports: [
-    UserModule,
     AuthModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
@@ -49,10 +46,7 @@ import {
     CasbinModule.forRootAsync({
       imports: [NacosConfigModule],
       useFactory: async (nacosConfigService: NacosConfigService) => {
-        const configs = await NacosUtils.getConfig(
-          nacosConfigService,
-          NACOS_AUTH_DATA_ID,
-        );
+        const configs = await nacosConfigService.getConfig('service-auth.json');
 
         return {
           model: resolve(__dirname, '../model/auth.conf'),
@@ -77,19 +71,16 @@ export class AppModule implements OnModuleInit {
   constructor(
     private readonly nacosNamingService: NacosNamingService,
     private readonly nacosConfigService: NacosConfigService,
+    private readonly casbinService: CasbinService,
   ) {}
 
   async onModuleInit() {
-    // const configs = await NacosUtils.getConfig(
-    //   this.nacosConfigService,
-    //   NACOS_AUTH_DATA_ID,
-    // );
-    // await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
-    //   ip: '0.0.0.0',
-    //   port: configs.app.authMicroservicePort,
-    // });
-    // this.nacosNamingService.client.subscribe(AUTH_SERVICE_NAME, (...e) => {
-    //   console.log(e);
-    // });
+    const configs = await this.nacosConfigService.getConfig(
+      'service-auth.json',
+    );
+    await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
+      port: configs.app.port,
+      ip: configs.app.port,
+    });
   }
 }

@@ -302,7 +302,7 @@ class Particle {
       this.y = this.base[1];
       this.radius = 1.1;
       this.setSpeed(this.speed);
-      this.futurRadius = utils.randomInt(this.radius, this.radius + 3);
+      this.futurRadius = utils.randomInt(this.radius, this.radius + 5);
       this.setHeading(
         utils.randomInt(utils.degreesToRads(0), utils.degreesToRads(360)),
       );
@@ -313,6 +313,8 @@ class Particle {
 export interface TextParticleProps {
   text: string;
   resolution?: string;
+  resolutionWidth?: string;
+  resolutionHeight?: string;
   boxWidth?: number;
   boxHeight?: number;
   radius?: number;
@@ -335,8 +337,8 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
     const canvas = ref.current!;
     const ctx = canvas.getContext('2d');
 
-    const width = (canvas.width = window.innerWidth);
-    const height = (canvas.height = window.innerHeight);
+    const width = (canvas.width = 470);
+    const height = (canvas.height = 220);
 
     var message = new Shape(ctx, {
       x: width / 2,
@@ -358,6 +360,7 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
       setTimeout(function () {
         ctx?.clearRect(0, 0, width, height);
 
+        // message.placement[0].update();
         for (var i = 0; i < message.placement.length; i++) {
           message.placement[i].update();
         }

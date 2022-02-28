@@ -23,13 +23,7 @@ const PassportModule = ForwardPassportModule.register({
     ClientsModule.registerAsync([
       {
         name: USER_SERVICE_NAME,
-        imports: [NacosConfigModule],
-        inject: [NacosConfigService],
         async useFactory() {
-          // const configs = await NacosUtils.getConfig(
-          //   nacosConfigService,
-          //   NACOS_AUTH_DATA_ID,
-          // );
           return {
             transport: Transport.TCP,
           };
