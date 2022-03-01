@@ -142,8 +142,8 @@ class Shape {
   radius: number;
   gravity: number;
   duration: number;
-  gridY: number;
-  gridX: number;
+  resolutionHeight: number;
+  resolutionWidth: number;
   width: number;
   height: number;
 
@@ -156,8 +156,8 @@ class Shape {
       speed,
       gravity,
       duration,
-      gridX,
-      gridY,
+      resolutionWidth,
+      resolutionHeight,
       radius,
       width,
       height,
@@ -166,8 +166,8 @@ class Shape {
     this.x = x;
     this.y = y;
     this.ctx = ctx;
-    this.gridY = gridX;
-    this.gridX = gridY;
+    this.resolutionHeight = resolutionWidth;
+    this.resolutionWidth = resolutionHeight;
     this.speed = speed;
     this.gravity = gravity;
     this.duration = duration;
@@ -189,8 +189,8 @@ class Shape {
 
     const buffer32 = new Uint32Array(idata.data.buffer);
 
-    for (let y = 0; y < this.height; y += this.gridY) {
-      for (let x = 0; x < this.width; x += this.gridX) {
+    for (let y = 0; y < this.height; y += this.resolutionHeight) {
+      for (let x = 0; x < this.width; x += this.resolutionWidth) {
         if (buffer32[y * this.width + x]) {
           this.placement.push(
             new Particle(this.ctx, {
@@ -312,9 +312,7 @@ class Particle {
 
 export interface TextParticleProps {
   text: string;
-  resolution?: string;
-  resolutionWidth?: string;
-  resolutionHeight?: string;
+  resolution: number;
   boxWidth?: number;
   boxHeight?: number;
   radius?: number;
@@ -326,19 +324,26 @@ export interface TextParticleProps {
 }
 
 export const TextParticle: FC<TextParticleProps> = function (props) {
-  const { fps, duration, radius, speed, gravity, text } = props;
+  const {
+    fps,
+    duration,
+    radius,
+    speed,
+    gravity,
+    text,
+    resolution,
+    boxWidth,
+    boxHeight,
+  } = props;
 
   const ref = useRef<HTMLCanvasElement>(null);
-
-  const gridX = 5,
-    gridY = 5;
 
   useEffect(() => {
     const canvas = ref.current!;
     const ctx = canvas.getContext('2d');
 
-    const width = (canvas.width = 470);
-    const height = (canvas.height = 220);
+    const width = (canvas.width = boxWidth!);
+    const height = (canvas.height = boxHeight!);
 
     var message = new Shape(ctx, {
       x: width / 2,
@@ -347,8 +352,8 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
       gravity,
       speed,
       duration,
-      gridX,
-      gridY,
+      resolutionWidth: resolution,
+      resolutionHeight: resolution,
       radius,
       width,
       height,
@@ -381,4 +386,6 @@ TextParticle.defaultProps = {
   radius: 2,
   speed: 0.1,
   gravity: 0,
+  boxWidth: window.innerWidth,
+  boxHeight: window.innerHeight,
 };

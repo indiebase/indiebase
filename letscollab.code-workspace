@@ -1,18 +1,23 @@
 {
   "folders": [
     {
-      "name": "🚀 @letscollab/app",
-      "path": "app"
+      "name": "✨ letscollab",
+      "path": "."
     },
     {
       "name": "city-night",
-      "path": "first_party/city-night"
+      "path": "first_party\\city-night"
+    },
+    {
+      "name": "🚀 @letscollab/dashboard",
+      "path": "apps\\dashboard"
+    },
+    {
+      "name": "🚀 @letscollab/app",
+      "path": "apps\\app"
     }
   ],
   "settings": {
-    "cSpell.words": [
-      "nacos",
-      "nestjs"
-    ]
+    "cSpell.words": ["nacos", "nestjs"]
   }
 }
