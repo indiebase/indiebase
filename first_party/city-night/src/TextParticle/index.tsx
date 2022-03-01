@@ -133,7 +133,7 @@ const colors = [
 class Shape {
   x: number;
   y: number;
-  size = 300;
+  size = 100;
   text: string;
   placement: any[] = [];
   vectors: any[] = [];
@@ -161,6 +161,7 @@ class Shape {
       radius,
       width,
       height,
+      size,
     },
   ) {
     this.x = x;
@@ -175,6 +176,7 @@ class Shape {
     this.width = width;
     this.height = height;
     this.text = text;
+    this.size = size;
 
     this.placement = [];
     this.vectors = [];
@@ -313,13 +315,14 @@ class Particle {
 export interface TextParticleProps {
   text: string;
   resolution: number;
-  boxWidth?: number;
-  boxHeight?: number;
+  boxWidth: number;
+  boxHeight: number;
   radius?: number;
   gravity?: number;
   duration?: number;
   fps?: number;
   speed?: number;
+  size?: number;
   [key: string]: any;
 }
 
@@ -334,6 +337,7 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
     resolution,
     boxWidth,
     boxHeight,
+    size,
   } = props;
 
   const ref = useRef<HTMLCanvasElement>(null);
@@ -357,6 +361,7 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
       radius,
       width,
       height,
+      size,
     });
 
     message.setValue();
@@ -386,6 +391,5 @@ TextParticle.defaultProps = {
   radius: 2,
   speed: 0.1,
   gravity: 0,
-  boxWidth: window.innerWidth,
-  boxHeight: window.innerHeight,
+  size: 100,
 };

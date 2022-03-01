@@ -1,3 +1,5 @@
+<img src="./apps/app/public/logo.svg" width="90%"/>
+
 Target:
 
 相对于 OpenCollective, letscollab 用于管理私有独立项目的财政, letscollab 初始目的是作为管理 Nawb 的辅助产品.
