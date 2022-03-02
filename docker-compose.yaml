@@ -1,0 +1,8 @@
+version: '3.7'
+
+networks:
+  letscollab:
+    driver: overlay
+    attachable: true
+# volumes:
+#   etcd_data:
