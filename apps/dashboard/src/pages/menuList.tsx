@@ -1,5 +1,5 @@
 import { IconBrandChrome, IconDashboard, IconHelp } from '@tabler/icons';
-import { MenuItemProps } from '../layout/DashboardLayout/Sidebar/Menu';
+import { MenuItemProps } from '@/layout/DashboardLayout/Sidebar/Menu';
 
 export const menuList: MenuItemProps[] = [
   {

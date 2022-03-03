@@ -7,7 +7,7 @@ import { LogoLinker } from '../LogoLinker';
 import { Card } from './Menu/Card';
 import { drawerWidth } from '@/common/constants';
 import { FC } from 'react';
-import { menuList } from '@/dashboard/pages/menuList';
+import { menuList } from '@/pages/menuList';
 
 export interface SidebarProps {
   [key: string]: any;
@@ -44,7 +44,6 @@ export const Sidebar: FC<SidebarProps> = ({
       <MobileView>
         <Box sx={{ px: 2 }}>
           <Menu items={menuList} />
-          ``
           <Card />
         </Box>
       </MobileView>

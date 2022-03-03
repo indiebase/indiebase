@@ -9,12 +9,12 @@
       "path": "first_party\\city-night"
     },
     {
-      "name": "🚀 @letscollab/dashboard",
-      "path": "apps\\dashboard"
-    },
-    {
       "name": "🚀 @letscollab/app",
       "path": "apps\\app"
+    },
+    {
+      "name": "🚀 @letscollab/dashboard",
+      "path": "apps\\dashboard"
     }
   ],
   "settings": {
