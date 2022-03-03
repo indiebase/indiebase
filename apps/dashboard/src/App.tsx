@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { AppRootRoutes } from './AppRootRoutes';
+import { RootRoutes } from './RootRoutes';
 import { GlobalContext, globalProvider } from './provider';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import themes from './themes';
@@ -16,7 +16,7 @@ const App = function () {
         <ThemeProvider theme={themes()}>
           <CssBaseline />
           <BrowserRouter>
-            <AppRootRoutes />
+            <RootRoutes />
           </BrowserRouter>
         </ThemeProvider>
       </QueryClientProvider>

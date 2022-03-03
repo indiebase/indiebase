@@ -13,10 +13,10 @@ import { drawerWidth } from '@/common/constants';
 import { TitleBar } from './TitleBar';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
-import { menuList } from '@/dashboard/pages/menuList';
+import { menuList } from '@/pages/menuList';
 import { IconChevronRight } from '@tabler/icons';
 
-const DashboardLayoutStyle: FC<any> = styled('main', {
+const DashboardLayoutWrapper: FC<any> = styled('main', {
   shouldForwardProp: (prop) => prop !== 'open',
 })((props) => {
   const { theme, open } = props as any;
@@ -110,7 +110,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = () => {
         drawerToggle={handleLeftDrawerToggle}
       />
 
-      <DashboardLayoutStyle theme={theme} open={true}>
+      <DashboardLayoutWrapper theme={theme} open={true}>
         <TitleBar
           separator={IconChevronRight}
           navigation={menuList}
@@ -119,7 +119,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = () => {
           rightAlign
         />
         <Outlet />
-      </DashboardLayoutStyle>
+      </DashboardLayoutWrapper>
     </Box>
   );
 };
