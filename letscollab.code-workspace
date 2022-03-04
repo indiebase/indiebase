@@ -5,16 +5,12 @@
       "path": "."
     },
     {
-      "name": "city-night",
-      "path": "first_party\\city-night"
-    },
-    {
-      "name": "🚀 @letscollab/app",
-      "path": "apps\\app"
-    },
-    {
       "name": "🚀 @letscollab/dashboard",
       "path": "apps\\dashboard"
+    },
+    {
+      "name": "city-night",
+      "path": "first_party\\city-night"
     }
   ],
   "settings": {

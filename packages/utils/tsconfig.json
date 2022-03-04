@@ -1,13 +1,14 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
+    "allowJs": true,
     "module": "CommonJS",
     "moduleResolution": "node",
     "declaration": true,
-    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "ES2018",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
@@ -18,12 +19,14 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "test",
-    "dist",
-    "**/*spec.ts"
+  "include": [
+    "src/**/*"
   ]
 }

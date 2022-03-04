@@ -64,6 +64,11 @@ const DashboardLayoutWrapper: FC<any> = styled('main', {
   };
 });
 
+const ToolbarWrapper = styled(Toolbar)(({ theme }) => ({
+  paddingTop: theme.spacing(1.2),
+  paddingBottom: theme.spacing(1.2),
+}));
+
 export interface DashboardLayoutProps {
   sidebarWidth?: number;
   [key: string]: any;
@@ -100,9 +105,9 @@ export const DashboardLayout: FC<DashboardLayoutProps> = () => {
             : 'none',
         }}
       >
-        <Toolbar>
+        <ToolbarWrapper>
           <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
-        </Toolbar>
+        </ToolbarWrapper>
       </AppBar>
 
       <Sidebar

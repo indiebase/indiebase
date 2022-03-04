@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Box, ButtonBase } from '@mui/material';
+import { Avatar, Box, ButtonBase, IconButton } from '@mui/material';
 
 import { LogoLinker } from '../LogoLinker';
 import { Search } from './Search';
@@ -27,8 +27,8 @@ export const Header = ({ handleLeftDrawerToggle }) => {
         >
           <LogoLinker />
         </Box>
-        <ButtonBase sx={{ borderRadius: '12px', overflow: 'hidden' }}>
-          <Avatar
+
+        {/* <Avatar
             variant="rounded"
             sx={{
               ...(theme.typography as any).commonAvatar,
@@ -43,10 +43,10 @@ export const Header = ({ handleLeftDrawerToggle }) => {
             }}
             onClick={handleLeftDrawerToggle}
             color="inherit"
-          >
-            <IconMenu2 stroke={1.5} size="1.3rem" />
-          </Avatar>
-        </ButtonBase>
+          ></Avatar> */}
+        <IconButton color="secondary" aria-label="add an alarm">
+          <IconMenu2 stroke={1.5} size="1.3rem" />
+        </IconButton>
       </Box>
 
       <Box sx={{ flexGrow: 1 }} />

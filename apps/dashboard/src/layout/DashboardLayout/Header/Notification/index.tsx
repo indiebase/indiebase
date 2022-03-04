@@ -74,6 +74,8 @@ export const Notification = () => {
     if (event?.target.value) setValue(event?.target.value);
   };
 
+  console.log(theme);
+
   return (
     <>
       <Box

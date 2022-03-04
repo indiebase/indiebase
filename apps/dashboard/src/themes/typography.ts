@@ -93,10 +93,9 @@ export default function themeTypography(
     mainContent: {
       backgroundColor: theme.background,
       width: '100%',
-      minHeight: 'calc(100vh - 88px)',
+      minHeight: '100vh',
       flexGrow: 1,
       padding: '20px',
-      marginTop: '88px',
       marginRight: '20px',
       borderRadius: `${theme?.customization?.borderRadius}px`,
     },

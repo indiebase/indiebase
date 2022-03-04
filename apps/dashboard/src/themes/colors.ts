@@ -3,16 +3,16 @@ export const colors = {
   paper: '#ffffff',
 
   // primary
-  primaryLight: '#ffffff',
-  primaryMain: '#fafafa',
-  primaryDark: '#c7c7c7',
+  primaryLight: '#e3f2fd',
+  primaryMain: '#2196f3',
+  primaryDark: '#1e88e5',
   primary200: '#90caf9',
   primary800: '#1565c0',
 
   // secondary
-  secondaryLight: '#484848',
-  secondaryMain: '#212121',
-  secondaryDark: '#000000',
+  secondaryLight: '#F5F5F5',
+  secondaryMain: '#252525',
+  secondaryDark: '#252525',
   secondary200: '#b39ddb',
   secondary800: '#4527a0',
 

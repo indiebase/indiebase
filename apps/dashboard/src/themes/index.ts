@@ -1,4 +1,8 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles';
+import {
+  createTheme,
+  ThemeOptions,
+  PaletteOptions,
+} from '@mui/material/styles';
 import { colors } from './colors';
 import themeComponents from './components';
 import themePalette from './palette';
@@ -21,7 +25,7 @@ export const theme = () => {
 
   const themeOptions: ThemeOptions = {
     direction: 'ltr',
-    palette: themePalette(themeOption),
+    palette: themePalette(themeOption) as PaletteOptions,
     mixins: {
       toolbar: {
         minHeight: '48px',
