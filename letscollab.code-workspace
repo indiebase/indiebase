@@ -5,15 +5,15 @@
       "path": "."
     },
     {
-      "name": "🚀 @letscollab/dashboard",
-      "path": "apps\\dashboard"
+      "name": "@letscollab/nestjs-qiniu",
+      "path": "first_party\\qiniu"
     },
     {
-      "name": "city-night",
-      "path": "first_party\\city-night"
+      "name": "📦 @letscollab/service-auth",
+      "path": "packages\\auth"
     }
   ],
   "settings": {
-    "cSpell.words": ["nacos", "nestjs"]
+    "cSpell.words": ["letscollab", "nacos", "nestjs"]
   }
 }

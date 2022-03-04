@@ -78,7 +78,7 @@ export class AppModule implements OnModuleInit {
     const configs = await this.nacosConfigService.getConfig(
       'service-auth.json',
     );
-    this.casbinService.enforcer.addPolicy('')
+    
     await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
       port: configs.app.port,
       ip: configs.app.port,
