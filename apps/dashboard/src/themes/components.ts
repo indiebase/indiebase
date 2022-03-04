@@ -1,5 +1,4 @@
 export default function themeComponents(theme) {
-  console.log(theme);
   const bgColor = theme.colors?.grey50;
   return {
     MuiButton: {

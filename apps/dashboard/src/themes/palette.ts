@@ -1,6 +1,12 @@
-export default function themePalette(theme) {
+import { PaletteOptions } from '@mui/material/styles';
+
+interface PaletteCoverOptions extends PaletteOptions {
+  [k: string]: any;
+}
+
+export default function themePalette(theme): PaletteCoverOptions {
   return {
-    mode: theme?.customization?.navType,
+    mode: 'light',
     common: {
       black: theme.colors?.darkPaper,
     },
@@ -57,8 +63,8 @@ export default function themePalette(theme) {
     text: {
       primary: theme.darkTextPrimary,
       secondary: theme.darkTextSecondary,
-      dark: theme.textDark,
-      hint: theme.colors?.grey100,
+      // dark: theme.textDark,
+      // hint: theme.colors?.grey100,
     },
     background: {
       paper: theme.paper,
