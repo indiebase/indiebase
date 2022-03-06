@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @Inject(USER_SERVICE_NAME)
     private readonly client: ClientProxy,
-    private readonly config: ConfigService,
+    // private readonly config: ConfigService,
   ) {}
   async validateUser(info: AvailableUserInfo): Promise<any> {
     console.log(info, '===========================');

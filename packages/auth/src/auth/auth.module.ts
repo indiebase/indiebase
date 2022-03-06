@@ -19,7 +19,7 @@ const PassportModule = ForwardPassportModule.register({
 @Module({
   imports: [
     PassportModule,
-    NacosConfigModule,
+    // NacosConfigModule,
     ClientsModule.registerAsync([
       {
         name: USER_SERVICE_NAME,
@@ -31,14 +31,18 @@ const PassportModule = ForwardPassportModule.register({
       },
     ]),
     JwtModule.registerAsync({
-      imports: [NacosConfigModule],
-      inject: [NacosConfigService],
+      // imports: [NacosConfigModule],
+      // inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
-        const options = await NacosUtils.getConfig(
-          nacosConfigService,
-          NACOS_AUTH_DATA_ID,
-        );
-        return options?.jwt;
+        // const options = await NacosUtils.getConfig(
+        //   nacosConfigService,
+        //   NACOS_AUTH_DATA_ID,
+        // );
+        return {
+          secret: 'dev123456',
+          signOptions: { expiresIn: '100d' },
+        }
+        // return options?.jwt;
       },
     }),
   ],

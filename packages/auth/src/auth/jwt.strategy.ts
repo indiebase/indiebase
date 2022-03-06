@@ -17,9 +17,36 @@ export interface JwtPayload {
   r_t: string;
 }
 
+// @Injectable()
+// export class JwtStrategy extends PassportStrategy(Strategy) {
+//   constructor(private readonly nacosConfigService: NacosConfigService) {
+//     super({
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       ignoreExpiration: false,
+//       secretOrKeyProvider: async (
+//         _requestType,
+//         _tokenOrPayload,
+//         _verifyOrSignOrOptions,
+//       ) => {
+//         const options = await NacosUtils.getConfig(
+//           nacosConfigService,
+//           NACOS_AUTH_DATA_ID,
+//         );
+//         console.log(options?.jwt.secret);
+//         return options?.jwt.secret;
+//       },
+//     });
+//   }
+
+//   async validate(payload: JwtPayload) {
+//     console.log(payload);
+
+//     return payload;
+//   }
+// }
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly nacosConfigService: NacosConfigService) {
+  constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -28,12 +55,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         _tokenOrPayload,
         _verifyOrSignOrOptions,
       ) => {
-        const options = await NacosUtils.getConfig(
-          nacosConfigService,
-          NACOS_AUTH_DATA_ID,
-        );
-        console.log(options?.jwt.secret);
-        return options?.jwt.secret;
+        
+        return 'dev123456';
       },
     });
   }

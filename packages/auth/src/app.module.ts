@@ -23,43 +23,61 @@ import {
       isGlobal: true,
       load: configure,
     }),
-    NacosNamingModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory(config: ConfigService) {
-        return {
-          serverList: config.get('nacos.serverList'),
-          namespace: config.get('nacos.namespace'),
-        };
-      },
-    }),
-    NacosConfigModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory(config: ConfigService) {
-        return {
-          serverAddr: config.get('nacos.serverList'),
-          namespace: config.get('nacos.namespace'),
-        };
-      },
-    }),
-    CasbinModule.forRootAsync({
-      imports: [NacosConfigModule],
-      useFactory: async (nacosConfigService: NacosConfigService) => {
-        const configs = await nacosConfigService.getConfig('service-auth.json');
+    // NacosNamingModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory(config: ConfigService) {
+    //     return {
+    //       serverList: config.get('nacos.serverList'),
+    //       namespace: config.get('nacos.namespace'),
+    //     };
+    //   },
+    // }),
+    // NacosConfigModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory(config: ConfigService) {
+    //     return {
+    //       serverAddr: config.get('nacos.serverList'),
+    //       namespace: config.get('nacos.namespace'),
+    //     };
+    //   },
+    // }),
+    // CasbinModule.forRootAsync({
+    //   imports: [NacosConfigModule],
+    //   useFactory: async (nacosConfigService: NacosConfigService) => {
+    //     const configs = await nacosConfigService.getConfig('service-auth.json');
 
+    //     return {
+    //       model: resolve(__dirname, '../model/auth.conf'),
+    //       adapter: TypeOrmAdapter.newAdapter(configs.casbin.db),
+    //     };
+    //   },
+    //   inject: [NacosConfigService],
+    // }),
+    // JwtModule.registerAsync({
+    //   imports: [ConfigModule],
+    //   useFactory: (config: ConfigService) => ({
+    //     secret: config.get('jwt.secret'),
+    //     signOptions: { expiresIn: config.get('jwt.expire') },
+    //   }),
+    //   inject: [ConfigService],
+    // }),
+    CasbinModule.forRootAsync({
+      // imports: [NacosConfigModule],
+      useFactory: async (nacosConfigService: NacosConfigService) => {
         return {
           model: resolve(__dirname, '../model/auth.conf'),
-          adapter: TypeOrmAdapter.newAdapter(configs.casbin.db),
+          adapter: resolve(__dirname, '../model/auth_init.csv'),
         };
       },
-      inject: [NacosConfigService],
+      // inject: [NacosConfigService],
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (config: ConfigService) => ({
-        secret: config.get('jwt.secret'),
-        signOptions: { expiresIn: config.get('jwt.expire') },
+        secret: 'dev123456',
+        signOptions: { expiresIn: '100d' },
       }),
       inject: [ConfigService],
     }),
@@ -69,19 +87,21 @@ import {
 })
 export class AppModule implements OnModuleInit {
   constructor(
-    private readonly nacosNamingService: NacosNamingService,
-    private readonly nacosConfigService: NacosConfigService,
+    // private readonly nacosNamingService: NacosNamingService,
+    // private readonly nacosConfigService: NacosConfigService,
     private readonly casbinService: CasbinService,
   ) {}
 
   async onModuleInit() {
-    const configs = await this.nacosConfigService.getConfig(
-      'service-auth.json',
-    );
+    // const configs = await this.nacosConfigService.getConfig(
+    //   'service-auth.json',
+    // );
+
+    console.log(await this.casbinService.enforcer.addPolicy('12312','312321','321312','231312'));
     
-    await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
-      port: configs.app.port,
-      ip: configs.app.port,
-    });
+    // await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
+    //   port: configs.app.port,
+    //   ip: configs.app.port,
+    // });
   }
 }
