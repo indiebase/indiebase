@@ -6,19 +6,28 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const nacosConfigService: NacosConfigService =
-    app.get<NacosConfigService>(NacosConfigService);
+  // const nacosConfigService: NacosConfigService =
+  //   app.get<NacosConfigService>(NacosConfigService);
 
-  const configs = await nacosConfigService.getConfig('service-auth.json');
+  // const configs = await nacosConfigService.getConfig('service-auth.json');
+
+  // app.connectMicroservice<MicroserviceOptions>({
+  //   transport: Transport.TCP,
+  //   options: {
+  //     port: configs.app.authMicroservicePort,
+  //     host: configs.app.authMicroserviceHost,
+  //   },
+  // });
+  // await app.listen(configs.app.port);
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
-      port: configs.app.authMicroservicePort,
-      host: configs.app.authMicroserviceHost,
+      port: 33331,
+      host: '0.0.0.0',
     },
   });
-  await app.listen(configs.app.port);
+  await app.listen(33330);
 }
 
 bootstrap();
