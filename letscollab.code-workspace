@@ -3,18 +3,6 @@
     {
       "name": "✨ letscollab",
       "path": "."
-    },
-    {
-      "name": "@letscollab/nestjs-qiniu",
-      "path": "first_party\\qiniu"
-    },
-    {
-      "name": "📦 @letscollab/service-auth",
-      "path": "packages\\auth-nest"
-    },
-    {
-      "name": "📦 @letscollab/service-auth",
-      "path": "packages\\auth"
     }
   ],
   "settings": {
