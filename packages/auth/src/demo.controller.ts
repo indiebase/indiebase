@@ -1,14 +1,22 @@
-import { Body, Controller, Post, ALL, Provide, Logger, Inject } from '@midwayjs/decorator';
-import { ILogger } from '@midwayjs/logger';
+import {
+  Body,
+  Controller,
+  Post,
+  ALL,
+  Provide,
+  // Logger,
+  // Inject,
+} from '@midwayjs/decorator';
+// import { ILogger } from '@midwayjs/logger';
 
 @Provide()
 @Controller('/v1/user')
 export class UserController {
-  @Logger('dash')
-  logger: ILogger;
+  // @Logger('dash')
+  // logger: ILogger;
 
-  @Inject()
-  userService;
+  // @Inject()
+  // userService;
 
   @Post('/register')
   async register(@Body(ALL) body) {
@@ -19,6 +27,6 @@ export class UserController {
 
   @Post('/login')
   async login(@Body(ALL) body) {
-    return;
+    return 'demo';
   }
 }

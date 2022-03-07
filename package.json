@@ -30,7 +30,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "4.31.1rm ni",
+    "@typescript-eslint/eslint-plugin": "4.31.1",
     "@typescript-eslint/parser": "4.31.1",
     "@vercel/ncc": "^0.33.1",
     "concurrently": "^6.2.1",
