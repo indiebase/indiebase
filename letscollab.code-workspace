@@ -3,9 +3,17 @@
     {
       "name": "✨ letscollab",
       "path": "."
+    },
+    {
+      "name": "📦 @letscollab/service-auth",
+      "path": "packages\\auth"
     }
   ],
   "settings": {
-    "cSpell.words": ["letscollab", "nacos", "nestjs"]
+    "cSpell.words": [
+      "letscollab",
+      "nacos",
+      "nestjs"
+    ]
   }
 }

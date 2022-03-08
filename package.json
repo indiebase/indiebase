@@ -55,7 +55,9 @@
   "workspaces": [
     "packages/*",
     "first_party/*",
-    "apps/*"
+    "apps/*",
+    "third_party/midway",
+    "third_party/midway/packages/*"
   ],
   "jest": {
     "moduleFileExtensions": [
@@ -75,8 +77,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "@tabler/icons": "^1.54.0"
   }
 }
