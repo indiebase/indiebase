@@ -18,6 +18,8 @@ letscollab 基于 agpl 开源, 使用与要购买商业 license
 
 ## 部署文档
 
+使用midwayjs作为核心, 使用submodule将https://github.com/nawb-letscollab/midway.git clone至third_party 默认使用letscollab分支。
+
 https://nawb.deskbtm.com
 
 https://nawb.deskbtm.com/more/lonely-mgmt/start
