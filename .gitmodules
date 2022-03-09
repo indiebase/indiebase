@@ -1,3 +1,4 @@
 [submodule "third_party/midway"]
 	path = third_party/midway
 	url = https://github.com/nawb-letscollab/midway.git
+  branch = letscollab

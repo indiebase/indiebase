@@ -3694,6 +3694,7 @@ __metadata:
     "@midwayjs/decorator": "workspace:^"
     "@midwayjs/koa": "workspace:^"
     "@midwayjs/mock": "workspace:^"
+    typescript: ^4.6.2
   languageName: unknown
   linkType: soft
 
