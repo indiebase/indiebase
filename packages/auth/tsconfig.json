@@ -8,16 +8,13 @@
     "emitDecoratorMetadata": true,
     "inlineSourceMap": true,
     "noImplicitThis": false,
-    "noImplicitOverride": true,
+    // "noImplicitOverride": true,
     "noUnusedLocals": true,
     "stripInternal": true,
     "skipLibCheck": true,
     "pretty": true,
     "declaration": true,
-    "typeRoots": [
-      "./typings",
-      "./node_modules/@types"
-    ],
+    "baseUrl": ".",
     "outDir": "dist"
   },
   "exclude": [

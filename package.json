@@ -55,9 +55,7 @@
   "workspaces": [
     "packages/*",
     "first_party/*",
-    "apps/*",
-    "third_party/midway",
-    "third_party/midway/packages/*"
+    "apps/*"
   ],
   "jest": {
     "moduleFileExtensions": [

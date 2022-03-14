@@ -5,17 +5,17 @@
   "types": "./src/domain/index",
   "private": true,
   "dependencies": {
-    "@midwayjs/bootstrap": "workspace:^",
-    "@midwayjs/core": "workspace:^",
-    "@midwayjs/decorator": "workspace:^",
-    "@midwayjs/express": "workspace:^",
-    "@midwayjs/orm": "workspace:^",
+    "@midwayjs/bootstrap": "link:../../../../third_party/midway/packages/bootstrap",
+    "@midwayjs/core": "link:../../../../third_party/midway/packages/core",
+    "@midwayjs/decorator": "link:../../../../third_party/midway/packages/decorator",
+    "@midwayjs/express": "link:../../../../third_party/midway/packages/express",
+    "@midwayjs/orm": "link:../../../../third_party/midway/packages/orm",
     "mysql2": "^2.3.3",
     "typeorm": "^0.2.45"
   },
   "devDependencies": {
     "@midwayjs/cli": "1.3.0",
-    "@midwayjs/mock": "workspace:^",
+    "@midwayjs/mock": "link:../../../../third_party/midway/packages/mock",
     "@types/express": "^4.17.13",
     "@types/jest": "^26.0.10",
     "@types/node": "16.11.26",
@@ -35,7 +35,7 @@
   },
   "scripts": {
     "boot": "cross-env NODE_ENV=production pm2-runtime ./bootstrap.js",
-    "start": "cross-env NODE_ENV=local midway-bin dev --ts",
+    "start": "cross-env NODE_ENV=development nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./bootstrap.js",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",

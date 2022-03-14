@@ -8,7 +8,7 @@ import {
   // Logger,
   // Inject,
 } from '@midwayjs/decorator';
-import second from 'typeorm';
+// import second from 'typeorm';
 // import { ILogger } from '@midwayjs/logger';
 
 @Provide()
@@ -28,7 +28,7 @@ export class UserController {
   }
 
   @Get('/login')
-  async login(@Body() body, @Param('id') id, @TransactionManager() manager) {
+  async login(@Body() body, @Param('id') id) {
     return 'demo';
   }
 }

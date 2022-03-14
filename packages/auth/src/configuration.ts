@@ -1,6 +1,6 @@
 import { Configuration } from '@midwayjs/decorator';
 import * as express from '@midwayjs/express';
-import * as orm from '@midwayjs/orm';
+// import * as orm from '@midwayjs/orm';
 import { resolve } from 'path';
 
 @Configuration({
