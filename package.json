@@ -30,9 +30,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "devDependencies": {
+    "@midwayjs/bundle-helper": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "4.31.1",
     "@typescript-eslint/parser": "4.31.1",
-    "@vercel/ncc": "^0.33.1",
+    "@vercel/ncc": "^0.33.3",
     "concurrently": "^6.2.1",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",

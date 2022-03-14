@@ -18,7 +18,7 @@ export const NavHeader = function (props) {
     <Grid container spacing={2}>
       <Grid item xs={6}></Grid>
       <Grid item xs={6}>
-        <Stack justifyContent="flex-end" direction="row">
+        <Stack justifyContent="flex-end" direction="row" spacing={10}>
           <Stack direction="row" spacing={2}>
             <Button>One</Button>
             <Button>Two</Button>
@@ -26,7 +26,7 @@ export const NavHeader = function (props) {
           </Stack>
 
           <Stack direction="row" spacing={2}>
-            <Button variant="outlined">控制台</Button>
+            <Button variant="text">控制台</Button>
             <Button variant="text">登录</Button>
           </Stack>
         </Stack>

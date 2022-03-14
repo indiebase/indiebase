@@ -5,8 +5,12 @@
       "path": "."
     },
     {
+      "name": "@letscollab/midway-nacos",
+      "path": "first_party/nacos"
+    },
+    {
       "name": "📦 @letscollab/service-auth",
-      "path": "packages\\auth"
+      "path": "packages/auth"
     }
   ],
   "settings": {
