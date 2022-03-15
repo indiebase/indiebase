@@ -18,6 +18,7 @@
       "letscollab",
       "nacos",
       "nestjs"
-    ]
+    ],
+    "license.default": "apache-2.0"
   }
 }

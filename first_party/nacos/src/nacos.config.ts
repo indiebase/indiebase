@@ -1,6 +1,10 @@
 /**
- * @author Nawbc
+ * Copyright (c) 2022 Nawbc
+ * 
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
  */
+
 
 import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 import {
