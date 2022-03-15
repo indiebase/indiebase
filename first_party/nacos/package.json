@@ -2,7 +2,7 @@
   "name": "@letscollab/midway-nacos",
   "description": "midway nacos component",
   "version": "3.1.1",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "publishConfig": {
     "main": "dist/index.js",
     "typings": "dist/index.d.ts"
@@ -32,6 +32,7 @@
     "@midwayjs/web": "^3.1.1"
   },
   "dependencies": {
-    "nacos": "^2.2.1"
+    "nacos": "^2.2.1",
+    "strip-json-comments": "^4.0.0"
   }
 }

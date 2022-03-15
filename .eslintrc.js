@@ -19,6 +19,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/ban-types': 0,
     'no-unused-vars': 'off',
-    'unused-imports/no-unused-imports': 'warn',
+    'unused-imports/no-unused-imports': 'error',
   },
 };

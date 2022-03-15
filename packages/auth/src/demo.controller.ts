@@ -2,17 +2,16 @@ import {
   Body,
   Controller,
   Get,
+  OBJ_DEF_CLS,
   Param,
-  Post,
   Provide,
-  // Logger,
-  // Inject,
+  Inject,
 } from '@midwayjs/decorator';
 // import second from 'typeorm';
 // import { ILogger } from '@midwayjs/logger';
 
 @Provide()
-@Controller('/v1/user')
+@Controller()
 export class UserController {
   // @Logger('dash')
   // logger: ILogger;
@@ -20,11 +19,15 @@ export class UserController {
   // @Inject()
   // userService;
 
-  @Post('/register')
+  @Get('/register')
   async register(@Body() body) {
     // this.userService.
+    console.log(
+      Reflect.getMetadata(OBJ_DEF_CLS, UserController),
+      '=========================',
+    );
 
-    return;
+    return 'demo';
   }
 
   @Get('/login')

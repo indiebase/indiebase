@@ -1,2 +1,3 @@
 export { NacosConfiguration as Configuration } from './configuration';
-export * from './';
+export * from './nacos.config';
+export * from './nacos.naming';

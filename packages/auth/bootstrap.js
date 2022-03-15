@@ -1,5 +1,7 @@
 const { Bootstrap } = require('@midwayjs/bootstrap');
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 Bootstrap.configure({
-  imports: require('./dist/index'),
-  moduleDetector: false,
+  imports: !isDevelopment && require('./dist/index'),
 }).run();

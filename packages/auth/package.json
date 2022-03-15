@@ -5,6 +5,7 @@
   "types": "./src/domain/index",
   "private": true,
   "dependencies": {
+    "@letscollab/midway-nacos": "workspace:^",
     "@midwayjs/bootstrap": "link:../../third_party/midway/packages/bootstrap",
     "@midwayjs/core": "link:../../third_party/midway/packages/core",
     "@midwayjs/decorator": "link:../../third_party/midway/packages/decorator",
@@ -37,6 +38,7 @@
   "scripts": {
     "boot": "cross-env NODE_ENV=production pm2-runtime ./bootstrap.js",
     "start": "cross-env NODE_ENV=development nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./bootstrap.js",
+    "mw": "cross-env NODE_ENV=development midway-bin dev --ts",
     "test": "midway-bin test --ts",
     "cov": "midway-bin cov --ts",
     "lint": "mwts check",
@@ -44,6 +46,7 @@
     "ci": "npm run cov",
     "build": "midway-bin build -c",
     "ncc": "bundle && npm run build && ncc build bootstrap.js -o build",
+    "bundle": "bundle",
     "generate": "tsproto --path proto --output src/domain"
   },
   "midway-bin-clean": [
