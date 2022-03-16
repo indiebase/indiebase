@@ -29,10 +29,10 @@
     "@midwayjs/express": "^3.1.1",
     "@midwayjs/koa": "^3.1.1",
     "@midwayjs/mock": "^3.1.1",
-    "@midwayjs/web": "^3.1.1"
+    "@midwayjs/web": "^3.1.1",
+    "typescript": "^4.5.4"
   },
   "dependencies": {
-    "nacos": "^2.2.1",
-    "strip-json-comments": "^4.0.0"
+    "nacos": "^2.2.1"
   }
 }

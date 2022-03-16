@@ -1,17 +1,18 @@
 /**
  * Copyright (c) 2022 Nawbc
- * 
+ *
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
-
 
 import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 import {
   ClientOptions as NacosConfigClientOptions,
   NacosConfigClient,
 } from 'nacos';
-import stripJsonComments, { Options } from 'strip-json-comments';
+import stripJsonComments, {
+  StripJsonCommentsOptions,
+} from './strip-json-comments';
 
 @Provide()
 @Scope(ScopeEnum.Singleton)
@@ -30,7 +31,7 @@ export class NacosConfigService {
     return this.#client;
   }
 
-  #jsonParser(data: string, options?: Options) {
+  #jsonParser(data: string, options?: StripJsonCommentsOptions) {
     return JSON.parse(stripJsonComments(data, options));
   }
 }

@@ -9,7 +9,7 @@ import {
 
 import * as nacos from '@letscollab/midway-nacos';
 import { resolve } from 'path';
-import { NacosConfigService } from '@letscollab/midway-nacos';
+// import { NacosConfigService } from '@letscollab/midway-nacos';
 
 @Configuration({
   imports: [express, nacos],
@@ -22,6 +22,6 @@ export class AutoConfiguration implements ILifeCycle {
     mainApp?: IMidwayBaseApplication<Context>,
   ): Promise<any> {
     console.log(111, 2121);
-    console.log(await container.getAsync(NacosConfigService));
+    // console.log(await container.getAsync(NacosConfigService));
   }
 }

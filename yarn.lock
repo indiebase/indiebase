@@ -2567,7 +2567,7 @@ __metadata:
     "@midwayjs/mock": ^3.1.1
     "@midwayjs/web": ^3.1.1
     nacos: ^2.2.1
-    strip-json-comments: ^4.0.0
+    typescript: ^4.5.4
   languageName: unknown
   linkType: soft
 
@@ -20035,13 +20035,6 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
-  languageName: node
-  linkType: hard
-
-"strip-json-comments@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "strip-json-comments@npm:4.0.0"
-  checksum: 26bd0fbedd631d673dc5382163efd39cffdff0b7fcaf61e522a1c6d976968811eff6b2d3a3d5fec1d7563efac516f45ced1352df1ab2cf4991cc93fcfb94d05a
   languageName: node
   linkType: hard
 
