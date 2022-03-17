@@ -1,5 +1,5 @@
-export const NacosConfig = function () {
-  return (Target) => {
-    
-  };
-};
+// export const NacosConfig = function () {
+//   return (Target) => {
+
+//   };
+// };

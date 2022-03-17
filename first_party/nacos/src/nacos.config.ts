@@ -24,11 +24,12 @@ export class NacosConfigService {
 
   @Init()
   initService() {
+    console.log('==========================');
     this.#client = new NacosConfigClient(this.options);
   }
 
   public get client() {
-    return this.#client;
+    return this.client;
   }
 
   #jsonParser(data: string, options?: StripJsonCommentsOptions) {
