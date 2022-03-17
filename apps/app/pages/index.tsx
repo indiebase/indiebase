@@ -7,9 +7,6 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import { Footer, NavHeader } from 'components';
-import ButtonUnstyled, {
-  buttonUnstyledClasses,
-} from '@mui/base/ButtonUnstyled';
 import { useTheme } from '@mui/material/styles';
 import { IconFileCode } from '@tabler/icons';
 
