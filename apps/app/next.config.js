@@ -1,4 +1,4 @@
-const { withSentryConfig } = require('@sentry/nextjs');
+// const { withSentryConfig } = require('@sentry/nextjs');
 const path = require('path');
 
 /** @type {import('next').NextConfig} */
@@ -12,4 +12,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withSentryConfig(nextConfig);
+module.exports = nextConfig;

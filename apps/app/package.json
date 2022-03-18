@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "next dev",
-    "build": "next build",
-    "preview": "next start",
+    "build": "cross-env NODE_ENV=production next build",
+    "preview": "cross-env NODE_ENV=production next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "@types/node": "17.0.21",
     "@types/nprogress": "^0",
     "@types/react": "17.0.39",
+    "cross-env": "^7.0.3",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
     "next-sitemap": "^2.5.2",
