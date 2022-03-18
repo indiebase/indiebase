@@ -2454,6 +2454,7 @@ __metadata:
     "@types/react": 17.0.39
     axios: ^0.26.0
     city-night: "workspace:^"
+    cross-env: ^7.0.3
     eslint: 8.10.0
     eslint-config-next: 12.1.0
     localforage: ^1.10.0
