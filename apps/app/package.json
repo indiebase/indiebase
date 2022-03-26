@@ -10,13 +10,6 @@
   },
   "dependencies": {
     "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
-    "@mui/material": "^5.4.4",
-    "@mui/system": "^5.4.4",
-    "@sentry/nextjs": "^6.18.1",
-    "@tabler/icons": "^1.55.0",
-    "axios": "^0.26.0",
-    "city-night": "workspace:^",
     "localforage": "^1.10.0",
     "mobx": "^6.4.2",
     "mobx-react-lite": "^3.3.0",
