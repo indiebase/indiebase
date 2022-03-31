@@ -29,8 +29,8 @@ export class UserController {
   @Inject()
   nacosConfigService: NacosConfigService;
 
-  @Inject()
-  jwt: JwtService;
+  // @Inject()
+  // jwt: JwtService;
 
   @Inject()
   demoService: DemoService;
@@ -38,7 +38,7 @@ export class UserController {
   @Get('/register')
   async register(@Body() body) {
     // this.userService.
-    console.log(this.jwt);
+    // console.log(this.jwt);
     console.log(
       Reflect.getMetadata(OBJ_DEF_CLS, UserController),
       '=========================',

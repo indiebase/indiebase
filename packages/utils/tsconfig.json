@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitThis": false,
-    // "noImplicitOverride": true,
+    "noImplicitOverride": true,
     "noUnusedLocals": false,
     "stripInternal": true,
     "skipLibCheck": true,

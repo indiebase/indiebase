@@ -1,4 +1,4 @@
-import { Configuration } from '@midwayjs/decorator';
+import { Config, Configuration, Inject } from '@midwayjs/decorator';
 import * as express from '@midwayjs/express';
 import {
   Context,
@@ -6,22 +6,38 @@ import {
   IMidwayBaseApplication,
   IMidwayContainer,
 } from '@midwayjs/core';
-import * as jwt from '@midwayjs/jwt';
 import * as nacos from '@letscollab/midway-nacos';
 import { resolve } from 'path';
-import { NacosConfigService } from '@letscollab/midway-nacos';
+import {
+  NacosConfigService,
+  NacosNamingService,
+} from '@letscollab/midway-nacos';
 // import { NacosConfigService } from '@letscollab/midway-nacos';
-console.log(nacos, jwt);
+// import { NacosConfigService } from '@letscollab/midway-nacos';
+// console.log(nacos, jwt);
 @Configuration({
-  imports: [express],
+  imports: [express, nacos],
   importConfigs: [resolve(__dirname, './config')],
   // conflictCheck: true,
 })
 export class AutoConfiguration implements ILifeCycle {
-  async onReady(
+  @Inject()
+  nacosConfigService: NacosConfigService;
+
+  @Inject()
+  nacosNamingService: NacosNamingService;
+
+  @Config('')
+  config;
+
+  async onConfigLoad(
     container: IMidwayContainer,
     mainApp?: IMidwayBaseApplication<Context>,
-  ): Promise<void> {
-    // console.log(await container.getAsync(NacosConfigService));
+  ): Promise<any> {
+    const nacosService = await container.getAsync(NacosConfigService);
+
+    console.log(await nacosService.getConfig('service-auth'));
+
+    return;
   }
 }

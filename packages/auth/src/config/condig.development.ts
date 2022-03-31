@@ -1,12 +1,15 @@
+import { NacosConfigClientOptions } from '@letscollab/midway-nacos';
 import { MidwayAppInfo, MidwayConfig } from '@midwayjs/core';
-import { ClientOptions } from 'nacos';
 
 interface CustomConfig {
-  nacosConfig: ClientOptions;
+  nacosConfig: NacosConfigClientOptions;
 }
 
 export default (appInfo: MidwayAppInfo): MidwayConfig & CustomConfig => {
   return {
-    nacosConfig: {},
+    nacosConfig: {
+      namespace: 'development',
+      serverAddr: '0.0.0.0:13324',
+    },
   };
 };
