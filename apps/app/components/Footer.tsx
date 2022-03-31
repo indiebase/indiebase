@@ -16,8 +16,7 @@ export const Footer = function (props) {
         </Stack>
         <Stack direction="row" spacing={2}>
           {alinkGlobalStyle}
-          <Link href="/404">皖ICP备20002736号-2</Link>
-
+          <Link href="/">皖ICP备20002736号-2</Link>
           <Typography>
             Copyright© {new Date().getFullYear()} Wang Han(Nawbc)
           </Typography>
