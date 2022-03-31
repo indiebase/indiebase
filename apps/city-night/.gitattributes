@@ -1,0 +1,4 @@
+.env.demo merge=ours
+.env.production merge=ours
+scripts/deploy-demo.js merge=ours
+scripts/deploy-production.js merge=ours

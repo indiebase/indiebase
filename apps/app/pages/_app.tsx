@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import Head from 'next/head';
-import theme from './themes';
+import theme from '../components/themes';
 
 const queryClient = new QueryClient();
 
