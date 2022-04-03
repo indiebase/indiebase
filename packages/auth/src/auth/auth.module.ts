@@ -8,8 +8,7 @@ import {
   NacosConfigModule,
   NacosConfigService,
 } from '@letscollab/nestjs-nacos';
-import { NACOS_AUTH_DATA_ID, USER_SERVICE_NAME } from '@/app.constants';
-import { NacosUtils } from '@letscollab/utils';
+import { USER_SERVICE_NAME } from '@/app.constants';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 const PassportModule = ForwardPassportModule.register({
@@ -19,7 +18,7 @@ const PassportModule = ForwardPassportModule.register({
 @Module({
   imports: [
     PassportModule,
-    // NacosConfigModule,
+    NacosConfigModule,
     ClientsModule.registerAsync([
       {
         name: USER_SERVICE_NAME,
@@ -31,18 +30,11 @@ const PassportModule = ForwardPassportModule.register({
       },
     ]),
     JwtModule.registerAsync({
-      // imports: [NacosConfigModule],
-      // inject: [NacosConfigService],
+      imports: [NacosConfigModule],
+      inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
-        // const options = await NacosUtils.getConfig(
-        //   nacosConfigService,
-        //   NACOS_AUTH_DATA_ID,
-        // );
-        return {
-          secret: 'dev123456',
-          signOptions: { expiresIn: '100d' },
-        }
-        // return options?.jwt;
+        const configs = await nacosConfigService.getConfig('service-auth.json');
+        return configs?.jwt;
       },
     }),
   ],

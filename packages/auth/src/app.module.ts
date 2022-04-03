@@ -2,18 +2,19 @@ import { JwtModule } from '@nestjs/jwt';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import AppController from './app.controller';
-import { AUTH_SERVICE_NAME } from './app.constants';
 import { resolve } from 'path';
 import configure from './config';
-import { CasbinModule, CasbinService } from '@letscollab/nestjs-casbin';
-import TypeOrmAdapter from 'typeorm-adapter';
 import { AuthModule } from '@/auth/auth.module';
+import { AuthZModule, AUTHZ_ENFORCER } from 'nest-authz';
+import TypeORMAdapter from 'typeorm-adapter';
 import {
-  NacosNamingModule,
   NacosConfigModule,
-  NacosNamingService,
   NacosConfigService,
+  NacosNamingModule,
+  NacosNamingService,
 } from '@letscollab/nestjs-nacos';
+import * as casbin from 'casbin';
+import { AUTH_SERVICE_NAME } from './app.constants';
 
 @Module({
   imports: [
@@ -23,85 +24,66 @@ import {
       isGlobal: true,
       load: configure,
     }),
-    // NacosNamingModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory(config: ConfigService) {
-    //     return {
-    //       serverList: config.get('nacos.serverList'),
-    //       namespace: config.get('nacos.namespace'),
-    //     };
-    //   },
-    // }),
-    // NacosConfigModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory(config: ConfigService) {
-    //     return {
-    //       serverAddr: config.get('nacos.serverList'),
-    //       namespace: config.get('nacos.namespace'),
-    //     };
-    //   },
-    // }),
-    // CasbinModule.forRootAsync({
-    //   imports: [NacosConfigModule],
-    //   useFactory: async (nacosConfigService: NacosConfigService) => {
-    //     const configs = await nacosConfigService.getConfig('service-auth.json');
-
-    //     return {
-    //       model: resolve(__dirname, '../model/auth.conf'),
-    //       adapter: TypeOrmAdapter.newAdapter(configs.casbin.db),
-    //     };
-    //   },
-    //   inject: [NacosConfigService],
-    // }),
-    // JwtModule.registerAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: (config: ConfigService) => ({
-    //     secret: config.get('jwt.secret'),
-    //     signOptions: { expiresIn: config.get('jwt.expire') },
-    //   }),
-    //   inject: [ConfigService],
-    // }),
-    CasbinModule.forRootAsync({
-      // imports: [NacosConfigModule],
-      useFactory: async (nacosConfigService: NacosConfigService) => {
+    NacosNamingModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
         return {
-          model: resolve(__dirname, '../model/auth.conf'),
-          adapter: resolve(__dirname, '../model/auth_init.csv'),
+          serverList: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
         };
       },
-      // inject: [NacosConfigService],
+    }),
+    NacosConfigModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverAddr: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
+    AuthZModule.register({
+      imports: [NacosConfigModule],
+      enforcerProvider: {
+        provide: AUTHZ_ENFORCER,
+        useFactory: async (config: NacosConfigService) => {
+          const configs = await config.getConfig('service-auth.json');
+
+          return casbin.newEnforcer(
+            resolve(__dirname, '../model/auth.conf'),
+            await TypeORMAdapter.newAdapter(configs.casbin.db),
+          );
+        },
+        inject: [NacosConfigService],
+      },
+      usernameFromContext: (ctx) => {
+        const request = ctx.switchToHttp().getRequest();
+        return request.user && request.user.username;
+      },
     }),
     JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        secret: 'dev123456',
-        signOptions: { expiresIn: '100d' },
-      }),
-      inject: [ConfigService],
+      imports: [ConfigModule, NacosConfigModule],
+      useFactory: async (config: NacosConfigService) => {
+        const configs = await config.getConfig('service-auth.json');
+        return configs.jwt;
+      },
+      inject: [NacosConfigService],
     }),
   ],
   controllers: [AppController],
-  exports: [],
 })
 export class AppModule implements OnModuleInit {
   constructor(
-    // private readonly nacosNamingService: NacosNamingService,
-    // private readonly nacosConfigService: NacosConfigService,
-    private readonly casbinService: CasbinService,
+    private readonly configService: ConfigService,
+    private readonly nacosNamingService: NacosNamingService,
   ) {}
 
   async onModuleInit() {
-    // const configs = await this.nacosConfigService.getConfig(
-    //   'service-auth.json',
-    // );
-
-    console.log(await this.casbinService.enforcer.addPolicy('12312','312321','321312','231312'));
-    
-    // await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
-    //   port: configs.app.port,
-    //   ip: configs.app.port,
-    // });
+    await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
+      port: parseInt(this.configService.get('app.port')),
+      ip: this.configService.get('app.hostname'),
+    });
   }
 }

@@ -6,11 +6,15 @@
     },
     {
       "name": "@letscollab/nestjs-qiniu",
-      "path": "first_party/qiniu"
+      "path": "first_party\\qiniu"
     },
     {
       "name": "📦 @letscollab/service-auth",
-      "path": "packages/auth"
+      "path": "packages\\auth"
+    },
+    {
+      "name": "📦 @letscollab/service-user",
+      "path": "packages\\user"
     }
   ],
   "settings": {

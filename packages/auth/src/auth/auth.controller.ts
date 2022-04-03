@@ -1,17 +1,12 @@
 import { NACOS_AUTH_DATA_ID } from '../app.constants';
-import { NacosConfig, NacosConfigClient } from '@letscollab/nestjs-nacos';
+import { NacosConfig } from '@letscollab/nestjs-nacos';
 import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
-import { CasbinService } from '@letscollab/nestjs-casbin';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly casbinService: CasbinService,
-  ) {}
+  constructor() {}
 
   @MessagePattern({ cmd: 'sum' })
   async loggedIn(data) {
@@ -26,10 +21,6 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Get('demo')
   async demo(@Request() req: Request) {
-    console.log(req);
-    console.log(this.casbinService);
-    console.log(this.nacosConfig);
-    console.log(Reflect.getMetadata('demo', AuthController));
     return 'demo';
   }
 }

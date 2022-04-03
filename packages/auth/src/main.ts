@@ -1,4 +1,4 @@
-import { NacosConfigService } from '@letscollab/nestjs-nacos';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
@@ -6,28 +6,19 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // const nacosConfigService: NacosConfigService =
-  //   app.get<NacosConfigService>(NacosConfigService);
-
-  // const configs = await nacosConfigService.getConfig('service-auth.json');
-
-  // app.connectMicroservice<MicroserviceOptions>({
-  //   transport: Transport.TCP,
-  //   options: {
-  //     port: configs.app.authMicroservicePort,
-  //     host: configs.app.authMicroserviceHost,
-  //   },
-  // });
-  // await app.listen(configs.app.port);
+  const configService: ConfigService = app.get<ConfigService>(ConfigService);
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
-      port: 33331,
-      host: '0.0.0.0',
+      port: configService.get('app.auth_micro_port'),
+      host: configService.get('app.auth_micro_host'),
     },
   });
-  await app.listen(33330);
+  await app.listen(
+    configService.get('app.port'),
+    configService.get('app.hostname'),
+  );
 }
 
 bootstrap();
