@@ -1,28 +1,24 @@
-import { NacosConfigService } from '@letscollab/nestjs-nacos';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { NacosUtils } from '@letscollab/utils';
 import { AppModule } from './app.module';
-import { NACOS_USER_DATA_ID } from './app.constants';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const nacosConfigService: NacosConfigService =
-    app.get<NacosConfigService>(NacosConfigService);
-
-  const config = await NacosUtils.getConfig(
-    nacosConfigService,
-    NACOS_USER_DATA_ID,
-  );
+  const configService: ConfigService = app.get<ConfigService>(ConfigService);
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
-      port: config.app.userMicroservicePort,
+      port: configService.get('app.user_micro_port'),
+      host: configService.get('app.user_micro_host'),
     },
   });
-  await app.listen(config.app.httpPort);
+  await app.listen(
+    configService.get('app.port'),
+    configService.get('app.hostname'),
+  );
 }
 
 bootstrap();

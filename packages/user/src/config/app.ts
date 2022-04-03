@@ -4,7 +4,7 @@ export default registerAs('app', () => {
   return {
     hostname: process.env.HTTP_HOSTNAME,
     port: process.env.HTTP_PORT,
-    auth_micro_host: process.env.AUTH_MICRO_HOST,
-    auth_micro_port: process.env.AUTH_MICRO_PORT,
+    user_micro_host: process.env.USER_MICRO_HOST,
+    user_micro_port: process.env.USER_MICRO_PORT,
   };
 });

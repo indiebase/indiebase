@@ -21,7 +21,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@letscollab/nestjs-casbin": "workspace:^",
     "@letscollab/nestjs-nacos": "workspace:^",
     "@nestjs/common": "^8.2.6",
     "@nestjs/config": "^1.2.0",
@@ -30,6 +29,7 @@
     "@nestjs/microservices": "^8.2.6",
     "@nestjs/passport": "^8.1.0",
     "@nestjs/platform-express": "^8.2.6",
+    "nest-authz": "^2.2.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

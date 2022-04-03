@@ -33,6 +33,21 @@ export interface NacosNamingClientAsyncOptions<T = NacosNamingClientOptions> {
   >;
 }
 
+export interface NacosNamingInstance {
+  instanceId: string;
+  clusterName: string;
+  serviceName: string;
+  ip: string;
+  port: number;
+  weight: number;
+  ephemeral: boolean;
+  enabled: boolean;
+  valid: boolean;
+  marked: boolean;
+  healthy: boolean;
+  metadata: any;
+}
+
 export interface NacosNamingInstanceOptions {
   instanceId?: string;
   clusterName?: string;
@@ -54,34 +69,44 @@ export interface NacosNamingClient extends Base {
   registerInstance(
     serviceName: string,
     instance: NacosNamingInstanceOptions,
-    groupName?: string,
+    group?: string,
   ): Promise<void>;
 
   deregisterInstance(
     serviceName: string,
     instance: NacosNamingInstanceOptions,
-    groupName?: string,
+    group?: string,
   ): Promise<void>;
 
   getAllInstances(
     serviceName: string,
-    instance?: NacosNamingInstanceOptions,
-    groupName?: string,
+
+    group?: string,
     clusters?: string,
     subscribe?: boolean,
   ): Promise<[]>;
 
   selectInstances(
     serviceName: string,
-    instance?: NacosNamingInstanceOptions,
-    groupName?: string,
+    group?: string,
     clusters?: string,
+    healthy?: boolean,
     subscribe?: boolean,
   ): Promise<[]>;
 
   getServerStatus(): Promise<'UP' | 'DOWN'>;
 
-  subscribe(serviceName: string, listener?: (...args: any) => void): void;
+  subscribe(
+    service:
+      | string
+      | { serviceName: string; group?: string; clusters?: string },
+    listener?: (...args: any) => void,
+  ): void;
 
-  unSubscribe(serviceName: string, listener?: (...args: any) => void): void;
+  unSubscribe(
+    service:
+      | string
+      | { serviceName: string; group?: string; clusters?: string },
+    listener?: (...args: any) => void,
+  ): void;
 }

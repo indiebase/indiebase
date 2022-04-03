@@ -2417,7 +2417,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nestjs-casbin@workspace:^, @letscollab/nestjs-casbin@workspace:first_party/casbin":
+"@letscollab/nestjs-casbin@workspace:first_party/casbin":
   version: 0.0.0-use.local
   resolution: "@letscollab/nestjs-casbin@workspace:first_party/casbin"
   dependencies:
@@ -2524,8 +2524,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab/service-auth@workspace:packages/auth"
   dependencies:
-    "@letscollab/nestjs-casbin": "workspace:^"
-    "@letscollab/nestjs-nacos": "workspace:^"
     "@nestjs/cli": ^8.2.0
     "@nestjs/common": ^8.2.6
     "@nestjs/config": ^1.2.0
@@ -2550,6 +2548,7 @@ __metadata:
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^4.0.0
     jest: ^27.2.5
+    nest-authz: ^2.2.0
     nodemon: ^2.0.15
     passport: ^0.5.2
     passport-jwt: ^4.0.0
@@ -6045,6 +6044,18 @@ __metadata:
   version: 1.0.30001312
   resolution: "caniuse-lite@npm:1.0.30001312"
   checksum: 753fb9ea1e02e999430b323a71b5acab5120f3b5fc0161b01669f54a3ef5c5296240b6ae9b79b12a3742e3aed216aa9ee3d5398a23c16d08625ccd376b79545d
+  languageName: node
+  linkType: hard
+
+"casbin@npm:^5.11.1":
+  version: 5.14.0
+  resolution: "casbin@npm:5.14.0"
+  dependencies:
+    await-lock: ^2.0.1
+    csv-parse: ^4.15.3
+    expression-eval: ^4.0.0
+    picomatch: ^2.2.3
+  checksum: f0ddc9e5155a3e65cf8f5972924bb39ff44f7c3d1572ddc7838ea387903c726441b78e9b49f90cf8edba8c4ca7077a8378089f12006d5035cc6d3eaae868d3c0
   languageName: node
   linkType: hard
 
@@ -13264,6 +13275,20 @@ __metadata:
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
+  languageName: node
+  linkType: hard
+
+"nest-authz@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "nest-authz@npm:2.2.0"
+  dependencies:
+    casbin: ^5.11.1
+  peerDependencies:
+    "@nestjs/common": 7.6.15
+    "@nestjs/core": 7.6.15
+    reflect-metadata: ^0.1.12
+    rxjs: ^6.0.0
+  checksum: b1319d73e1f2f4c5c27d63b30ae19a366477385ac7fe73e02e848d66aca4b2d3ccd727cebcee0bb13264efe9f8370fa7f1cf68b757cf65faac9ac31a257b8725
   languageName: node
   linkType: hard
 
