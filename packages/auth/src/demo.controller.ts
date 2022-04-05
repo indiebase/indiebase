@@ -6,6 +6,7 @@
  */
 
 import { NacosConfigService } from '@letscollab/midway-nacos';
+import { ILogger, IMidwayLogger } from '@midwayjs/core';
 import {
   Body,
   Controller,
@@ -14,6 +15,7 @@ import {
   Param,
   Provide,
   Inject,
+  Logger,
 } from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { DemoService } from './demo.service';
@@ -28,6 +30,9 @@ export class UserController {
 
   @Inject()
   nacosConfigService: NacosConfigService;
+
+  @Logger()
+  logger: ILogger;
 
   // @Inject()
   // jwt: JwtService;
@@ -50,6 +55,8 @@ export class UserController {
 
   @Get('/login')
   async login(@Body() body, @Param('id') id) {
+    console.log('======================');
+    this.logger.info('=========================');
     return 'demo';
   }
 }

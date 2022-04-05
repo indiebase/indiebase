@@ -1,7 +1,26 @@
+/**
+ * Copyright 2022 WangHan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import type { ClientOptions } from 'nacos';
 
+export interface DataParser {
+  (data: string | string[], ...args: any[]): any;
+}
 export interface NacosConfigClientOptions extends ClientOptions {
-  dataParser?: (data?: string, ...args: any[]) => any;
+  dataParser?: DataParser;
   [key: string]: any;
 }
 
@@ -27,6 +46,21 @@ export interface NacosNamingClientOptions {
   vipSrvRefInterMillis?: number;
 }
 
+export interface NacosNamingInstance {
+  instanceId: string;
+  clusterName: string;
+  serviceName: string;
+  ip: string;
+  port: number;
+  weight: number;
+  ephemeral: boolean;
+  enabled: boolean;
+  valid: boolean;
+  marked: boolean;
+  healthy: boolean;
+  metadata: any;
+}
+
 export interface NacosNamingInstanceOptions {
   instanceId?: string;
   clusterName?: string;
@@ -48,34 +82,46 @@ export interface NacosNamingClient extends Base {
   registerInstance(
     serviceName: string,
     instance: NacosNamingInstanceOptions,
-    groupName?: string,
+    group?: string,
   ): Promise<void>;
 
   deregisterInstance(
     serviceName: string,
     instance: NacosNamingInstanceOptions,
-    groupName?: string,
+    group?: string,
   ): Promise<void>;
 
   getAllInstances(
     serviceName: string,
-    instance?: NacosNamingInstanceOptions,
-    groupName?: string,
+
+    group?: string,
     clusters?: string,
     subscribe?: boolean,
   ): Promise<[]>;
 
   selectInstances(
     serviceName: string,
-    instance?: NacosNamingInstanceOptions,
-    groupName?: string,
+    group?: string,
     clusters?: string,
+    healthy?: boolean,
     subscribe?: boolean,
   ): Promise<[]>;
 
   getServerStatus(): Promise<'UP' | 'DOWN'>;
 
-  subscribe(serviceName: string, listener?: (...args: any) => void): void;
+  subscribe(
+    service:
+      | string
+      | { serviceName: string; group?: string; clusters?: string },
+    listener?: (...args: any) => void,
+  ): void;
 
-  unSubscribe(serviceName: string, listener?: (...args: any) => void): void;
+  unSubscribe(
+    service:
+      | string
+      | { serviceName: string; group?: string; clusters?: string },
+    listener?: (...args: any) => void,
+  ): void;
+
+  close(): void;
 }

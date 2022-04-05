@@ -1,4 +1,4 @@
-import { Config, Configuration, Inject } from '@midwayjs/decorator';
+import { Configuration, Inject } from '@midwayjs/decorator';
 import * as express from '@midwayjs/express';
 import {
   Context,
@@ -9,16 +9,17 @@ import {
 import * as nacos from '@letscollab/midway-nacos';
 import { resolve } from 'path';
 import {
+  NacosConfig,
   NacosConfigService,
   NacosNamingService,
 } from '@letscollab/midway-nacos';
-// import { NacosConfigService } from '@letscollab/midway-nacos';
-// import { NacosConfigService } from '@letscollab/midway-nacos';
-// console.log(nacos, jwt);
+import { AUTH_SERVICE_NAME } from './contants';
+// import YAML from 'yaml';
+const YAML = require('yaml');
+
 @Configuration({
   imports: [express, nacos],
   importConfigs: [resolve(__dirname, './config')],
-  // conflictCheck: true,
 })
 export class AutoConfiguration implements ILifeCycle {
   @Inject()
@@ -27,17 +28,25 @@ export class AutoConfiguration implements ILifeCycle {
   @Inject()
   nacosNamingService: NacosNamingService;
 
-  @Config('')
+  @NacosConfig('yaml', YAML.parse)
   config;
+
+  async onReady(
+    container: IMidwayContainer,
+    mainApp?: IMidwayBaseApplication<Context>,
+  ): Promise<void> {
+    console.log(this.config);
+    // console.log(d1);
+    // await this.nacosNamingService.registerInstance(AUTH_SERVICE_NAME, {
+    //   port: 90,
+    //   ip: '0.0.0.0',
+    // });
+  }
 
   async onConfigLoad(
     container: IMidwayContainer,
     mainApp?: IMidwayBaseApplication<Context>,
   ): Promise<any> {
-    const nacosService = await container.getAsync(NacosConfigService);
-
-    console.log(await nacosService.getConfig('service-auth'));
-
     return;
   }
 }

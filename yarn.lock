@@ -2533,6 +2533,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@letscollab/midway-casbin@workspace:first_party/casbin":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/midway-casbin@workspace:first_party/casbin"
+  dependencies:
+    "@midwayjs/core": ^3.2.0
+    "@midwayjs/decorator": ^3.1.6
+    "@midwayjs/express": ^3.2.0
+    "@midwayjs/koa": ^3.2.0
+    "@midwayjs/mock": ^3.2.0
+    "@midwayjs/web": ^3.2.0
+    casbin: ^5.14.0
+    typescript: ^4.5.4
+  languageName: unknown
+  linkType: soft
+
 "@letscollab/midway-nacos@workspace:^, @letscollab/midway-nacos@workspace:first_party/nacos":
   version: 0.0.0-use.local
   resolution: "@letscollab/midway-nacos@workspace:first_party/nacos"
@@ -2565,6 +2580,7 @@ __metadata:
     "@types/express": ^4.17.13
     "@types/jest": ^27.4.1
     "@types/node": 17.0.23
+    "@types/yaml": ^1
     cross-env: ^7.0.3
     jest: ^26.6.3
     mwts: ^1.3.0
@@ -2573,6 +2589,7 @@ __metadata:
     ts-jest: ^26.5.6
     typeorm: ^0.2.45
     typescript: ^4.5.4
+    yaml: ^1.10.2
   languageName: unknown
   linkType: soft
 
@@ -4402,6 +4419,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/yaml@npm:^1":
+  version: 1.9.6
+  resolution: "@types/yaml@npm:1.9.6"
+  dependencies:
+    yaml: "*"
+  checksum: 3df74c9d4028641e2ed710b627ac533e97707713ac17c665df5cc477602f77925a3ceeaf5db76c7400ea42be114609bba990079907e89219ffd905a539997469
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
@@ -5505,6 +5531,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"await-lock@npm:^2.0.1":
+  version: 2.1.0
+  resolution: "await-lock@npm:2.1.0"
+  checksum: bbd211470e3b59a7a18f7c58037eb2a04839b42e372001bdbd6e19193264988ec0855c56696f7fd8769cd6836fa80307e92e9eecb4b0645411bbd9f85cd1c5d4
+  languageName: node
+  linkType: hard
+
 "axe-core@npm:^4.3.5":
   version: 4.4.1
   resolution: "axe-core@npm:4.4.1"
@@ -6267,6 +6300,18 @@ __metadata:
   dependencies:
     rsvp: ^4.8.4
   checksum: 0b9f10daca09e521da9599f34c8e7af14ad879c336e2bdeb19955b375398ae1c5bcc91ac9f2429944343057ee9ed028b1b2fb28816c384e0e55d70c439b226f4
+  languageName: node
+  linkType: hard
+
+"casbin@npm:^5.14.0":
+  version: 5.14.0
+  resolution: "casbin@npm:5.14.0"
+  dependencies:
+    await-lock: ^2.0.1
+    csv-parse: ^4.15.3
+    expression-eval: ^4.0.0
+    picomatch: ^2.2.3
+  checksum: f0ddc9e5155a3e65cf8f5972924bb39ff44f7c3d1572ddc7838ea387903c726441b78e9b49f90cf8edba8c4ca7077a8378089f12006d5035cc6d3eaae868d3c0
   languageName: node
   linkType: hard
 
@@ -7821,6 +7866,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csv-parse@npm:^4.15.3":
+  version: 4.16.3
+  resolution: "csv-parse@npm:4.16.3"
+  checksum: 5ad7790fc31c32ca1623bad1a54906134ba44fa109e8dd2dfda440bf7e9fd93610d9076a78f45c872701bfafdf7f93c9b75500c09d7efd6611d863f1d45ec69f
+  languageName: node
+  linkType: hard
+
 "culvert@npm:^0.1.2":
   version: 0.1.2
   resolution: "culvert@npm:0.1.2"
@@ -8666,7 +8718,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"egg-logger@npm:^2.0.3, egg-logger@npm:^2.3.2, egg-logger@npm:^2.4.1":
+"egg-logger@npm:^2.0.3":
+  version: 2.8.0
+  resolution: "egg-logger@npm:2.8.0"
+  dependencies:
+    chalk: ^2.4.1
+    circular-json-for-egg: ^1.0.0
+    debug: ^2.6.9
+    depd: ^2.0.0
+    egg-errors: ^2.2.0
+    iconv-lite: ^0.4.24
+    mkdirp: ^0.5.1
+    utility: ^1.15.0
+  checksum: a40b0d969b7d1a9df0c612da6decec347a98a26b791f4fc7fb29bfab94afeffd0c097ee445e9010c65ae7d7247525ed3258126b042a2f34ba7d97c5678ddce8c
+  languageName: node
+  linkType: hard
+
+"egg-logger@npm:^2.3.2, egg-logger@npm:^2.4.1":
   version: 2.7.1
   resolution: "egg-logger@npm:2.7.1"
   dependencies:
@@ -9943,6 +10011,15 @@ __metadata:
     utils-merge: 1.0.1
     vary: ~1.1.2
   checksum: 967e53b74a37eafdf9789b9938c8df86102928b4985b1ad5e385c709deeab405a364de95ca744bc2cc5d05b5d9cc1efc69ae2ae17688a462038648d5a924bfad
+  languageName: node
+  linkType: hard
+
+"expression-eval@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "expression-eval@npm:4.0.0"
+  dependencies:
+    jsep: ^0.3.0
+  checksum: 3599e74d5e84d96a2faea85e05cffd692191fe600f0c95ab18a47ec4c4eb6d86550d3a91290a565c5cc186566b1dcfad6c70e137b040f336277816c00c6f2486
   languageName: node
   linkType: hard
 
@@ -13498,6 +13575,13 @@ __metadata:
     canvas:
       optional: true
   checksum: 454b83371857000763ed31130a049acd1b113e3b927e6dcd75c67ddc30cdd242d7ebcac5c2294b7a1a6428155cb1398709c573b3c6d809218692ea68edd93370
+  languageName: node
+  linkType: hard
+
+"jsep@npm:^0.3.0":
+  version: 0.3.5
+  resolution: "jsep@npm:0.3.5"
+  checksum: fb89b4ca9d85d3f4ec9edb079c042ffad1c548e00297d7c08e90194e7c8688e09e52a5781af2e028d51fc86fd6a9089a5e5fc0cd2a6c778e4e4531a1a3ff7015
   languageName: node
   linkType: hard
 
@@ -22102,7 +22186,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.10.0, yaml@npm:^1.10.2, yaml@npm:^1.7.2":
+"yaml@npm:*, yaml@npm:^1.10.0, yaml@npm:^1.10.2, yaml@npm:^1.7.2":
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f

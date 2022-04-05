@@ -1,11 +1,13 @@
 {
   "name": "@letscollab/midway-nacos",
   "description": "midway nacos component",
-  "version": "3.1.1",
+  "version": "0.0.2-alpha.1",
   "main": "src/index.ts",
   "publishConfig": {
+    "access": "public",
     "main": "dist/index.js",
-    "typings": "dist/index.d.ts"
+    "typings": "dist/index.d.ts",
+    "registry": "https://registry.npmjs.org"
   },
   "files": [
     "dist/**/*.js",
@@ -18,8 +20,7 @@
   },
   "keywords": [
     "midway",
-    "jsonwebtoken",
-    "jwt"
+    "nacos"
   ],
   "author": "Nawbc",
   "license": "MIT",

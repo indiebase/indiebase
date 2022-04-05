@@ -1,5 +1,37 @@
-// export const NacosConfig = function () {
-//   return (Target) => {
+/**
+ * Copyright 2022 WangHan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-//   };
-// };
+import { DataParser } from './nacos.interface';
+import { createCustomPropertyDecorator } from '@midwayjs/decorator';
+
+export const NACOS_CONFIG_KEY = 'NACOS_CONFIG_KEY';
+
+export const NacosConfig = function (
+  config: string,
+  key?: string,
+  parser?: DataParser,
+): PropertyDecorator {
+  if (typeof key === 'function') {
+    parser = key;
+    key = null;
+  }
+
+  return createCustomPropertyDecorator(NACOS_CONFIG_KEY, {
+    config,
+    key,
+    parser,
+  });
+};
