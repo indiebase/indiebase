@@ -5,6 +5,7 @@
   "types": "./src/domain/index",
   "private": true,
   "dependencies": {
+    "@letscollab/midway-casbin": "workspace:^",
     "@letscollab/midway-nacos": "workspace:^",
     "@midwayjs/bootstrap": "^3.2.0",
     "@midwayjs/core": "^3.2.0",
@@ -12,8 +13,13 @@
     "@midwayjs/express": "^3.2.0",
     "@midwayjs/jwt": "^3.2.0",
     "@midwayjs/orm": "^3.2.0",
+    "@midwayjs/passport": "^3.2.2",
     "mysql2": "^2.3.3",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "typeorm": "^0.2.45",
+    "typeorm-adapter": "^1.4.2",
     "yaml": "^1.10.2"
   },
   "devDependencies": {
@@ -23,6 +29,8 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/node": "17.0.23",
+    "@types/passport": "^0",
+    "@types/passport-local": "^1",
     "@types/yaml": "^1",
     "cross-env": "^7.0.3",
     "jest": "^26.6.3",

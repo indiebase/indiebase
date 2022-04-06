@@ -1,3 +1,4 @@
+import TypeOrmAdapter from 'typeorm-adapter';
 import { Configuration, Inject } from '@midwayjs/decorator';
 import * as express from '@midwayjs/express';
 import {
@@ -7,18 +8,18 @@ import {
   IMidwayContainer,
 } from '@midwayjs/core';
 import * as nacos from '@letscollab/midway-nacos';
+import * as casbin from '@letscollab/midway-casbin';
 import { resolve } from 'path';
 import {
   NacosConfig,
   NacosConfigService,
   NacosNamingService,
 } from '@letscollab/midway-nacos';
-import { AUTH_SERVICE_NAME } from './contants';
-// import YAML from 'yaml';
+import { CasbinService } from '@letscollab/midway-casbin';
 const YAML = require('yaml');
 
 @Configuration({
-  imports: [express, nacos],
+  imports: [express, nacos, casbin],
   importConfigs: [resolve(__dirname, './config')],
 })
 export class AutoConfiguration implements ILifeCycle {
@@ -27,26 +28,23 @@ export class AutoConfiguration implements ILifeCycle {
 
   @Inject()
   nacosNamingService: NacosNamingService;
+  @Inject()
+  casbinService: CasbinService;
 
-  @NacosConfig('yaml', YAML.parse)
-  config;
+  @NacosConfig('service-auth.json')
+  authConfigs;
 
   async onReady(
     container: IMidwayContainer,
     mainApp?: IMidwayBaseApplication<Context>,
-  ): Promise<void> {
-    console.log(this.config);
-    // console.log(d1);
-    // await this.nacosNamingService.registerInstance(AUTH_SERVICE_NAME, {
-    //   port: 90,
-    //   ip: '0.0.0.0',
-    // });
-  }
+  ): Promise<void> {}
 
-  async onConfigLoad(
-    container: IMidwayContainer,
-    mainApp?: IMidwayBaseApplication<Context>,
-  ): Promise<any> {
-    return;
+  async onConfigLoad(): Promise<any> {
+    return {
+      casbin: {
+        model: resolve(__dirname, '../model/base.conf'),
+        adapter: TypeOrmAdapter.newAdapter((await this.authConfigs).casbin.db),
+      },
+    };
   }
 }

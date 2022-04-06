@@ -2533,7 +2533,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/midway-casbin@workspace:first_party/casbin":
+"@letscollab/midway-casbin@workspace:^, @letscollab/midway-casbin@workspace:first_party/casbin":
   version: 0.0.0-use.local
   resolution: "@letscollab/midway-casbin@workspace:first_party/casbin"
   dependencies:
@@ -2567,6 +2567,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab/service-auth@workspace:packages/auth"
   dependencies:
+    "@letscollab/midway-casbin": "workspace:^"
     "@letscollab/midway-nacos": "workspace:^"
     "@midwayjs/bootstrap": ^3.2.0
     "@midwayjs/bundle-helper": ^1.1.1
@@ -2577,17 +2578,24 @@ __metadata:
     "@midwayjs/jwt": ^3.2.0
     "@midwayjs/mock": ^3.2.0
     "@midwayjs/orm": ^3.2.0
+    "@midwayjs/passport": ^3.2.2
     "@types/express": ^4.17.13
     "@types/jest": ^27.4.1
     "@types/node": 17.0.23
+    "@types/passport": ^0
+    "@types/passport-local": ^1
     "@types/yaml": ^1
     cross-env: ^7.0.3
     jest: ^26.6.3
     mwts: ^1.3.0
     mysql2: ^2.3.3
+    passport: ^0.5.2
+    passport-jwt: ^4.0.0
+    passport-local: ^1.0.0
     pm2: ^5.1.2
     ts-jest: ^26.5.6
     typeorm: ^0.2.45
+    typeorm-adapter: ^1.4.2
     typescript: ^4.5.4
     yaml: ^1.10.2
   languageName: unknown
@@ -2915,6 +2923,15 @@ __metadata:
   peerDependencies:
     typeorm: "*"
   checksum: 9324a06c7a01100e7e8e8846573eb9c81c952dd7e6f08f534c362accfb77bc3c6d1429dc0d7fe7b44eccd3cabbf0f3e580d8f97d18b58dfbbed9de07b0f038f1
+  languageName: node
+  linkType: hard
+
+"@midwayjs/passport@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@midwayjs/passport@npm:3.2.2"
+  peerDependencies:
+    passport: ^0.5.0
+  checksum: d88eaa3a0b835cd3b60f7f2123def3e6c14fdb2d6a617cc89e3b218a51255780ee1e5808763acde5612eeed179744c51adee9f89b7c8f24c371ad94ff2dc3846
   languageName: node
   linkType: hard
 
@@ -4221,6 +4238,45 @@ __metadata:
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
   checksum: fd6bce2b674b6efc3db4c7c3d336bd70c90838e8439de639b909ce22f3720d21344f52427f1d9e57b265fcb7f6c018699b99e5e0c208a1a4823014269a6bf35b
+  languageName: node
+  linkType: hard
+
+"@types/passport-local@npm:^1":
+  version: 1.0.34
+  resolution: "@types/passport-local@npm:1.0.34"
+  dependencies:
+    "@types/express": "*"
+    "@types/passport": "*"
+    "@types/passport-strategy": "*"
+  checksum: c8e162f571c8685344f4496b1473645eb1244a2ecb1c810854d43ac8897145083ac7412b8d3a3231f72f27a22d57e526fc8421d8208c18cdff8f83266e875f37
+  languageName: node
+  linkType: hard
+
+"@types/passport-strategy@npm:*":
+  version: 0.2.35
+  resolution: "@types/passport-strategy@npm:0.2.35"
+  dependencies:
+    "@types/express": "*"
+    "@types/passport": "*"
+  checksum: e5949063ad8977ce1f7cf2a5df6bc379c4d43a959c9946bfed6570ef379c6c12d1713212a29b3b5aafc631c5ebe9bfe082116f3e75ca1bf45d79dd889671532d
+  languageName: node
+  linkType: hard
+
+"@types/passport@npm:*":
+  version: 1.0.7
+  resolution: "@types/passport@npm:1.0.7"
+  dependencies:
+    "@types/express": "*"
+  checksum: 1b78fbbb589774a2d9794449e039d590c21fefd6b3f0a5cc911e2a79bac85f363121cfdc330d15840879abeb4fb2d68d521111e595bded0f5dc4356bf8dba3ec
+  languageName: node
+  linkType: hard
+
+"@types/passport@npm:^0":
+  version: 0.4.7
+  resolution: "@types/passport@npm:0.4.7"
+  dependencies:
+    "@types/express": "*"
+  checksum: c22a84226d763db30cc6d8b330022820d067ea4039dc625371825e0d2fb8e3d6e7387cf4619e79a4cc293e8c3f3420f3da3067c564da14c21fadb03b5f5c870f
   languageName: node
   linkType: hard
 
@@ -6303,7 +6359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"casbin@npm:^5.14.0":
+"casbin@npm:^5.11.5, casbin@npm:^5.14.0":
   version: 5.14.0
   resolution: "casbin@npm:5.14.0"
   dependencies:
@@ -13727,7 +13783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:^8.5.1":
+"jsonwebtoken@npm:^8.2.0, jsonwebtoken@npm:^8.5.1":
   version: 8.5.1
   resolution: "jsonwebtoken@npm:8.5.1"
   dependencies:
@@ -16345,6 +16401,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"passport-jwt@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "passport-jwt@npm:4.0.0"
+  dependencies:
+    jsonwebtoken: ^8.2.0
+    passport-strategy: ^1.0.0
+  checksum: d0499ebb819c714d885a9c03a6c5d6dfae916c1a81ccb62357136d5bf477529327e9b8fc658f61f97c565651d2bd78eccec4543474a08e944132f0e2ec47cc3d
+  languageName: node
+  linkType: hard
+
+"passport-local@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "passport-local@npm:1.0.0"
+  dependencies:
+    passport-strategy: 1.x.x
+  checksum: 86dc08b12f05f0ce1bb109780ccb0377eff45bbba70aa9c0d65f092b3ef476d344c0443517db2e9f3e5ec0ca849171ab25fb622164e0f69a677173af42b9bba7
+  languageName: node
+  linkType: hard
+
+"passport-strategy@npm:1.x.x, passport-strategy@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "passport-strategy@npm:1.0.0"
+  checksum: 5086693f2508e538dffa55a338c89fe8192fb5f4478c71f80cd5890b8573419a098f4fec88b505374f60bbe9049f6f24b9f3992678612528a3370b4dc73354a2
+  languageName: node
+  linkType: hard
+
+"passport@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "passport@npm:0.5.2"
+  dependencies:
+    passport-strategy: 1.x.x
+    pause: 0.0.1
+  checksum: be17a64a069f412299dea342fea1f4c755aea66fcd71e9422c5e254be18b069a39b00d141e4c63fb852f1bfea6030e8e170593d7f0db5c197fddec781e9e8de4
+  languageName: node
+  linkType: hard
+
 "path-exists@npm:^3.0.0":
   version: 3.0.0
   resolution: "path-exists@npm:3.0.0"
@@ -16439,6 +16531,13 @@ __metadata:
   dependencies:
     through: ~2.3
   checksum: 3c4a14052a638b92e0c96eb00c0d7977df7f79ea28395250c525d197f1fc02d34ce1165d5362e2e6ebbb251524b94a76f3f0d4abc39ab8b016d97449fe15583c
+  languageName: node
+  linkType: hard
+
+"pause@npm:0.0.1":
+  version: 0.0.1
+  resolution: "pause@npm:0.0.1"
+  checksum: e96ee581b68085e6f2ba5adbcb4d4a41fe88e5b514061e76df2fe1905f0f65f4fe5a843b538e9551122c6b9184ff4be266c2ee0ea4614702f9a3d04466d9f462
   languageName: node
   linkType: hard
 
@@ -20817,7 +20916,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm@npm:^0.2.45":
+"typeorm-adapter@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "typeorm-adapter@npm:1.4.2"
+  dependencies:
+    casbin: ^5.11.5
+    typeorm: ^0.2.29
+  checksum: 5d201b1850140111487625cd4bff6582e1f46d739dc1b483d660d44cf52206b13275783a5f8e33933a08453dede041f4f69ecf08a260f462be821178f8c95d25
+  languageName: node
+  linkType: hard
+
+"typeorm@npm:^0.2.29, typeorm@npm:^0.2.45":
   version: 0.2.45
   resolution: "typeorm@npm:0.2.45"
   dependencies:
