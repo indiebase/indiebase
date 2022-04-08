@@ -6,11 +6,15 @@
     },
     {
       "name": "@letscollab/midway-casbin",
-      "path": "first_party/casbin"
+      "path": "first_party\\casbin"
     },
     {
       "name": "📦 @letscollab/service-auth",
-      "path": "packages/auth"
+      "path": "packages\\auth"
+    },
+    {
+      "name": "📦 @letscollab/service-user",
+      "path": "packages\\user"
     }
   ],
   "settings": {

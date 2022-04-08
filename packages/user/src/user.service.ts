@@ -13,7 +13,7 @@ import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 
 @Provide()
 @Scope(ScopeEnum.Singleton)
-export class DemoService {
+export class UserService {
   // @Config('nacosConfig')
   // options: NacosConfigClientOptions;
 

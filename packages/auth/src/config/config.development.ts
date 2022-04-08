@@ -17,6 +17,12 @@ interface CustomConfig extends MidwayConfig {
 
 export default (appInfo: MidwayAppInfo): CustomConfig => {
   return {
+    express: {
+      port: 23331,
+    },
+    rabbitmq: {
+      url: 'amqp://0.0.0.0:13340',
+    },
     midwayLogger: {
       default: {
         level: 'none',

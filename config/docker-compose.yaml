@@ -166,6 +166,14 @@ services:
     networks:
       - loki
 
+  rabbitmq:
+    image: rabbitmq:3.9.14-management
+    ports:
+      - '13340:5672'
+      - '13341:15672'
+    networks:
+      - rabbitmq
+
   # promtail:
   #   image: grafana/promtail:2.4.1
   #   volumes:
@@ -189,6 +197,7 @@ networks:
     driver: overlay
     attachable: true
   loki:
+  rabbitmq:
 
 volumes:
   etcd_data:
