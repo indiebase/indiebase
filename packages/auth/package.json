@@ -2,7 +2,6 @@
   "name": "@letscollab/service-auth",
   "version": "0.0.1",
   "description": "",
-  "types": "./src/domain/index",
   "private": true,
   "dependencies": {
     "@letscollab/midway-casbin": "workspace:^",

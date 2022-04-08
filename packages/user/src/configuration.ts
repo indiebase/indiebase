@@ -11,9 +11,10 @@ import * as casbin from '@letscollab/midway-casbin';
 import { resolve } from 'path';
 import { NacosConfig, NacosNamingService } from '@letscollab/midway-nacos';
 import * as rabbitmq from '@midwayjs/rabbitmq';
+import * as orm from '@midwayjs/orm';
 
 @Configuration({
-  imports: [express, nacos, casbin, rabbitmq],
+  imports: [express, nacos, casbin, rabbitmq, orm],
   importConfigs: [resolve(__dirname, './config')],
 })
 export class AutoConfiguration implements ILifeCycle {

@@ -11,7 +11,7 @@ import * as amqp from 'amqp-connection-manager';
 @Autoload()
 @Provide()
 @Scope(ScopeEnum.Singleton) // Singleton 单例，全局唯一（进程级别）
-export class RabbitMQService {
+export class AuthRabbitMQService {
   private connection: amqp.AmqpConnectionManager;
 
   private channelWrapper;

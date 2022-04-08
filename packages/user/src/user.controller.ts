@@ -1,21 +1,8 @@
-import { CasbinService } from '@letscollab/midway-casbin';
-import { MidwayCasbinConfigs } from '@letscollab/midway-casbin/src/casbin.interface';
-import { NacosConfig, NacosConfigService } from '@letscollab/midway-nacos';
-import { ILogger } from '@midwayjs/core';
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Provide,
-  Inject,
-  Logger,
-  Config,
-} from '@midwayjs/decorator';
+import { UserEntity } from './model/user.entity';
+import { Controller, Get, Provide, Inject } from '@midwayjs/decorator';
+import { InjectEntityModel } from '@midwayjs/orm';
+import { Repository } from 'typeorm';
 import { RabbitMQProvider } from './user.provider';
-import { UserService } from './user.service';
-
-// import second from 'typeorm';
 
 @Provide()
 @Controller()
@@ -23,10 +10,16 @@ export class UserController {
   @Inject()
   rabbitMQProvider: RabbitMQProvider;
 
+  @InjectEntityModel(UserEntity)
+  userRepo: Repository<UserEntity>;
+
   @Get('/login')
-  async login(@Body() body, @Param('id') id) {
-    console.log('demo');
-    await this.rabbitMQProvider.sendToQueue('tasks', { name: 'demo' });
+  async login() {
+    console.log(this.userRepo.create({ username: 'demo', password: 'dede' }));
+    await this.userRepo.save(
+      this.userRepo.create({ username: 'demo', password: 'dede' }),
+    );
+
     return 'demo';
   }
 }

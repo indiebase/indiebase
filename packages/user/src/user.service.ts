@@ -1,3 +1,4 @@
+import { UserEntity } from './model/user.entity';
 /**
  * Copyright (c) 2022 Nawbc
  *
@@ -6,6 +7,8 @@
  */
 
 import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
+import { InjectEntityModel } from '@midwayjs/orm';
+import { Repository } from 'typeorm';
 // import {
 //   ClientOptions as NacosConfigClientOptions,
 //   NacosConfigClient,
@@ -14,6 +17,8 @@ import { Config, Init, Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 @Provide()
 @Scope(ScopeEnum.Singleton)
 export class UserService {
+  @InjectEntityModel(UserEntity)
+  userRepo: Repository<UserEntity>;
   // @Config('nacosConfig')
   // options: NacosConfigClientOptions;
 

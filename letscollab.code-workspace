@@ -9,6 +9,10 @@
       "path": "first_party\\casbin"
     },
     {
+      "name": "@letscollab/midway-nacos",
+      "path": "first_party\\nacos"
+    },
+    {
       "name": "📦 @letscollab/service-auth",
       "path": "packages\\auth"
     },

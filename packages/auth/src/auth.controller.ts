@@ -1,18 +1,26 @@
 import {
   Body,
-  Consumer,
   Controller,
   Get,
-  MSListenerType,
+  Inject,
   Param,
   Provide,
 } from '@midwayjs/decorator';
+import { AuthRabbitMQService } from './auth.provider';
 
 @Provide()
-@Controller()
+@Controller('/auth')
 export class AuthController {
+  @Inject()
+  rabbitMQProvider: AuthRabbitMQService;
+
   @Get('/login')
-  async login(@Body() body, @Param('id') id) {
+  async login() {
+    return 'demo';
+  }
+
+  @Get('/profile')
+  async profile() {
     return 'demo';
   }
 }

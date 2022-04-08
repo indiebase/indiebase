@@ -24,8 +24,6 @@ export class RabbitMQProvider {
   async connect() {
     this.connection = await amqp.connect('amqp://0.0.0.0:13340');
 
-    console.log(this.connection.isConnected());
-
     this.channelWrapper = this.connection.createChannel({
       json: true,
       setup: function (channel) {
