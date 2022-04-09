@@ -15,6 +15,7 @@ async function bootstrap() {
       host: configService.get('app.auth_micro_host'),
     },
   });
+
   await app.listen(
     configService.get('app.port'),
     configService.get('app.hostname'),

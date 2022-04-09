@@ -5,6 +5,10 @@
       "path": "."
     },
     {
+      "name": "@letscollab/nestjs-nacos",
+      "path": "first_party\\nacos"
+    },
+    {
       "name": "@letscollab/nestjs-qiniu",
       "path": "first_party\\qiniu"
     },
