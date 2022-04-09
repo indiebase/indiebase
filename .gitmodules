@@ -1,0 +1,3 @@
+[submodule "first_party/nacos"]
+	path = first_party/nacos
+	url = https://github.com/nawb-letscollab/nest-nacos.git
