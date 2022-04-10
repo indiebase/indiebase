@@ -1,5 +1,3 @@
-import { NACOS_AUTH_DATA_ID } from '../app.constants';
-import { NacosConfig } from '@letscollab/nestjs-nacos';
 import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { LocalAuthGuard } from './local.guard';
@@ -14,12 +12,8 @@ export class AuthController {
     return '1233333333333333333333';
   }
 
-  @NacosConfig(NACOS_AUTH_DATA_ID)
-  nacosConfig;
-
-  // @NacosConfigClient('dem')
   @UseGuards(LocalAuthGuard)
-  @Get('demo')
+  @Get('login')
   async demo(@Request() req: Request) {
     return 'demo';
   }

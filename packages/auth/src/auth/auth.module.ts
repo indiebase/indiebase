@@ -4,10 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
-import {
-  NacosConfigModule,
-  NacosConfigService,
-} from '@letscollab/nestjs-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { USER_SERVICE_NAME } from '@/app.constants';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
@@ -18,7 +15,7 @@ const PassportModule = ForwardPassportModule.register({
 @Module({
   imports: [
     PassportModule,
-    NacosConfigModule,
+
     ClientsModule.registerAsync([
       {
         name: USER_SERVICE_NAME,

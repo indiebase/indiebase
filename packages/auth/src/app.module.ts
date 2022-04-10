@@ -1,20 +1,14 @@
 import { JwtModule } from '@nestjs/jwt';
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, OnModuleInit, SetMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import AppController from './app.controller';
+import { AppController } from './app.controller';
 import { resolve } from 'path';
 import configure from './config';
-import { AuthModule } from '@/auth/auth.module';
 import { AuthZModule, AUTHZ_ENFORCER } from 'nest-authz';
 import TypeORMAdapter from 'typeorm-adapter';
-import {
-  NacosConfigModule,
-  NacosConfigService,
-  NacosNamingModule,
-  NacosNamingService,
-} from '@letscollab/nestjs-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import * as casbin from 'casbin';
-import { AUTH_SERVICE_NAME } from './app.constants';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,16 +18,16 @@ import { AUTH_SERVICE_NAME } from './app.constants';
       isGlobal: true,
       load: configure,
     }),
-    NacosNamingModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory(config: ConfigService) {
-        return {
-          serverList: config.get('nacos.serverList'),
-          namespace: config.get('nacos.namespace'),
-        };
-      },
-    }),
+    // NacosNamingModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory(config: ConfigService) {
+    //     return {
+    //       serverList: config.get('nacos.serverList'),
+    //       namespace: config.get('nacos.namespace'),
+    //     };
+    //   },
+    // }),
     NacosConfigModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -77,13 +71,13 @@ import { AUTH_SERVICE_NAME } from './app.constants';
 export class AppModule implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
-    private readonly nacosNamingService: NacosNamingService,
+    private readonly nacosConfigService: NacosConfigService,
   ) {}
 
   async onModuleInit() {
-    await this.nacosNamingService.client.registerInstance(AUTH_SERVICE_NAME, {
-      port: parseInt(this.configService.get('app.port')),
-      ip: this.configService.get('app.hostname'),
-    });
+    // await this.nacosNamingService.registerInstance(AUTH_SERVICE_NAME, {
+    //   port: parseInt(this.configService.get('app.port')),
+    //   ip: this.configService.get('app.hostname'),
+    // });
   }
 }

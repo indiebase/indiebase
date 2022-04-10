@@ -30,7 +30,7 @@ export class CasbinService implements OnModuleInit, OnModuleDestroy {
     this.#enforcer = null;
   }
 
-  public get enforcer() {
+  public get e() {
     return this.#enforcer;
   }
 }
