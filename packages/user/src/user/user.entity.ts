@@ -10,6 +10,7 @@ import {
   JoinColumn,
   OneToOne,
   ManyToOne,
+  Generated,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
@@ -20,10 +21,13 @@ enum AccountStatus {
 
 @Entity('user')
 export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column('varchar', { unique: true })
+  account: string;
+
+  @Column('varchar')
   username: string;
 
   @Column('varchar', { select: false })
@@ -31,14 +35,16 @@ export class UserEntity {
 
   @Column('boolean', {
     name: 'account_status',
-    comment: '用户状态',
+    comment: '账户状态',
     default: 1,
   })
   accountStatus?: AccountStatus;
 
+  // 邀请的用户
   @OneToMany(() => UserEntity, (g) => g.inviteBy)
   invitations: UserEntity[];
 
+  // 被谁邀请
   @ManyToOne(() => UserEntity, (g) => g.invitations)
   inviteBy: UserEntity;
 

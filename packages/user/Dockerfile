@@ -2,10 +2,15 @@ FROM node:16-alpine
 
 LABEL org.opencontainers.image.authors="deskbtm@outlook.com"
 
-WORKDIR /opt/letscollab/service-auth
+WORKDIR /opt/letscollab/service-user
 
-COPY ./dist ./dist
+ENV NODE_ENV=${ENV:-prodction}
 
-EXPOSE 12220
+COPY ./dist ./dsit
+COPY ./i18n ./i18n
+COPY ./package.json ./package.json
+COPY ./env.${ENV:-prodction} ./
 
-CMD [ "node", "dist/index.js" ]
+EXPOSE 23332 33333
+
+CMD [ "node", "index.js" ]

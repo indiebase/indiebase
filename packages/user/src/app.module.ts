@@ -11,6 +11,8 @@ import { NACOS_USER_DATA_ID, USER_SERVICE_NAME } from './app.constants';
 import { resolve } from 'path';
 import configure from '@/config';
 import { UserModule } from './user/user.module';
+import { I18nModule } from 'nestjs-i18n';
+const isProd = process.env.NODE_ENV === 'production';
 
 @Module({
   imports: [
@@ -30,6 +32,14 @@ import { UserModule } from './user/user.module';
     //     };
     //   },
     // }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'zh',
+      loaderOptions: {
+        path: resolve(process.cwd(), './i18n'),
+        watch: !isProd,
+      },
+      logging: !isProd,
+    }),
     NacosConfigModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -45,7 +55,10 @@ import { UserModule } from './user/user.module';
       inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
         const configs = await nacosConfigService.getConfig('service-user.json');
-        return configs.orm;
+        return {
+          ...configs.orm,
+          autoLoadEntities: true,
+        };
       },
     }),
   ],

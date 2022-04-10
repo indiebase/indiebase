@@ -5,12 +5,12 @@
       "path": "."
     },
     {
-      "name": "@letscollab/nest-qiniu",
-      "path": "first_party\\qiniu"
-    },
-    {
       "name": "📦 @letscollab/service-auth",
       "path": "packages\\auth"
+    },
+    {
+      "name": "📦 @letscollab/utils",
+      "path": "packages\\common"
     },
     {
       "name": "📦 @letscollab/service-user",
@@ -22,6 +22,19 @@
       "letscollab",
       "nacos",
       "nestjs"
-    ]
+    ],
+    "files.exclude": {
+      "✨ letscollab/.editorconfig": true,
+      "✨ letscollab/.eslintignore": true,
+      "✨ letscollab/.eslintrc.js": true,
+      "✨ letscollab/.gitattributes": true,
+      "✨ letscollab/.gitignore": true,
+      "✨ letscollab/.gitmodules": true,
+      "✨ letscollab/.prettierrc": true,
+      "✨ letscollab/.yarnrc.yml": true,
+      "✨ letscollab/letscollab.code-workspace": true,
+      "📦 @letscollab/service-user/node_modules": true
+    },
+    "workspace.isHidden": true
   }
 }

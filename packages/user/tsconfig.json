@@ -4,7 +4,6 @@
     "allowJs": true,
     "module": "CommonJS",
     "moduleResolution": "node",
-    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
