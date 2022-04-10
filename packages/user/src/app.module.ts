@@ -4,11 +4,10 @@ import {
   NacosConfigModule,
   NacosNamingService,
   NacosConfigService,
-} from '@letscollab/nestjs-nacos';
+} from '@letscollab/nest-nacos';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { NACOS_USER_DATA_ID, USER_SERVICE_NAME } from './app.constants';
-import { NacosUtils } from '@letscollab/utils';
 import { resolve } from 'path';
 import configure from '@/config';
 import { UserModule } from './user/user.module';
@@ -21,16 +20,16 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
       load: configure,
     }),
-    NacosNamingModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory(config: ConfigService) {
-        return {
-          serverList: config.get('nacos.serverList'),
-          namespace: config.get('nacos.namespace'),
-        };
-      },
-    }),
+    // NacosNamingModule.forRootAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory(config: ConfigService) {
+    //     return {
+    //       serverList: config.get('nacos.serverList'),
+    //       namespace: config.get('nacos.namespace'),
+    //     };
+    //   },
+    // }),
     NacosConfigModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -45,29 +44,15 @@ import { UserModule } from './user/user.module';
       imports: [NacosConfigModule],
       inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
-        const configs = await NacosUtils.getConfig(
-          nacosConfigService,
-          NACOS_USER_DATA_ID,
-        );
-        return configs.mysql;
+        const configs = await nacosConfigService.getConfig('service-user.json');
+        return configs.orm;
       },
     }),
   ],
 })
 export class AppModule implements OnModuleInit {
-  constructor(
-    private nacosNamingService: NacosNamingService,
-    private readonly nacosConfigService: NacosConfigService,
-  ) {}
+  constructor(private readonly nacosConfigService: NacosConfigService) {}
   async onModuleInit() {
-    const configs = await NacosUtils.getConfig(
-      this.nacosConfigService,
-      NACOS_USER_DATA_ID,
-    );
-    await this.nacosNamingService.client.registerInstance(USER_SERVICE_NAME, {
-      ip: '0.0.0.0',
-      port: configs.app.userMicroservicePort,
-    });
     // this.nacosNamingService.client.subscribe(USER_SERVICE_NAME, (...e) => {
     //   console.log(e);
     // });

@@ -1,9 +1,6 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { NacosConfigService } from '@letscollab/nestjs-nacos';
-import { NacosUtils } from '@letscollab/utils';
-import { NACOS_AUTH_DATA_ID } from '@/app.constants';
 
 export interface JwtPayload {
   roles: string[];
@@ -55,7 +52,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         _tokenOrPayload,
         _verifyOrSignOrOptions,
       ) => {
-        
         return 'dev123456';
       },
     });

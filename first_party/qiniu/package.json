@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nestjs-qiniu",
+  "name": "@letscollab/nest-qiniu",
   "version": "0.0.1",
   "description": "nestjs nacos module",
   "author": "Nawbc",
@@ -36,7 +36,6 @@
     "@nestjs/cli": "^8.2.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
-    "@types/express": "^4.17.13",
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
@@ -53,7 +52,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.6.3"
   },
   "jest": {
     "moduleFileExtensions": [

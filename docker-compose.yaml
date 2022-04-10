@@ -90,24 +90,6 @@ services:
       - apisix
       - loki
 
-  # minio:
-  #   <<: *minio-common
-  #   hostname: minio
-  #   volumes:
-  #     - minio_data1_1:/minio_data1
-  #     - minio_data1_2:/minio_data2
-
-  # nginx:
-  #   image: nginx:1.21.5-alpine
-  #   hostname: nginx
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  #   ports:
-  #     - '13337:9000'
-  #     - '13338:9001'
-  #   depends_on:
-  #     - minio
-
   nacos:
     image: nacos/nacos-server:v2.0.4
     env_file:
@@ -121,6 +103,9 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+      resources:
+        limits:
+          memory: 400M
     depends_on:
       - mysql
 
@@ -173,6 +158,17 @@ services:
       - '13341:15672'
     networks:
       - rabbitmq
+  # consul:
+  #   image: consul:1.11.4
+  #   volumes:
+  #     - consul_data:/bitnami/consul
+  #   ports:
+  #     - '13342:8300'
+  #     - '13343:8301'
+  #     - '13343:8301/udp'
+  #     - '13344:8500'
+  #     - '13345:8600'
+  #     - '13344:8600/udp'
 
   # promtail:
   #   image: grafana/promtail:2.4.1
@@ -210,3 +206,5 @@ volumes:
   apisix_logs:
   mysql_logs:
   loki_logs:
+  # consul_data:
+  #   driver: local
