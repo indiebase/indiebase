@@ -30,6 +30,8 @@
     "@nestjs/passport": "^8.1.0",
     "@nestjs/platform-fastify": "^8.4.4",
     "@types/yaml": "^1.9.7",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
     "nest-authz": "^2.2.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
