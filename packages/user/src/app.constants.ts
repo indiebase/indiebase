@@ -5,9 +5,3 @@ export const USER_CLIENT = 'service-auth:user_client';
 export const NACOS_GROUP = 'DEFAULT_GROUP';
 export const NACOS_USER_DATA_ID = 'service-user';
 export const NACOS_AUTH_DATA_ID = 'service-auth';
-
-export enum StatusCode {
-  TIMEOUT = -1,
-  ERROR = 0,
-  SUCCESS = 1,
-}

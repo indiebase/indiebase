@@ -1,29 +1,51 @@
-import { StatusCode } from '../constants';
+import { ResultCode } from '../constants';
 import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
   HttpException,
+  Logger,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-@Catch(HttpException)
+/**
+ * 此类会捕获所有错误  它会将错误格式化并返回
+ */
+@Catch()
 export class FormatExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  constructor(private readonly logger: Logger) {}
+
+  catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
-    const status = exception.getStatus();
-    const resException = exception.getResponse();
-    const resExceptionObj =
-      typeof resException === 'string'
-        ? { message: resException }
-        : resException;
+    let statusCode;
+    let resExceptionObj;
 
-    response.status(status).send({
+    // 如果是http错误
+    if (exception instanceof HttpException) {
+      statusCode = exception.getStatus();
+      const resException = exception.getResponse();
+      resExceptionObj =
+        typeof resException === 'string'
+          ? { message: resException }
+          : resException;
+    } else {
+    }
+
+    // const resExceptionObj =
+    //   typeof resException === 'string'
+    //     ? { message: resException }
+    //     : resException;
+
+    // if (status) {
+    //   this.logger.error('', resException);
+    // }
+
+    response.status(statusCode).send({
       ...resExceptionObj,
-      statusCode: status,
-      code: StatusCode.ERROR,
+      statusCode,
+      code: ResultCode.ERROR,
       timestamp: new Date().toISOString(),
       path: request.url,
     });
