@@ -4,6 +4,7 @@
     "streetsidesoftware.code-spell-checker",
     "vivaxy.vscode-conventional-commits",
     "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "RedVanWorkshop.explorer-exclude-vscode-extension"
   ]
 }

@@ -1,7 +1,4 @@
-export const AUTH_SERVICE_NAME = '@letscollab/service-auth';
-export const USER_SERVICE_NAME = '@letscollab/service-user';
-
-export const USER_CLIENT = 'service-auth:user_client';
+export const AUTH_RMQ = 'service-auth:rmq';
 
 // CASBIN
 export const NACOS_GROUP = 'DEFAULT_GROUP';

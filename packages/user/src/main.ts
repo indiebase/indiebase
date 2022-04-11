@@ -6,21 +6,33 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
-import { setupUserApiDoc } from './utils/swagger.utils';
 import { ValidationPipe } from '@nestjs/common';
-import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
-const ENV = process.env.NODE_ENV;
-const isProd = ENV === 'production';
+import { NacosConfigService } from '@letscollab/nest-nacos';
+import { FormatExceptionFilter } from '@letscollab/common';
+import { setupUserApiDoc } from './utils';
+
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
+    {
+      logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
+      bodyParser: true,
+    },
   );
 
+  const configService: ConfigService = app.get<ConfigService>(ConfigService);
+  const nacosConfigService: NacosConfigService =
+    app.get<NacosConfigService>(NacosConfigService);
+
+  const nacosConfigs = await nacosConfigService.getConfig('service-user.json');
+
   // 配置swagger
-  ENV !== 'production' && (await setupUserApiDoc(app));
+  !isProduction && (await setupUserApiDoc(app));
 
   //dto 国际化
   app.useGlobalPipes(
@@ -29,15 +41,20 @@ async function bootstrap() {
     }),
   );
 
-  const configService: ConfigService = app.get<ConfigService>(ConfigService);
+  app.useGlobalFilters(new FormatExceptionFilter());
 
   app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.TCP,
+    transport: Transport.RMQ,
     options: {
-      port: configService.get('app.user_micro_port'),
-      host: configService.get('app.user_micro_host'),
+      urls: nacosConfigs.rabbitmq.urls,
+      queue: 'user_queue',
+      queueOptions: {
+        durable: false,
+      },
     },
   });
+
+  await app.startAllMicroservices();
 
   await app.listen(
     configService.get('app.port'),

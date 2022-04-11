@@ -5,16 +5,16 @@
       "path": "."
     },
     {
-      "name": "📦 @letscollab/service-auth",
-      "path": "packages\\auth"
-    },
-    {
-      "name": "📦 @letscollab/utils",
+      "name": "📦 @letscollab/common",
       "path": "packages\\common"
     },
     {
       "name": "📦 @letscollab/service-user",
       "path": "packages\\user"
+    },
+    {
+      "name": "📦 @letscollab/service-auth",
+      "path": "packages\\auth"
     }
   ],
   "settings": {
@@ -24,17 +24,23 @@
       "nestjs"
     ],
     "files.exclude": {
-      "✨ letscollab/.editorconfig": true,
-      "✨ letscollab/.eslintignore": true,
-      "✨ letscollab/.eslintrc.js": true,
-      "✨ letscollab/.gitattributes": true,
-      "✨ letscollab/.gitignore": true,
-      "✨ letscollab/.gitmodules": true,
-      "✨ letscollab/.prettierrc": true,
-      "✨ letscollab/.yarnrc.yml": true,
-      "✨ letscollab/letscollab.code-workspace": true,
-      "📦 @letscollab/service-user/node_modules": true
+      "**/.git": true,
+      "**/.svn": false,
+      "**/.hg": false,
+      "**/CVS": false,
+      "**/.DS_Store": false,
+      "**/Thumbs.db": false,
+      "node_modules": true,
+      "**/.eslintignore": true,
+      "**/.editorconfig": true,
+      "**/.gitignore": true,
+      "**/.gitattributes": true,
+      "**/.github": true,
+      "**/.vscode": true,
+      "**/.yarn": true,
+      "**/.prettierrc": true,
+      "**/.eslintrc.js": true
     },
-    "workspace.isHidden": true
+    "explorerExclude.backup": null
   }
 }
