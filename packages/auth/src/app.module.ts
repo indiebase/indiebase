@@ -1,5 +1,5 @@
 import { JwtModule } from '@nestjs/jwt';
-import { Module, OnModuleInit, SetMetadata } from '@nestjs/common';
+import { Logger, Module, OnModuleInit, SetMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { resolve } from 'path';
@@ -11,6 +11,7 @@ import * as casbin from 'casbin';
 import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
+import * as DailyRotateFile from 'winston-daily-rotate-file';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -24,7 +25,9 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       load: configure,
     }),
     WinstonModule.forRootAsync({
-      useFactory: () => {
+      inject: [NacosConfigService],
+      useFactory: async (config: NacosConfigService) => {
+        const configs = await config.getConfig('service-auth.json');
         const transports: any[] = [
           new winston.transports.Console({
             format: winston.format.combine(
@@ -35,11 +38,19 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         ];
         if (isProduction) {
           transports.push(
-            new winston.transports.File({
-              filename: 'combined.log',
+            new DailyRotateFile({
+              // filename: resolve(configs.logger.path ?  : '/tmp' ,'combined-%DATE%.log'),
+              datePattern: 'YYYY-MM-DD-HH',
+              zippedArchive: true,
               level: 'warn',
-              format: winston.format.json(),
+              maxSize: '20m',
+              maxFiles: '14d',
             }),
+            // new winston.transports.File({
+            //   filename: 'combined.log',
+            //   level: 'warn',
+            //   format: winston.format.json(),
+            // }),
           );
         }
 
@@ -49,7 +60,16 @@ const isDevelopment = process.env.NODE_ENV === 'development';
           defaultMeta: { service: 'auth' },
           exitOnError: false,
           rejectionHandlers: isProduction
-            ? [new winston.transports.File({ filename: 'rejections.log' })]
+            ? [
+                new DailyRotateFile({
+                  filename: 'logs/rejections-%DATE%.log',
+                  datePattern: 'YYYY-MM-DD-HH',
+                  zippedArchive: true,
+                  level: 'warn',
+                  maxSize: '20m',
+                  maxFiles: '14d',
+                }),
+              ]
             : null,
           transports,
         };
@@ -105,6 +125,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     }),
   ],
   controllers: [AppController],
+  providers: [Logger],
 })
 export class AppModule implements OnModuleInit {
   constructor(

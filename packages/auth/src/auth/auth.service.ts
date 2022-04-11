@@ -11,8 +11,10 @@ import { AvailableUserInfo } from './auth.interface';
 export class AuthService implements OnModuleInit {
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(AUTH_RMQ) private client: ClientProxy,
-    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    @Inject(AUTH_RMQ)
+    private client: ClientProxy,
+    
+    private readonly logger: Logger,
   ) {}
 
   async onModuleInit() {
@@ -23,7 +25,9 @@ export class AuthService implements OnModuleInit {
 
   async validateUser(info: AvailableUserInfo): Promise<any> {}
 
-  async signup(user: SignupDto): Promise<any> {}
+  async signup(user: SignupDto): Promise<any> {
+    this.logger.error('fucker');
+  }
 
   async signTarget(object: string | Buffer | object) {
     return this.jwtService.sign(object);

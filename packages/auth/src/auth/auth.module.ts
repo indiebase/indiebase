@@ -1,5 +1,5 @@
 import { AUTH_RMQ } from '../app.constants';
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { PassportModule as ForwardPassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
@@ -48,7 +48,7 @@ const PassportModule = ForwardPassportModule.register({
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, Logger],
   exports: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}

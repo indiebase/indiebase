@@ -19,7 +19,7 @@ version: '3.7'
 x-logging: &loki-logging
   driver: loki
   options:
-    loki-url: 'http://YOUR_IP:13339/loki/api/v1/push'
+    loki-url: 'http://localhost:13339/loki/api/v1/push'
     max-size: '200m'
 
 services:
@@ -72,23 +72,6 @@ services:
       - '13334:9090'
     networks:
       - apisix
-
-  grafana:
-    image: grafana/grafana:7.3.7
-    ports:
-      - '13335:3000'
-    volumes:
-      - './config/grafana/provisioning:/etc/grafana/provisioning'
-      - './config/grafana/dashboards:/var/lib/grafana/dashboards'
-      - './config/grafana/config/grafana.ini:/etc/grafana/grafana.ini'
-      - 'grafana_data:/var/lib/grafana'
-    environment:
-      - TZ=Asia/Shanghai
-      - LANG=zh_CN.UTF-8
-    # logging: *loki-logging
-    networks:
-      - apisix
-      - loki
 
   nacos:
     image: nacos/nacos-server:v2.0.4
@@ -143,11 +126,41 @@ services:
       mode: replicated
       replicas: 1
 
+  # Grafana
+  grafana:
+    image: grafana/grafana:7.3.7
+    ports:
+      - '13335:3000'
+    volumes:
+      - './config/grafana/provisioning:/etc/grafana/provisioning'
+      - './config/grafana/dashboards:/var/lib/grafana/dashboards'
+      - './config/grafana/config/grafana.ini:/etc/grafana/grafana.ini'
+      - 'grafana_data:/var/lib/grafana'
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+    logging:
+      driver: loki
+      options:
+        loki-url: 'http://localhost:13339/loki/api/v1/push'
+        max-size: '200m'
+    networks:
+      - apisix
+      - loki
+
   loki:
     image: grafana/loki:2.4.1
     ports:
       - '13339:3100'
     command: -config.file=/etc/loki/local-config.yaml -frontend.instance-addr=127.0.0.1
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.4.1
+    volumes:
+      - loki_logs:/var/log
+    command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
 
@@ -170,13 +183,6 @@ services:
   #     - '13345:8600'
   #     - '13344:8600/udp'
 
-  # promtail:
-  #   image: grafana/promtail:2.4.1
-  #   volumes:
-  #     - loki_logs:/var/log
-  #   command: -config.file=/etc/promtail/config.yml
-  #   networks:
-  #     - loki
   # redis:
   #   image: redis:6.2.6-alpine
   #   volumes:

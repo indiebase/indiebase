@@ -41,7 +41,7 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalFilters(new FormatExceptionFilter());
+  // app.useGlobalFilters(new FormatExceptionFilter());
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

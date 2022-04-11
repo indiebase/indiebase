@@ -36,7 +36,7 @@ async function bootstrap() {
   app.useLogger(nestWinston);
 
   app.useGlobalFilters(
-    new FormatExceptionFilter(),
+    new FormatExceptionFilter(nestWinston),
     // new HttpExceptionFilter(nestWinston.logger),
   );
 
