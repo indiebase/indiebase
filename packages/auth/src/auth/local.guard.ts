@@ -21,8 +21,6 @@ export class LocalAuthGuard extends AuthGuard('local') {
       throw new InternalServerErrorException();
     }
 
-    console.log(user);
-
     // if (!user) {
     //   throw new UnauthorizedException({ message: '用户登录失败, 请重新登陆' });
     // }

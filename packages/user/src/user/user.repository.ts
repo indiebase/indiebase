@@ -9,5 +9,5 @@ export class UserRepository extends Repository<UserEntity> {
     await this.save(userEntity);
   }
 
-  async findBy() {}
+  async findUser() {}
 }

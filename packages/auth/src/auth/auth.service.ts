@@ -1,40 +1,33 @@
-import { USER_SERVICE_NAME } from '@/app.constants';
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { AUTH_RMQ } from '@/app.constants';
+import { SignupDto } from '@letscollab/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { AvailableUserInfo } from './auth.interface';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(USER_SERVICE_NAME)
-    private readonly client: ClientProxy,
-  ) // private readonly config: ConfigService,
-  {}
-  async validateUser(info: AvailableUserInfo): Promise<any> {
-    // const admin = await this.adminSrv.findByNameWithPwd(username);
-    // // this.adminSrv.createUser
-    // if (admin) {
-    //   if (password === admin.password) {
-    //     return admin;
-    //   } else {
-    //     throw new UnauthorizedException('管理员认证错误, 请重新输入密码');
-    //   }
-    // } else {
-    //   if (
-    //     username === this.config.get('common.ownerName') &&
-    //     password === this.config.get('common.ownerPassword')
-    //   ) {
-    //   } else {
-    //     throw new BadRequestException('管理员不存在或密码错误');
-    //   }
-    // }
+    @Inject(AUTH_RMQ) private client: ClientProxy,
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+  ) {}
+
+  async onModuleInit() {
+    await this.client.connect().catch((err) => {
+      console.log(err);
+    });
   }
+
+  async validateUser(info: AvailableUserInfo): Promise<any> {}
+
+  async signup(user: SignupDto): Promise<any> {}
 
   async signTarget(object: string | Buffer | object) {
     return this.jwtService.sign(object);
   }
+
+  isCaptchaExpire() {}
 }

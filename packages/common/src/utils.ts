@@ -15,3 +15,12 @@ export const writeOpenApiDoc = async ({
   await ensureDir(dir);
   await writeJson(resolve(dir, `${name}.json`), content);
 };
+
+/**
+ * 验证码相关工具
+ */
+export const Captcha = {
+  getSignupCaptchaToken(captcha, username) {
+    return 'SIGNUP_' + Date.now() + '_' + captcha + '-' + username;
+  },
+};

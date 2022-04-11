@@ -1,20 +1,43 @@
-import { Controller, Get, UseGuards, Request } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { Controller, UseGuards, Request, Post, Body } from '@nestjs/common';
 import { LocalAuthGuard } from './local.guard';
+import { ApiBearerAuth, ApiOAuth2, ApiTags } from '@nestjs/swagger';
+import { SignupDto } from '@letscollab/common';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
+@ApiTags('v1/auth')
 export class AuthController {
-  constructor() {}
-
-  @MessagePattern({ cmd: 'sum' })
-  async loggedIn(data) {
-    console.log(data);
-    return '1233333333333333333333';
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Get('login')
-  async demo(@Request() req: Request) {
+  @Post('login')
+  async login(@Request() req: Request) {
+    // await lastValueFrom(
+    //   this.client.send({ cmd: 'signup' }, 'demo').pipe(timeout(5000)),
+    // );
+    return 'demo';
+  }
+
+  @Post('logout')
+  async logout(@Request() req: Request) {
+    return 'demo';
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(LocalAuthGuard)
+  @Post('profile')
+  async profile(@Request() req: Request) {
+    return 'demo';
+  }
+
+  @Post('signup')
+  async signup(@Body() body: SignupDto) {
+    return this.authService.signup(body);
+  }
+
+  @ApiOAuth2(['pets:write'])
+  @Post('github')
+  async github(@Request() req: Request) {
     return 'demo';
   }
 }
