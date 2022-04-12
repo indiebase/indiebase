@@ -1,19 +1,17 @@
-import { Body, Controller, OnModuleInit, Post } from '@nestjs/common';
+import { SignupDto } from '@letscollab/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
-import { UserRegisterDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
 @ApiTags('v1/User')
 export class UserController {
-  constructor(private readonly userService: UserService) {} // private readonly client: ClientProxy, // @Inject(AUTH_SERVICE_NAME)
+  constructor(private readonly userService: UserService) {}
 
   @MessagePattern({ cmd: 'signup' })
-  async signup(@Payload() body) {
-    console.log(body, '============');
-    return 'demdoedmeomdoe';
-    // return this.userService.register(body);
+  async signup(@Payload() user: SignupDto) {
+    return this.userService.signup(user);
   }
 
   @Post('register-admin')
