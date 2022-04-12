@@ -1,5 +1,5 @@
 import { JwtModule } from '@nestjs/jwt';
-import { Logger, Module, OnModuleInit, SetMetadata } from '@nestjs/common';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { resolve } from 'path';
@@ -12,6 +12,7 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -24,10 +25,21 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       isGlobal: true,
       load: configure,
     }),
+    RedisModule.forRootAsync({
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const configs = await config.getConfig('service-auth.json');
+        return configs.redis;
+      },
+    }),
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const configs = await config.getConfig('service-auth.json');
+        const logStorageDir = configs.logger.storageDir
+          ? configs.logger.storageDir
+          : '/var/log';
+
         const transports: any[] = [
           new winston.transports.Console({
             format: winston.format.combine(
@@ -39,7 +51,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         if (isProduction) {
           transports.push(
             new DailyRotateFile({
-              // filename: resolve(configs.logger.path ?  : '/tmp' ,'combined-%DATE%.log'),
+              filename: resolve(logStorageDir, 'combined-%DATE%.log'),
               datePattern: 'YYYY-MM-DD-HH',
               zippedArchive: true,
               level: 'warn',
@@ -62,7 +74,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
           rejectionHandlers: isProduction
             ? [
                 new DailyRotateFile({
-                  filename: 'logs/rejections-%DATE%.log',
+                  filename: resolve(logStorageDir, 'rejections-%DATE%.log'),
                   datePattern: 'YYYY-MM-DD-HH',
                   zippedArchive: true,
                   level: 'warn',

@@ -1,20 +1,31 @@
 import { AUTH_RMQ } from '@/app.constants';
-import { SignupDto } from '@letscollab/common';
-import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Captcha, SignupDto } from '@letscollab/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
+import Redis from 'ioredis';
+import { InjectRedis } from '@liaoliaots/nestjs-redis';
 
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { AvailableUserInfo } from './auth.interface';
+import { lastValueFrom, timeout } from 'rxjs';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
   constructor(
     private readonly jwtService: JwtService,
     @Inject(AUTH_RMQ)
-    private client: ClientProxy,
-    
+    private readonly client: ClientProxy,
+
     private readonly logger: Logger,
+
+    @InjectRedis()
+    private readonly redis: Redis,
   ) {}
 
   async onModuleInit() {
@@ -26,7 +37,20 @@ export class AuthService implements OnModuleInit {
   async validateUser(info: AvailableUserInfo): Promise<any> {}
 
   async signup(user: SignupDto): Promise<any> {
-    this.logger.error('fucker');
+    const { captcha, username } = user;
+    const key = Captcha.getSignupCaptchaToken(captcha, username);
+    const c = await this.redis.get(key);
+
+    // if (c) {
+    //   await this.redis.del(key);
+    // } else {
+    //   throw new BadRequestException({ message: '验证码错误或失效' });
+    // }
+
+    const result = await lastValueFrom(
+      this.client.send({ cmd: 'signup' }, user).pipe(timeout(4000)),
+    );
+    console.log(result);
   }
 
   async signTarget(object: string | Buffer | object) {

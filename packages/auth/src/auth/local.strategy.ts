@@ -1,4 +1,3 @@
-// import { RedisService } from 'nestjs-redis';
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';

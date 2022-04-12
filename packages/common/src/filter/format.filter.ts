@@ -46,7 +46,7 @@ export class FormatExceptionFilter implements ExceptionFilter {
       ...resExceptionObj,
       statusCode,
       code: ResultCode.ERROR,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toLocaleString(),
       path: request.url,
     });
   }

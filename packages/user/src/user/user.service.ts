@@ -1,9 +1,7 @@
 import { UserRepository } from './user.repository';
-import { AUTH_SERVICE_NAME } from '@/app.constants';
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRegisterDto } from './dto/user.dto';
+import { SignupDto } from '@letscollab/common';
 
 @Injectable()
 export class UserService {
@@ -11,7 +9,11 @@ export class UserService {
     @InjectRepository(UserRepository)
     private readonly userRepo: UserRepository,
   ) {}
-  public async register(body: UserRegisterDto) {
-    // await this.userRepo.createUser(body);
+
+  public async signup(body: SignupDto) {
+    
+
+
+    await this.userRepo.createUser(body);
   }
 }

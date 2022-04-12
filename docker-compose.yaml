@@ -16,11 +16,11 @@ version: '3.7'
 #     MINIO_ACCESS_KEY_FILE: /run/secrets/access_key
 #     MINIO_SECRET_KEY_FILE: /run/secrets/secret_key
 
-x-logging: &loki-logging
-  driver: loki
-  options:
-    loki-url: 'http://localhost:13339/loki/api/v1/push'
-    max-size: '200m'
+# x-logging: &loki-logging
+#   driver: loki
+#   options:
+#     loki-url: 'http://localhost:13339'
+#     max-size: '200m'
 
 services:
   apisix-dashboard:
@@ -149,18 +149,21 @@ services:
       - loki
 
   loki:
-    image: grafana/loki:2.4.1
+    image: grafana/loki:2.5.0
+    # volumes:
+    #   - './config/loki:/etc/loki/'
     ports:
       - '13339:3100'
-    command: -config.file=/etc/loki/local-config.yaml -frontend.instance-addr=127.0.0.1
+    command: -config.file=/etc/loki/local-config.yaml
     networks:
       - loki
 
   promtail:
-    image: grafana/promtail:2.4.1
+    image: grafana/promtail:2.5.0
     volumes:
+      - './config/promtail:/etc/promtail/'
       - loki_logs:/var/log
-    command: -config.file=/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yaml
     networks:
       - loki
 
@@ -183,13 +186,16 @@ services:
   #     - '13345:8600'
   #     - '13344:8600/udp'
 
-  # redis:
-  #   image: redis:6.2.6-alpine
-  #   volumes:
-  #     - loki_logs:/var/log
-  #   command: -config.file=/etc/promtail/config.yml
-  #   networks:
-  #     - loki
+  redis:
+    image: redis:6.2.6-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/data'
+    command: --requirepass dev123456
+
+    networks:
+      - loki
 
 networks:
   apisix:
@@ -209,6 +215,7 @@ volumes:
   mysql_data:
   grafana_data:
   portainer_data:
+  redis_data:
   apisix_logs:
   mysql_logs:
   loki_logs:
