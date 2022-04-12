@@ -9,10 +9,25 @@ export class UserRepository extends Repository<UserEntity> {
     await this.save(userEntity);
   }
 
-  async findByAccount(user: SignupDto) {
+  public async findByAccount(user: SignupDto) {
     return this.findOne({
       account: user.account,
     });
+  }
+
+  public async updateUser(body) {
+    const { username, ...rest } = body;
+
+    // try {
+    //   return this.adminRepo.update(
+    //     {
+    //       username,
+    //     },
+    //     rest,
+    //   );
+    // } catch (error) {
+    //   throw new BadRequestException({ message: '修改失败' });
+    // }
   }
 
   /**
