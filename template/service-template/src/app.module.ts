@@ -1,37 +1,24 @@
-import { JwtModule } from '@nestjs/jwt';
-import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { resolve } from 'path';
 import configure from './config';
-import { AuthZModule, AUTHZ_ENFORCER } from 'nest-authz';
-import TypeORMAdapter from 'typeorm-adapter';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
-import * as casbin from 'casbin';
 import { WinstonModule, utilities } from 'nest-winston';
-import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
-import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
-    AuthModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
       load: configure,
     }),
-    RedisModule.forRootAsync({
-      inject: [NacosConfigService],
-      async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('service-auth.json');
-        return configs.redis;
-      },
-    }),
+
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
@@ -107,48 +94,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    AuthZModule.register({
-      imports: [NacosConfigModule],
-      enforcerProvider: {
-        provide: AUTHZ_ENFORCER,
-        useFactory: async (config: NacosConfigService) => {
-          const configs = await config.getConfig('service-auth.json');
-
-          return casbin.newEnforcer(
-            resolve(__dirname, '../model/auth.conf'),
-            await TypeORMAdapter.newAdapter(configs.casbin.db),
-          );
-        },
-        inject: [NacosConfigService],
-      },
-      usernameFromContext: (ctx) => {
-        const request = ctx.switchToHttp().getRequest();
-        return request.user && request.user.username;
-      },
-    }),
-
-    JwtModule.registerAsync({
-      imports: [ConfigModule, NacosConfigModule],
-      useFactory: async (config: NacosConfigService) => {
-        const configs = await config.getConfig('service-auth.json');
-        return configs.jwt;
-      },
-      inject: [NacosConfigService],
-    }),
   ],
   controllers: [AppController],
   providers: [Logger],
 })
-export class AppModule implements OnModuleInit {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly nacosConfigService: NacosConfigService,
-  ) {}
-
-  async onModuleInit() {
-    // await this.nacosNamingService.registerInstance(AUTH_SERVICE_NAME, {
-    //   port: parseInt(this.configService.get('app.port')),
-    //   ip: this.configService.get('app.hostname'),
-    // });
-  }
-}
+export class AppModule {}

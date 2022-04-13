@@ -1,37 +1,56 @@
-import { JwtModule } from '@nestjs/jwt';
-import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { resolve } from 'path';
 import configure from './config';
-import { AuthZModule, AUTHZ_ENFORCER } from 'nest-authz';
-import TypeORMAdapter from 'typeorm-adapter';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
-import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
-import { AuthModule } from './auth/auth.module';
-import * as casbin from 'casbin';
 import * as winston from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MailModule } from './mail';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
-    AuthModule,
+    MailModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
       load: configure,
     }),
-    RedisModule.forRootAsync({
+    MailerModule.forRootAsync({
       inject: [NacosConfigService],
-      async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('service-auth.json');
-        return configs.redis;
+      useFactory: async (config: NacosConfigService) => {
+        const configs = await config.getConfig('service-msg.json');
+        return {
+          transport: {
+            port: configs.mail.port,
+            ignoreTLS: false,
+            secure: true,
+            service: configs.mail.type,
+            auth: {
+              user: configs.mail.username,
+              pass: configs.mail.password,
+            },
+          },
+          defaults: {
+            from: configs.mail.from,
+          },
+          preview: true,
+          template: {
+            dir: resolve(__dirname, '../public/mail-template/'),
+            adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+            options: {
+              strict: true,
+            },
+          },
+        };
       },
     }),
+
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
@@ -58,11 +77,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
               maxSize: '20m',
               maxFiles: '14d',
             }),
-            // new winston.transports.File({
-            //   filename: 'combined.log',
-            //   level: 'warn',
-            //   format: winston.format.json(),
-            // }),
           );
         }
 
@@ -87,6 +101,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
+
     // NacosNamingModule.forRootAsync({
     //   imports: [ConfigModule],
     //   inject: [ConfigService],
@@ -107,48 +122,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    AuthZModule.register({
-      imports: [NacosConfigModule],
-      enforcerProvider: {
-        provide: AUTHZ_ENFORCER,
-        useFactory: async (config: NacosConfigService) => {
-          const configs = await config.getConfig('service-auth.json');
-
-          return casbin.newEnforcer(
-            resolve(__dirname, '../model/auth.conf'),
-            await TypeORMAdapter.newAdapter(configs.casbin.db),
-          );
-        },
-        inject: [NacosConfigService],
-      },
-      usernameFromContext: (ctx) => {
-        const request = ctx.switchToHttp().getRequest();
-        return request.user && request.user.username;
-      },
-    }),
-
-    JwtModule.registerAsync({
-      imports: [ConfigModule, NacosConfigModule],
-      useFactory: async (config: NacosConfigService) => {
-        const configs = await config.getConfig('service-auth.json');
-        return configs.jwt;
-      },
-      inject: [NacosConfigService],
-    }),
   ],
-  controllers: [AppController],
   providers: [Logger],
 })
-export class AppModule implements OnModuleInit {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly nacosConfigService: NacosConfigService,
-  ) {}
-
-  async onModuleInit() {
-    // await this.nacosNamingService.registerInstance(AUTH_SERVICE_NAME, {
-    //   port: parseInt(this.configService.get('app.port')),
-    //   ip: this.configService.get('app.hostname'),
-    // });
-  }
-}
+export class AppModule {}

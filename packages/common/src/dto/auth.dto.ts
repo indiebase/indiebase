@@ -10,7 +10,7 @@ export class SignupDto {
   username?: string;
 
   @ApiProperty({
-    default: 'letscollabtest@outlook.com',
+    default: 'deskbtm@outlook.com',
   })
   @IsNotEmpty({
     message: '账户不可为空',
