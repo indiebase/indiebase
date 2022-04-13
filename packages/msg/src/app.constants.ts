@@ -1,4 +1,4 @@
-export const USER_RMQ = 'service-user:rmq';
+export const MAIL_RMQ_CONSUMER = 'service-mail:rmq';
 
 // CASBIN
 export const NACOS_GROUP = 'DEFAULT_GROUP';

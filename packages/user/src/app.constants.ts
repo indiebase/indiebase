@@ -1,4 +1,5 @@
-export const AUTH_SERVICE_NAME = '@letscollab/service-auth';
+export const AUTH_RMQ = 'service-auth:rmq';
+export const MAIL_RMQ = 'service-mail:rmq';
 
 export const USER_CLIENT = 'service-auth:user_client';
 

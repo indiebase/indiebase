@@ -1,4 +1,4 @@
-import { AUTH_RMQ } from '@/app.constants';
+import { USER_RMQ } from '@/app.constants';
 import { Captcha, SignupDto } from '@letscollab/common';
 import {
   BadRequestException,
@@ -19,7 +19,7 @@ import { lastValueFrom, timeout } from 'rxjs';
 export class AuthService implements OnModuleInit {
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(AUTH_RMQ)
+    @Inject(USER_RMQ)
     private readonly client: ClientProxy,
 
     private readonly logger: Logger,

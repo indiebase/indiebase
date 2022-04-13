@@ -5,16 +5,20 @@
       "path": "."
     },
     {
+      "name": "📦 @letscollab/service-auth",
+      "path": "packages\\auth"
+    },
+    {
       "name": "📦 @letscollab/common",
       "path": "packages\\common"
     },
     {
-      "name": "📦 @letscollab/service-user",
-      "path": "packages\\user"
+      "name": "📦 @letscollab/service-msg",
+      "path": "packages\\msg"
     },
     {
-      "name": "📦 @letscollab/service-auth",
-      "path": "packages\\auth"
+      "name": "📦 @letscollab/service-user",
+      "path": "packages\\user"
     }
   ],
   "settings": {
