@@ -9,6 +9,7 @@ import * as DailyRotateFile from 'winston-daily-rotate-file';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailModule } from './mail';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -20,6 +21,13 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
       load: configure,
+    }),
+    RedisModule.forRootAsync({
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const configs = await config.getConfig('service-auth.json');
+        return configs.redis;
+      },
     }),
     MailerModule.forRootAsync({
       inject: [NacosConfigService],
@@ -41,8 +49,8 @@ const isDevelopment = process.env.NODE_ENV === 'development';
           },
           preview: true,
           template: {
-            dir: resolve(__dirname, '../public/mail-template/'),
-            adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+            dir: resolve(process.cwd(), 'public/tpl/'),
+            adapter: new HandlebarsAdapter(),
             options: {
               strict: true,
             },
