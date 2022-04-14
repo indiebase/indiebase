@@ -1,4 +1,4 @@
-import { USER_RMQ } from '@/app.constants';
+import { USER_RMQ } from '../app.constants';
 import { Captcha, SignupDto } from '@letscollab/common';
 import {
   BadRequestException,
@@ -20,7 +20,7 @@ export class AuthService implements OnModuleInit {
   constructor(
     private readonly jwtService: JwtService,
     @Inject(USER_RMQ)
-    private readonly client: ClientProxy,
+    private readonly userClient: ClientProxy,
 
     private readonly logger: Logger,
 
@@ -29,7 +29,7 @@ export class AuthService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.client.connect().catch((err) => {
+    await this.userClient.connect().catch((err) => {
       console.log(err);
     });
   }
@@ -41,14 +41,14 @@ export class AuthService implements OnModuleInit {
     const key = Captcha.getSignupCaptchaToken(captcha, username);
     const c = await this.redis.get(key);
 
-    // if (c) {
-    //   await this.redis.del(key);
-    // } else {
-    //   throw new BadRequestException({ message: '验证码错误或失效' });
-    // }
+    if (c) {
+      await this.redis.del(key);
+    } else {
+      throw new BadRequestException({ message: '验证码错误或失效' });
+    }
 
     const result = await lastValueFrom(
-      this.client.send({ cmd: 'signup' }, user).pipe(timeout(4000)),
+      this.userClient.send({ cmd: 'signup' }, user).pipe(timeout(4000)),
     );
     console.log(result);
   }

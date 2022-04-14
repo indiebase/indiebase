@@ -18,12 +18,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "noImplicitOverride": true
   },
   "include": [
     "src/**/*"

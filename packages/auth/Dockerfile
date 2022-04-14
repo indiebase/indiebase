@@ -6,6 +6,6 @@ WORKDIR /opt/letscollab/service-auth
 
 COPY ./dist ./dist
 
-EXPOSE 12220
+EXPOSE 23331
 
 CMD [ "node", "dist/index.js" ]

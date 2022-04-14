@@ -9,9 +9,9 @@ export class UserRepository extends Repository<UserEntity> {
     await this.save(userEntity);
   }
 
-  public async findByAccount(user: SignupDto) {
+  public async findByAccount(account: string) {
     return this.findOne({
-      account: user.account,
+      account,
     });
   }
 

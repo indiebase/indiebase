@@ -31,6 +31,8 @@ async function bootstrap() {
 
   const nacosConfigs = await nacosConfigService.getConfig('service-user.json');
 
+  app.setGlobalPrefix('v1');
+
   // 配置swagger
   !isProduction && (await setupUserApiDoc(app));
 

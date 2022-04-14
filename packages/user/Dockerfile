@@ -11,6 +11,6 @@ COPY ./i18n ./i18n
 COPY ./package.json ./package.json
 COPY ./env.${ENV:-prodction} ./
 
-EXPOSE 23332 33333
+EXPOSE 23332
 
 CMD [ "node", "index.js" ]

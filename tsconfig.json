@@ -13,12 +13,7 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "preserveSymlinks": true,
-    "noImplicitOverride": true,
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "noImplicitOverride": true
   },
   "exclude": [
     "node_modules",

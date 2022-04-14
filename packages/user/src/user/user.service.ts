@@ -2,8 +2,9 @@ import { UserRepository } from './user.repository';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SignupDto } from '@letscollab/common';
-import { MAIL_RMQ, AUTH_RMQ } from '@/app.constants';
 import { ClientProxy } from '@nestjs/microservices';
+import { ResultCode } from '@letscollab/common/src/constants';
+import { MAIL_RMQ, AUTH_RMQ } from '../app.constants';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,12 @@ export class UserService {
   ) {}
 
   public async signup(body: SignupDto) {
-    // await this.userRepo.createUser(body);
+    const user = await this.userRepo.findByAccount(body.account);
+    if (user) {
+      return {
+        message: '该用户/邮箱已经注册',
+        code: ResultCode.ERROR,
+      };
+    }
   }
 }

@@ -10,8 +10,6 @@ const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 export const setupAuthApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
-      app.setGlobalPrefix('v1');
-
       const authOptions = new DocumentBuilder()
         .setTitle('Auth Api')
         .setDescription('Authorization 接口')
