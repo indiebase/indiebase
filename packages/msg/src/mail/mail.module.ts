@@ -3,7 +3,7 @@ import { MailService } from './mail.service';
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MailController } from './mail.controller';
-import { MAIL_RMQ_CONSUMER } from '@/app.constants';
+import { MAIL_RMQ_CONSUMER } from '../app.constants';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { MAIL_RMQ_CONSUMER } from '@/app.constants';
             transport: Transport.RMQ,
             options: {
               urls: nacosConfigs.rabbitmq.urls,
-              queue: 'auth_queue',
+              queue: 'user_queue',
               queueOptions: {
                 durable: false,
               },

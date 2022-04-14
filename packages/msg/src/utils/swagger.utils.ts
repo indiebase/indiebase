@@ -3,30 +3,29 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { readJsonSync } from 'fs-extra';
 import { writeOpenApiDoc } from '@letscollab/common';
-import { AuthModule } from '../auth/auth.module';
+import { MailModule } from '../mail';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
-export const setupAuthApiDoc = (app: INestApplication) =>
+export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
-      app.setGlobalPrefix('v1');
-
-      const authOptions = new DocumentBuilder()
-        .setTitle('Auth Api')
-        .setDescription('Authorization 接口')
+      const options = new DocumentBuilder()
+        .setTitle('Message Api')
+        .setDescription('发布邮件，消息，通知等等')
         .setVersion(pkg.version)
         .build();
 
-      const authDoc = SwaggerModule.createDocument(app, authOptions, {
-        include: [AuthModule],
+      const smgDoc = SwaggerModule.createDocument(app, options, {
+        include: [MailModule],
       });
-      SwaggerModule.setup('api/doc/auth', app, authDoc);
+
+      SwaggerModule.setup('api/doc/msg', app, smgDoc);
       await writeOpenApiDoc({
-        name: 'auth',
+        name: 'Message',
         pkgName: pkg.name,
         pkgVersion: pkg.version,
-        content: authDoc,
+        content: smgDoc,
       });
     } catch (e) {
       console.log(e);

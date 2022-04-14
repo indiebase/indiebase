@@ -6,6 +6,7 @@
     "microservices",
     "nacos",
     "nestjs",
+    "rabbitmq",
     "typeorm"
   ]
 }

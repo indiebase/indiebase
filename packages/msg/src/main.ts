@@ -7,7 +7,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { FormatExceptionFilter } from '@letscollab/common';
-import { setupAuthApiDoc } from './utils';
+import { setupApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
 
@@ -30,7 +30,9 @@ async function bootstrap() {
 
   const nacosConfigs = await nacosConfigService.getConfig('service-auth.json');
 
-  !isProduction && (await setupAuthApiDoc(app));
+  app.setGlobalPrefix('v1');
+
+  !isProduction && (await setupApiDoc(app));
 
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(nestWinston);
@@ -44,7 +46,7 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: nacosConfigs.rabbitmq.urls,
-      queue: 'auth_queue',
+      queue: 'msg_queue',
       queueOptions: {
         durable: false,
       },

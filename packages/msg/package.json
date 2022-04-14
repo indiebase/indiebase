@@ -23,6 +23,7 @@
   "dependencies": {
     "@letscollab/common": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
+    "@liaoliaots/nestjs-redis": "^8.0.0",
     "@nestjs-modules/mailer": "^1.6.1",
     "@nestjs/common": "^8.2.6",
     "@nestjs/config": "^1.2.0",
@@ -30,6 +31,7 @@
     "@nestjs/microservices": "^8.2.6",
     "amqp-connection-manager": "^4.1.1",
     "amqplib": "^0.8.0",
+    "ioredis": "^5.0.4",
     "nanoid": "^3.3.2",
     "nest-winston": "^1.6.2",
     "reflect-metadata": "^0.1.13",
@@ -45,6 +47,7 @@
     "@types/amqplib": "^0",
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
+    "@types/nodemailer": "^6.4.4",
     "@types/rimraf": "^3",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
