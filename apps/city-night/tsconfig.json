@@ -21,12 +21,7 @@
     "jsx": "react-jsx",
     "noImplicitAny": false,
     "baseUrl": ".",
-    "outDir": "./dist",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "outDir": "./dist"deskbtm@outlook.com
   },
   "include": [
     "src"

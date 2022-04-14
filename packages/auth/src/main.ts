@@ -30,6 +30,9 @@ async function bootstrap() {
 
   const nacosConfigs = await nacosConfigService.getConfig('service-auth.json');
 
+  // 接口版本
+  app.setGlobalPrefix('v1');
+
   !isProduction && (await setupAuthApiDoc(app));
 
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);

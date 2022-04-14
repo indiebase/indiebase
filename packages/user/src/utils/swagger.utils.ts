@@ -11,8 +11,6 @@ const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 export const setupUserApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
-      app.setGlobalPrefix('v1');
-
       const userOptions = new DocumentBuilder()
         .setTitle('User Api')
         .setDescription('用户接口')

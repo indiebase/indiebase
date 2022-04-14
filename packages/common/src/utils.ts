@@ -20,7 +20,7 @@ export const writeOpenApiDoc = async ({
  * 验证码相关工具
  */
 export const Captcha = {
-  getSignupCaptchaToken(captcha, username) {
-    return 'SIGNUP_' + Date.now() + '_' + captcha + '-' + username;
+  getSignupCaptchaToken(captcha, t) {
+    return 'SIGNUP_' + captcha + '-' + t;
   },
 };

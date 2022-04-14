@@ -2346,6 +2346,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab/common@workspace:packages/common"
   dependencies:
+    "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs/cli": ^8.2.0
     "@nestjs/common": ^8.2.6
     "@nestjs/core": ^8.2.6
@@ -2363,6 +2364,7 @@ __metadata:
     eslint: ^8.0.1
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^4.0.0
+    ioredis: ^5.0.4
     jest: ^27.2.5
     prettier: ^2.3.2
     reflect-metadata: ^0.1.13
@@ -2635,12 +2637,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/service-mail@workspace:packages/mail":
+"@letscollab/service-msg@workspace:packages/msg":
   version: 0.0.0-use.local
-  resolution: "@letscollab/service-mail@workspace:packages/mail"
+  resolution: "@letscollab/service-msg@workspace:packages/msg"
   dependencies:
     "@letscollab/common": "workspace:^"
     "@letscollab/nest-nacos": "workspace:^"
+    "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs-modules/mailer": ^1.6.1
     "@nestjs/cli": ^8.2.0
     "@nestjs/common": ^8.2.6
@@ -2652,6 +2655,7 @@ __metadata:
     "@types/amqplib": ^0
     "@types/jest": 27.0.2
     "@types/node": ^16.0.0
+    "@types/nodemailer": ^6.4.4
     "@types/rimraf": ^3
     "@types/supertest": ^2.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
@@ -2662,6 +2666,7 @@ __metadata:
     eslint: ^8.0.1
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^4.0.0
+    ioredis: ^5.0.4
     jest: ^27.2.5
     nanoid: ^3.3.2
     nest-winston: ^1.6.2
@@ -4232,6 +4237,15 @@ __metadata:
   version: 16.11.25
   resolution: "@types/node@npm:16.11.25"
   checksum: 0b6e25a81364be89256ad1a36341e27b387e646d3186e270108a8bb7b6ecdfdf5ae037aa1c75a5117b8a7509c80093b75431cd5cfcfbc4d553b52e7db2ca272e
+  languageName: node
+  linkType: hard
+
+"@types/nodemailer@npm:^6.4.4":
+  version: 6.4.4
+  resolution: "@types/nodemailer@npm:6.4.4"
+  dependencies:
+    "@types/node": "*"
+  checksum: 16ed1bad2cd8471fd3b026471e234da33ba3b65935dc44b31be3145eff7bdb067eb4d08ec4b41d23339b988075299abc1a0c0fe77b99f04ca235827bca95af81
   languageName: node
   linkType: hard
 

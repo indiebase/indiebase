@@ -6,14 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, MAIL_RMQ } from '@/app.constants';
+import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, UserRepository]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
-      { name: MAIL_RMQ, q: 'mail_queue' },
+      { name: MAIL_RMQ, q: 'msg_queue' },
     ].map((v) => {
       return ClientsModule.registerAsync([
         {
@@ -28,7 +28,7 @@ import { AUTH_RMQ, MAIL_RMQ } from '@/app.constants';
               transport: Transport.RMQ,
               options: {
                 urls: nacosConfigs.rabbitmq.urls,
-                queue: 'auth_queue',
+                queue: v.q,
                 queueOptions: {
                   durable: false,
                 },
