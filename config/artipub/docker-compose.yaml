@@ -6,8 +6,8 @@ services:
       MONGO_HOST: 'mongo'
       ARTIPUB_API_ADDRESS: 'http://0.0.0.0:13340'
     ports:
-      - '13341:8000'
-      - '13340:3000'
+      - '18000:8000'
+      - '13000:3000'
     depends_on:
       - mongo
   mongo:
