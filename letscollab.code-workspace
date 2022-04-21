@@ -5,20 +5,8 @@
       "path": "."
     },
     {
-      "name": "📦 @letscollab/service-auth",
-      "path": "packages\\auth"
-    },
-    {
-      "name": "📦 @letscollab/common",
-      "path": "packages\\common"
-    },
-    {
       "name": "📦 @letscollab/service-msg",
-      "path": "packages\\msg"
-    },
-    {
-      "name": "📦 @letscollab/service-user",
-      "path": "packages\\user"
+      "path": "packages/msg"
     }
   ],
   "settings": {
@@ -29,13 +17,12 @@
     ],
     "files.exclude": {
       "**/.git": true,
-      "**/.svn": true,
-      "**/.hg": true,
-      "**/CVS": true,
-      "**/.DS_Store": true,
-      "**/Thumbs.db": true,
-      "**/LICENSE": true,
-      "**/node_modules": true,
+      "**/.svn": false,
+      "**/.hg": false,
+      "**/CVS": false,
+      "**/.DS_Store": false,
+      "**/Thumbs.db": false,
+      "node_modules": false,
       "**/.editorconfig": true,
       "**/.gitignore": true,
       "**/.gitattributes": true,
@@ -44,46 +31,53 @@
       "**/.yarn": true,
       "**/.prettierrc": true,
       "**/.eslintrc.js": true,
-      "**/key": true,
-      "**/key/dev.pem": false
+      "**/.eslintignore": true,
+      "**/LICENSE-zh": true,
     },
     "explorerExclude.backup": null,
-    "workbench.colorCustomizations": {
-      "statusBar.background": "#4f125c",
-      "statusBar.foreground": "#ffffff",
-      "tab.activeBorder": "#4f125c",
-      "sideBar.foreground": "#ffffff",
-      "sideBarTitle.foreground": "#4f125c"
-    },
+    "workspace.isHidden": false,
     "ColorfulMonorepo.workspaces.collection": [
       {
-        "path": "c:\\Users\\Nawb\\Desktop\\Workspace\\letscollab",
+        "path": "/home/nawbc/Workspace/letscollab",
         "packageName": "letscollab",
         "label": "🌱  letscollab",
         "foreground": "#ffffff",
-        "background": "#4f125c"
+        "background": "#1a7aad"
       },
       {
-        "path": "c:\\Users\\Nawb\\Desktop\\Workspace\\letscollab\\packages\\auth",
+        "path": "/home/nawbc/Workspace/letscollab/packages/auth",
         "packageName": "@letscollab/service-auth",
         "label": "🍀  @letscollab/service-auth",
-        "foreground": "#000000",
-        "background": "#eddcfe"
+        "foreground": "#ffffff",
+        "background": "#026bfe"
       },
       {
-        "path": "c:\\Users\\Nawb\\Desktop\\Workspace\\letscollab\\packages\\common",
+        "path": "/home/nawbc/Workspace/letscollab/packages/common",
         "packageName": "@letscollab/common",
         "label": "🍀  @letscollab/common",
-        "foreground": "#000000",
-        "background": "#6ae7d7"
+        "foreground": "#ffffff",
+        "background": "#f058be"
       },
       {
-        "path": "c:\\Users\\Nawb\\Desktop\\Workspace\\letscollab\\packages\\msg",
+        "path": "/home/nawbc/Workspace/letscollab/packages/msg",
         "packageName": "@letscollab/service-msg",
         "label": "🍀  @letscollab/service-msg",
+        "foreground": "#000000",
+        "background": "#e7ccef"
+      },
+      {
+        "path": "/home/nawbc/Workspace/letscollab/packages/user",
+        "packageName": "@letscollab/service-user",
+        "label": "🍀  @letscollab/service-user",
         "foreground": "#ffffff",
-        "background": "#f1272b"
+        "background": "#1e3faf"
       }
-    ]
+    ],
+    "workbench.colorCustomizations": {
+      "statusBar.background": "#1a7aad",
+      "statusBar.foreground": "#ffffff",
+      "tab.activeBorder": "#1a7aad",
+      "sideBarTitle.foreground": "#1a7aad"
+    }
   }
 }
