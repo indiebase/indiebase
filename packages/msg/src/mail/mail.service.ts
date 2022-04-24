@@ -12,6 +12,7 @@ import { Captcha } from '@letscollab/common';
 export class MailService {
   constructor(
     private readonly mailerService: MailerService,
+    // private readonly logger: Logger,
     @InjectRedis()
     private readonly redis: Redis,
   ) {}
@@ -20,7 +21,7 @@ export class MailService {
     const captcha = parseInt(Math.random().toString().slice(2, 7));
     const subject = '注册验证';
 
-    await this.mailerService
+    return this.mailerService
       .sendMail({
         to: body.account,
         subject,
@@ -28,16 +29,20 @@ export class MailService {
         context: {
           captcha,
           subject,
+          addition: '',
         },
+      })
+      .then(async () => {
+        await this.redis.setex(
+          Captcha.getSignupCaptchaToken(captcha, body.account),
+          3000,
+          captcha,
+        );
+
+        return {};
       })
       .catch((e) => {
         console.log(e);
       });
-
-    await this.redis.setex(
-      Captcha.getSignupCaptchaToken(captcha, body.account),
-      3000,
-      captcha,
-    );
   }
 }

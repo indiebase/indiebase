@@ -47,7 +47,8 @@
     "rxjs": "^7.2.0",
     "typeorm-adapter": "^1.4.2",
     "winston": "^3.7.2",
-    "winston-daily-rotate-file": "^4.6.1"
+    "winston-daily-rotate-file": "^4.6.1",
+    "winston-loki": "^6.0.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.2.0",

@@ -16,11 +16,11 @@ version: '3.7'
 #     MINIO_ACCESS_KEY_FILE: /run/secrets/access_key
 #     MINIO_SECRET_KEY_FILE: /run/secrets/secret_key
 
-# x-logging: &loki-logging
-#   driver: loki
-#   options:
-#     loki-url: 'http://localhost:13339'
-#     max-size: '200m'
+x-logging: &loki-logging
+  driver: loki
+  options:
+    loki-url: 'http://localhost:13339/loki/api/v1/push'
+    max-size: '200m'
 
 services:
   apisix-dashboard:
@@ -139,11 +139,12 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
-    logging:
-      driver: loki
-      options:
-        loki-url: 'http://localhost:13339/loki/api/v1/push'
-        max-size: '200m'
+    # logging: *loki-logging
+    # logging:
+    #   driver: loki
+    #   options:
+    #     loki-url: 'http://localhost:13339/loki/api/v1/push'
+    #     max-size: '200m'
     networks:
       - apisix
       - loki
@@ -161,7 +162,7 @@ services:
   promtail:
     image: grafana/promtail:2.5.0
     volumes:
-      - './config/promtail:/etc/promtail/'
+      # - './config/promtail:/etc/promtail/'
       - loki_logs:/var/log
     command: -config.file=/etc/promtail/config.yaml
     networks:

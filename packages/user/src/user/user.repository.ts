@@ -6,6 +6,7 @@ import { UserEntity } from './user.entity';
 export class UserRepository extends Repository<UserEntity> {
   async createUser(body) {
     const userEntity = this.create(body);
+
     await this.save(userEntity);
   }
 
