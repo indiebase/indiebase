@@ -3,7 +3,7 @@ import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
-import configure from '@/config';
+import configure from './config';
 import { UserModule } from './user/user.module';
 import { I18nModule } from 'nestjs-i18n';
 const isProd = process.env.NODE_ENV === 'production';

@@ -8,7 +8,6 @@ import { MailService } from './mail.service';
 export class MailController {
   constructor(private readonly mailService: MailService) {}
 
-  
   @Post('send-captcha')
   async sendCaptcha(@Body() body: GetCaptchaDto) {
     this.mailService.sendCaptchaEmail(body);

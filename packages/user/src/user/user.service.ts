@@ -19,6 +19,7 @@ export class UserService {
   ) {}
 
   public async signup(body: SignupDto) {
+    this.userRepo.create;
     const user = await this.userRepo.findByAccount(body.account);
     if (user) {
       return {

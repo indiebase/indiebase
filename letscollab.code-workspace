@@ -1,12 +1,24 @@
 {
   "folders": [
     {
-      "name": "✨ letscollab",
+      "name": "🌱  letscollab",
       "path": "."
     },
     {
-      "name": "📦 @letscollab/service-msg",
+      "name": "🍀  @letscollab/service-auth",
+      "path": "packages/auth"
+    },
+    {
+      "name": "🍀  @letscollab/common",
+      "path": "packages/common"
+    },
+    {
+      "name": "🍀  @letscollab/service-msg",
       "path": "packages/msg"
+    },
+    {
+      "name": "🍀  @letscollab/service-user",
+      "path": "packages/user"
     }
   ],
   "settings": {
@@ -17,22 +29,29 @@
     ],
     "files.exclude": {
       "**/.git": true,
-      "**/.svn": false,
-      "**/.hg": false,
-      "**/CVS": false,
-      "**/.DS_Store": false,
-      "**/Thumbs.db": false,
-      "node_modules": false,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
       "**/.editorconfig": true,
       "**/.gitignore": true,
       "**/.gitattributes": true,
       "**/.github": true,
-      "**/.vscode": true,
       "**/.yarn": true,
       "**/.prettierrc": true,
       "**/.eslintrc.js": true,
-      "**/.eslintignore": true,
       "**/LICENSE-zh": true,
+      "**/.eslintignore": true,
+      "**/node_modules": true,
+      "**/Dockerfile": true,
+      "**/ormconfig.js": true,
+      "**/tsconfig.json": true,
+      "**/nest-cli.json": true,
+      "**/package.json": true,
+      "**/.env.production": true,
+      "**/.env.test": true,
+      "**/.env.development": true
     },
     "explorerExclude.backup": null,
     "workspace.isHidden": false,
@@ -42,42 +61,44 @@
         "packageName": "letscollab",
         "label": "🌱  letscollab",
         "foreground": "#ffffff",
-        "background": "#1a7aad"
+        "background": "#68808b"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/auth",
         "packageName": "@letscollab/service-auth",
         "label": "🍀  @letscollab/service-auth",
-        "foreground": "#ffffff",
-        "background": "#026bfe"
+        "foreground": "#000000",
+        "background": "#deb3df"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/common",
         "packageName": "@letscollab/common",
         "label": "🍀  @letscollab/common",
         "foreground": "#ffffff",
-        "background": "#f058be"
+        "background": "#cb077a"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/msg",
         "packageName": "@letscollab/service-msg",
         "label": "🍀  @letscollab/service-msg",
-        "foreground": "#000000",
-        "background": "#e7ccef"
+        "foreground": "#ffffff",
+        "background": "#37303a"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/user",
         "packageName": "@letscollab/service-user",
         "label": "🍀  @letscollab/service-user",
-        "foreground": "#ffffff",
-        "background": "#1e3faf"
+        "foreground": "#000000",
+        "background": "#fbe173"
       }
     ],
     "workbench.colorCustomizations": {
-      "statusBar.background": "#1a7aad",
+      "statusBar.background": "#68808b",
       "statusBar.foreground": "#ffffff",
-      "tab.activeBorder": "#1a7aad",
-      "sideBarTitle.foreground": "#1a7aad"
-    }
+      "tab.activeBorder": "#68808b",
+      "sideBarTitle.foreground": "#68808b"
+    },
+    "ColorfulMonorepo.arrange.enabled": false,
+    "ColorfulMonorepo.arrange.init": true
   }
 }

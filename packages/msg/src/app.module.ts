@@ -33,19 +33,19 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const configs = await config.getConfig('service-msg.json');
+
         return {
           transport: {
-            port: configs.mail.port,
+            host: configs.mail.host,
             ignoreTLS: false,
             secure: true,
-            service: configs.mail.type,
             auth: {
               user: configs.mail.username,
               pass: configs.mail.password,
             },
           },
           defaults: {
-            from: configs.mail.from,
+            from: `Deskbtm <${configs.mail.username}>`,
           },
           preview: true,
           template: {
@@ -91,7 +91,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         return {
           level: isDevelopment ? 'debug' : 'warn',
           format: winston.format.json(),
-          defaultMeta: { service: 'auth' },
+          defaultMeta: { service: 'message' },
           exitOnError: false,
           rejectionHandlers: isProduction
             ? [

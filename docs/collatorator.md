@@ -9,13 +9,13 @@ Port: `13331:9443`
 - `cd ./config/portainer`
 - `docker stack deploy -c ./docker-compose.yaml portainer`
 
-#### minio
+<!-- #### minio
 
 Port: `13337:9000`,
 
 Console Port: `13338:9001`
 
-`docker stack deploy -c ./docker-compose.yaml minio`
+`docker stack deploy -c ./docker-compose.yaml minio` -->
 
 #### apisix
 
