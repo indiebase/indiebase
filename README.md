@@ -32,7 +32,7 @@ letscollab 用于 Nawb 付费的服务将不开源 letscollab 基于 agpl 开源
 
 附加许可：
 
-Copyright (C) 2021 WangHan <wanghan9423@outlook.com>
+Copyright (C) 2021 WangHan <deskbtm@outlook.com>
 
 a) 本程序的源代码禁止个人私自传播，部署，衍生，源代码仅用于学习交流
 
