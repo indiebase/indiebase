@@ -52,8 +52,8 @@
       "**/.env.production": true,
       "**/.env.test": true,
       "**/.env.development": true,
-      "**/.vscode": true,
-      "**/test": true
+      "**/test": true,
+      "**/.vscode": true
     },
     "explorerExclude.backup": null,
     "workspace.isHidden": false,
@@ -95,10 +95,10 @@
       }
     ],
     "workbench.colorCustomizations": {
-      "statusBar.background": "#68808b",
+      "statusBar.background": "#cb077a",
       "statusBar.foreground": "#ffffff",
-      "tab.activeBorder": "#68808b",
-      "sideBarTitle.foreground": "#68808b"
+      "tab.activeBorder": "#cb077a",
+      "sideBarTitle.foreground": "#cb077a"
     },
     "ColorfulMonorepo.arrange.enabled": false,
     "ColorfulMonorepo.arrange.init": true

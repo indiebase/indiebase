@@ -15,23 +15,5 @@
   ],
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    "✨ letscollab/.editorconfig": true,
-    "✨ letscollab/.eslintignore": true,
-    "✨ letscollab/.eslintrc.js": true,
-    "✨ letscollab/.gitattributes": true,
-    "✨ letscollab/.gitignore": true,
-    "✨ letscollab/.gitmodules": true,
-    "✨ letscollab/.prettierrc": true,
-    "✨ letscollab/.yarnrc.yml": true,
-    "✨ letscollab/letscollab.code-workspace": true,
-    "📦 @letscollab/service-user/node_modules": true
-  },
+  }
 }
