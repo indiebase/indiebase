@@ -51,7 +51,9 @@
       "**/package.json": true,
       "**/.env.production": true,
       "**/.env.test": true,
-      "**/.env.development": true
+      "**/.env.development": true,
+      "**/.vscode": true,
+      "**/test": true
     },
     "explorerExclude.backup": null,
     "workspace.isHidden": false,
