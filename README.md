@@ -2,6 +2,10 @@
 
 <https://nawb.deskbtm.com/more/lonely-mgmt/start>
 
+<img width="500" src="https://s2.loli.net/2022/04/25/dPcuzynwbxStgl4.png" />
+
+<br />
+
 ### 什么是 letscollab？
 
 letscollab 类似于 Patreon + OpenCollective. 其提供以下几点主要功能
