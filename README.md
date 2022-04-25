@@ -2,7 +2,7 @@
 
 <https://nawb.deskbtm.com/more/lonely-mgmt/start>
 
-<img width="500" src="https://s2.loli.net/2022/04/25/dPcuzynwbxStgl4.png" />
+<img src="https://s2.loli.net/2022/04/25/dPcuzynwbxStgl4.png" />
 
 <br />
 
