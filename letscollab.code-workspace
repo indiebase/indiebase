@@ -95,10 +95,10 @@
       }
     ],
     "workbench.colorCustomizations": {
-      "statusBar.background": "#cb077a",
+      "statusBar.background": "#68808b",
       "statusBar.foreground": "#ffffff",
-      "tab.activeBorder": "#cb077a",
-      "sideBarTitle.foreground": "#cb077a"
+      "tab.activeBorder": "#68808b",
+      "sideBarTitle.foreground": "#68808b"
     },
     "ColorfulMonorepo.arrange.enabled": false,
     "ColorfulMonorepo.arrange.init": true
