@@ -29,8 +29,8 @@ services:
       - ./config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
       - '13336:9000'
-    networks:
-      - apisix
+    # networks:
+    #   - apisix
 
   apisix:
     image: apache/apisix:2.11.0-alpine
@@ -47,8 +47,8 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    networks:
-      - apisix
+    # networks:
+    #   - apisix
 
   etcd:
     image: bitnami/etcd:3.4.15
@@ -61,8 +61,8 @@ services:
       ETCD_LISTEN_CLIENT_URLS: 'http://0.0.0.0:2379'
     ports:
       - '2379:2379/tcp'
-    networks:
-      - apisix
+    # networks:
+    #   - apisix
 
   prometheus:
     image: prom/prometheus:v2.25.0
@@ -70,13 +70,13 @@ services:
       - ./config/prometheus/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '13334:9090'
-    networks:
-      - apisix
+    # networks:
+    #   - apisix
 
   nacos:
     image: nacos/nacos-server:v2.0.4
     env_file:
-      - ./config/nacos/nacos.env
+      - ./.env.development
     volumes:
       - mysql_logs:/home/nacos/logs
     ports:
@@ -88,14 +88,14 @@ services:
         condition: on-failure
       resources:
         limits:
-          memory: 400M
+          memory: 512M
     depends_on:
       - mysql
 
   mysql:
     image: nacos/nacos-mysql:8.0.16
     env_file:
-      - ./config/db/mysql.env
+      - ./.env.development
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
@@ -145,28 +145,28 @@ services:
     #   options:
     #     loki-url: 'http://localhost:13339/loki/api/v1/push'
     #     max-size: '200m'
-    networks:
-      - apisix
-      - loki
+    # networks:
+    #   - apisix
+    #   - loki
 
-  loki:
-    image: grafana/loki:2.5.0
-    # volumes:
-    #   - './config/loki:/etc/loki/'
-    ports:
-      - '13339:3100'
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - loki
+  # loki:
+  #   image: grafana/loki:2.5.0
+  #   volumes:
+  #     - './config/loki:/etc/loki/'
+  #   ports:
+  #     - '13339:3100'
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   networks:
+  #     - loki
 
-  promtail:
-    image: grafana/promtail:2.5.0
-    volumes:
-      # - './config/promtail:/etc/promtail/'
-      - loki_logs:/var/log
-    command: -config.file=/etc/promtail/config.yaml
-    networks:
-      - loki
+  # promtail:
+  #   image: grafana/promtail:2.5.0
+  #   volumes:
+  #     - './config/promtail:/etc/promtail/'
+  #     - loki_logs:/var/log
+  #   command: -config.file=/etc/promtail/config.yaml
+  #   networks:
+  #     - loki
 
   rabbitmq:
     image: rabbitmq:3.9.14-management
@@ -175,17 +175,6 @@ services:
       - '13341:15672'
     networks:
       - rabbitmq
-  # consul:
-  #   image: consul:1.11.4
-  #   volumes:
-  #     - consul_data:/bitnami/consul
-  #   ports:
-  #     - '13342:8300'
-  #     - '13343:8301'
-  #     - '13343:8301/udp'
-  #     - '13344:8500'
-  #     - '13345:8600'
-  #     - '13344:8600/udp'
 
   redis:
     image: redis:6.2.6-alpine
@@ -194,9 +183,6 @@ services:
     volumes:
       - 'redis_data:/data'
     command: --requirepass dev123456
-
-    networks:
-      - loki
 
 networks:
   apisix:
@@ -211,8 +197,6 @@ networks:
 volumes:
   etcd_data:
     driver: local
-  # minio_data1_1:
-  # minio_data1_2:
   mysql_data:
   grafana_data:
   portainer_data:
@@ -220,5 +204,3 @@ volumes:
   apisix_logs:
   mysql_logs:
   loki_logs:
-  # consul_data:
-  #   driver: local

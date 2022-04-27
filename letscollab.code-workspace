@@ -27,34 +27,34 @@
       "nacos",
       "nestjs"
     ],
-    "files.exclude": {
-      "**/.git": true,
-      "**/.svn": true,
-      "**/.hg": true,
-      "**/CVS": true,
-      "**/.DS_Store": true,
-      "**/Thumbs.db": true,
-      "**/.editorconfig": true,
-      "**/.gitignore": true,
-      "**/.gitattributes": true,
-      "**/.github": true,
-      "**/.yarn": true,
-      "**/.prettierrc": true,
-      "**/.eslintrc.js": true,
-      "**/LICENSE-zh": true,
-      "**/.eslintignore": true,
-      "**/node_modules": true,
-      "**/Dockerfile": true,
-      "**/ormconfig.js": true,
-      "**/tsconfig.json": true,
-      "**/nest-cli.json": true,
-      "**/package.json": true,
-      "**/.env.production": true,
-      "**/.env.test": true,
-      "**/.env.development": true,
-      "**/test": true,
-      "**/.vscode": true
-    },
+    // "files.exclude": {
+    //   "**/.git": true,
+    //   "**/.svn": true,
+    //   "**/.hg": true,
+    //   "**/CVS": true,
+    //   "**/.DS_Store": true,
+    //   "**/Thumbs.db": true,
+    //   "**/.editorconfig": true,
+    //   "**/.gitignore": true,
+    //   "**/.gitattributes": true,
+    //   "**/.github": true,
+    //   "**/.yarn": true,
+    //   "**/.prettierrc": true,
+    //   "**/.eslintrc.js": true,
+    //   "**/LICENSE-zh": true,
+    //   "**/.eslintignore": true,
+    //   "**/node_modules": true,
+    //   "**/Dockerfile": true,
+    //   "**/ormconfig.js": true,
+    //   "**/tsconfig.json": true,
+    //   "**/nest-cli.json": true,
+    //   "**/package.json": true,
+    //   "**/.env.production": true,
+    //   "**/.env.test": true,
+    //   "**/.env.development": true,
+    //   "**/test": true,
+    //   "**/.vscode": true
+    // },
     "explorerExclude.backup": null,
     "workspace.isHidden": false,
     "ColorfulMonorepo.workspaces.collection": [
@@ -63,42 +63,42 @@
         "packageName": "letscollab",
         "label": "🌱  letscollab",
         "foreground": "#ffffff",
-        "background": "#68808b"
+        "background": "#0c548b"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/auth",
         "packageName": "@letscollab/service-auth",
         "label": "🍀  @letscollab/service-auth",
         "foreground": "#000000",
-        "background": "#deb3df"
+        "background": "#fb83ad"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/common",
         "packageName": "@letscollab/common",
         "label": "🍀  @letscollab/common",
-        "foreground": "#ffffff",
-        "background": "#cb077a"
+        "foreground": "#000000",
+        "background": "#3fb99f"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/msg",
         "packageName": "@letscollab/service-msg",
         "label": "🍀  @letscollab/service-msg",
-        "foreground": "#ffffff",
-        "background": "#37303a"
+        "foreground": "#000000",
+        "background": "#a6cbea"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/packages/user",
         "packageName": "@letscollab/service-user",
         "label": "🍀  @letscollab/service-user",
         "foreground": "#000000",
-        "background": "#fbe173"
+        "background": "#29f19f"
       }
     ],
     "workbench.colorCustomizations": {
-      "statusBar.background": "#68808b",
+      "statusBar.background": "#0c548b",
       "statusBar.foreground": "#ffffff",
-      "tab.activeBorder": "#68808b",
-      "sideBarTitle.foreground": "#68808b"
+      "tab.activeBorder": "#0c548b",
+      "sideBarTitle.foreground": "#0c548b"
     },
     "ColorfulMonorepo.arrange.enabled": false,
     "ColorfulMonorepo.arrange.init": true
