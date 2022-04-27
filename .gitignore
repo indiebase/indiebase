@@ -5,7 +5,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
+*production*
 # compiled output
 **/node_modules/*
 **/dist/*
