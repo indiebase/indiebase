@@ -2332,13 +2332,14 @@ __metadata:
     next-pwa: ^5.4.4
     next-sitemap: ^2.5.2
     nprogress: ^0.2.0
-    react: 18.0.0
+    react: 17.0.2
     react-device-detect: ^2.1.2
-    react-dom: 18.0.0
+    react-dom: 17.0.2
     react-query: ^3.34.16
+    react-scroll-motion: ^0.2.6
     react-use: ^17.3.2
     sass: ^1.49.9
-    typescript: 4.6.3
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -2382,9 +2383,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/dashboard@workspace:apps/dashboard":
+"@letscollab/console@workspace:apps/console":
   version: 0.0.0-use.local
-  resolution: "@letscollab/dashboard@workspace:apps/dashboard"
+  resolution: "@letscollab/console@workspace:apps/console"
   dependencies:
     "@babel/core": ^7.16.0
     "@emotion/react": ^11.8.1
@@ -2438,11 +2439,11 @@ __metadata:
     postcss-normalize: ^10.0.1
     postcss-preset-env: ^7.0.1
     prompts: ^2.4.2
-    react: ^18.0.0
+    react: ^17.0.2
     react-app-polyfill: ^3.0.0
     react-dev-utils: ^12.0.0
     react-device-detect: ^2.1.2
-    react-dom: ^18.0.0
+    react-dom: ^17.0.2
     react-perfect-scrollbar: ^1.5.8
     react-query: ^3.34.15
     react-refresh: ^0.11.0
@@ -6955,8 +6956,8 @@ __metadata:
     "@types/node": ^16.11.25
     "@types/react": ^17.0.39
     "@types/react-dom": ^17.0.11
-    react: ^18.0.0
-    react-dom: ^18.0.0
+    react: ^17.0.2
+    react-dom: ^17.0.2
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -17593,15 +17594,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.0.0, react-dom@npm:^18.0.0":
-  version: 18.0.0
-  resolution: "react-dom@npm:18.0.0"
+"react-dom@npm:17.0.2, react-dom@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react-dom@npm:17.0.2"
   dependencies:
     loose-envify: ^1.1.0
-    scheduler: ^0.21.0
+    object-assign: ^4.1.1
+    scheduler: ^0.20.2
   peerDependencies:
-    react: ^18.0.0
-  checksum: dd0ba9f2f31dd728076c892a95b2f5a8dfe79136431b0289afb46eec39d0ca6b6f0f40a60fd8aa6ef702c98ce7c26100d3d4dbc35c7c9e87429cd04f84cb58bd
+    react: 17.0.2
+  checksum: 1c1eaa3bca7c7228d24b70932e3d7c99e70d1d04e13bb0843bbf321582bc25d7961d6b8a6978a58a598af2af496d1cedcfb1bf65f6b0960a0a8161cb8dab743c
   languageName: node
   linkType: hard
 
@@ -17688,6 +17690,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-scroll-motion@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "react-scroll-motion@npm:0.2.6"
+  peerDependencies:
+    react: ^17.0.1
+    react-dom: ^17.0.1
+  checksum: c2418f65297c9ef5d760e690ff1d479484c12f99eabd7da5bfca993ca8c2cdd756c17ef67847230f9bd962a09d9b8a31af337c30820fbd1bedbb11955df22c33
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.2":
   version: 4.4.2
   resolution: "react-transition-group@npm:4.4.2"
@@ -17738,12 +17750,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.0.0, react@npm:^18.0.0":
-  version: 18.0.0
-  resolution: "react@npm:18.0.0"
+"react@npm:17.0.2, react@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react@npm:17.0.2"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: 293020b96536b3c7113ee57ca5c990a3f25649d1751b1c7a3aabd16dff0691fe9f1eed1206616d0906d05933536052037340a0c8d0941ff870b0eb469a2f975b
+    object-assign: ^4.1.1
+  checksum: b254cc17ce3011788330f7bbf383ab653c6848902d7936a87b09d835d091e3f295f7e9dd1597c6daac5dc80f90e778c8230218ba8ad599f74adcc11e33b9d61b
   languageName: node
   linkType: hard
 
@@ -18455,12 +18468,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.21.0":
-  version: 0.21.0
-  resolution: "scheduler@npm:0.21.0"
+"scheduler@npm:^0.20.2":
+  version: 0.20.2
+  resolution: "scheduler@npm:0.20.2"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: 4f8285076041ed2c81acdd1faa987f1655fdbd30554bc667c1ea64743fc74fb3a04ca7d27454b3d678735df5a230137a3b84756061b43dc5796e80701b66d124
+    object-assign: ^4.1.1
+  checksum: c4b35cf967c8f0d3e65753252d0f260271f81a81e427241295c5a7b783abf4ea9e905f22f815ab66676f5313be0a25f47be582254db8f9241b259213e999b8fc
   languageName: node
   linkType: hard
 
@@ -20608,7 +20622,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.6.3, typescript@npm:^4.6.3":
+"typescript@npm:^4.6.3":
   version: 4.6.3
   resolution: "typescript@npm:4.6.3"
   bin:
@@ -20628,7 +20642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.6.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
   version: 4.6.3
   resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=493e53"
   bin:

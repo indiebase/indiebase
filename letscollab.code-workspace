@@ -5,20 +5,8 @@
       "path": "."
     },
     {
-      "name": "🍀  @letscollab/service-auth",
-      "path": "packages/auth"
-    },
-    {
-      "name": "🍀  @letscollab/common",
-      "path": "packages/common"
-    },
-    {
-      "name": "🍀  @letscollab/service-msg",
-      "path": "packages/msg"
-    },
-    {
-      "name": "🍀  @letscollab/service-user",
-      "path": "packages/user"
+      "name": "🍀  @letscollab/app",
+      "path": "apps/app"
     }
   ],
   "settings": {
@@ -63,42 +51,21 @@
         "packageName": "letscollab",
         "label": "🌱  letscollab",
         "foreground": "#ffffff",
-        "background": "#0c548b"
+        "background": "#1d3523"
       },
       {
-        "path": "/home/nawbc/Workspace/letscollab/packages/auth",
-        "packageName": "@letscollab/service-auth",
-        "label": "🍀  @letscollab/service-auth",
+        "path": "/home/nawbc/Workspace/letscollab/apps/app",
+        "packageName": "@letscollab/app",
+        "label": "🍀  @letscollab/app",
         "foreground": "#000000",
-        "background": "#fb83ad"
-      },
-      {
-        "path": "/home/nawbc/Workspace/letscollab/packages/common",
-        "packageName": "@letscollab/common",
-        "label": "🍀  @letscollab/common",
-        "foreground": "#000000",
-        "background": "#3fb99f"
-      },
-      {
-        "path": "/home/nawbc/Workspace/letscollab/packages/msg",
-        "packageName": "@letscollab/service-msg",
-        "label": "🍀  @letscollab/service-msg",
-        "foreground": "#000000",
-        "background": "#a6cbea"
-      },
-      {
-        "path": "/home/nawbc/Workspace/letscollab/packages/user",
-        "packageName": "@letscollab/service-user",
-        "label": "🍀  @letscollab/service-user",
-        "foreground": "#000000",
-        "background": "#29f19f"
+        "background": "#9fb591"
       }
     ],
     "workbench.colorCustomizations": {
-      "statusBar.background": "#0c548b",
-      "statusBar.foreground": "#ffffff",
-      "tab.activeBorder": "#0c548b",
-      "sideBarTitle.foreground": "#0c548b"
+      "statusBar.background": "#9fb591",
+      "statusBar.foreground": "#000000",
+      "tab.activeBorder": "#9fb591",
+      "sideBarTitle.foreground": "#9fb591"
     },
     "ColorfulMonorepo.arrange.enabled": false,
     "ColorfulMonorepo.arrange.init": true
