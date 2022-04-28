@@ -21,7 +21,10 @@ Router.events.on('routeChangeStart', NProgress.start);
 Router.events.on('routeChangeComplete', NProgress.done);
 Router.events.on('routeChangeError', NProgress.done);
 
-function LetsCollabApp({ Component, pageProps }: AppProps) {
+function LetsCollabApp({
+  Component,
+  pageProps,
+}: AppProps & { Component: any }) {
   return (
     <>
       <Head>
