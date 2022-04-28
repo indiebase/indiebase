@@ -51,23 +51,31 @@
         "packageName": "letscollab",
         "label": "🌱  letscollab",
         "foreground": "#ffffff",
-        "background": "#1d3523"
+        "background": "#5e9b5a"
       },
       {
         "path": "/home/nawbc/Workspace/letscollab/apps/app",
         "packageName": "@letscollab/app",
         "label": "🍀  @letscollab/app",
         "foreground": "#000000",
-        "background": "#9fb591"
+        "background": "#63c1a6"
       }
     ],
     "workbench.colorCustomizations": {
-      "statusBar.background": "#9fb591",
-      "statusBar.foreground": "#000000",
-      "tab.activeBorder": "#9fb591",
-      "sideBarTitle.foreground": "#9fb591"
+      "statusBar.background": "#5e9b5a",
+      "statusBar.foreground": "#ffffff",
+      "tab.activeBorder": "#5e9b5a",
+      "sideBarTitle.foreground": "#5e9b5a"
     },
     "ColorfulMonorepo.arrange.enabled": false,
-    "ColorfulMonorepo.arrange.init": true
+    "ColorfulMonorepo.arrange.init": true,
+    "files.exclude": {
+      "**/.git": false,
+      "**/.svn": false,
+      "**/.hg": false,
+      "**/CVS": false,
+      "**/.DS_Store": false,
+      "**/Thumbs.db": false
+    }
   }
 }
