@@ -2,24 +2,16 @@
 import type { NextPage } from 'next';
 import { TextParticle } from 'city-night';
 import { useWindowSize } from 'react-use';
-import { isMobile, MobileView, BrowserView } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import styled from '@mui/system/styled';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { Footer, NavHeader } from 'components';
+import { NavHeader } from 'components';
 import { useTheme } from '@mui/material/styles';
-import { IconFileCode, IconBrandGithub } from '@tabler/icons';
+import { IconFileCode } from '@tabler/icons';
 import dynamic from 'next/dynamic';
-
-const ScrollContainer = dynamic(
-  async () => {
-    const { ScrollContainer } = await import('react-scroll-motion');
-    return ScrollContainer;
-  },
-  { ssr: false },
-);
 
 import {
   Animator,
@@ -34,6 +26,16 @@ import {
   StickyIn,
   ZoomIn,
 } from 'react-scroll-motion';
+
+const ScrollContainer = dynamic(
+  async () => {
+    const { ScrollContainer } = await import('react-scroll-motion');
+    return ScrollContainer;
+  },
+  { ssr: false },
+) as any;
+
+import { ReactComponentElement } from 'react';
 
 const HomeStyleWrapper = styled('div')({
   h1: {

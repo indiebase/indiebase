@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.8.1",
+    "@sentry/nextjs": "^6.19.7",
     "localforage": "^1.10.0",
     "mobx": "^6.4.2",
     "mobx-react-lite": "^3.3.0",
