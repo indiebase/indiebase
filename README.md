@@ -6,13 +6,19 @@ https://nawb.deskbtm.com/more/lonely-mgmt/start
 
 <br />
 
-## 什么是 letscollab？
+## FAQ
 
-letscollab 类似于 Patreon + OpenCollective. 其提供以下几点主要功能：
+### 1. 什么是 letscollab？
 
-1.  letscollab 用于管理私有独立项目的财政与合作者。
-2.  提供对独立项目的基本业务管理，如用户，内购支付等。
-3.  letscollab 初始目的是作为管理 Nawb 的辅助产品。
+letscollab 类似于 Patreon + OpenCollective + 独立软件管理系统 . 其提供以下几点主要功能：
+
+- letscollab 用于管理私有独立项目的财政与合作者。
+- 提供针对独立项目的基本业务管理，如用户，内购支付等。
+- letscollab 初始目的是作为管理 Nawb 的辅助产品。
+
+### 2. letscollab 会上 web3.0 吗？
+
+letscollab 虽然第一眼看上去有点 web3 的意思， 但它还是以创始者为中心的中心化应用。目前来说 web3 的局限性太大，并不适用于 letscollab，但是未来发展成熟还是会有机会接入 web3。
 
 ## 收益
 
