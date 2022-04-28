@@ -7,7 +7,7 @@ export default function themeComponents(theme): Components {
       styleOverrides: {
         root: {
           fontWeight: 500,
-          borderRadius: '8px',
+          borderRadius: '6px',
           color: theme.textDark,
         },
       },

@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { CssBaseline, ThemeProvider, GlobalStyles } from '@mui/material';
 import Head from 'next/head';
 import theme from '../components/themes';
-// import { Footer } from '../components/Footer';
+import { Footer } from 'components';
 
 const queryClient = new QueryClient();
 
@@ -35,7 +35,7 @@ function LetsCollabApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           {isProduction && <ReactQueryDevtools position="bottom-right" />}
           <Component {...pageProps} />
-          {/* <Footer /> */}
+          <Footer />
         </ThemeProvider>
       </QueryClientProvider>
     </>
