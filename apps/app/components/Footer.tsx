@@ -1,9 +1,14 @@
-import { Stack, Button, Typography, GlobalStyles } from '@mui/material';
+import { Stack, Button, Typography } from '@mui/material';
 import Link from 'next/link';
+import Box from '@mui/material/Box';
 
 export const Footer = function (props) {
   return (
-    <footer>
+    <footer
+      style={{
+        marginBottom: '40px',
+      }}
+    >
       <Stack justifyContent="center" direction="column">
         <Stack direction="row" justifyContent="center" spacing={2}>
           <Button>One</Button>
