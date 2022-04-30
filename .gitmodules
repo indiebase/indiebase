@@ -1,9 +1,9 @@
 [submodule "pro"]
 	path = pro
-	url = https://github.com/nawb-letscollab/letscollab-pro.git
+	url = https://github.com/deskbtm-letscollab/letscollab-pro.git
 [submodule "first_party/mbdpay"]
 	path = first_party/mbdpay
-	url = https://github.com/nawb-letscollab/mbdpay.git
+	url = https://github.com/deskbtm-letscollab/mbdpay.git
 [submodule "nawb"]
 	path = nawb
-	url = https://github.com/nawb-letscollab/letscollab-nawb.git
+	url = https://github.com/deskbtm-letscollab/letscollab-nawb.git
