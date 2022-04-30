@@ -15,5 +15,28 @@
   ],
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
+  },
+  "ColorfulMonorepo.workspaces.collection": [
+    {
+      "path": "/home/nawbc/Workspace/letscollab",
+      "packageName": "letscollab",
+      "label": "🌱  letscollab",
+      "foreground": "#ffffff",
+      "background": "#7432f2"
+    },
+    {
+      "path": "/home/nawbc/Workspace/letscollab/packages/auth",
+      "packageName": "@letscollab/service-auth",
+      "label": "🍀  @letscollab/service-auth",
+      "foreground": "#ffffff",
+      "background": "#066ec9"
+    },
+    {
+      "path": "/home/nawbc/Workspace/letscollab/packages/common",
+      "packageName": "@letscollab/common",
+      "label": "🍀  @letscollab/common",
+      "foreground": "#ffffff",
+      "background": "#7a8d85"
+    }
+  ]
 }
