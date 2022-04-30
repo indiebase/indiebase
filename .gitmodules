@@ -4,3 +4,6 @@
 [submodule "first_party/mbdpay"]
 	path = first_party/mbdpay
 	url = https://github.com/nawb-letscollab/mbdpay.git
+[submodule "nawb"]
+	path = nawb
+	url = https://github.com/nawb-letscollab/letscollab-nawb.git

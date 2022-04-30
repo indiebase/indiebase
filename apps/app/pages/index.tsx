@@ -201,7 +201,7 @@ const Home: NextPage = () => {
           <Animator animation={batch(Fade(), Move(), Sticky())}>
             <Box sx={{ textAlign: 'center' }}>
               <h1>加入letscollab</h1>
-              <h2>letscollab作为letscollab的第一个用户欢迎大家的加入</h2>
+              <h2>letscollab作为letscollab的第一个项目欢迎大家的加入</h2>
 
               <CustomButton1
                 size="large"
