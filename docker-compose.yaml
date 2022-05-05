@@ -19,8 +19,8 @@ version: '3.7'
 x-logging: &loki-logging
   driver: loki
   options:
-    loki-url: 'http://localhost:13339/loki/api/v1/push'
-    max-size: '200m'
+    loki-url: 'http://loki:3100/loki/api/v1/push'
+    max-size: '1024m'
 
 services:
   apisix-dashboard:
@@ -139,25 +139,15 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
-    # logging: *loki-logging
-    # logging:
-    #   driver: loki
-    #   options:
-    #     loki-url: 'http://localhost:13339/loki/api/v1/push'
-    #     max-size: '200m'
-    # networks:
-    #   - apisix
-    #   - loki
+    logging: *loki-logging
 
   loki:
     image: grafana/loki:2.5.0
     volumes:
-      - './config/loki/loki-config.yaml:/etc/loki/loki-config.yaml'
+      - './config/loki/local-config.yaml:/etc/loki/local-config.yaml'
     ports:
       - '13339:3100'
     command: -config.file=/etc/loki/local-config.yaml
-    # networks:
-    #   - loki
 
   promtail:
     image: grafana/promtail:2.5.0
@@ -165,8 +155,6 @@ services:
       - './config/promtail:/etc/promtail/'
       - loki_logs:/var/log
     command: -config.file=/etc/promtail/config.yaml
-    # networks:
-    #   - loki
 
   rabbitmq:
     image: rabbitmq:3.9.14-management
