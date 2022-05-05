@@ -134,7 +134,7 @@ services:
     volumes:
       - './config/grafana/provisioning:/etc/grafana/provisioning'
       - './config/grafana/dashboards:/var/lib/grafana/dashboards'
-      - './config/grafana/config/grafana.ini:/etc/grafana/grafana.ini'
+      - './config/grafana/grafana.ini:/etc/grafana/grafana.ini'
       - 'grafana_data:/var/lib/grafana'
     environment:
       - TZ=Asia/Shanghai
@@ -149,24 +149,24 @@ services:
     #   - apisix
     #   - loki
 
-  # loki:
-  #   image: grafana/loki:2.5.0
-  #   volumes:
-  #     - './config/loki:/etc/loki/'
-  #   ports:
-  #     - '13339:3100'
-  #   command: -config.file=/etc/loki/local-config.yaml
-  #   networks:
-  #     - loki
+  loki:
+    image: grafana/loki:2.5.0
+    volumes:
+      - './config/loki/loki-config.yaml:/etc/loki/loki-config.yaml'
+    ports:
+      - '13339:3100'
+    command: -config.file=/etc/loki/local-config.yaml
+    # networks:
+    #   - loki
 
-  # promtail:
-  #   image: grafana/promtail:2.5.0
-  #   volumes:
-  #     - './config/promtail:/etc/promtail/'
-  #     - loki_logs:/var/log
-  #   command: -config.file=/etc/promtail/config.yaml
-  #   networks:
-  #     - loki
+  promtail:
+    image: grafana/promtail:2.5.0
+    volumes:
+      - './config/promtail:/etc/promtail/'
+      - loki_logs:/var/log
+    command: -config.file=/etc/promtail/config.yaml
+    # networks:
+    #   - loki
 
   rabbitmq:
     image: rabbitmq:3.9.14-management
@@ -182,7 +182,26 @@ services:
       - '6379:6379'
     volumes:
       - 'redis_data:/data'
-    command: --requirepass dev123456
+    command: --requirepass letscollab
+
+  # lakefs:
+  #   image: 'treeverse/lakefs:latest'
+  #   ports:
+  #     - '15001:8000'
+  #   volumes:
+  #     - ./config/lakefs/development/.lakectl.yaml:/home/lakefs/.lakectl.yaml
+  #   env_file:
+  #     - ./.env.development
+  #   depends_on:
+  #     - 'postgres'
+  #   entrypoint: ['/app/wait-for', 'postgres:5432', '--', '/app/lakefs', 'run']
+  # postgres:
+  #   image: 'postgres:14'
+  #   ports:
+  #     - '5432:5432'
+  #   command: '-c log_min_messages=FATAL'
+  #   env_file:
+  #     - ./.env.development
 
 networks:
   apisix:
@@ -198,6 +217,7 @@ volumes:
   etcd_data:
     driver: local
   mysql_data:
+  postgres_data:
   grafana_data:
   portainer_data:
   redis_data:

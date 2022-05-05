@@ -7,3 +7,9 @@
 [submodule "nawb"]
 	path = nawb
 	url = https://github.com/deskbtm-letscollab/letscollab-nawb.git
+[submodule "self-hosting"]
+	path = self-hosting
+	url = https://github.com/deskbtm-letscollab/self-hosting.git
+[submodule "self_hosting"]
+	path = self_hosting
+	url = https://github.com/deskbtm-letscollab/self_hosting.git
