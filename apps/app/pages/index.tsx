@@ -213,24 +213,6 @@ const Home: NextPage = () => {
             </Box>
           </Animator>
         </ScrollPage>
-        <ScrollPage page={3}>
-          <Animator animation={batch(Fade(), Move(), Sticky())}>
-            <Box sx={{ textAlign: 'center' }}>
-              <h1>
-                加入<span style={{ color: '#0DCF85' }}>letscollab</span>
-              </h1>
-              <h2>letscollab作为letscollab的第一个用户欢迎大家的加入</h2>
-
-              <CustomButton1
-                size="large"
-                variant="contained"
-                sx={{ marginTop: '50px' }}
-              >
-                加入
-              </CustomButton1>
-            </Box>
-          </Animator>
-        </ScrollPage>
       </ScrollContainer>
     </HomeStyleWrapper>
   );
