@@ -17,10 +17,11 @@ version: '3.7'
 #     MINIO_SECRET_KEY_FILE: /run/secrets/secret_key
 
 x-logging: &loki-logging
-  driver: loki
-  options:
-    loki-url: 'http://loki:3100/loki/api/v1/push'
-    max-size: '1024m'
+  logging:
+    driver: loki
+    options:
+      loki-url: 'http://loki:3100/loki/api/v1/push'
+      max-size: '100m'
 
 services:
   apisix-dashboard:
@@ -29,8 +30,6 @@ services:
       - ./config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
       - '13336:9000'
-    # networks:
-    #   - apisix
 
   apisix:
     image: apache/apisix:2.11.0-alpine
@@ -61,8 +60,6 @@ services:
       ETCD_LISTEN_CLIENT_URLS: 'http://0.0.0.0:2379'
     ports:
       - '2379:2379/tcp'
-    # networks:
-    #   - apisix
 
   prometheus:
     image: prom/prometheus:v2.25.0
@@ -70,15 +67,13 @@ services:
       - ./config/prometheus/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '13334:9090'
-    # networks:
-    #   - apisix
 
   nacos:
     image: nacos/nacos-server:v2.0.4
     env_file:
       - ./.env.development
     volumes:
-      - mysql_logs:/home/nacos/logs
+      - nacos_logs:/home/nacos/logs
     ports:
       - '13324:8848'
       - '13325:9848'
@@ -100,6 +95,13 @@ services:
       - mysql_data:/var/lib/mysql
     ports:
       - '3306:3306'
+
+  mysqlexporter:
+    image: prom/mysqld-exporter
+    ports:
+      - '9104:9104'
+    env_file:
+      - ./.env.development
 
   portainer-agent:
     image: portainer/agent:2.11.0
@@ -128,6 +130,7 @@ services:
 
   # Grafana
   grafana:
+    <<: *loki-logging
     image: grafana/grafana:7.3.7
     ports:
       - '13335:3000'
@@ -139,7 +142,6 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
-    logging: *loki-logging
 
   loki:
     image: grafana/loki:2.5.0
@@ -153,7 +155,7 @@ services:
     image: grafana/promtail:2.5.0
     volumes:
       - './config/promtail:/etc/promtail/'
-      - loki_logs:/var/log
+      # - loki_logs:/var/log
     command: -config.file=/etc/promtail/config.yaml
 
   rabbitmq:
@@ -161,8 +163,6 @@ services:
     ports:
       - '13340:5672'
       - '13341:15672'
-    networks:
-      - rabbitmq
 
   redis:
     image: redis:6.2.6-alpine
@@ -192,14 +192,14 @@ services:
   #     - ./.env.development
 
 networks:
-  apisix:
-    driver: overlay
-    attachable: true
+  # apisix:
+  #   driver: overlay
+  #   attachable: true
   agent_network:
     driver: overlay
     attachable: true
-  loki:
-  rabbitmq:
+  # loki:
+  # rabbitmq:
 
 volumes:
   etcd_data:
@@ -210,5 +210,5 @@ volumes:
   portainer_data:
   redis_data:
   apisix_logs:
-  mysql_logs:
+  nacos_logs:
   loki_logs:

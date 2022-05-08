@@ -21,12 +21,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       throw new InternalServerErrorException();
     }
 
-    console.log(user, _info);
-
-    // if (!user) {
-    //   throw new UnauthorizedException({ message: '用户登录失败, 请重新登陆' });
-    // }
-
     return user;
   }
 }
