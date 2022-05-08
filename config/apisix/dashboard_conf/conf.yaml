@@ -51,8 +51,8 @@ authentication:
     # if it's default value, when `manager api` start, it will generate a random string to replace it.
   expire_time: 3600 # jwt token expire time, in second
   users: # yamllint enable rule:comments-indentation
-    - username: nawbc # username and password for login `manager api`
-      password: dev123456
+    - username: letscollab # username and password for login `manager api`
+      password: letscollab
 
 plugins: # plugin list (sorted in alphabetical order)
   - api-breaker

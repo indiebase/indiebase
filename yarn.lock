@@ -2337,7 +2337,7 @@ __metadata:
     mobx-react-lite: ^3.3.0
     next: 12.1.0
     next-pwa: ^5.4.4
-    next-sitemap: ^2.5.2
+    next-sitemap: ^2.5.20
     nprogress: ^0.2.0
     react: 17.0.2
     react-device-detect: ^2.1.2
@@ -15217,7 +15217,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-sitemap@npm:^2.5.2":
+"next-sitemap@npm:^2.5.20":
   version: 2.5.20
   resolution: "next-sitemap@npm:2.5.20"
   dependencies:
