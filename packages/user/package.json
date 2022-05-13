@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/service-user",
+  "name": "@letscollab/user",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:docker": "npm run ncc && docker build . -t letscollab/service-user  --build-arg ENV=production",
+    "build:docker": "npm run ncc && docker build . -t letscollab/user  --build-arg ENV=production",
     "build": "nest build",
     "ncc": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

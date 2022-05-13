@@ -1,27 +1,10 @@
 version: '3.7'
 
-# secrets:
-#   secret_key:
-#     external: true
-#   access_key:
-#     external: true
-
-# x-minio-common: &minio-common
-#   image: quay.io/minio/minio:RELEASE.2022-01-08T03-11-54Z
-#   command: server --console-address ":9001" /minio_data1
-#   secrets:
-#     - access_key
-#     - secret_key
-#   environment:
-#     MINIO_ACCESS_KEY_FILE: /run/secrets/access_key
-#     MINIO_SECRET_KEY_FILE: /run/secrets/secret_key
-
 x-logging: &loki-logging
-  logging:
-    driver: loki
-    options:
-      loki-url: 'http://loki:3100/loki/api/v1/push'
-      max-size: '100m'
+  driver: loki:latest
+  options:
+    loki-url: 'http://loki:3100/loki/api/v1/push'
+    max-size: '300m'
 
 services:
   apisix-dashboard:
@@ -29,8 +12,7 @@ services:
     volumes:
       - ./config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
-      - '13336:9000'
-
+      - 13336:9000
   apisix:
     image: apache/apisix:2.11.0-alpine
     volumes:
@@ -39,15 +21,14 @@ services:
     depends_on:
       - etcd
     ports:
-      - '13320:9080/tcp'
-      - '13321:9091/tcp'
-      - '13322:9443/tcp'
-      - '13323:9092/tcp'
+      - 13320:9080/tcp
+      - 13321:9091/tcp
+      - 13322:9443/tcp
+      - 13323:9092/tcp
     deploy:
       restart_policy:
         condition: on-failure
-    # networks:
-    #   - apisix
+    logging: *loki-logging
 
   etcd:
     image: bitnami/etcd:3.4.15
@@ -59,15 +40,16 @@ services:
       ETCD_ADVERTISE_CLIENT_URLS: 'http://0.0.0.0:2379'
       ETCD_LISTEN_CLIENT_URLS: 'http://0.0.0.0:2379'
     ports:
-      - '2379:2379/tcp'
-
+      - 2379:2379/tcp
+    logging: *loki-logging
   prometheus:
     image: prom/prometheus:v2.25.0
     volumes:
-      - ./config/prometheus/prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
     ports:
-      - '13334:9090'
-
+      - 13334:9090
+    logging: *loki-logging
   nacos:
     image: nacos/nacos-server:v2.0.4
     env_file:
@@ -75,9 +57,9 @@ services:
     volumes:
       - nacos_logs:/home/nacos/logs
     ports:
-      - '13324:8848'
-      - '13325:9848'
-      - '13326:9555'
+      - 13324:8848
+      - 13325:9848
+      - 13326:9555
     deploy:
       restart_policy:
         condition: on-failure
@@ -86,7 +68,7 @@ services:
           memory: 512M
     depends_on:
       - mysql
-
+    logging: *loki-logging
   mysql:
     image: nacos/nacos-mysql:8.0.16
     env_file:
@@ -94,12 +76,13 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - '3306:3306'
+      - 3306:3306
+    logging: *loki-logging
 
   mysqlexporter:
     image: prom/mysqld-exporter
     ports:
-      - '9104:9104'
+      - 9104:9104
     env_file:
       - ./.env.development
 
@@ -119,7 +102,7 @@ services:
     image: portainer/portainer-ce:2.11.0
     command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
     ports:
-      - '13331:9443'
+      - 13331:9443
     volumes:
       - portainer_data:/data
     networks:
@@ -130,76 +113,55 @@ services:
 
   # Grafana
   grafana:
-    <<: *loki-logging
-    image: grafana/grafana:7.3.7
+    image: grafana/grafana:7.5.15
     ports:
-      - '13335:3000'
+      - 13335:3000
     volumes:
-      - './config/grafana/provisioning:/etc/grafana/provisioning'
-      - './config/grafana/dashboards:/var/lib/grafana/dashboards'
-      - './config/grafana/grafana.ini:/etc/grafana/grafana.ini'
-      - 'grafana_data:/var/lib/grafana'
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+      - ./config/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - grafana_data:/var/lib/grafana
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
-
+    logging: *loki-logging
   loki:
-    image: grafana/loki:2.5.0
+    image: grafana/loki:2.2.1
     volumes:
-      - './config/loki/local-config.yaml:/etc/loki/local-config.yaml'
+      - ./config/loki/config.yaml:/etc/loki/config.yaml
+      - loki_data:/loki
     ports:
-      - '13339:3100'
-    command: -config.file=/etc/loki/local-config.yaml
+      - 13339:3100
+    command: -config.file=/etc/loki/config.yaml
+    logging: *loki-logging
 
   promtail:
-    image: grafana/promtail:2.5.0
+    image: grafana/promtail:2.2.1
     volumes:
-      - './config/promtail:/etc/promtail/'
-      # - loki_logs:/var/log
+      - ./config/promtail:/etc/promtail/
+      - /var/log:/ext_logs:ro
     command: -config.file=/etc/promtail/config.yaml
+    logging: *loki-logging
 
   rabbitmq:
     image: rabbitmq:3.9.14-management
     ports:
-      - '13340:5672'
-      - '13341:15672'
-
+      - 13340:5672
+      - 13341:15672
+    logging: *loki-logging
   redis:
     image: redis:6.2.6-alpine
     ports:
-      - '6379:6379'
+      - 6379:6379
     volumes:
-      - 'redis_data:/data'
+      - redis_data:/data
     command: --requirepass letscollab
-
-  # lakefs:
-  #   image: 'treeverse/lakefs:latest'
-  #   ports:
-  #     - '15001:8000'
-  #   volumes:
-  #     - ./config/lakefs/development/.lakectl.yaml:/home/lakefs/.lakectl.yaml
-  #   env_file:
-  #     - ./.env.development
-  #   depends_on:
-  #     - 'postgres'
-  #   entrypoint: ['/app/wait-for', 'postgres:5432', '--', '/app/lakefs', 'run']
-  # postgres:
-  #   image: 'postgres:14'
-  #   ports:
-  #     - '5432:5432'
-  #   command: '-c log_min_messages=FATAL'
-  #   env_file:
-  #     - ./.env.development
+    logging: *loki-logging
 
 networks:
-  # apisix:
-  #   driver: overlay
-  #   attachable: true
   agent_network:
     driver: overlay
     attachable: true
-  # loki:
-  # rabbitmq:
 
 volumes:
   etcd_data:
@@ -208,6 +170,8 @@ volumes:
   postgres_data:
   grafana_data:
   portainer_data:
+  prometheus_data:
+  loki_data:
   redis_data:
   apisix_logs:
   nacos_logs:

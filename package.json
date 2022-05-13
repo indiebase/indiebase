@@ -12,11 +12,7 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "npm run prebuild && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npm run prebuild && cross-env NODE_ENV=development nest start --watch",
-    "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "docker:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
     "docker:dev": "docker stack deploy -c ./docker-compose.yaml letscollab",
@@ -57,7 +53,8 @@
   "workspaces": [
     "packages/*",
     "first_party/*",
-    "apps/*"
+    "apps/*",
+    "pro/*"
   ],
   "jest": {
     "moduleFileExtensions": [
@@ -80,7 +77,6 @@
   },
   "dependencies": {
     "@nestjs/swagger": "^5.2.1",
-    "class-validator": "^0.13.2",
-    "fastify-swagger": "^5.1.0"
+    "class-validator": "^0.13.2"
   }
 }
