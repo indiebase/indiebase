@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import * as casbin from 'casbin';
 import * as winston from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
+import LokiTransport = require('winston-loki');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -47,6 +48,11 @@ const isDevelopment = process.env.NODE_ENV === 'development';
               utilities.format.nestLike(),
             ),
           }),
+          new LokiTransport({
+            host: 'http://0.0.0.0:13339',
+            json: true,
+            labels: { job: 'winston-loki-example' },
+          }),
         ];
         if (isProduction) {
           transports.push(
@@ -73,14 +79,14 @@ const isDevelopment = process.env.NODE_ENV === 'development';
           exitOnError: false,
           rejectionHandlers: isProduction
             ? [
-                new DailyRotateFile({
-                  filename: resolve(logStorageDir, 'rejections-%DATE%.log'),
-                  datePattern: 'YYYY-MM-DD-HH',
-                  zippedArchive: true,
-                  level: 'warn',
-                  maxSize: '20m',
-                  maxFiles: '14d',
-                }),
+                // new DailyRotateFile({
+                //   filename: resolve(logStorageDir, 'rejections-%DATE%.log'),
+                //   datePattern: 'YYYY-MM-DD-HH',
+                //   zippedArchive: true,
+                //   level: 'warn',
+                //   maxSize: '20m',
+                //   maxFiles: '14d',
+                // }),
               ]
             : null,
           transports,

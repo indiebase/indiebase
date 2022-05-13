@@ -50,7 +50,6 @@ export class AuthService implements OnModuleInit {
     const result = await lastValueFrom(
       this.userClient.send({ cmd: 'signup' }, user).pipe(timeout(4000)),
     );
-    console.log(result);
   }
 
   async signTarget(object: string | Buffer | object) {

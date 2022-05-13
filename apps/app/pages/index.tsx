@@ -116,13 +116,13 @@ const Home: NextPage = () => {
         <ScrollPage page={0}>
           <Animator animation={batch(Fade(), MoveOut(0, -500))}>
             <TextParticleWrapper>
-              <TextParticle
+              {/* <TextParticle
                 text="letscollab"
                 resolution={5}
                 boxWidth={isMobileDevice ? 1800 : width}
                 boxHeight={400}
                 size={300}
-              />
+              /> */}
               <CustomButton
                 size="large"
                 variant="contained"
@@ -150,7 +150,7 @@ const Home: NextPage = () => {
               >
                 letscollab
               </h1>
-              <h1 style={{ color: '#00A2FF' }}>让独立开发者们的营收更加轻松</h1>
+              <h1 style={{ color: '#00A2FF' }}></h1>
             </p>
           </Animator>
         </ScrollPage>
@@ -171,7 +171,7 @@ const Home: NextPage = () => {
             </Animator>
             <Box sx={{ height: 10 }} />
             <Animator animation={MoveIn(-1000, 0)}>
-              <h2>创始人：</h2>
+              <h2>创始人</h2>
               <h4>招募与你志同道合的伙伴，一起做东西，管理项目的财政。</h4>
               <h4>
                 letscollab pro
@@ -180,17 +180,17 @@ const Home: NextPage = () => {
             </Animator>
             <Box sx={{ height: 5 }} />
             <Animator animation={MoveIn(1000, 0)}>
-              <h2>编程爱好者：</h2>
+              <h2>编程爱好者</h2>
               <h4>
                 letscollab会分配项目所获得的营收，让每个参与者获得应有的回报。
               </h4>
               <h4>在项目中与来自五湖四海的Geek朋友交流学习。</h4>
             </Animator>
             <Animator animation={MoveIn(-2000, 0)}>
-              <h2>企业：</h2>
+              <h2>企业</h2>
               <h4>通过 letscollab 公布开源或其他合适的项目，</h4>
               <h4>
-                让拥有空余时间的开发者参与进来完善产品并给予报酬或，
+                让拥有空余时间的开发者参与进来完善产品并给予报酬，
                 使双方互利共赢。
               </h4>
             </Animator>

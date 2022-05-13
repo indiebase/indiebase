@@ -13,11 +13,4 @@ export class UserController {
   async signup(@Payload() user: SignupDto) {
     return this.userService.signup(user);
   }
-
-  @Post('register-admin')
-  async registerAdmin(@Body() body) {
-    const pattern = { cmd: 'sum' };
-    const payload = [1, 2, 3];
-    return 'demo';
-  }
 }
