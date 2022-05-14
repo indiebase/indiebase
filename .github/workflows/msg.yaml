@@ -32,10 +32,10 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Setup Nodejs
-        uses:  actions/setup-node@v3
-          with:
-            node-version: 16
-            cache: yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
 
       - name: Docker meta
         id: meta
@@ -53,7 +53,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
 
       - name: Install nodejs deps
         working-directory: .
