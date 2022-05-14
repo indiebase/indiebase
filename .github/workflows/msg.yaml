@@ -24,7 +24,7 @@ jobs:
       - name: Update submodules
         run: |
           echo $(pwd)
-          ls -al
+          echo $(ls -a)
           git submodule update --init --recursive
           git submodule update --recursive --remote
 
