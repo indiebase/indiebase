@@ -3,7 +3,7 @@ module.exports = {
   plugins: ['eslint-plugin-react'],
   rules: {
     'react/self-closing-comp': [
-      'error',
+      'warn',
       {
         component: true,
         html: true,
