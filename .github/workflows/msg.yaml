@@ -25,6 +25,11 @@ jobs:
         working-directory: ./packages/msg
 
     steps:
+      - name: Update submodules
+        run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -58,13 +63,14 @@ jobs:
         run: yarn install
 
       - name: Build dist
+        working-directory: packages/msg
         run: yarn ncc
 
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: packages/msg
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
