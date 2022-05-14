@@ -27,12 +27,11 @@ jobs:
           submodules: 'true'
           token: ${{ secrets.REPO_TOKEN }}
 
-      # - name: Update submodules
-      #   run: |
-      #     echo $(pwd)
-      #     echo $(ls -a)
-      #     git submodule update --init --recursive
-      #     git submodule update --recursive --remote
+      - name: Display current directories
+        run: |
+          echo Current: $(pwd)
+          echo Directories: $(ls -a)
+          echo Pro Directories: $(ls ./pro -a)
 
       - name: Setup Docker build
         uses: docker/setup-buildx-action@v1
@@ -62,8 +61,11 @@ jobs:
         run: yarn install
 
       - name: Build dist
-        working-directory: packages/msg
-        run: yarn ncc
+        run: |
+          echo Current: $(pwd)
+          echo Directories: $(ls -a)
+          yarn ncc
+        working-directory: ./packages/msg
 
       - name: Build and push Docker image
         id: build-and-push
