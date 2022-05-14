@@ -13,7 +13,7 @@ env:
   IMAGE_NAME: msg
 
 jobs:
-  build-image:
+  push-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,7 +26,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
 
       - name: Setup Docker build
         uses: docker/setup-buildx-action@v1
@@ -42,9 +44,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/letscollab/${{ env.IMAGE_NAME }}
-
-      - name:
-        uses: docker/setup-buildx-action@v1
 
       - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'
