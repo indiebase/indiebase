@@ -24,14 +24,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
+          submodules: 'true'
           token: ${{ secrets.REPO_TOKEN }}
 
-      - name: Update submodules
-        run: |
-          echo $(pwd)
-          echo $(ls -a)
-          git submodule update --init --recursive
-          git submodule update --recursive --remote
+      # - name: Update submodules
+      #   run: |
+      #     echo $(pwd)
+      #     echo $(ls -a)
+      #     git submodule update --init --recursive
+      #     git submodule update --recursive --remote
 
       - name: Setup Docker build
         uses: docker/setup-buildx-action@v1
