@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Update submodules
         run: |
+          echo $(pwd)
+          ls -al
           git submodule update --init --recursive
           git submodule update --recursive --remote
 
