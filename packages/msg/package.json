@@ -4,7 +4,6 @@
   "description": "用于发布邮件，信息，通知等等",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "npm run ncc && docker build . -t letscollab/msg",
