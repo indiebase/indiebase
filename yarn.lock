@@ -2513,6 +2513,7 @@ __metadata:
     "@types/supertest": ^2.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
+    "@vercel/ncc": ^0.33.4
     amqp-connection-manager: ^4.1.1
     amqplib: ^0.8.0
     class-transformer: ^0.5.1
@@ -2731,6 +2732,7 @@ __metadata:
     "@types/supertest": ^2.0.11
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
+    "@vercel/ncc": ^0.33.4
     amqp-connection-manager: ^4.1.1
     amqplib: ^0.8.0
     cross-env: ^7.0.3
@@ -2902,7 +2904,7 @@ __metadata:
     "@types/validator": ^13.7.2
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
-    "@vercel/ncc": ^0.33.3
+    "@vercel/ncc": ^0.33.4
     amqp-connection-manager: ^4.1.1
     amqplib: ^0.8.0
     bcrypt: ^5.0.1
@@ -5396,7 +5398,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/ncc@npm:^0.33.1, @vercel/ncc@npm:^0.33.3":
+"@vercel/ncc@npm:^0.33.4":
   version: 0.33.4
   resolution: "@vercel/ncc@npm:0.33.4"
   dependencies:
@@ -13950,7 +13952,6 @@ __metadata:
     "@nestjs/swagger": ^5.2.1
     "@typescript-eslint/eslint-plugin": 4.31.1
     "@typescript-eslint/parser": 4.31.1
-    "@vercel/ncc": ^0.33.1
     class-validator: ^0.13.2
     concurrently: ^6.2.1
     cross-env: ^7.0.3

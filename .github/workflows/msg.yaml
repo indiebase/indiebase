@@ -63,7 +63,7 @@ jobs:
       - name: Build dist
         run: |
           echo Current: $(pwd)
-          echo Directories: $(ls -a)
+          echo Directories: $(ls node_modules)
           yarn ncc
         working-directory: ./packages/msg
 
