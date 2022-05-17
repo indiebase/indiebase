@@ -7,7 +7,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import { FormatExceptionFilter } from '@letscollab/common';``
+import { FormatExceptionFilter } from '@letscollab/common';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 

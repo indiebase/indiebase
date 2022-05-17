@@ -48,11 +48,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
               utilities.format.nestLike(),
             ),
           }),
-          new LokiTransport({
-            host: 'http://0.0.0.0:13339',
-            json: true,
-            labels: { job: 'winston-loki-example' },
-          }),
         ];
         if (isProduction) {
           transports.push(
@@ -63,6 +58,11 @@ const isDevelopment = process.env.NODE_ENV === 'development';
               level: 'warn',
               maxSize: '20m',
               maxFiles: '14d',
+            }),
+            new LokiTransport({
+              host: '',
+              json: true,
+              labels: { job: 'winston-loki-example' },
             }),
             // new winston.transports.File({
             //   filename: 'combined.log',
