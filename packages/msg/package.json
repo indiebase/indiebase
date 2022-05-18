@@ -7,9 +7,10 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "npm run ncc && docker build . -t letscollab/msg",
-    "build:dev": "npm run ncc && docker build --build-arg RUNTIME_ENV=development --no-cache -t letscollab/msg .",
-    "publish:dev": "npm run ncc && docker build . --build-arg ENV=development -t letscollab/msg",
-    "ncc": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
+    "build:dev": "npm run ncc && docker build --build-arg RUNTIME_ENV=development --no-cache -t letscollab/msg:dev .",
+    "publish:dev": "docker service create -p 23333:23333 --name letscollab_msg letscollab/msg:dev",
+    "bundle": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
+    "bundle:dev": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && cross-env NODE_ENV=development nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/main.ts",
     "start:debug": "npm run prebuild && cross-env NODE_ENV=development nest start -d -w",

@@ -2,14 +2,16 @@ FROM node:16-alpine
 
 LABEL org.opencontainers.image.authors="deskbtm@outlook.com"
 
-WORKDIR /opt/letscollab/msg
-
 ARG RUNTIME_ENV
 
-COPY ./dist ./dist
-COPY ./public ./public
-COPY ./package.json ./package.json
-COPY ./.env.${RUNTIME_ENV:-production} ./
+ENV NODE_ENV=$RUNTIME_ENV
+
+WORKDIR /opt/letscollab/msg
+
+ADD ./dist ./dist
+ADD ./public ./public
+ADD ./package.json ./package.json
+ADD ./.env.${RUNTIME_ENV:-production} ./
 
 EXPOSE 23333
 

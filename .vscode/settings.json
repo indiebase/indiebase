@@ -23,9 +23,23 @@
       "label": "🌱  letscollab",
       "foreground": "#ffffff",
       "background": "#db42e9"
+    },
+    {
+      "path": "/home/nawbc/Workspace/letscollab/packages/auth",
+      "packageName": "@letscollab/auth",
+      "label": "🍀  @letscollab/auth",
+      "foreground": "#ffffff",
+      "background": "#d86d4a"
+    },
+    {
+      "path": "/home/nawbc/Workspace/letscollab/packages/msg",
+      "packageName": "@letscollab/msg",
+      "label": "🍀  @letscollab/msg",
+      "foreground": "#ffffff",
+      "background": "#432283"
     }
   ],
-  "ColorfulMonorepo.drawer.init": true,
+  "ColorfulMonorepo.drawer.init": false,
   "files.exclude": {},
   "explorer.experimental.fileNesting.enabled": true,
   "[properties]": {

@@ -2551,9 +2551,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/common@workspace:^, @letscollab/common@workspace:packages/common":
+"@letscollab/common@workspace:^, @letscollab/common@workspace:first_party/common":
   version: 0.0.0-use.local
-  resolution: "@letscollab/common@workspace:packages/common"
+  resolution: "@letscollab/common@workspace:first_party/common"
   dependencies:
     "@letscollab/nest-nacos": "workspace:^"
     "@liaoliaots/nestjs-redis": ^8.0.0
