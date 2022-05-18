@@ -5,7 +5,6 @@ import {
   ExecutionContext,
   Injectable,
 } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import type { Redis } from 'ioredis';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { FastifyRequest } from 'fastify';

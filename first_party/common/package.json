@@ -2,9 +2,8 @@
   "name": "@letscollab/common",
   "version": "0.0.1",
   "description": "",
-  "author": "HanWang",
+  "author": "Nawbc",
   "private": true,
-  "license": "UNLICENSED",
   "main": "./src/index.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -14,7 +13,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "npm run ncc && docker build . -t letscollab/service-utils",
-    "ncc": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
+    "ncc": "npm run prebuild && ncc build ./src/main.ts -o dist -m -C",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && nest build --watch",
     "start:debug": "npm run prebuild && cross-env NODE_ENV=development nest start -d -w",

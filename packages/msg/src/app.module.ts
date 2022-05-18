@@ -5,11 +5,11 @@ import configure from './config';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
-import * as DailyRotateFile from 'winston-daily-rotate-file';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailModule } from './mail';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
+import LokiTransport = require('winston-loki');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -63,9 +63,9 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const configs = await config.getConfig('service-auth.json');
-        const logStorageDir = configs.logger.storageDir
-          ? configs.logger.storageDir
-          : '/var/log';
+        // const logStorageDir = configs.logger.storageDir
+        //   ? configs.logger.storageDir
+        //   : '/var/log';
 
         const transports: any[] = [
           new winston.transports.Console({
@@ -74,37 +74,15 @@ const isDevelopment = process.env.NODE_ENV === 'development';
               utilities.format.nestLike(),
             ),
           }),
+          new LokiTransport(configs.logger.loki),
         ];
-        if (isProduction) {
-          transports.push(
-            new DailyRotateFile({
-              filename: resolve(logStorageDir, 'combined-%DATE%.log'),
-              datePattern: 'YYYY-MM-DD-HH',
-              zippedArchive: true,
-              level: 'warn',
-              maxSize: '20m',
-              maxFiles: '14d',
-            }),
-          );
-        }
 
         return {
           level: isDevelopment ? 'debug' : 'warn',
           format: winston.format.json(),
           defaultMeta: { service: 'message' },
           exitOnError: false,
-          rejectionHandlers: isProduction
-            ? [
-                new DailyRotateFile({
-                  filename: resolve(logStorageDir, 'rejections-%DATE%.log'),
-                  datePattern: 'YYYY-MM-DD-HH',
-                  zippedArchive: true,
-                  level: 'warn',
-                  maxSize: '20m',
-                  maxFiles: '14d',
-                }),
-              ]
-            : null,
+          rejectionHandlers: [new LokiTransport(configs.logger.rejectionLoki)],
           transports,
         };
       },

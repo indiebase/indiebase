@@ -1,7 +1,7 @@
 import { Controller, UseGuards, Request, Post, Body } from '@nestjs/common';
 import { LocalAuthGuard } from './local.guard';
 import { ApiBearerAuth, ApiOAuth2, ApiTags } from '@nestjs/swagger';
-import { SignupDto } from '@letscollab/common';
+import { CaptchaGuard, SignupDto } from '@letscollab/common';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -31,7 +31,7 @@ export class AuthController {
   }
 
   @Post('signup')
-  // @UseGuards(CaptchaGuard)
+  @UseGuards(CaptchaGuard)
   async signup(@Body() body: SignupDto) {
     return this.authService.signup(body);
   }

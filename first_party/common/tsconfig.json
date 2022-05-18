@@ -3,7 +3,7 @@
     "allowJs": true,
     "module": "CommonJS",
     "declaration": true,
-    "removeComments": false,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -18,20 +18,15 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true,
-    "pretty": true
-  },
-  "paths": {
-    "@/*": [
-      "src/*"
-    ]
+    "noImplicitOverride": true
   },
   "include": [
-    "src/**/*",
-    "test/**/*"
+    "src/**/*"
   ],
   "exclude": [
+    "node_modules",
+    "test",
     "dist",
-    "node_modules"
+    "**/*spec.ts"
   ]
 }
