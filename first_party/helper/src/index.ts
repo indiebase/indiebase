@@ -1,4 +1,4 @@
 export * from './dto';
-export * from './utils';
+export * from './share';
 export * from './filter';
 export * from './guard';
