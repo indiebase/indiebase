@@ -1,7 +1,7 @@
 import { UserRepository } from './user.repository';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SignupDto } from '@letscollab/common';
+import { SignupDto } from '@letscollab/helper';
 import { ClientProxy } from '@nestjs/microservices';
 import { ResultCode } from '@letscollab/common/src/constants';
 import { MAIL_RMQ, AUTH_RMQ } from '../app.constants';

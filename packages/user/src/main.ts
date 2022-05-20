@@ -9,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 
 import { NacosConfigService } from '@letscollab/nest-nacos';
-import { FormatExceptionFilter } from '@letscollab/common';
+import { FormatExceptionFilter } from '@letscollab/helper';
 import { setupUserApiDoc } from './utils';
 
 const isProduction = process.env.NODE_ENV === 'production';

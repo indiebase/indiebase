@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@letscollab/common": "workspace:^",
+    "@letscollab/helper": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
     "@nestjs/common": "^8.2.6",
     "@nestjs/config": "^1.2.0",

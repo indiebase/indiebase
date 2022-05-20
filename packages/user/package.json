@@ -23,7 +23,7 @@
     "typeorm": "ts-node ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
-    "@letscollab/common": "workspace:^",
+    "@letscollab/helper": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
     "@nestjs/common": "^8.2.6",
     "@nestjs/config": "^1.2.0",

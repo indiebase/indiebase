@@ -1,5 +1,5 @@
 // import { PaginationDto } from '@/common/dto/pagination.dto';
-import { PaginationDto } from '@letscollab/common';
+import { PaginationDto } from '@letscollab/helper';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
