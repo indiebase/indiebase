@@ -1,4 +1,4 @@
-import { SignupDto } from '@letscollab/common';
+import { SignupDto } from '@letscollab/helper';
 import { EntityRepository, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 

@@ -4,7 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 
 import { readJsonSync } from 'fs-extra';
-import { writeOpenApiDoc } from '@letscollab/common';
+import { writeOpenApiDoc } from '@letscollab/helper';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 

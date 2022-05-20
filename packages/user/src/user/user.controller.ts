@@ -1,4 +1,4 @@
-import { SignupDto } from '@letscollab/common';
+import { SignupDto } from '@letscollab/helper';
 import { Body, Controller, Post } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';

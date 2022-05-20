@@ -1,5 +1,5 @@
 import { USER_RMQ } from '../app.constants';
-import { Captcha, SignupDto } from '@letscollab/common';
+import { Captcha, SignupDto } from '@letscollab/helper';
 import {
   BadRequestException,
   Inject,

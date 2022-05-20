@@ -1,7 +1,7 @@
 import { Controller, UseGuards, Request, Post, Body } from '@nestjs/common';
 import { LocalAuthGuard } from './local.guard';
 import { ApiBearerAuth, ApiOAuth2, ApiTags } from '@nestjs/swagger';
-import { CaptchaGuard, SignupDto } from '@letscollab/common';
+import { CaptchaGuard, SignupDto } from '@letscollab/helper';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
