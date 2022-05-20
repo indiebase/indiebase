@@ -2,7 +2,7 @@ import { resolve } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { readJsonSync } from 'fs-extra';
-import { writeOpenApiDoc } from '@letscollab/common';
+import { writeOpenApiDoc } from '@letscollab/helper';
 import { MailModule } from '../mail';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
@@ -21,6 +21,7 @@ export const setupApiDoc = (app: INestApplication) =>
       });
 
       SwaggerModule.setup('api/doc/msg', app, smgDoc);
+
       await writeOpenApiDoc({
         name: 'Message',
         pkgName: pkg.name,
