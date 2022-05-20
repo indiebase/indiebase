@@ -11,7 +11,6 @@ import { MailModule } from './mail';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import LokiTransport = require('winston-loki');
 
-const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 @Module({
