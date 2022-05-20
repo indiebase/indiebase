@@ -7,7 +7,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import type { Redis } from 'ioredis';
-import { Captcha } from '@letscollab/common';
+import { Captcha } from '@letscollab/helper';
 @Injectable()
 export class MailService {
   constructor(
