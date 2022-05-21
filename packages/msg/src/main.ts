@@ -10,6 +10,7 @@ import { FormatExceptionFilter } from '@letscollab/helper';
 import { setupApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
+import * as fs from 'fs';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -20,7 +21,7 @@ async function bootstrap() {
     new FastifyAdapter(),
     {
       bodyParser: true,
-      logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
+      logger: ['verbose'],
     },
   );
 
@@ -32,33 +33,52 @@ async function bootstrap() {
 
   app.setGlobalPrefix('v1');
 
-  !isProduction && (await setupApiDoc(app));
+  // !isProduction && (await setupApiDoc(app));
+  // await setupApiDoc(app);
+  // const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  // app.useLogger(nestWinston);
 
-  const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
-  app.useLogger(nestWinston);
+  // app.useGlobalFilters(
+  //   new FormatExceptionFilter(nestWinston),
+  //   // new HttpExceptionFilter(nestWinston.logger),
+  // );
 
-  app.useGlobalFilters(
-    new FormatExceptionFilter(nestWinston),
-    // new HttpExceptionFilter(nestWinston.logger),
+  try {
+    app.connectMicroservice<MicroserviceOptions>({
+      transport: Transport.RMQ,
+      options: {
+        urls: nacosConfigs.rabbitmq.urls,
+        queue: 'msg_queue',
+        queueOptions: {
+          durable: false,
+        },
+      },
+    });
+    await app.startAllMicroservices().catch((e) => {
+      console.log(e);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+
+  fs.writeFileSync(
+    process.cwd() + '/demo.txt',
+    `${process.env.HTTP_HOSTNAME} ${process.env.HTTP_PORT} ${configService.get(
+      'app.port',
+    )} ${configService.get('app.hostname')}`,
   );
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: nacosConfigs.rabbitmq.urls,
-      queue: 'msg_queue',
-      queueOptions: {
-        durable: false,
-      },
-    },
-  });
-
-  await app.startAllMicroservices();
-
-  await app.listen(
+  console.log(
+    process.env.HTTP_HOSTNAME,
+    process.env.HTTP_PORT,
     configService.get('app.port'),
     configService.get('app.hostname'),
+    '========================',
   );
+
+  await app.listen(17001, '0.0.0.0');
 }
 
-bootstrap();
+bootstrap().catch((e) => {
+  console.log(e);
+});

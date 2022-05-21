@@ -8,7 +8,7 @@ import {
 import type { Redis } from 'ioredis';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { FastifyRequest } from 'fastify';
-import { Captcha } from '../utils';
+import { Captcha } from '../share';
 
 @Injectable()
 export class CaptchaGuard implements CanActivate {
