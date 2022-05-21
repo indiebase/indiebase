@@ -35,8 +35,6 @@ const ScrollContainer = dynamic(
   { ssr: false },
 ) as any;
 
-import { ReactComponentElement } from 'react';
-
 const HomeStyleWrapper = styled('div')({
   h1: {
     fontSize: '60px',
@@ -116,13 +114,13 @@ const Home: NextPage = () => {
         <ScrollPage page={0}>
           <Animator animation={batch(Fade(), MoveOut(0, -500))}>
             <TextParticleWrapper>
-              {/* <TextParticle
+              <TextParticle
                 text="letscollab"
                 resolution={5}
                 boxWidth={isMobileDevice ? 1800 : width}
                 boxHeight={400}
                 size={300}
-              /> */}
+              />
               <CustomButton
                 size="large"
                 variant="contained"
@@ -219,12 +217,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-// <h2 style={{ fontSize: '40px' , textAlign: 'center' }}>什么是 letscollab？</h2>
-//           <ul>
-//             <li>letscollab 用于管理私有独立项目的财政与合作者。</li>
-//             <li>
-//               提供对独立项目的基本业务管理，如用户，内购支付等。 letscollab
-//             </li>
-//             <li>提供对独立项目的基本业务管理，如用户，内购支付等。</li>
-//           </ul>
