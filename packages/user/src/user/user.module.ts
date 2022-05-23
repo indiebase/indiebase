@@ -1,7 +1,7 @@
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
@@ -40,6 +40,6 @@ import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, Logger],
 })
 export class UserModule {}

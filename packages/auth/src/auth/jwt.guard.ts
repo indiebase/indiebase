@@ -3,7 +3,6 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
@@ -16,11 +15,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   override handleRequest(err, user, _info, _context) {
-    if (err) {
-      console.error(err);
-      throw new InternalServerErrorException();
+    if (err || !user) {
+      throw err || new UnauthorizedException();
     }
-
     return user;
   }
 }

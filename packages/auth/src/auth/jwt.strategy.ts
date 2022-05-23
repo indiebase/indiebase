@@ -52,6 +52,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         _tokenOrPayload,
         _verifyOrSignOrOptions,
       ) => {
+        console.log(_requestType, _tokenOrPayload, _verifyOrSignOrOptions);
         return 'dev123456';
       },
     });

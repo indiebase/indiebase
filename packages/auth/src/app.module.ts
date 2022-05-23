@@ -1,7 +1,6 @@
 import { JwtModule } from '@nestjs/jwt';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { resolve } from 'path';
 import configure from './config';
 import { AuthZModule, AUTHZ_ENFORCER } from 'nest-authz';
@@ -109,7 +108,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       inject: [NacosConfigService],
     }),
   ],
-  controllers: [AppController],
   providers: [Logger],
 })
 export class AppModule implements OnModuleInit {

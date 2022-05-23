@@ -1,2 +1,2 @@
-export * from './pagenation.dto';
+export * from './schema.dto';
 export * from './auth.dto';

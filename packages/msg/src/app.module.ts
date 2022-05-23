@@ -1,15 +1,15 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
-import configure from './config';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { MailModule } from './mail';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import LokiTransport = require('winston-loki');
+import configure from './config';
+import { MailModule } from './mail';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -58,35 +58,34 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       },
     }),
 
-    // WinstonModule.forRootAsync({
-    //   inject: [NacosConfigService],
-    //   useFactory: async (config: NacosConfigService) => {
-    //     const configs = await config.getConfig('service-msg.json');
-    //     // const logStorageDir = configs.logger.storageDir
-    //     //   ? configs.logger.storageDir
-    //     //   : '/var/log';
+    WinstonModule.forRootAsync({
+      inject: [NacosConfigService],
+      useFactory: async (config: NacosConfigService) => {
+        const configs = await config.getConfig('service-msg.json');
+        // const logStorageDir = configs.logger.storageDir
+        //   ? configs.logger.storageDir
+        //   : '/var/log';
 
-    //     const transports: any[] = [
-    //       new winston.transports.Console({
-    //         format: winston.format.combine(
-    //           winston.format.timestamp(),
-    //           utilities.format.nestLike(),
-    //         ),
-    //       }),
-    //       new LokiTransport(configs.logger.loki),
-    //     ];
+        const transports: any[] = [
+          new winston.transports.Console({
+            format: winston.format.combine(
+              winston.format.timestamp(),
+              utilities.format.nestLike(),
+            ),
+          }),
+          new LokiTransport(configs.logger.loki),
+        ];
 
-    //     return {
-    //       level: 'debug',
-    //       format: winston.format.json(),
-    //       defaultMeta: { service: 'message' },
-    //       exitOnError: false,
-    //       rejectionHandlers: [new LokiTransport(configs.logger.rejectionLoki)],
-    //       transports,
-    //     };
-    //   },
-    // }),
-
+        return {
+          level: isDevelopment ? 'debug' : 'warn',
+          format: winston.format.json(),
+          defaultMeta: { service: 'message' },
+          exitOnError: false,
+          rejectionHandlers: [new LokiTransport(configs.logger.rejectionLoki)],
+          transports,
+        };
+      },
+    }),
     // NacosNamingModule.forRootAsync({
     //   imports: [ConfigModule],
     //   inject: [ConfigService],
@@ -101,11 +100,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory(config: ConfigService) {
-        console.log(
-          '--------',
-          config.get('nacos.serverList'),
-          config.get('nacos.namespace'),
-        );
         return {
           serverAddr: config.get('nacos.serverList'),
           namespace: config.get('nacos.namespace'),
@@ -113,8 +107,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       },
     }),
   ],
-  providers: [
-    /* Logger */
-  ],
+  providers: [Logger],
 })
 export class AppModule {}

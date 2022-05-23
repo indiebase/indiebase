@@ -5,6 +5,7 @@ import {
   ArgumentsHost,
   HttpException,
   Logger,
+  HttpStatus,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -13,8 +14,6 @@ import { FastifyReply, FastifyRequest } from 'fastify';
  */
 @Catch()
 export class FormatExceptionFilter implements ExceptionFilter {
-  constructor(private readonly logger: Logger) {}
-
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<FastifyReply>();
@@ -31,16 +30,11 @@ export class FormatExceptionFilter implements ExceptionFilter {
           ? { message: resException }
           : resException;
     } else {
+      statusCode = exception?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR;
+      resExceptionObj = {
+        message: exception?.message,
+      };
     }
-
-    // const resExceptionObj =
-    //   typeof resException === 'string'
-    //     ? { message: resException }
-    //     : resException;
-
-    // if (status) {
-    //   this.logger.error('', resException);
-    // }
 
     response.status(statusCode).send({
       ...resExceptionObj,

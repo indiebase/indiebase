@@ -1,19 +1,16 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AvailableUserInfo } from './auth.interface';
+import { LocalSignInDto } from '@letscollab/helper';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
-  constructor(private readonly authSrv: AuthService) {
-    super();
+  constructor(private readonly authService: AuthService) {
+    super({ usernameField: 'account' });
   }
 
-  async validate(info: AvailableUserInfo): Promise<any> {
-    // await this.redisSrv.getClient().del(username);
-    const user = await this.authSrv.validateUser(info);
-
-    return 'demo';
+  async validate(account, password): Promise<any> {
+    return this.authService.validateUser({ account, password });
   }
 }

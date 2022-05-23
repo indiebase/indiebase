@@ -36,8 +36,8 @@ async function bootstrap() {
   app.useLogger(nestWinston);
 
   app.useGlobalFilters(
-    new FormatExceptionFilter(nestWinston),
-    // new HttpExceptionFilter(nestWinston.logger),
+    new FormatExceptionFilter(),
+    // new FormatExceptionFilter(nestWinston.logger),
   );
 
   app.connectMicroservice<MicroserviceOptions>({
