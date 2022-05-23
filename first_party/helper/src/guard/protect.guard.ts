@@ -8,7 +8,8 @@ import { FastifyRequest } from 'fastify';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 import * as forge from 'node-forge';
 /**
- *  校验Header中的API
+ *  Inspect token from header
+ *
  *
  * @param token
  * @param secret
@@ -36,6 +37,9 @@ export const apiTokenInspect = async function (
   );
 };
 
+/**
+ * Default header: Access-Control-Allow-Credential , custom in nacos config.
+ */
 @Injectable()
 export class ProtectGuard implements CanActivate {
   constructor(private readonly nacosConfigService: NacosConfigService) {}
@@ -43,10 +47,10 @@ export class ProtectGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
     try {
-      const apiToken = request.headers[
-        'Access-Control-Allow-Credential'
-      ] as string;
       const common = await this.nacosConfigService.getConfig('common.json');
+      const apiToken = request.headers[
+        common?.security?.guardHeader ?? 'Access-Control-Allow-Credential'
+      ] as string;
       const salt = common.security.apiSalt;
       const expire = common.security.expire;
       return apiTokenInspect(apiToken, salt, expire);

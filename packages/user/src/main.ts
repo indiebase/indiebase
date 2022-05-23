@@ -7,9 +7,13 @@ import {
 } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
-
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { NacosConfigService } from '@letscollab/nest-nacos';
-import { FormatExceptionFilter } from '@letscollab/helper';
+import {
+  FormatExceptionFilter,
+  MicroExceptionFilter,
+} from '@letscollab/helper';
+import fastifyCookie from 'fastify-cookie';
 import { setupUserApiDoc } from './utils';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -29,12 +33,13 @@ async function bootstrap() {
   const nacosConfigService: NacosConfigService =
     app.get<NacosConfigService>(NacosConfigService);
 
-  const nacosConfigs = await nacosConfigService.getConfig('service-user.json');
+  const userConfigs = await nacosConfigService.getConfig('service-user.json');
+  const commonConfigs = await nacosConfigService.getConfig('common.json');
 
   app.setGlobalPrefix('v1');
 
   // 配置swagger
-  !isProduction && (await setupUserApiDoc(app));
+  await setupUserApiDoc(app);
 
   //dto 国际化
   app.useGlobalPipes(
@@ -43,12 +48,19 @@ async function bootstrap() {
     }),
   );
 
-  // app.useGlobalFilters(new FormatExceptionFilter());
+  await app.register(fastifyCookie, {
+    secret: commonConfigs?.security?.cookieSecret,
+  });
+
+  const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  app.useLogger(nestWinston);
+
+  app.useGlobalFilters(new FormatExceptionFilter(), new MicroExceptionFilter());
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: nacosConfigs.rabbitmq.urls,
+      urls: userConfigs.rabbitmq.urls,
       queue: 'user_queue',
       queueOptions: {
         durable: false,

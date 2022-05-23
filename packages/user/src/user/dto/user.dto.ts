@@ -1,13 +1,7 @@
 // import { PaginationDto } from '@/common/dto/pagination.dto';
 import { PaginationDto } from '@letscollab/helper';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class QueryUserDto extends PaginationDto {
   @ApiProperty({

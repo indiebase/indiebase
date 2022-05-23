@@ -4,10 +4,17 @@ import { UserEntity } from './user.entity';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(body) {
-    const userEntity = this.create(body);
+  async createUser(body: SignupDto) {
+    return new Promise(async (resolve, reject) => {
+      const userEntity = this.create(body);
 
-    await this.save(userEntity);
+      this.save(userEntity)
+        .then((r) => {
+          delete r.password;
+          resolve(r);
+        })
+        .catch(reject);
+    });
   }
 
   public async findByAccount(account: string) {
@@ -16,19 +23,15 @@ export class UserRepository extends Repository<UserEntity> {
     });
   }
 
+  public async findFullByAccount(account: string) {
+    return this.createQueryBuilder('user')
+      .addSelect('user.password')
+      .where({ account })
+      .getOne();
+  }
+
   public async updateUser(body) {
     const { username, ...rest } = body;
-
-    // try {
-    //   return this.adminRepo.update(
-    //     {
-    //       username,
-    //     },
-    //     rest,
-    //   );
-    // } catch (error) {
-    //   throw new BadRequestException({ message: '修改失败' });
-    // }
   }
 
   /**

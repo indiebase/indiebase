@@ -4,7 +4,6 @@ import { Module, Logger } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MailController } from './mail.controller';
 import { MAIL_RMQ_CONSUMER } from '../app.constants';
-import * as winston from 'winston';
 @Module({
   imports: [
     ClientsModule.registerAsync([

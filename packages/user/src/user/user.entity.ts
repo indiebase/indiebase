@@ -7,10 +7,7 @@ import {
   BeforeUpdate,
   UpdateDateColumn,
   OneToMany,
-  JoinColumn,
-  OneToOne,
   ManyToOne,
-  Generated,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
@@ -33,7 +30,7 @@ export class UserEntity {
   @Column('varchar', { select: false })
   password: string;
 
-  @Column('boolean', {
+  @Column('int', {
     name: 'account_status',
     comment: '账户状态',
     default: 1,
