@@ -9,7 +9,6 @@ import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
-import * as casbin from 'casbin';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import { CasbinModule } from '@letscollab/nest-casbin';
@@ -37,9 +36,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const configs = await config.getConfig('service-auth.json');
-        // const logStorageDir = configs.logger.storageDir
-        //   ? configs.logger.storageDir
-        //   : '/var/log';
 
         const transports: any[] = [
           new winston.transports.Console({

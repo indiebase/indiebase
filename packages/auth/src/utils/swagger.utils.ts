@@ -31,7 +31,12 @@ export const setupAuthApiDoc = (app: INestApplication) =>
       const authDoc = SwaggerModule.createDocument(app, authOptions, {
         include: [AuthModule, RbacModule],
       });
-      SwaggerModule.setup('api/doc/auth', app, authDoc);
+      SwaggerModule.setup('api/doc/auth', app, authDoc, {
+        // explorer: true,
+        uiConfig: {
+          persistAuthorization: true,
+        },
+      });
       await writeOpenApiDoc({
         name: 'auth',
         pkgName: pkg.name,
