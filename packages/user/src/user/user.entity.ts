@@ -22,10 +22,10 @@ export class UserEntity {
   id: string;
 
   @Column('varchar', { unique: true })
-  account: string;
-
-  @Column('varchar')
   username: string;
+
+  @Column('varchar', { comment: '昵称' })
+  nickname: string;
 
   @Column('varchar', { select: false })
   password: string;

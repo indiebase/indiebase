@@ -19,7 +19,7 @@ export class UserService {
   ) {}
 
   public async signup(body: SignupDto) {
-    const user = await this.userRepo.findByAccount(body.account);
+    const user = await this.userRepo.findByUsername(body.username);
 
     if (user) {
       return {
@@ -47,8 +47,17 @@ export class UserService {
     }
   }
 
-  public async getFull(account: string) {
-    return this.userRepo.findFullByAccount(account).catch((err) => {
+  /**
+   *
+   *
+   * @param username
+   * @param full  是否获取完整用户信息 包含密码
+   * @returns
+   */
+  public async getUser(username: string, full = false) {
+    const user = await this.userRepo[
+      full ? 'findFullByUsername' : 'findByUsername'
+    ](username).catch((err) => {
       this.logger.error(err.message, err.stack);
 
       throw new RpcException({
@@ -56,5 +65,10 @@ export class UserService {
         message: err.message,
       });
     });
+
+    return {
+      code: user ? ResultCode.SUCCESS : ResultCode.ERROR,
+      d: user,
+    };
   }
 }

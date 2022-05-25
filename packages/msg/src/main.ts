@@ -36,7 +36,7 @@ async function bootstrap() {
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(nestWinston);
 
-  app.useGlobalFilters(new FormatExceptionFilter());
+  app.useGlobalFilters(new FormatExceptionFilter(nestWinston));
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

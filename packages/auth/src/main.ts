@@ -11,12 +11,8 @@ import { FormatExceptionFilter } from '@letscollab/helper';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import fastifyCookie from 'fastify-cookie';
-import {
-  BadRequestException,
-  ValidationError,
-  ValidationPipe,
-} from '@nestjs/common';
-import { fastifyHelmet } from 'fastify-helmet';
+import { ValidationPipe } from '@nestjs/common';
+import { fastifyHelmet } from '@fastify/helmet';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -45,7 +41,11 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      // exceptionFactory:
+      transform: true,
+      enableDebugMessages: isDevelopment,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      // exceptionFactory: i18nValidationErrorFactory,
     }),
   );
 
@@ -53,12 +53,18 @@ async function bootstrap() {
     secret: commonConfigs?.security?.cookieSecret,
   });
 
-  // await app.register(fastifyHelmet);
+  await app.register(fastifyHelmet, {
+    global: true,
+    contentSecurityPolicy: {},
+    enableCSPNonces: true,
+    referrerPolicy: true,
+  });
 
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+
   app.useLogger(nestWinston);
 
-  app.useGlobalFilters(new FormatExceptionFilter());
+  app.useGlobalFilters(new FormatExceptionFilter(nestWinston));
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

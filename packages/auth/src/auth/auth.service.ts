@@ -1,6 +1,7 @@
 import { USER_RMQ } from '../app.constants';
 import {
   LocalSignInDto,
+  RpcResSchema,
   SignupDto,
   UserDto,
   UserResDto,
@@ -40,23 +41,28 @@ export class AuthService implements OnModuleInit {
     });
   }
 
-  async validateUser(info: LocalSignInDto): Promise<UserDto> {
-    let user = await lastValueFrom<UserDto & { password: string }>(
-      this.userClient
-        .send({ cmd: 'full_user' }, { account: info.account })
-        .pipe(
-          timeout(4000),
-          catchError(() => {
-            throw new InternalServerErrorException({
-              message: '获取用户信息失败',
-            });
-          }),
-        ),
+  async getUser<T>(cmd: string, c: any) {
+    return lastValueFrom<T>(
+      this.userClient.send({ cmd }, c).pipe(
+        timeout(4000),
+        catchError((e) => {
+          throw new InternalServerErrorException({
+            message: '获取用户信息失败',
+          });
+        }),
+      ),
+    );
+  }
+
+  async validateUser(info: LocalSignInDto) {
+    let user = await this.getUser<RpcResSchema<UserDto & { password: string }>>(
+      'get_full_user',
+      info.username,
     );
 
-    if (user?.password) {
-      if (await bcrypt.compare(info.password, user.password)) {
-        return user;
+    if (user.code > 0) {
+      if (await bcrypt.compare(info.password, user.d.password)) {
+        return user.d;
       } else {
         throw new UnauthorizedException('用户认证错误, 请重新输入密码');
       }
@@ -69,14 +75,26 @@ export class AuthService implements OnModuleInit {
     let r = await lastValueFrom<UserResDto>(
       this.userClient.send({ cmd: 'signup' }, user).pipe(
         timeout(4000),
-        catchError(() => {
+        catchError((e) => {
+          this.logger.error(e);
           throw new InternalServerErrorException({ message: '用户注册失败' });
         }),
       ),
     );
 
     if (r.code > 0) {
-      let t = await this.signTarget({ account: r.d.account });
+      let t = await this.signTarget({ username: r.d.username });
+      r.d.t = t;
+    }
+
+    return r;
+  }
+
+  async signin(username) {
+    const r = await this.getUser<RpcResSchema<UserDto>>('get_user', username);
+
+    if (r.code > 0) {
+      let t = await this.signTarget({ username: r.d.username });
       r.d.t = t;
     }
 

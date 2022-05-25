@@ -5,9 +5,8 @@ import {
   Post,
   Body,
   Res,
-  HttpStatus,
+  Get,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './local.guard';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -18,6 +17,7 @@ import { LocalSignInDto, SignupDto, UserResDto } from '@letscollab/helper';
 import { AuthService } from './auth.service';
 import { FastifyReply } from 'fastify';
 import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from './jwt.guard';
 
 @Controller('auth')
 @ApiTags('v1/Auth')
@@ -25,14 +25,12 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
+  @ApiCreatedResponse({
+    type: UserResDto,
+  })
   @UseGuards(AuthGuard('local'))
-  async signin(@Request() req: any) {
-    console.log(req.user);
-    // console.log(body);
-    // await lastValueFrom(
-    //   this.client.send({ cmd: 'signup' }, 'demo').pipe(timeout(5000)),
-    // );
-    return 'demo';
+  async signin(@Body() body: LocalSignInDto) {
+    return this.authService.signin(body.username);
   }
 
   @Post('logout')
@@ -40,9 +38,9 @@ export class AuthController {
     return 'demo';
   }
 
-  @ApiBearerAuth()
-  @UseGuards(LocalAuthGuard)
-  @Post('profile')
+  @Get('profile')
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtAuthGuard)
   async profile(@Request() req: Request) {
     return 'demo';
   }

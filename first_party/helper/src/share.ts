@@ -1,5 +1,7 @@
+import { RpcException } from '@nestjs/microservices';
 import { ensureDir, writeJson } from 'fs-extra';
 import { resolve } from 'path';
+import { ResultCode } from './constants';
 
 /**
  *

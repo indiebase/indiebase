@@ -6,5 +6,5 @@ export class GetCaptchaDto {
     default: 'deskbtm@outlook.com',
   })
   @IsNotEmpty()
-  account: string;
+  username: string;
 }

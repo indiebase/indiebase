@@ -12,7 +12,7 @@ export class PaginationDto {
   total?: number;
 }
 
-export abstract class BasicSchemaDto {
+export abstract class BasicResSchemaDto {
   @ApiProperty({
     description: 'Response code',
     default: ResultCode.SUCCESS,
@@ -22,5 +22,5 @@ export abstract class BasicSchemaDto {
   @ApiProperty({
     description: 'Response message',
   })
-  message: string;
+  message: string | string[];
 }

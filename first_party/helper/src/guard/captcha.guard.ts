@@ -21,8 +21,8 @@ export class CaptchaGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
 
     const body = request.body as SignupDto;
-    const { captcha, account } = body;
-    const key = Captcha.getSignupCaptchaToken(captcha, account);
+    const { captcha, username } = body;
+    const key = Captcha.getSignupCaptchaToken(captcha, username);
     const c = await this.redis.get(key);
 
     if (c) {

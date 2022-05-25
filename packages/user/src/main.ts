@@ -15,6 +15,7 @@ import {
 } from '@letscollab/helper';
 import fastifyCookie from 'fastify-cookie';
 import { setupUserApiDoc } from './utils';
+// import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -55,7 +56,10 @@ async function bootstrap() {
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(nestWinston);
 
-  app.useGlobalFilters(new FormatExceptionFilter(), new MicroExceptionFilter());
+  app.useGlobalFilters(
+    new FormatExceptionFilter(nestWinston),
+    new MicroExceptionFilter(),
+  );
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

@@ -1,9 +1,9 @@
+import { RbacModule } from './rbac/rbac.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
-import { AuthZModule, AUTHZ_ENFORCER } from 'nest-authz';
 import TypeORMAdapter from 'typeorm-adapter';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import * as casbin from 'casbin';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
+import { CasbinModule } from '@letscollab/nest-casbin';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -19,6 +20,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 @Module({
   imports: [
     AuthModule,
+    RbacModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
@@ -79,25 +81,39 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    AuthZModule.register({
+    CasbinModule.forRootAsync({
       imports: [NacosConfigModule],
-      enforcerProvider: {
-        provide: AUTHZ_ENFORCER,
-        useFactory: async (config: NacosConfigService) => {
-          const configs = await config.getConfig('service-auth.json');
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const configs = await config.getConfig('service-auth.json');
 
-          return casbin.newEnforcer(
-            resolve(__dirname, '../model/auth.conf'),
-            await TypeORMAdapter.newAdapter(configs.casbin.db),
-          );
-        },
-        inject: [NacosConfigService],
-      },
-      usernameFromContext: (ctx) => {
-        const request = ctx.switchToHttp().getRequest();
-        return request.user && request.user.username;
+        return {
+          model: resolve(__dirname, '../model/auth.conf'),
+          adapter: await TypeORMAdapter.newAdapter(configs.casbin.db),
+        };
       },
     }),
+    // AuthZModule.register({
+    //   imports: [NacosConfigModule],
+    //   enforcerProvider: {
+    //     provide: AUTHZ_ENFORCER,
+    //     useFactory: async (config: NacosConfigService) => {
+    //       const configs = await config.getConfig('service-auth.json');
+
+    //       return casbin.newEnforcer(
+    //         resolve(__dirname, '../model/auth.conf'),
+    //         await TypeORMAdapter.newAdapter(configs.casbin.db),
+    //       );
+    //     },
+    //     inject: [NacosConfigService],
+    //   },
+    //   usernameFromContext: (ctx) => {
+    //     // const request = ctx.switchToHttp().getRequest();
+
+    //     // return request.user && request.user.username;
+    //     return 'demo';
+    //   },
+    // }),
 
     JwtModule.registerAsync({
       imports: [ConfigModule, NacosConfigModule],

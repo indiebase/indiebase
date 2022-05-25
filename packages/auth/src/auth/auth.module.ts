@@ -50,6 +50,6 @@ const PassportModule = ForwardPassportModule.register({
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy, Logger],
-  exports: [AuthService, LocalStrategy, JwtStrategy],
+  exports: [AuthService, LocalStrategy, JwtStrategy, PassportModule],
 })
 export class AuthModule {}
