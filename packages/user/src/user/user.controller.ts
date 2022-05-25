@@ -14,8 +14,13 @@ export class UserController {
     return this.userService.signup(user);
   }
 
-  @MessagePattern({ cmd: 'full_user' })
-  async getFull(@Payload() user: Pick<LocalSignInDto, 'account'>) {
-    return this.userService.getFull(user.account);
+  @MessagePattern({ cmd: 'get_full_user' })
+  async getFullUser(@Payload() username: string) {
+    return this.userService.getUser(username, true);
+  }
+
+  @MessagePattern({ cmd: 'get_user' })
+  async getUser(@Payload() username: string) {
+    return this.userService.getUser(username);
   }
 }

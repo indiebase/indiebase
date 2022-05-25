@@ -1,6 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
-import { BasicSchemaDto } from './schema.dto';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { BasicResSchemaDto } from './schema.dto';
 
 enum AccountStatus {
   forbidden,
@@ -8,12 +14,12 @@ enum AccountStatus {
 }
 
 export class SignupDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: '用户名(选填)',
     default: 'letscollabtest',
-    required: false,
   })
-  username?: string;
+  @IsOptional()
+  nickname?: string;
 
   @ApiProperty({
     default: 'deskbtm@outlook.com',
@@ -27,7 +33,7 @@ export class SignupDto {
       message: '邮箱格式不正确',
     },
   )
-  account?: string;
+  username?: string;
 
   @ApiProperty({
     default: 'dev123456',
@@ -59,10 +65,13 @@ export class LocalSignInDto {
   @IsNotEmpty({
     message: '用户姓名不可为空',
   })
-  @IsEmail(null, {
-    message: '邮箱格式不正确',
-  })
-  account: string;
+  @IsEmail(
+    {},
+    {
+      message: '邮箱格式不正确',
+    },
+  )
+  username: string;
 
   @ApiProperty({
     default: 'dev123456',
@@ -89,34 +98,34 @@ export class UserDto {
   id: number;
 
   @ApiProperty()
-  account: string;
-
-  @ApiProperty({
-    description: '初始值和account相同',
-  })
   username: string;
 
   @ApiProperty({
+    description: '初始值和username相同',
+  })
+  nickname: string;
+
+  @ApiProperty({
     enum: AccountStatus,
-    description: 'account status',
+    description: 'Account status',
   })
   accountStatus?: AccountStatus;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: '邀请的用户',
   })
-  invitations: UserDto[];
+  invitations?: UserDto[];
 
-  @ApiProperty({
-    description: '被谁邀请',
+  @ApiPropertyOptional({
+    description: '被邀请',
   })
-  inviteBy: UserDto;
+  inviteBy?: UserDto;
 
   createTime?: Date;
   updateTime?: Date;
 }
 
-export class UserResDto extends BasicSchemaDto {
+export class UserResDto extends BasicResSchemaDto {
   @ApiPropertyOptional({
     type: () => UserDto,
   })

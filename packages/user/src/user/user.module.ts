@@ -4,9 +4,9 @@ import { UserController } from './user.controller';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
-import { UserRepository } from './user.repository';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
+import { UserRepository } from './user.repository';
 
 @Module({
   imports: [

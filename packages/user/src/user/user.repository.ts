@@ -17,16 +17,16 @@ export class UserRepository extends Repository<UserEntity> {
     });
   }
 
-  public async findByAccount(account: string) {
+  public async findByUsername(username: string) {
     return this.findOne({
-      account,
+      username,
     });
   }
 
-  public async findFullByAccount(account: string) {
+  public async findFullByUsername(username: string) {
     return this.createQueryBuilder('user')
       .addSelect('user.password')
-      .where({ account })
+      .where({ username })
       .getOne();
   }
 

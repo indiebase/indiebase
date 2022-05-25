@@ -19,7 +19,7 @@ export class MailService {
 
     return this.mailerService
       .sendMail({
-        to: body.account,
+        to: body.username,
         subject,
         template: 'mail-captcha.hbs',
         context: {
@@ -30,7 +30,7 @@ export class MailService {
       })
       .then(async () => {
         await this.redis.setex(
-          Captcha.getSignupCaptchaToken(captcha, body.account),
+          Captcha.getSignupCaptchaToken(captcha, body.username),
           3000,
           captcha,
         );

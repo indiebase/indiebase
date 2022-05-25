@@ -4,8 +4,8 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-  Logger,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -14,12 +14,16 @@ import { FastifyReply, FastifyRequest } from 'fastify';
  */
 @Catch()
 export class FormatExceptionFilter implements ExceptionFilter {
+  constructor(private readonly logger: Logger) {}
+
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
     let statusCode;
     let resExceptionObj;
+
+    process.env.NODE_ENV === 'development' && console.debug(exception);
 
     // 如果是http错误
     if (exception instanceof HttpException) {
@@ -30,6 +34,8 @@ export class FormatExceptionFilter implements ExceptionFilter {
           ? { message: resException }
           : resException;
     } else {
+      this.logger.error(exception, exception?.stack);
+
       statusCode = exception?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR;
       resExceptionObj = {
         message: exception?.message,
