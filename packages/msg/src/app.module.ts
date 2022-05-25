@@ -62,9 +62,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const configs = await config.getConfig('service-msg.json');
-        // const logStorageDir = configs.logger.storageDir
-        //   ? configs.logger.storageDir
-        //   : '/var/log';
 
         const transports: any[] = [
           new winston.transports.Console({

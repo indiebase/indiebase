@@ -1,14 +1,15 @@
 import { GetCaptchaDto } from './mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Captcha, ResultCode } from '@letscollab/helper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
+import { Logger } from '@nestjs/common';
 import type { Redis } from 'ioredis';
-import { Captcha } from '@letscollab/helper';
 @Injectable()
 export class MailService {
   constructor(
     private readonly mailerService: MailerService,
-    // private readonly logger: Logger,
+    private readonly logger: Logger,
     @InjectRedis()
     private readonly redis: Redis,
   ) {}
@@ -35,10 +36,14 @@ export class MailService {
           captcha,
         );
 
-        return {};
+        return {
+          code: ResultCode.SUCCESS,
+          message: '发送成功',
+        };
       })
       .catch((e) => {
-        console.log(e);
+        this.logger.error(e);
+        throw new InternalServerErrorException();
       });
   }
 }

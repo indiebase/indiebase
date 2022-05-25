@@ -31,9 +31,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix('v1');
 
-  !isProduction && (await setupApiDoc(app));
+  await setupApiDoc(app);
 
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+
   app.useLogger(nestWinston);
 
   app.useGlobalFilters(new FormatExceptionFilter(nestWinston));

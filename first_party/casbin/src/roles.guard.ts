@@ -4,11 +4,13 @@ import { CasbinService } from './casbin.service';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
-export class RolesGuard implements CanActivate {
+export abstract class RolesGuard implements CanActivate {
   constructor(
     private readonly casbinService: CasbinService,
     private readonly reflector: Reflector,
   ) {}
+
+  abstract getPayload(context: ExecutionContext): Promise<string>;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>(
@@ -21,7 +23,15 @@ export class RolesGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
+    let username = request.user?.username as string;
+
+    username = username ?? (await this.getPayload(context));
+
+    console.log(username);
+    // if (!user) {
+    //   throw new UnauthorizedException();
+    // }
+
     // const roles = this.reflector.get<string[]>('roles', context.getHandler());
 
     return true;
