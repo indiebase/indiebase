@@ -10,15 +10,23 @@ export class RoleService {
     await this.casbin.e.addPolicy(
       role.name,
       'letscollab.deskbtm.com',
-      'demo',
+      '/path/*',
       'read',
     );
 
-    await this.casbin.e.addRoleForUser(
-      'letscollabtest',
-      role.name,
-      'letscollab.deskbtm.com',
+    console.log(
+      await this.casbin.e.getUsersForRoleInDomain(
+        role.name,
+        'letscollab.deskbtm.com',
+      ),
     );
+    this.casbin.e.enforce();
+
+    // await this.casbin.e.addRoleForUser(
+    //   'letscollabtest',
+    //   role.name,
+    //   'letscollab.deskbtm.com',
+    // );
     // console.log(await this.casbin.e);
 
     // this.authzService.addRoleForUser();

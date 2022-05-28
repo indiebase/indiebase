@@ -1,11 +1,5 @@
 import { USER_RMQ } from '../app.constants';
-import {
-  LocalSignInDto,
-  RpcResSchema,
-  SignupDto,
-  UserDto,
-  UserResDto,
-} from '@letscollab/helper';
+import { LocalSignInDto, RpcResSchema, UserDto } from '@letscollab/helper';
 import {
   Inject,
   Injectable,
@@ -30,10 +24,9 @@ export class AuthService implements OnModuleInit {
     private readonly userClient: ClientProxy,
 
     private readonly logger: Logger,
-
-    @InjectRedis()
-    private readonly redis: Redis,
-  ) {}
+  ) // @InjectRedis()
+  // private readonly redis: Redis,
+  {}
 
   async onModuleInit() {
     await this.userClient.connect().catch((err) => {
@@ -71,25 +64,6 @@ export class AuthService implements OnModuleInit {
     }
   }
 
-  async signup(user: SignupDto): Promise<UserResDto> {
-    let r = await lastValueFrom<UserResDto>(
-      this.userClient.send({ cmd: 'signup' }, user).pipe(
-        timeout(4000),
-        catchError((e) => {
-          this.logger.error(e);
-          throw new InternalServerErrorException({ message: '用户注册失败' });
-        }),
-      ),
-    );
-
-    if (r.code > 0) {
-      let t = await this.signTarget({ username: r.d.username });
-      r.d.t = t;
-    }
-
-    return r;
-  }
-
   async signin(username) {
     const r = await this.getUser<RpcResSchema<UserDto>>('get_user', username);
 
@@ -104,6 +78,4 @@ export class AuthService implements OnModuleInit {
   async signTarget(object: string | Buffer | object) {
     return this.jwtService.sign(object);
   }
-
-  isCaptchaExpire() {}
 }

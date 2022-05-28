@@ -4,20 +4,27 @@ import {
   Request,
   Post,
   Body,
-  Res,
   Get,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiCreatedResponse,
-  ApiOAuth2,
-  ApiTags,
-} from '@nestjs/swagger';
-import { LocalSignInDto, SignupDto, UserResDto } from '@letscollab/helper';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { FastifyReply } from 'fastify';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt.guard';
+import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
+import { RolesGuard } from '@letscollab/nest-casbin';
+import {
+  UserResDto,
+  LocalSignInDto,
+  UserDto,
+  ResultCode,
+  ProtectGuard,
+  ApiProtectHeader,
+  VerifyDto,
+  CaptchaGuard,
+} from '@letscollab/helper';
+import { FastifyRequest } from 'fastify';
 
 @Controller('auth')
 @ApiTags('v1/Auth')
@@ -28,41 +35,41 @@ export class AuthController {
   @ApiCreatedResponse({
     type: UserResDto,
   })
-  @UseGuards(AuthGuard('local'))
+  @ApiProtectHeader()
+  @UseGuards(ProtectGuard, AuthGuard('local'))
   async signin(@Body() body: LocalSignInDto) {
     return this.authService.signin(body.username);
   }
 
-  @Post('logout')
-  async logout(@Request() req: Request) {
-    return 'demo';
-  }
-
   @Get('profile')
   @ApiBearerAuth('JWT-auth')
-  @UseGuards(JwtAuthGuard)
-  async profile(@Request() req: Request) {
+  @UseGuards(ProtectGuard, JwtAuthGuard)
+  async profile(@Request() req: FastifyRequest & { user: any }) {
+    console.log(req.user);
+
     return 'demo';
   }
 
-  @Post('signup')
-  @ApiCreatedResponse({
-    type: UserResDto,
-  })
-  // @UseGuards(CaptchaGuard)
-  async signup(@Body() body: SignupDto, @Res() res: FastifyReply) {
-    const r = await this.authService.signup(body);
-
-    if (r.code > 0) {
-      res.setCookie('__HOST-t', r.d.t, { httpOnly: true, secure: true });
-    }
-
-    res.send(r);
+  @UsePipes(new ValidationPipe())
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @MessagePattern({ cmd: 'auth' })
+  async auth(@Payload() payload: VerifyDto) {
+    console.log(payload);
+    return 1;
   }
 
-  @ApiOAuth2(['pets:write'])
-  @Post('github')
-  async github(@Request() req: Request) {
-    return 'demo';
+  @MessagePattern({ cmd: 'sign' })
+  async sign(@Payload() payload: any) {
+    const t = await this.authService.signTarget(payload).catch((err) => {
+      throw new RpcException({
+        code: ResultCode.ERROR,
+        message: err,
+      });
+    });
+
+    return {
+      code: ResultCode.SUCCESS,
+      d: t,
+    };
   }
 }

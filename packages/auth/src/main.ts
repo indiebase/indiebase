@@ -7,14 +7,16 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import { FormatExceptionFilter } from '@letscollab/helper';
+import {
+  FormatExceptionFilter,
+  MicroExceptionFilter,
+} from '@letscollab/helper';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import fastifyCookie from 'fastify-cookie';
 import { ValidationPipe } from '@nestjs/common';
 import { fastifyHelmet } from '@fastify/helmet';
 
-const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
@@ -64,7 +66,10 @@ async function bootstrap() {
 
   app.useLogger(nestWinston);
 
-  app.useGlobalFilters(new FormatExceptionFilter(nestWinston));
+  app.useGlobalFilters(
+    new FormatExceptionFilter(nestWinston),
+    new MicroExceptionFilter(nestWinston),
+  );
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

@@ -1,10 +1,5 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiCookieAuth,
-  ApiProperty,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './role.dto';
 import { Roles, RolesGuard } from '@letscollab/nest-casbin';
@@ -23,7 +18,6 @@ export class RoleController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles({ name: 'demo' })
   async create(@Body() role: CreateRoleDto) {
-    console.log(role);
     this.roleService.addRole(role);
     // const data: Role = Object.assign(
     //   {

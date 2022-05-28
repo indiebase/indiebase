@@ -11,10 +11,16 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   override canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    return super.canActivate(context);
+    const req = context.switchToHttp().getRequest();
+    console.log(req);
+
+    return true;
+
+    // return super.canActivate(context);
   }
 
   override handleRequest(err, user, _info, _context) {
+    console.log(user);
     if (err || !user) {
       throw err || new UnauthorizedException();
     }

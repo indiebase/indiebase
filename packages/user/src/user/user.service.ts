@@ -1,24 +1,62 @@
 import { UserRepository } from './user.repository';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  OnModuleInit,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SignupDto } from '@letscollab/helper';
+import {
+  JwtSignDto,
+  LocalSignInDto,
+  SignupDto,
+  UserResDto,
+} from '@letscollab/helper';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ResultCode } from '@letscollab/helper';
 import { MAIL_RMQ, AUTH_RMQ } from '../app.constants';
+import { catchError, lastValueFrom, timeout } from 'rxjs';
+import { InjectRedis } from '@liaoliaots/nestjs-redis';
+import Redis from 'ioredis';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnModuleInit {
   constructor(
     @InjectRepository(UserRepository)
     private readonly userRepo: UserRepository,
+
     @Inject(AUTH_RMQ)
     private readonly authClient: ClientProxy,
+
     @Inject(MAIL_RMQ)
     private readonly mailClient: ClientProxy,
+
     private readonly logger: Logger,
   ) {}
 
-  public async signup(body: SignupDto) {
+  async onModuleInit() {
+    await this.authClient.connect().catch((err) => {
+      this.logger.error(err.message, err.stack);
+    });
+  }
+
+  async demo(header: string) {
+    let r = await lastValueFrom<JwtSignDto>(
+      this.authClient.send({ cmd: 'auth' }, { Authorization: header }).pipe(
+        timeout(4000),
+        catchError((e) => {
+          this.logger.error(e);
+          throw new InternalServerErrorException({
+            message: 'token生成失败',
+          });
+        }),
+      ),
+    );
+  }
+
+  public async signup(body: SignupDto): Promise<UserResDto> {
     const user = await this.userRepo.findByUsername(body.username);
 
     if (user) {
@@ -29,17 +67,38 @@ export class UserService {
     } else {
       return this.userRepo
         .createUser(body)
-        .then((d) => {
+        .then(async (d) => {
+          let result: any = d;
+
+          let r = await lastValueFrom<JwtSignDto>(
+            this.authClient
+              .send({ cmd: 'sign' }, { username: d.username })
+              .pipe(
+                timeout(4000),
+                catchError((e) => {
+                  this.logger.error(e);
+                  throw new InternalServerErrorException({
+                    message: 'token生成失败',
+                  });
+                }),
+              ),
+          );
+
+          if (r.code > 0) {
+            result.t = r.d;
+            console.log(result);
+          }
+
           return {
             code: ResultCode.SUCCESS,
             message: '注册成功',
-            d,
+            d: result,
           };
         })
         .catch((err) => {
           this.logger.error(err.message, err.stack);
 
-          throw new RpcException({
+          throw new BadRequestException({
             code: ResultCode.ERROR,
             message: err.code === 'ER_DUP_ENTRY' ? '用户已存在' : err.message,
           });

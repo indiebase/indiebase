@@ -4,7 +4,7 @@ import { UserEntity } from './user.entity';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(body: SignupDto) {
+  async createUser(body: SignupDto): Promise<UserEntity> {
     return new Promise(async (resolve, reject) => {
       const userEntity = this.create(body);
 
