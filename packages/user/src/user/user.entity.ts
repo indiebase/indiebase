@@ -10,11 +10,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-
-enum AccountStatus {
-  forbidden,
-  active,
-}
+import { AccountStatus } from '@letscollab/helper';
 
 @Entity('user')
 export class UserEntity {

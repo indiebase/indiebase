@@ -32,7 +32,6 @@ export const setupAuthApiDoc = (app: INestApplication) =>
         include: [AuthModule, RbacModule],
       });
       SwaggerModule.setup('api/doc/auth', app, authDoc, {
-        // explorer: true,
         uiConfig: {
           persistAuthorization: true,
         },

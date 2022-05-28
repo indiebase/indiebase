@@ -58,7 +58,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(
     new FormatExceptionFilter(nestWinston),
-    new MicroExceptionFilter(),
+    new MicroExceptionFilter(nestWinston),
   );
 
   app.connectMicroservice<MicroserviceOptions>({

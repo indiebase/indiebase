@@ -2526,6 +2526,7 @@ __metadata:
     "@types/jest": 27.0.2
     "@types/node": ^16.0.0
     "@types/passport": ^0
+    "@types/passport-jwt": ^3.0.6
     "@types/passport-local": ^1
     "@types/rimraf": ^3
     "@types/supertest": ^2.0.11
@@ -2903,6 +2904,7 @@ __metadata:
   dependencies:
     "@letscollab/helper": "workspace:^"
     "@letscollab/nest-nacos": "workspace:^"
+    "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs/cli": ^8.2.0
     "@nestjs/common": ^8.2.6
     "@nestjs/config": ^1.2.0
@@ -4853,7 +4855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:8.5.8":
+"@types/jsonwebtoken@npm:*, @types/jsonwebtoken@npm:8.5.8":
   version: 8.5.8
   resolution: "@types/jsonwebtoken@npm:8.5.8"
   dependencies:
@@ -4972,6 +4974,17 @@ __metadata:
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
   checksum: fd6bce2b674b6efc3db4c7c3d336bd70c90838e8439de639b909ce22f3720d21344f52427f1d9e57b265fcb7f6c018699b99e5e0c208a1a4823014269a6bf35b
+  languageName: node
+  linkType: hard
+
+"@types/passport-jwt@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@types/passport-jwt@npm:3.0.6"
+  dependencies:
+    "@types/express": "*"
+    "@types/jsonwebtoken": "*"
+    "@types/passport-strategy": "*"
+  checksum: aa1e89b30bf77e1147bd5d47118fec38705246d6789b687d7385f037fdc01bed4d1e222e9d3c5c04e871c9a06474853090c17968434f9affefc53bed4dfad32b
   languageName: node
   linkType: hard
 
