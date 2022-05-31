@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Header,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
   ApiBearerAuth,
@@ -15,33 +7,35 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
+
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CaptchaGuard, SignupDto, UserResDto } from '@letscollab/helper';
+import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
+import { UserResDto, SignupDto } from './user.dto';
 
 @Controller('user')
 @ApiTags('v1/User')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @MessagePattern({ cmd: 'signup' })
-  // async signup(@Payload() user: SignupDto) {
-  //   return this.userService.signup(user);
-  // }
-
-  @MessagePattern({ cmd: 'get_full_user' })
+  @MessagePattern({ cmd: 'get_complete_name' })
   async getFullUser(@Payload() username: string) {
-    return this.userService.getUser(username, true);
+    return this.userService.getUser({ username }, true);
   }
 
-  @MessagePattern({ cmd: 'get_user' })
-  async getUser(@Payload() username: string) {
-    return this.userService.getUser(username);
+  @MessagePattern({ cmd: 'get_name' })
+  async getName(@Payload() username: string) {
+    return this.userService.getUser({ username });
+  }
+
+  @MessagePattern({ cmd: 'get_id' })
+  async getId(@Payload() id: number) {
+    return this.userService.getUser({ id });
   }
 
   @Post('query')
-  @ApiBearerAuth('JWT-auth')
+  @ApiBearerAuth('jwt')
+  @UseGuards(Http2RmqAuthGuard)
   async queryUsers(@Req() req: FastifyRequest) {
-    this.userService.demo(req.headers.authorization);
     return 1;
   }
 
@@ -53,7 +47,7 @@ export class UserController {
     name: 'Access-Control-Allow-Credential',
     description: 'Custom Protect API',
   })
-  @UseGuards(CaptchaGuard)
+  // @UseGuards(CaptchaGuard)
   async signup(@Body() body: SignupDto, @Res() res: FastifyReply) {
     const r = await this.userService.signup(body);
 

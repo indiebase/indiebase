@@ -1,6 +1,7 @@
-import { SignupDto } from '@letscollab/helper';
 import { EntityRepository, Repository } from 'typeorm';
+import { SignupDto } from './user.dto';
 import { UserEntity } from './user.entity';
+import { FindUserCond } from './user.interface';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
@@ -17,21 +18,11 @@ export class UserRepository extends Repository<UserEntity> {
     });
   }
 
-  public async findByUsername(username: string) {
-    return this.findOne({
-      username,
-    });
-  }
-
-  public async findFullByUsername(username: string) {
+  public async findFull(cond: FindUserCond) {
     return this.createQueryBuilder('user')
       .addSelect('user.password')
-      .where({ username })
+      .where(cond)
       .getOne();
-  }
-
-  public async updateUser(body) {
-    const { username, ...rest } = body;
   }
 
   /**

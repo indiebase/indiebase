@@ -26,7 +26,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     RedisModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('service-auth.json');
+        const configs = await config.getConfig('service-user.json');
         return configs.redis;
       },
     }),
@@ -34,7 +34,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
-        const configs = await config.getConfig('service-auth.json');
+        const configs = await config.getConfig('service-user.json');
 
         const transports: any[] = [
           new winston.transports.Console({

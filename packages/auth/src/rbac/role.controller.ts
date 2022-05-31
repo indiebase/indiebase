@@ -14,11 +14,11 @@ export class RoleController {
   @ApiProperty({
     description: 'Create a new role',
   })
-  @ApiBearerAuth('JWT-auth')
+  @ApiBearerAuth('jwt')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles({ name: 'demo' })
   async create(@Body() role: CreateRoleDto) {
-    this.roleService.addRole(role);
+    return this.roleService.addRole(role);
     // const data: Role = Object.assign(
     //   {
     //     id: uuidv4(),

@@ -1,12 +1,15 @@
+import { RoleEntity } from './role.entity';
 import { Logger, Module } from '@nestjs/common';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { USER_RMQ } from '../app.constants';
 import { RoleController } from './role.controller';
 import { RoleService } from './role.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([RoleEntity]),
     ClientsModule.registerAsync([
       {
         name: USER_RMQ,

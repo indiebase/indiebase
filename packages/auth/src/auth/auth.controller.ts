@@ -5,8 +5,6 @@ import {
   Post,
   Body,
   Get,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -15,16 +13,15 @@ import { JwtAuthGuard } from './jwt.guard';
 import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 import { RolesGuard } from '@letscollab/nest-casbin';
 import {
-  UserResDto,
-  LocalSignInDto,
-  UserDto,
   ResultCode,
   ProtectGuard,
   ApiProtectHeader,
-  VerifyDto,
-  CaptchaGuard,
+  IVerify,
 } from '@letscollab/helper';
 import { FastifyRequest } from 'fastify';
+import { RpcAuthGuard } from './jwt-rpc.guard';
+import { UserResDto } from '@letscollab/user';
+import { LocalSignInDto } from './auth.dto';
 
 @Controller('auth')
 @ApiTags('v1/Auth')
@@ -42,7 +39,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  @ApiBearerAuth('JWT-auth')
+  @ApiBearerAuth('jwt')
   @UseGuards(ProtectGuard, JwtAuthGuard)
   async profile(@Request() req: FastifyRequest & { user: any }) {
     console.log(req.user);
@@ -50,12 +47,10 @@ export class AuthController {
     return 'demo';
   }
 
-  @UsePipes(new ValidationPipe())
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @MessagePattern({ cmd: 'auth' })
-  async auth(@Payload() payload: VerifyDto) {
-    console.log(payload);
-    return 1;
+  @UseGuards(RpcAuthGuard, RolesGuard)
+  @MessagePattern({ cmd: 'verify' })
+  async auth(@Payload() payload: IVerify) {
+    return true;
   }
 
   @MessagePattern({ cmd: 'sign' })

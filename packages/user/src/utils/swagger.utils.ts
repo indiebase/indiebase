@@ -23,7 +23,7 @@ export const setupUserApiDoc = (app: INestApplication) =>
             description: 'Enter JWT token',
             in: 'Header',
           },
-          'JWT-auth',
+          'jwt',
         )
         .build();
 

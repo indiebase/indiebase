@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import { CasbinModule } from '@letscollab/nest-casbin';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -118,6 +119,17 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         return configs.jwt;
       },
       inject: [NacosConfigService],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [NacosConfigModule],
+      inject: [NacosConfigService],
+      async useFactory(nacosConfigService: NacosConfigService) {
+        const configs = await nacosConfigService.getConfig('service-auth.json');
+        return {
+          ...configs.orm,
+          autoLoadEntities: true,
+        };
+      },
     }),
   ],
   providers: [Logger],

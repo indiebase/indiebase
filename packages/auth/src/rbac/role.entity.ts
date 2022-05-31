@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-enum Status {
+export enum RoleStatus {
   inactive,
   active,
 }
@@ -14,17 +14,19 @@ enum Status {
 @Entity('role')
 export class RoleEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column('varchar', { unique: true })
   name: string;
 
+  @Column('varchar')
+  description: string;
+
   @Column('int', {
-    name: 'account_status',
     comment: '角色状态',
-    default: 1,
+    default: RoleStatus.active,
   })
-  status?: Status;
+  status?: RoleStatus;
 
   @CreateDateColumn({
     type: 'timestamp',

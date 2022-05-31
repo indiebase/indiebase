@@ -1,38 +1,29 @@
 import { USER_RMQ } from '../app.constants';
-import { LocalSignInDto, RpcResSchema, UserDto } from '@letscollab/helper';
+import { RpcResSchema } from '@letscollab/helper';
 import {
   Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
-import Redis from 'ioredis';
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
 import * as bcrypt from 'bcrypt';
+import { LocalSignInDto } from './auth.dto';
+import { UserDto } from '@letscollab/user';
 
 @Injectable()
-export class AuthService implements OnModuleInit {
+export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
     @Inject(USER_RMQ)
     private readonly userClient: ClientProxy,
 
-    private readonly logger: Logger,
-  ) // @InjectRedis()
-  // private readonly redis: Redis,
-  {}
-
-  async onModuleInit() {
-    await this.userClient.connect().catch((err) => {
-      this.logger.error(err.message, err.stack);
-    });
-  }
+    private readonly logger: Logger, // @InjectRedis() // private readonly redis: Redis,
+  ) {}
 
   async getUser<T>(cmd: string, c: any) {
     return lastValueFrom<T>(
@@ -49,7 +40,7 @@ export class AuthService implements OnModuleInit {
 
   async validateUser(info: LocalSignInDto) {
     let user = await this.getUser<RpcResSchema<UserDto & { password: string }>>(
-      'get_full_user',
+      'get_complete_name',
       info.username,
     );
 
@@ -65,7 +56,7 @@ export class AuthService implements OnModuleInit {
   }
 
   async signin(username) {
-    const r = await this.getUser<RpcResSchema<UserDto>>('get_user', username);
+    const r = await this.getUser<RpcResSchema<UserDto>>('get_name', username);
 
     if (r.code > 0) {
       let t = await this.signTarget({ username: r.d.username });
