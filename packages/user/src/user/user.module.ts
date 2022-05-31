@@ -1,3 +1,4 @@
+import { TeamEntity } from '@letscollab/collab';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
@@ -10,7 +11,7 @@ import { UserRepository } from './user.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, UserRepository]),
+    TypeOrmModule.forFeature([UserEntity, UserRepository, TeamEntity]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: MAIL_RMQ, q: 'msg_queue' },
@@ -22,7 +23,7 @@ import { UserRepository } from './user.repository';
           inject: [NacosConfigService],
           async useFactory(nacosConfigService: NacosConfigService) {
             const nacosConfigs = await nacosConfigService.getConfig(
-              'service-auth.json',
+              'service-user.json',
             );
             return {
               transport: Transport.RMQ,

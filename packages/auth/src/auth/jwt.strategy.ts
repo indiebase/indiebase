@@ -2,7 +2,6 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { NacosConfigService } from '@letscollab/nest-nacos';
-import { JwtService } from '@nestjs/jwt';
 
 export interface JwtPayload {
   roles: string[];
@@ -25,12 +24,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       async secretOrKeyProvider(_request, _jwtToken, done) {
         const c = await nacosConfigService.getConfig('service-auth.json');
 
+        console.log('demodmeodmeomdoe');
+
         done(null, c.jwt.secret);
       },
     });
   }
 
   async validate(payload: JwtPayload) {
+    console.log(payload);
     return payload;
   }
 }

@@ -8,30 +8,31 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToOne,
+  ManyToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { AccountStatus } from '@letscollab/helper';
+import { TeamEntity } from '@letscollab/collab';
+import { AccountStatus } from './user.enum';
 
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column('varchar', { unique: true })
   username: string;
 
   @Column('varchar', { comment: '昵称' })
-  nickname: string;
+  nickname?: string;
 
   @Column('varchar', { select: false })
   password: string;
 
   @Column('int', {
-    name: 'account_status',
     comment: '账户状态',
     default: 1,
   })
-  accountStatus?: AccountStatus;
+  status?: AccountStatus;
 
   // 邀请的用户
   @OneToMany(() => UserEntity, (g) => g.inviteBy)
@@ -54,6 +55,12 @@ export class UserEntity {
     comment: '更新时间',
   })
   updateTime?: Date;
+
+  @ManyToMany(() => TeamEntity, (t) => t.members)
+  teams?: TeamEntity[];
+
+  // @OneToMany(() => )
+  // teams:
 
   // @OneToOne(() => DeviceEntity, (device) => device.user, { cascade: true })
   // @JoinColumn({ name: 'device_id' })

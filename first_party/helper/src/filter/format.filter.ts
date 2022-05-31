@@ -1,4 +1,4 @@
-import { ResultCode } from '../constants';
+import { ResultCode } from '../enum';
 import {
   ExceptionFilter,
   Catch,

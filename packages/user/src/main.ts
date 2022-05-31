@@ -45,6 +45,10 @@ async function bootstrap() {
   //dto 国际化
   app.useGlobalPipes(
     new ValidationPipe({
+      transform: true,
+      enableDebugMessages: isDevelopment,
+      whitelist: true,
+      forbidNonWhitelisted: true,
       // exceptionFactory: i18nValidationErrorFactory,
     }),
   );

@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build:docker": "npm run ncc && docker build . -t letscollab/user  --build-arg ENV=production",
@@ -23,6 +24,8 @@
     "typeorm": "ts-node ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@letscollab/auth": "workspace:^",
+    "@letscollab/collab": "workspace:^",
     "@letscollab/helper": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
     "@liaoliaots/nestjs-redis": "^8.0.0",
@@ -59,6 +62,7 @@
     "@types/jest": "27.0.2",
     "@types/mysql": "^2",
     "@types/node": "^16.0.0",
+    "@types/passport-jwt": "^3.0.6",
     "@types/rimraf": "^3",
     "@types/supertest": "^2.0.11",
     "@types/validator": "^13.7.2",
@@ -70,6 +74,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.2.5",
+    "passport-jwt": "^4.0.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.20",

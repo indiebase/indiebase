@@ -13,7 +13,7 @@
   },
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\" --fix",
+    "lint": "yarn workspaces foreach run lint",
     "docker:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
     "docker:dev": "docker stack deploy -c ./docker-compose.yaml letscollab",
     "release": "standard-version",
@@ -26,7 +26,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "deploy:basic": "docker stack deploy -c ./docker-compose.yaml letscollab_basic"
+    "deploy:basic": "docker stack deploy -c ./docker-compose.yaml letscollab_basic",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.31.1",
@@ -38,6 +39,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-unused-imports": "^1.1.4",
+    "husky": "^8.0.1",
     "prettier": "^2.4.0",
     "standard-version": "^9.3.1",
     "supertest": "^6.1.6",
