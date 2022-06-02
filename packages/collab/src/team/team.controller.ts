@@ -5,20 +5,23 @@ import {
   Get,
   Post,
   Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
 import { TeamService } from './team.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
 import {
   CreateTeamDto,
   DeleteTeamDto,
   InviteMemberDto,
+  QueryTeamDto,
+  QueryTeamResDto,
   UpdateTeamDto,
 } from './team.dto';
+import { IVerify } from '@letscollab/helper';
 
 @Controller('team')
 @ApiTags('v1/Team')
@@ -30,9 +33,12 @@ export class TeamController {
 
   @Get('query')
   @ApiBearerAuth('jwt')
-  @UseGuards(Http2RmqAuthGuard)
-  async queryUsers(@Req() req: FastifyRequest) {
-    return 1;
+  @ApiOkResponse({
+    type: QueryTeamResDto,
+  })
+  // @UseGuards(Http2RmqAuthGuard)
+  async queryUsers(@Query() query: QueryTeamDto) {
+    return this.teamService.queryTeam(query);
   }
 
   @Post('create')
@@ -51,14 +57,17 @@ export class TeamController {
 
   @Post('invite')
   @ApiBearerAuth('jwt')
-  // @UseGuards(Http2RmqAuthGuard)
-  async inviteMember(@Body() body: InviteMemberDto) {
-    return this.teamService.inviteMember(body);
+  @UseGuards(Http2RmqAuthGuard)
+  async inviteMember(
+    @Body() body: InviteMemberDto,
+    @Req() req: { user: IVerify },
+  ) {
+    return this.teamService.inviteMember(body, req.user.body);
   }
 
   @Get('invite/confirm')
   @ApiBearerAuth('jwt')
-  // @UseGuards(Http2RmqAuthGuard)
+  @UseGuards(Http2RmqAuthGuard)
   async confirmInviteMember(@Body() body: UpdateTeamDto) {
     return this.teamService.updateTeam(body);
   }

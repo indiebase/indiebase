@@ -87,7 +87,10 @@ export class UserDto {
   })
   inviteBy?: UserDto;
 
+  @ApiProperty()
   createTime?: Date;
+
+  @ApiProperty()
   updateTime?: Date;
 }
 

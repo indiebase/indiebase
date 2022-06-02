@@ -24,8 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       async secretOrKeyProvider(_request, _jwtToken, done) {
         const c = await nacosConfigService.getConfig('service-auth.json');
 
-        console.log('demodmeodmeomdoe');
-
         done(null, c.jwt.secret);
       },
     });

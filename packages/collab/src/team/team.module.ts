@@ -6,14 +6,20 @@ import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TeamEntity } from './team.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, USER_RMQ } from '../app.constants';
+import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '../app.constants';
+import { TeamInvitationRepository } from './team_invitation.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TeamEntity, UserEntity]),
+    TypeOrmModule.forFeature([
+      TeamEntity,
+      UserEntity,
+      TeamInvitationRepository,
+    ]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: USER_RMQ, q: 'user_queue' },
+      { name: MAIL_RMQ, q: 'msg_queue' },
     ].map((v) => {
       return ClientsModule.registerAsync([
         {

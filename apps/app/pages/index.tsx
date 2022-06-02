@@ -148,7 +148,7 @@ const Home: NextPage = () => {
               >
                 letscollab
               </h1>
-              <h1 style={{ color: '#00A2FF' }}></h1>
+              <h1 style={{ color: '#00A2FF' }} />
             </p>
           </Animator>
         </ScrollPage>

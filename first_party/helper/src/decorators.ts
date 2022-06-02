@@ -1,34 +1,22 @@
-import {
-  applyDecorators,
-  createParamDecorator,
-  ExecutionContext,
-  SetMetadata,
-} from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-export function Auth(...roles: []) {
-  return applyDecorators(
-    SetMetadata('roles', roles),
-    // UseGuards(AuthGuard, RolesGuard),
-    // ApiBearerAuth(),
-    // ApiUnauthorizedResponse({ description: 'Unauthorized"' }),
-  );
-}
-
-/**
- *  Protect 会读取header AS 字段 对接口进行合法校验
- * @returns
- */
-export function Protect(): MethodDecorator | ClassDecorator {
-  return (target, key, descriptor) => {};
-}
-
-/**
- *  Protect 会读取header AS 字段 对接口进行合法校验
- * @returns
- */
-export const Protect2 = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
+export const UserRoles = createParamDecorator(
+  (data: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return request.user;
+    return data ? request.user[data] : request.user.roles;
+  },
+);
+
+export const ExtractJWT = createParamDecorator(
+  (data: string, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return data ? request.user[data] : request.user.a_t;
+  },
+);
+
+export const UserInfo = createParamDecorator(
+  (data: string, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return data ? request.user[data] : request.user;
   },
 );

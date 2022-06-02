@@ -1,10 +1,10 @@
 import { UserEntity } from '@letscollab/user';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
-import { TeamService } from './team.service';
-import { TeamController } from './team.controller';
+import { PrjService } from './prj.service';
+import { PrjController } from './prj.controller';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TeamEntity } from './team.entity';
+import { TeamEntity } from './prj.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
 
@@ -39,7 +39,7 @@ import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
       ]);
     }),
   ],
-  controllers: [TeamController],
-  providers: [TeamService, Logger],
+  controllers: [PrjController],
+  providers: [PrjService, Logger],
 })
 export class TeamModule {}

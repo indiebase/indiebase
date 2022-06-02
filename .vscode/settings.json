@@ -16,17 +16,6 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "ColorfulMonorepo.workspaces.collection": [
-    {
-      "path": "/home/nawbc/Workspace/letscollab",
-      "packageName": "letscollab",
-      "label": "🌱  letscollab",
-      "foreground": "#ffffff",
-      "background": "#db42e9"
-    }
-  ],
-  "ColorfulMonorepo.drawer.init": true,
-  "files.exclude": {},
   "explorer.experimental.fileNesting.enabled": true,
   "[properties]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"

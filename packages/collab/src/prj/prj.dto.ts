@@ -1,7 +1,7 @@
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
 
-export class CreateTeamDto {
+export class createPrjDto {
   @ApiPropertyOptional({
     description: '团队名称',
     default: 'letscollab',

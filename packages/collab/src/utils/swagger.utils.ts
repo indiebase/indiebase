@@ -11,7 +11,7 @@ export const setupUserApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
       const userOptions = new DocumentBuilder()
-        .setTitle('User Api')
+        .setTitle('Collab Api')
         .setDescription('用户接口')
         .setVersion(pkg.version)
         .addBearerAuth(
