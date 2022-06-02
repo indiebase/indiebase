@@ -1,6 +1,5 @@
 import { Stack, Button, Typography } from '@mui/material';
 import Link from 'next/link';
-import Box from '@mui/material/Box';
 
 export const Footer = function (props) {
   return (

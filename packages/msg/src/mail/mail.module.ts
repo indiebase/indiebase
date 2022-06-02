@@ -3,12 +3,12 @@ import { MailService } from './mail.service';
 import { Module, Logger } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MailController } from './mail.controller';
-import { MAIL_RMQ_CONSUMER } from '../app.constants';
+import { MAIL_RMQ } from '../app.constants';
 @Module({
   imports: [
     ClientsModule.registerAsync([
       {
-        name: MAIL_RMQ_CONSUMER,
+        name: MAIL_RMQ,
         imports: [NacosConfigModule],
         inject: [NacosConfigService],
         async useFactory(nacosConfigService: NacosConfigService) {

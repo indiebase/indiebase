@@ -5,8 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { UserEntity } from '@letscollab/user';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum TeamStatus {
   active,
@@ -15,39 +17,48 @@ export enum TeamStatus {
 
 @Entity('team')
 export class TeamEntity {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty()
   @Column('varchar', { unique: true, comment: 'Team name' })
   name: string;
 
-  @Column('varchar', { name: 'contact_email', comment: '昵称' })
+  @ApiProperty()
+  @Column('varchar', { name: 'contact_email' })
   contactEmail: string;
 
+  @ApiProperty({
+    enum: TeamStatus,
+  })
   @Column('int', {
     name: 'status',
-    comment: '团队状态',
+    comment: 'Team Status',
     default: TeamStatus.active,
+    nullable: true,
   })
   status?: TeamStatus;
 
-  @Column()
+  @ApiProperty()
+  @Column({ nullable: true })
   description?: string;
 
+  @ApiProperty()
   @CreateDateColumn({
     type: 'timestamp',
     name: 'create_time',
-    comment: '创建时间',
   })
   createTime?: Date;
 
+  @ApiProperty()
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'update_time',
-    comment: '更新时间',
   })
   updateTime?: Date;
 
   @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
+  @JoinTable()
   members?: UserEntity[];
 }

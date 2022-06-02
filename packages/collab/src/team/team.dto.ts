@@ -1,9 +1,11 @@
+import { TeamEntity } from '../prj/prj.entity';
+import { PaginationGetDto, PaginationResSchemaDto } from '@letscollab/helper';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateTeamDto {
   @ApiPropertyOptional({
-    description: '团队名称',
+    description: 'Team name',
     default: 'letscollab',
   })
   @IsString()
@@ -34,7 +36,7 @@ export class UpdateTeamDto {
   id: number;
 
   @ApiProperty({
-    description: '团队名称',
+    description: 'Team name',
     default: 'letscollab',
   })
   @IsOptional()
@@ -42,7 +44,7 @@ export class UpdateTeamDto {
   name?: string;
 
   @ApiProperty({
-    description: '公开邮箱',
+    description: 'public email',
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -72,3 +74,26 @@ export class InviteMemberDto {
   @IsNumber()
   id: number;
 }
+
+export class QueryTeamDto extends PaginationGetDto {
+  @ApiPropertyOptional({
+    nullable: true,
+  })
+  @IsOptional()
+  name?: string;
+}
+
+export class QueryTeamResDto extends PaginationResSchemaDto {
+  @ApiPropertyOptional({
+    type: () => TeamEntity,
+  })
+  d?: TeamEntity;
+}
+
+// export class QueryTeamResDto extends PaginationGetDto {
+//   @ApiPropertyOptional({
+//     nullable: true,
+//   })
+//   @IsOptional()
+//   name?: string;
+// }

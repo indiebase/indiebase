@@ -8,7 +8,7 @@ import type { Redis } from 'ioredis';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { FastifyRequest } from 'fastify';
 import { Captcha } from '../share';
-import {SignupDto} from '@letscollab/user'
+import { SignupDto } from '@letscollab/user';
 
 @Injectable()
 export class CaptchaGuard implements CanActivate {
@@ -19,6 +19,10 @@ export class CaptchaGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
+
+    if (process.env.NODE_ENV === 'development') {
+      return true;
+    }
 
     const body = request.body as SignupDto;
     const { captcha, username } = body;

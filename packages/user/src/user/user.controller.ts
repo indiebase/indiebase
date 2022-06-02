@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
 import { UserResDto, SignupDto } from './user.dto';
+import { CaptchaGuard } from '@letscollab/helper';
 
 @Controller('user')
 @ApiTags('v1/User')
@@ -47,7 +48,7 @@ export class UserController {
     name: 'Access-Control-Allow-Credential',
     description: 'Custom Protect API',
   })
-  // @UseGuards(CaptchaGuard)
+  @UseGuards(CaptchaGuard)
   async signup(@Body() body: SignupDto, @Res() res: FastifyReply) {
     const r = await this.userService.signup(body);
 

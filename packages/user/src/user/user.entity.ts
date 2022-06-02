@@ -6,8 +6,6 @@ import {
   BeforeInsert,
   BeforeUpdate,
   UpdateDateColumn,
-  OneToMany,
-  ManyToOne,
   ManyToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -33,14 +31,6 @@ export class UserEntity {
     default: 1,
   })
   status?: AccountStatus;
-
-  // 邀请的用户
-  @OneToMany(() => UserEntity, (g) => g.inviteBy)
-  invitations: UserEntity[];
-
-  // 被谁邀请
-  @ManyToOne(() => UserEntity, (g) => g.invitations)
-  inviteBy: UserEntity;
 
   @CreateDateColumn({
     type: 'timestamp',

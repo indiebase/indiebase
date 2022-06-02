@@ -7,13 +7,13 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
 import { MAIL_RMQ, AUTH_RMQ } from '../app.constants';
-import { CreateTeamDto, UpdateTeamDto } from './team.dto';
+import { createPrjDto, UpdateTeamDto } from './prj.dto';
 import { ResultCode } from '@letscollab/helper';
-import { TeamEntity } from './team.entity';
+import { TeamEntity } from './prj.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TeamService {
+export class PrjService {
   constructor(
     @InjectRepository(TeamEntity)
     private readonly teamRepo: Repository<TeamEntity>,
@@ -27,7 +27,7 @@ export class TeamService {
     private readonly logger: Logger,
   ) {}
 
-  async createTeam(body: CreateTeamDto) {
+  async createPrj(body: createPrjDto) {
     const teamEntity = this.teamRepo.create(body);
     await this.teamRepo.save(teamEntity).catch((err) => {
       this.logger.error(err);

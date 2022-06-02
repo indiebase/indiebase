@@ -50,7 +50,7 @@ export class AuthController {
   @UseGuards(RpcAuthGuard, RolesGuard)
   @MessagePattern({ cmd: 'verify' })
   async auth(@Payload() payload: IVerify) {
-    return true;
+    return payload;
   }
 
   @MessagePattern({ cmd: 'sign' })
