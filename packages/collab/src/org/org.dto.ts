@@ -1,25 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { PaginationGetDto, PaginationResSchemaDto } from '@letscollab/helper';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import { OrgEntity } from './org.entity';
 
-export class CreatePrjDto {
-  @ApiProperty({
-    description: 'Project name',
+export class CreateOrgDto {
+  @ApiPropertyOptional({
+    description: 'Team name',
     default: 'letscollab',
-    required: true,
   })
   @IsString()
   name: string;
 
   @ApiProperty({
-    description: 'Github repository URI',
-    default: 'letscollab',
-    required: true,
-  })
-  @IsString()
-  githubRepoUrl: string;
-
-  @ApiProperty({
-    description: 'Public email',
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -38,13 +30,13 @@ export class CreatePrjDto {
   description: string;
 }
 
-export class UpdatePrjDto {
+export class UpdateOrgDto {
   @ApiProperty()
   @IsNumber()
   id: number;
 
   @ApiProperty({
-    description: '团队名称',
+    description: 'Team name',
     default: 'letscollab',
   })
   @IsOptional()
@@ -52,7 +44,7 @@ export class UpdatePrjDto {
   name?: string;
 
   @ApiProperty({
-    description: '公开邮箱',
+    description: 'public email',
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -71,10 +63,31 @@ export class UpdatePrjDto {
   description: string;
 }
 
-export class QueryPrjDto {}
-
-export class DeletePrjDto {
+export class DeleteOrgDto {
   @ApiProperty()
   @IsNumber()
   id: number;
 }
+
+export class QueryOrgDto extends PaginationGetDto {
+  @ApiPropertyOptional({
+    nullable: true,
+  })
+  @IsOptional()
+  name?: string;
+}
+
+export class QueryOrgResDto extends PaginationResSchemaDto {
+  @ApiPropertyOptional({
+    type: () => OrgEntity,
+  })
+  d?: OrgEntity;
+}
+
+// export class QueryOrgResDto extends PaginationGetDto {
+//   @ApiPropertyOptional({
+//     nullable: true,
+//   })
+//   @IsOptional()
+//   name?: string;
+// }

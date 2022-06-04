@@ -1,7 +1,7 @@
-import { TeamEntity } from '../prj/prj.entity';
 import { PaginationGetDto, PaginationResSchemaDto } from '@letscollab/helper';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import { TeamEntity } from './team.entity';
 
 export class CreateTeamDto {
   @ApiPropertyOptional({
@@ -64,12 +64,6 @@ export class UpdateTeamDto {
 }
 
 export class DeleteTeamDto {
-  @ApiProperty()
-  @IsNumber()
-  id: number;
-}
-
-export class InviteMemberDto {
   @ApiProperty()
   @IsNumber()
   id: number;

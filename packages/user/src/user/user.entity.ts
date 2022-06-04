@@ -17,10 +17,13 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column('varchar', { comment: 'Avatar url' })
+  avatar: string;
+
   @Column('varchar', { unique: true })
   username: string;
 
-  @Column('varchar', { comment: '昵称' })
+  @Column('varchar', { comment: 'Nickname' })
   nickname?: string;
 
   @Column('varchar', { select: false })
@@ -35,14 +38,14 @@ export class UserEntity {
   @CreateDateColumn({
     type: 'timestamp',
     name: 'create_time',
-    comment: '创建时间',
+    comment: 'Create time',
   })
   createTime?: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'update_time',
-    comment: '更新时间',
+    comment: 'Update time',
   })
   updateTime?: Date;
 

@@ -12,8 +12,13 @@ export enum InvitationStatus {
   fulfilled,
 }
 
-@Entity('team_invitation')
-export class TeamInvitationEntity {
+export enum InvitationType {
+  team,
+  prj,
+}
+
+@Entity('invitation')
+export class InvitationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -37,9 +42,15 @@ export class TeamInvitationEntity {
 
   @Column('int', {
     name: 'status',
-    comment: 'Team status',
+    comment: 'Invitation status',
   })
   status?: InvitationStatus;
+
+  @Column('int', {
+    name: 'status',
+    comment: 'Team status',
+  })
+  type: InvitationType;
 
   @CreateDateColumn({
     type: 'timestamp',
