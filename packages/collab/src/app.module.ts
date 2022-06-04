@@ -1,15 +1,16 @@
-import { Module, OnModuleInit } from '@nestjs/common';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
-import { TeamModule } from './team/team.module';
 import { I18nModule } from 'nestjs-i18n';
-import { utilities, WinstonModule } from 'nest-winston';
-import LokiTransport = require('winston-loki');
-import { RedisModule } from '@liaoliaots/nestjs-redis';
 import * as winston from 'winston';
+import LokiTransport = require('winston-loki');
+import { TeamModule } from './team/team.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
+import { utilities, WinstonModule } from 'nest-winston';
+import { Module, OnModuleInit } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { OctokitModule } from '@letscollab/octokit';
+import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -17,6 +18,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 @Module({
   imports: [
     TeamModule,
+    // InvitationModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
@@ -94,6 +96,18 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         return {
           ...configs.orm,
           autoLoadEntities: true,
+        };
+      },
+    }),
+    OctokitModule.forRootAsync({
+      imports: [NacosConfigModule],
+      inject: [NacosConfigService],
+      async useFactory(nacosConfigService: NacosConfigService) {
+        const configs = await nacosConfigService.getConfig(
+          'service-collab.json',
+        );
+        return {
+          options: configs.github,
         };
       },
     }),

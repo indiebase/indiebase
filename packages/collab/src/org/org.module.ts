@@ -1,18 +1,19 @@
 import { UserEntity } from '@letscollab/user';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
-import { PrjService } from './prj.service';
-import { PrjController } from './prj.controller';
+import { OrgService } from './org.service';
+import { OrgController } from './org.controller';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PrjEntity } from './prj.entity';
+import { OrgEntity } from './org.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
+import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '../app.constants';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PrjEntity, UserEntity]),
+    TypeOrmModule.forFeature([OrgEntity, UserEntity]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
+      { name: USER_RMQ, q: 'user_queue' },
       { name: MAIL_RMQ, q: 'msg_queue' },
     ].map((v) => {
       return ClientsModule.registerAsync([
@@ -24,6 +25,7 @@ import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
             const nacosConfigs = await nacosConfigService.getConfig(
               'service-collab.json',
             );
+
             return {
               transport: Transport.RMQ,
               options: {
@@ -39,7 +41,7 @@ import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
       ]);
     }),
   ],
-  controllers: [PrjController],
-  providers: [PrjService, Logger],
+  controllers: [OrgController],
+  providers: [OrgService, Logger],
 })
 export class TeamModule {}

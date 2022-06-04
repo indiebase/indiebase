@@ -5,49 +5,51 @@ import {
   Get,
   Post,
   Put,
-  Req,
-  UseGuards,
+  Query,
 } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
 import { PrjService } from './prj.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
-import { createPrjDto, UpdateTeamDto } from './prj.dto';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  CreatePrjDto,
+  DeletePrjDto,
+  QueryPrjDto,
+  UpdatePrjDto,
+} from './prj.dto';
+import { QueryTeamResDto } from 'src/team/team.dto';
 
 @Controller('prj')
 @ApiTags('v1/Project')
 export class PrjController {
-  constructor(private readonly PrjService: PrjService) {}
-
-  @MessagePattern({ cmd: 'get_name' })
-  async getUser(@Payload() username: string) {}
+  constructor(private readonly prjService: PrjService) {}
 
   @Get('query')
   @ApiBearerAuth('jwt')
-  @UseGuards(Http2RmqAuthGuard)
-  async queryUsers(@Req() req: FastifyRequest) {
-    return 1;
+  @ApiOkResponse({
+    type: QueryTeamResDto,
+  })
+  // @UseGuards(Http2RmqAuthGuard)
+  async queryUsers(@Query() query: QueryPrjDto) {
+    return this.prjService.queryPrj(query);
   }
 
   @Post('create')
   @ApiBearerAuth('jwt')
   // @UseGuards(Http2RmqAuthGuard)
-  async createPrj(@Body() body: createPrjDto) {
-    return this.PrjService.createPrj(body);
+  async createTeam(@Body() body: CreatePrjDto) {
+    return this.prjService.createPrj(body);
   }
 
   @Put('update')
   @ApiBearerAuth('jwt')
   // @UseGuards(Http2RmqAuthGuard)
-  async updateTeam(@Body() body: UpdateTeamDto) {
-    return this.PrjService.updateTeam(body);
+  async updateTeam(@Body() body: UpdatePrjDto) {
+    return this.prjService.updatePrj(body);
   }
 
   @Delete('delete')
   @ApiBearerAuth('jwt')
-  @UseGuards(Http2RmqAuthGuard)
-  async deleteTeam(@Body() body: createPrjDto) {
-    return 1;
+  // @UseGuards(Http2RmqAuthGuard)
+  async deleteTeam(@Body() body: DeletePrjDto) {
+    return this.prjService.deletePrj(body);
   }
 }

@@ -26,6 +26,7 @@
   "dependencies": {
     "@letscollab/helper": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
+    "@letscollab/octokit": "workspace:^",
     "@letscollab/user": "workspace:^",
     "@liaoliaots/nestjs-redis": "^8.0.0",
     "@nestjs/common": "^8.2.6",

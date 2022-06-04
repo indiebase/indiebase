@@ -7,16 +7,22 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
 import { MAIL_RMQ, AUTH_RMQ } from '../app.constants';
-import { createPrjDto, UpdateTeamDto } from './prj.dto';
+import {
+  CreatePrjDto,
+  DeletePrjDto,
+  QueryPrjDto,
+  UpdatePrjDto,
+} from './prj.dto';
 import { ResultCode } from '@letscollab/helper';
-import { TeamEntity } from './prj.entity';
+
 import { Repository } from 'typeorm';
+import { PrjEntity } from './prj.entity';
 
 @Injectable()
 export class PrjService {
   constructor(
-    @InjectRepository(TeamEntity)
-    private readonly teamRepo: Repository<TeamEntity>,
+    @InjectRepository(PrjEntity)
+    private readonly prjRepo: Repository<PrjEntity>,
 
     @Inject(AUTH_RMQ)
     private readonly authClient: ClientProxy,
@@ -27,9 +33,22 @@ export class PrjService {
     private readonly logger: Logger,
   ) {}
 
-  async createPrj(body: createPrjDto) {
-    const teamEntity = this.teamRepo.create(body);
-    await this.teamRepo.save(teamEntity).catch((err) => {
+  async createPrj(body: CreatePrjDto) {
+    const prjEntity = this.prjRepo.create(body);
+    await this.prjRepo.save(prjEntity).catch((err) => {
+      this.logger.error(err);
+      throw new InternalServerErrorException({
+        code: ResultCode.ERROR,
+        message: err?.code === 'ER_DUP_ENTRY' ? '项目名名重复' : '创建失败',
+      });
+    });
+
+    return { code: ResultCode.SUCCESS, message: '创建成功' };
+  }
+
+  async queryPrj(body: QueryPrjDto) {
+    const prjEntity = this.prjRepo.create(body);
+    await this.prjRepo.save(prjEntity).catch((err) => {
       this.logger.error(err);
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
@@ -40,14 +59,28 @@ export class PrjService {
     return { code: ResultCode.SUCCESS, message: '创建成功' };
   }
 
-  async updateTeam(body: UpdateTeamDto) {
+  // TODO
+  async updatePrj(body: UpdatePrjDto) {
     const { id, ...rest } = body;
-    this.teamRepo.remove;
-    await this.teamRepo.update({ id }, rest).catch((err) => {
+    this.prjRepo.remove;
+    await this.prjRepo.update({ id }, rest).catch((err) => {
       this.logger.error(err);
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
-        message: err?.code === 'ER_DUP_ENTRY' ? '团队名重复' : '创建失败',
+        message: err?.code === 'ER_DUP_ENTRY' ? '项目已存在' : '创建失败',
+      });
+    });
+
+    return { code: ResultCode.SUCCESS, message: '创建成功' };
+  }
+
+  async deletePrj(body: DeletePrjDto) {
+    const { id } = body;
+    await this.prjRepo.delete({ id }).catch((err) => {
+      this.logger.error(err);
+      throw new InternalServerErrorException({
+        code: ResultCode.ERROR,
+        message: '删除失败',
       });
     });
 

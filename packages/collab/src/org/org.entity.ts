@@ -16,7 +16,7 @@ export enum TeamStatus {
 }
 
 @Entity('team')
-export class TeamEntity {
+export class OrgEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
