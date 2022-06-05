@@ -58,7 +58,9 @@ jobs:
 
       - name: Install nodejs deps
         working-directory: .
-        run: yarn install
+        run: |
+          ls apps packages first_party
+          yarn install
 
       - name: Build dist
         run: |
