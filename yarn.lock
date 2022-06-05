@@ -2621,7 +2621,6 @@ __metadata:
     mysql2: ^2.3.3
     nest-winston: ^1.6.2
     nestjs-i18n: ^9.0.5
-    octokit: ^1.7.1
     passport-jwt: ^4.0.0
     prettier: ^2.3.2
     reflect-metadata: ^0.1.13
