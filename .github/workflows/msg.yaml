@@ -61,7 +61,7 @@ jobs:
         working-directory: .
         run: |
           ls apps packages first_party
-          yarn install
+          yarn install --immutable  --check-cache
 
       - name: Build dist
         run: |
