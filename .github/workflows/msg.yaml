@@ -32,7 +32,6 @@ jobs:
           echo Current: $(pwd)
           echo Directories: $(ls -a)
           echo Pro Directories: $(ls ./pro -a)
-          ls ~/.cache/yarn
           rm -rf ~/.cache/yarn
 
       - name: Setup Docker build
