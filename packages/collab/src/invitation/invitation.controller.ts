@@ -8,7 +8,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { TeamService } from './invitation.service';
+import { InvitationService } from './invitation.service';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
@@ -19,7 +19,7 @@ import { InviteMemberDto } from './invitation.dto';
 @Controller('invite')
 @ApiTags('v1/Invitation')
 export class InvitationController {
-  constructor(private readonly teamService: TeamService) {}
+  constructor(private readonly invitationService: InvitationService) {}
 
   @MessagePattern({ cmd: 'get_name' })
   async getUser(@Payload() username: string) {}
@@ -31,14 +31,14 @@ export class InvitationController {
   })
   // @UseGuards(Http2RmqAuthGuard)
   async queryUsers(@Query() query) {
-    // return this.teamService.queryTeam(query);
+    // return this.invitationService.queryTeam(query);
   }
 
   @Put('update')
   @ApiBearerAuth('jwt')
   // @UseGuards(Http2RmqAuthGuard)
   async updateTeam(@Body() body) {
-    // return this.teamService.updateTeam(body);
+    // return this.invitationService.updateTeam(body);
   }
 
   @Post('create')
@@ -48,13 +48,13 @@ export class InvitationController {
     @Body() body: InviteMemberDto,
     @Req() req: { user: IVerify },
   ) {
-    return this.teamService.inviteMember(body, req.user.body);
+    return this.invitationService.inviteMember(body, req.user.body);
   }
 
   @Get('invite/confirm')
   @ApiBearerAuth('jwt')
   @UseGuards(Http2RmqAuthGuard)
   async confirmInviteMember(@Body() body) {
-    // return this.teamService.updateTeam(body);
+    // return this.invitationService.updateTeam(body);
   }
 }
