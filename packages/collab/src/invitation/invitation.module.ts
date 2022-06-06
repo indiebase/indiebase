@@ -1,3 +1,4 @@
+import { InvitationRepository } from './invitation.repository';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,7 +10,7 @@ import { InvitationEntity } from './invitation.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([InvitationEntity]),
+    TypeOrmModule.forFeature([InvitationEntity, InvitationRepository]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: USER_RMQ, q: 'user_queue' },

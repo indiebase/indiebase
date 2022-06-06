@@ -32,6 +32,7 @@ jobs:
           echo Current: $(pwd)
           echo Directories: $(ls -a)
           echo Pro Directories: $(ls ./pro -a)
+          ls -al ../
 
       - name: Setup Docker build
         uses: docker/setup-buildx-action@v1
@@ -41,6 +42,7 @@ jobs:
         with:
           node-version: 16
           cache: yarn
+          cache-dependency-path: ./yarn.lock
 
       - name: Docker meta
         id: meta
@@ -59,8 +61,7 @@ jobs:
       - name: Install nodejs deps
         working-directory: .
         run: |
-          ls apps packages first_party
-          yarn install
+          yarn install --immutable --check-cache
 
       - name: Build dist
         run: |

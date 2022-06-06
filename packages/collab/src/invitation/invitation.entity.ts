@@ -47,8 +47,7 @@ export class InvitationEntity {
   status?: InvitationStatus;
 
   @Column('int', {
-    name: 'status',
-    comment: 'Team status',
+    comment: 'Invitation type',
   })
   type: InvitationType;
 
