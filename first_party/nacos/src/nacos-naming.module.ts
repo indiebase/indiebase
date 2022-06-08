@@ -2,7 +2,7 @@ import { DynamicModule, Global, Module } from '@nestjs/common';
 import { NacosNamingService } from './nacos-naming.service';
 import {
   createNacosNamingClientProvider,
-  createNacosNamingClientProviderAsync,
+  createNacosNamingClientAsyncProvider,
 } from './nacos.provider';
 import {
   NacosNamingClientOptions,
@@ -24,7 +24,7 @@ export class NacosNamingModule {
   public static forRootAsync(
     options?: NacosNamingClientAsyncOptions,
   ): DynamicModule {
-    const provider = createNacosNamingClientProviderAsync(options);
+    const provider = createNacosNamingClientAsyncProvider(options);
 
     return {
       module: NacosNamingModule,

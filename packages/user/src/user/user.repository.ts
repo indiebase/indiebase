@@ -5,13 +5,16 @@ import { FindUserCond } from './user.interface';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(body: SignupDto): Promise<UserEntity> {
+  async createUser(
+    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
+  ): Promise<UserEntity> {
     return new Promise(async (resolve, reject) => {
       const userEntity = this.create(body);
 
       this.save(userEntity)
         .then((r) => {
           delete r.password;
+
           resolve(r);
         })
         .catch(reject);

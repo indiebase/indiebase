@@ -4,6 +4,8 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { readJsonSync } from 'fs-extra';
 import { writeOpenApiDoc } from '@letscollab/helper';
+import { OrgModule } from '../org/org.module';
+import { InvitationModule } from '../invitation/invitation.module';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
@@ -12,7 +14,6 @@ export const setupUserApiDoc = (app: INestApplication) =>
     try {
       const userOptions = new DocumentBuilder()
         .setTitle('Collab Api')
-        .setDescription('用户接口')
         .setVersion(pkg.version)
         .addBearerAuth(
           {
@@ -28,7 +29,7 @@ export const setupUserApiDoc = (app: INestApplication) =>
         .build();
 
       const userDoc = SwaggerModule.createDocument(app, userOptions, {
-        include: [TeamModule],
+        include: [TeamModule, OrgModule, InvitationModule],
       });
       SwaggerModule.setup('api/doc/collab', app, userDoc, {
         uiConfig: {

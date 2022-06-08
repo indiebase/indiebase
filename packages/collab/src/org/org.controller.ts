@@ -17,8 +17,8 @@ import {
   UpdateOrgDto,
 } from './org.dto';
 
-@Controller('team')
-@ApiTags('v1/Team')
+@Controller('org')
+@ApiTags('v1/Organization')
 export class OrgController {
   constructor(private readonly orgService: OrgService) {}
 
@@ -28,7 +28,7 @@ export class OrgController {
     type: QueryOrgResDto,
   })
   // @UseGuards(Http2RmqAuthGuard)
-  async queryUsers(@Query() query: QueryOrgDto) {
+  async queryOrgs(@Query() query: QueryOrgDto) {
     return this.orgService.queryTeam(query);
   }
 
@@ -51,5 +51,14 @@ export class OrgController {
   // @UseGuards(Http2RmqAuthGuard)
   async deleteTeam(@Body() body: DeleteOrgDto) {
     return this.orgService.deleteTeam(body);
+  }
+
+  @Get('demo')
+  // @ApiBearerAuth('jwt')
+  // @UseGuards(Http2RmqAuthGuard)
+  async demo(@Query() body) {
+    console.log(body);
+    return {};
+    // return this.orgService.deleteTeam(body);
   }
 }

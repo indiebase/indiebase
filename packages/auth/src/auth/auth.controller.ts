@@ -5,10 +5,11 @@ import {
   Post,
   Body,
   Get,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './jwt.guard';
 import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 import { RolesGuard } from '@letscollab/nest-casbin';
@@ -18,10 +19,12 @@ import {
   ApiProtectHeader,
   IVerify,
 } from '@letscollab/helper';
-import { FastifyRequest } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { RpcAuthGuard } from './jwt-rpc.guard';
 import { UserResDto } from '@letscollab/user';
 import { LocalSignInDto } from './auth.dto';
+import { AuthGuard } from '@letscollab/passport';
+import { GithubGuard } from './github.guard';
 
 @Controller('auth')
 @ApiTags('v1/Auth')
@@ -45,6 +48,26 @@ export class AuthController {
     console.log(req.user);
 
     return 'demo';
+  }
+
+  @Get('github')
+  @ApiBearerAuth('jwt')
+  @UseGuards(GithubGuard)
+  async github(@Request() req: FastifyRequest & { user: any }) {}
+
+  @Get('github/callback')
+  @UseGuards(GithubGuard)
+  async githubCallback(
+    @Req() req: FastifyRequest & { user: any },
+    @Res() res: FastifyReply,
+  ) {
+    const r = await this.authService.signupGithub(req.user);
+
+    if (r.code > 0) {
+      res.setCookie('__HOST-t', r.d.t, { httpOnly: true, secure: true });
+    }
+
+    res.send(r);
   }
 
   @UseGuards(RpcAuthGuard, RolesGuard)

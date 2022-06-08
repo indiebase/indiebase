@@ -12,6 +12,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OctokitModule } from '@letscollab/octokit';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { InvitationModule } from './invitation/invitation.module';
+import { OrgModule } from './org/org.module';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -20,6 +21,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
   imports: [
     TeamModule,
     InvitationModule,
+    OrgModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,

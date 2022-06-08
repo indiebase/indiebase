@@ -10,9 +10,10 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ResultCode } from '@letscollab/helper';
 import { AUTH_RMQ } from '../app.constants';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
-import { SignupDto, UserResDto } from './user.dto';
+import { UserResDto } from './user.dto';
 import { JwtSignResDto } from '@letscollab/auth';
 import { FindUserCond } from './user.interface';
+import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -26,8 +27,19 @@ export class UserService {
     private readonly logger: Logger,
   ) {}
 
-  public async signup(body: SignupDto): Promise<UserResDto> {
-    const user = await this.userRepo.findOne({ username: body.username });
+  public async signup(
+    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
+  ): Promise<UserResDto> {
+    const user = await this.userRepo.findOne({
+      where: [
+        {
+          username: body.username,
+        },
+        {
+          email: body.email,
+        },
+      ],
+    });
 
     if (user) {
       return {

@@ -44,4 +44,4 @@ import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '../app.constants';
   controllers: [OrgController],
   providers: [OrgService, Logger],
 })
-export class TeamModule {}
+export class OrgModule {}

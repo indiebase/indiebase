@@ -12,7 +12,7 @@ export const setupUserApiDoc = (app: INestApplication) =>
     try {
       const userOptions = new DocumentBuilder()
         .setTitle('User Api')
-        .setDescription('用户接口')
+        .setDescription('User REST API')
         .setVersion(pkg.version)
         .addBearerAuth(
           {
