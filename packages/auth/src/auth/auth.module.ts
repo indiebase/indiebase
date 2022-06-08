@@ -1,6 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { PassportModule as ForwardPassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
@@ -8,6 +8,7 @@ import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { USER_RMQ } from '../app.constants';
+import { GithubStrategy } from './github.strategy';
 
 const PassportModule = ForwardPassportModule.register({
   defaultStrategy: 'jwt',
@@ -44,12 +45,18 @@ const PassportModule = ForwardPassportModule.register({
       inject: [NacosConfigService],
       async useFactory(nacosConfigService: NacosConfigService) {
         const configs = await nacosConfigService.getConfig('service-auth.json');
-        return configs?.jwt;
+        return configs?.jwt as JwtModuleOptions;
       },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, Logger],
-  exports: [AuthService, LocalStrategy, JwtStrategy, PassportModule],
+  providers: [AuthService, LocalStrategy, GithubStrategy, JwtStrategy, Logger],
+  exports: [
+    AuthService,
+    LocalStrategy,
+    GithubStrategy,
+    JwtStrategy,
+    PassportModule,
+  ],
 })
 export class AuthModule {}

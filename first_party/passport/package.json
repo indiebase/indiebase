@@ -1,0 +1,71 @@
+{
+  "name": "@letscollab/passport",
+  "version": "8.2.1",
+  "description": "Nest - modern, fast, powerful node.js web framework (@passport)",
+  "author": "Kamil Mysliwiec",
+  "license": "MIT",
+  "main": "./lib/index.ts",
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "format": "prettier --write \"lib/**/*.ts\"",
+    "lint": "eslint 'lib/**/*.ts' --fix",
+    "precommit": "lint-staged",
+    "prepublish:npm": "npm run build",
+    "publish:npm": "npm publish --access public",
+    "prerelease": "npm run build",
+    "release": "release-it",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "passport": "^0.4.0 || ^0.5.0 || ^0.6.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.0.2",
+    "@commitlint/config-angular": "17.0.0",
+    "@nestjs/common": "8.4.6",
+    "@nestjs/core": "8.4.6",
+    "@nestjs/jwt": "8.0.1",
+    "@nestjs/platform-express": "8.4.6",
+    "@nestjs/testing": "8.4.6",
+    "@types/jest": "28.1.1",
+    "@types/node": "17.0.17",
+    "@types/passport": "1.0.8",
+    "@types/passport-jwt": "3.0.6",
+    "@types/passport-local": "1.0.34",
+    "@typescript-eslint/eslint-plugin": "5.27.1",
+    "@typescript-eslint/parser": "5.27.1",
+    "eslint": "8.17.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "husky": "8.0.1",
+    "jest": "28.1.0",
+    "lint-staged": "13.0.0",
+    "pactum": "3.1.9",
+    "passport": "0.6.0",
+    "passport-jwt": "4.0.0",
+    "passport-local": "1.0.0",
+    "prettier": "2.6.2",
+    "reflect-metadata": "0.1.13",
+    "release-it": "15.0.0",
+    "rimraf": "3.0.2",
+    "rxjs": "7.5.5",
+    "ts-jest": "28.0.4",
+    "typescript": "4.7.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nestjs/passport"
+  }
+}

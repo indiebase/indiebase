@@ -16,13 +16,27 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import fastifyCookie from 'fastify-cookie';
 import { ValidationPipe } from '@nestjs/common';
 import { fastifyHelmet } from '@fastify/helmet';
+import Fastify from 'fastify';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
+  const fastify = Fastify();
+
+  fastify.addHook('onRequest', (request: any, reply: any, done) => {
+    reply.setHeader = function (key, value) {
+      return this.raw.setHeader(key, value);
+    };
+    reply.end = function () {
+      this.raw.end();
+    };
+    request.res = reply;
+    done();
+  });
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter(fastify),
     {
       bodyParser: true,
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],

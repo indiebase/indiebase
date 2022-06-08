@@ -16,7 +16,7 @@ export const createNacosNamingClientProvider = function (
   };
 };
 
-export const createNacosNamingClientProviderAsync = function (
+export const createNacosNamingClientAsyncProvider = function (
   options?: NacosNamingClientAsyncOptions,
 ): Provider {
   return {
@@ -35,7 +35,7 @@ export const createNacosConfigClientProvider = function (
   };
 };
 
-export const createNacosConfigClientProviderAsync = function (
+export const createNacosConfigClientAsyncProvider = function (
   options?: NacosConfigClientAsyncOptions,
 ): Provider {
   return {

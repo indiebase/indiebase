@@ -14,6 +14,8 @@ import { catchError, lastValueFrom, timeout } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { LocalSignInDto } from './auth.dto';
 import { UserDto } from '@letscollab/user';
+import { InjectRedis } from '@liaoliaots/nestjs-redis';
+import Redis from 'ioredis';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +23,9 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @Inject(USER_RMQ)
     private readonly userClient: ClientProxy,
+
+    @InjectRedis()
+    private readonly redis: Redis,
 
     private readonly logger: Logger, // @InjectRedis() // private readonly redis: Redis,
   ) {}
@@ -38,7 +43,7 @@ export class AuthService {
     );
   }
 
-  async validateUser(info: LocalSignInDto) {
+  async validateLocal(info: LocalSignInDto) {
     let user = await this.getUser<RpcResSchema<UserDto & { password: string }>>(
       'get_complete_name',
       info.username,
@@ -53,6 +58,26 @@ export class AuthService {
     } else {
       throw new NotFoundException('用户不存在, 请先注册');
     }
+  }
+
+  async signupGithub(data) {
+    const r = await lastValueFrom(
+      this.userClient.send({ cmd: 'signup_github' }, data.profile).pipe(
+        timeout(4000),
+        catchError((e) => {
+          throw new InternalServerErrorException({
+            message: '注册失败',
+          });
+        }),
+      ),
+    );
+
+    if (r.code > 0) {
+      // let t = await this.signTarget({ username: r.d.username });
+      // r.d.t = t;
+    }
+
+    return r;
   }
 
   async signin(username) {
