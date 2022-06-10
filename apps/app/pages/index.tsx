@@ -1,22 +1,19 @@
 /* eslint-disable  react/no-unescaped-entities */
 import type { NextPage } from 'next';
-import { Footer, Header } from 'components';
 
 import {
-  AppShell,
-  Navbar,
-  MediaQuery,
-  Aside,
   Text,
   useMantineTheme,
   Box,
   Button,
   Title,
-  Space,
   Center,
+  Image,
+  Card,
+  Group,
+  Stack,
 } from '@mantine/core';
-import { useRef, useState } from 'react';
-import { width } from '@mui/system';
+import { useState } from 'react';
 import { IconFileCode } from '@tabler/icons';
 import { TextParticle } from 'city-night';
 import {
@@ -30,9 +27,6 @@ import {
   FadeIn,
   ZoomIn,
   MoveIn,
-  Move,
-  Sticky,
-  FadeOut,
 } from 'components/scroll';
 
 const Home: NextPage = () => {
@@ -41,10 +35,12 @@ const Home: NextPage = () => {
 
   return (
     <ScrollContainer>
-      <ScrollPage page={0}>
+      <ScrollPage style={{ zIndex: 10 }} page={0}>
         <Center
           sx={{
             height: 'calc(100vh - 60px)',
+            flexDirection: 'column',
+            zIndex: 1,
           }}
         >
           <Animator animation={batch(Fade(), MoveOut(0, -500))}>
@@ -56,6 +52,9 @@ const Home: NextPage = () => {
               size={300}
             />
           </Animator>
+          <Button leftIcon={<IconFileCode />} radius="xl" size="xl" uppercase>
+            开始
+          </Button>
         </Center>
       </ScrollPage>
 
@@ -87,6 +86,10 @@ const Home: NextPage = () => {
             flexDirection: 'column',
             height: '100%',
             textAlign: 'center',
+            h4: {
+              color: '#2C2C2C',
+              fontWeight: 'unset',
+            },
           }}
         >
           <Animator animation={MoveIn(0, 0)}>
@@ -143,14 +146,104 @@ const Home: NextPage = () => {
       </ScrollPage>
 
       <ScrollPage page={3}>
-        <Animator animation={batch(Fade(), MoveIn(0, -600), Sticky())}>
-          <Box sx={{ textAlign: 'center', height: '100%' }}>
-            <h1>加入letscollab</h1>
-            <h2>letscollab作为letscollab的第一个项目欢迎大家的加入</h2>
+        <Center sx={{ height: '100%' }}>
+          <Stack style={{ marginTop: 200 }} align="center">
+            <Group
+              position="center"
+              sx={{
+                // height: '100%',
+                h4: {
+                  color: '#2C2C2C',
+                  fontWeight: 'unset',
+                },
+              }}
+              
+            >
+              <Animator animation={batch(FadeIn(), MoveIn(-200, 0))}>
+                <Card sx={{ width: 340, marginRight: 40 }} shadow="md" p="lg">
+                  <Image
+                    src="/logo.svg"
+                    fit="contain"
+                    height={100}
+                    alt="letscollab"
+                  />
 
-            <Button>加入</Button>
-          </Box>
-        </Animator>
+                  <Text weight={600} size="lg">
+                    letscollab
+                  </Text>
+
+                  <Text size="sm" style={{ color: '#000', lineHeight: 1.5 }}>
+                    The management platform for independent projects makes it
+                    easier for independent developers to generate revenue.
+                  </Text>
+
+                  <Button
+                    variant="light"
+                    color="cyan"
+                    fullWidth
+                    style={{ marginTop: 14 }}
+                  >
+                    前往
+                  </Button>
+                </Card>
+              </Animator>
+              <Animator animation={batch(FadeIn(), MoveIn(200, 0))}>
+                <Card sx={{ width: 340, marginLeft: 40 }} shadow="md" p="lg">
+                  <Image
+                    src="/nawb.svg"
+                    fit="contain"
+                    height={100}
+                    alt="nawb"
+                  />
+
+                  <Text weight={600} size="lg">
+                    Nawb
+                  </Text>
+
+                  <Text size="sm" style={{ color: '#000', lineHeight: 1.5 }}>
+                    With Fjord Tours you can explore more of the magical fjord
+                    landscapes with tours and activities on and around the
+                    fjords of Norway
+                  </Text>
+
+                  <Button
+                    variant="light"
+                    color="blue"
+                    fullWidth
+                    style={{ marginTop: 14 }}
+                  >
+                    前往
+                  </Button>
+                </Card>
+              </Animator>
+            </Group>
+
+            <Animator animation={Fade()}>
+              <Title style={{ marginTop: 80 }} order={3}>
+                <Text
+                  inherit
+                  component="span"
+                  align="center"
+                  style={{ fontSize: '60px' }}
+                  weight={700}
+                >
+                  加入
+                </Text>
+                <Text
+                  inherit
+                  component="span"
+                  align="center"
+                  variant="gradient"
+                  gradient={{ from: '#111111', to: '#857C7C', deg: 45 }}
+                  style={{ fontSize: '65px' }}
+                  weight={700}
+                >
+                  deskbtm !
+                </Text>
+              </Title>
+            </Animator>
+          </Stack>
+        </Center>
       </ScrollPage>
     </ScrollContainer>
   );

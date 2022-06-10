@@ -1,7 +1,10 @@
-import { Box, Center, Text } from '@mantine/core';
+import { Center, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 
 export default function Custom404() {
+  const matches = useMediaQuery('(max-width: 768px)');
+
   return (
     <Center
       sx={{
@@ -14,7 +17,7 @@ export default function Custom404() {
         variant="gradient"
         gradient={{ from: '#FF00B3', to: '#EC0047', deg: 45 }}
         weight={700}
-        style={{ fontSize: '120px' }}
+        style={{ fontSize: matches ? 120 : 200 }}
       >
         404
       </Text>

@@ -76,7 +76,7 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
           });
       }, 50);
     }
-  }, [children, scrollParent, snap, setScrollData]);
+  }, [children, scrollParent, snap, setScrollData, scrollData.viewportHeight]);
 
   useLayoutEffect(() => {
     if (scrollParent) {
@@ -85,7 +85,7 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
       scrollParent.addEventListener('resize', scrollEvent);
       return () => scrollParent.removeEventListener('scroll', scrollEvent);
     }
-  }, [scrollEvent, scrollParent]);
+  }, [scrollEvent, scrollParent, scrollData.viewportHeight]);
 
   return (
     <div style={{ margin: 0, padding: 0, userSelect: 'none' }}>

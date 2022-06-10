@@ -8,10 +8,11 @@ interface ScrollPageProps {
    * @deprecated `page` number will be assigend automatically. You don't have to set it.
    */
   page?: number;
+  style?: CSSProperties;
 }
 
 const ScrollPage: FC<ScrollPageProps> = (props) => {
-  const { children, debugBorder = false } = props;
+  const { children, debugBorder = false, style: s } = props;
   const { viewportHeight } = useContext(ScrollDataContext);
   const { page } = useContext(ScrollPageContext);
 
@@ -23,6 +24,7 @@ const ScrollPage: FC<ScrollPageProps> = (props) => {
     boxSizing: 'border-box',
     scrollSnapAlign: 'center',
     overflow: 'hidden',
+    ...s,
     ...(debugBorder ? { border: '1px solid red' } : {}),
   };
 

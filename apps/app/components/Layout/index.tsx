@@ -5,13 +5,13 @@ import {
   ColorScheme,
   ColorSchemeProvider,
   Global,
-  Header,
   MantineProvider,
   MediaQuery,
   Navbar,
+  Text,
   useMantineTheme,
 } from '@mantine/core';
-import { Footer } from 'components';
+import { Footer, Header } from 'components';
 import { FC, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 
@@ -54,7 +54,7 @@ export const Layout: FC<PropsWithChildren> = (props) => {
           asideOffsetBreakpoint="sm"
           navbar={
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Navbar p="md" hidden={!opened}>
+              <Navbar p="md" width={{ sm: 200, lg: 300 }} hidden={!opened}>
                 <Text>Application navbar</Text>
               </Navbar>
             </MediaQuery>
