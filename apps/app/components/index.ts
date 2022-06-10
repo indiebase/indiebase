@@ -1,2 +1,3 @@
 export * from './Footer';
-export * from './NavHeader';
+export * from './Header';
+export * from './Layout';

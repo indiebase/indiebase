@@ -183,6 +183,7 @@ export default function themeComponents(theme): Components {
         tooltip: {
           color: theme.paper,
           background: theme.colors?.grey700,
+          padding: '8px 8px',
         },
       },
     },
