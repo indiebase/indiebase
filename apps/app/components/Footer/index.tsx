@@ -7,8 +7,8 @@ export const Footer = function (props) {
       <Stack align="center">
         <Group spacing={2}>
           <Button variant="white">One</Button>
-          <Button>Two</Button>
-          <Button>Three</Button>
+          <Button variant="white">Two</Button>
+          <Button variant="white">Three</Button>
         </Group>
         <Stack align="center">
           <Link href="#">皖ICP备20002736号-2</Link>
