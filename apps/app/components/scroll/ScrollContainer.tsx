@@ -15,6 +15,7 @@ interface ScrollContainerProps {
   snap?: 'none' | 'proximity' | 'mandatory';
   children: ReactNode | ReactNode[];
   scrollParent?: Window | HTMLElement;
+  onScroll?: (event: ScrollData) => void;
 }
 
 const _window: (Window & typeof globalThis) | undefined =
@@ -46,20 +47,20 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
     const currentPage: number = Math.floor(realPage);
     const currentProgress: number = realPage - currentPage;
 
-    setScrollData(
-      (scrollData) =>
-        ({
-          ...scrollData,
-          currentY,
-          viewportHeight,
-          totalPage,
-          totalHeight,
-          totalProgress,
-          realPage,
-          currentPage,
-          currentProgress,
-        } as ScrollData),
-    );
+    const data = {
+      currentY,
+      viewportHeight,
+      totalPage,
+      totalHeight,
+      totalProgress,
+      realPage,
+      currentPage,
+      currentProgress,
+    } as ScrollData;
+
+    setScrollData((scrollData) => ({ ...scrollData, ...data }));
+
+    props?.onScroll(data);
 
     if (snap !== 'none') {
       scrollTimer.current = setTimeout(() => {

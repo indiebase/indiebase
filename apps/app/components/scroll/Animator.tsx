@@ -6,14 +6,15 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
-import { ScrollDataContext, ScrollPageContext } from "./stores";
-import { Animation } from "./types";
-import { computeStyle } from "./utils";
+} from 'react';
+import { ScrollDataContext, ScrollPageContext } from './stores';
+import { Animation } from './types';
+import { computeStyle } from './utils';
 
 interface AnimatorProps {
   children: ReactNode | ReactNode[];
   animation: Animation;
+  style?: CSSProperties;
 }
 
 const Animator: FC<AnimatorProps> = (props) => {
@@ -23,8 +24,8 @@ const Animator: FC<AnimatorProps> = (props) => {
   const [isSSR, setIsSSR] = useState(true);
 
   useEffect(
-    () => (typeof window !== "undefined" ? setIsSSR(false) : undefined),
-    []
+    () => (typeof window !== 'undefined' ? setIsSSR(false) : undefined),
+    [],
   );
 
   const calculatedStyle: CSSProperties | undefined = useMemo(
@@ -39,7 +40,7 @@ const Animator: FC<AnimatorProps> = (props) => {
         ? ({
             ...computeStyle(animation?.in?.style, currentProgress),
           } as CSSProperties)
-        : { display: "none" },
+        : { display: 'none' },
     [
       isSSR,
       currentPage,
@@ -47,11 +48,14 @@ const Animator: FC<AnimatorProps> = (props) => {
       animation?.out?.style,
       animation?.in?.style,
       currentProgress,
-    ]
+    ],
   );
 
   return (
-    <div suppressHydrationWarning style={calculatedStyle}>
+    <div
+      suppressHydrationWarning
+      style={{ ...calculatedStyle, ...props.style }}
+    >
       {children}
     </div>
   );

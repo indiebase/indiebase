@@ -21,6 +21,7 @@
     "@tabler/icons": "^1.68.0",
     "city-night": "workspace:^",
     "localforage": "^1.10.0",
+    "lottie-react": "^2.2.1",
     "next": "12.1.6",
     "next-pwa": "^5.5.4",
     "nprogress": "^0.2.0",
