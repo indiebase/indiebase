@@ -14,7 +14,6 @@ import {
   Transition,
 } from '@mantine/core';
 import { useCallback, useRef, useState, useTransition } from 'react';
-import { IconFileCode } from '@tabler/icons';
 import { TextParticle } from 'city-night';
 import {
   ScrollContainer,
@@ -34,7 +33,7 @@ import { ScrollData } from 'components/scroll/types';
 import { FC } from 'react';
 import { CSSProperties } from '@emotion/serialize';
 
-const RadiusRect: FC<{
+const TransitionShape: FC<{
   mounted?: boolean;
   style?: CSSProperties;
   duration?: number;
@@ -141,7 +140,7 @@ const Home: NextPage = () => {
             </Text>
           </section>
         </Animator>
-        <RadiusRect
+        <TransitionShape
           mounted={showPage1Scrap}
           duration={1000}
           style={{
@@ -155,7 +154,7 @@ const Home: NextPage = () => {
             left: 200,
           }}
         />
-        <RadiusRect
+        <TransitionShape
           mounted={showPage1Scrap}
           duration={1000}
           style={{
@@ -167,6 +166,49 @@ const Home: NextPage = () => {
             position: 'absolute',
             top: 360,
             right: 200,
+          }}
+        />
+        <TransitionShape
+          mounted={showPage1Scrap}
+          duration={1000}
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: '80px solid transparent',
+            borderRight: '80px solid transparent',
+            borderTop: '140px solid #7B4DFA',
+            position: 'absolute',
+            bottom: 100,
+            transform: 'rotate(45deg)',
+            left: 500,
+          }}
+        />
+        <TransitionShape
+          mounted={showPage1Scrap}
+          duration={1000}
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: '80px solid transparent',
+            borderRight: '80px solid transparent',
+            borderTop: '140px solid #7B4DFA',
+            position: 'absolute',
+            bottom: 100,
+            transform: 'rotate(45deg)',
+            left: 500,
+          }}
+        />
+        <TransitionShape
+          mounted={showPage1Scrap}
+          duration={1000}
+          style={{
+            width: 120,
+            height: 300,
+            position: 'absolute',
+            bottom: -150,
+            background: '#E911A1',
+            transform: 'rotate(45deg)',
+            right: 500,
           }}
         />
       </ScrollPage>
@@ -265,7 +307,11 @@ const Home: NextPage = () => {
                     letscollab
                   </Text>
 
-                  <Text size="sm" style={{ color: '#000', lineHeight: 1.5 }}>
+                  <Text
+                    size="sm"
+                    style={{ color: '#000', lineHeight: 1.5, height: 65 }}
+                    lineClamp={3}
+                  >
                     The management platform for independent projects makes it
                     easier for independent developers to generate revenue.
                   </Text>
@@ -288,10 +334,11 @@ const Home: NextPage = () => {
                     Nawb
                   </Text>
 
-                  <Text size="sm" style={{ color: '#000', lineHeight: 1.5 }}>
-                    With Fjord Tours you can explore more of the magical fjord
-                    landscapes with tours and activities on and around the
-                    fjords of Norway
+                  <Text
+                    size="sm"
+                    style={{ color: '#000', lineHeight: 1.5, height: 65 }}
+                  >
+                    Mystery
                   </Text>
 
                   <Button variant="light" color="blue" fullWidth mt={14}>
