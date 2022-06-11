@@ -9,8 +9,9 @@ import {
   Image,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { LoginModal } from 'components/LoginModal';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -20,6 +21,13 @@ export interface NavHeaderProps {
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const matches = useMediaQuery('(max-width: 768px)');
+  const [modalMeta, setModalMeta] = useState<{
+    initialNo?: number;
+    opened: boolean;
+  }>({
+    opened: false,
+  });
+
   return (
     <MantineHeader
       fixed
@@ -32,6 +40,11 @@ export const Header: FC<NavHeaderProps> = function (props) {
       height={65}
       p="md"
     >
+      <LoginModal
+        opened={modalMeta.opened}
+        onClose={() => setModalMeta({ opened: false })}
+        initialNo={modalMeta.initialNo}
+      />
       <Group
         position="apart"
         sx={(theme) => ({
@@ -93,12 +106,22 @@ export const Header: FC<NavHeaderProps> = function (props) {
             </Group>
           </MediaQuery>
 
-          <Group sx={{ marginLeft: 40 }} spacing={6}>
-            <Anchor component={Link} href="#">
+          <Group sx={{ marginLeft: 40, span: { fontSize: 14 } }} spacing={6}>
+            <Anchor
+              component={'span'}
+              onClick={(e) => {
+                setModalMeta({ opened: true, initialNo: 0 });
+              }}
+            >
               登录
             </Anchor>
             /
-            <Anchor component={Link} href="#">
+            <Anchor
+              component="span"
+              onClick={(e) => {
+                setModalMeta({ opened: true, initialNo: 1 });
+              }}
+            >
               注册
             </Anchor>
           </Group>
