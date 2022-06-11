@@ -1,4 +1,3 @@
-/* eslint-disable  react/no-unescaped-entities */
 import type { NextPage } from 'next';
 
 import {
@@ -12,8 +11,9 @@ import {
   Card,
   Group,
   Stack,
+  Transition,
 } from '@mantine/core';
-import { useState } from 'react';
+import { useCallback, useRef, useState, useTransition } from 'react';
 import { IconFileCode } from '@tabler/icons';
 import { TextParticle } from 'city-night';
 import {
@@ -28,13 +28,59 @@ import {
   ZoomIn,
   MoveIn,
 } from 'components/scroll';
+import Lottie, { LottieRefCurrentProps } from 'lottie-react';
+import RightArrow from 'components/RightArrow.json';
+import { ScrollData } from 'components/scroll/types';
+import { FC } from 'react';
+import { CSSProperties } from '@emotion/serialize';
+
+const RadiusRect: FC<{
+  mounted?: boolean;
+  style?: CSSProperties;
+  duration?: number;
+}> = (props) => {
+  return (
+    <Transition
+      mounted={props.mounted}
+      transition="fade"
+      duration={1000}
+      timingFunction="ease"
+    >
+      {(styles) => (
+        <Box
+          style={{
+            ...(props.style as any),
+            ...styles,
+          }}
+        ></Box>
+      )}
+    </Transition>
+  );
+};
 
 const Home: NextPage = () => {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
+  const ref = useRef<LottieRefCurrentProps>();
+
+  const [showPage1Scrap, setPage1Scrap] = useState(false);
+
+  const handlePage = useCallback(
+    (event: ScrollData) => {
+      // console.log(event);
+      switch (event.currentPage) {
+        case 1:
+          event.currentProgress < 0.2 && !showPage1Scrap && setPage1Scrap(true);
+          break;
+        default:
+          break;
+      }
+    },
+    [showPage1Scrap],
+  );
 
   return (
-    <ScrollContainer>
+    <ScrollContainer onScroll={handlePage}>
       <ScrollPage style={{ zIndex: 10 }} page={0}>
         <Center
           sx={{
@@ -52,14 +98,34 @@ const Home: NextPage = () => {
               size={300}
             />
           </Animator>
-          <Button leftIcon={<IconFileCode />} radius="xl" size="xl" uppercase>
+          <Button
+            onMouseEnter={() => {
+              ref.current.play();
+            }}
+            onMouseLeave={() => {
+              ref.current.stop();
+            }}
+            rightIcon={
+              <Lottie
+                lottieRef={ref}
+                style={{ width: 30 }}
+                animationData={RightArrow}
+              />
+            }
+            radius="xl"
+            size="xl"
+            uppercase
+          >
             开始
           </Button>
         </Center>
       </ScrollPage>
 
       <ScrollPage page={1}>
-        <Animator animation={batch(StickyIn(), FadeIn(), ZoomIn())}>
+        <Animator
+          style={{ zIndex: 1 }}
+          animation={batch(StickyIn(), FadeIn(), ZoomIn())}
+        >
           <section style={{ whiteSpace: 'nowrap' }}>
             <Text
               align="center"
@@ -75,6 +141,34 @@ const Home: NextPage = () => {
             </Text>
           </section>
         </Animator>
+        <RadiusRect
+          mounted={showPage1Scrap}
+          duration={1000}
+          style={{
+            borderRadius: 15,
+            width: 160,
+            height: 160,
+            background: 'cyan',
+            display: 'inline-block',
+            position: 'absolute',
+            top: 160,
+            left: 200,
+          }}
+        />
+        <RadiusRect
+          mounted={showPage1Scrap}
+          duration={1000}
+          style={{
+            borderRadius: 130,
+            width: 130,
+            height: 130,
+            background: '#2AFF7C',
+            display: 'inline-block',
+            position: 'absolute',
+            top: 360,
+            right: 200,
+          }}
+        />
       </ScrollPage>
 
       <ScrollPage page={2}>
@@ -147,7 +241,7 @@ const Home: NextPage = () => {
 
       <ScrollPage page={3}>
         <Center sx={{ height: '100%' }}>
-          <Stack style={{ marginTop: 200 }} align="center">
+          <Stack mt={200} align="center">
             <Group
               position="center"
               sx={{
@@ -157,10 +251,9 @@ const Home: NextPage = () => {
                   fontWeight: 'unset',
                 },
               }}
-              
             >
               <Animator animation={batch(FadeIn(), MoveIn(-200, 0))}>
-                <Card sx={{ width: 340, marginRight: 40 }} shadow="md" p="lg">
+                <Card sx={{ width: 340 }} mr={40} shadow="md" p="lg">
                   <Image
                     src="/logo.svg"
                     fit="contain"
@@ -177,18 +270,13 @@ const Home: NextPage = () => {
                     easier for independent developers to generate revenue.
                   </Text>
 
-                  <Button
-                    variant="light"
-                    color="cyan"
-                    fullWidth
-                    style={{ marginTop: 14 }}
-                  >
+                  <Button variant="light" color="cyan" fullWidth mt={14}>
                     前往
                   </Button>
                 </Card>
               </Animator>
               <Animator animation={batch(FadeIn(), MoveIn(200, 0))}>
-                <Card sx={{ width: 340, marginLeft: 40 }} shadow="md" p="lg">
+                <Card sx={{ width: 340 }} ml={40} shadow="md" p="lg">
                   <Image
                     src="/nawb.svg"
                     fit="contain"
@@ -206,12 +294,7 @@ const Home: NextPage = () => {
                     fjords of Norway
                   </Text>
 
-                  <Button
-                    variant="light"
-                    color="blue"
-                    fullWidth
-                    style={{ marginTop: 14 }}
-                  >
+                  <Button variant="light" color="blue" fullWidth mt={14}>
                     前往
                   </Button>
                 </Card>
@@ -219,7 +302,7 @@ const Home: NextPage = () => {
             </Group>
 
             <Animator animation={Fade()}>
-              <Title style={{ marginTop: 80 }} order={3}>
+              <Title mt={80} order={3}>
                 <Text
                   inherit
                   component="span"
