@@ -26,10 +26,10 @@ import {
   FadeIn,
   ZoomIn,
   MoveIn,
-} from 'components/scroll';
+} from 'components/Scroll';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import RightArrow from 'components/RightArrow.json';
-import { ScrollData } from 'components/scroll/types';
+import { ScrollData } from 'components/Scroll/types';
 import { FC } from 'react';
 import { CSSProperties } from '@emotion/serialize';
 
