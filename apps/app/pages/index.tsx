@@ -58,8 +58,6 @@ const TransitionShape: FC<{
 };
 
 const Home: NextPage = () => {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
   const ref = useRef<LottieRefCurrentProps>();
 
   const [showPage1Scrap, setPage1Scrap] = useState(false);
