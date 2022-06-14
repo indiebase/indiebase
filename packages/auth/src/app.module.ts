@@ -5,7 +5,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
 import TypeORMAdapter from 'typeorm-adapter';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import {
+  NacosConfigModule,
+  NacosConfigService,
+  NacosNamingModule,
+  NacosNamingService,
+} from '@letscollab/nest-nacos';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
@@ -58,16 +63,16 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    // NacosNamingModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory(config: ConfigService) {
-    //     return {
-    //       serverList: config.get('nacos.serverList'),
-    //       namespace: config.get('nacos.namespace'),
-    //     };
-    //   },
-    // }),
+    NacosNamingModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverList: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
     NacosConfigModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -137,13 +142,16 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 export class AppModule implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
-    private readonly nacosConfigService: NacosConfigService,
+    private readonly nacosNamingService: NacosNamingService,
   ) {}
 
   async onModuleInit() {
-    // await this.nacosNamingService.registerInstance(AUTH_SERVICE_NAME, {
-    //   port: parseInt(this.configService.get('app.port')),
-    //   ip: this.configService.get('app.hostname'),
-    // });
+    await this.nacosNamingService.registerInstance(
+      `@letscollab/auth-${process.env.NODE_ENV}`,
+      {
+        port: parseInt(this.configService.get('app.port')),
+        ip: this.configService.get('app.hostname'),
+      },
+    );
   }
 }

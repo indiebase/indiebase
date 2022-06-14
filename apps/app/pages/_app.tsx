@@ -9,11 +9,15 @@ import { Layout } from 'components';
 
 const queryClient = new QueryClient();
 
-const isProduction = process.env.NODE_ENV !== 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 NProgress.configure({
   showSpinner: false,
 });
+
+if (isProduction) {
+  console.debug = () => {};
+}
 
 Router.events.on('routeChangeStart', NProgress.start);
 Router.events.on('routeChangeComplete', NProgress.done);
@@ -36,7 +40,7 @@ function LetsCollabApp({
       </Head>
 
       <QueryClientProvider client={queryClient}>
-        {isProduction && <ReactQueryDevtools position="bottom-right" />}
+        {!isProduction && <ReactQueryDevtools position="bottom-right" />}
         <Layout>
           <Component {...pageProps} />
         </Layout>
