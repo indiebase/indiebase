@@ -1,8 +1,9 @@
+import { useBrowserLayoutEffect } from 'components/hooks';
 import React, {
   FC,
   ReactNode,
   useCallback,
-  useLayoutEffect,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -79,7 +80,7 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
     }
   }, [children, scrollParent, snap, setScrollData, scrollData.viewportHeight]);
 
-  useLayoutEffect(() => {
+  useBrowserLayoutEffect(() => {
     if (scrollParent) {
       scrollEvent();
       scrollParent.addEventListener('scroll', scrollEvent);
