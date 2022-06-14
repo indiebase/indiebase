@@ -1,11 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { AccountStatus } from './user.enum';
 import { BasicResSchemaDto } from '@letscollab/helper';
 
@@ -44,9 +38,6 @@ export class SignupDto {
   })
   @MinLength(8, {
     message: '密码长度不可低于8',
-  })
-  @MaxLength(32, {
-    message: '密码长度不可超过32',
   })
   password: string;
 
