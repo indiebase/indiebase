@@ -37,9 +37,9 @@ export const Layout: FC<PropsWithChildren> = (props) => {
       />
       <MantineProvider
         theme={{ colorScheme, primaryColor: 'dark' }}
-        styles={{}}
         withGlobalStyles
         withNormalizeCSS
+        emotionOptions={{ key: 'mantine' }}
       >
         <AppShell
           styles={{
