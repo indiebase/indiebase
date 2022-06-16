@@ -10,7 +10,11 @@ import { utilities, WinstonModule } from 'nest-winston';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { OctokitModule } from '@letscollab/octokit';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import {
+  NacosConfigModule,
+  NacosConfigService,
+  NacosNamingModule,
+} from '@letscollab/nest-nacos';
 import { InvitationModule } from './invitation/invitation.module';
 import { OrgModule } from './org/org.module';
 
@@ -27,7 +31,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       isGlobal: true,
       load: configure,
     }),
-
     RedisModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
@@ -35,7 +38,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         return configs.redis;
       },
     }),
-
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
@@ -61,16 +63,16 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    // NacosNamingModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory(config: ConfigService) {
-    //     return {
-    //       serverList: config.get('nacos.serverList'),
-    //       namespace: config.get('nacos.namespace'),
-    //     };
-    //   },
-    // }),
+    NacosNamingModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverList: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
     I18nModule.forRoot({
       fallbackLanguage: 'zh',
       loaderOptions: {
