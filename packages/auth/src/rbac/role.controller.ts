@@ -5,7 +5,7 @@ import { CreateRoleDto } from './role.dto';
 import { Roles, RolesGuard } from '@letscollab/nest-casbin';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 
-@Controller('role')
+@Controller('v1/role')
 @ApiTags('v1/Role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}

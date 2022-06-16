@@ -32,21 +32,28 @@ export default function Root({ children }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!isProduction && <ReactQueryDevtools position="bottom-right" />}
+      {!isProduction && <ReactQueryDevtools position="bottom-left" />}
 
       <ColorSchemeProvider
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
       >
         <Global
-          styles={() => ({
-            '*, *::before, *::after': {
-              boxSizing: 'border-box',
-            },
-          })}
+          styles={(theme) => {
+            return [
+              {
+                '*, *::before, *::after': {
+                  boxSizing: 'border-box',
+                },
+              },
+            ];
+          }}
         />
         <MantineProvider
-          theme={{ colorScheme, primaryColor: 'dark' }}
+          theme={{
+            colorScheme,
+            primaryColor: 'dark',
+          }}
           withGlobalStyles
           withNormalizeCSS
           emotionOptions={{ key: 'mantine' }}
