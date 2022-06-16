@@ -26,7 +26,7 @@ import { LocalSignInDto } from './auth.dto';
 import { AuthGuard } from '@letscollab/passport';
 import { GithubGuard } from './github.guard';
 
-@Controller('auth')
+@Controller('v1/auth')
 @ApiTags('v1/Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

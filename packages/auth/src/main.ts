@@ -18,6 +18,12 @@ import { ValidationPipe } from '@nestjs/common';
 import { fastifyHelmet } from '@fastify/helmet';
 import Fastify from 'fastify';
 
+const whitelist = [
+  'http://127.0.0.1:1032',
+  'http://localhost:1032',
+  'http://172.20.10.3:1032',
+];
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
@@ -40,6 +46,7 @@ async function bootstrap() {
     {
       bodyParser: true,
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
+      cors: true,
     },
   );
 
@@ -51,7 +58,7 @@ async function bootstrap() {
   const commonConfigs = await nacosConfigService.getConfig('common.json');
 
   // 接口版本
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix('api');
 
   await setupAuthApiDoc(app);
 

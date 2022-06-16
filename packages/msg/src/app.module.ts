@@ -1,7 +1,12 @@
-import { Logger, Module } from '@nestjs/common';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import {
+  NacosConfigModule,
+  NacosConfigService,
+  NacosNamingModule,
+  NacosNamingService,
+} from '@letscollab/nest-nacos';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import { MailerModule } from '@nestjs-modules/mailer';
@@ -83,16 +88,16 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    // NacosNamingModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory(config: ConfigService) {
-    //     return {
-    //       serverList: config.get('nacos.serverList'),
-    //       namespace: config.get('nacos.namespace'),
-    //     };
-    //   },
-    // }),
+    NacosNamingModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory(config: ConfigService) {
+        return {
+          serverList: config.get('nacos.serverList'),
+          namespace: config.get('nacos.namespace'),
+        };
+      },
+    }),
     NacosConfigModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -106,4 +111,18 @@ const isDevelopment = process.env.NODE_ENV === 'development';
   ],
   providers: [Logger],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly nacosNamingService: NacosNamingService,
+  ) {}
+  async onModuleInit() {
+    await this.nacosNamingService.registerInstance(
+      `@letscollab/msg-${process.env.NODE_ENV}`,
+      {
+        port: parseInt(this.configService.get('app.port')),
+        ip: this.configService.get('app.hostname'),
+      },
+    );
+  }
+}

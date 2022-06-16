@@ -12,8 +12,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'letscollab',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  tagline: 'letscollab are cool',
+  url: 'https://letscollab.deskbtm.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -28,8 +28,8 @@ const config = {
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'zh-Hans',
+    locales: ['zh-Hans', 'en'],
   },
 
   presets: [
@@ -60,36 +60,43 @@ const config = {
 
   customFields: {
     env: process.env,
+    icp: {
+      label: '皖ICP备20002736号-2',
+      href: 'https://beian.miit.gov.cn/#/Integrated/index',
+    },
   },
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        hideOnScroll: false,
+        hideOnScroll: true,
         logo: {
           alt: 'letscollab Logo',
           src: 'img/logo.svg',
+          width: '150px',
         },
         items: [
           {
             type: 'doc',
             docId: 'intro',
-            position: 'left',
-            label: 'Docs',
-          },
-          { to: '/blog', label: 'Blog', position: 'left' },
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
             position: 'right',
+            label: '文档',
+          },
+          { to: '/pricing', label: '价格', position: 'right' },
+          { to: '/blog', label: 'Blog', position: 'right' },
+          {
+            label: 'Nawb',
+            position: 'right',
+            href: 'https://nawb.deskbtm.com',
           },
         ],
       },
       footer: {
         style: 'light',
+
         links: [
           {
-            title: 'Docs',
+            title: '文档',
             items: [
               {
                 label: 'Tutorial',
@@ -98,15 +105,11 @@ const config = {
             ],
           },
           {
-            title: 'Community',
+            title: '社区',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: '知乎',
+                href: 'https://www.zhihu.com/people/mrno-64',
               },
               {
                 label: 'Twitter',
@@ -123,7 +126,11 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/deskbtm-letscollab/letscollab',
+              },
+              {
+                label: 'Nawb',
+                href: 'https://nawb.letscollab.com',
               },
             ],
           },

@@ -24,9 +24,12 @@ export default function NavbarLayout({ children }: Props): JSX.Element {
   const {
     navbar: { hideOnScroll },
   } = useThemeConfig();
-  const { isNavbarVisible } = useHideableNavbar(hideOnScroll);
+  const { navbarRef } = useHideableNavbar(hideOnScroll);
+
   return (
     <MantineHeader
+      ref={navbarRef}
+      className="navbar"
       fixed
       sx={{
         borderBottom: 'unset',
@@ -34,7 +37,7 @@ export default function NavbarLayout({ children }: Props): JSX.Element {
         backgroundColor: 'hsla(0,0%,100%,.7)',
         alignItems: 'center',
       }}
-      height={70}
+      height={65}
       p="md"
     >
       {children}
