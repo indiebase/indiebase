@@ -4,17 +4,18 @@ import {
   ColorSchemeProvider,
   Global,
   MantineProvider,
+  useEmotionCache,
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import React, { useState } from 'react';
 import { useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-const queryClient = new QueryClient();
+import { CacheProvider } from '@emotion/react';
+import { ServerStyles, createStylesServer } from '@mantine/ssr';
 
-// Router.events.on('routeChangeStart', NProgress.start);
-// Router.events.on('routeChangeComplete', NProgress.done);
-// Router.events.on('routeChangeError', NProgress.done);
+const queryClient = new QueryClient();
+const stylesServer = createStylesServer();
 
 // Default implementation, that you can customize
 export default function Root({ children }) {
@@ -30,40 +31,45 @@ export default function Root({ children }) {
     [],
   );
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      {!isProduction && <ReactQueryDevtools position="bottom-left" />}
+  const cache = useEmotionCache();
 
-      <ColorSchemeProvider
-        colorScheme={colorScheme}
-        toggleColorScheme={toggleColorScheme}
-      >
-        <Global
-          styles={(theme) => {
-            return [
-              {
-                '*, *::before, *::after': {
-                  boxSizing: 'border-box',
-                },
-              },
-            ];
-          }}
-        />
-        <MantineProvider
-          theme={{
-            colorScheme,
-            primaryColor: 'dark',
-          }}
-          withGlobalStyles
-          withNormalizeCSS
-          emotionOptions={{ key: 'mantine' }}
+  return (
+    <CacheProvider value={cache}>
+      <ServerStyles html={''} server={stylesServer} />
+
+      <QueryClientProvider client={queryClient}>
+        {!isProduction && <ReactQueryDevtools position="bottom-left" />}
+
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
         >
-          <NotificationsProvider position="top-right">
-            {children}
-            {/* <Footer /> */}
-          </NotificationsProvider>
-        </MantineProvider>
-      </ColorSchemeProvider>
-    </QueryClientProvider>
+          <Global
+            styles={(theme) => {
+              return [
+                {
+                  '*, *::before, *::after': {
+                    boxSizing: 'border-box',
+                  },
+                },
+              ];
+            }}
+          />
+          <MantineProvider
+            theme={{
+              colorScheme,
+              primaryColor: 'dark',
+            }}
+            withGlobalStyles
+            withNormalizeCSS
+          >
+            <NotificationsProvider position="top-right">
+              {children}
+              {/* <Footer /> */}
+            </NotificationsProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </QueryClientProvider>
+    </CacheProvider>
   );
 }

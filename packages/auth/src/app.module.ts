@@ -18,9 +18,10 @@ import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import { CasbinModule } from '@letscollab/nest-casbin';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisCookieSessionModule } from './utils/redis-cookie-session.module';
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
@@ -36,6 +37,24 @@ const isDevelopment = process.env.NODE_ENV === 'development';
       async useFactory(config: NacosConfigService) {
         const configs = await config.getConfig('service-auth.json');
         return configs.redis;
+      },
+    }),
+    RedisCookieSessionModule.forRootAsync({
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const configs = await config.getConfig('service-auth.json');
+        return {
+          session: {
+            secret: configs.session.secret,
+            cookie: {
+              secure: isProd,
+            },
+          },
+          cookie: {
+            secret: configs.cookie.secret,
+          },
+          redis: configs.redis.config,
+        };
       },
     }),
     WinstonModule.forRootAsync({
@@ -54,7 +73,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         ];
 
         return {
-          level: isDevelopment ? 'debug' : 'warn',
+          level: isDev ? 'debug' : 'warn',
           format: winston.format.json(),
           defaultMeta: { service: 'auth' },
           exitOnError: false,

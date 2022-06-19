@@ -239,7 +239,13 @@ const SignUpTab = function () {
         </Group>
         <Group mt={20} grow>
           <Button type="submit">注册</Button>
-          {/* <Button variant="white">取消</Button> */}
+          <Button
+            variant="gradient"
+            gradient={{ from: '#E91164', to: '#BEB612' }}
+          >
+            Signin&nbsp;&nbsp;
+            <Image src="/img/github.svg" width={20} />
+          </Button>
         </Group>
       </form>
     </Container>
