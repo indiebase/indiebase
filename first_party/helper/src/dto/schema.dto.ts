@@ -49,7 +49,7 @@ export abstract class BasicResSchemaDto {
   @ApiProperty({
     description: 'Response message',
   })
-  message: string | string[];
+  message?: string | string[];
 }
 export abstract class PaginationResSchemaDto extends BasicResSchemaDto {
   @ApiProperty({

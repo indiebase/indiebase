@@ -39,10 +39,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  // 配置swagger
+  // setup swagger
   await setupUserApiDoc(app);
 
-  //dto 国际化
+  //dto international
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

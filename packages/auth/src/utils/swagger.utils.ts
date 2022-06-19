@@ -13,12 +13,12 @@ export const setupAuthApiDoc = (app: INestApplication) =>
     try {
       const authOptions = new DocumentBuilder()
         .setTitle('Auth Api')
-        .setDescription('Authorization 接口')
+        .setDescription('Authz and authn interface')
         .setVersion(pkg.version)
         .addBearerAuth(
           {
             type: 'http',
-            scheme: 'bearer',
+            scheme: '',
             bearerFormat: 'JWT',
             name: 'JWT',
             description: 'Enter JWT token',

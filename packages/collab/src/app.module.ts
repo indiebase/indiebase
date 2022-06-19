@@ -19,7 +19,7 @@ import { InvitationModule } from './invitation/invitation.module';
 import { OrgModule } from './org/org.module';
 
 const isProd = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
@@ -54,7 +54,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         ];
 
         return {
-          level: isDevelopment ? 'debug' : 'warn',
+          level: isDev ? 'debug' : 'warn',
           format: winston.format.json(),
           defaultMeta: { service: 'auth' },
           exitOnError: false,

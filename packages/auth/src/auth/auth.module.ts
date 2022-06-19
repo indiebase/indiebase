@@ -1,5 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
-import { PassportModule as ForwardPassportModule } from '@nestjs/passport';
+import { PassportModule as ForwardPassportModule } from '@letscollab/passport';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';

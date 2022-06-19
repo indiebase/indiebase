@@ -15,7 +15,6 @@ import {
 } from '@letscollab/helper';
 import fastifyCookie from 'fastify-cookie';
 import { setupUserApiDoc } from './utils';
-// import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -39,10 +38,9 @@ async function bootstrap() {
 
   app.setGlobalPrefix('v1');
 
-  // 配置swagger
+  // setup swagger
   await setupUserApiDoc(app);
 
-  //dto 国际化
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -58,8 +56,8 @@ async function bootstrap() {
   });
 
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
-  app.useLogger(nestWinston);
 
+  app.useLogger(nestWinston);
   app.useGlobalFilters(
     new FormatExceptionFilter(nestWinston),
     new MicroExceptionFilter(nestWinston),
