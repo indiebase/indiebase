@@ -15,17 +15,10 @@ export const setupAuthApiDoc = (app: INestApplication) =>
         .setTitle('Auth Api')
         .setDescription('Authz and authn interface')
         .setVersion(pkg.version)
-        .addBearerAuth(
-          {
-            type: 'http',
-            scheme: '',
-            bearerFormat: 'JWT',
-            name: 'JWT',
-            description: 'Enter JWT token',
-            in: 'Header',
-          },
-          'jwt',
-        )
+        .addCookieAuth('sessionId', {
+          type: 'apiKey',
+          in: 'cookie',
+        })
         .build();
 
       const authDoc = SwaggerModule.createDocument(app, authOptions, {
