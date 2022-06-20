@@ -159,7 +159,7 @@ services:
       - 6379:6379
     volumes:
       - redis_data:/data
-    command: --requirepass letscollab
+      - ./config/redis:/usr/local/etc/redis
     logging: *loki-logging
 networks:
   agent_network:

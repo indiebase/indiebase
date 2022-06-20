@@ -2,16 +2,11 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { BasicResSchemaDto } from '@letscollab/helper';
 import { IsNotEmpty, IsEmail, MinLength, MaxLength } from 'class-validator';
 
-export class JwtResultDto {
-  @ApiProperty()
-  token: string;
-}
-
 export class JwtSignResDto extends BasicResSchemaDto {
   @ApiPropertyOptional({
-    type: () => JwtResultDto,
+    type: String,
   })
-  d?: JwtResultDto;
+  d?: string;
 }
 
 export class LocalSignInDto {

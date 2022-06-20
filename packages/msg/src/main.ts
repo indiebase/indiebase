@@ -29,7 +29,7 @@ async function bootstrap() {
 
   const nacosConfigs = await nacosConfigService.getConfig('service-auth.json');
 
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix('api');
 
   await setupApiDoc(app);
 

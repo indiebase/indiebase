@@ -5,3 +5,4 @@ export * from './guard';
 export * from './interface';
 export * from './enum';
 export * from './decorators';
+export * from './module';

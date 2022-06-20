@@ -1,5 +1,5 @@
 import { Strategy } from 'passport-local';
-import { PassportStrategy } from '@nestjs/passport';
+import { PassportStrategy } from '@letscollab/passport';
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
@@ -10,6 +10,7 @@ export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
   }
 
   async validate(username, password): Promise<any> {
+    console.log(username);
     return this.authService.validateLocal({ username, password });
   }
 }

@@ -20,7 +20,7 @@ export const setupApiDoc = (app: INestApplication) =>
         include: [MailModule],
       });
 
-      SwaggerModule.setup('api/doc/msg', app, smgDoc);
+      SwaggerModule.setup('msg/openapi', app, smgDoc);
 
       await writeOpenApiDoc({
         name: 'Message',

@@ -30,7 +30,7 @@ export const setupUserApiDoc = (app: INestApplication) =>
       const userDoc = SwaggerModule.createDocument(app, userOptions, {
         include: [UserModule],
       });
-      SwaggerModule.setup('api/doc/user', app, userDoc, {
+      SwaggerModule.setup('user/openapi', app, userDoc, {
         uiConfig: {
           persistAuthorization: true,
         },

@@ -1,3 +1,4 @@
+import { SignupType } from './user.enum';
 import { UserRepository } from './user.repository';
 import {
   Inject,
@@ -30,6 +31,8 @@ export class UserService {
   public async signup(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
   ): Promise<UserResDto> {
+    let result: UserResDto;
+
     const user = await this.userRepo.findOne({
       where: [
         {
@@ -42,47 +45,58 @@ export class UserService {
     });
 
     if (user) {
-      return {
-        code: ResultCode.ERROR,
-        message: '该用户/邮箱已经注册',
-      };
-    } else {
-      return this.userRepo
-        .createUser(body)
-        .then(async (d) => {
-          let result: any = d;
-
-          let r = await lastValueFrom<JwtSignResDto>(
-            this.authClient
-              .send({ cmd: 'sign' }, { username: d.username })
-              .pipe(
-                timeout(4000),
-                catchError((e) => {
-                  this.logger.error(e);
-                  throw new Error('注册成功，Token生成失败');
-                }),
-              ),
-          );
-
-          if (r.code > 0) {
-            result.t = r.d;
-          }
-
-          return {
+      switch (user.signupType) {
+        case SignupType.github:
+          result = {
             code: ResultCode.SUCCESS,
-            message: '注册成功',
-            d: result,
           };
-        })
-        .catch((err) => {
-          this.logger.error(err.message, err.stack);
+          break;
+        default:
+          result = {
+            code: ResultCode.EENTEXIST,
+            message: '该用户/邮箱已经注册',
+          };
+          break;
+      }
+    } else {
+      const created = await this.userRepo.createUser(body).catch((err) => {
+        this.logger.error(err.message, err.stack);
 
-          throw new InternalServerErrorException({
-            code: ResultCode.ERROR,
-            message: err.code === 'ER_DUP_ENTRY' ? '用户已存在' : err.message,
-          });
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: err.code === 'ER_DUP_ENTRY' ? '用户已存在' : err.message,
         });
+      });
+
+      result = {
+        code: ResultCode.SUCCESS,
+        message: '注册成功',
+        d: created,
+      };
     }
+
+    if (result.code > 0) {
+      let signMeta = await this.getSign({ username: user.username });
+
+      console.log(signMeta);
+      if (signMeta.code > 0) {
+        result.d.t = signMeta.d;
+      }
+    }
+
+    return result;
+  }
+
+  public async getSign(data: {}) {
+    return await lastValueFrom<JwtSignResDto>(
+      this.authClient.send({ cmd: 'sign' }, data).pipe(
+        timeout(4000),
+        catchError((e) => {
+          this.logger.error(e);
+          throw new Error('注册成功，Token生成失败');
+        }),
+      ),
+    );
   }
 
   /**
