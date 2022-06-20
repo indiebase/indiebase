@@ -13,25 +13,18 @@ export const setupAuthApiDoc = (app: INestApplication) =>
     try {
       const authOptions = new DocumentBuilder()
         .setTitle('Auth Api')
-        .setDescription('Authorization 接口')
+        .setDescription('Authz and authn interface')
         .setVersion(pkg.version)
-        .addBearerAuth(
-          {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-            name: 'JWT',
-            description: 'Enter JWT token',
-            in: 'Header',
-          },
-          'jwt',
-        )
+        .addCookieAuth('sessionId', {
+          type: 'apiKey',
+          in: 'cookie',
+        })
         .build();
 
       const authDoc = SwaggerModule.createDocument(app, authOptions, {
         include: [AuthModule, RbacModule],
       });
-      SwaggerModule.setup('api/doc/auth', app, authDoc, {
+      SwaggerModule.setup('auth/openapi', app, authDoc, {
         uiConfig: {
           persistAuthorization: true,
         },

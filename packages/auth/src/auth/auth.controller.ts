@@ -1,3 +1,4 @@
+import { LocalAuthGuard } from './local.guard';
 import {
   Controller,
   UseGuards,
@@ -7,6 +8,7 @@ import {
   Get,
   Req,
   Res,
+  Session,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -19,14 +21,13 @@ import {
   ApiProtectHeader,
   IVerify,
 } from '@letscollab/helper';
+import { UserResDto } from '@letscollab/user';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { RpcAuthGuard } from './jwt-rpc.guard';
-import { UserResDto } from '@letscollab/user';
 import { LocalSignInDto } from './auth.dto';
-import { AuthGuard } from '@letscollab/passport';
 import { GithubGuard } from './github.guard';
 
-@Controller('auth')
+@Controller('v1/auth')
 @ApiTags('v1/Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -36,8 +37,11 @@ export class AuthController {
     type: UserResDto,
   })
   @ApiProtectHeader()
-  @UseGuards(ProtectGuard, AuthGuard('local'))
-  async signin(@Body() body: LocalSignInDto) {
+  @UseGuards(ProtectGuard, LocalAuthGuard)
+  async signin(
+    @Body() body: LocalSignInDto,
+    @Session() session: FastifyRequest['session'],
+  ) {
     return this.authService.signin(body.username);
   }
 
@@ -50,7 +54,33 @@ export class AuthController {
     return 'demo';
   }
 
-  @Get('github')
+  @Get('demo')
+  async demo(
+    @Session() session: FastifyRequest['session'],
+    @Request() req: FastifyRequest,
+    @Res() res: FastifyReply,
+    // @Cookies('__HOST-t', true) cookies,
+  ) {
+    // console.log(cookies);
+    // session.user = { role: 'fuck', username: 'letscollab' };
+
+    // res.setCookie('demo', 'demo', {
+    //   httpOnly: true,
+    //   signed: true,
+    //   path: '/',
+    // });
+
+    // res.setCookie('__HOST-t', 'demo', {
+    //   httpOnly: true,
+    //   signed: true,
+    //   path: '/',
+    //   maxAge: 10000,
+    // });
+
+    res.send('demo');
+  }
+
+  @Get('oauth/github')
   @ApiBearerAuth('jwt')
   @UseGuards(GithubGuard)
   async github(@Request() req: FastifyRequest & { user: any }) {}

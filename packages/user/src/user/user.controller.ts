@@ -17,7 +17,7 @@ import { UserResDto, SignupDto } from './user.dto';
 import { ApiProtectHeader, CaptchaGuard } from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
-@Controller('user')
+@Controller('v1/user')
 @ApiTags('v1/User')
 export class UserController {
   constructor(private readonly userService: UserService) {}

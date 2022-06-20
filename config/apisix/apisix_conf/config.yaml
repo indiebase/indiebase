@@ -25,9 +25,7 @@ apisix:
   admin_key:
     - name: 'admin'
       key: edd1c9f034335f136f87ad84b625c8f1
-      role:
-        admin # admin: manage all configuration data
-        # viewer: only can view configuration data
+      role: admin # admin: manage all configuration data
     - name: 'viewer'
       key: 4054f7cf07e344346cd3f287985e76a2
       role: viewer
@@ -46,7 +44,7 @@ etcd:
 discovery:
   nacos:
     host:
-      - 'http://nacos:8848'
+      - 'http://nacos:letscollab@nacos:8848'
 
 plugin_attr:
   prometheus:

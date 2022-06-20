@@ -15,7 +15,7 @@ export class MailService {
   ) {}
 
   public async sendCaptchaEmail(body: GetCaptchaDto) {
-    const captcha = parseInt(Math.random().toString().slice(2, 7));
+    const captcha = Math.random().toString().slice(2, 7);
     const subject = '注册验证';
 
     return this.mailerService

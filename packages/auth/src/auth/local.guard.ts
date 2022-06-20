@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from '@letscollab/passport';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {}

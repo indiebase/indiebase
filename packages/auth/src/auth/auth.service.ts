@@ -72,6 +72,7 @@ export class AuthService {
       ),
     );
 
+    console.log(r);
     if (r.code > 0) {
       // let t = await this.signTarget({ username: r.d.username });
       // r.d.t = t;

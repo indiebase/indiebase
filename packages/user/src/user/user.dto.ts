@@ -65,7 +65,7 @@ export class UserDto {
   @ApiProperty({
     description: '初始值和username相同',
   })
-  nickname: string;
+  nickname?: string;
 
   @ApiProperty({
     enum: AccountStatus,

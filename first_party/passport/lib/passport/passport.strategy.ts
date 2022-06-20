@@ -17,39 +17,43 @@ export function PassportStrategy<T extends Type<any> = any>(
     abstract setOptions(): Promise<Record<string, any>> | Record<string, any>;
 
     async onModuleInit() {
-      const callback = async (...params: any[]) => {
-        const done = params[params.length - 1];
-        try {
-          const validateResult = await this.validate(...params);
-          if (Array.isArray(validateResult)) {
-            done(null, ...validateResult);
-          } else {
-            done(null, validateResult);
+      try {
+        const callback = async (...params: any[]) => {
+          const done = params[params.length - 1];
+          try {
+            const validateResult = await this.validate(...params);
+            if (Array.isArray(validateResult)) {
+              done(null, ...validateResult);
+            } else {
+              done(null, validateResult);
+            }
+          } catch (err) {
+            done(err, null);
           }
-        } catch (err) {
-          done(err, null);
+        };
+        /**
+         * Commented out due to the regression it introduced
+         * Read more here: https://github.com/nestjs/passport/issues/446
+
+          const validate = new.target?.prototype?.validate;
+          if (validate) {
+            Object.defineProperty(callback, 'length', {
+              value: validate.length + 1
+            });
+          }
+        */
+
+        const options = this.setOptions ? await this.setOptions() : {};
+        this.strategy = new Strategy(options, callback);
+
+        const passportInstance = this.getPassportInstance();
+        if (name) {
+          passportInstance.use(name, this.strategy as any);
+        } else {
+          passportInstance.use(this.strategy as any);
         }
-      };
-      /**
-       * Commented out due to the regression it introduced
-       * Read more here: https://github.com/nestjs/passport/issues/446
-
-        const validate = new.target?.prototype?.validate;
-        if (validate) {
-          Object.defineProperty(callback, 'length', {
-            value: validate.length + 1
-          });
-        }
-      */
-
-      const options = await this.setOptions();
-      this.strategy = new Strategy(options, callback);
-
-      const passportInstance = this.getPassportInstance();
-      if (name) {
-        passportInstance.use(name, this.strategy as any);
-      } else {
-        passportInstance.use(this.strategy as any);
+      } catch (error) {
+        throw error;
       }
     }
 
