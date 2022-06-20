@@ -20,11 +20,10 @@ import {
   ProtectGuard,
   ApiProtectHeader,
   IVerify,
-  Cookies,
 } from '@letscollab/helper';
+import { UserResDto } from '@letscollab/user';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { RpcAuthGuard } from './jwt-rpc.guard';
-import { UserResDto } from '@letscollab/user';
 import { LocalSignInDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 
@@ -39,7 +38,10 @@ export class AuthController {
   })
   @ApiProtectHeader()
   @UseGuards(ProtectGuard, LocalAuthGuard)
-  async signin(@Body() body: LocalSignInDto) {
+  async signin(
+    @Body() body: LocalSignInDto,
+    @Session() session: FastifyRequest['session'],
+  ) {
     return this.authService.signin(body.username);
   }
 
@@ -54,14 +56,13 @@ export class AuthController {
 
   @Get('demo')
   async demo(
-    @Session() session,
+    @Session() session: FastifyRequest['session'],
     @Request() req: FastifyRequest,
     @Res() res: FastifyReply,
-    @Cookies('__HOST-t', true, true) cookies,
+    // @Cookies('__HOST-t', true) cookies,
   ) {
-    session.test = {};
-    console.log(cookies);
-    req.session;
+    // console.log(cookies);
+    // session.user = { role: 'fuck', username: 'letscollab' };
 
     // res.setCookie('demo', 'demo', {
     //   httpOnly: true,
@@ -69,12 +70,12 @@ export class AuthController {
     //   path: '/',
     // });
 
-    res.setCookie('__HOST-t', 'demo', {
-      httpOnly: true,
-      signed: true,
-      path: '/',
-      maxAge: 10000,
-    });
+    // res.setCookie('__HOST-t', 'demo', {
+    //   httpOnly: true,
+    //   signed: true,
+    //   path: '/',
+    //   maxAge: 10000,
+    // });
 
     res.send('demo');
   }
