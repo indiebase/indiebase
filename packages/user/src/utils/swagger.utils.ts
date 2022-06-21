@@ -14,17 +14,10 @@ export const setupUserApiDoc = (app: INestApplication) =>
         .setTitle('User Api')
         .setDescription('User REST API')
         .setVersion(pkg.version)
-        .addBearerAuth(
-          {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-            name: 'JWT',
-            description: 'Enter JWT token',
-            in: 'Header',
-          },
-          'jwt',
-        )
+        .addCookieAuth('SID', {
+          type: 'apiKey',
+          in: 'cookie',
+        })
         .build();
 
       const userDoc = SwaggerModule.createDocument(app, userOptions, {

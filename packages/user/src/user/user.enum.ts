@@ -4,6 +4,6 @@ export enum AccountStatus {
 }
 
 export enum SignupType {
-  github,
   letscollab,
+  github,
 }

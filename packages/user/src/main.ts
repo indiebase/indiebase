@@ -6,18 +6,16 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 import {
   FormatExceptionFilter,
   MicroExceptionFilter,
 } from '@letscollab/helper';
-import fastifyCookie from 'fastify-cookie';
 import { setupUserApiDoc } from './utils';
 // import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
-const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
@@ -30,58 +28,58 @@ async function bootstrap() {
     },
   );
 
-  const configService: ConfigService = app.get<ConfigService>(ConfigService);
-  const nacosConfigService: NacosConfigService =
-    app.get<NacosConfigService>(NacosConfigService);
+  const logger = app.get<Logger>(Logger);
 
-  const userConfigs = await nacosConfigService.getConfig('service-user.json');
-  const commonConfigs = await nacosConfigService.getConfig('common.json');
+  try {
+    const configService = app.get<ConfigService>(ConfigService);
+    const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
 
-  app.setGlobalPrefix('api');
+    const userConfigs = await nacosConfigService.getConfig('service-user.json');
 
-  // setup swagger
-  await setupUserApiDoc(app);
+    app.setGlobalPrefix('api');
 
-  //dto international
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      enableDebugMessages: isDevelopment,
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      // exceptionFactory: i18nValidationErrorFactory,
-    }),
-  );
+    // setup swagger
+    await setupUserApiDoc(app);
 
-  await app.register(fastifyCookie, {
-    secret: commonConfigs?.security?.cookieSecret,
-  });
+    //dto international
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        enableDebugMessages: isDevelopment,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        // exceptionFactory: i18nValidationErrorFactory,
+      }),
+    );
 
-  const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
-  app.useLogger(nestWinston);
+    const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+    app.useLogger(nestWinston);
 
-  app.useGlobalFilters(
-    new FormatExceptionFilter(nestWinston),
-    new MicroExceptionFilter(nestWinston),
-  );
+    app.useGlobalFilters(
+      new FormatExceptionFilter(nestWinston),
+      new MicroExceptionFilter(nestWinston),
+    );
 
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: userConfigs.rabbitmq.urls,
-      queue: 'user_queue',
-      queueOptions: {
-        durable: false,
+    app.connectMicroservice<MicroserviceOptions>({
+      transport: Transport.RMQ,
+      options: {
+        urls: userConfigs.rabbitmq.urls,
+        queue: 'user_queue',
+        queueOptions: {
+          durable: false,
+        },
       },
-    },
-  });
+    });
 
-  await app.startAllMicroservices();
+    await app.startAllMicroservices();
 
-  await app.listen(
-    configService.get('app.port'),
-    configService.get('app.hostname'),
-  );
+    await app.listen(
+      configService.get('app.port'),
+      configService.get('app.hostname'),
+    );
+  } catch (error) {
+    logger.error(error);
+  }
 }
 
 bootstrap();

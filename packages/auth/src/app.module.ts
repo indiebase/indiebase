@@ -42,20 +42,7 @@ const isDev = process.env.NODE_ENV === 'development';
     RedisCookieSessionModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const cc = await config.getConfig('common.json');
-
-        return {
-          session: {
-            secret: cc.session.secret,
-            cookie: {
-              secure: isProd,
-            },
-          },
-          cookie: {
-            secret: cc.cookie.secret,
-          },
-          redis: cc.redis,
-        };
+        return config.getConfig('common.json');
       },
     }),
     WinstonModule.forRootAsync({
@@ -115,28 +102,6 @@ const isDev = process.env.NODE_ENV === 'development';
         };
       },
     }),
-    // AuthZModule.register({
-    //   imports: [NacosConfigModule],
-    //   enforcerProvider: {
-    //     provide: AUTHZ_ENFORCER,
-    //     useFactory: async (config: NacosConfigService) => {
-    //       const configs = await config.getConfig('service-auth.json');
-
-    //       return casbin.newEnforcer(
-    //         resolve(__dirname, '../model/auth.conf'),
-    //         await TypeORMAdapter.newAdapter(configs.casbin.db),
-    //       );
-    //     },
-    //     inject: [NacosConfigService],
-    //   },
-    //   usernameFromContext: (ctx) => {
-    //     // const request = ctx.switchToHttp().getRequest();
-
-    //     // return request.user && request.user.username;
-    //     return 'demo';
-    //   },
-    // }),
-
     JwtModule.registerAsync({
       imports: [ConfigModule, NacosConfigModule],
       useFactory: async (config: NacosConfigService) => {

@@ -75,15 +75,6 @@ export class UserService {
       };
     }
 
-    if (result.code > 0) {
-      let signMeta = await this.getSign({ username: user.username });
-
-      console.log(signMeta);
-      if (signMeta.code > 0) {
-        result.d.t = signMeta.d;
-      }
-    }
-
     return result;
   }
 
@@ -103,7 +94,7 @@ export class UserService {
    *
    *
    * @param username
-   * @param full  是否获取完整用户信息 包含密码
+   * @param full  Get complete user information that includes password.
    * @returns
    */
   public async getUser(cond: FindUserCond, full = false) {
