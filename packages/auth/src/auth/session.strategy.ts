@@ -14,11 +14,11 @@ export class SessionStrategy
 
   setOptions() {
     return {
-      cookieName: 'sessionId',
+      cookieName: 'SID',
     };
   }
 
-  async validate(username, password): Promise<any> {
-    return this.authService.validateLocal({ username, password });
+  async validate(...data): Promise<any> {
+    console.log(data);
   }
 }

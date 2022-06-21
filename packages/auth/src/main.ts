@@ -15,43 +15,47 @@ import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { fastifyHelmet } from '@fastify/helmet';
-
 import Fastify from 'fastify';
+import { UserSession } from './utils';
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    user: UserSession;
+  }
+}
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
+  const fastify = Fastify();
+
+  fastify.addHook('onRequest', (request: any, reply: any, done) => {
+    reply.setHeader = function (key, value) {
+      return this.raw.setHeader(key, value);
+    };
+    reply.end = function () {
+      this.raw.end();
+    };
+    request.res = reply;
+    done();
+  });
+
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(fastify),
+    {
+      bodyParser: true,
+      logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
+      cors: true,
+    },
+  );
+
+  const logger = app.get<Logger>(Logger);
+
   try {
-    const fastify = Fastify();
-
-    fastify.addHook('onRequest', (request: any, reply: any, done) => {
-      reply.setHeader = function (key, value) {
-        return this.raw.setHeader(key, value);
-      };
-      reply.end = function () {
-        this.raw.end();
-      };
-      request.res = reply;
-      done();
-    });
-
-    const app = await NestFactory.create<NestFastifyApplication>(
-      AppModule,
-      new FastifyAdapter(fastify),
-      {
-        bodyParser: true,
-        logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
-        cors: true,
-      },
-    );
-
-    const configService: ConfigService = app.get<ConfigService>(ConfigService);
-    const logger: ConfigService = app.get<ConfigService>(Logger);
-    const nacosConfigService: NacosConfigService =
-      app.get<NacosConfigService>(NacosConfigService);
-
+    const configService = app.get<ConfigService>(ConfigService);
+    const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
     const authConfigs = await nacosConfigService.getConfig('service-auth.json');
-    const commonConfigs = await nacosConfigService.getConfig('common.json');
 
     // 接口版本
     app.setGlobalPrefix('api');
@@ -67,22 +71,6 @@ async function bootstrap() {
         // exceptionFactory: i18nValidationErrorFactory,
       }),
     );
-
-    // await app.register(fastifyCookie, {
-    //   secret: commonConfigs?.security?.cookieSecret,
-    // });
-
-    // app.register(fastifySession, {
-    //   secret: authConfigs.session.secret,
-    //   cookie: {
-    //     secure: true,
-    //     httpOnly: true,
-    //   },
-    // });
-
-    // await app.register(secureSession, authConfigs.session);
-
-    // console.log('=-==================================');
 
     await app.register(fastifyHelmet, {
       global: true,
@@ -118,7 +106,7 @@ async function bootstrap() {
       configService.get('app.hostname'),
     );
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 }
 

@@ -4,7 +4,6 @@ import {
   UseGuards,
   Request,
   Post,
-  Body,
   Get,
   Req,
   Res,
@@ -12,20 +11,14 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt.guard';
-import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RolesGuard } from '@letscollab/nest-casbin';
-import {
-  ResultCode,
-  ProtectGuard,
-  ApiProtectHeader,
-  IVerify,
-} from '@letscollab/helper';
+import { ProtectGuard, ApiProtectHeader, IVerify } from '@letscollab/helper';
 import { UserResDto } from '@letscollab/user';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { RpcAuthGuard } from './jwt-rpc.guard';
-import { LocalSignInDto } from './auth.dto';
+import { RpcAuthGuard } from './rpc-auth.guard';
 import { GithubGuard } from './github.guard';
+import { SessionGuard } from './session.guard';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
@@ -38,46 +31,28 @@ export class AuthController {
   })
   @ApiProtectHeader()
   @UseGuards(ProtectGuard, LocalAuthGuard)
-  async signin(
-    @Body() body: LocalSignInDto,
+  async signIn(
     @Session() session: FastifyRequest['session'],
+    @Req() req: FastifyRequest,
   ) {
-    return this.authService.signin(body.username);
+    const user = req.user;
+
+    session.user = {
+      loggedIn: true,
+      username: user.username,
+      id: user.id,
+    };
+
+    return user;
   }
 
   @Get('profile')
-  @ApiBearerAuth('jwt')
-  @UseGuards(ProtectGuard, JwtAuthGuard)
-  async profile(@Request() req: FastifyRequest & { user: any }) {
+  @ApiProtectHeader()
+  @UseGuards(ProtectGuard, SessionGuard)
+  async profile(@Request() req: FastifyRequest) {
     console.log(req.user);
 
     return 'demo';
-  }
-
-  @Get('demo')
-  async demo(
-    @Session() session: FastifyRequest['session'],
-    @Request() req: FastifyRequest,
-    @Res() res: FastifyReply,
-    // @Cookies('__HOST-t', true) cookies,
-  ) {
-    // console.log(cookies);
-    // session.user = { role: 'fuck', username: 'letscollab' };
-
-    // res.setCookie('demo', 'demo', {
-    //   httpOnly: true,
-    //   signed: true,
-    //   path: '/',
-    // });
-
-    // res.setCookie('__HOST-t', 'demo', {
-    //   httpOnly: true,
-    //   signed: true,
-    //   path: '/',
-    //   maxAge: 10000,
-    // });
-
-    res.send('demo');
   }
 
   @Get('oauth/github')
@@ -87,10 +62,7 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(GithubGuard)
-  async githubCallback(
-    @Req() req: FastifyRequest & { user: any },
-    @Res() res: FastifyReply,
-  ) {
+  async githubCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     const r = await this.authService.signupGithub(req.user);
 
     if (r.code > 0) {
@@ -104,20 +76,5 @@ export class AuthController {
   @MessagePattern({ cmd: 'verify' })
   async auth(@Payload() payload: IVerify) {
     return payload;
-  }
-
-  @MessagePattern({ cmd: 'sign' })
-  async sign(@Payload() payload: any) {
-    const t = await this.authService.signTarget(payload).catch((err) => {
-      throw new RpcException({
-        code: ResultCode.ERROR,
-        message: err,
-      });
-    });
-
-    return {
-      code: ResultCode.SUCCESS,
-      d: t,
-    };
   }
 }

@@ -13,7 +13,6 @@ import {
   FormatExceptionFilter,
   MicroExceptionFilter,
 } from '@letscollab/helper';
-import fastifyCookie from 'fastify-cookie';
 import { setupUserApiDoc } from './utils';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -50,10 +49,6 @@ async function bootstrap() {
       // exceptionFactory: i18nValidationErrorFactory,
     }),
   );
-
-  await app.register(fastifyCookie, {
-    secret: commonConfigs?.security?.cookieSecret,
-  });
 
   const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 

@@ -15,7 +15,7 @@ export const setupAuthApiDoc = (app: INestApplication) =>
         .setTitle('Auth Api')
         .setDescription('Authz and authn interface')
         .setVersion(pkg.version)
-        .addCookieAuth('sessionId', {
+        .addCookieAuth('SID', {
           type: 'apiKey',
           in: 'cookie',
         })

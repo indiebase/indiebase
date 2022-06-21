@@ -12,23 +12,18 @@ export class SignupDto {
   nickname?: string;
 
   @ApiProperty({
-    default: 'letscollab',
+    default: 'deskbtm@outlook.com',
   })
   @IsNotEmpty({
     message: '账户不可为空',
   })
-  username: string;
-
-  @ApiProperty({
-    default: 'deskbtm@outlook.com',
-  })
   @IsEmail(
     {},
     {
-      message: '邮箱格式不正确',
+      message: '用户名需使用邮箱',
     },
   )
-  email: string;
+  username: string;
 
   @ApiProperty({
     default: 'dev123456',

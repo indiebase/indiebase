@@ -2,13 +2,14 @@ import { Logger, Module } from '@nestjs/common';
 import { PassportModule as ForwardPassportModule } from '@letscollab/passport';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
+
 import { LocalStrategy } from './local.strategy';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { USER_RMQ } from '../app.constants';
 import { GithubStrategy } from './github.strategy';
+import { SessionStrategy } from './session.strategy';
 
 const PassportModule = ForwardPassportModule.register({
   defaultStrategy: 'jwt',
@@ -50,12 +51,18 @@ const PassportModule = ForwardPassportModule.register({
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, GithubStrategy, JwtStrategy, Logger],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    GithubStrategy,
+    Logger,
+    SessionStrategy,
+  ],
   exports: [
     AuthService,
     LocalStrategy,
     GithubStrategy,
-    JwtStrategy,
+    SessionStrategy,
     PassportModule,
   ],
 })

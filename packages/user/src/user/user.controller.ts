@@ -1,20 +1,26 @@
+import { Http2RmqAuthGuard } from './../guard/rmq-auth.guard';
 import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Req,
   Res,
+  Session,
   UseGuards,
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
 import { UserResDto, SignupDto } from './user.dto';
-import { ApiProtectHeader, CaptchaGuard } from '@letscollab/helper';
+import {
+  ApiProtectHeader,
+  CaptchaGuard,
+  ProtectGuard,
+} from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
 @Controller('v1/user')
@@ -37,7 +43,7 @@ export class UserController {
     return this.userService.getUser({ id });
   }
 
-  @MessagePattern({ cmd: 'signup_github' })
+  @MessagePattern({ cmd: 'signin_github' })
   async signupGithub(@Payload() profile) {
     const { _json: json, username, profileUrl } = profile;
 
@@ -53,23 +59,30 @@ export class UserController {
     });
   }
 
-  @Get(':username')
-  @ApiBearerAuth('jwt')
+  @Get('list/:username')
+  @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
-  async queryUser(@Req() req: FastifyRequest) {
+  async getByUsername(@Session() session, @Req() req: FastifyRequest) {
     return 1;
   }
 
-  @Get('users')
-  @ApiBearerAuth('jwt')
+  @Get('list')
+  @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
-  async queryUsers(@Req() req: FastifyRequest) {
+  async getUserList(@Session() session, @Req() req: FastifyRequest) {
     return 1;
   }
 
-  @Post('update')
-  @ApiBearerAuth('jwt')
+  @Get('profile')
+  @ApiCookieAuth('SID')
   @UseGuards(Http2RmqAuthGuard)
+  async getProfile(@Session() session, @Req() req: FastifyRequest) {
+    return 1;
+  }
+
+  @Patch('profile')
+  @ApiCookieAuth('SID')
+  // @UseGuards(Http2RmqAuthGuard)
   async updatePassword() {
     return 1;
   }
@@ -79,18 +92,26 @@ export class UserController {
     type: UserResDto,
   })
   @ApiProtectHeader()
-  @UseGuards(CaptchaGuard)
-  async signup(@Body() body: SignupDto, @Res() res: FastifyReply) {
+  @UseGuards(ProtectGuard, CaptchaGuard)
+  async signup(
+    @Body() body: SignupDto,
+    @Res() res: FastifyReply,
+    @Session() session: FastifyRequest['session'],
+  ) {
     const r = await this.userService.signup({
       signupType: SignupType.letscollab,
       username: body.username,
       password: body.password,
-      email: body.email,
+      email: body.username,
       nickname: body.nickname,
     });
 
     if (r.code > 0) {
-      res.setCookie('__HOST-t', r.d.t, { httpOnly: true, secure: true });
+      session.user = {
+        loggedIn: false,
+        username: r.d.username,
+        id: r.d.id,
+      };
     }
 
     res.send(r);

@@ -12,6 +12,7 @@ export class Http2RmqAuthGuard extends Http2RpcAuthGuard(AUTH_RMQ) {
     context: ExecutionContext,
   ): Promise<Record<string, any>> {
     const req = context.switchToHttp().getRequest();
-    return { token: ExtractJwt.fromAuthHeaderAsBearerToken()(req) };
+    
+    return {};
   }
 }

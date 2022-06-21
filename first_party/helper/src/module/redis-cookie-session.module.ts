@@ -96,6 +96,11 @@ export class RedisCookieSessionModule implements NestModule, OnModuleDestroy {
     this.options.session.store = new RedisStore({
       client: new Redis(this.options.redis),
     });
+
+    if (!this.options.session.cookieName) {
+      this.options.session.cookieName = 'SID';
+    }
+
     await fastifyInstance.register(fastifyCookie, this.options?.cookie);
     await fastifyInstance.register(FastifySession, this.options.session);
   }

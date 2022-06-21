@@ -8,26 +8,18 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { LocalSignInDto } from './auth.dto';
 import { UserDto } from '@letscollab/user';
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
-import Redis from 'ioredis';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly jwtService: JwtService,
     @Inject(USER_RMQ)
     private readonly userClient: ClientProxy,
-
-    @InjectRedis()
-    private readonly redis: Redis,
-
-    private readonly logger: Logger, // @InjectRedis() // private readonly redis: Redis,
+    private readonly logger: Logger,
   ) {}
 
   async getUser<T>(cmd: string, c: any) {
@@ -79,20 +71,5 @@ export class AuthService {
     }
 
     return r;
-  }
-
-  async signin(username) {
-    const r = await this.getUser<RpcResSchema<UserDto>>('get_name', username);
-
-    if (r.code > 0) {
-      let t = await this.signTarget({ username: r.d.username });
-      r.d.t = t;
-    }
-
-    return r;
-  }
-
-  async signTarget(object: string | Buffer | object) {
-    return this.jwtService.sign(object);
   }
 }

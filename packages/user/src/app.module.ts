@@ -15,9 +15,10 @@ import { utilities, WinstonModule } from 'nest-winston';
 import LokiTransport = require('winston-loki');
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import * as winston from 'winston';
+import { RedisCookieSessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
@@ -31,11 +32,19 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     RedisModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('service-user.json');
-        return configs.redis;
+        const configs = await config.getConfig('common.json');
+        return { config: configs.redis };
       },
     }),
+    RedisCookieSessionModule.forRootAsync({
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const cc = await config.getConfig('common.json');
+        cc.session.saveUninitialized = false;
 
+        return cc;
+      },
+    }),
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
@@ -52,7 +61,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
         ];
 
         return {
-          level: isDevelopment ? 'debug' : 'warn',
+          level: isDev ? 'debug' : 'warn',
           format: winston.format.json(),
           defaultMeta: { service: 'auth' },
           exitOnError: false,

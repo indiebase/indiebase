@@ -3,7 +3,6 @@ import { ApiBearerAuth, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './role.dto';
 import { Roles, RolesGuard } from '@letscollab/nest-casbin';
-import { JwtAuthGuard } from 'src/auth/jwt.guard';
 
 @Controller('v1/role')
 @ApiTags('v1/Role')
@@ -15,7 +14,7 @@ export class RoleController {
     description: 'Create a new role',
   })
   @ApiBearerAuth('jwt')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles({ name: 'demo' })
   async create(@Body() role: CreateRoleDto) {
     return this.roleService.addRole(role);
