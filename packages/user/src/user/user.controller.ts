@@ -1,4 +1,4 @@
-import { Http2RmqAuthGuard } from './../guard/rmq-auth.guard';
+import { SessionRpcAuthGuard } from './../guard/session-rpc-auth.guard';
 import {
   Body,
   Controller,
@@ -22,6 +22,7 @@ import {
   ProtectGuard,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
+import { AccessAction, UseAccess } from '@letscollab/nest-acl';
 
 @Controller('v1/user')
 @ApiTags('v1/User')
@@ -75,15 +76,15 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(Http2RmqAuthGuard)
+  @UseAccess({ action: AccessAction.createAny })
+  @UseGuards(SessionRpcAuthGuard)
   async getProfile(@Session() session, @Req() req: FastifyRequest) {
     return 1;
   }
 
   @Patch('profile')
-  @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
-  async updatePassword() {
+  async updateProfile() {
     return 1;
   }
 

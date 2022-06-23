@@ -2,9 +2,7 @@ import { resolve } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { readJsonSync } from 'fs-extra';
-import { writeOpenApiDoc } from '@letscollab/helper';
 import { AuthModule } from '../auth/auth.module';
-import { RbacModule } from '../rbac/rbac.module';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
@@ -22,21 +20,15 @@ export const setupAuthApiDoc = (app: INestApplication) =>
         .build();
 
       const authDoc = SwaggerModule.createDocument(app, authOptions, {
-        include: [AuthModule, RbacModule],
+        include: [AuthModule],
       });
-      SwaggerModule.setup('auth/openapi', app, authDoc, {
+      SwaggerModule.setup('openapi/auth', app, authDoc, {
         uiConfig: {
           persistAuthorization: true,
         },
       });
-      await writeOpenApiDoc({
-        name: 'auth',
-        pkgName: pkg.name,
-        pkgVersion: pkg.version,
-        content: authDoc,
-      });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       resolve(null);
     }

@@ -26,6 +26,7 @@
     "typeorm": "ts-node ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@fastify/helmet": "^8.1.0",
     "@letscollab/auth": "workspace:^",
     "@letscollab/collab": "workspace:^",
     "@letscollab/helper": "workspace:^",

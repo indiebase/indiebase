@@ -14,14 +14,24 @@ import {
   MicroExceptionFilter,
 } from '@letscollab/helper';
 import { setupUserApiDoc } from './utils';
+import fastifyHelmet from '@fastify/helmet';
+import * as ConnectRedis from 'connect-redis';
+import fastifySession from 'fastify-session';
+import fastifyCookie from 'fastify-cookie';
+import Redis from 'ioredis';
+import Fastify from 'fastify';
 // import { i18nValidationErrorFactory } from 'nestjs-i18n';
+
+const RedisStore = ConnectRedis(fastifySession);
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
+  const fastify = Fastify();
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter(fastify),
     {
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
       bodyParser: true,
@@ -35,11 +45,13 @@ async function bootstrap() {
     const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
 
     const userConfigs = await nacosConfigService.getConfig('service-user.json');
+    // const cc = await nacosConfigService.getConfig('common.json');
 
-    app.setGlobalPrefix('api');
-
-    // setup swagger
-    await setupUserApiDoc(app);
+    // cc.session.saveUninitialized = false;
+    // cc.session.cookieName = 'SID';
+    // cc.session.store = new RedisStore({
+    //   client: new Redis(cc.redis),
+    // });
 
     //dto international
     app.useGlobalPipes(
@@ -52,7 +64,28 @@ async function bootstrap() {
       }),
     );
 
+    await app.register(fastifyHelmet, {
+      global: true,
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: [`'self'`],
+          styleSrc: [`'self'`, `'unsafe-inline'`],
+          imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
+          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+        },
+      },
+      enableCSPNonces: true,
+      referrerPolicy: true,
+    });
+
+    // await app.register(fastifyCookie, cc.cookie);
+
+    // await app.register(fastifySession, cc.session);
+
+    await setupUserApiDoc(app);
+
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+
     app.useLogger(nestWinston);
 
     app.useGlobalFilters(

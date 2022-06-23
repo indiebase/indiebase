@@ -1,7 +1,7 @@
 {
-  "name": "@letscollab/nest-casbin",
+  "name": "@letscollab/nest-acl",
   "version": "0.0.1",
-  "description": "nestjs nacos module",
+  "description": "Nestjs microservice access module",
   "author": "Nawbc",
   "private": true,
   "license": "Apache-2.0",

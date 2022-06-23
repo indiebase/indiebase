@@ -1,3 +1,5 @@
+import { RoleEntity } from './role/role.entity';
+import { RoleService } from './role/role.service';
 import { TeamEntity } from '@letscollab/collab';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { UserService } from './user.service';
@@ -8,10 +10,16 @@ import { UserEntity } from './user.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
 import { UserRepository } from './user.repository';
+import { RoleController } from './role/role.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, UserRepository, TeamEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      UserRepository,
+      TeamEntity,
+      RoleEntity,
+    ]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: MAIL_RMQ, q: 'msg_queue' },
@@ -40,7 +48,7 @@ import { UserRepository } from './user.repository';
       ]);
     }),
   ],
-  controllers: [UserController],
-  providers: [UserService, Logger],
+  controllers: [UserController, RoleController],
+  providers: [UserService, Logger, RoleService],
 })
 export class UserModule {}

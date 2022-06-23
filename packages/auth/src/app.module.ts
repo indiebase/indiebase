@@ -1,10 +1,8 @@
-import { RbacModule } from './rbac/rbac.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
-import TypeORMAdapter from 'typeorm-adapter';
 import {
   NacosConfigModule,
   NacosConfigService,
@@ -16,17 +14,27 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { CasbinModule } from '@letscollab/nest-casbin';
+import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RedisCookieSessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response, NextFunction } from 'express';
+import { NodeRedisAdapter } from './utils';
+
+@Injectable()
+export class AuthMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: NextFunction) {
+    console.log('Request...');
+    next();
+  }
+}
+
 @Module({
   imports: [
     AuthModule,
-    RbacModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
@@ -37,12 +45,6 @@ const isDev = process.env.NODE_ENV === 'development';
       async useFactory(config: NacosConfigService) {
         const configs = await config.getConfig('common.json');
         return { config: configs.redis };
-      },
-    }),
-    RedisCookieSessionModule.forRootAsync({
-      inject: [NacosConfigService],
-      async useFactory(config: NacosConfigService) {
-        return config.getConfig('common.json');
       },
     }),
     WinstonModule.forRootAsync({
@@ -94,11 +96,11 @@ const isDev = process.env.NODE_ENV === 'development';
       imports: [NacosConfigModule],
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('service-auth.json');
+        const configs = await config.getConfig('common.json');
 
         return {
           model: resolve(__dirname, '../model/auth.conf'),
-          adapter: await TypeORMAdapter.newAdapter(configs.casbin.db),
+          adapter: await NodeRedisAdapter.newAdapter(configs.redis),
         };
       },
     }),
@@ -128,9 +130,16 @@ export class AppModule implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
     private readonly nacosNamingService: NacosNamingService,
+    private readonly casbinService: CasbinService,
   ) {}
 
   async onModuleInit() {
+    await this.casbinService.e.addPolicy(
+      'admin',
+      'letscollab.deskbtm.com',
+      'data1',
+      'read',
+    );
     await this.nacosNamingService.registerInstance(
       `@letscollab/auth-${process.env.NODE_ENV}`,
       {

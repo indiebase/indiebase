@@ -15,8 +15,9 @@ import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { fastifyHelmet } from '@fastify/helmet';
-import Fastify from 'fastify';
 import { UserSession } from './utils';
+
+import Fastify from 'fastify';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -57,11 +58,6 @@ async function bootstrap() {
     const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
     const authConfigs = await nacosConfigService.getConfig('service-auth.json');
 
-    // 接口版本
-    app.setGlobalPrefix('api');
-
-    await setupAuthApiDoc(app);
-
     app.useGlobalPipes(
       new ValidationPipe({
         transform: true,
@@ -74,10 +70,19 @@ async function bootstrap() {
 
     await app.register(fastifyHelmet, {
       global: true,
-      contentSecurityPolicy: {},
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: [`'self'`],
+          styleSrc: [`'self'`, `'unsafe-inline'`],
+          imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
+          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+        },
+      },
       enableCSPNonces: true,
       referrerPolicy: true,
     });
+
+    await setupAuthApiDoc(app);
 
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
