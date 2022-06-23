@@ -28,7 +28,7 @@
     "@fastify/express": "^1.1.0",
     "@fastify/helmet": "^8.1.0",
     "@letscollab/helper": "workspace:^",
-    "@letscollab/nest-casbin": "workspace:^",
+    "@letscollab/nest-acl": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
     "@letscollab/passport": "workspace:^",
     "@letscollab/user": "workspace:^",
@@ -64,7 +64,6 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.6",
-    "typeorm-adapter": "^1.4.2",
     "winston": "^3.7.2",
     "winston-daily-rotate-file": "^4.6.1",
     "winston-loki": "^6.0.5"

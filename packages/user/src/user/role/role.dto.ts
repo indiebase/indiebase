@@ -1,15 +1,12 @@
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsOptional,
-} from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateRoleDto {
   @ApiProperty({
     default: 'admin',
   })
   @IsNotEmpty({
-    message: '角色命不可为空',
+    message: `Role name can't be empty`,
   })
   name?: string;
 

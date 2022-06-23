@@ -1,4 +1,11 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  MiddlewareConsumer,
+  Module,
+  NestMiddleware,
+  NestModule,
+  OnModuleInit,
+} from '@nestjs/common';
 import {
   NacosConfigModule,
   NacosConfigService,
@@ -13,12 +20,27 @@ import { UserModule } from './user/user.module';
 import { I18nModule } from 'nestjs-i18n';
 import { utilities, WinstonModule } from 'nest-winston';
 import LokiTransport = require('winston-loki');
-import { RedisModule } from '@liaoliaots/nestjs-redis';
+import { InjectRedis, RedisModule } from '@liaoliaots/nestjs-redis';
 import * as winston from 'winston';
+import { HttpAdapterHost } from '@nestjs/core';
+import type { Redis } from 'ioredis';
 import { RedisCookieSessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
+
+@Injectable()
+export class AuthMiddleware implements NestMiddleware {
+  constructor(
+    @InjectRedis()
+    private readonly redis: Redis,
+  ) {}
+
+  use(req: any, res: Response, next) {
+    console.log(req.session);
+    next();
+  }
+}
 
 @Module({
   imports: [
@@ -111,11 +133,18 @@ const isDev = process.env.NODE_ENV === 'development';
     }),
   ],
 })
-export class AppModule implements OnModuleInit {
+export class AppModule implements OnModuleInit, NestModule {
   constructor(
     private readonly configService: ConfigService,
     private readonly nacosNamingService: NacosNamingService,
+    private readonly adapterHost: HttpAdapterHost,
   ) {}
+  async configure(consumer: MiddlewareConsumer) {
+    // consumer.apply(AuthMiddleware).forRoutes('user/(.*)');
+    // const fastifyInstance =
+    //   this.adapterHost?.httpAdapter?.getInstance() as FastifyInstance;
+    // await setupUserApiDoc(fastifyInstance);
+  }
   async onModuleInit() {
     await this.nacosNamingService.registerInstance(
       `@letscollab/user-${process.env.NODE_ENV}`,

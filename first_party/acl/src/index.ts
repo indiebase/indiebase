@@ -4,3 +4,6 @@ export * from './casbin.interface';
 export * from './casbin.constants';
 export * from './roles.guard';
 export * from './roles.decorator';
+export * from './rpc-auth.guard';
+export * from './access.decorator';
+export * from './actions';
