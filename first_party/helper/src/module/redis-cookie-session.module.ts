@@ -76,9 +76,9 @@ export class RedisCookieSessionModule implements NestModule, OnModuleDestroy {
   }
 
   constructor(
+    private readonly adapterHost: HttpAdapterHost,
     @Inject(REDIS_SESSION_FASTIFY_MODULE)
     private readonly options: RedisSessionFastifyModuleOptions,
-    private readonly adapterHost: HttpAdapterHost,
   ) {}
 
   public onModuleDestroy(): void {

@@ -25,8 +25,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^8.2.6",
-    "@nestjs/core": "^8.2.6",
+    "@nestjs/common": "^8.4.7",
+    "@nestjs/core": "^8.4.7",
     "nacos": "^2.2.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -34,9 +34,9 @@
     "strip-json-comments": "^3.1.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "^8.2.0",
-    "@nestjs/schematics": "^8.0.0",
-    "@nestjs/testing": "^8.0.0",
+    "@nestjs/cli": "^8.2.8",
+    "@nestjs/schematics": "^8.0.11",
+    "@nestjs/testing": "^8.4.7",
     "@types/express": "^4.17.13",
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
