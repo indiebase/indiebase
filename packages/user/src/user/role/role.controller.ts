@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Patch, Get, Delete } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import { RoleService } from './role.service';
-import { CreateRoleDto } from './role.dto';
+import { CreateRoleDto, DeleteRoleDto, UpdateRoleDto } from './role.dto';
 
 @Controller('v1/user/role')
 @ApiTags('v1/Role')
@@ -14,7 +14,10 @@ export class RoleController {
   })
   @ApiCookieAuth('SID')
   async create(@Body() role: CreateRoleDto) {
-    return this.roleService.addRole(role);
+    return this.roleService.create({
+      name: role.name,
+      description: role.description,
+    });
   }
 
   @Get()
@@ -23,20 +26,20 @@ export class RoleController {
   })
   @ApiCookieAuth('SID')
   async getList(@Body() role: CreateRoleDto) {
-    return this.roleService.addRole(role);
+    // return this.roleService.addRole(role);
   }
 
   @Patch()
   @ApiOperation({
     summary: 'Update a role',
   })
-  async update(@Body() role: CreateRoleDto) {}
+  async update(@Body() role: UpdateRoleDto) {}
 
   @Delete()
   @ApiOperation({
     summary: 'Delete a role',
   })
-  async delete(@Body() role: CreateRoleDto) {}
+  async delete(@Body() role: DeleteRoleDto) {}
 
   @Post(':roleId/:userId')
   @ApiCookieAuth('SID')

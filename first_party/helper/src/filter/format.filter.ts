@@ -10,7 +10,8 @@ import {
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 /**
- * 此类会捕获所有错误  它会将错误格式化并返回
+ * This clz will catch all exceptions and send formatted payload.
+ *
  */
 @Catch()
 export class FormatExceptionFilter implements ExceptionFilter {

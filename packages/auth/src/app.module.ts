@@ -16,21 +16,10 @@ import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { NodeRedisAdapter } from './utils';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
-
-import { Injectable, NestMiddleware } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
-import { NodeRedisAdapter } from './utils';
-
-@Injectable()
-export class AuthMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
-    console.log('Request...');
-    next();
-  }
-}
 
 @Module({
   imports: [
@@ -134,12 +123,6 @@ export class AppModule implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    await this.casbinService.e.addPolicy(
-      'admin',
-      'letscollab.deskbtm.com',
-      'data1',
-      'read',
-    );
     await this.nacosNamingService.registerInstance(
       `@letscollab/auth-${process.env.NODE_ENV}`,
       {

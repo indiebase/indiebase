@@ -11,6 +11,6 @@ export class SessionRpcAuthGuard extends RpcAuthGuard(AUTH_RMQ) {
   override async transfer(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<FastifyRequest>();
 
-    return req.session;
+    return { ...req.session, domain: req.hostname };
   }
 }

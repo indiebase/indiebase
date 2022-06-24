@@ -38,13 +38,14 @@ export function RpcAuthGuard(
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const access = this.reflector.get<[]>(ACCESS_META, context.getHandler());
 
-      console.log(access);
-
       if (!access) {
         return true;
       }
 
-      const input = await this.transfer(context);
+      let input = await this.transfer(context);
+
+      input = { ...input, access };
+
       const pattern = await this.setPattern(context);
 
       return lastValueFrom<boolean>(
