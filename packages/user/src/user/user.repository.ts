@@ -33,8 +33,6 @@ export class UserRepository extends Repository<UserEntity> {
    * 通过名字查找会返回多个用户
    */
   async findByName(user: SignupDto) {
-    return this.find({
-      username: user.username,
-    });
+    return this.find({ where: { username: user.username } });
   }
 }

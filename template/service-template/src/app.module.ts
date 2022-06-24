@@ -6,7 +6,6 @@ import configure from './config';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
-import * as DailyRotateFile from 'winston-daily-rotate-file';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -36,21 +35,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
           }),
         ];
         if (isProduction) {
-          transports.push(
-            new DailyRotateFile({
-              filename: resolve(logStorageDir, 'combined-%DATE%.log'),
-              datePattern: 'YYYY-MM-DD-HH',
-              zippedArchive: true,
-              level: 'warn',
-              maxSize: '20m',
-              maxFiles: '14d',
-            }),
-            // new winston.transports.File({
-            //   filename: 'combined.log',
-            //   level: 'warn',
-            //   format: winston.format.json(),
-            // }),
-          );
+          transports.push();
         }
 
         return {
@@ -58,18 +43,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
           format: winston.format.json(),
           defaultMeta: { service: 'auth' },
           exitOnError: false,
-          rejectionHandlers: isProduction
-            ? [
-                new DailyRotateFile({
-                  filename: resolve(logStorageDir, 'rejections-%DATE%.log'),
-                  datePattern: 'YYYY-MM-DD-HH',
-                  zippedArchive: true,
-                  level: 'warn',
-                  maxSize: '20m',
-                  maxFiles: '14d',
-                }),
-              ]
-            : null,
+          rejectionHandlers: isProduction ? [] : null,
           transports,
         };
       },
