@@ -17,10 +17,11 @@ import { setupUserApiDoc } from './utils';
 import fastifyHelmet from '@fastify/helmet';
 import * as ConnectRedis from 'connect-redis';
 import fastifySession from 'fastify-session';
-import fastifyCookie from 'fastify-cookie';
-import Redis from 'ioredis';
 import Fastify from 'fastify';
-// import { i18nValidationErrorFactory } from 'nestjs-i18n';
+import {
+  i18nValidationErrorFactory,
+  I18nValidationExceptionFilter,
+} from 'nestjs-i18n';
 
 const RedisStore = ConnectRedis(fastifySession);
 
@@ -45,13 +46,6 @@ async function bootstrap() {
     const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
 
     const userConfigs = await nacosConfigService.getConfig('service-user.json');
-    // const cc = await nacosConfigService.getConfig('common.json');
-
-    // cc.session.saveUninitialized = false;
-    // cc.session.cookieName = 'SID';
-    // cc.session.store = new RedisStore({
-    //   client: new Redis(cc.redis),
-    // });
 
     //dto international
     app.useGlobalPipes(
@@ -60,7 +54,7 @@ async function bootstrap() {
         enableDebugMessages: isDevelopment,
         whitelist: true,
         forbidNonWhitelisted: true,
-        // exceptionFactory: i18nValidationErrorFactory,
+        exceptionFactory: i18nValidationErrorFactory,
       }),
     );
 
@@ -78,10 +72,6 @@ async function bootstrap() {
       referrerPolicy: true,
     });
 
-    // await app.register(fastifyCookie, cc.cookie);
-
-    // await app.register(fastifySession, cc.session);
-
     await setupUserApiDoc(app);
 
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
@@ -91,6 +81,7 @@ async function bootstrap() {
     app.useGlobalFilters(
       new FormatExceptionFilter(nestWinston),
       new MicroExceptionFilter(nestWinston),
+      new I18nValidationExceptionFilter(),
     );
 
     app.connectMicroservice<MicroserviceOptions>({

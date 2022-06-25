@@ -6,3 +6,4 @@ export * from './interface';
 export * from './enum';
 export * from './decorators';
 export * from './module';
+export * from './resources';

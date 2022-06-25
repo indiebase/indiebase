@@ -1,9 +1,9 @@
 import { FastifyRequest } from 'fastify';
 import { ExecutionContext } from '@nestjs/common';
 import { AUTH_RMQ } from '../app.constants';
-import { RpcAuthGuard } from '@letscollab/nest-acl';
+import { RpcAuthClientGuard } from '@letscollab/nest-acl';
 
-export class SessionRpcAuthGuard extends RpcAuthGuard(AUTH_RMQ) {
+export class SessionRpcAuthGuard extends RpcAuthClientGuard(AUTH_RMQ) {
   async setPattern(context: ExecutionContext): Promise<Record<string, any>> {
     return { cmd: 'authenticate' };
   }

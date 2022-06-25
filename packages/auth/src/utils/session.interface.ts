@@ -1,3 +1,5 @@
+import { IAccessOptions } from '@letscollab/nest-acl';
+
 export type UserSession = {
   username: string;
   id: number;
@@ -5,4 +7,10 @@ export type UserSession = {
   access: any;
   loggedIn: boolean;
   [k: string]: any;
+};
+
+export type ExtraMountedSession = {
+  user: UserSession;
+  domain: string;
+  access: IAccessOptions[];
 };

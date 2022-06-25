@@ -1,11 +1,11 @@
 export enum AccessAction {
-  createOwn,
-  readOwn,
-  updateOwn,
-  deleteOwn,
+  createOwn = 'createOwn',
+  readOwn = 'readOwn',
+  updateOwn = 'updateOwn',
+  deleteOwn = 'deleteOwn',
 
-  createAny,
-  readAny,
-  updateAny,
-  deleteAny,
+  createAny = 'createAny',
+  readAny = 'readAny',
+  updateAny = 'updateAny',
+  deleteAny = 'deleteAny',
 }

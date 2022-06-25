@@ -1,9 +1,7 @@
 import {
   Injectable,
-  MiddlewareConsumer,
   Module,
   NestMiddleware,
-  NestModule,
   OnModuleInit,
 } from '@nestjs/common';
 import {
@@ -25,7 +23,6 @@ import * as winston from 'winston';
 import { HttpAdapterHost } from '@nestjs/core';
 import type { Redis } from 'ioredis';
 import { RedisCookieSessionModule } from '@letscollab/helper';
-
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -50,7 +47,6 @@ export class AuthMiddleware implements NestMiddleware {
       isGlobal: true,
       load: configure,
     }),
-
     RedisModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
@@ -103,7 +99,7 @@ export class AuthMiddleware implements NestMiddleware {
       },
     }),
     I18nModule.forRoot({
-      fallbackLanguage: 'zh',
+      fallbackLanguage: 'zh-CN',
       loaderOptions: {
         path: resolve(process.cwd(), './i18n'),
         watch: !isProd,
@@ -133,18 +129,13 @@ export class AuthMiddleware implements NestMiddleware {
     }),
   ],
 })
-export class AppModule implements OnModuleInit, NestModule {
+export class AppModule implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
     private readonly nacosNamingService: NacosNamingService,
     private readonly adapterHost: HttpAdapterHost,
   ) {}
-  async configure(consumer: MiddlewareConsumer) {
-    // consumer.apply(AuthMiddleware).forRoutes('user/(.*)');
-    // const fastifyInstance =
-    //   this.adapterHost?.httpAdapter?.getInstance() as FastifyInstance;
-    // await setupUserApiDoc(fastifyInstance);
-  }
+
   async onModuleInit() {
     await this.nacosNamingService.registerInstance(
       `@letscollab/user-${process.env.NODE_ENV}`,

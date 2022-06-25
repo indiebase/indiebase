@@ -1,15 +1,17 @@
-import { UserSession } from '../utils/session.interface';
+import { ExtraMountedSession } from '../utils/session.interface';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 
 @Injectable()
-export class RpcAuthFrontierGuard implements CanActivate {
+export class RpcAuthSessionGuard implements CanActivate {
   constructor() {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     let sess = context
       .switchToRpc()
-      .getData<FastifyRequest['session'] & { user: UserSession }>();
+      .getData<FastifyRequest['session'] & ExtraMountedSession>();
+
+    console.log(sess);
 
     if (!sess.user || !sess.user.loggedIn) {
       return false;

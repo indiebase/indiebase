@@ -1,5 +1,4 @@
 import { SignupType } from './user.enum';
-import { UserRepository } from './user.repository';
 import {
   Inject,
   Injectable,
@@ -11,22 +10,56 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ResultCode } from '@letscollab/helper';
 import { AUTH_RMQ } from '../app.constants';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
-import { UserResDto } from './user.dto';
+import { SignupDto, UserResDto } from './user.dto';
 import { JwtSignResDto } from '@letscollab/auth';
 import { FindUserCond } from './user.interface';
 import { UserEntity } from './user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserRepository)
-    private readonly userRepo: UserRepository,
+    @InjectRepository(UserEntity)
+    private readonly userRepo: Repository<UserEntity>,
 
     @Inject(AUTH_RMQ)
     private readonly authClient: ClientProxy,
 
     private readonly logger: Logger,
   ) {}
+
+  private async createUser(
+    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
+  ): Promise<UserEntity> {
+    return new Promise(async (resolve, reject) => {
+      const userEntity = this.userRepo.create(body);
+
+      this.userRepo
+        .save(userEntity)
+        .then((r) => {
+          delete r.password;
+
+          resolve(r);
+        })
+        .catch(reject);
+    });
+  }
+
+  private async getFullInfo(cond: FindUserCond) {
+    return this.userRepo
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where(cond)
+      .getOne();
+  }
+
+  /**
+   *
+   * 通过名字查找会返回多个用户
+   */
+  private async findByName(user: SignupDto) {
+    return this.userRepo.find({ where: { username: user.username } });
+  }
 
   public async signup(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
@@ -59,7 +92,7 @@ export class UserService {
           break;
       }
     } else {
-      const created = await this.userRepo.createUser(body).catch((err) => {
+      const created = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
         throw new InternalServerErrorException({
@@ -98,7 +131,7 @@ export class UserService {
    * @returns
    */
   public async getUser(cond: FindUserCond, full = false) {
-    const user = await this.userRepo[full ? 'findFull' : 'findOne'](cond).catch(
+    const user = await this[full ? 'getFullInfo' : 'findOne'](cond).catch(
       (err) => {
         this.logger.error(err.message, err.stack);
 

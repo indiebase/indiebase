@@ -1,7 +1,28 @@
-import { Controller, Post, Body, Patch, Get, Delete } from '@nestjs/common';
-import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Get,
+  Delete,
+  Query,
+  Req,
+} from '@nestjs/common';
+import {
+  ApiOperation,
+  ApiTags,
+  ApiCookieAuth,
+  ApiCreatedResponse,
+} from '@nestjs/swagger';
 import { RoleService } from './role.service';
-import { CreateRoleDto, DeleteRoleDto, UpdateRoleDto } from './role.dto';
+import {
+  CreateRoleDto,
+  DeleteRoleDto,
+  QueryRoleDto,
+  QueryRolesResDto,
+  UpdateRoleDto,
+} from './role.dto';
+import { FastifyRequest } from 'fastify';
 
 @Controller('v1/user/role')
 @ApiTags('v1/Role')
@@ -14,38 +35,42 @@ export class RoleController {
   })
   @ApiCookieAuth('SID')
   async create(@Body() role: CreateRoleDto) {
-    return this.roleService.create({
-      name: role.name,
-      description: role.description,
-    });
+    return this.roleService.createRole(role);
   }
 
   @Get()
   @ApiOperation({
     summary: 'Get role list',
   })
+  @ApiCreatedResponse({
+    type: QueryRolesResDto,
+  })
   @ApiCookieAuth('SID')
-  async getList(@Body() role: CreateRoleDto) {
-    // return this.roleService.addRole(role);
+  async getList(@Query() role: QueryRoleDto) {
+    return this.roleService.queryRoles(role);
   }
 
   @Patch()
   @ApiOperation({
     summary: 'Update a role',
   })
-  async update(@Body() role: UpdateRoleDto) {}
+  async update(@Body() role: UpdateRoleDto) {
+    return this.roleService.updateRole(role);
+  }
 
   @Delete()
   @ApiOperation({
     summary: 'Delete a role',
   })
-  async delete(@Body() role: DeleteRoleDto) {}
+  async delete(@Body() role: DeleteRoleDto) {
+    return this.roleService.deleteRole(role.id);
+  }
 
-  @Post(':roleId/:userId')
+  @Post(':roleName/:username')
   @ApiCookieAuth('SID')
   @ApiOperation({ summary: 'Attach a role to user' })
   // @UseGuards(Http2RmqAuthGuard)
-  async attachRole2User() {
+  async attachRole2User(@Req() req: FastifyRequest) {
     return 1;
   }
 }

@@ -9,17 +9,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
-import { UserRepository } from './user.repository';
 import { RoleController } from './role/role.controller';
+import { ResourceController } from './res/resource.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      UserEntity,
-      UserRepository,
-      TeamEntity,
-      RoleEntity,
-    ]),
+    TypeOrmModule.forFeature([UserEntity, TeamEntity, RoleEntity]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: MAIL_RMQ, q: 'msg_queue' },
@@ -48,7 +43,7 @@ import { RoleController } from './role/role.controller';
       ]);
     }),
   ],
-  controllers: [UserController, RoleController],
+  controllers: [UserController, RoleController, ResourceController],
   providers: [UserService, Logger, RoleService],
 })
 export class UserModule {}

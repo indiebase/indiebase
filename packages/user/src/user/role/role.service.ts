@@ -1,37 +1,30 @@
 import { RoleEntity } from './role.entity';
 
 import {
-  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { CreateRoleDto } from './role.dto';
+import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { ResultCode } from '@letscollab/helper';
-import { ClientProxy } from '@nestjs/microservices';
-import { AUTH_RMQ } from 'src/app.constants';
 
 @Injectable()
 export class RoleService {
   constructor(
     @InjectRepository(RoleEntity)
     private readonly roleRepo: Repository<RoleEntity>,
-    @Inject(AUTH_RMQ)
-    private readonly authClient: ClientProxy,
     private readonly dataSource: DataSource,
     private readonly logger: Logger,
   ) {}
 
-  async create(role: CreateRoleDto) {
-    const queryRunner = this.dataSource.createQueryRunner();
-
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
-    const roleEntity = this.roleRepo.create(role);
-    await queryRunner.manager.save(roleEntity).catch(async (err) => {
+  async createRole(role: CreateRoleDto) {
+    const roleEntity = this.roleRepo.create({
+      name: role.name,
+      description: role.description,
+    });
+    await this.roleRepo.save(roleEntity).catch(async (err) => {
       this.logger.error(err);
 
       throw new InternalServerErrorException({
@@ -40,24 +33,65 @@ export class RoleService {
       });
     });
 
-    await queryRunner.commitTransaction();
-
-    // try {
-    // } catch (error) {
-    // } finally {
-    //   await queryRunner.release();
-    // }
-
-    // await queryRunner.commitTransaction();
-
-    return { code: ResultCode.SUCCESS, message: '创建成功' };
+    return {
+      code: ResultCode.SUCCESS,
+      message: '创建成功',
+    };
   }
 
-  async deleteRole({ id }) {
-    await this.roleRepo.delete({ id }).catch(() => {
+  async deleteRole(id: number) {
+    await this.roleRepo.delete({ id }).catch((err) => {
+      this.logger.error(err);
       throw new InternalServerErrorException();
     });
 
-    return { code: ResultCode.SUCCESS, message: '删除成功' };
+    return {
+      code: ResultCode.SUCCESS,
+      message: '删除成功',
+    };
+  }
+
+  async updateRole(body: UpdateRoleDto) {
+    const { id, name, status, description } = body;
+    await this.roleRepo
+      .update({ id }, { name, status, description })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          message: err?.code === 'ER_DUP_ENTRY' ? '角色重复' : '创建失败',
+        });
+      });
+
+    return {
+      code: ResultCode.SUCCESS,
+      message: '更新成功',
+    };
+  }
+
+  async queryRoles(body: QueryRoleDto) {
+    body = Object.assign({}, body);
+    const { name, current, pageSize, id } = body;
+    const cond = [];
+    name && cond.push({ name });
+    id && cond.push({ id });
+
+    const [list, total] = await this.roleRepo
+      .findAndCount({
+        where: cond,
+        skip: (current - 1) * pageSize,
+        take: pageSize,
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException();
+      });
+
+    return {
+      code: ResultCode.SUCCESS,
+      total,
+      pageSize,
+      current,
+      d: list,
+    };
   }
 }

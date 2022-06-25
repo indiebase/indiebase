@@ -13,7 +13,6 @@ import {
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { RolesGuard } from '@letscollab/nest-acl';
 import {
   ProtectGuard,
   ApiProtectHeader,
@@ -22,7 +21,7 @@ import {
 } from '@letscollab/helper';
 import { UserResDto } from '@letscollab/user';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { RpcAuthFrontierGuard } from './rpc-auth-frontier.guard';
+import { RpcAuthSessionGuard } from './rpc-auth-session.guard';
 import { GithubGuard } from './github.guard';
 import { LocalSignInDto } from './auth.dto';
 
@@ -70,10 +69,15 @@ export class AuthController {
     res.send(r);
   }
 
-  @UseGuards(RpcAuthFrontierGuard, RolesGuard)
+  @UseGuards(RpcAuthSessionGuard)
   @MessagePattern({ cmd: 'authenticate' })
   async auth(@Payload() payload: IVerify) {
     console.log('============================');
+    return payload;
+  }
+
+  @MessagePattern({ cmd: 'set_policy' })
+  async addRole(@Payload() payload: IVerify) {
     return payload;
   }
 }
