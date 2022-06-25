@@ -17,6 +17,7 @@ import LokiTransport = require('winston-loki');
 import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NodeRedisAdapter } from './utils';
+import { RedisCookieSessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
@@ -34,6 +35,15 @@ const isDev = process.env.NODE_ENV === 'development';
       async useFactory(config: NacosConfigService) {
         const configs = await config.getConfig('common.json');
         return { config: configs.redis };
+      },
+    }),
+    RedisCookieSessionModule.forRootAsync({
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const cc = await config.getConfig('common.json');
+        cc.session.saveUninitialized = false;
+
+        return cc;
       },
     }),
     WinstonModule.forRootAsync({
@@ -123,6 +133,21 @@ export class AppModule implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
+    const r = await this.casbinService.e.addPolicy(
+      'owner',
+      'letscollab.deskbtm.com',
+      '',
+      'readOwn',
+    );
+    console.log(r);
+    console.log(
+      await this.casbinService.e.addRoleForUser(
+        'wanghan',
+        'owner',
+        'letscollab.deskbtm.com',
+      ),
+    );
+
     await this.nacosNamingService.registerInstance(
       `@letscollab/auth-${process.env.NODE_ENV}`,
       {

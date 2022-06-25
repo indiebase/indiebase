@@ -18,7 +18,7 @@ abstract class BaseAuthGuard {
 
 type AbstractAuth = abstract new (...args: any) => BaseAuthGuard;
 
-export function RpcAuthGuard(
+export function RpcAuthClientGuard(
   clientName: string,
   options?: {
     timeout?: number;
@@ -44,7 +44,7 @@ export function RpcAuthGuard(
 
       let input = await this.transfer(context);
 
-      input = { ...input, access };
+      input = { access, ...input };
 
       const pattern = await this.setPattern(context);
 

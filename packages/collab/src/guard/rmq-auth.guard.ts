@@ -1,9 +1,9 @@
 import { ExecutionContext } from '@nestjs/common';
 import { AUTH_RMQ } from '../app.constants';
-import { RpcAuthGuard } from '@letscollab/helper';
+import { RpcAuthClientGuard } from '@letscollab/helper';
 import { ExtractJwt } from 'passport-jwt';
 
-export class UserRpcAuthGuard extends RpcAuthGuard(AUTH_RMQ, {
+export class UserRpcAuthGuard extends RpcAuthClientGuard(AUTH_RMQ, {
   timeout: 1000,
 }) {
   async handlePattern(context: ExecutionContext): Promise<Record<string, any>> {

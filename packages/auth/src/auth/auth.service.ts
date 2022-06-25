@@ -13,6 +13,7 @@ import { catchError, lastValueFrom, timeout } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { LocalSignInDto } from './auth.dto';
 import { UserDto } from '@letscollab/user';
+import { CasbinService } from '@letscollab/nest-acl';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,7 @@ export class AuthService {
     @Inject(USER_RMQ)
     private readonly userClient: ClientProxy,
     private readonly logger: Logger,
+    private readonly casbin: CasbinService,
   ) {}
 
   async getUser<T>(cmd: string, c: any) {
@@ -64,12 +66,10 @@ export class AuthService {
       ),
     );
 
-    console.log(r);
-    if (r.code > 0) {
-      // let t = await this.signTarget({ username: r.d.username });
-      // r.d.t = t;
-    }
-
     return r;
+  }
+
+  public async addRole() {
+    // this.casbin.e.addPolicies();
   }
 }

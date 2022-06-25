@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { AccountStatus } from './user.enum';
-import { BasicResSchemaDto } from '@letscollab/helper';
+import { BaseResSchemaDto } from '@letscollab/helper';
 
 export class SignupDto {
   @ApiPropertyOptional({
@@ -85,7 +85,7 @@ export class UserDto {
   updateTime?: Date;
 }
 
-export class UserResDto extends BasicResSchemaDto {
+export class UserResDto extends BaseResSchemaDto {
   @ApiPropertyOptional({
     type: () => UserDto,
   })

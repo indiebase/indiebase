@@ -17,8 +17,6 @@ import { ResultCode } from '@letscollab/helper';
 import { OrgEntity } from './org.entity';
 import { Repository } from 'typeorm';
 
-// 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;
-
 @Injectable()
 export class OrgService {
   constructor(
@@ -36,7 +34,6 @@ export class OrgService {
     const { name, current, pageSize } = body;
     const cond = [];
     name && cond.push({ name });
-    console.log(body);
 
     const [list, total] = await this.orgRepo.findAndCount({
       where: cond,

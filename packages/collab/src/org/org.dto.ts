@@ -1,4 +1,4 @@
-import { PaginationGetDto, PaginationResSchemaDto } from '@letscollab/helper';
+import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
 import { OrgEntity } from './org.entity';
@@ -69,7 +69,7 @@ export class DeleteOrgDto {
   id: number;
 }
 
-export class QueryOrgDto extends PaginationGetDto {
+export class QueryOrgDto extends PaginationReqDto {
   @ApiPropertyOptional({
     nullable: true,
   })
@@ -84,7 +84,7 @@ export class QueryOrgResDto extends PaginationResSchemaDto {
   d?: OrgEntity;
 }
 
-// export class QueryOrgResDto extends PaginationGetDto {
+// export class QueryOrgResDto extends PaginationReqDto {
 //   @ApiPropertyOptional({
 //     nullable: true,
 //   })

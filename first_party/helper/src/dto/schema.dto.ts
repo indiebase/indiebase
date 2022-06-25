@@ -16,7 +16,7 @@ export class PaginationDto {
   @IsNumber()
   pageSize: number = 20;
 }
-export class PaginationGetDto {
+export class PaginationReqDto {
   @ApiProperty({
     default: 1,
   })
@@ -31,15 +31,8 @@ export class PaginationGetDto {
   @IsNumber()
   pageSize: number = 20;
 }
-export class PaginationResDto {
-  @ApiProperty()
-  current: number;
 
-  @ApiProperty()
-  pageSize: number;
-}
-
-export abstract class BasicResSchemaDto {
+export class BaseResSchemaDto {
   @ApiProperty({
     description: 'Response code',
     default: ResultCode.SUCCESS,
@@ -51,7 +44,7 @@ export abstract class BasicResSchemaDto {
   })
   message?: string | string[];
 }
-export abstract class PaginationResSchemaDto extends BasicResSchemaDto {
+export class PaginationResSchemaDto extends BaseResSchemaDto {
   @ApiProperty({
     description: 'Total items',
   })

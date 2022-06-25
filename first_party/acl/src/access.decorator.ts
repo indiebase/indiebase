@@ -4,6 +4,7 @@ import { ACCESS_META } from './casbin.constants';
 
 export type IAccessOptions = {
   action: AccessAction;
+  resource: string;
 };
 
 export const UseAccess = (...access: IAccessOptions[]) =>

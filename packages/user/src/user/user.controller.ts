@@ -22,7 +22,6 @@ import {
   ProtectGuard,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
-import { AccessAction, UseAccess } from '@letscollab/nest-acl';
 
 @Controller('v1/user')
 @ApiTags('v1/User')
@@ -76,7 +75,6 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseAccess({ action: AccessAction.createAny })
   @UseGuards(SessionRpcAuthGuard)
   async getProfile(@Session() session, @Req() req: FastifyRequest) {
     return 1;
