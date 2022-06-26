@@ -136,7 +136,7 @@ export class AppModule implements OnModuleInit {
     const r = await this.casbinService.e.addPolicy(
       'owner',
       'letscollab.deskbtm.com',
-      '',
+      'user_list',
       'readOwn',
     );
     console.log(r);

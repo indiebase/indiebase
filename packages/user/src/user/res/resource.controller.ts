@@ -2,8 +2,8 @@ import { ResultCode, UserResource } from '@letscollab/helper';
 import { AccessAction, UseAccess } from '@letscollab/nest-acl';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
+import { SessionRpcAuthClientGuard } from '../../guard/session-rpc-auth-client.guard';
 import { I18n, I18nContext } from 'nestjs-i18n';
-import { SessionRpcAuthGuard } from 'src/guard/session-rpc-auth.guard';
 import { createResources } from './resources';
 
 @Controller('v1/user/res')
@@ -14,7 +14,7 @@ export class ResourceController {
     summary: 'Get resource list',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(SessionRpcAuthGuard)
+  @UseGuards(SessionRpcAuthClientGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: UserResource.list,

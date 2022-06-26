@@ -1,4 +1,4 @@
-import { SessionRpcAuthGuard } from './../guard/session-rpc-auth.guard';
+import { SessionRpcAuthClientGuard } from '../guard/session-rpc-auth-client.guard';
 import {
   Body,
   Controller,
@@ -75,7 +75,7 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(SessionRpcAuthGuard)
+  @UseGuards(SessionRpcAuthClientGuard)
   async getProfile(@Session() session, @Req() req: FastifyRequest) {
     return 1;
   }
