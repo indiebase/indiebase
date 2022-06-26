@@ -21,7 +21,7 @@ import {
 } from '@letscollab/helper';
 import { UserResDto } from '@letscollab/user';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { RpcAuthSessionGuard } from './rpc-auth-session.guard';
+import { SessionRpcAuthConsumerGuard } from './session-rpc-auth-consumer.guard';
 import { GithubGuard } from './github.guard';
 import { LocalSignInDto } from './auth.dto';
 
@@ -49,7 +49,11 @@ export class AuthController {
       id: user.id,
     };
 
-    return { code: ResultCode.SUCCESS, message: '登录成功', d: user };
+    return {
+      code: ResultCode.SUCCESS,
+      message: '登录成功',
+      d: user,
+    };
   }
 
   @Get('oauth/github')
@@ -69,7 +73,7 @@ export class AuthController {
     res.send(r);
   }
 
-  @UseGuards(RpcAuthSessionGuard)
+  @UseGuards(SessionRpcAuthConsumerGuard)
   @MessagePattern({ cmd: 'authenticate' })
   async auth(@Payload() payload: IVerify) {
     console.log('============================');

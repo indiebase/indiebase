@@ -12,7 +12,9 @@ import { Reflector } from '@nestjs/core';
 import { ACCESS_META } from './casbin.constants';
 
 abstract class BaseAuthGuard {
-  abstract transfer(context: ExecutionContext): Promise<Record<string, any>>;
+  abstract transfer(
+    context: ExecutionContext,
+  ): Promise<Record<string, any> | boolean>;
   abstract setPattern(context: ExecutionContext): Promise<Record<string, any>>;
 }
 
@@ -43,6 +45,10 @@ export function RpcAuthClientGuard(
       }
 
       let input = await this.transfer(context);
+
+      if (typeof input === 'boolean') {
+        return input;
+      }
 
       input = { access, ...input };
 
