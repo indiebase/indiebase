@@ -11,7 +11,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { ApiCreatedResponse, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiTags,
+  ApiCookieAuth,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -76,11 +81,17 @@ export class UserController {
   @Get('profile')
   @ApiCookieAuth('SID')
   @UseGuards(SessionRpcAuthClientGuard)
+  @ApiOperation({
+    summary: 'Get a user profile',
+  })
   async getProfile(@Session() session, @Req() req: FastifyRequest) {
     return 1;
   }
 
   @Patch('profile')
+  @ApiOperation({
+    summary: 'Update a user profile',
+  })
   // @UseGuards(Http2RmqAuthGuard)
   async updateProfile() {
     return 1;

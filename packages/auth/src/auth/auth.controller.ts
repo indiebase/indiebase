@@ -74,7 +74,7 @@ export class AuthController {
   }
 
   @UseGuards(SessionRpcAuthConsumerGuard)
-  @MessagePattern({ cmd: 'authenticate' })
+  @MessagePattern({ cmd: 'auth' })
   async auth(@Payload() payload: IVerify) {
     console.log('============================');
     return payload;

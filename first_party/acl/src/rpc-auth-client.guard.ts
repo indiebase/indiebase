@@ -10,11 +10,10 @@ import { catchError, timeout, lastValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { Reflector } from '@nestjs/core';
 import { ACCESS_META } from './casbin.constants';
+import { IAccessOptions } from './access.decorator';
 
 abstract class BaseAuthGuard {
-  abstract transfer(
-    context: ExecutionContext,
-  ): Promise<Record<string, any> | boolean>;
+  abstract transfer(context: ExecutionContext): Promise<Record<string, any>>;
   abstract setPattern(context: ExecutionContext): Promise<Record<string, any>>;
 }
 
@@ -38,7 +37,10 @@ export function RpcAuthClientGuard(
     }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-      const access = this.reflector.get<[]>(ACCESS_META, context.getHandler());
+      const access = this.reflector.get<IAccessOptions[]>(
+        ACCESS_META,
+        context.getHandler(),
+      );
 
       if (!access) {
         return true;
@@ -46,11 +48,18 @@ export function RpcAuthClientGuard(
 
       let input = await this.transfer(context);
 
-      if (typeof input === 'boolean') {
-        return input;
-      }
-
       input = { access, ...input };
+
+      for (const a of access) {
+        if (a.action.toLowerCase().indexOf('own') > 0 && a.possess) {
+          const isOwn = await a.possess(context);
+          if (!isOwn) {
+            return false;
+          }
+        } else {
+          throw Error(`${a.resource} {${a.action} needs property possess`);
+        }
+      }
 
       const pattern = await this.setPattern(context);
 
