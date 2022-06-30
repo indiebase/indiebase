@@ -52,6 +52,7 @@
   "workspaces": [
     "packages/*",
     "first_party/*",
+    "third_party/*",
     "apps/*",
     "pro/*"
   ],
