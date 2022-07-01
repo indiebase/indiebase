@@ -1,4 +1,5 @@
-// theme.config.js
 export default {
-  foot: true,
+  darkMode: false,
+  footer: false,
+  navbar: false,
 };

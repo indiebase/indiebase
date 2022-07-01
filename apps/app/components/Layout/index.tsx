@@ -47,7 +47,7 @@ export const Layout: FC<PropsWithChildren> = (props) => {
               main: {
                 background:
                   theme.colorScheme === 'dark'
-                    ? theme.colors.dark[8]
+                    ? theme.colors.dark[6]
                     : theme.colors.white,
               },
             }}
