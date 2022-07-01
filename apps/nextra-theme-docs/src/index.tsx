@@ -97,7 +97,7 @@ const Body: React.FC<BodyProps> = ({
               : '',
           )}
         >
-          <main className="max-w-4xl px-6 md:px-8 pt-4 z-10 min-w-0 w-full">
+          <main className="mt-8 max-w-4xl px-6 md:px-8 pt-4 z-10 min-w-0 w-full">
             {breadcrumb}
             <MDXTheme>{children}</MDXTheme>
             {date && config.gitTimestamp ? (
