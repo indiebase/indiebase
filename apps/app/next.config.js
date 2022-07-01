@@ -1,7 +1,7 @@
 // const { withSentryConfig } = require('@sentry/nextjs');
 
 const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',
+  theme: '@letscollab/nextra-theme-docs',
   themeConfig: './theme.config.js',
 });
 

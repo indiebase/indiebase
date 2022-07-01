@@ -95,6 +95,9 @@ const Home: NextPage = () => {
             />
           </Animator>
           <Button
+            sx={(theme) => ({
+              backgroundColor: theme.colors.dark[6] + '!important',
+            })}
             onMouseEnter={() => {
               ref.current.play();
             }}
