@@ -81,7 +81,7 @@ const SignInTab = function () {
         <Group mt={50} grow>
           <Button type="submit">登录</Button>
           <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
-            <Image src="/github.svg" width={25} />
+          Signin&nbsp;&nbsp;<Image src="/github.svg" width={25} />
           </Button>
         </Group>
       </form>
@@ -280,7 +280,7 @@ export const LoginModal: FC<ModalProps & { initialNo?: number }> = function (
         initialTab={props.initialNo}
         variant="pills"
       >
-        <Tabs.Tab label="登录">
+        <Tabs.Tab label="Login">
           <SignInTab />
         </Tabs.Tab>
         <Tabs.Tab label="注册">

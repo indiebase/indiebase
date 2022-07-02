@@ -63,7 +63,6 @@ const Home: NextPage = () => {
 
   const handlePage = useCallback(
     (event: ScrollData) => {
-      // console.log(event);
       switch (event.currentPage) {
         case 1:
           event.currentProgress < 0.2 && !showPage1Scrap && setPage1Scrap(true);
@@ -76,7 +75,7 @@ const Home: NextPage = () => {
   );
 
   return (
-    <ScrollContainer onScroll={handlePage}>
+    <ScrollContainer vHeight={3500} onScroll={handlePage}>
       <ScrollPage style={{ zIndex: 10 }} page={0}>
         <Center
           sx={{
