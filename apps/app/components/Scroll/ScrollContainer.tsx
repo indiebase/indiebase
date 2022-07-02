@@ -1,4 +1,4 @@
-import { useBrowserLayoutEffect } from "components/hooks";
+import { useBrowserLayoutEffect } from 'components/hooks';
 import React, {
   FC,
   ReactNode,
@@ -6,31 +6,32 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { initialScrollData } from "./constants";
-import { ScrollDataContext, ScrollPageContext } from "./stores";
-import { ScrollData } from "./types";
-import { environment } from "./utils";
+} from 'react';
+import { initialScrollData } from './constants';
+import { ScrollDataContext, ScrollPageContext } from './stores';
+import { ScrollData } from './types';
+import { environment } from './utils';
 
 interface ScrollContainerProps {
-  snap?: "none" | "proximity" | "mandatory";
+  snap?: 'none' | 'proximity' | 'mandatory';
   children: ReactNode | ReactNode[];
   scrollParent?: Window | HTMLElement;
   onScroll?: (event: ScrollData) => void;
+  vHeight?: number | string;
 }
 
 const _window: (Window & typeof globalThis) | undefined =
-  typeof window !== "undefined" ? window : undefined;
+  typeof window !== 'undefined' ? window : undefined;
 
 const ScrollContainer: FC<ScrollContainerProps> = (props) => {
-  const { snap = "none", children, scrollParent: _scrollParent } = props;
+  const { snap = 'none', children, scrollParent: _scrollParent } = props;
   const scrollParent = _scrollParent || _window;
 
   const [scrollData, setScrollData] = useState<ScrollData>(initialScrollData);
   const scrollTimer = useRef<ReturnType<typeof setTimeout>>();
 
   const scrollEvent = useCallback(() => {
-    if (snap !== "none" && scrollTimer.current)
+    if (snap !== 'none' && scrollTimer.current)
       clearTimeout(scrollTimer.current);
 
     const currentY: number =
@@ -63,18 +64,18 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
 
     props?.onScroll(data);
 
-    if (snap !== "none") {
+    if (snap !== 'none') {
       scrollTimer.current = setTimeout(() => {
         const newCurrentPage = Math.round(realPage);
         let newCurrentY = currentY;
 
-        if (snap === "mandatory" || Math.abs(newCurrentPage - realPage) < 0.3)
+        if (snap === 'mandatory' || Math.abs(newCurrentPage - realPage) < 0.3)
           newCurrentY = newCurrentPage * viewportHeight;
 
         if (newCurrentY !== currentY)
           window.scrollTo({
             top: newCurrentY,
-            behavior: "smooth",
+            behavior: 'smooth',
           });
       }, 50);
     }
@@ -84,14 +85,21 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
   useBrowserLayoutEffect(() => {
     if (scrollParent) {
       scrollEvent();
-      scrollParent.addEventListener("scroll", scrollEvent);
-      scrollParent.addEventListener("resize", scrollEvent);
-      return () => scrollParent.removeEventListener("scroll", scrollEvent);
+      scrollParent.addEventListener('scroll', scrollEvent);
+      scrollParent.addEventListener('resize', scrollEvent);
+      return () => scrollParent.removeEventListener('scroll', scrollEvent);
     }
   }, [scrollEvent, scrollParent, scrollData.viewportHeight]);
 
   return (
-    <div style={{ margin: 0, padding: 0, userSelect: "none" }}>
+    <div
+      style={{
+        margin: 0,
+        padding: 0,
+        userSelect: 'none',
+        height: scrollData.viewportHeight > 0 ? 'auto' : props.vHeight,
+      }}
+    >
       <ScrollDataContext.Provider value={scrollData}>
         {(Array.isArray(children) &&
           children.map((child, index) => (
@@ -106,6 +114,10 @@ const ScrollContainer: FC<ScrollContainerProps> = (props) => {
       </ScrollDataContext.Provider>
     </div>
   );
+};
+
+ScrollContainer.defaultProps = {
+  vHeight: 'auto',
 };
 
 export default ScrollContainer;

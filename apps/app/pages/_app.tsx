@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import Head from 'next/head';
 import { Layout } from 'components';
 import 'styles/nextra-doc.css';
-// import 'nextra-theme-docs/style.css';
 
 const queryClient = new QueryClient();
 
