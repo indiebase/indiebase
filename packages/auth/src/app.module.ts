@@ -142,25 +142,25 @@ export class AppModule implements OnModuleInit {
 
     const r1 = await this.casbinService.e.addPolicy(
       'owner',
-      'letscollab.deskbtm.com',
+      '0.0.0.0:23332',
       'user_list',
-      'writeAny',
+      'readAny',
     );
     // console.log(r);
     console.log(
       await this.casbinService.e.addRoleForUser(
-        'wanghan',
+        'deskbtm@outlook.com',
         'owner',
-        'letscollab.deskbtm.com',
+        '0.0.0.0:23332',
       ),
     );
 
     console.log(
       await this.casbinService.e.enforce(
-        'wanghan',
-        'letscollab.deskbtm.com',
+        'deskbtm@outlook.com',
+        '0.0.0.0:23332',
         'user_list',
-        'writeAny',
+        'readAny',
       ),
     );
 

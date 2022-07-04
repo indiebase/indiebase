@@ -1,27 +1,26 @@
-import { BrowserRouter } from 'react-router-dom';
-import { RootRoutes } from './RootRoutes';
-import { GlobalContext, globalProvider } from './provider';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import themes from './themes';
-import { CssBaseline } from '@mui/material';
-import ThemeProvider from '@mui/system/ThemeProvider';
-import './App.scss';
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-const queryClient = new QueryClient();
-
-const App = function () {
+function App() {
   return (
-    <GlobalContext.Provider value={globalProvider}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={themes()}>
-          <CssBaseline />
-          <BrowserRouter>
-            <RootRoutes />
-          </BrowserRouter>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </GlobalContext.Provider>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
-};
+}
 
 export default App;

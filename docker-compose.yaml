@@ -54,7 +54,7 @@ services:
     logging: *loki-logging
 
   nacos:
-    image: nacos/nacos-server:v2.0.4
+    image: nacos/nacos-server:v2.1.0
     env_file:
       - ./.env.development
     volumes:

@@ -7,8 +7,8 @@ import {
 } from 'typeorm';
 
 export enum RoleStatus {
-  inactive,
-  active,
+  inactive = 'inactive',
+  active = 'active',
 }
 
 @Entity('role')
@@ -22,23 +22,28 @@ export class RoleEntity {
   @Column('varchar')
   description: string;
 
-  @Column('int', {
-    comment: '角色状态',
+  @Column('simple-enum', {
+    enum: RoleStatus,
+    comment: 'Role status',
     default: RoleStatus.active,
   })
   status?: RoleStatus;
 
+  @Column('simple-array', {
+    comment: 'Resources owned',
+    nullable: true,
+  })
+  resource?: string[];
+
   @CreateDateColumn({
     type: 'timestamp',
     name: 'create_time',
-    comment: '创建时间',
   })
   createTime?: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'update_time',
-    comment: '更新时间',
   })
   updateTime?: Date;
 }

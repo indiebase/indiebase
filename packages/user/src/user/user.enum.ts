@@ -1,9 +1,9 @@
 export enum AccountStatus {
-  active,
-  inactive,
+  active = 'active',
+  inactive = 'inactive',
 }
 
 export enum SignupType {
-  letscollab,
-  github,
+  letscollab = 'letscollab',
+  github = 'github',
 }
