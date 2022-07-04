@@ -13,6 +13,7 @@ export class MicroExceptionFilter implements RpcExceptionFilter<RpcException> {
 
   catch(exception: RpcException, host: ArgumentsHost): Observable<any> {
     this.logger.error(exception.message, exception.stack);
+    console.log(host, '================================================');
     return throwError(() => exception.getError());
   }
 }

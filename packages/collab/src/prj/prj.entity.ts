@@ -11,8 +11,8 @@ import { UserEntity } from '@letscollab/user';
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum PrjStatus {
-  wip, // working in progress
-  archive, //
+  wip = 'wip', // working in progress
+  archive = 'archive', //
 }
 
 @Entity('project')
@@ -32,8 +32,9 @@ export class PrjEntity {
   @ApiProperty({
     enum: PrjStatus,
   })
-  @Column('int', {
+  @Column('varchar', {
     name: 'status',
+    length: 32,
     comment: 'Project Status',
     nullable: true,
   })

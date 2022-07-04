@@ -16,7 +16,6 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { fastifyHelmet } from '@fastify/helmet';
 import { UserSession } from './utils';
-
 import Fastify from 'fastify';
 
 declare module 'fastify' {

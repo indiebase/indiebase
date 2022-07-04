@@ -26,7 +26,7 @@
     "typeorm": "ts-node ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
-    "@fastify/helmet": "^8.1.0",
+    "@fastify/helmet": "^9.1.0",
     "@letscollab/auth": "workspace:^",
     "@letscollab/collab": "workspace:^",
     "@letscollab/helper": "workspace:^",
@@ -49,7 +49,7 @@
     "nestjs-i18n": "^9.0.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.6",
+    "typeorm": "^0.3.7",
     "winston": "^3.7.2",
     "winston-loki": "^6.0.5"
   },

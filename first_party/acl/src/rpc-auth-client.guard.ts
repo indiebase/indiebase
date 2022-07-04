@@ -51,13 +51,21 @@ export function RpcAuthClientGuard(
       input = { access, ...input };
 
       for (const a of access) {
-        if (a.action.toLowerCase().indexOf('own') > 0 && a.possess) {
-          const isOwn = await a.possess(context);
-          if (!isOwn) {
-            return false;
+        if (a.resource.indexOf('_') < 0) {
+          throw new Error(
+            `${a.resource} needs prefix to divide groups e.g groupName_xxxxx`,
+          );
+        }
+
+        if (a.action.toLowerCase().indexOf('own') > 0) {
+          if (a.possess) {
+            const isOwn = await a.possess(context);
+            if (!isOwn) {
+              return false;
+            }
+          } else {
+            throw Error(`${a.resource} ${a.action} needs property possess`);
           }
-        } else {
-          throw Error(`${a.resource} {${a.action} needs property possess`);
         }
       }
 

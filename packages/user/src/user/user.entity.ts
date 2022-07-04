@@ -17,7 +17,8 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('int', {
+  @Column('varchar', {
+    length: 64,
     comment: 'signup type e.g. github letscollab',
   })
   signupType: SignupType;
@@ -40,7 +41,7 @@ export class UserEntity {
   @Column('varchar', { unique: true })
   email: string;
 
-  @Column({ type: 'varchar', nullable: true, charset: 'utf8mb4' })
+  @Column({ type: 'varchar', nullable: true })
   bio?: string;
 
   @Column('varchar', { comment: 'Optional name' })

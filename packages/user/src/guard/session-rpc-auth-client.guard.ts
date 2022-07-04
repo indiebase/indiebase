@@ -16,6 +16,8 @@ export class SessionRpcAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {
       throw new UnauthorizedException({ message: '未登录' });
     }
 
+    // req.session.domain =
+
     return { ...req.session, domain: req.hostname };
   }
 }

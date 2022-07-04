@@ -11,8 +11,8 @@ import { UserEntity } from '@letscollab/user';
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum TeamStatus {
-  active,
-  inactive,
+  active = 'active',
+  inactive = 'inactive',
 }
 
 @Entity('team')
@@ -32,8 +32,9 @@ export class TeamEntity {
   @ApiProperty({
     enum: TeamStatus,
   })
-  @Column('int', {
+  @Column('varchar', {
     name: 'status',
+    length: 32,
     comment: 'Team Status',
     default: TeamStatus.active,
     nullable: true,
