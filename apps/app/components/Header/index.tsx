@@ -71,6 +71,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
         <Group sx={{ marginLeft: matches ? 0 : 30 }}>
           <Link href="/">
             <Image
+            
               src="/logo.svg"
               fit="contain"
               width="150px"
