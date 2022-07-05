@@ -1,25 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from './Router';
+
+const queryClient = new QueryClient();
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      {!isProduction && <ReactQueryDevtools position="bottom-right" />}
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
