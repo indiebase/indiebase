@@ -5,11 +5,11 @@ import {
   useMantineTheme,
   Group,
   Anchor,
-  Divider,
   Image,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -19,12 +19,6 @@ export interface NavHeaderProps {
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const matches = useMediaQuery('(max-width: 768px)');
-  const [modalMeta, setModalMeta] = useState<{
-    initialNo?: number;
-    opened: boolean;
-  }>({
-    opened: false,
-  });
 
   return (
     <MantineHeader
@@ -56,12 +50,11 @@ export const Header: FC<NavHeaderProps> = function (props) {
               onClick={props.onNavbarOpen}
               size="sm"
               color={theme.colors.gray[6]}
-              mr="xl"
             />
           </Group>
         </MediaQuery>
-        <Group sx={{ marginLeft: matches ? 0 : 30 }}>
-          <Anchor href="/">
+        <Group ml={10}>
+          <Anchor component={Link} to="/" reloadDocument={false}>
             <Image
               src="/logo.svg"
               fit="contain"

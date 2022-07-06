@@ -1,0 +1,2 @@
+- [react](https://github.com/facebook/react) MIT
+- [ant-design/pro-components](https://github.com/ant-design/pro-components) MIT
