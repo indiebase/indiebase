@@ -33,11 +33,15 @@ letscollab 虽然第一眼看上去有点 web3 的意思， 但它还是以创�
 
 ## 加入
 
-letscollab 社区版本欢迎大家提交 Pr，如果有意愿加入私有部分的开发， 请认真阅读 [letscollab 保密协议](./docs/confidentiality-agreement.md)
+letscollab 社区版本欢迎大家提交 Pr，如果有意愿加入私有部分的开发， 请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/confidentiality-agreement.md)
 <br />
 同样 letscollab 所获取的收益，会分配给项目参与成员。
 
 WeChat: Nawbc9423
+
+## Credits
+
+See [Credits.md](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/CREDITS.md)
 
 ## License
 

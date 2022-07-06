@@ -2,6 +2,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './Router';
+import './App.less';
+// import 'antd/dist/antd.min.css';
 
 const queryClient = new QueryClient();
 
