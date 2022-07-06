@@ -81,7 +81,8 @@ const SignInTab = function () {
         <Group mt={50} grow>
           <Button type="submit">登录</Button>
           <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
-          Signin&nbsp;&nbsp;<Image src="/github.svg" width={25} />
+            Signin&nbsp;&nbsp;
+            <Image src="/github.svg" width={25} />
           </Button>
         </Group>
       </form>
@@ -167,7 +168,6 @@ const SignUpTab = function () {
             });
             return;
           }
-          console.log(values);
         })}
       >
         <TextInput
