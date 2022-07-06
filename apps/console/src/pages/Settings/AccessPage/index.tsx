@@ -1,12 +1,8 @@
-import {
-  ActionType,
-  ProColumns,
-  ProTable,
-} from '../../../components/MagicAntd/Table';
-import '@ant-design/pro-table/dist/table.css';
+import { ActionType, ProColumns, ProTable } from 'src/components/MagicAntd';
 import { Grid } from '@mantine/core';
 import { useRef } from 'react';
 import { RoleModal } from './RoleModal';
+import { RoleStatus } from 'src/common/enum';
 
 const columns: ProColumns<any>[] = [
   {
@@ -16,14 +12,26 @@ const columns: ProColumns<any>[] = [
     key: 'name',
   },
   {
+    title: '描述',
+    dataIndex: 'description',
+    key: 'description',
+    hideInSearch: true,
+    width: '25%',
+  },
+  {
     title: '状态',
     dataIndex: 'disable',
     key: 'disable',
     filters: [
-      { text: 'Male', value: 'male' },
-      { text: 'Female', value: 'female' },
+      { text: RoleStatus.active, value: RoleStatus.active },
+      { text: RoleStatus.inactive, value: RoleStatus.inactive },
     ],
-    valueType: 'radioButton',
+    hideInSearch: true,
+  },
+  {
+    title: '权限',
+    dataIndex: 'disable',
+    key: 'disable',
     hideInSearch: true,
   },
   {
@@ -31,8 +39,8 @@ const columns: ProColumns<any>[] = [
     dataIndex: 'createTime',
     key: 'createTime',
     valueType: 'date',
-    render: (_dom, row, _i) => {
-      return <span>{new Date(row.createTime).toLocaleString()}</span>;
+    sorter: {
+      compare: (a, b) => a.createTime - b.createTime,
     },
   },
   {
@@ -41,9 +49,6 @@ const columns: ProColumns<any>[] = [
     dataIndex: 'updateTime',
     valueType: 'date',
     key: 'updateTime',
-    render: (_dom, row, _i) => {
-      return <span>{new Date(row.updateTime).toLocaleString()}</span>;
-    },
   },
 ];
 
@@ -59,7 +64,7 @@ export const AccessPage = function (props) {
 
   return (
     <Grid>
-      <Grid.Col span={6}>
+      <Grid.Col span={8}>
         <ProTable
           bordered
           search={{
@@ -78,8 +83,10 @@ export const AccessPage = function (props) {
             showQuickJumper: true,
           }}
           rowKey="id"
-          dateFormatter="string"
           toolBarRender={() => [<RoleModal />]}
+          dateFormatter={(value, valueType) => {
+            return value.format('YYYY-MM-DD HH:mm:ss');
+          }}
         />
       </Grid.Col>
       {/* <Grid.Col span={6}>
