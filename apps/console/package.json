@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/pro-components": "^1.1.7",
-    "@ant-design/pro-table": "^2.77.0",
     "@babel/core": "^7.16.0",
+    "@letscollab-pro/console": "workspace:^",
+    "@letscollab/app-utils": "workspace:^",
     "@mantine/core": "^4.2.12",
     "@mantine/hooks": "^4.2.12",
     "@mantine/notifications": "^4.2.12",

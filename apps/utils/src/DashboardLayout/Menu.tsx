@@ -1,6 +1,5 @@
 import {
   Text,
-  Box,
   Group,
   Navbar,
   ScrollArea,
@@ -9,11 +8,20 @@ import {
   Accordion,
 } from '@mantine/core';
 import { FC, useState } from 'react';
-import { Link, Navigate, NavLink, useNavigate } from 'react-router-dom';
-import { useMenu } from '../../use-menu';
+import { useNavigate } from 'react-router-dom';
+
+export interface MenuNode {
+  label: string;
+  to?: string;
+  icon?: React.ReactNode;
+  color?: string;
+  children?: MenuNode[];
+  onClick?: () => Promise<void> | void;
+}
 
 export interface MenuProps {
   opened: boolean;
+  menu: MenuNode[];
 }
 
 interface MenuItemProps {
@@ -24,7 +32,6 @@ interface MenuItemProps {
 
 function MenuItem({ label, active, onClick }: MenuItemProps) {
   return (
-    // <Link to={'/home'}>
     <UnstyledButton
       onClick={onClick}
       sx={(theme) => ({
@@ -49,13 +56,12 @@ function MenuItem({ label, active, onClick }: MenuItemProps) {
         <Text size="sm">{label}</Text>
       </Group>
     </UnstyledButton>
-    // </Link>
   );
 }
 
 export const Menu: FC<MenuProps> = function (props) {
-  const menuTree = useMenu();
-  const [active, setActive] = useState(null);
+  // const menuTree = useMenu();
+  const [active, setActive] = useState<number | null>(null);
   const navigate = useNavigate();
 
   return (
@@ -81,7 +87,7 @@ export const Menu: FC<MenuProps> = function (props) {
             itemTitle: { borderRadius: theme.radius.sm, overflow: 'hidden' },
           })}
         >
-          {menuTree.map((node, index1) => {
+          {props.menu.map((node, index1) => {
             return (
               <Accordion.Item
                 key={index1}
@@ -92,7 +98,7 @@ export const Menu: FC<MenuProps> = function (props) {
                   </ThemeIcon>
                 }
               >
-                {node?.children.map((sub, index2) => {
+                {node?.children?.map((sub, index2) => {
                   const index = parseInt(`${index1}${index2}`);
                   return (
                     <MenuItem
@@ -102,7 +108,7 @@ export const Menu: FC<MenuProps> = function (props) {
                       onClick={(e) => {
                         e.stopPropagation();
                         setActive(index);
-                        navigate(sub.to);
+                        navigate(sub.to!);
                       }}
                     />
                   );

@@ -30,7 +30,7 @@ import RightArrow from 'components/RightArrow.json';
 import { ScrollData } from 'components/Scroll/types';
 import { FC } from 'react';
 import { CSSProperties } from '@emotion/serialize';
-import { TextParticle } from 'city-night';
+import { TextParticle } from '@letscollab/app-utils';
 
 const TransitionShape: FC<{
   mounted?: boolean;

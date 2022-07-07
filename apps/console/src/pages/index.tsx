@@ -1,4 +1,4 @@
-import { Stack, Button, Text, Box, Group } from '@mantine/core';
+import { Stack, Text, Box, Group } from '@mantine/core';
 
 export const HomePage = function (props) {
   return (
