@@ -19,11 +19,6 @@ interface CreateRoleModalProps {
   updateModal?: boolean;
 }
 
-const isEmail = (value) =>
-  /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(
-    value,
-  );
-
 const countriesData = [
   { label: 'United States', value: 'US' },
   { label: 'Great Britain', value: 'GB' },
@@ -32,7 +27,7 @@ const countriesData = [
   { label: 'Russia', value: 'RU' },
 ];
 
-export const RoleModal: FC<CreateRoleModalProps> = function (props) {
+export const MemberModal: FC<CreateRoleModalProps> = function (props) {
   const ref = useRef<FormInstance>();
 
   const theme = useMantineTheme();
@@ -119,7 +114,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function (props) {
           setOpen(true);
         }}
         variant="gradient"
-        gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
+        gradient={{ from: '#2193b0', to: '#6dd5ed', deg: 35 }}
       >
         添加
       </Button>

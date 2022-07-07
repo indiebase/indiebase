@@ -11,10 +11,13 @@ import {
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { Header } from './Header';
-import { Menu } from './Menu';
+import { Menu, MenuNode } from './Menu';
 
 export interface DashboardLayoutProps {
-  sidebarWidth?: number;
+  menu: MenuNode[];
+  logoHref: string;
+  logo: React.ReactNode;
+  nav?: React.ReactNode;
   [key: string]: any;
 }
 
@@ -39,6 +42,9 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
       />
       <MantineProvider
         theme={{ colorScheme, primaryColor: 'dark' }}
+        defaultProps={{
+          Button: { size: 'xs' },
+        }}
         withGlobalStyles
         withNormalizeCSS
       >
@@ -55,9 +61,12 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             }}
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
-            navbar={<Menu opened={!opened} />}
+            navbar={<Menu menu={props.menu} opened={!opened} />}
             header={
               <Header
+                nav={props.nav}
+                logoHref={props.logoHref}
+                logo={props.logo}
                 navbarOpened={opened}
                 onNavbarOpen={() => setOpened((o) => !o)}
               />

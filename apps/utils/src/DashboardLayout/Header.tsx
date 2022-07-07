@@ -7,18 +7,19 @@ import {
   Anchor,
   Image,
 } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
-  navbarOpened?: boolean;
+  logo: React.ReactNode;
+  nav?: React.ReactNode;
+  logoHref: string;
+  navbarOpened: boolean;
 }
 
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
-  const matches = useMediaQuery('(max-width: 768px)');
 
   return (
     <MantineHeader
@@ -44,23 +45,21 @@ export const Header: FC<NavHeaderProps> = function (props) {
         })}
       >
         <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-          <Group>
-            <Burger
-              opened={props.navbarOpened}
-              onClick={props.onNavbarOpen}
-              size="sm"
-              color={theme.colors.gray[6]}
-            />
-          </Group>
+          <Burger
+            opened={props.navbarOpened}
+            onClick={props.onNavbarOpen}
+            size="sm"
+            color={theme.colors.gray[6]}
+          />
         </MediaQuery>
         <Group ml={10}>
-          <Anchor component={Link} to="/" reloadDocument={false}>
-            <Image
-              src="/logo.svg"
-              fit="contain"
-              width="150px"
-              alt="letscollab"
-            />
+          <Anchor
+            component={Link}
+            to={props.logoHref}
+            reloadDocument={false}
+            underline={false}
+          >
+            {props.logo}
           </Anchor>
         </Group>
 
@@ -76,7 +75,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
               })}
             >
               <Group sx={{ marginRight: 40 }} spacing={40}>
-                <Anchor href="/pro">文档</Anchor>
+                {props.nav}
               </Group>
             </Group>
           </MediaQuery>
