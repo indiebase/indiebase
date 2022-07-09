@@ -4,10 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
 } from 'typeorm';
-import { UserEntity } from '@letscollab/user';
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum PrjStatus {
@@ -58,13 +55,15 @@ export class PrjEntity {
   })
   updateTime?: Date;
 
-  @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
-  @JoinTable()
-  members?: UserEntity[];
+  // @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
+  // @JoinTable()
+  // members?: UserEntity[];
 
   @ApiProperty({
-    default: 'Github repository url',
+    default: 'Github repo url',
   })
-  @Column()
-  githubRepositoryUrl?: string;
+  @Column({
+    name: 'github_repo_url',
+  })
+  githubRepoUrl?: string;
 }

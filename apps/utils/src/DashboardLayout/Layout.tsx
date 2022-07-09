@@ -17,6 +17,7 @@ export interface DashboardLayoutProps {
   menu: MenuNode[];
   logoHref: string;
   logo: React.ReactNode;
+  logoWidth: number;
   nav?: React.ReactNode;
   [key: string]: any;
 }
@@ -41,7 +42,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
         })}
       />
       <MantineProvider
-        theme={{ colorScheme, primaryColor: 'dark' }}
+        theme={{ colorScheme, primaryColor: 'blue' }}
         defaultProps={{
           Button: { size: 'xs' },
         }}
@@ -64,6 +65,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             navbar={<Menu menu={props.menu} opened={!opened} />}
             header={
               <Header
+                logoWidth={props.logoWidth}
                 nav={props.nav}
                 logoHref={props.logoHref}
                 logo={props.logo}

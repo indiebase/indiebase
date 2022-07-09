@@ -29,17 +29,21 @@ export class OrgService {
     private readonly logger: Logger,
   ) {}
 
-  async queryTeam(body: QueryOrgDto) {
+  async queryOrg(body: QueryOrgDto) {
     body = Object.assign({}, body);
     const { name, current, pageSize } = body;
-    const cond = [];
+    let cond = [];
     name && cond.push({ name });
+
+    if (cond.length === 0) {
+      cond = null;
+    }
 
     const [list, total] = await this.orgRepo.findAndCount({
       where: cond,
       relations: ['members'],
-      skip: (current - 1) * pageSize,
       take: pageSize,
+      skip: (current - 1) * pageSize,
     });
 
     return {
@@ -51,7 +55,7 @@ export class OrgService {
     };
   }
 
-  async createTeam(body: CreateOrgDto) {
+  async createOrg(body: CreateOrgDto) {
     const teamEntity = this.orgRepo.create(body);
     await this.orgRepo.save(teamEntity).catch((err) => {
       this.logger.error(err);
@@ -64,7 +68,7 @@ export class OrgService {
     return { code: ResultCode.SUCCESS, message: '创建成功' };
   }
 
-  async updateTeam(body: UpdateOrgDto) {
+  async updateOrg(body: UpdateOrgDto) {
     const { id, ...rest } = body;
     this.orgRepo.remove;
     await this.orgRepo.update({ id }, rest).catch((err) => {
@@ -78,7 +82,7 @@ export class OrgService {
     return { code: ResultCode.SUCCESS, message: '更新成功' };
   }
 
-  async deleteTeam(body: DeleteOrgDto) {
+  async deleteOrg(body: DeleteOrgDto) {
     const { id } = body;
     await this.orgRepo.delete({ id }).catch((err) => {
       this.logger.error(err);

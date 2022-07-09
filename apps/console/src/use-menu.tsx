@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { IconSettings } from '@tabler/icons';
+import { IconSettings, IconFileCode } from '@tabler/icons';
+import { MantineThemeColors } from '@mantine/core';
 
 export interface MenuNode {
   label: string;
   to?: string;
   icon?: React.ReactNode;
-  color?: string;
+  color?: keyof MantineThemeColors;
   children?: MenuNode[];
   onClick?: () => Promise<void> | void;
 }
@@ -13,6 +14,12 @@ export interface MenuNode {
 export const useMenu = () => {
   return useMemo<MenuNode[]>(
     () => [
+      {
+        label: 'Project',
+        icon: <IconFileCode size={16} />,
+        color: 'blue',
+        to: 'projects',
+      },
       {
         label: 'Setting',
         icon: <IconSettings size={16} />,

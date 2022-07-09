@@ -1,46 +1,39 @@
-import { TeamModule } from '../team/team.module';
 import { resolve } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { readJsonSync } from 'fs-extra';
-import { writeOpenApiDoc } from '@letscollab/helper';
 import { OrgModule } from '../org/org.module';
+import { PrjModule } from '../prj/prj.module';
 import { InvitationModule } from '../invitation/invitation.module';
+import { type FastifyRequest } from 'fastify';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
-export const setupUserApiDoc = (app: INestApplication) =>
+export const setupCollabApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
       const userOptions = new DocumentBuilder()
         .setTitle('Collab Api')
+        .setDescription('Collab REST API')
         .setVersion(pkg.version)
-        .addBearerAuth(
-          {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-            name: 'JWT',
-            description: 'Enter JWT token',
-            in: 'Header',
-          },
-          'jwt',
-        )
+        .addCookieAuth('SID', {
+          type: 'apiKey',
+          in: 'cookie',
+        })
         .build();
 
       const userDoc = SwaggerModule.createDocument(app, userOptions, {
-        include: [TeamModule, OrgModule, InvitationModule],
+        include: [PrjModule, OrgModule, InvitationModule],
       });
-      SwaggerModule.setup('api/doc/collab', app, userDoc, {
+      SwaggerModule.setup('openapi/collab', app, userDoc, {
         uiConfig: {
           persistAuthorization: true,
         },
-      });
-      await writeOpenApiDoc({
-        name: 'user',
-        pkgName: pkg.name,
-        pkgVersion: pkg.version,
-        content: userDoc,
+        uiHooks: {
+          preHandler(req: FastifyRequest, res, next) {
+            next();
+          },
+        },
       });
     } catch (e) {
       console.log(e);

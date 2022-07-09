@@ -4,25 +4,22 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
 } from 'typeorm';
-import { UserEntity } from '@letscollab/user';
 import { ApiProperty } from '@nestjs/swagger';
 
-export enum TeamStatus {
-  active,
-  inactive,
+export enum OrgStatus {
+  active = 'active',
+  inactive = 'inactive',
 }
 
-@Entity('team')
+@Entity('org')
 export class OrgEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
   @ApiProperty()
-  @Column('varchar', { unique: true, comment: 'Team name' })
+  @Column('varchar', { unique: true, comment: 'Organization name' })
   name: string;
 
   @ApiProperty()
@@ -30,15 +27,15 @@ export class OrgEntity {
   contactEmail: string;
 
   @ApiProperty({
-    enum: TeamStatus,
+    enum: OrgStatus,
   })
-  @Column('int', {
+  @Column('simple-enum', {
     name: 'status',
-    comment: 'Team Status',
-    default: TeamStatus.active,
-    nullable: true,
+    comment: 'Organization Status',
+    enum: OrgStatus,
+    default: OrgStatus.active,
   })
-  status?: TeamStatus;
+  status?: OrgStatus;
 
   @ApiProperty()
   @Column({ nullable: true })
@@ -62,7 +59,7 @@ export class OrgEntity {
   })
   updateTime?: Date;
 
-  @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
-  @JoinTable()
-  members?: UserEntity[];
+  // @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
+  // @JoinTable()
+  // members?: UserEntity[];
 }

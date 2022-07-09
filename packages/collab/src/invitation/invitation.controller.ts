@@ -11,10 +11,10 @@ import {
 import { InvitationService } from './invitation.service';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Http2RmqAuthGuard } from 'src/guard/rmq-auth.guard';
 
 import { IVerify } from '@letscollab/helper';
 import { InviteMemberDto } from './invitation.dto';
+import { SessionRpcAuthClientGuard } from 'src/guard/session-rpc-auth-client.guard';
 
 @Controller('invite')
 @ApiTags('v1/Invitation')
@@ -43,7 +43,7 @@ export class InvitationController {
 
   @Post('create')
   @ApiBearerAuth('jwt')
-  @UseGuards(Http2RmqAuthGuard)
+  @UseGuards(SessionRpcAuthClientGuard)
   async inviteMember(
     @Body() body: InviteMemberDto,
     @Req() req: { user: IVerify },
@@ -53,7 +53,7 @@ export class InvitationController {
 
   @Get('invite/confirm')
   @ApiBearerAuth('jwt')
-  @UseGuards(Http2RmqAuthGuard)
+  @UseGuards(SessionRpcAuthClientGuard)
   async confirmInviteMember(@Body() body) {
     // return this.invitationService.updateTeam(body);
   }

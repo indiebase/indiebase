@@ -2,6 +2,7 @@ import { ProTable, ActionType, ProColumns } from '@letscollab/app-utils';
 import { useRef } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { RoleModal } from './RoleModal';
+import { Container, Text } from '@mantine/core';
 
 const columns: ProColumns<any>[] = [
   {
@@ -69,6 +70,7 @@ export const RoleTable = function () {
       search={{
         filterType: 'light',
       }}
+      locale={{ emptyText: <Container my={20}>Empty</Container> }}
       showSorterTooltip={false}
       headerTitle="角色"
       toolbar={{}}

@@ -15,15 +15,11 @@ import {
 } from '@letscollab/helper';
 import { setupUserApiDoc } from './utils';
 import fastifyHelmet from '@fastify/helmet';
-import * as ConnectRedis from 'connect-redis';
-import fastifySession from 'fastify-session';
 import Fastify from 'fastify';
 import {
   i18nValidationErrorFactory,
   I18nValidationExceptionFilter,
 } from 'nestjs-i18n';
-
-const RedisStore = ConnectRedis(fastifySession);
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
