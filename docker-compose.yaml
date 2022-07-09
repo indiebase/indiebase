@@ -160,7 +160,6 @@ services:
     volumes:
       - redis_data:/data
       - ./config/redis:/usr/local/etc/redis
-    # command: --requirepass letscollab
     command: redis-server /usr/local/etc/redis/redis.conf
     logging: *loki-logging
 networks:
