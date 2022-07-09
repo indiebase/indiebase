@@ -25,5 +25,5 @@
   },
   "include": [
     "src"
-  ],
+, "../console/src/components/Guard"  ],
 }

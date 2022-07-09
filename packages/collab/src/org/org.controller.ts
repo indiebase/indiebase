@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { OrgService } from './org.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import {
   CreateOrgDto,
   DeleteOrgDto,
@@ -17,48 +17,40 @@ import {
   UpdateOrgDto,
 } from './org.dto';
 
-@Controller('org')
+@Controller('v1/org')
 @ApiTags('v1/Organization')
 export class OrgController {
   constructor(private readonly orgService: OrgService) {}
 
-  @Get('query')
-  @ApiBearerAuth('jwt')
+  @Get('list')
+  @ApiCookieAuth('SID')
   @ApiOkResponse({
     type: QueryOrgResDto,
   })
-  // @UseGuards(Http2RmqAuthGuard)
   async queryOrgs(@Query() query: QueryOrgDto) {
-    return this.orgService.queryTeam(query);
+    return this.orgService.queryOrg(query);
   }
 
-  @Post('create')
-  @ApiBearerAuth('jwt')
-  // @UseGuards(Http2RmqAuthGuard)
-  async createTeam(@Body() body: CreateOrgDto) {
-    return this.orgService.createTeam(body);
+  @Post()
+  @ApiCookieAuth('SID')
+  async createOrg(@Body() body: CreateOrgDto) {
+    return this.orgService.createOrg({
+      name: body.name,
+      description: body.description,
+      contactEmail: body.contactEmail,
+    });
   }
 
-  @Put('update')
-  @ApiBearerAuth('jwt')
-  // @UseGuards(Http2RmqAuthGuard)
-  async updateTeam(@Body() body: UpdateOrgDto) {
-    return this.orgService.updateTeam(body);
+  @Put()
+  @ApiCookieAuth('SID')
+  async updateOrg(@Body() body: UpdateOrgDto) {
+    return this.orgService.updateOrg(body);
   }
 
-  @Delete('delete')
-  @ApiBearerAuth('jwt')
+  @Delete()
+  @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
   async deleteTeam(@Body() body: DeleteOrgDto) {
-    return this.orgService.deleteTeam(body);
-  }
-
-  @Get('demo')
-  // @ApiBearerAuth('jwt')
-  // @UseGuards(Http2RmqAuthGuard)
-  async demo(@Query() body) {
-    console.log(body);
-    return {};
-    // return this.orgService.deleteTeam(body);
+    return this.orgService.deleteOrg(body);
   }
 }

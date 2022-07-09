@@ -1,5 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import { PaginationReqDto } from '@letscollab/helper';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsNumber,
+  Matches,
+} from 'class-validator';
 
 export class CreatePrjDto {
   @ApiProperty({
@@ -12,10 +19,10 @@ export class CreatePrjDto {
 
   @ApiProperty({
     description: 'Github repository URI',
-    default: 'letscollab',
+    default: 'https://github.com/deskbtm-letscollab/letscollab',
     required: true,
   })
-  @IsString()
+  @Matches(/github\.com/g)
   githubRepoUrl: string;
 
   @ApiProperty({
@@ -71,7 +78,13 @@ export class UpdatePrjDto {
   description: string;
 }
 
-export class QueryPrjDto {}
+export class QueryPrjDto extends PaginationReqDto {
+  @ApiPropertyOptional({
+    nullable: true,
+  })
+  @IsOptional()
+  name?: string;
+}
 
 export class DeletePrjDto {
   @ApiProperty()

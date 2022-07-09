@@ -14,7 +14,6 @@ import {
   UpdatePrjDto,
 } from './prj.dto';
 import { ResultCode } from '@letscollab/helper';
-
 import { Repository } from 'typeorm';
 import { PrjEntity } from './prj.entity';
 
@@ -47,19 +46,31 @@ export class PrjService {
   }
 
   async queryPrj(body: QueryPrjDto) {
-    const prjEntity = this.prjRepo.create(body);
-    await this.prjRepo.save(prjEntity).catch((err) => {
-      this.logger.error(err);
-      throw new InternalServerErrorException({
-        code: ResultCode.ERROR,
-        message: err?.code === 'ER_DUP_ENTRY' ? '团队名重复' : '创建失败',
-      });
+    body = Object.assign({}, body);
+    const { name, current, pageSize } = body;
+    let cond = [];
+    name && cond.push({ name });
+
+    if (cond.length === 0) {
+      cond = null;
+    }
+
+    const [list, total] = await this.prjRepo.findAndCount({
+      where: cond,
+      // relations: ['members'],
+      take: pageSize,
+      skip: (current - 1) * pageSize,
     });
 
-    return { code: ResultCode.SUCCESS, message: '创建成功' };
+    return {
+      code: ResultCode.SUCCESS,
+      pageSize,
+      total,
+      current,
+      d: list,
+    };
   }
 
-  // TODO
   async updatePrj(body: UpdatePrjDto) {
     const { id, ...rest } = body;
     this.prjRepo.remove;

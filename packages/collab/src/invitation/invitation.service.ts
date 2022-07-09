@@ -11,16 +11,16 @@ import { AUTH_RMQ, USER_RMQ } from '../app.constants';
 
 import { ResultCode } from '@letscollab/helper';
 import { lastValueFrom, timeout, catchError } from 'rxjs';
-import { InvitationRepository } from './invitation.repository';
 import { UserResDto } from '@letscollab/user';
-import { InvitationStatus } from './invitation.entity';
+import { InvitationEntity, InvitationStatus } from './invitation.entity';
 import { InviteMemberDto } from './invitation.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class InvitationService {
   constructor(
-    @InjectRepository(InvitationRepository)
-    private readonly inviteRepo: InvitationRepository,
+    @InjectRepository(InvitationEntity)
+    private readonly inviteRepo: Repository<InvitationEntity>,
 
     @Inject(AUTH_RMQ)
     private readonly authClient: ClientProxy,
@@ -33,6 +33,18 @@ export class InvitationService {
 
     private readonly logger: Logger,
   ) {}
+
+  private async createInvitation(
+    body: Omit<InvitationEntity, 'id'>,
+  ): Promise<InvitationEntity> {
+    const entity = this.inviteRepo.create(body);
+    return this.inviteRepo.save(entity).catch((err) => {
+      throw new InternalServerErrorException({
+        code: ResultCode.SUCCESS,
+        message: err.message,
+      });
+    });
+  }
 
   private async getUser<T>(cmd: string, c: any, errorMsg?: string) {
     return lastValueFrom<T>(
@@ -54,8 +66,10 @@ export class InvitationService {
 
     if (target.code > 0 && host.code > 0) {
       const record = await this.inviteRepo.findOne({
-        hostId: host.d.id,
-        targetId: target.d.id,
+        where: {
+          hostId: host.d.id,
+          targetId: target.d.id,
+        },
       });
 
       switch (record?.status) {
@@ -70,7 +84,7 @@ export class InvitationService {
             message: '对方已在团队内',
           };
         default:
-          await this.inviteRepo.createInvitation({
+          await this.createInvitation({
             hostId: host.d.id,
             targetId: target.d.id,
             status: InvitationStatus.pending,

@@ -1,4 +1,4 @@
-import { UserEntity } from '@letscollab/user';
+// import { UserEntity } from '@letscollab/user';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { OrgService } from './org.service';
 import { OrgController } from './org.controller';
@@ -10,7 +10,7 @@ import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '../app.constants';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OrgEntity, UserEntity]),
+    TypeOrmModule.forFeature([OrgEntity]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: USER_RMQ, q: 'user_queue' },

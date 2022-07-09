@@ -49,6 +49,7 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
     <span>
       <Modal
         centered
+        size="lg"
         overlayColor={
           theme.colorScheme === 'dark'
             ? theme.colors.dark[9]
@@ -70,8 +71,16 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
               <TextInput
                 my={15}
                 variant="filled"
-                label="角色名"
-                placeholder="请输入角色名"
+                label="账户"
+                placeholder="请输入账户"
+                {...form.getInputProps('name')}
+                required
+              />
+              <TextInput
+                my={15}
+                variant="filled"
+                label="角色"
+                placeholder="请输入账户"
                 {...form.getInputProps('name')}
                 required
               />

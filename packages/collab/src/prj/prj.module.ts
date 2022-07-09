@@ -1,4 +1,3 @@
-import { UserEntity } from '@letscollab/user';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { PrjService } from './prj.service';
 import { PrjController } from './prj.controller';
@@ -10,7 +9,7 @@ import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PrjEntity, UserEntity]),
+    TypeOrmModule.forFeature([PrjEntity]),
     ...[
       { name: AUTH_RMQ, q: 'auth_queue' },
       { name: MAIL_RMQ, q: 'msg_queue' },
@@ -42,4 +41,4 @@ import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
   controllers: [PrjController],
   providers: [PrjService, Logger],
 })
-export class TeamModule {}
+export class PrjModule {}

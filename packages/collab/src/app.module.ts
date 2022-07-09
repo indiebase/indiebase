@@ -3,7 +3,6 @@ import configure from './config';
 import { I18nModule } from 'nestjs-i18n';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { TeamModule } from './team/team.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { utilities, WinstonModule } from 'nest-winston';
@@ -17,14 +16,15 @@ import {
 } from '@letscollab/nest-nacos';
 import { InvitationModule } from './invitation/invitation.module';
 import { OrgModule } from './org/org.module';
+import { PrjModule } from './prj/prj.module';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
-    TeamModule,
     InvitationModule,
+    PrjModule,
     OrgModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),

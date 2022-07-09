@@ -92,6 +92,14 @@ export const Menu: FC<MenuProps> = function (props) {
               <Accordion.Item
                 key={index1}
                 label={node.label}
+                onClick={(e) => {
+                  if (node.children && node.children?.length <= 0) {
+                    return;
+                  }
+                  e.stopPropagation();
+                  setActive(null);
+                  navigate(node.to!);
+                }}
                 icon={
                   <ThemeIcon color={node.color} variant="light">
                     {node.icon}

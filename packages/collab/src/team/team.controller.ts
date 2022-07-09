@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { TeamService } from './team.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateTeamDto,
   DeleteTeamDto,
@@ -23,7 +23,6 @@ export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 
   @Get('query')
-  @ApiBearerAuth('jwt')
   @ApiOkResponse({
     type: QueryTeamResDto,
   })
@@ -33,21 +32,18 @@ export class TeamController {
   }
 
   @Post('create')
-  @ApiBearerAuth('jwt')
   // @UseGuards(Http2RmqAuthGuard)
   async createTeam(@Body() body: CreateTeamDto) {
     return this.teamService.createTeam(body);
   }
 
   @Put('update')
-  @ApiBearerAuth('jwt')
   // @UseGuards(Http2RmqAuthGuard)
   async updateTeam(@Body() body: UpdateTeamDto) {
     return this.teamService.updateTeam(body);
   }
 
   @Delete('delete')
-  @ApiBearerAuth('jwt')
   // @UseGuards(Http2RmqAuthGuard)
   async deleteTeam(@Body() body: DeleteTeamDto) {
     return this.teamService.deleteTeam(body);

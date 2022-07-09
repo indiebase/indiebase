@@ -1,5 +1,5 @@
 import { ProTable, ActionType, ProColumns } from '@letscollab/app-utils';
-import { Button } from '@mantine/core';
+import { Button, Container } from '@mantine/core';
 import { useRef, useMemo } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { MemberModal } from './MemberModal';
@@ -86,6 +86,7 @@ export const MemberTable = function () {
       search={{
         filterType: 'light',
       }}
+      locale={{ emptyText: <Container my={20}>Empty</Container> }}
       showSorterTooltip={false}
       rowSelection={rowSelection}
       headerTitle="成员"
