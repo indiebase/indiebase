@@ -12,7 +12,7 @@
     "@mantine/notifications": "^4.2.12",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
-    "@tabler/icons": "^1.72.0",
+    "@tabler/icons": "^1.74.0",
     "axios": "^0.27.2",
     "axios-mock-adapter": "^1.21.1",
     "babel-jest": "^27.4.2",

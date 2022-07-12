@@ -1,6 +1,6 @@
+import { UserEntity } from './user.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
-import { AccountStatus } from './user.enum';
 import { BaseResSchemaDto } from '@letscollab/helper';
 
 export class SignupDto {
@@ -45,49 +45,9 @@ export class SignupDto {
   captcha: number;
 }
 
-export class UserDto {
-  @ApiProperty({
-    description: 'jwt',
-  })
-  t?: string;
-
-  @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  username: string;
-
-  @ApiProperty({
-    description: '初始值和username相同',
-  })
-  nickname?: string;
-
-  @ApiProperty({
-    enum: AccountStatus,
-    description: 'Account status',
-  })
-  status?: AccountStatus;
-
-  @ApiPropertyOptional({
-    description: '邀请的用户',
-  })
-  invitations?: UserDto[];
-
-  @ApiPropertyOptional({
-    description: '被邀请',
-  })
-  inviteBy?: UserDto;
-
-  @ApiProperty()
-  createTime?: Date;
-
-  @ApiProperty()
-  updateTime?: Date;
-}
-
 export class UserResDto extends BaseResSchemaDto {
   @ApiPropertyOptional({
-    type: () => UserDto,
+    type: () => UserEntity,
   })
-  d?: UserDto;
+  d?: UserEntity;
 }

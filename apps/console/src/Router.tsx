@@ -8,7 +8,7 @@ import { DashboardLayout } from '@letscollab/app-utils';
 import { useProMenu } from '@letscollab-pro/console';
 import { Anchor, Image, Text, Title } from '@mantine/core';
 import { useQuery } from 'react-query';
-import { req } from './api';
+import { req } from '@letscollab/app-utils/src/api';
 import { Layout } from './Layout';
 
 export const AppRouter: FC<any> = function () {

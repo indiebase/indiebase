@@ -1,32 +1,25 @@
-import { FC, useMemo } from 'react';
-import { Link, useRoutes } from 'react-router-dom';
-import { HomePage } from './pages';
-import { NotFoundPage } from './pages/404';
-import { AccessPage } from './pages/Settings/';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { useMenu } from './use-menu';
 import { DashboardLayout } from '@letscollab/app-utils';
-import { useProMenu } from '@letscollab-pro/console';
-import { Anchor, Image, Text, Title } from '@mantine/core';
-import { useQuery } from 'react-query';
-import { req } from './api';
+import { Anchor, Image } from '@mantine/core';
+import { userProfileQuery } from '@letscollab/app-utils';
+import { useAtom } from 'jotai';
 
 export const Layout: FC<any> = function () {
   const menu = useMenu();
 
-  // const { isLoading, error, data, isFetching } = useQuery(['repoData'], () =>
-  //   req
-  //     .get('https://api.github.com/repos/tannerlinsley/react-query')
-  //     .then((res) => res.data),
-  // );
+  const [data, dispatch] = useAtom(userProfileQuery);
 
   return (
     <DashboardLayout
       logoHref="/"
       logo={
-        <Image src="/logo.svg" fit="contain" width="150px" alt="letscollab" />
+        <Image src="/logo.svg" fit="contain" width="180px" alt="letscollab" />
       }
-      logoWidth={150}
+      logoWidth={180}
       menu={menu}
+      orgs={data.d.orgs}
       nav={
         <>
           <Anchor
@@ -35,12 +28,13 @@ export const Layout: FC<any> = function () {
             underline={false}
             component={Link}
             reloadDocument={false}
-            style={{ color: '#ffd700', fontWeight: 700 }}
+            style={{ color: '#228be6', fontWeight: 700 }}
           >
             Switch Pro
           </Anchor>
         </>
       }
+      navbarOpened={false}
     />
   );
 };

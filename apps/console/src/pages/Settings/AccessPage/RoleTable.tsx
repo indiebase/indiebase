@@ -85,7 +85,6 @@ export const RoleTable = function () {
       pagination={{
         showQuickJumper: true,
       }}
-      rowKey="id"
       toolBarRender={() => [<RoleModal />]}
       dateFormatter={(value, valueType) => {
         return value.format('YYYY-MM-DD HH:mm:ss');

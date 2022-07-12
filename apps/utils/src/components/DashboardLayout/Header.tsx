@@ -6,12 +6,14 @@ import {
   Group,
   Anchor,
   Avatar,
-  Image,
   Select,
   Text,
+  Menu,
+  Divider,
 } from '@mantine/core';
 import { FC, forwardRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { IconSettings, IconPlus } from '@tabler/icons';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -20,53 +22,23 @@ export interface NavHeaderProps {
   nav?: React.ReactNode;
   logoHref: string;
   navbarOpened: boolean;
+  orgs?: OrgSelectProps[];
 }
 
-const data = [
-  {
-    image:
-      'https://deskbtm.coding.net/static/project_icon/scenery-version-2-3.svg',
-    label: 'Bender Bending 11111111111111111111111111111111',
-    value: 'Bender Bending Rodríguez',
-    description: 'Fascinated with cooking',
-  },
-
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
-    label: 'Carol Miller',
-    value: 'Carol Miller',
-    description: 'One of the richest people on Earth',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
-    label: 'Homer Simpson',
-    value: 'Homer Simpson',
-    description: 'Overweight, lazy, and often ignorant',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    value: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-  },
-];
-
-interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
-  image: string;
+export interface OrgSelectProps extends React.ComponentPropsWithoutRef<'div'> {
+  logo: string;
   label: string;
-  description: string;
+  value: string;
 }
 
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ image, label, description, ...others }: ItemProps, ref) => (
-    <div ref={ref} {...others}>
+const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
+  ({ logo, label, value, ...rest }: OrgSelectProps, ref) => (
+    <div ref={ref} {...rest}>
       <Group noWrap spacing={7}>
-        <Avatar src={image} radius="xl" size={15} />
-        <div>
-          <Text lineClamp={1} size="xs">
-            {label}
-          </Text>
-        </div>
+        <Avatar src={logo} radius="xl" size={15} />
+        <Text lineClamp={1} size="xs">
+          {label}
+        </Text>
       </Group>
     </div>
   ),
@@ -76,6 +48,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
 
   const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
+  const [org, setOrg] = useState<string | undefined>();
+  const { orgs } = props;
 
   return (
     <MantineHeader
@@ -112,16 +86,17 @@ export const Header: FC<NavHeaderProps> = function (props) {
           <MediaQuery smallerThan="sm" styles={{ display: 'none', width: 100 }}>
             <Group spacing="xs" ml={6}>
               <Avatar src={orgAvatar} radius="xl" size="sm" />
-
               <div style={{ width: 150 }}>
                 <Select
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
-                  data={data}
+                  data={orgs!}
+                  value={org}
                   onChange={(e) => {
-                    const r = data.find((v) => v.value === e);
-                    setOrgAvatar(r?.image);
+                    const r = orgs!.find((v) => v.value === e);
+                    setOrg(r?.value);
+                    setOrgAvatar(r?.logo);
                   }}
                   searchable
                   size="xs"
@@ -158,8 +133,19 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 height: '100%',
               })}
             >
-              <Group sx={{ marginRight: 40 }} spacing={40}>
+              <Group sx={{ marginRight: 20, height: '100%' }} spacing={40}>
                 {props.nav}
+                <Divider orientation="vertical" />
+              </Group>
+              <Group mr={30} spacing={6}>
+                <Menu color="dark" control={<Avatar radius="xl" size="md" />}>
+                  <Menu.Item icon={<IconSettings size={16} />}>
+                    Settings
+                  </Menu.Item>
+                  <Menu.Item icon={<IconPlus size={16} />}>
+                    Create Organization
+                  </Menu.Item>
+                </Menu>
               </Group>
             </Group>
           </MediaQuery>
@@ -167,4 +153,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
       </Group>
     </MantineHeader>
   );
+};
+
+Header.defaultProps = {
+  orgs: [],
 };

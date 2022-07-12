@@ -12,12 +12,10 @@ export const req = axios.create({
 req.interceptors.request.use(
   async function (config) {
     console.debug('request....', config);
-    const jwt = await localforage.getItem('t');
-    config.headers['Authorization'] = `Bearer ${jwt}`;
     return config;
   },
   function (error) {
-    return Promise.resolve(error);
+    return Promise.reject(error);
   },
 );
 
@@ -49,4 +47,6 @@ req.interceptors.response.use(
   },
 );
 
-export const mock = new MockAdapter(axios);
+export const mock = new MockAdapter(req, { delayResponse: 1000 });
+
+process.env.NODE_ENV !== 'development' && mock.restore();
