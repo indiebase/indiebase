@@ -1,5 +1,6 @@
 import { ProTable, ActionType, ProColumns } from '@letscollab/app-utils';
 import { Button, Container } from '@mantine/core';
+import { atom, useAtom } from 'jotai';
 import { useRef, useMemo } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { MemberModal } from './MemberModal';
@@ -48,6 +49,8 @@ const columns: ProColumns<any>[] = [
   },
 ];
 
+const id1 = atom(0);
+
 export const MemberTable = function () {
   const ref = useRef<ActionType>(null);
   const requestData = async function () {
@@ -80,6 +83,7 @@ export const MemberTable = function () {
     };
   }, []);
 
+  // const [data1, setProfile] = useAtom(userProfile);
   return (
     <ProTable
       bordered
@@ -101,7 +105,7 @@ export const MemberTable = function () {
       pagination={{
         showQuickJumper: true,
       }}
-      rowKey="id"
+      rowKey="name"
       toolBarRender={() => [<MemberModal />]}
       dateFormatter={(value, valueType) => {
         return value.format('YYYY-MM-DD HH:mm:ss');

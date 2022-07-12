@@ -11,9 +11,11 @@ import {
 import * as bcrypt from 'bcrypt';
 import { TeamEntity } from '@letscollab/collab';
 import { AccountStatus, SignupType } from './user.enum';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('user')
 export class UserEntity {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,36 +25,50 @@ export class UserEntity {
   })
   signupType: SignupType;
 
+  @ApiProperty()
   @Column('char', { unique: true, nullable: true, length: 32 })
   githubId?: string;
 
+  @ApiProperty()
   @Column('varchar', { nullable: true })
   profileUrl?: string;
 
+  @ApiProperty()
   @Column('varchar', { comment: 'Avatar url', nullable: true })
   avatar?: string;
 
+  @ApiProperty()
   @Column('varchar', { comment: 'company', nullable: true })
   company?: string;
 
+  @ApiProperty()
   @Column('varchar', { unique: true })
   username: string;
 
+  @ApiProperty()
   @Column('varchar', { unique: true })
   email: string;
 
   @Column({ type: 'varchar', nullable: true })
   bio?: string;
 
+  @ApiProperty({
+    description: 'The default value is same as username',
+  })
   @Column('varchar', { comment: 'Optional name' })
   nickname?: string;
 
   @Column('varchar', { select: false, nullable: true })
   password?: string;
 
-  @Column('int', {
+  @ApiProperty({
+    enum: AccountStatus,
+    description: 'Account status',
+  })
+  @Column('simple-enum', {
+    enum: AccountStatus,
     comment: 'Account status',
-    default: 1,
+    default: AccountStatus.active,
   })
   status?: AccountStatus;
 
@@ -61,6 +77,7 @@ export class UserEntity {
     name: 'create_time',
     comment: 'Create time',
   })
+  @ApiProperty()
   createTime: Date;
 
   @UpdateDateColumn({
@@ -68,6 +85,7 @@ export class UserEntity {
     name: 'update_time',
     comment: 'Update time',
   })
+  @ApiProperty()
   updateTime: Date;
 
   @ManyToMany(() => TeamEntity, (t) => t.members)
@@ -75,7 +93,7 @@ export class UserEntity {
 
   @BeforeInsert()
   @BeforeUpdate()
-  async hashPassword() {
+  private async hashPassword() {
     if (this.password) {
       const salt = await bcrypt.genSalt(10);
       this.password = await bcrypt.hash(this.password, salt);
