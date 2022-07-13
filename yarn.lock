@@ -3174,11 +3174,16 @@ __metadata:
     "@mantine/hooks": ^4.2.12
     "@mantine/notifications": ^4.2.12
     "@types/node": ^16.11.25
+    "@types/node-forge": ^1.0.2
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
+    "@types/stegcloak": ^1.0.0
     jotai: ^1.7.3
+    nanoid: ^3.3.2
+    node-forge: ^1.3.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    stegcloak: ^1.1.1
     typescript: ^4.6.3
   languageName: unknown
   linkType: soft
@@ -3427,6 +3432,7 @@ __metadata:
     react-app-polyfill: ^3.0.0
     react-dev-utils: ^12.0.1
     react-dom: ^18.2.0
+    react-error-boundary: ^3.1.4
     react-i18next: ^11.17.4
     react-query: ^3.39.1
     react-refresh: ^0.11.0
@@ -3437,7 +3443,7 @@ __metadata:
     sass-loader: ^12.3.0
     semver: ^7.3.5
     source-map-loader: ^3.0.0
-    stegcloak: ^1.1.1
+    stream-browserify: ^3.0.0
     style-loader: ^3.3.1
     tailwindcss: ^3.0.2
     terser-webpack-plugin: ^5.2.5
@@ -6755,6 +6761,13 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
+  languageName: node
+  linkType: hard
+
+"@types/stegcloak@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@types/stegcloak@npm:1.0.0"
+  checksum: 3e00e699e484e59ec87f1751c85fc5c74a150ad9499576b30d94737c2982da1c938aa0365faae708aa406fa6824f34040b62b82318b66b90171a572c3fc6c956
   languageName: node
   linkType: hard
 
@@ -15747,7 +15760,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.1, inherits@npm:~2.0.3":
+"inherits@npm:2, inherits@npm:2.0.4, inherits@npm:^2.0.1, inherits@npm:^2.0.3, inherits@npm:^2.0.4, inherits@npm:~2.0.1, inherits@npm:~2.0.3, inherits@npm:~2.0.4":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 4a48a733847879d6cf6691860a6b1e3f0f4754176e4d71494c41f3475553768b10f84b5ce1d40fbd0e34e6bfbb864ee35858ad4dd2cf31e02fc4a154b724d7f1
@@ -24834,6 +24847,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-error-boundary@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "react-error-boundary@npm:3.1.4"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: f36270a5d775a25c8920f854c0d91649ceea417b15b5bc51e270a959b0476647bb79abb4da3be7dd9a4597b029214e8fe43ea914a7f16fa7543c91f784977f1b
+  languageName: node
+  linkType: hard
+
 "react-error-overlay@npm:^6.0.11":
   version: 6.0.11
   resolution: "react-error-overlay@npm:6.0.11"
@@ -25135,7 +25159,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:3, readable-stream@npm:^3.0.0, readable-stream@npm:^3.0.2, readable-stream@npm:^3.0.6, readable-stream@npm:^3.1.1, readable-stream@npm:^3.4.0, readable-stream@npm:^3.6.0":
+"readable-stream@npm:3, readable-stream@npm:^3.0.0, readable-stream@npm:^3.0.2, readable-stream@npm:^3.0.6, readable-stream@npm:^3.1.1, readable-stream@npm:^3.4.0, readable-stream@npm:^3.5.0, readable-stream@npm:^3.6.0":
   version: 3.6.0
   resolution: "readable-stream@npm:3.6.0"
   dependencies:
@@ -26921,6 +26945,16 @@ __metadata:
   bin:
     stegcloak: ./cli.js
   checksum: 69fb48fa7004ad3486b0884f9c7defec50f750e9f5a8968732711f3495bfde9d17a7596c71c48f1de1049d3645adb2e91a82eb10a61eb7c620a3136117005a0b
+  languageName: node
+  linkType: hard
+
+"stream-browserify@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "stream-browserify@npm:3.0.0"
+  dependencies:
+    inherits: ~2.0.4
+    readable-stream: ^3.5.0
+  checksum: 4c47ef64d6f03815a9ca3874e2319805e8e8a85f3550776c47ce523b6f4c6cd57f40e46ec6a9ab8ad260fde61863c2718f250d3bedb3fe9052444eb9abfd9921
   languageName: node
   linkType: hard
 

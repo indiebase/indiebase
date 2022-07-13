@@ -30,7 +30,7 @@ i18n
   });
 
 if (process.env.NODE_ENV === 'production') {
-  console.debug = () => {};
+  console.log = () => {};
 }
 
 const root = ReactDOM.createRoot(

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import {
@@ -12,6 +12,7 @@ import {
 import { NotificationsProvider } from '@mantine/notifications';
 import { Header, NavHeaderProps } from './Header';
 import { Menu, MenuNode } from './Menu';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export interface DashboardLayoutProps extends NavHeaderProps {
   menu: MenuNode[];
@@ -60,11 +61,15 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             asideOffsetBreakpoint="sm"
             navbar={<Menu menu={props.menu} opened={!opened} />}
             header={
-              <Header
-                {...props}
-                navbarOpened={opened}
-                onNavbarOpen={() => setOpened((o) => !o)}
-              />
+              <ErrorBoundary fallbackRender={() => <div></div>}>
+                <Suspense>
+                  <Header
+                    {...props}
+                    navbarOpened={opened}
+                    onNavbarOpen={() => setOpened((o) => !o)}
+                  />
+                </Suspense>
+              </ErrorBoundary>
             }
           >
             <Outlet />

@@ -69,9 +69,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
           </Group>
         </MediaQuery>
         <Group sx={{ marginLeft: matches ? 0 : 30 }}>
-          <Link href="/">
+          <Link href="/" passHref>
             <Image
-            
               src="/logo.svg"
               fit="contain"
               width="150px"

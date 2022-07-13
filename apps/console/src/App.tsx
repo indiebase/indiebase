@@ -2,11 +2,17 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './Router';
-import './App.less';
-import { Suspense } from 'react';
 import { Provider } from 'jotai';
 
-const queryClient = new QueryClient();
+import './App.less';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+    },
+  },
+});
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -19,9 +25,7 @@ function App() {
       />
       <BrowserRouter>
         <Provider>
-          <Suspense>
-            <AppRouter />
-          </Suspense>
+          <AppRouter />
         </Provider>
       </BrowserRouter>
     </QueryClientProvider>
