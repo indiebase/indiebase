@@ -1,6 +1,12 @@
-import { ProTable, ActionType, ProColumns } from '@letscollab/app-utils';
+import {
+  ProTable,
+  ActionType,
+  ProColumns,
+  userProfileQuery,
+} from '@letscollab/app-utils';
 import { Button, Container } from '@mantine/core';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
+import { loadable } from 'jotai/utils';
 import { useRef, useMemo } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { MemberModal } from './MemberModal';
@@ -49,8 +55,6 @@ const columns: ProColumns<any>[] = [
   },
 ];
 
-const id1 = atom(0);
-
 export const MemberTable = function () {
   const ref = useRef<ActionType>(null);
   const requestData = async function () {
@@ -61,7 +65,7 @@ export const MemberTable = function () {
           role: 'Owner',
         },
       ],
-      success: true,
+      success: false,
     };
   };
 

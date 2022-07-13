@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useMenu } from './use-menu';
-import { DashboardLayout } from '@letscollab/app-utils';
+import { DashboardLayout, userProfileQuery } from '@letscollab/app-utils';
 import { Anchor, Image } from '@mantine/core';
-import { userProfileQuery } from '@letscollab/app-utils';
 import { useAtom } from 'jotai';
+import { loadable } from 'jotai/utils';
 
 export const Layout: FC<any> = function () {
   const menu = useMenu();
 
-  const [data, dispatch] = useAtom(userProfileQuery);
+  useAtom(loadable(userProfileQuery));
 
   return (
     <DashboardLayout
@@ -19,7 +19,6 @@ export const Layout: FC<any> = function () {
       }
       logoWidth={180}
       menu={menu}
-      orgs={data.d.orgs}
       nav={
         <>
           <Anchor

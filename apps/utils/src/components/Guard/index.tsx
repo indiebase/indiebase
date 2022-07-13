@@ -1,18 +1,15 @@
-import React, { useContext, useState } from 'react';
+import { useAtom } from 'jotai';
+import React, { PropsWithChildren, useContext, useState } from 'react';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function usePageViews() {
-  React.useEffect(() => {}, [location.pathname]);
-}
-
-export const Guard: FC = function (props) {
-  usePageViews();
+export const Guard: FC<PropsWithChildren> = function (props) {
   let navigate = useNavigate();
+
+  // const [data] = useAtom(userProfileQuery);
 
   useEffect(() => {
     (async function () {
-      // const t = localStorage.getItem('t');
       // if (!t) {
       //   setRender(true);
       //   h.replace('/login');
@@ -28,7 +25,5 @@ export const Guard: FC = function (props) {
       // }
     })();
   }, []);
-
   return <></>;
-  // return shouldRender ? (props.children as any) : null;
 };

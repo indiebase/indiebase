@@ -14,6 +14,10 @@ import {
 import { FC, forwardRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IconSettings, IconPlus } from '@tabler/icons';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { userProfile, userProfileQuery } from '../../api';
+import { loadable } from 'jotai/utils';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -22,7 +26,6 @@ export interface NavHeaderProps {
   nav?: React.ReactNode;
   logoHref: string;
   navbarOpened: boolean;
-  orgs?: OrgSelectProps[];
 }
 
 export interface OrgSelectProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -44,12 +47,19 @@ const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
   ),
 );
 
+const loadableUserProfile = loadable(userProfileQuery);
+
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
+  const { org: orgParam } = useParams();
 
   const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
-  const [org, setOrg] = useState<string | undefined>();
-  const { orgs } = props;
+  const [org, setOrg] = useState<string | undefined>(orgParam);
+  const navigate = useNavigate();
+
+  const [data] = useAtom(loadableUserProfile);
+
+  const orgs = data.state === 'hasData' ? data.data.d?.orgs : [];
 
   return (
     <MantineHeader
@@ -91,11 +101,12 @@ export const Header: FC<NavHeaderProps> = function (props) {
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
-                  data={orgs!}
+                  data={orgs}
                   value={org}
                   onChange={(e) => {
-                    const r = orgs!.find((v) => v.value === e);
+                    const r = orgs.find((v) => v.value === e);
                     setOrg(r?.value);
+                    navigate(r.label);
                     setOrgAvatar(r?.logo);
                   }}
                   searchable
@@ -153,8 +164,4 @@ export const Header: FC<NavHeaderProps> = function (props) {
       </Group>
     </MantineHeader>
   );
-};
-
-Header.defaultProps = {
-  orgs: [],
 };
