@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { IconSettings, IconPlus } from '@tabler/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userProfile, userProfileQuery } from '../../api';
+import { UserProfile, userProfileQuery } from '../../api';
 import { loadable } from 'jotai/utils';
 
 export interface NavHeaderProps {
@@ -57,9 +57,9 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const [org, setOrg] = useState<string | undefined>(orgParam);
   const navigate = useNavigate();
 
-  const [data] = useAtom(loadableUserProfile);
+  const [value] = useAtom(loadableUserProfile);
 
-  const orgs = data.state === 'hasData' ? data.data.d?.orgs : [];
+  const data = (value.state === 'hasData' ? value.data.d : {}) as UserProfile;
 
   return (
     <MantineHeader
@@ -101,11 +101,11 @@ export const Header: FC<NavHeaderProps> = function (props) {
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
-                  data={orgs}
+                  data={data.orgs ?? []}
                   value={org}
                   onChange={(e) => {
-                    const r = orgs.find((v) => v.value === e);
-                    setOrg(r?.value);
+                    const r = data.orgs.find((v) => v.value === e);
+                    setOrg(r.value);
                     navigate(r.label);
                     setOrgAvatar(r?.logo);
                   }}
@@ -144,12 +144,15 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 height: '100%',
               })}
             >
-              <Group sx={{ marginRight: 20, height: '100%' }} spacing={40}>
+              <Group sx={{ marginRight: 10, height: '100%' }} spacing={40}>
                 {props.nav}
-                <Divider orientation="vertical" />
               </Group>
+              <Divider mr={10} orientation="vertical" />
               <Group mr={30} spacing={6}>
-                <Menu color="dark" control={<Avatar radius="xl" size="md" />}>
+                <Menu
+                  color="dark"
+                  control={<Avatar src={data.avatar} radius="xl" size={26} />}
+                >
                   <Menu.Item icon={<IconSettings size={16} />}>
                     Settings
                   </Menu.Item>

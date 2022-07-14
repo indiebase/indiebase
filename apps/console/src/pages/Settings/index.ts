@@ -1,1 +1,1 @@
-export * from './AccessPage/index';
+export * from './AccessPage';
