@@ -1,52 +1,51 @@
-import { FC, useMemo } from 'react';
-import { Link, useRoutes } from 'react-router-dom';
-import { HomePage } from './pages';
-import { NotFoundPage } from './pages/404';
-import { AccessPage } from './pages/Settings/';
-import { useMenu } from './use-menu';
-import { DashboardLayout } from '@letscollab/app-utils';
+import { FC } from 'react';
+import { useRoutes } from 'react-router-dom';
+
+import { HttpStatusPage } from '@letscollab/app-utils';
 import { ProLayout } from '@letscollab-pro/console';
-import { Anchor, Image, Text, Title } from '@mantine/core';
-import { useQuery } from 'react-query';
-import { req } from '@letscollab/app-utils/src/api';
 import { Layout } from './Layout';
+import { OrganizationPage, AccessPage } from './pages';
 
 export const AppRouter: FC<any> = function () {
   return useRoutes([
+    {
+      path: '/404',
+      element: <HttpStatusPage label="404" />,
+    },
     {
       path: '/',
       element: <Layout />,
       children: [
         {
           index: true,
-          element: <AccessPage />,
+          element: <div>demo</div>,
         },
         {
           path: ':org',
           children: [
             {
               index: true,
-              element: <AccessPage />,
+              element: <OrganizationPage />,
             },
-            // {
-            //   path: ':project',
-            //   children: [
-            //     {
-            //       path: 'settings',
-            //       children: [
-            //         {
-            //           path: 'access',
-            //           element: <AccessPage />,
-            //         },
-            //       ],
-            //     },
-            //   ],
-            // },
+            {
+              path: ':project',
+              children: [
+                {
+                  path: 'settings',
+                  children: [
+                    {
+                      path: 'access',
+                      element: <AccessPage />,
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
         {
           path: '*',
-          element: <NotFoundPage />,
+          element: <HttpStatusPage label="404" />,
         },
       ],
     },
@@ -54,10 +53,6 @@ export const AppRouter: FC<any> = function () {
       path: '/pro',
       element: <ProLayout />,
       children: [
-        {
-          path: '*',
-          element: <NotFoundPage />,
-        },
         {
           path: ':org',
           children: [
@@ -77,6 +72,10 @@ export const AppRouter: FC<any> = function () {
               ],
             },
           ],
+        },
+        {
+          path: '*',
+          element: <HttpStatusPage label="404" />,
         },
       ],
     },

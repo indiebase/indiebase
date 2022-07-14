@@ -3,7 +3,6 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './Router';
 import { Provider } from 'jotai';
-
 import './App.less';
 
 const queryClient = new QueryClient({
