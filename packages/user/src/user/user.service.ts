@@ -87,7 +87,7 @@ export class UserService {
         default:
           result = {
             code: ResultCode.EENTEXIST,
-            message: '该用户/邮箱已经注册',
+            message: '该用户名/邮箱已经注册',
           };
           break;
       }

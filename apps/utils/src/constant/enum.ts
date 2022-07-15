@@ -13,7 +13,24 @@ export enum AccountStatus {
   active = 'active',
 }
 
+/**
+ * Signup Type Enum
+ */
 export enum SignupType {
   letscollab = 'letscollab',
   github = 'github',
+}
+
+/**
+ * Project Status Enum
+ */
+export enum PrjStatus {
+  /* working in progress */
+  wip = 'wip',
+  /*  project dead, */
+  archive = 'archive',
+  /* project is opening, */
+  open = 'open',
+  /* project has closed */
+  closed = 'archive',
 }

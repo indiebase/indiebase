@@ -64,13 +64,6 @@ export class UserController {
     });
   }
 
-  @Get('list/:username')
-  @ApiCookieAuth('SID')
-  // @UseGuards(Http2RmqAuthGuard)
-  async getByUsername(@Session() session, @Req() req: FastifyRequest) {
-    return 1;
-  }
-
   @Get('list')
   @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
@@ -78,13 +71,13 @@ export class UserController {
     return 1;
   }
 
-  @Get('profile')
+  @Get('profile/:username')
   @ApiCookieAuth('SID')
-  @UseGuards(SessionRpcAuthClientGuard)
+  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
   @ApiOperation({
-    summary: 'Get a user profile',
+    summary: 'Get a user profile default own',
   })
-  async getProfile(@Session() session, @Req() req: FastifyRequest) {
+  async getProfile(@Session() session, @Req() req) {
     return 1;
   }
 
@@ -92,6 +85,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Update a user profile',
   })
+  @UseGuards(ProtectGuard)
   // @UseGuards(Http2RmqAuthGuard)
   async updateProfile() {
     return 1;
@@ -112,7 +106,7 @@ export class UserController {
       signupType: SignupType.letscollab,
       username: body.username,
       password: body.password,
-      email: body.username,
+      email: body.email,
       nickname: body.nickname,
     });
 

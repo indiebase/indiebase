@@ -17,10 +17,10 @@ import {
 import {
   CreatePrjDto,
   DeletePrjDto,
+  PrjListResDto,
   QueryPrjDto,
   UpdatePrjDto,
 } from './prj.dto';
-import { QueryTeamResDto } from 'src/team/team.dto';
 
 @Controller('v1/prj')
 @ApiTags('v1/Project')
@@ -30,12 +30,12 @@ export class PrjController {
   @Get('list')
   @ApiCookieAuth('SID')
   @ApiOperation({
-    summary: 'Get Project list',
+    summary: 'Get project list',
   })
   @ApiOkResponse({
-    type: QueryTeamResDto,
+    type: PrjListResDto,
   })
-  async queryPrjs(@Query() query: QueryPrjDto) {
+  async prjList(@Query() query: QueryPrjDto) {
     return this.prjService.queryPrj(query);
   }
 

@@ -1,4 +1,4 @@
-import { SignupType } from './../constant/enum';
+import { SignupType } from '../constant/enum';
 import { AccountStatus } from '../constant';
 import { BaseResSchema } from '../interface';
 import { faker } from '@faker-js/faker';
@@ -19,9 +19,9 @@ mock.onGet('/v1/user/profile').reply<BaseResSchema<UserProfile>>(200, {
     createTime: faker.date.past(),
     updateTime: faker.date.past(),
     company: faker.company.companyName(),
-    orgs: Array.from({ length: 5 }).map(() => ({
-      value: faker.datatype.number().toString(),
-      label: faker.company.catchPhraseAdjective(),
+    orgs: Array.from({ length: 5 }).map((_, index) => ({
+      value: index.toString(),
+      label: 'organization' + index,
       logo: faker.image.food(),
     })),
   },

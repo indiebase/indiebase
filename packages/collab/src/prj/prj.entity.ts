@@ -8,8 +8,14 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 
 export enum PrjStatus {
-  wip = 'wip', // working in progress
-  archive = 'archive', //
+  /* working in progress */
+  wip = 'wip',
+  /*  project dead, */
+  archive = 'archive',
+  /* project is opening, */
+  open = 'open',
+  /* project has closed */
+  closed = 'archive',
 }
 
 @Entity('project')
@@ -29,10 +35,10 @@ export class PrjEntity {
   @ApiProperty({
     enum: PrjStatus,
   })
-  @Column('varchar', {
+  @Column('simple-enum', {
     name: 'status',
-    length: 32,
     comment: 'Project Status',
+    enum: PrjStatus,
     nullable: true,
   })
   status?: PrjStatus;
