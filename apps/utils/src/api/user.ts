@@ -5,6 +5,7 @@ import { atom } from 'jotai';
 import { atomWithQuery } from 'jotai/query';
 import { req } from './request';
 import './user.mock';
+import { loadable } from 'jotai/utils';
 
 export interface UserProfile {
   id: number;
@@ -23,12 +24,14 @@ export interface UserProfile {
   orgs?: OrgSelectProps[];
 }
 
-export const userProfile = atom({});
+export const userProfileAtom = atom({});
 
 export const userProfileQuery = atomWithQuery((get) => ({
-  queryKey: ['user-profile', get(userProfile)],
+  queryKey: ['own-profile', get(userProfileAtom)],
   queryFn: async (...r): Promise<BaseResSchema<UserProfile>> => {
     const { data } = await req.get('/v1/user/profile');
     return data;
   },
 }));
+
+export const loadableUserProfile = loadable(userProfileQuery);

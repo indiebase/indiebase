@@ -5,25 +5,33 @@ import { BaseResSchemaDto } from '@letscollab/helper';
 
 export class SignupDto {
   @ApiPropertyOptional({
-    description: '用户名(选填)',
-    default: 'letscollabtest',
+    description: 'nickname (optional)',
+    default: 'letscollabNickname',
   })
   @IsOptional()
   nickname?: string;
 
   @ApiProperty({
+    default: 'letscollab',
+  })
+  @IsNotEmpty({
+    message: '用户名不可为空',
+  })
+  username: string;
+
+  @ApiProperty({
     default: 'deskbtm@outlook.com',
   })
   @IsNotEmpty({
-    message: '账户不可为空',
+    message: '邮箱不可为空',
   })
   @IsEmail(
     {},
     {
-      message: '用户名需使用邮箱',
+      message: '请输入正确邮箱',
     },
   )
-  username: string;
+  email: string;
 
   @ApiProperty({
     default: 'dev123456',
@@ -50,4 +58,11 @@ export class UserResDto extends BaseResSchemaDto {
     type: () => UserEntity,
   })
   d?: UserEntity;
+}
+
+export class QueryUserDto {
+  @ApiPropertyOptional({
+    default: 'letscollab',
+  })
+  username?: string;
 }

@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import StegCloak from 'stegcloak';
 import { nanoid } from 'nanoid';
 import * as forge from 'node-forge';
+import { QueryClient } from 'react-query';
 
 const stegcloak = new StegCloak(true, false);
 
@@ -59,6 +60,7 @@ req.interceptors.response.use(
     console.log('[Response Error].....', error);
     if (response) {
       const data = response.data;
+      console.log(data);
 
       if (data.statusCode === 401 || response.status === 401) {
         // location.href = process.env.REACT_APP_LOGIN_SITE_URI;

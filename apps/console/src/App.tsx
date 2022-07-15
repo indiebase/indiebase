@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './Router';
 import { Provider } from 'jotai';
 import './App.less';
+import { queryClientAtom } from 'jotai/query';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,7 +24,7 @@ function App() {
         position="bottom-right"
       />
       <BrowserRouter>
-        <Provider>
+        <Provider initialValues={[[queryClientAtom, queryClient] as any]}>
           <AppRouter />
         </Provider>
       </BrowserRouter>

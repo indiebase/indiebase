@@ -1,4 +1,5 @@
-import { PaginationReqDto } from '@letscollab/helper';
+import { PrjEntity } from './prj.entity';
+import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -51,7 +52,7 @@ export class UpdatePrjDto {
   id: number;
 
   @ApiProperty({
-    description: '团队名称',
+    description: 'Project name',
     default: 'letscollab',
   })
   @IsOptional()
@@ -59,7 +60,7 @@ export class UpdatePrjDto {
   name?: string;
 
   @ApiProperty({
-    description: '公开邮箱',
+    description: 'public email',
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -90,4 +91,11 @@ export class DeletePrjDto {
   @ApiProperty()
   @IsNumber()
   id: number;
+}
+
+export class PrjListResDto extends PaginationResSchemaDto {
+  @ApiPropertyOptional({
+    type: () => PrjEntity,
+  })
+  d?: PrjEntity;
 }

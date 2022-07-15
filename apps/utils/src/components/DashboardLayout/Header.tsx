@@ -11,13 +11,17 @@ import {
   Menu,
   Divider,
 } from '@mantine/core';
-import { FC, forwardRef, useState } from 'react';
+import { FC, forwardRef, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IconSettings, IconPlus } from '@tabler/icons';
+import {
+  IconSettings,
+  IconPlus,
+  IconUser,
+  IconBuildingCommunity,
+} from '@tabler/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { UserProfile, userProfileQuery } from '../../api';
-import { loadable } from 'jotai/utils';
+import { loadableUserProfile, UserProfile } from '../../api';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -47,19 +51,21 @@ const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
   ),
 );
 
-const loadableUserProfile = loadable(userProfileQuery);
-
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
-  const { org: orgParam } = useParams();
-
-  const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
-  const [org, setOrg] = useState<string | undefined>(orgParam);
   const navigate = useNavigate();
-
+  const { org: orgParam } = useParams();
+  const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
   const [value] = useAtom(loadableUserProfile);
-
   const data = (value.state === 'hasData' ? value.data.d : {}) as UserProfile;
+  const orgs = data.orgs ?? [];
+
+  const orgDefault = useMemo(
+    () => orgs.find((v) => v.label === orgParam),
+    [orgParam, orgs],
+  );
+
+  const [org, setOrg] = useState<string | undefined>();
 
   return (
     <MantineHeader
@@ -95,14 +101,18 @@ export const Header: FC<NavHeaderProps> = function (props) {
           </MediaQuery>
           <MediaQuery smallerThan="sm" styles={{ display: 'none', width: 100 }}>
             <Group spacing="xs" ml={6}>
-              <Avatar src={orgAvatar} radius="xl" size="sm" />
+              <Avatar src={orgAvatar ?? orgDefault?.logo} radius="xl" size="sm">
+                <Avatar radius="xl" size={26}>
+                  <IconBuildingCommunity size={17} />
+                </Avatar>
+              </Avatar>
               <div style={{ width: 150 }}>
                 <Select
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
                   data={data.orgs ?? []}
-                  value={org}
+                  value={org ?? orgDefault?.value}
                   onChange={(e) => {
                     const r = data.orgs.find((v) => v.value === e);
                     setOrg(r.value);
@@ -151,7 +161,11 @@ export const Header: FC<NavHeaderProps> = function (props) {
               <Group mr={30} spacing={6}>
                 <Menu
                   color="dark"
-                  control={<Avatar src={data.avatar} radius="xl" size={26} />}
+                  control={
+                    <Avatar radius="xl" size={26}>
+                      <IconUser size={17} />
+                    </Avatar>
+                  }
                 >
                   <Menu.Item icon={<IconSettings size={16} />}>
                     Settings
