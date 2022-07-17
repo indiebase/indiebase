@@ -162,7 +162,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 <Menu
                   color="dark"
                   control={
-                    <Avatar radius="xl" size={26}>
+                    <Avatar src={data.avatar} radius="xl" size={26}>
                       <IconUser size={17} />
                     </Avatar>
                   }

@@ -1,9 +1,8 @@
 import axios, { type AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import StegCloak from 'stegcloak';
 import { nanoid } from 'nanoid';
 import * as forge from 'node-forge';
-import { QueryClient } from 'react-query';
+const StegCloak = require('stegcloak');
 
 const stegcloak = new StegCloak(true, false);
 
@@ -74,4 +73,4 @@ req.interceptors.response.use(
 
 export const mock = new MockAdapter(req, { delayResponse: 1000 });
 
-process.env.NODE_ENV !== 'development' && mock.restore();
+// process.env.NODE_ENV !== 'development' && mock.restore();
