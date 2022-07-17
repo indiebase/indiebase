@@ -27,6 +27,7 @@ const ForkTsCheckerWebpackPlugin =
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -299,10 +300,10 @@ module.exports = function (webpackEnv) {
       ],
     },
     resolve: {
-      fallback: {
-        stream: require.resolve('stream-browserify'),
-        buffer: require.resolve('buffer/'),
-      },
+      // fallback: {
+      //   stream: require.resolve('stream-browserify'),
+      //   buffer: require.resolve('buffer/'),
+      // },
       // This allows you to set a fallback for where webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -415,12 +416,16 @@ module.exports = function (webpackEnv) {
             // The preset includes JSX, Flow, TypeScript, and some ESnext features.
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
-              // include: [paths.appSrc],
               loader: require.resolve('babel-loader'),
               options: {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides',
                 ),
+                /**
+                 * This maybe a @babel/plugin-transform-runtime bug.
+                 * @see {@link https://babeljs.io/docs/en/options#misc-options}
+                 */
+                sourceType: 'unambiguous',
                 presets: [
                   [
                     require.resolve('babel-preset-react-app'),
@@ -595,9 +600,12 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        Buffer: ['buffer', 'Buffer'],
+      new NodePolyfillPlugin({
+        excludeAliases: ['console'],
       }),
+      // new webpack.ProvidePlugin({
+      //   Buffer: ['buffer', 'Buffer'],
+      // }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(

@@ -29,9 +29,9 @@ i18n
     },
   });
 
-if (process.env.NODE_ENV === 'production') {
-  console.log = () => {};
-}
+// if (process.env.NODE_ENV === 'production') {
+//   console.log = () => {};
+// }
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

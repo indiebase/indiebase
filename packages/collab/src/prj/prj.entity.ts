@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserEntity } from '@letscollab/user';
 
 export enum PrjStatus {
   /* working in progress */
@@ -15,7 +18,7 @@ export enum PrjStatus {
   /* project is opening, */
   open = 'open',
   /* project has closed */
-  closed = 'archive',
+  closed = 'closed',
 }
 
 @Entity('project')
@@ -31,6 +34,10 @@ export class PrjEntity {
   @ApiProperty()
   @Column('varchar', { name: 'contact_email' })
   contactEmail: string;
+
+  @ApiProperty({ description: 'Project cover url' })
+  @Column('varchar', { nullable: true })
+  cover?: string;
 
   @ApiProperty({
     enum: PrjStatus,
@@ -61,9 +68,9 @@ export class PrjEntity {
   })
   updateTime?: Date;
 
-  // @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
-  // @JoinTable()
-  // members?: UserEntity[];
+  @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
+  @JoinTable()
+  members?: UserEntity[];
 
   @ApiProperty({
     default: 'Github repo url',

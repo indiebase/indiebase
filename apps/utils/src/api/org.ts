@@ -1,5 +1,4 @@
-import { atom } from 'jotai';
-import { atomWithQuery } from 'jotai/query';
+import { UserProfile } from './user';
 import { PrjStatus } from '../constant';
 import { BaseResSchema } from '../interface';
 import { req } from './request';
@@ -12,8 +11,9 @@ export interface IProject {
   description?: string;
   createTime: Date;
   updateTime: Date;
-  members?: any;
+  members?: UserProfile[];
   githubRepoUrl?: string;
+  cover?: string;
 }
 
 export const projectsQuery = async function (): Promise<
