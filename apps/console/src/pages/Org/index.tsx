@@ -1,4 +1,4 @@
-import { PrjStatus, projectsQuery } from '@letscollab/app-utils';
+import { IProject, PrjStatus, projectsQuery } from '@letscollab/app-utils';
 import {
   Card,
   Group,
@@ -12,26 +12,29 @@ import {
   MantineColor,
   Anchor,
   useMantineTheme,
-  Accordion,
+  Grid,
+  Title,
+  Container,
+  Center,
   Button,
 } from '@mantine/core';
-import { FC, Suspense, useMemo, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useQuery } from 'react-query';
-import { WidthProvider, Responsive } from 'react-grid-layout';
 import { Link } from 'react-router-dom';
-import { IconUser } from '@tabler/icons';
+import { IconUser, IconWallet, IconArrowNarrowUp } from '@tabler/icons';
+import CurrencyFormat from 'react-currency-format';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+export interface CoreProjectCardProps extends Partial<IProject> {}
 
-export interface CoreProjectCardProps {
-  type?: PrjStatus;
-}
+const OrgProfile: FC<any> = function (props) {
+  return <Box style={{ background: 'red' }}>dsadsadsa</Box>;
+};
 
 const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
   let color: MantineColor;
 
-  switch (props.type) {
+  switch (props.status) {
     case PrjStatus.archive:
       color = 'grey';
       break;
@@ -59,47 +62,95 @@ const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
             size="sm"
             style={{ color: '#228be6', fontWeight: 700 }}
           >
-            Norway Fjord Adventures
+            {props.name}
           </Anchor>
         </Group>
         <Badge size="xs" color={color} variant="light">
-          {props.type}
+          {props.status}
         </Badge>
       </Group>
       <Card.Section>
         <div style={{ width: '100%', height: '100%' }}></div>
         <Image
-          src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+          src={props.cover ? props.cover : '/images/project-cover.svg'}
           height={50}
           alt="cover"
         />
       </Card.Section>
 
-      <Text lineClamp={2} mt={10} style={{ color: '#777777', fontSize: 10 }}>
-        With Fjord Tours you can explore more of the magical fjord landscapes
-        with tours and activities on and around the fjords of Norway
-      </Text>
+      <Box style={{ height: 30 }}>
+        <Text lineClamp={2} mt={10} style={{ color: '#777777', fontSize: 10 }}>
+          {props.description}
+        </Text>
+      </Box>
 
-      <Group position="apart">
+      <Group mt={9} position="apart">
         <AvatarsGroup
           styles={(t) => ({
             truncated: {
               color: t.colors.green,
             },
           })}
-          mt={9}
           ml={-5}
           size="sm"
           limit={8}
         >
-          <Avatar
-            src="avatar.png"
-            component="a"
-            href="https://github.com/rtivital"
-          >
-            <IconUser size={14} />
-          </Avatar>
+          {props.members.map((u, i) => {
+            return (
+              <Avatar key={i} src={u.avatar} component="a" href={u.profileUrl}>
+                <IconUser size={14} />
+              </Avatar>
+            );
+          })}
         </AvatarsGroup>
+        <Center>
+          <Button
+            color="dark"
+            radius="xs"
+            size="xs"
+            style={{ padding: 0 }}
+            compact
+            variant="white"
+          >
+            <IconWallet size={14} />
+            <CurrencyFormat
+              value={0}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'$'}
+              renderText={(value) => (
+                <Text ml={3} style={{ lineHeight: 1 }} lineClamp={1} size="xs">
+                  {value}
+                </Text>
+              )}
+            />
+          </Button>
+          <Button
+            ml={3}
+            color="dark"
+            radius="xs"
+            size="xs"
+            style={{ padding: 0 }}
+            compact
+            variant="white"
+          >
+            <IconArrowNarrowUp size={12} color="green" />
+            <Text
+              color="green"
+              style={{ lineHeight: 1, fontSize: 10 }}
+              lineClamp={1}
+            >
+              0
+            </Text>
+          </Button>
+        </Center>
+      </Group>
+      <Group mt={9} position="apart">
+        <Center>
+          <Text style={{ fontSize: 10 }} color="gray">
+            Update
+          </Text>
+        </Center>
       </Group>
     </Card>
   );
@@ -129,8 +180,8 @@ const ProjectTile: FC<ProjectTileProps> = function (props) {
   }
 
   return (
-    <Card p="xs" style={{ border: '1px solid #E2E2E2' }}>
-      <Group position="apart" mb={7}>
+    <Card p="xs" style={{ borderBottom: '1px solid #E2E2E2' }}>
+      <Group position="apart">
         <Group spacing={5}>
           <Anchor
             to="/pro"
@@ -146,16 +197,7 @@ const ProjectTile: FC<ProjectTileProps> = function (props) {
           {props.type}
         </Badge>
       </Group>
-      <Card.Section>
-        <div style={{ width: '100%', height: '100%' }}></div>
-        <Image
-          src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-          height={50}
-          alt="cover"
-        />
-      </Card.Section>
-
-      <Text lineClamp={2} mt={10} style={{ color: '#777777', fontSize: 10 }}>
+      <Text lineClamp={2} mt={8} style={{ color: '#777777', fontSize: 10 }}>
         With Fjord Tours you can explore more of the magical fjord landscapes
         with tours and activities on and around the fjords of Norway
       </Text>
@@ -190,81 +232,77 @@ const Organization = function (props) {
     suspense: true,
   });
   const theme = useMantineTheme();
-  const { lg, sm, xs, md } = theme.breakpoints;
   const [hideMore, setHideMore] = useState(true);
 
   const displayData = hideMore ? data.d.slice(0, 6) : data.d;
   const corePrjsLen = data.d.length;
 
-  const gridLayout = useMemo(
-    () =>
-      displayData.map((e, i) => {
-        return {
-          x: i % 3,
-          y: 0,
-          w: 1,
-          h: 1.2,
-          i: i.toString(),
-        };
-      }),
-    [displayData],
-  );
-
   return (
     <>
-      <Box mt={30} mb={20} style={{ width: '75%' }}>
-        <ResponsiveGridLayout
-          containerPadding={[0, 0]}
-          margin={[20, 15]}
-          breakpoints={{ lg, md, sm, xs, xxs: 0 }}
-          cols={{
-            lg: 3,
-            sm: 3,
-            xs: 3,
-            md: 3,
-            xxs: 0,
-          }}
-          layouts={{
-            lg: gridLayout,
-            xs: gridLayout,
-            md: gridLayout,
-            sm: gridLayout,
-            xxs: gridLayout,
-          }}
-          isResizable={false}
-          isDraggable={false}
-          isDroppable={false}
-        >
-          {displayData.map((e, i) => {
-            return (
-              <span key={i}>
-                <CoreProjectCard />
-              </span>
-            );
-          })}
-        </ResponsiveGridLayout>
-        {corePrjsLen > 6 ? (
-          <Group mt={15} position="right">
+      <Grid mt={30} grow>
+        <Grid.Col span={9}>
+          <Box>
             <Text
-              size="sm"
-              color="blue"
-              style={{
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                setHideMore(!hideMore);
-              }}
+              component="span"
+              variant="gradient"
+              gradient={{ from: 'red', to: 'cyan', deg: 45 }}
+              size="lg"
+              weight={400}
+              style={{ fontFamily: 'Greycliff CF, sans-serif' }}
             >
-              {hideMore ? 'show more' : 'hide'}&nbsp;({corePrjsLen - 6})
+              Main
             </Text>
-          </Group>
-        ) : null}
-      </Box>
-      <Input
-        style={{ width: 300 }}
-        variant="default"
-        placeholder="Search project"
-      />
+            <Grid mt={2}>
+              {displayData.map((e, i) => {
+                return (
+                  <Grid.Col lg={4} md={6}>
+                    <span key={i}>
+                      <CoreProjectCard
+                        cover={e.cover}
+                        name={e.name}
+                        members={e.members}
+                        updateTime={e.updateTime}
+                        status={e.status}
+                        description={e.description}
+                      />
+                    </span>
+                  </Grid.Col>
+                );
+              })}
+            </Grid>
+            {corePrjsLen > 6 ? (
+              <Group mt={15} position="right">
+                <Text
+                  size="sm"
+                  color="blue"
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    setHideMore(!hideMore);
+                  }}
+                >
+                  {hideMore ? 'show more' : 'hide'}&nbsp;({corePrjsLen - 6})
+                </Text>
+              </Group>
+            ) : null}
+            <Input
+              mt={20}
+              style={{ width: 300 }}
+              variant="default"
+              placeholder="Search project"
+            />
+            <Box my={20}>
+              <ProjectTile />
+            </Box>
+          </Box>
+        </Grid.Col>
+        <Grid.Col span={3}>
+          <Box>
+            <OrgProfile />
+          </Box>
+        </Grid.Col>
+      </Grid>
     </>
   );
 };
