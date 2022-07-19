@@ -18,6 +18,7 @@ import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NodeRedisAdapter } from './utils';
 import { RedisCookieSessionModule } from '@letscollab/helper';
+import * as mysql from 'mysql';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
@@ -60,6 +61,8 @@ const isDev = process.env.NODE_ENV === 'development';
           }),
           new LokiTransport(configs.logger.loki),
         ];
+
+        mysql.createConnection({})
 
         return {
           level: isDev ? 'debug' : 'warn',

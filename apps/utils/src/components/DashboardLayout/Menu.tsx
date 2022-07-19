@@ -126,7 +126,7 @@ export const Menu: FC<MenuProps> = function (props) {
           })}
         </Accordion>
       </Navbar.Section>
-      <Navbar.Section>a</Navbar.Section>
+      {/* <Navbar.Section>a</Navbar.Section> */}
     </Navbar>
   );
 };
