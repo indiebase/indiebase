@@ -1,7 +1,6 @@
 import {
   DropAnimation,
   defaultDropAnimationSideEffects,
-  Announcements,
   closestCenter,
   DndContext,
   DragOverlay,
@@ -21,7 +20,7 @@ import {
 } from '@dnd-kit/sortable';
 import { IProject } from '@letscollab/app-utils';
 import { Grid, Text, Group } from '@mantine/core';
-import { FC, useCallback, useRef, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CoreProjectCard } from '../../components';
 
@@ -33,14 +32,6 @@ const dropAnimationConfig: DropAnimation = {
       },
     },
   }),
-};
-
-const screenReaderInstructions: ScreenReaderInstructions = {
-  draggable: `
-    To pick up a sortable item, press the space bar.
-    While sorting, use the arrow keys to move the item.
-    Press space again to drop the item in its new position, or press escape to cancel.
-  `,
 };
 
 const activationConstraint = {
@@ -74,6 +65,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
   );
 
   const [hideMore, setHideMore] = useState(true);
+  const visibleItems = hideMore ? items.slice(0, 6) : items;
 
   const activeIndex = activeId ? getIndex(activeId) : -1;
 
@@ -82,28 +74,28 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
       <DndContext
         collisionDetection={closestCenter}
         sensors={sensors}
-        onDragStart={({ active }) => {
-          if (!active) {
-            return;
-          }
+        // onDragStart={({ active }) => {
+        //   if (!active) {
+        //     return;
+        //   }
 
-          setActiveId(active.id);
-        }}
-        onDragEnd={({ over }) => {
-          setActiveId(null);
+        //   setActiveId(active.id);
+        // }}
+        // onDragEnd={({ over }) => {
+        //   setActiveId(null);
 
-          if (over) {
-            const overIndex = getIndex(over.id);
-            if (activeIndex !== overIndex) {
-              setItems((items) => arrayMove(items, activeIndex, overIndex));
-            }
-          }
-        }}
-        onDragCancel={() => setActiveId(null)}
+        //   if (over) {
+        //     const overIndex = getIndex(over.id);
+        //     if (activeIndex !== overIndex) {
+        //       setItems((items) => arrayMove(items, activeIndex, overIndex));
+        //     }
+        //   }
+        // }}
+        // onDragCancel={() => setActiveId(null)}
       >
-        <SortableContext items={items} strategy={rectSortingStrategy}>
+        <SortableContext items={visibleItems} strategy={rectSortingStrategy}>
           <Grid mt={2}>
-            {items.map((e, i) => {
+            {visibleItems.map((e, i) => {
               return (
                 <Grid.Col key={i} lg={4} md={6}>
                   <CoreProjectCard

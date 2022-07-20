@@ -50,10 +50,10 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
     id,
   });
 
-  useEffect(() => {
-    console.log(setNodeRef);
+  console.log(transform, isDragging, isSorting);
 
-    if (!isDragging) {
+  useEffect(() => {
+    if (!isDragging || !isSorting) {
       return;
     }
 
@@ -62,30 +62,37 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
     return () => {
       document.body.style.cursor = '';
     };
-  }, [isDragging, setNodeRef]);
+  }, [isDragging, isSorting]);
 
   return (
     <Card
       ref={setNodeRef}
       p="xs"
-      pt={8}
+      pt={0}
       style={{
         border: '1px solid #E2E2E2',
         transform: CSS.Transform.toString(transform),
         transition,
       }}
-      {...listeners}
-      {...attributes}
     >
-      <Center mb={5}>
+      <Center
+        sx={{
+          '&:hover': {
+            cursor: 'grabbing',
+          },
+          touchAction: 'manipulation',
+        }}
+        {...listeners}
+        {...attributes}
+        ref={setActivatorNodeRef}
+        style={{ height: 16 }}
+      >
         <Box
           sx={{
             width: 50,
             height: 3,
+            borderRadius: 10,
             background: theme.colors.gray[3],
-            '&:hover': {
-              cursor: 'grabbing',
-            },
           }}
         ></Box>
       </Center>
