@@ -69,50 +69,47 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
 
   const activeIndex = activeId ? getIndex(activeId) : -1;
 
+  console.log('============================', activeIndex);
+
   return (
-    <>
+    <div>
       <DndContext
         collisionDetection={closestCenter}
         sensors={sensors}
-        // onDragStart={({ active }) => {
-        //   if (!active) {
-        //     return;
-        //   }
-
-        //   setActiveId(active.id);
-        // }}
-        // onDragEnd={({ over }) => {
-        //   setActiveId(null);
-
-        //   if (over) {
-        //     const overIndex = getIndex(over.id);
-        //     if (activeIndex !== overIndex) {
-        //       setItems((items) => arrayMove(items, activeIndex, overIndex));
-        //     }
-        //   }
-        // }}
-        // onDragCancel={() => setActiveId(null)}
+        onDragStart={({ active }) => {
+          if (!active) {
+            return;
+          }
+          setActiveId(active.id);
+        }}
+        onDragEnd={({ over, active }) => {
+          if (over.id !== active.id) {
+            const overIndex = getIndex(over.id);
+            setItems((items) => arrayMove(items, activeIndex, overIndex));
+          }
+          setActiveId(null);
+        }}
+        onDragCancel={() => setActiveId(null)}
       >
         <SortableContext items={visibleItems} strategy={rectSortingStrategy}>
           <Grid mt={2}>
             {visibleItems.map((e, i) => {
               return (
-                <Grid.Col key={i} lg={4} md={6}>
-                  <CoreProjectCard
-                    id={e.id}
-                    cover={e.cover}
-                    name={e.name}
-                    members={e.members}
-                    updateTime={e.updateTime}
-                    status={e.status}
-                    description={e.description}
-                  />
-                </Grid.Col>
+                <CoreProjectCard
+                  key={i}
+                  id={e.id}
+                  cover={e.cover}
+                  name={e.name}
+                  members={e.members}
+                  updateTime={e.updateTime}
+                  status={e.status}
+                  description={e.description}
+                />
               );
             })}
           </Grid>
         </SortableContext>
-        {createPortal(
+        {/* {createPortal(
           <DragOverlay adjustScale={true} dropAnimation={dropAnimationConfig}>
             {activeId ? (
               <div></div>
@@ -139,7 +136,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
             null}
           </DragOverlay>,
           document.body,
-        )}
+        )} */}
       </DndContext>
       {items.length > 6 ? (
         <Group mt={15} position="right">
@@ -157,6 +154,6 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
           </Text>
         </Group>
       ) : null}
-    </>
+    </div>
   );
 };
