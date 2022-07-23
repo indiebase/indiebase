@@ -85,14 +85,17 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-grid-layout": "^1",
+    "@types/webpack-bundle-analyzer": "^4",
     "less": "^4.1.3",
     "less-loader": "^11.0.0",
-    "node-polyfill-webpack-plugin": "^2.0.0"
+    "node-polyfill-webpack-plugin": "^2.0.0",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.{tsx,ts}\" --fix"
   },
   "eslintConfig": {
     "extends": [

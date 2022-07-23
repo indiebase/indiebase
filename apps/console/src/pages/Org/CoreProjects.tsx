@@ -1,16 +1,12 @@
 import {
-  DropAnimation,
-  defaultDropAnimationSideEffects,
   closestCenter,
   DndContext,
-  DragOverlay,
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
   UniqueIdentifier,
   useSensor,
   useSensors,
-  ScreenReaderInstructions,
 } from '@dnd-kit/core';
 import {
   sortableKeyboardCoordinates,
@@ -21,23 +17,7 @@ import {
 import { IProject } from '@letscollab/app-utils';
 import { Grid, Text, Group } from '@mantine/core';
 import { FC, useCallback, useState } from 'react';
-import { createPortal } from 'react-dom';
 import { CoreProjectCard } from '../../components';
-
-const dropAnimationConfig: DropAnimation = {
-  sideEffects: defaultDropAnimationSideEffects({
-    styles: {
-      active: {
-        opacity: '0.5',
-      },
-    },
-  }),
-};
-
-const activationConstraint = {
-  delay: 0,
-  tolerance: 5,
-};
 
 export interface CoreProjectsProps {
   list: IProject[];
@@ -45,9 +25,7 @@ export interface CoreProjectsProps {
 
 export const CoreProjects: FC<CoreProjectsProps> = function (props) {
   const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint,
-    }),
+    useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {
       scrollBehavior: 'Cypress' in window ? 'auto' : undefined,
@@ -69,8 +47,6 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
 
   const activeIndex = activeId ? getIndex(activeId) : -1;
 
-  console.log('============================', activeIndex);
-
   return (
     <div>
       <DndContext
@@ -82,10 +58,12 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
           }
           setActiveId(active.id);
         }}
-        onDragEnd={({ over, active }) => {
-          if (over.id !== active.id) {
+        onDragEnd={({ over }) => {
+          if (over) {
             const overIndex = getIndex(over.id);
-            setItems((items) => arrayMove(items, activeIndex, overIndex));
+            if (activeIndex !== overIndex) {
+              setItems((items) => arrayMove(items, activeIndex, overIndex));
+            }
           }
           setActiveId(null);
         }}
@@ -95,48 +73,21 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
           <Grid mt={2}>
             {visibleItems.map((e, i) => {
               return (
-                <CoreProjectCard
-                  key={i}
-                  id={e.id}
-                  cover={e.cover}
-                  name={e.name}
-                  members={e.members}
-                  updateTime={e.updateTime}
-                  status={e.status}
-                  description={e.description}
-                />
+                <Grid.Col key={i} lg={4} md={6}>
+                  <CoreProjectCard
+                    id={e.id}
+                    cover={e.cover}
+                    name={e.name}
+                    members={e.members}
+                    updateTime={e.updateTime}
+                    status={e.status}
+                    description={e.description}
+                  />
+                </Grid.Col>
               );
             })}
           </Grid>
         </SortableContext>
-        {/* {createPortal(
-          <DragOverlay adjustScale={true} dropAnimation={dropAnimationConfig}>
-            {activeId ? (
-              <div></div>
-            ) : // <Item
-            //   value={items[activeIndex]}
-            //   handle={handle}
-            //   renderItem={renderItem}
-            //   wrapperStyle={wrapperStyle({
-            //     active: { id: activeId },
-            //     index: activeIndex,
-            //     isDragging: true,
-            //     id: items[activeIndex],
-            //   })}
-            //   style={getItemStyles({
-            //     id: items[activeIndex],
-            //     index: activeIndex,
-            //     isSorting: activeId !== null,
-            //     isDragging: true,
-            //     overIndex: -1,
-            //     isDragOverlay: true,
-            //   })}
-            //   dragOverlay
-            // />
-            null}
-          </DragOverlay>,
-          document.body,
-        )} */}
       </DndContext>
       {items.length > 6 ? (
         <Group mt={15} position="right">

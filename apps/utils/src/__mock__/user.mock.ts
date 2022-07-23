@@ -2,8 +2,8 @@ import { SignupType } from '../constant/enum';
 import { AccountStatus } from '../constant';
 import { BaseResSchema } from '../interface';
 import { faker } from '@faker-js/faker';
-import { mock } from './request';
-import { type UserProfile } from './user';
+import { mock } from '../api';
+import { type UserProfile } from '../api';
 
 export const FakeSingleUserProfile = () => ({
   id: faker.datatype.number(),

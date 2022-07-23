@@ -2,7 +2,7 @@ import { UserProfile } from './user';
 import { PrjStatus } from '../constant';
 import { BaseResSchema } from '../interface';
 import { req } from './request';
-import './org.mock';
+
 export interface IProject {
   id: number;
   name: string;

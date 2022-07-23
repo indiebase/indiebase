@@ -4,7 +4,6 @@ import { BaseResSchema } from '@letscollab/app-utils';
 import { atom } from 'jotai';
 import { atomWithQuery } from 'jotai/query';
 import { req } from './request';
-import './user.mock';
 import { loadable } from 'jotai/utils';
 
 export interface UserProfile {
@@ -24,7 +23,7 @@ export interface UserProfile {
   orgs?: OrgSelectProps[];
 }
 
-export const userProfileAtom = atom({});
+export const userProfileAtom = atom<BaseResSchema<UserProfile>>({} as any);
 
 export const userProfileQuery = atomWithQuery((get) => ({
   queryKey: ['own-profile', get(userProfileAtom)],

@@ -1,8 +1,8 @@
-import { PrjStatus } from './../constant/enum';
+import { PrjStatus } from '../constant/enum';
 import { faker } from '@faker-js/faker';
-import { BaseResSchema } from './../interface';
-import { type IProject } from './org';
-import { mock } from './request';
+import { BaseResSchema } from '../interface';
+import { type IProject } from '../api/org';
+import { mock } from '../api';
 import { FakeSingleUserProfile } from './user.mock';
 
 mock.onGet('/v1/prj/list').reply<BaseResSchema<IProject[]>>(200, {
