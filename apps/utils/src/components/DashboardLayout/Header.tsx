@@ -21,7 +21,7 @@ import {
 } from '@tabler/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { loadableUserProfile, UserProfile } from '../../api';
+import { userProfileQuery } from '../../api';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -56,9 +56,10 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const navigate = useNavigate();
   const { org: orgParam } = useParams();
   const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
-  const [value] = useAtom(loadableUserProfile);
-  const data = (value.state === 'hasData' ? value.data.d : {}) as UserProfile;
-  const orgs = data.orgs ?? [];
+  const [value] = useAtom(userProfileQuery);
+
+  const data = value.d;
+  const orgs = data?.orgs ?? [];
 
   const orgDefault = useMemo(
     () => orgs.find((v) => v.label === orgParam),
@@ -102,16 +103,14 @@ export const Header: FC<NavHeaderProps> = function (props) {
           <MediaQuery smallerThan="sm" styles={{ display: 'none', width: 100 }}>
             <Group spacing="xs" ml={6}>
               <Avatar src={orgAvatar ?? orgDefault?.logo} radius="xl" size="sm">
-                <Avatar radius="xl" size={26}>
-                  <IconBuildingCommunity size={17} />
-                </Avatar>
+                <IconBuildingCommunity size={17} />
               </Avatar>
               <div style={{ width: 150 }}>
                 <Select
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
-                  data={data.orgs ?? []}
+                  data={orgs ?? []}
                   value={org ?? orgDefault?.value}
                   onChange={(e) => {
                     const r = data.orgs.find((v) => v.value === e);
@@ -162,7 +161,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 <Menu
                   color="dark"
                   control={
-                    <Avatar src={data.avatar} radius="xl" size={26}>
+                    <Avatar src={data?.avatar} radius="xl" size={26}>
                       <IconUser size={17} />
                     </Avatar>
                   }

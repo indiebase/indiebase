@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { FC, Suspense, useState } from 'react';
+import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { IProject, projectsQuery } from '@letscollab/app-utils';
 import {
@@ -12,17 +12,19 @@ import {
   Avatar,
   Stack,
   Title,
+  Divider,
 } from '@mantine/core';
 import { ProjectTile } from '../../components';
 import { Link } from 'react-router-dom';
 import { CoreProjects } from './CoreProjects';
+import { IconLink, IconMail } from '@tabler/icons';
 
 export interface CoreProjectCardProps extends Partial<IProject> {}
 
 const OrgProfile: FC<any> = function () {
   return (
     <Box ml={30}>
-      <Group>
+      <Group noWrap>
         <Avatar
           size="xl"
           radius={1000}
@@ -31,10 +33,38 @@ const OrgProfile: FC<any> = function () {
           to="setting"
           reloadDocument={false}
         ></Avatar>
-        <Stack>
-          <Title order={3}>Organization1</Title>
+        <Stack justify="flex-start">
+          <Title order={4}>Organization1</Title>
         </Stack>
       </Group>
+      <Divider my="lg" variant="dashed" labelPosition="center" />
+      <Stack spacing={6}>
+        <Group noWrap spacing={8}>
+          <IconLink size={15} />
+          <Text
+            style={{ maxWidth: 300 }}
+            size="xs"
+            component="a"
+            href=" www.baidu.com"
+            target="_blank"
+            lineClamp={1}
+          >
+            www.dsadasmdoeo.com
+          </Text>
+        </Group>
+        <Group spacing={8}>
+          <IconMail size={14} />
+          <Text
+            size="xs"
+            component="a"
+            href=" www.baidu.com"
+            target="_blank"
+            lineClamp={1}
+          >
+            www.baidu.com
+          </Text>
+        </Group>
+      </Stack>
     </Box>
   );
 };
@@ -43,14 +73,10 @@ const Organization = function () {
   const { data } = useQuery(['own-projects'], projectsQuery, {
     suspense: true,
   });
-  const [hideMore, setHideMore] = useState(true);
-
-  // const displayData = hideMore ? data.d.slice(0, 6) : data.d;
-  // const corePrjsLen = data.d.length;
 
   return (
     <>
-      <Grid mt={30} grow>
+      <Grid mt={30} grow style={{ flexWrap: 'nowrap' }}>
         <Grid.Col span={9}>
           <Box>
             <Text
@@ -96,9 +122,7 @@ const Organization = function () {
         </Grid.Col>
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
           <Grid.Col span={3}>
-            <Box>
-              <OrgProfile />
-            </Box>
+            <OrgProfile />
           </Grid.Col>
         </MediaQuery>
       </Grid>

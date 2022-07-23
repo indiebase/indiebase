@@ -417,6 +417,7 @@ module.exports = function (webpackEnv) {
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               loader: require.resolve('babel-loader'),
+              // include: [paths.appSrc],
               options: {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides',
@@ -601,7 +602,7 @@ module.exports = function (webpackEnv) {
     },
     plugins: [
       new NodePolyfillPlugin({
-        excludeAliases: ['console'],
+        includeAliases: ['Buffer', 'buffer', 'stream'],
       }),
       // new webpack.ProvidePlugin({
       //   Buffer: ['buffer', 'Buffer'],
@@ -701,8 +702,8 @@ module.exports = function (webpackEnv) {
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
       // You can remove this if you don't use Moment.js:
       new webpack.IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/,
+        resourceRegExp: /^\.\/locale$|^\.\/__mock__$/,
+        contextRegExp: /moment$|__mock__$/,
       }),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the webpack build.

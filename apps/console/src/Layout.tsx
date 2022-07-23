@@ -8,7 +8,7 @@ import { useAtom } from 'jotai';
 export const Layout: FC<any> = function () {
   const menu = useMenu();
 
-  useAtom(loadableUserProfile);
+  console.log('-------- Layout Render --------');
 
   return (
     <DashboardLayout
