@@ -1,5 +1,5 @@
+import { UserEntity } from 'src/user/user.entity';
 import { DataSource } from 'typeorm';
-import { AppModule } from './../app.module';
 import { Injectable } from '@nestjs/common';
 import {
   ValidatorConstraint,
@@ -11,27 +11,37 @@ import {
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class IsUserAlreadyExistConstraint
-  implements ValidatorConstraintInterface
-{
+export class IsUserExistedConstraint implements ValidatorConstraintInterface {
   constructor(private readonly dataSource: DataSource) {}
   validate(username: any, args: ValidationArguments) {
-    return true;
-    // return UserRepository.findOneByName(userName).then((user) => {
-    //   if (user) return false;
-    //   return true;
-    // });
+    const { email } = args.object as any;
+
+    return this.dataSource
+      .getRepository(UserEntity)
+      .findOne({
+        where: [
+          {
+            username,
+          },
+          {
+            email,
+          },
+        ],
+      })
+      .then((user) => {
+        return !user;
+      });
   }
 }
 
-export function IsUserAlreadyExist(validationOptions?: ValidationOptions) {
+export function IsUserExisted(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: IsUserAlreadyExistConstraint,
+      validator: IsUserExistedConstraint,
     });
   };
 }
