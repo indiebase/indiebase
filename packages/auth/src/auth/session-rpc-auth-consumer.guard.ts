@@ -14,8 +14,8 @@ export class SessionRpcAuthConsumerGuard implements CanActivate {
 
     console.log(sess);
 
-    for (const acc of sess.access) {
-      let { action, resource } = acc;
+    for (const a of sess.access) {
+      let { action, resource } = a;
 
       const hasPermission = await this.casbinService.e.enforce(
         sess.user.username,

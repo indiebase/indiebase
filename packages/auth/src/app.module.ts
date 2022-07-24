@@ -18,9 +18,7 @@ import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NodeRedisAdapter } from './utils';
 import { RedisCookieSessionModule } from '@letscollab/helper';
-import * as mysql from 'mysql';
 
-const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
 
 @Module({
@@ -61,8 +59,6 @@ const isDev = process.env.NODE_ENV === 'development';
           }),
           new LokiTransport(configs.logger.loki),
         ];
-
-        mysql.createConnection({})
 
         return {
           level: isDev ? 'debug' : 'warn',
@@ -136,19 +132,6 @@ export class AppModule implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    const r = await this.casbinService.e.addPolicy(
-      'han',
-      'letscollab.deskbtm.com',
-      'user_list',
-      'readOwn',
-    );
-
-    const r1 = await this.casbinService.e.addPolicy(
-      'owner',
-      '0.0.0.0:23332',
-      'user_list',
-      'readAny',
-    );
     // console.log(r);
     console.log(
       await this.casbinService.e.addRoleForUser(

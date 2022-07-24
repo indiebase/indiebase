@@ -11,6 +11,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
 import { RoleController } from './role/role.controller';
 import { ResourceController } from './res/resource.controller';
+import { IsUserAlreadyExistConstraint } from '../utils';
 
 @Module({
   imports: [
@@ -44,6 +45,6 @@ import { ResourceController } from './res/resource.controller';
     }),
   ],
   controllers: [UserController, RoleController, ResourceController],
-  providers: [UserService, Logger, RoleService],
+  providers: [UserService, Logger, RoleService, IsUserAlreadyExistConstraint],
 })
 export class UserModule {}

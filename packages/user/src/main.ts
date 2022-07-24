@@ -20,7 +20,7 @@ import {
   i18nValidationErrorFactory,
   I18nValidationExceptionFilter,
 } from 'nestjs-i18n';
-
+import { useContainer } from 'class-validator';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
@@ -34,6 +34,9 @@ async function bootstrap() {
       bodyParser: true,
     },
   );
+
+  // Inject service to ValidatorConstraintInterface
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const logger = app.get<Logger>(Logger);
 

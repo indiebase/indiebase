@@ -12,7 +12,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { LocalSignInDto } from './auth.dto';
-import { UserDto } from '@letscollab/user';
+import { UserEntity } from '@letscollab/user';
 import { CasbinService } from '@letscollab/nest-acl';
 
 @Injectable()
@@ -38,10 +38,9 @@ export class AuthService {
   }
 
   async validateLocal(info: LocalSignInDto) {
-    let user = await this.getUser<RpcResSchema<UserDto & { password: string }>>(
-      'get_complete_name',
-      info.username,
-    );
+    let user = await this.getUser<
+      RpcResSchema<UserEntity & { password: string }>
+    >('get_complete_name', info.username);
 
     if (user.code > 0) {
       if (await bcrypt.compare(info.password, user.d.password)) {
