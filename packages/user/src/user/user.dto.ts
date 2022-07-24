@@ -2,7 +2,7 @@ import { UserEntity } from './user.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { BaseResSchemaDto } from '@letscollab/helper';
-import { IsUserAlreadyExist } from 'src/utils';
+import { IsUserExisted } from 'src/utils';
 
 export class SignupDto {
   @ApiPropertyOptional({
@@ -18,7 +18,9 @@ export class SignupDto {
   @IsNotEmpty({
     message: '用户名不可为空',
   })
-  @IsUserAlreadyExist()
+  @IsUserExisted({
+    message: 'username/email already registered',
+  })
   username: string;
 
   @ApiProperty({
