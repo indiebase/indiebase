@@ -55,7 +55,7 @@ export class UserEntity {
   @ApiProperty({
     description: 'The default value is same as username',
   })
-  @Column('varchar', { comment: 'Optional name' })
+  @Column('varchar', { comment: 'Optional name', nullable: true })
   nickname?: string;
 
   @Column('varchar', { select: false, nullable: true })

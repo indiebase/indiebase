@@ -66,7 +66,7 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  // @UseGuards(Http2RmqAuthGuard)
+  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
   async getUserList(@Session() session, @Req() req: FastifyRequest) {
     return 1;
   }

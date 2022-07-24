@@ -38,7 +38,7 @@ export class RoleController {
     return this.roleService.createRole(role);
   }
 
-  @Get()
+  @Get('list')
   @ApiOperation({
     summary: 'Get role list',
   })

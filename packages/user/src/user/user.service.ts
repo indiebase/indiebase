@@ -29,7 +29,7 @@ export class UserService {
   ) {}
 
   private async createUser(
-    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
+    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime'>,
   ): Promise<UserEntity> {
     return new Promise(async (resolve, reject) => {
       const userEntity = this.userRepo.create(body);
