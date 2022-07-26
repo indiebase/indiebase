@@ -19,7 +19,6 @@
     "@mdx-js/loader": "^2.1.1",
     "@mdx-js/react": "^2.1.1",
     "@next/mdx": "^12.1.6",
-    "@sentry/nextjs": "^7.1.1",
     "@tabler/icons": "^1.68.0",
     "axios": "^0.27.2",
     "localforage": "^1.10.0",
