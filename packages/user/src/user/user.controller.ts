@@ -35,17 +35,17 @@ export class UserController {
 
   @MessagePattern({ cmd: 'get_complete_name' })
   async getFullUser(@Payload() username: string) {
-    return this.userService.getUser({ username }, true);
+    return this.userService.getUser([{ username }], true);
   }
 
   @MessagePattern({ cmd: 'get_name' })
   async getName(@Payload() username: string) {
-    return this.userService.getUser({ username });
+    return this.userService.getUser([{ username }]);
   }
 
   @MessagePattern({ cmd: 'get_id' })
   async getId(@Payload() id: number) {
-    return this.userService.getUser({ id });
+    return this.userService.getUser([{ id }]);
   }
 
   @MessagePattern({ cmd: 'signin_github' })

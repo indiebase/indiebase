@@ -10,9 +10,8 @@ import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ResultCode } from '@letscollab/helper';
 import { AUTH_RMQ } from '../app.constants';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
-import { SignupDto, UserResDto } from './user.dto';
+import { UserResDto } from './user.dto';
 import { JwtSignResDto } from '@letscollab/auth';
-import { FindUserCond } from './user.interface';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 
@@ -45,20 +44,12 @@ export class UserService {
     });
   }
 
-  private async getFullInfo(cond: FindUserCond) {
+  private async findOneWithFull(cond) {
     return this.userRepo
       .createQueryBuilder('user')
       .addSelect('user.password')
       .where(cond)
       .getOne();
-  }
-
-  /**
-   *
-   * 通过名字查找会返回多个用户
-   */
-  private async findByName(user: SignupDto) {
-    return this.userRepo.find({ where: { username: user.username } });
   }
 
   public async signup(
@@ -87,7 +78,7 @@ export class UserService {
         default:
           result = {
             code: ResultCode.EENTEXIST,
-            message: '该用户名/邮箱已经注册',
+            message: 'username/email already registered',
           };
           break;
       }
@@ -97,7 +88,7 @@ export class UserService {
 
         throw new InternalServerErrorException({
           code: ResultCode.ERROR,
-          message: err.code === 'ER_DUP_ENTRY' ? '用户已存在' : err.message,
+          message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,
         });
       });
 
@@ -130,17 +121,21 @@ export class UserService {
    * @param full  Get complete user information that includes password.
    * @returns
    */
-  public async getUser(cond: FindUserCond, full = false) {
-    const user = await this[full ? 'getFullInfo' : 'findOne'](cond).catch(
-      (err) => {
-        this.logger.error(err.message, err.stack);
-
-        throw new RpcException({
-          code: ResultCode.ERROR,
-          message: err.message,
+  public async getUser(cond: any[], full = false) {
+    const promise = full
+      ? this.findOneWithFull(cond)
+      : this.userRepo.findOne({
+          where: cond,
         });
-      },
-    );
+
+    const user = await promise.catch((err) => {
+      this.logger.error(err.message, err.stack);
+
+      throw new RpcException({
+        code: ResultCode.ERROR,
+        message: err.message,
+      });
+    });
 
     return {
       code: user ? ResultCode.SUCCESS : ResultCode.ERROR,
