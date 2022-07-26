@@ -51,7 +51,7 @@ export class AuthController {
 
     return {
       code: ResultCode.SUCCESS,
-      message: '登录成功',
+      message: 'Successfully login',
       d: user,
     };
   }
@@ -76,12 +76,13 @@ export class AuthController {
   @UseGuards(SessionRpcAuthConsumerGuard)
   @MessagePattern({ cmd: 'auth' })
   async auth(@Payload() payload: IVerify) {
-    console.log('============================');
     return payload;
   }
 
-  @MessagePattern({ cmd: 'set_policy' })
-  async addRole(@Payload() payload: IVerify) {
+  @MessagePattern({ cmd: 'set_role_policy' })
+  async addRole(@Payload() payload: string[]) {
+    console.log(payload);
+    this.authService.setRolePolicy();
     return payload;
   }
 }
