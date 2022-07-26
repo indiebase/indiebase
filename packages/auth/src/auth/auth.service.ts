@@ -46,10 +46,12 @@ export class AuthService {
       if (await bcrypt.compare(info.password, user.d.password)) {
         return user.d;
       } else {
-        throw new UnauthorizedException('用户认证错误, 请重新输入密码');
+        throw new UnauthorizedException('Wrong password');
       }
     } else {
-      throw new NotFoundException('用户不存在, 请先注册');
+      throw new NotFoundException(
+        `${info.username} not existed,  register first plz`,
+      );
     }
   }
 
@@ -59,13 +61,17 @@ export class AuthService {
         timeout(4000),
         catchError((e) => {
           throw new InternalServerErrorException({
-            message: '注册失败',
+            message: 'Fail to register',
           });
         }),
       ),
     );
 
     return r;
+  }
+
+  async setRolePolicy() {
+    this.casbin.e.addPolicy();
   }
 
   public async addRole() {
