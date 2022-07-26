@@ -13,10 +13,8 @@ export class SessionRpcAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {
 
     // If not logged in,  RpcAuthClientGuard will throw UnAuthorizedException.
     if (!req.session?.user?.loggedIn) {
-      throw new UnauthorizedException({ message: '未登录' });
+      throw new UnauthorizedException({ message: 'Please login' });
     }
-
-    // req.session.domain =
 
     return { ...req.session, domain: req.hostname };
   }

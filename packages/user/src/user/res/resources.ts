@@ -14,6 +14,7 @@ export const createResources: (i18n: I18nContext) => IResource[] = (i18n) => [
     isGroup: true,
     children: [
       {
+        // user
         name: UserResource.list,
         displayName: i18n.t('res.user_list'),
         description: i18n.t('res.user_list'),
@@ -27,6 +28,7 @@ export const createResources: (i18n: I18nContext) => IResource[] = (i18n) => [
     isGroup: true,
     children: [
       {
+        // role
         name: RoleResource.list,
         displayName: i18n.t('res.role_list'),
         description: i18n.t('res.role_list'),

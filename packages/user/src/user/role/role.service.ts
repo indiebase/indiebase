@@ -1,6 +1,7 @@
 import { RoleEntity } from './role.entity';
 
 import {
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -9,12 +10,16 @@ import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { ResultCode } from '@letscollab/helper';
+import { ClientProxy } from '@nestjs/microservices';
+import { AUTH_RMQ } from '../../app.constants';
 
 @Injectable()
 export class RoleService {
   constructor(
     @InjectRepository(RoleEntity)
     private readonly roleRepo: Repository<RoleEntity>,
+    @Inject(AUTH_RMQ)
+    private readonly authClient: ClientProxy,
     private readonly dataSource: DataSource,
     private readonly logger: Logger,
   ) {}
@@ -24,18 +29,23 @@ export class RoleService {
       name: role.name,
       description: role.description,
     });
-    await this.roleRepo.save(roleEntity).catch(async (err) => {
-      this.logger.error(err);
+    await this.roleRepo
+      .save(roleEntity)
+      .then(() => {
+        this.authClient.send('set_role_policy', []);
+      })
+      .catch(async (err) => {
+        this.logger.error(err);
 
-      throw new InternalServerErrorException({
-        code: ResultCode.ERROR,
-        message: err?.code === 'ER_DUP_ENTRY' ? '角色重复' : '创建失败',
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: err?.code === 'ER_DUP_ENTRY' ? 'Role repeat' : 'Create fail',
+        });
       });
-    });
 
     return {
       code: ResultCode.SUCCESS,
-      message: '创建成功',
+      message: 'Create successfully',
     };
   }
 
@@ -47,7 +57,7 @@ export class RoleService {
 
     return {
       code: ResultCode.SUCCESS,
-      message: '删除成功',
+      message: 'Delete successfully',
     };
   }
 
@@ -58,13 +68,13 @@ export class RoleService {
       .catch((err) => {
         this.logger.error(err);
         throw new InternalServerErrorException({
-          message: err?.code === 'ER_DUP_ENTRY' ? '角色重复' : '创建失败',
+          message: err?.code === 'ER_DUP_ENTRY' ? 'Role repeat' : 'Update fail',
         });
       });
 
     return {
       code: ResultCode.SUCCESS,
-      message: '更新成功',
+      message: 'Update successfully',
     };
   }
 

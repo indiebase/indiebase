@@ -2,7 +2,6 @@ import { UserEntity } from './user.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { BaseResSchemaDto } from '@letscollab/helper';
-import { IsUserExisted } from 'src/utils';
 
 export class SignupDto {
   @ApiPropertyOptional({
@@ -13,26 +12,20 @@ export class SignupDto {
   nickname?: string;
 
   @ApiProperty({
-    default: 'letscollab',
+    default: 'letscollabtest',
   })
   @IsNotEmpty({
-    message: '用户名不可为空',
-  })
-  @IsUserExisted({
-    message: 'username/email already registered',
+    message: 'Username is empty',
   })
   username: string;
 
   @ApiProperty({
     default: 'deskbtm@outlook.com',
   })
-  @IsNotEmpty({
-    message: '邮箱不可为空',
-  })
   @IsEmail(
     {},
     {
-      message: '请输入正确邮箱',
+      message: 'The following email incorrect',
     },
   )
   email: string;
@@ -40,11 +33,8 @@ export class SignupDto {
   @ApiProperty({
     default: 'dev123456',
   })
-  @IsNotEmpty({
-    message: '密码不可为空',
-  })
   @MinLength(8, {
-    message: '密码长度不可低于8',
+    message: 'Password length cannot less than 8',
   })
   password: string;
 
@@ -52,7 +42,7 @@ export class SignupDto {
     default: 12345,
   })
   @IsNotEmpty({
-    message: '请填写验证码',
+    message: 'Invalid CAPTCHA',
   })
   captcha: number;
 }
