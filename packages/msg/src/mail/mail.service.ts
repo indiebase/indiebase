@@ -1,7 +1,7 @@
 import { GetCaptchaDto } from './mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Captcha, ResultCode } from '@letscollab/helper';
+import { CaptchaUtils, ResultCode } from '@letscollab/helper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { Logger } from '@nestjs/common';
 import type { Redis } from 'ioredis';
@@ -31,7 +31,7 @@ export class MailService {
       })
       .then(async () => {
         await this.redis.setex(
-          Captcha.getSignupCaptchaToken(captcha, body.username),
+          CaptchaUtils.getSignupCaptchaToken(captcha, body.username),
           3000,
           captcha,
         );

@@ -81,8 +81,7 @@ export class AuthController {
 
   @MessagePattern({ cmd: 'set_role_policy' })
   async addRole(@Payload() payload: string[]) {
-    console.log(payload);
-    this.authService.setRolePolicy();
+    this.authService.setRolePolicy(payload);
     return payload;
   }
 }

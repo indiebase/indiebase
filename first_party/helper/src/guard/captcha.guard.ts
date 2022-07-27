@@ -7,7 +7,7 @@ import {
 import type { Redis } from 'ioredis';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { FastifyRequest } from 'fastify';
-import { Captcha } from '../share';
+import { CaptchaUtils } from '../utils';
 import { SignupDto } from '@letscollab/user';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class CaptchaGuard implements CanActivate {
 
     const body = request.body as SignupDto;
     const { captcha, username } = body;
-    const key = Captcha.getSignupCaptchaToken(captcha, username);
+    const key = CaptchaUtils.getSignupCaptchaToken(captcha, username);
     const c = await this.redis.get(key);
 
     if (c) {

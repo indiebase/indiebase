@@ -9,9 +9,10 @@ import {
 import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
-import { ResultCode } from '@letscollab/helper';
+import { awaitValue, ResultCode } from '@letscollab/helper';
 import { ClientProxy } from '@nestjs/microservices';
 import { AUTH_RMQ } from '../../app.constants';
+import { catchError, lastValueFrom, timeout } from 'rxjs';
 
 @Injectable()
 export class RoleService {
@@ -32,7 +33,26 @@ export class RoleService {
     await this.roleRepo
       .save(roleEntity)
       .then(() => {
-        this.authClient.send('set_role_policy', []);
+        if (role.possession && role.possession.length > 0) {
+          awaitValue(
+            this.authClient,
+            { cmd: 'set_role_policy' },
+            { name: role.name, possession: role.possession },
+            (e) => {},
+          );
+
+          lastValueFrom(
+            this.authClient
+              .send({ cmd: 'set_role_policy' }, role.possession)
+              .pipe(
+                timeout(4000),
+                catchError((e) => {
+                  this.logger.error(e);
+                  throw new Error('Set role possession error');
+                }),
+              ),
+          );
+        }
       })
       .catch(async (err) => {
         this.logger.error(err);

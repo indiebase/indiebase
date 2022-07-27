@@ -104,7 +104,7 @@ export class UserService {
   }
 
   public async getSign(data: {}) {
-    return await lastValueFrom<JwtSignResDto>(
+    return lastValueFrom<JwtSignResDto>(
       this.authClient.send({ cmd: 'sign' }, data).pipe(
         timeout(4000),
         catchError((e) => {
