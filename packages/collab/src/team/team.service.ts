@@ -36,7 +36,6 @@ export class TeamService {
     const { name, current, pageSize } = body;
     const cond = [];
     name && cond.push({ name });
-    console.log(body);
 
     const [list, total] = await this.teamRepo.findAndCount({
       where: cond,

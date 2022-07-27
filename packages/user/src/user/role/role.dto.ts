@@ -1,6 +1,12 @@
 import { RoleStatus } from './role.entity';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
 
 export class CreateRoleDto {
@@ -18,6 +24,13 @@ export class CreateRoleDto {
   })
   @IsOptional()
   description?: string;
+
+  @ApiProperty({
+    description: "The same as project's packageName",
+    default: 'letscollab.letscollab.deskbtm.com',
+  })
+  @IsString()
+  domain: string;
 
   @ApiPropertyOptional({
     description: 'Possession',
