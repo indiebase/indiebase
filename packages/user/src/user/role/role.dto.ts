@@ -19,8 +19,12 @@ export class CreateRoleDto {
   @IsOptional()
   description?: string;
 
-  @IsArray({})
-  possession: string[];
+  @ApiPropertyOptional({
+    description: 'Possession',
+  })
+  @IsArray()
+  @IsOptional()
+  possession?: string[];
 }
 export class QueryRoleDto extends PaginationReqDto {
   @ApiPropertyOptional({

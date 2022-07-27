@@ -18,7 +18,7 @@ import { ApiHeader } from '@nestjs/swagger';
  * @param salt Recommend to use steganography to hide the salt in frontend
  * @example
  * ```
- *  Access-Control-Allow-Credential 不同于 Access-Control-Allow-Credentials
+ *  Access-Control-Allow-Credential different from Access-Control-Allow-Credentials
  *  Access-Control-Allow-Credential: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
  * ```
  *
