@@ -71,7 +71,11 @@ export class AuthService {
   }
 
   async setRolePolicy() {
-    this.casbin.e.addPolicy();
+    const a = await this.casbin.e.addPolicy().catch(() => {
+      throw new InternalServerErrorException({
+        message: 'Fail to register',
+      });
+    });
   }
 
   public async addRole() {
