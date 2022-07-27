@@ -86,6 +86,7 @@ export class UserService {
       const created = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
+        //TODO: handle rpc exception
         throw new InternalServerErrorException({
           code: ResultCode.ERROR,
           message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,

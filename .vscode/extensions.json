@@ -5,6 +5,8 @@
     "vivaxy.vscode-conventional-commits",
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "RedVanWorkshop.explorer-exclude-vscode-extension"
+    "redvanworkshop.explorer-exclude-vscode-extension",
+    "gruntfuggly.todo-tree",
+    "deskbtm.colorful-monorepo"
   ]
 }

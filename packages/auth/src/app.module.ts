@@ -133,23 +133,41 @@ export class AppModule implements OnModuleInit {
 
   async onModuleInit() {
     // console.log(r);
-    
-    // console.log(
-    //   await this.casbinService.e.addRoleForUser(
-    //     'deskbtm@outlook.com',
-    //     'owner',
-    //     '0.0.0.0:23332',
-    //   ),
-    // );
 
-    // console.log(
-    //   await this.casbinService.e.enforce(
-    //     'deskbtm@outlook.com',
-    //     '0.0.0.0:23332',
-    //     'user_list',
-    //     'readAny',
-    //   ),
-    // );
+    console.log(
+      await this.casbinService.e.addRoleForUser(
+        'letscollabtest',
+        'admin',
+        '0.0.0.0:23332',
+      ),
+    );
+
+    console.log(
+      await this.casbinService.e.addPolicy(
+        'admin',
+        '0.0.0.0:23332',
+        'user_list',
+        'readAny',
+      ),
+    );
+
+    console.log(
+      await this.casbinService.e.addPolicy(
+        'admin',
+        '0.0.0.0:23332',
+        'role_list',
+        'createAny',
+      ),
+    );
+
+    console.log(
+      await this.casbinService.e.enforce(
+        'letscollabtest',
+        '0.0.0.0:23332',
+        'user_list',
+        'readAny',
+      ),
+    );
 
     await this.nacosNamingService.registerInstance(
       `@letscollab/auth-${process.env.NODE_ENV}`,

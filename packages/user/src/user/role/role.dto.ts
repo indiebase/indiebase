@@ -1,6 +1,6 @@
 import { RoleStatus } from './role.entity';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
 
 export class CreateRoleDto {
@@ -18,6 +18,9 @@ export class CreateRoleDto {
   })
   @IsOptional()
   description?: string;
+
+  @IsArray({})
+  possession: string[];
 }
 export class QueryRoleDto extends PaginationReqDto {
   @ApiPropertyOptional({
