@@ -23,6 +23,10 @@ export class OrgEntity {
   name: string;
 
   @ApiProperty()
+  @Column('varchar', { unique: true, comment: 'Organization domain' })
+  domain: string;
+
+  @ApiProperty()
   @Column('varchar', { name: 'contact_email' })
   contactEmail: string;
 

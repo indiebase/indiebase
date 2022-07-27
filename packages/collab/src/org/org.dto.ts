@@ -17,7 +17,7 @@ export class CreateOrgDto {
   @IsEmail(
     {},
     {
-      message: '邮箱格式不正确',
+      message: 'Email incorrect',
     },
   )
   @IsOptional()
@@ -50,7 +50,7 @@ export class UpdateOrgDto {
   @IsEmail(
     {},
     {
-      message: '邮箱格式不正确',
+      message: 'Email incorrect',
     },
   )
   @IsOptional()
@@ -61,6 +61,12 @@ export class UpdateOrgDto {
   })
   @IsOptional()
   description: string;
+
+  @ApiProperty({
+    description: 'Organization domain',
+    default: 'letscollab.deskbtm.com',
+  })
+  domain: string;
 }
 
 export class DeleteOrgDto {

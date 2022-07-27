@@ -16,11 +16,14 @@ export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { unique: true })
+  @Column('varchar')
   name: string;
 
   @Column('varchar')
   description: string;
+
+  @Column({ type: 'varchar' })
+  domain: string;
 
   @Column('simple-enum', {
     enum: RoleStatus,
@@ -30,10 +33,10 @@ export class RoleEntity {
   status?: RoleStatus;
 
   @Column('simple-array', {
-    comment: 'Resources owned',
+    comment: 'Possession',
     nullable: true,
   })
-  resource?: string[];
+  possession?: string[];
 
   @CreateDateColumn({
     type: 'timestamp',

@@ -40,6 +40,12 @@ export class CreatePrjDto {
   contactEmail?: string;
 
   @ApiProperty({
+    description: 'Project domain',
+    default: 'letscollab.letscollab.deskbtm.com',
+  })
+  packageName: string;
+
+  @ApiProperty({
     default: 'xxxxxx',
   })
   @IsOptional()

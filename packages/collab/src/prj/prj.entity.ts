@@ -35,9 +35,13 @@ export class PrjEntity {
   @Column('varchar', { name: 'contact_email' })
   contactEmail: string;
 
-  @ApiProperty({ description: 'Project cover url' })
+  @ApiProperty()
   @Column('varchar', { nullable: true })
   cover?: string;
+
+  @ApiProperty({ description: 'Project domain' })
+  @Column('varchar', { unique: true, comment: 'Project domain' })
+  packageName: string;
 
   @ApiProperty({
     enum: PrjStatus,
