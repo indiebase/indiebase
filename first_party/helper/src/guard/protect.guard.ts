@@ -18,7 +18,7 @@ import { ApiHeader } from '@nestjs/swagger';
  * @param salt Recommend to use steganography to hide the salt in frontend
  * @example
  * ```
- *  Access-Control-Allow-Credential different from Access-Control-Allow-Credentials
+ *  Access-Control-Allow-Credential is different from Access-Control-Allow-Credentials
  *  Access-Control-Allow-Credential: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
  * ```
  *
@@ -52,7 +52,7 @@ export class ProtectGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
     try {
-      const common = await this.nacosConfigService.getConfig('common.json');
+      const common = (await this.nacosConfigService.getConfig('common.json')) ?? {};
 
       // If remote config not enable, return true.
       if (!common.security.enableProtectGuard) {
@@ -60,7 +60,7 @@ export class ProtectGuard implements CanActivate {
       }
 
       const apiToken = request.headers[
-        common?.security?.guardHeader ?? 'Access-Control-Allow-Credential'
+        common.security?.guardHeader ?? 'Access-Control-Allow-Credential'
       ] as string;
 
       if (!apiToken) {
