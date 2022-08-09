@@ -57,9 +57,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const { org: orgParam } = useParams();
   const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
   const [value] = useAtom(userProfileQuery);
-
   const data = value.d;
-  const orgs = data?.orgs ?? [];
+  const orgs = data.orgs ?? [];
 
   const orgDefault = useMemo(
     () => orgs.find((v) => v.label === orgParam),
