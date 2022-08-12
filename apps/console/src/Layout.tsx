@@ -1,9 +1,8 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useMenu } from './use-menu';
-import { DashboardLayout, loadableUserProfile } from '@letscollab/app-utils';
+import { DashboardLayout } from '@letscollab/app-utils';
 import { Anchor, Image } from '@mantine/core';
-import { useAtom } from 'jotai';
 
 export const Layout: FC<any> = function () {
   const menu = useMenu();
