@@ -12,8 +12,6 @@ export class SessionRpcAuthConsumerGuard implements CanActivate {
       .switchToRpc()
       .getData<FastifyRequest['session'] & ExtraMountedSession>();
 
-    console.log(sess);
-
     for (const a of sess.access) {
       let { action, resource } = a;
 
