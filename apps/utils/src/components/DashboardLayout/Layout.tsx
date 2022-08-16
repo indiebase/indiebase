@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import {
   AppShell,
+  Box,
   ColorScheme,
   ColorSchemeProvider,
   Global,
@@ -61,8 +62,10 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             asideOffsetBreakpoint="sm"
             navbar={<Menu menu={props.menu} opened={!opened} />}
             header={
-              <ErrorBoundary fallbackRender={() => <div></div>}>
-                <Suspense>
+              <ErrorBoundary
+                fallbackRender={() => <div style={{ height: 65 }} />}
+              >
+                <Suspense fallback={<div style={{ height: 65 }} />}>
                   <Header
                     {...props}
                     navbarOpened={opened}

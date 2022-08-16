@@ -2,12 +2,12 @@
 
 ## 环境搭建
 
+社区版
+`docker stack deploy -c docker-compose.yaml letscollab  --with-registry-auth`
+
 ### portainer
 
 Port: `13331:9443`
-
-- `cd ./config/portainer`
-- `docker stack deploy -c ./docker-compose.yaml portainer`
 
 ### apisix
 
@@ -15,13 +15,9 @@ Apisix Ports: `13320:9080`,`13321:9091`,`13322:9443`,`13323:9092`
 
 Apisix Dashboard Posts: `13336:9000`
 
-`docker stack deploy -c ./docker-compose.yaml apisix`
-
 ### nacos
 
 Ports: `13324:8848`,`13325:9848`,`13326:9555`
-
-`docker stack deploy -c ./docker-compose.yaml nacos`
 
 ### prometheus
 
@@ -47,4 +43,5 @@ Ports Range `23330~23350`
 
 ### @letscollab/service-user
 
+在Windows上开发，使用Docker需要对 0.0.0.0 绑定
 

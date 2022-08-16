@@ -6,19 +6,31 @@ import {
   ThemeIcon,
   UnstyledButton,
   Accordion,
+  MantineThemeColors,
 } from '@mantine/core';
 import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {
+  useNavigate,
+  NavLink,
+  useOutlet,
+  useMatch,
+  Location,
+  useLocation,
+  resolvePath,
+} from 'react-router-dom';
+import history from 'history/browser';
+import React from 'react';
 
 export interface MenuNode {
   label: string;
   to?: string;
+  replace?: boolean;
+  type?: 'node' | 'link';
   icon?: React.ReactNode;
-  color?: string;
+  color?: keyof MantineThemeColors;
   children?: MenuNode[];
   onClick?: () => Promise<void> | void;
 }
-
 export interface MenuProps {
   opened: boolean;
   menu: MenuNode[];
@@ -60,9 +72,8 @@ function MenuItem({ label, active, onClick }: MenuItemProps) {
 }
 
 export const Menu: FC<MenuProps> = function (props) {
-  // const menuTree = useMenu();
-  const [active, setActive] = useState<number | null>(null);
   const navigate = useNavigate();
+  let location = useLocation();
 
   return (
     <Navbar
@@ -71,9 +82,9 @@ export const Menu: FC<MenuProps> = function (props) {
       width={{ sm: 200, lg: 250 }}
       style={{ borderRight: 0 }}
       hidden={props.opened}
-      onClick={(e) => {
-        setActive(null);
-      }}
+      // onClick={(e) => {
+      //   setActive(null);
+      // }}
     >
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <Accordion
@@ -97,8 +108,8 @@ export const Menu: FC<MenuProps> = function (props) {
                     return;
                   }
                   e.stopPropagation();
-                  setActive(null);
-                  navigate(node.to!);
+                  // setActive(null);
+                  node.to && navigate(node.to, { replace: node.replace });
                 }}
                 icon={
                   <ThemeIcon color={node.color} variant="light">
@@ -109,16 +120,19 @@ export const Menu: FC<MenuProps> = function (props) {
                 {node?.children?.map((sub, index2) => {
                   const index = parseInt(`${index1}${index2}`);
                   return (
-                    <MenuItem
-                      key={index}
-                      active={index === active}
-                      label={sub.label}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActive(index);
-                        navigate(sub.to!);
-                      }}
-                    />
+                    <NavLink key={index} to={sub.to}>
+                      {({ isActive }) => (
+                        <MenuItem
+                          active={isActive}
+                          label={sub.label}
+                          // onClick={(e) => {
+                          //   e.stopPropagation();
+                          //   setActive(index);
+                          //   navigate(sub.to);
+                          // }}
+                        />
+                      )}
+                    </NavLink>
                   );
                 })}
               </Accordion.Item>
