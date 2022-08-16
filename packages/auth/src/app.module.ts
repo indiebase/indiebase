@@ -1,4 +1,3 @@
-import { JwtModule } from '@nestjs/jwt';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
@@ -101,14 +100,6 @@ const isDev = process.env.NODE_ENV === 'development';
           adapter: await NodeRedisAdapter.newAdapter(configs.redis),
         };
       },
-    }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule, NacosConfigModule],
-      useFactory: async (config: NacosConfigService) => {
-        const configs = await config.getConfig('service-auth.json');
-        return configs.jwt;
-      },
-      inject: [NacosConfigService],
     }),
     TypeOrmModule.forRootAsync({
       imports: [NacosConfigModule],

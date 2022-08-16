@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 /* eslint max-classes-per-file: ["error", 3] */
 import ProCard from '@ant-design/pro-card';
 

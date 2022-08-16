@@ -1,6 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
 import { PassportModule as ForwardPassportModule } from '@letscollab/passport';
-import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 
 import { LocalStrategy } from './local.strategy';
@@ -41,14 +40,6 @@ const PassportModule = ForwardPassportModule.register({
         },
       },
     ]),
-    JwtModule.registerAsync({
-      imports: [NacosConfigModule],
-      inject: [NacosConfigService],
-      async useFactory(nacosConfigService: NacosConfigService) {
-        const configs = await nacosConfigService.getConfig('service-auth.json');
-        return configs?.jwt as JwtModuleOptions;
-      },
-    }),
   ],
   controllers: [AuthController],
   providers: [

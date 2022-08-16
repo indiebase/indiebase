@@ -6,9 +6,10 @@ import configure from './config';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
+import LokiTransport = require('winston-loki');
 
-const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 
 @Module({
   imports: [
@@ -21,10 +22,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
     WinstonModule.forRootAsync({
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
-        const configs = await config.getConfig('service-auth.json');
-        const logStorageDir = configs.logger.storageDir
-          ? configs.logger.storageDir
-          : '/var/log';
+        const configs = await config.getConfig('service-user.json');
 
         const transports: any[] = [
           new winston.transports.Console({
@@ -33,17 +31,15 @@ const isDevelopment = process.env.NODE_ENV === 'development';
               utilities.format.nestLike(),
             ),
           }),
+          new LokiTransport(configs.logger.loki),
         ];
-        if (isProduction) {
-          transports.push();
-        }
 
         return {
-          level: isDevelopment ? 'debug' : 'warn',
+          level: isDev ? 'debug' : 'warn',
           format: winston.format.json(),
           defaultMeta: { service: 'auth' },
           exitOnError: false,
-          rejectionHandlers: isProduction ? [] : null,
+          rejectionHandlers: [new LokiTransport(configs.logger.rejectionLoki)],
           transports,
         };
       },
