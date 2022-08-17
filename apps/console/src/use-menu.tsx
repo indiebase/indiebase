@@ -1,22 +1,54 @@
 import { useMemo } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
-import { MantineThemeColors } from '@mantine/core';
-import {
-  resolvePath,
-  useLocation,
-  useParams,
-  useResolvedPath,
-} from 'react-router-dom';
-import { MenuNode } from '@letscollab/app-utils';
+import { useParams } from 'react-router-dom';
+import { MenuNode, userProfileQuery } from '@letscollab/app-utils';
+import { useAtom } from 'jotai';
 
 export const useMenu = () => {
   const { org, project } = useParams();
 
-  const resolve = useResolvedPath('settings/general');
+  const [value] = useAtom(userProfileQuery);
 
-  console.log(resolve);
+  console.log(value);
 
   return useMemo<MenuNode[]>(() => {
+    //TODO: Stupid way
+
+    let settingList = [
+      {
+        label: 'General',
+        to: 'user/settings/general',
+      },
+    ];
+
+    const slug = [org, project].filter(Boolean).join('/');
+
+    if (org) {
+      settingList = [
+        {
+          label: 'General',
+          to: `${org}/settings/general`,
+        },
+        {
+          label: 'Access',
+          to: `${org}/settings/access`,
+        },
+      ];
+    }
+
+    if (org && project) {
+      settingList = [
+        {
+          label: 'General',
+          to: `${org}/${project}/settings/general`,
+        },
+        {
+          label: 'Access',
+          to: `${org}/${project}/settings/access`,
+        },
+      ];
+    }
+
     return [
       {
         label: 'Project',
@@ -30,18 +62,8 @@ export const useMenu = () => {
         icon: <IconSettings size={16} />,
         color: 'violet',
         type: 'node',
-        children: [
-          {
-            label: 'General',
-            to: 'user/settings',
-            // to: 'settings/general',
-          },
-          {
-            label: 'Access',
-            to: 'settings/access',
-          },
-        ],
+        children: settingList,
       },
     ];
-  }, [org]);
+  }, [org, project, value]);
 };
