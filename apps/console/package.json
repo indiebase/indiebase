@@ -93,6 +93,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start:mock": "../../node_modules/.bin/cross-env REACT_APP_IS_MOCK=true node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.{tsx,ts}\" --fix"
