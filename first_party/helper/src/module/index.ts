@@ -1,1 +1,1 @@
-export * from './redis-cookie-session.module';
+export * from './redis-session.module';

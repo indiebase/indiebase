@@ -21,6 +21,7 @@ import {
   I18nValidationExceptionFilter,
 } from 'nestjs-i18n';
 import { useContainer } from 'class-validator';
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
@@ -45,6 +46,7 @@ async function bootstrap() {
     const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
 
     const userConfigs = await nacosConfigService.getConfig('service-user.json');
+    const commonConfigs = await nacosConfigService.getConfig('common.json');
 
     //dto international
     app.useGlobalPipes(

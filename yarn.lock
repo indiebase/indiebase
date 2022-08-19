@@ -2606,6 +2606,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/csrf@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "@fastify/csrf@npm:4.0.1"
+  dependencies:
+    rndm: ^1.2.0
+    tsscmp: ^1.0.6
+    uid-safe: ^2.1.5
+  checksum: a1c569b4fd518f41400be8e60730e5e9e39fee26ba662a4012d6eb705ddb080d493e0606bca1ee63d06160b2f5a7f35e58bccfa27d17c1ec8c0bb7a31bed2f16
+  languageName: node
+  linkType: hard
+
 "@fastify/error@npm:^2.0.0":
   version: 2.0.0
   resolution: "@fastify/error@npm:2.0.0"
@@ -3288,13 +3299,13 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     stegcloak: ^1.1.1
-    typescript: ^4.6.3
   peerDependencies:
     "@mantine/core": ^4.2.12
     "@mantine/hooks": ^4.2.12
     "@mantine/notifications": ^4.2.12
     jotai: ^1.7.3
     react-router-dom: ^6.3.0
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -3954,6 +3965,7 @@ __metadata:
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^4.0.0
     fastify-cookie: 5.6.1
+    fastify-csrf: ^3.1.0
     jest: ^27.2.5
     mysql2: ^2.3.3
     nest-winston: ^1.6.2
@@ -13602,6 +13614,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fastify-csrf@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "fastify-csrf@npm:3.1.0"
+  dependencies:
+    "@fastify/csrf": ^4.0.0
+    fastify-plugin: ^3.0.0
+    http-errors: ^1.8.0
+  checksum: f0d12d0201e402ddab84645f70f83ca3cff2ca5b65f7a2919fdca5d9b71788fa697143482baf75475b0a256f40d45c9618b087ec32bedeaed425e4bb164a9a4d
+  languageName: node
+  linkType: hard
+
 "fastify-formbody-deprecated@npm:fastify-formbody@5.2.0":
   version: 5.2.0
   resolution: "fastify-formbody@npm:5.2.0"
@@ -15279,7 +15302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-errors@npm:1.8.1":
+"http-errors@npm:1.8.1, http-errors@npm:^1.8.0":
   version: 1.8.1
   resolution: "http-errors@npm:1.8.1"
   dependencies:
@@ -25731,6 +25754,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rndm@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "rndm@npm:1.2.0"
+  checksum: ff0c54a12357267108d7de17b762869e388215e2e3c8147b5bba80d8454ee490c5fdaa40020b8b52ca52b86f13ad6171b4845dd5b7f627e5e2b6195908117c07
+  languageName: node
+  linkType: hard
+
 "rollup-plugin-terser@npm:^7.0.0":
   version: 7.0.2
   resolution: "rollup-plugin-terser@npm:7.0.2"
@@ -28170,6 +28200,13 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tsscmp@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "tsscmp@npm:1.0.6"
+  checksum: 1512384def36bccc9125cabbd4c3b0e68608d7ee08127ceaa0b84a71797263f1a01c7f82fa69be8a3bd3c1396e2965d2f7b52d581d3a5eeaf3967fbc52e3b3bf
   languageName: node
   linkType: hard
 
