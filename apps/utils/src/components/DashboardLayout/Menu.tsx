@@ -8,7 +8,7 @@ import {
   Accordion,
   MantineThemeColors,
 } from '@mantine/core';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   useNavigate,
   NavLink,
@@ -73,7 +73,6 @@ function MenuItem({ label, active, onClick }: MenuItemProps) {
 
 export const Menu: FC<MenuProps> = function (props) {
   const navigate = useNavigate();
-  let location = useLocation();
 
   return (
     <Navbar
@@ -104,10 +103,11 @@ export const Menu: FC<MenuProps> = function (props) {
                 key={index1}
                 label={node.label}
                 onClick={(e) => {
-                  if (node.children && node.children?.length <= 0) {
+                  e.stopPropagation();
+
+                  if (!node.children) {
                     return;
                   }
-                  e.stopPropagation();
                   // setActive(null);
                   node.to && navigate(node.to, { replace: node.replace });
                 }}

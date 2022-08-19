@@ -44,6 +44,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "fastify-cookie": "5.6.1",
+    "fastify-csrf": "^3.1.0",
     "mysql2": "^2.3.3",
     "nest-winston": "^1.6.2",
     "nestjs-i18n": "^9.0.5",

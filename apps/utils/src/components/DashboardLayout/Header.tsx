@@ -11,7 +11,7 @@ import {
   Menu,
   Divider,
 } from '@mantine/core';
-import { FC, forwardRef, useMemo, useState } from 'react';
+import { FC, forwardRef, useEffect, useMemo, useState } from 'react';
 import {
   Link,
   resolvePath,
@@ -23,6 +23,8 @@ import {
   IconPlus,
   IconUser,
   IconBuildingCommunity,
+  IconFileDescription,
+  IconLogout,
 } from '@tabler/icons';
 import { useNavigate, useParams, NavLink } from 'react-router-dom';
 import { useAtom } from 'jotai';
@@ -63,6 +65,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const navigate = useNavigate();
   const { org: orgParam } = useParams();
   const [value] = useAtom(userProfileQuery);
+
   const data = value.d;
   const userItem = {
     logo: data.avatar,
@@ -179,8 +182,15 @@ export const Header: FC<NavHeaderProps> = function (props) {
                   <Menu.Item icon={<IconSettings size={16} />}>
                     Settings
                   </Menu.Item>
+                  <Menu.Item icon={<IconFileDescription size={16} />}>
+                    Docs
+                  </Menu.Item>
                   <Menu.Item icon={<IconPlus size={16} />}>
                     Create Organization
+                  </Menu.Item>
+                  <Divider my="lg" variant="dashed" labelPosition="center" />
+                  <Menu.Item icon={<IconLogout size={16} />}>
+                    Sign Out
                   </Menu.Item>
                 </Menu>
               </Group>
