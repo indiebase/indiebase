@@ -8,17 +8,8 @@ import {
   Accordion,
   MantineThemeColors,
 } from '@mantine/core';
-import { FC, useEffect, useState } from 'react';
-import {
-  useNavigate,
-  NavLink,
-  useOutlet,
-  useMatch,
-  Location,
-  useLocation,
-  resolvePath,
-} from 'react-router-dom';
-import history from 'history/browser';
+import { FC } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
 import React from 'react';
 
 export interface MenuNode {
@@ -105,9 +96,9 @@ export const Menu: FC<MenuProps> = function (props) {
                 onClick={(e) => {
                   e.stopPropagation();
 
-                  if (!node.children) {
-                    return;
-                  }
+                  // if (!node.children) {
+                  //   return;
+                  // }
                   // setActive(null);
                   node.to && navigate(node.to, { replace: node.replace });
                 }}

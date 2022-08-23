@@ -5,46 +5,29 @@ import { MenuNode, userProfileQuery } from '@letscollab/app-utils';
 import { useAtom } from 'jotai';
 
 export const useMenu = () => {
-  const { org, project } = useParams();
-
-  const [value] = useAtom(userProfileQuery);
-
-  console.log(value);
+  const { org, project, user } = useParams();
+  console.log(user);
 
   return useMemo<MenuNode[]>(() => {
     //TODO: Stupid way
 
     let settingList = [
       {
-        label: 'General',
-        to: 'user/settings/general',
+        label: 'Profile',
+        to: `users/${user}/settings/profile`,
       },
     ];
 
-    const slug = [org, project].filter(Boolean).join('/');
-
     if (org) {
+      const slug = ['orgs', org, project].filter(Boolean).join('/');
       settingList = [
         {
           label: 'General',
-          to: `${org}/settings/general`,
+          to: `${slug}/settings/general`,
         },
         {
           label: 'Access',
-          to: `${org}/settings/access`,
-        },
-      ];
-    }
-
-    if (org && project) {
-      settingList = [
-        {
-          label: 'General',
-          to: `${org}/${project}/settings/general`,
-        },
-        {
-          label: 'Access',
-          to: `${org}/${project}/settings/access`,
+          to: `${slug}/settings/access`,
         },
       ];
     }
@@ -54,7 +37,7 @@ export const useMenu = () => {
         label: 'Project',
         icon: <IconFileCode size={16} />,
         color: 'blue',
-        replace: true,
+        // replace: true,
         to: org,
       },
       {
@@ -65,5 +48,5 @@ export const useMenu = () => {
         children: settingList,
       },
     ];
-  }, [org, project, value]);
+  }, [org, project, user]);
 };

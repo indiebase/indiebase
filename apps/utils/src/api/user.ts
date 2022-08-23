@@ -29,7 +29,7 @@ export const userProfileQuery = atomWithQuery((get) => ({
   queryKey: ['profile', get(userProfileAtom)],
   queryFn: async (): Promise<BaseResSchema<UserProfile>> => {
     const { data } = await req.get('/v1/user/profile');
-    return data;
+    return data ?? {};
   },
 }));
 

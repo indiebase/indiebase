@@ -24,9 +24,9 @@ mock.onGet('/v1/user/profile').reply<BaseResSchema<UserProfile>>(200, {
   d: {
     ...FakeSingleUserProfile(),
     orgs: Array.from({ length: 5 }).map((_, index) => ({
-      value: index.toString(),
+      value: 'organization' + index,
       label: 'organization' + index,
-      logo: faker.image.food(),
+      logo: faker.image.avatar(),
     })),
   },
 });
