@@ -22,7 +22,7 @@ export const AppRouter: FC<any> = function () {
           element: <div>demo</div>,
         },
         {
-          path: 'settings',
+          path: 'users/:user',
           children: [
             {
               path: 'profile',
@@ -31,7 +31,7 @@ export const AppRouter: FC<any> = function () {
           ],
         },
         {
-          path: ':org',
+          path: 'orgs/:org',
           children: [
             {
               index: true,
