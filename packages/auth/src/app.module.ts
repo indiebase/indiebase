@@ -1,4 +1,3 @@
-import { JwtModule } from '@nestjs/jwt';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
@@ -17,7 +16,7 @@ import LokiTransport = require('winston-loki');
 import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NodeRedisAdapter } from './utils';
-import { RedisCookieSessionModule } from '@letscollab/helper';
+import { RedisSessionModule } from '@letscollab/helper';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -36,7 +35,7 @@ const isDev = process.env.NODE_ENV === 'development';
         return { config: configs.redis };
       },
     }),
-    RedisCookieSessionModule.forRootAsync({
+    RedisSessionModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
         const cc = await config.getConfig('common.json');
@@ -101,14 +100,6 @@ const isDev = process.env.NODE_ENV === 'development';
           adapter: await NodeRedisAdapter.newAdapter(configs.redis),
         };
       },
-    }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule, NacosConfigModule],
-      useFactory: async (config: NacosConfigService) => {
-        const configs = await config.getConfig('service-auth.json');
-        return configs.jwt;
-      },
-      inject: [NacosConfigService],
     }),
     TypeOrmModule.forRootAsync({
       imports: [NacosConfigModule],

@@ -9,23 +9,46 @@ import { OrganizationPage, AccessPage } from './pages';
 export const AppRouter: FC<any> = function () {
   return useRoutes([
     {
-      path: '/404',
-      element: <HttpStatusPage label="404" />,
-    },
-    {
       path: '/',
       element: <Layout />,
       children: [
+        // {
+        //   path: '404',
+        //   element: <HttpStatusPage label="404" />,
+        // },
+
         {
           index: true,
           element: <div>demo</div>,
         },
         {
-          path: ':org',
+          path: 'users/:user',
+          children: [
+            {
+              path: 'profile',
+              element: <div>Settings Profile</div>,
+            },
+          ],
+        },
+        {
+          path: 'orgs/:org',
           children: [
             {
               index: true,
               element: <OrganizationPage />,
+            },
+            {
+              path: 'settings',
+              children: [
+                {
+                  path: 'general',
+                  element: <AccessPage />,
+                },
+                {
+                  path: 'access',
+                  element: <AccessPage />,
+                },
+              ],
             },
             {
               path: ':project',

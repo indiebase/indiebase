@@ -24,6 +24,7 @@ import { UserResDto, SignupDto } from './user.dto';
 import {
   ApiProtectHeader,
   CaptchaGuard,
+  CsrfGuard,
   ProtectGuard,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
@@ -66,9 +67,13 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
-  async getUserList(@Session() session, @Req() req: FastifyRequest) {
-    return 1;
+  @UseGuards(CsrfGuard, ProtectGuard, SessionRpcAuthClientGuard)
+  async getUserList(
+    @Session() session,
+    @Req() req: FastifyRequest,
+    @Res() res: FastifyReply,
+  ) {
+    res.send({ token: 1 });
   }
 
   @Get('profile/:username')

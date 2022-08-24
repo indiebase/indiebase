@@ -7,15 +7,15 @@ import { type UserProfile } from '../api';
 
 export const FakeSingleUserProfile = () => ({
   id: faker.datatype.number(),
-  username: faker.name.findName(),
-  nickname: faker.name.findName(),
+  username: faker.name.middleName(),
+  nickname: faker.name.fullName(),
   status: AccountStatus.active,
   signupType: SignupType.github,
   avatar: faker.image.avatar(),
   email: faker.internet.email(),
   createTime: faker.date.past(),
   updateTime: faker.date.past(),
-  company: faker.company.companyName(),
+  company: faker.company.name(),
 });
 
 mock.onGet('/v1/user/profile').reply<BaseResSchema<UserProfile>>(200, {
@@ -24,9 +24,9 @@ mock.onGet('/v1/user/profile').reply<BaseResSchema<UserProfile>>(200, {
   d: {
     ...FakeSingleUserProfile(),
     orgs: Array.from({ length: 5 }).map((_, index) => ({
-      value: index.toString(),
+      value: 'organization' + index,
       label: 'organization' + index,
-      logo: faker.image.food(),
+      logo: faker.image.avatar(),
     })),
   },
 });

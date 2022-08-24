@@ -26,10 +26,10 @@ export interface UserProfile {
 export const userProfileAtom = atom<BaseResSchema<UserProfile>>({} as any);
 
 export const userProfileQuery = atomWithQuery((get) => ({
-  queryKey: ['own-profile', get(userProfileAtom)],
-  queryFn: async (...r): Promise<BaseResSchema<UserProfile>> => {
+  queryKey: ['profile', get(userProfileAtom)],
+  queryFn: async (): Promise<BaseResSchema<UserProfile>> => {
     const { data } = await req.get('/v1/user/profile');
-    return data;
+    return data ?? {};
   },
 }));
 

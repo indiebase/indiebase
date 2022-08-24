@@ -5,19 +5,17 @@ export const getStatusColor = function (status: PrjStatus) {
   let color: MantineColor;
   switch (status) {
     case PrjStatus.archive:
-      color = 'grey';
+      color = 'gray';
       break;
     case PrjStatus.closed:
       color = 'pink';
       break;
-    case PrjStatus.open:
+    case PrjStatus.operating:
       color = 'blue';
       break;
     case PrjStatus.wip:
       color = 'orange';
       break;
-    default:
-      color = 'blue';
   }
   return color;
 };

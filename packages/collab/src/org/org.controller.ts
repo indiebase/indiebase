@@ -36,8 +36,8 @@ export class OrgController {
   async createOrg(@Body() body: CreateOrgDto) {
     return this.orgService.createOrg({
       name: body.name,
-      description: body.description,
-      contactEmail: body.contactEmail,
+      // description: body.description,
+      // contactEmail: body.contactEmail,
     });
   }
 

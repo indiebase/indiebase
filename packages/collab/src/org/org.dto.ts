@@ -5,29 +5,29 @@ import { OrgEntity } from './org.entity';
 
 export class CreateOrgDto {
   @ApiPropertyOptional({
-    description: 'Team name',
-    default: 'letscollab',
+    description: 'Org name',
+    default: 'deskbtm',
   })
   @IsString()
   name: string;
 
-  @ApiProperty({
-    default: 'deskbtm@outlook.com',
-  })
-  @IsEmail(
-    {},
-    {
-      message: 'Email incorrect',
-    },
-  )
-  @IsOptional()
-  contactEmail?: string;
+  // @ApiProperty({
+  //   default: 'deskbtm@outlook.com',
+  // })
+  // @IsEmail(
+  //   {},
+  //   {
+  //     message: 'Email incorrect',
+  //   },
+  // )
+  // @IsOptional()
+  // contactEmail?: string;
 
-  @ApiProperty({
-    default: 'xxxxxx',
-  })
-  @IsOptional()
-  description: string;
+  // @ApiProperty({
+  //   default: 'xxxxxx',
+  // })
+  // @IsOptional()
+  // description: string;
 }
 
 export class UpdateOrgDto {

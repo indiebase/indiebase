@@ -1,44 +1,51 @@
 import { useMemo } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
-import { MantineThemeColors } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-
-export interface MenuNode {
-  label: string;
-  to?: string;
-  icon?: React.ReactNode;
-  color?: keyof MantineThemeColors;
-  children?: MenuNode[];
-  onClick?: () => Promise<void> | void;
-}
+import { MenuNode } from '@letscollab/app-utils';
 
 export const useMenu = () => {
-  const { org } = useParams();
+  const { org, project, user } = useParams();
+  console.log(user);
 
-  return useMemo<MenuNode[]>(
-    () => [
+  return useMemo<MenuNode[]>(() => {
+    //TODO: Stupid way
+
+    let settingList = [
+      {
+        label: 'Profile',
+        to: `users/${user}/settings/profile`,
+      },
+    ];
+
+    if (org) {
+      const slug = ['orgs', org, project].filter(Boolean).join('/');
+      settingList = [
+        {
+          label: 'General',
+          to: `${slug}/settings/general`,
+        },
+        {
+          label: 'Access',
+          to: `${slug}/settings/access`,
+        },
+      ];
+    }
+
+    return [
       {
         label: 'Project',
         icon: <IconFileCode size={16} />,
         color: 'blue',
+        // replace: true,
         to: org,
       },
       {
         label: 'Setting',
         icon: <IconSettings size={16} />,
         color: 'violet',
-        children: [
-          {
-            label: 'Access',
-            to: 'access',
-          },
-          {
-            label: 'Access',
-            to: 'fuck',
-          },
-        ],
+        type: 'node',
+        children: settingList,
       },
-    ],
-    [org],
-  );
+    ];
+  }, [org, project, user]);
 };
