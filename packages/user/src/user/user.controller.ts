@@ -73,20 +73,7 @@ export class UserController {
     @Req() req: FastifyRequest,
     @Res() res: FastifyReply,
   ) {
-    const token = await res.generateCsrf();
-    res.send({ token });
-  }
-
-  @Get('list1')
-  @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
-  async getUserList1(
-    @Session() session,
-    @Req() req: FastifyRequest,
-    @Res() res: FastifyReply,
-  ) {
-    const token = await res.generateCsrf();
-    res.send({ token });
+    res.send({ token: 1 });
   }
 
   @Get('profile/:username')

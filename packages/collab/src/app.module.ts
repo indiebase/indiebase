@@ -8,7 +8,7 @@ import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { utilities, WinstonModule } from 'nest-winston';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { OctokitModule } from '@letscollab/octokit';
+import { OctokitModule } from '@letscollab/nest-octokit';
 import {
   NacosConfigModule,
   NacosConfigService,
@@ -111,8 +111,14 @@ const isDev = process.env.NODE_ENV === 'development';
         const configs = await nacosConfigService.getConfig(
           'service-collab.json',
         );
+
+        const { auth, oauth_callback } = configs.github;
+
         return {
-          options: configs.github,
+          options: {
+            auth,
+            // oauth_callback,
+          },
         };
       },
     }),

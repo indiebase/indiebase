@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
 import { useParams } from 'react-router-dom';
-import { MenuNode, userProfileQuery } from '@letscollab/app-utils';
-import { useAtom } from 'jotai';
+import { MenuNode } from '@letscollab/app-utils';
 
 export const useMenu = () => {
   const { org, project, user } = useParams();
