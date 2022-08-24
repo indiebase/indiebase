@@ -72,9 +72,9 @@ export class PrjEntity {
   })
   updateTime?: Date;
 
-  @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
-  @JoinTable()
-  members?: UserEntity[];
+  // @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
+  // @JoinTable()
+  // members?: UserEntity[];
 
   @ApiProperty({
     default: 'Github repo url',

@@ -16,6 +16,7 @@ import {
 import { ResultCode } from '@letscollab/helper';
 import { OrgEntity } from './org.entity';
 import { Repository } from 'typeorm';
+import { OctokitService } from '@letscollab/nest-octokit';
 
 @Injectable()
 export class OrgService {
@@ -27,6 +28,8 @@ export class OrgService {
     private readonly userClient: ClientProxy,
 
     private readonly logger: Logger,
+
+    private readonly octokit: OctokitService,
   ) {}
 
   async queryOrg(body: QueryOrgDto) {
@@ -56,16 +59,19 @@ export class OrgService {
   }
 
   async createOrg(body: CreateOrgDto) {
-    const teamEntity = this.orgRepo.create(body);
-    await this.orgRepo.save(teamEntity).catch((err) => {
-      this.logger.error(err);
-      throw new InternalServerErrorException({
-        code: ResultCode.ERROR,
-        message: err?.code === 'ER_DUP_ENTRY' ? '团队名重复' : '创建失败',
-      });
-    });
+    const { data: org } = await this.octokit.rest.orgs.get({ org: body.name });
+    console.log('Hello, %s', org);
 
-    return { code: ResultCode.SUCCESS, message: '创建成功' };
+    // const teamEntity = this.orgRepo.create(body);
+    // await this.orgRepo.save(teamEntity).catch((err) => {
+    //   this.logger.error(err);
+    //   throw new InternalServerErrorException({
+    //     code: ResultCode.ERROR,
+    //     message: err?.code === 'ER_DUP_ENTRY' ? '团队名重复' : '创建失败',
+    //   });
+    // });
+
+    return { code: ResultCode.SUCCESS, message: 'Create success', d: org };
   }
 
   async updateOrg(body: UpdateOrgDto) {
