@@ -29,6 +29,7 @@ export interface RedisSessionFastifyModuleOptions {
   redis?: RedisOptions;
   session: FastifySession.Options;
   cookie?: FastifyCookieOptions;
+  registerCookie?: boolean;
 }
 export interface RedisSessionFastifyModuleAsyncOptions
   extends Pick<ModuleMetadata, 'imports'> {
@@ -50,12 +51,12 @@ export interface RedisSessionFastifyModuleOptionsFactory {
 
 @Global()
 @Module({})
-export class RedisCookieSessionModule implements NestModule, OnModuleDestroy {
+export class RedisSessionModule implements NestModule, OnModuleDestroy {
   public static forRoot(
     options: RedisSessionFastifyModuleOptions,
   ): DynamicModule {
     return {
-      module: RedisCookieSessionModule,
+      module: RedisSessionModule,
       providers: [
         {
           provide: REDIS_SESSION_FASTIFY_MODULE,
@@ -70,7 +71,7 @@ export class RedisCookieSessionModule implements NestModule, OnModuleDestroy {
   ): DynamicModule {
     return {
       imports: [...(options.imports || [])],
-      module: RedisCookieSessionModule,
+      module: RedisSessionModule,
       providers: [...createAsyncProviders(options)],
     };
   }
@@ -101,7 +102,9 @@ export class RedisCookieSessionModule implements NestModule, OnModuleDestroy {
       this.options.session.cookieName = 'SID';
     }
 
-    await fastifyInstance.register(fastifyCookie, this.options?.cookie);
+    this.options.registerCookie !== false &&
+      (await fastifyInstance.register(fastifyCookie, this.options?.cookie));
+
     await fastifyInstance.register(FastifySession, this.options.session);
   }
 }

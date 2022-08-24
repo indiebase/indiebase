@@ -30,7 +30,7 @@ export enum PrjStatus {
   /*  project dead, */
   archive = 'archive',
   /* project is opening, */
-  open = 'open',
+  operating = 'operating',
   /* project has closed */
-  closed = 'archive',
+  closed = 'closed',
 }

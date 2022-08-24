@@ -11,15 +11,22 @@ import {
   Menu,
   Divider,
 } from '@mantine/core';
-import { FC, forwardRef, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FC, forwardRef, useEffect, useMemo, useState } from 'react';
+import {
+  Link,
+  resolvePath,
+  useLocation,
+  useResolvedPath,
+} from 'react-router-dom';
 import {
   IconSettings,
   IconPlus,
   IconUser,
   IconBuildingCommunity,
+  IconFileDescription,
+  IconLogout,
 } from '@tabler/icons';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, NavLink } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userProfileQuery } from '../../api';
 
@@ -39,33 +46,42 @@ export interface OrgSelectProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
-  ({ logo, label, value, ...rest }: OrgSelectProps, ref) => (
-    <div ref={ref} {...rest}>
-      <Group noWrap spacing={7}>
-        <Avatar src={logo} radius="xl" size={15} />
-        <Text lineClamp={1} size="xs">
-          {label}
-        </Text>
-      </Group>
-    </div>
-  ),
+  ({ logo, label, value, ...rest }: OrgSelectProps, ref) => {
+    return (
+      <div ref={ref} {...rest}>
+        <Group noWrap spacing={7}>
+          <Avatar src={logo} radius="xl" size={15} />
+          <Text lineClamp={1} size="xs">
+            {label}
+          </Text>
+        </Group>
+      </div>
+    );
+  },
 );
 
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const { org: orgParam } = useParams();
-  const [orgAvatar, setOrgAvatar] = useState<string | undefined>();
   const [value] = useAtom(userProfileQuery);
+
   const data = value.d;
-  const orgs = data.orgs ?? [];
+  const userItem = {
+    logo: data.avatar,
+    label: data.username,
+    value: 'users/' + data.username,
+  };
+  const orgs = data.orgs
+    ? [userItem, ...data.orgs.map((o) => ({ ...o, value: 'orgs/' + o.value }))]
+    : [];
 
   const orgDefault = useMemo(
-    () => orgs.find((v) => v.label === orgParam),
+    () => orgs.find((v) => v.value === orgParam) ?? userItem,
     [orgParam, orgs],
   );
 
-  const [org, setOrg] = useState<string | undefined>();
+  const [org, setOrg] = useState<OrgSelectProps>({} as any);
 
   return (
     <MantineHeader
@@ -101,21 +117,21 @@ export const Header: FC<NavHeaderProps> = function (props) {
           </MediaQuery>
           <MediaQuery smallerThan="sm" styles={{ display: 'none', width: 100 }}>
             <Group spacing="xs" ml={6}>
-              <Avatar src={orgAvatar ?? orgDefault?.logo} radius="xl" size="sm">
+              <Avatar src={org.logo ?? orgDefault?.logo} radius="xl" size="sm">
                 <IconBuildingCommunity size={17} />
               </Avatar>
               <div style={{ width: 150 }}>
                 <Select
                   radius="lg"
+                  // withinPortal={false}
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
                   data={orgs ?? []}
-                  value={org ?? orgDefault?.value}
+                  value={org.value ?? orgDefault?.value}
                   onChange={(e) => {
-                    const r = data.orgs.find((v) => v.value === e);
-                    setOrg(r.value);
-                    navigate(r.label);
-                    setOrgAvatar(r?.logo);
+                    const r = orgs.find((v) => v.value === e);
+                    setOrg(r);
+                    navigate(resolvePath(r.value));
                   }}
                   searchable
                   size="xs"
@@ -168,8 +184,15 @@ export const Header: FC<NavHeaderProps> = function (props) {
                   <Menu.Item icon={<IconSettings size={16} />}>
                     Settings
                   </Menu.Item>
+                  <Menu.Item icon={<IconFileDescription size={16} />}>
+                    Docs
+                  </Menu.Item>
                   <Menu.Item icon={<IconPlus size={16} />}>
                     Create Organization
+                  </Menu.Item>
+                  <Divider my="lg" variant="dashed" labelPosition="center" />
+                  <Menu.Item icon={<IconLogout size={16} />}>
+                    Sign Out
                   </Menu.Item>
                 </Menu>
               </Group>

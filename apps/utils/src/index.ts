@@ -5,4 +5,6 @@ export * from './components';
 export * from './api';
 export * from './vectors';
 
-process.env.NODE_ENV !== 'production' && require('./__mock__');
+console.log(process.env);
+
+Boolean(process.env.REACT_APP_IS_MOCK) && require('./__mock__');

@@ -64,13 +64,14 @@ export class AuthController {
   @Get('github/callback')
   @UseGuards(GithubGuard)
   async githubCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
-    const r = await this.authService.signupGithub(req.user);
+    console.log(req.user, req.query);
+    // const r = await this.authService.signupGithub(req.user);
 
-    if (r.code > 0) {
-      res.setCookie('__HOST-t', r.d.t, { httpOnly: true, secure: true });
-    }
+    // if (r.code > 0) {
+    //   res.setCookie('__HOST-t', r.d.t, { httpOnly: true, secure: true });
+    // }
 
-    res.send(r);
+    res.send({});
   }
 
   @UseGuards(SessionRpcAuthConsumerGuard)

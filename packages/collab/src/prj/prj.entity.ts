@@ -13,10 +13,10 @@ import { UserEntity } from '@letscollab/user';
 export enum PrjStatus {
   /* working in progress */
   wip = 'wip',
-  /*  project dead, */
+  /*  project dead */
   archive = 'archive',
-  /* project is opening, */
-  open = 'open',
+  /* project is operating */
+  operating = 'operating',
   /* project has closed */
   closed = 'closed',
 }
@@ -72,9 +72,9 @@ export class PrjEntity {
   })
   updateTime?: Date;
 
-  @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
-  @JoinTable()
-  members?: UserEntity[];
+  // @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
+  // @JoinTable()
+  // members?: UserEntity[];
 
   @ApiProperty({
     default: 'Github repo url',

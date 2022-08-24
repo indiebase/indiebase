@@ -13,8 +13,11 @@ export class GithubStrategy
   }
 
   async setOptions() {
-    const c = await this.nacosConfigService.getConfig('service-auth.json');
-    return c.github;
+    const {
+      github: { clientID, clientSecret, callbackURL },
+    } = await this.nacosConfigService.getConfig('service-auth.json');
+    console.log(callbackURL);
+    return { clientID, clientSecret, callbackURL };
   }
 
   async validate(accessToken, refreshToken, profile) {
