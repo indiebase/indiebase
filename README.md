@@ -18,13 +18,13 @@ letscollab 类似于 Patreon + OpenCollective + 独立软件管理系统 . 其�
 
 ### 2. letscollab 会上 web3.0 吗？
 
-letscollab 虽然第一眼看上去有点 web3 的意思， 但它还是以创始者为中心的中心化应用。目前来说 web3 的局限性太大，并不适用于 letscollab，但是未来发展成熟还是会有机会接入 web3。
+letscollab 将会是一款中心化应用，但其支付等功能或将支持web3.0。
 
 ## 收益
 
-1.  对于独立项目的 Founder: 通过 letscollab 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。
-2.  对于拥有激情和业余时间的编程爱好者: 通过在 letscollab 中发现自己喜爱的项目 贡献代码并从中获取报酬。
-3.  对于企业: 通过 letscollab 公布开源或其他项目, 让拥有空余时间的开发者参与进来完善产品并支付给开发者报酬. 使双方互利共赢。
+1. 对于独立项目的 Founder: 通过 letscollab 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。
+2. 对于拥有激情和业余时间的编程爱好者: 通过在 letscollab 中发现自己喜爱的项目 贡献代码并从中获取报酬。
+3. 对于企业: 通过 letscollab 公布开源或其他项目, 让拥有空余时间的开发者参与进来完善产品并支付给开发者报酬. 使双方互利共赢。
 
 ## 注意
 
@@ -34,7 +34,7 @@ letscollab 虽然第一眼看上去有点 web3 的意思， 但它还是以创�
 ## 加入
 
 letscollab 社区版本欢迎大家提交 Pr，如果有意愿加入私有部分的开发， 请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/confidentiality-agreement.md)
-<br />
+`<br />`
 同样 letscollab 所获取的收益，会分配给项目参与成员。
 
 WeChat: Nawbc9423
