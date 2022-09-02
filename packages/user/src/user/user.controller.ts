@@ -1,32 +1,19 @@
 import { SessionRpcAuthClientGuard } from '../guard/session-rpc-auth-client.guard';
 import {
-  Body,
   Controller,
   Get,
   Patch,
-  Post,
   Req,
   Res,
   Session,
   UseGuards,
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import {
-  ApiCreatedResponse,
-  ApiTags,
-  ApiCookieAuth,
-  ApiOperation,
-} from '@nestjs/swagger';
+import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { UserResDto, SignupDto } from './user.dto';
-import {
-  ApiProtectHeader,
-  CaptchaGuard,
-  CsrfGuard,
-  ProtectGuard,
-} from '@letscollab/helper';
+import { CsrfGuard, ProtectGuard } from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
 @Controller('v1/user')
@@ -49,17 +36,17 @@ export class UserController {
     return this.userService.getUser([{ id }]);
   }
 
-  @MessagePattern({ cmd: 'signin_github' })
+  @MessagePattern({ cmd: 'signup_github' })
   async signupGithub(@Payload() profile) {
-    const { _json: json, username, profileUrl } = profile;
+    const { _json: json, username, profileUrl, id, displayName } = profile;
 
     return this.userService.signup({
       username: username,
       profileUrl: profileUrl,
       signupType: SignupType.github,
-      githubId: profile.id,
-      nickname: profile.displayName,
-      email: profile.emails?.[0].value,
+      githubId: id,
+      nickname: displayName,
+      email: json?.email,
       avatar: json?.avatar_url,
       bio: json?.bio,
     });
@@ -96,33 +83,33 @@ export class UserController {
     return 1;
   }
 
-  @Post('signup')
-  @ApiCreatedResponse({
-    type: UserResDto,
-  })
-  @ApiProtectHeader()
-  @UseGuards(ProtectGuard, CaptchaGuard)
-  async signup(
-    @Body() body: SignupDto,
-    @Res() res: FastifyReply,
-    @Session() session: FastifyRequest['session'],
-  ) {
-    const r = await this.userService.signup({
-      signupType: SignupType.letscollab,
-      username: body.username,
-      password: body.password,
-      email: body.email,
-      nickname: body.nickname,
-    });
+  // @Post('signup')
+  // @ApiCreatedResponse({
+  //   type: UserResDto,
+  // })
+  // @ApiProtectHeader()
+  // @UseGuards(ProtectGuard, CaptchaGuard)
+  // async signup(
+  //   @Body() body: SignupDto,
+  //   @Res() res: FastifyReply,
+  //   @Session() session: FastifyRequest['session'],
+  // ) {
+  //   const r = await this.userService.signup({
+  //     signupType: SignupType.letscollab,
+  //     username: body.username,
+  //     password: body.password,
+  //     email: body.email,
+  //     nickname: body.nickname,
+  //   });
 
-    if (r.code > 0) {
-      session.user = {
-        loggedIn: false,
-        username: r.d.username,
-        id: r.d.id,
-      };
-    }
+  //   if (r.code > 0) {
+  //     session.user = {
+  //       loggedIn: false,
+  //       username: r.d.username,
+  //       id: r.d.id,
+  //     };
+  //   }
 
-    res.send(r);
-  }
+  //   res.send(r);
+  // }
 }

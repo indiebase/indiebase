@@ -1,75 +1,61 @@
-import { LocalAuthGuard } from './local.guard';
-import {
-  Controller,
-  UseGuards,
-  Request,
-  Post,
-  Get,
-  Req,
-  Res,
-  Session,
-  Body,
-} from '@nestjs/common';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, UseGuards, Get, Req, Res, Session } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import {
-  ProtectGuard,
-  ApiProtectHeader,
-  IVerify,
-  ResultCode,
-} from '@letscollab/helper';
-import { UserResDto } from '@letscollab/user';
+import { IVerify } from '@letscollab/helper';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { SessionRpcAuthConsumerGuard } from './session-rpc-auth-consumer.guard';
 import { GithubGuard } from './github.guard';
-import { LocalSignInDto } from './auth.dto';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signin')
-  @ApiCreatedResponse({
-    type: UserResDto,
-  })
-  @ApiProtectHeader()
-  @UseGuards(ProtectGuard, LocalAuthGuard)
-  async signIn(
-    @Body() _: LocalSignInDto,
-    @Session() session: FastifyRequest['session'],
-    @Req() req: FastifyRequest,
-  ) {
-    const user = req.user;
+  /**
+   * Give up letscollab's register
+   */
+  // @Post('signin')
+  // @ApiCreatedResponse({
+  //   type: UserResDto,
+  // })
+  // @ApiProtectHeader()
+  // @UseGuards(ProtectGuard, LocalAuthGuard)
+  // async signIn(
+  //   @Body() _: LocalSignInDto,
+  //   @Session() session: FastifyRequest['session'],
+  //   @Req() req: FastifyRequest,
+  // ) {
+  //   const user = req.user;
 
-    session.user = {
-      loggedIn: true,
-      username: user.username,
-      id: user.id,
-    };
+  //   session.user = {
+  //     loggedIn: true,
+  //     username: user.username,
+  //     id: user.id,
+  //   };
 
-    return {
-      code: ResultCode.SUCCESS,
-      message: 'Successfully login',
-      d: user,
-    };
-  }
+  //   return {
+  //     code: ResultCode.SUCCESS,
+  //     message: 'Successfully login',
+  //     d: user,
+  //   };
+  // }
 
   @Get('oauth/github')
   @ApiBearerAuth('jwt')
   @UseGuards(GithubGuard)
-  async github(@Request() req: FastifyRequest & { user: any }) {}
+  async github() {}
 
   @Get('github/callback')
-  @UseGuards(GithubGuard)
-  async githubCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
-    console.log(req.user, req.query);
-    // const r = await this.authService.signupGithub(req.user);
+  // @UseGuards(GithubGuard)
+  async githubCallback(
+    @Req() req: FastifyRequest,
+    @Res() res: FastifyReply,
+    @Session() session: FastifyRequest['session'],
+  ) {
+    const r = await this.authService.signupGithub({ profile: {} });
 
-    // if (r.code > 0) {
-    //   res.setCookie('__HOST-t', r.d.t, { httpOnly: true, secure: true });
-    // }
+    console.log(r);
 
     res.send({});
   }

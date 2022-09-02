@@ -13,11 +13,11 @@ import { FastifyReply, FastifyRequest } from 'fastify';
  * This clz will catch all exceptions and send formatted payload.
  *
  */
-@Catch()
-export class FormatExceptionFilter implements ExceptionFilter {
+@Catch(HttpException)
+export class HttpExceptionFilter implements ExceptionFilter {
   constructor(private readonly logger: Logger) {}
 
-  catch(exception: any, host: ArgumentsHost) {
+  catch(exception, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest<FastifyRequest>();
@@ -26,7 +26,7 @@ export class FormatExceptionFilter implements ExceptionFilter {
 
     process.env.NODE_ENV === 'development' && console.debug(exception);
 
-    // 如果是http错误
+    // http exception will ignore error log
     if (exception instanceof HttpException) {
       statusCode = exception.getStatus();
       const resException = exception.getResponse();
@@ -35,6 +35,7 @@ export class FormatExceptionFilter implements ExceptionFilter {
           ? { message: resException }
           : resException;
     } else {
+      console.log('=============================================');
       this.logger.error(exception, exception?.stack);
 
       statusCode = exception?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR;
