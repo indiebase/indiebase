@@ -1,4 +1,3 @@
-import { SignupType } from './user.enum';
 import {
   Inject,
   Injectable,
@@ -9,9 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ResultCode } from '@letscollab/helper';
 import { AUTH_RMQ } from '../app.constants';
-import { catchError, lastValueFrom, timeout } from 'rxjs';
 import { UserResDto } from './user.dto';
-import { JwtSignResDto } from '@letscollab/auth';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 
@@ -44,7 +41,7 @@ export class UserService {
     });
   }
 
-  private async findOneWithFull(cond) {
+  private async findOneFull(cond) {
     return this.userRepo
       .createQueryBuilder('user')
       .addSelect('user.password')
@@ -56,6 +53,14 @@ export class UserService {
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
   ): Promise<UserResDto> {
     let result: UserResDto;
+
+
+    throw new InternalServerErrorException
+
+    throw new RpcException({
+      code: ResultCode.ERROR,
+      // message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,
+    });
 
     const user = await this.userRepo.findOne({
       where: [
@@ -69,24 +74,14 @@ export class UserService {
     });
 
     if (user) {
-      switch (user.signupType) {
-        case SignupType.github:
-          result = {
-            code: ResultCode.SUCCESS,
-          };
-          break;
-        default:
-          result = {
-            code: ResultCode.EENTEXIST,
-            message: 'username/email already registered',
-          };
-          break;
-      }
+      result = {
+        code: ResultCode.EENTEXIST,
+        message: 'username/email already registered',
+      };
     } else {
       const created = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
-        //TODO: handle rpc exception
         throw new InternalServerErrorException({
           code: ResultCode.ERROR,
           message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,
@@ -103,18 +98,6 @@ export class UserService {
     return result;
   }
 
-  public async getSign(data: {}) {
-    return lastValueFrom<JwtSignResDto>(
-      this.authClient.send({ cmd: 'sign' }, data).pipe(
-        timeout(4000),
-        catchError((e) => {
-          this.logger.error(e);
-          throw new Error('注册成功，Token生成失败');
-        }),
-      ),
-    );
-  }
-
   /**
    *
    *
@@ -124,7 +107,7 @@ export class UserService {
    */
   public async getUser(cond: any[], full = false) {
     const promise = full
-      ? this.findOneWithFull(cond)
+      ? this.findOneFull(cond)
       : this.userRepo.findOne({
           where: cond,
         });

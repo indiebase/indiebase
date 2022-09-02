@@ -6,7 +6,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { FormatExceptionFilter } from '@letscollab/helper';
+import { HttpExceptionFilter } from '@letscollab/helper';
 import { setupApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppModule } from './app.module';
@@ -37,7 +37,7 @@ async function bootstrap() {
 
   app.useLogger(nestWinston);
 
-  app.useGlobalFilters(new FormatExceptionFilter(nestWinston));
+  app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

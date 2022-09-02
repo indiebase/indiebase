@@ -8,11 +8,14 @@ import { Observable, throwError } from 'rxjs';
 import { RpcException } from '@nestjs/microservices';
 
 @Catch(RpcException)
-export class MicroExceptionFilter implements RpcExceptionFilter<RpcException> {
+export class MicroserviceExceptionFilter
+  implements RpcExceptionFilter<RpcException>
+{
   constructor(private readonly logger: Logger) {}
 
   catch(exception: RpcException, host: ArgumentsHost): Observable<any> {
-    this.logger.error(exception.message, exception.stack);
+    console.log('=============================');
+    this.logger.error('Rpc Error: ' + exception.message, exception.stack);
     return throwError(() => exception.getError());
   }
 }

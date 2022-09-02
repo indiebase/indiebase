@@ -8,8 +8,8 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import {
-  FormatExceptionFilter,
-  MicroExceptionFilter,
+  HttpExceptionFilter,
+  MicroserviceExceptionFilter,
 } from '@letscollab/helper';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
@@ -89,8 +89,8 @@ async function bootstrap() {
     app.useLogger(nestWinston);
 
     app.useGlobalFilters(
-      new FormatExceptionFilter(nestWinston),
-      new MicroExceptionFilter(nestWinston),
+      new MicroserviceExceptionFilter(nestWinston),
+      new HttpExceptionFilter(nestWinston),
     );
 
     app.connectMicroservice<MicroserviceOptions>({

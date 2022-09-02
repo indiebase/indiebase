@@ -2,7 +2,7 @@ import { Logger, Module } from '@nestjs/common';
 import { PassportModule as ForwardPassportModule } from '@letscollab/passport';
 import { AuthService } from './auth.service';
 
-import { LocalStrategy } from './local.strategy';
+// import { LocalStrategy } from './local.strategy';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
@@ -44,14 +44,14 @@ const PassportModule = ForwardPassportModule.register({
   controllers: [AuthController],
   providers: [
     AuthService,
-    LocalStrategy,
+    // LocalStrategy,
     GithubStrategy,
     Logger,
     SessionStrategy,
   ],
   exports: [
     AuthService,
-    LocalStrategy,
+    // LocalStrategy,
     GithubStrategy,
     SessionStrategy,
     PassportModule,

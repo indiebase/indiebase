@@ -10,8 +10,8 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 import {
-  FormatExceptionFilter,
-  MicroExceptionFilter,
+  HttpExceptionFilter,
+  MicroserviceExceptionFilter,
 } from '@letscollab/helper';
 import { setupUserApiDoc } from './utils';
 import fastifyHelmet from '@fastify/helmet';
@@ -80,8 +80,8 @@ async function bootstrap() {
     app.useLogger(nestWinston);
 
     app.useGlobalFilters(
-      new FormatExceptionFilter(nestWinston),
-      new MicroExceptionFilter(nestWinston),
+      new HttpExceptionFilter(nestWinston),
+      new MicroserviceExceptionFilter(nestWinston),
       new I18nValidationExceptionFilter(),
     );
 
