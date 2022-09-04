@@ -8,6 +8,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
 import { CasbinService } from '@letscollab/nest-acl';
+import { RpcResSchemaDto } from '@letscollab/helper';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
         timeout(4000),
         catchError((e) => {
           throw new InternalServerErrorException({
-            message: '获取用户信息失败',
+            message: 'Failed to get user profile',
           });
         }),
       ),
@@ -49,17 +50,15 @@ export class AuthService {
   //   }
   // }
 
-  async signupGithub(data) {
+  async signupGithub(data): Promise<RpcResSchemaDto> {
     const r = await lastValueFrom(
       this.userClient.send({ cmd: 'signup_github' }, data.profile).pipe(
         timeout(4000),
-        // catchError((e) => {
-        //   console.log(e, '========');
-
-        //   throw new InternalServerErrorException({
-        //     message: 'Fail to register',
-        //   });
-        // }),
+        catchError((err) => {
+          throw new InternalServerErrorException({
+            message: 'Fail to register',
+          });
+        }),
       ),
     );
 

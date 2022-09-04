@@ -1,12 +1,7 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-} from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ResultCode } from '@letscollab/helper';
+import { ResultCode, RpcResSchemaDto } from '@letscollab/helper';
 import { AUTH_RMQ } from '../app.constants';
 import { UserResDto } from './user.dto';
 import { UserEntity } from './user.entity';
@@ -51,16 +46,8 @@ export class UserService {
 
   public async signup(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
-  ): Promise<UserResDto> {
+  ): Promise<RpcResSchemaDto> {
     let result: UserResDto;
-
-
-    throw new InternalServerErrorException
-
-    throw new RpcException({
-      code: ResultCode.ERROR,
-      // message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,
-    });
 
     const user = await this.userRepo.findOne({
       where: [
@@ -74,28 +61,27 @@ export class UserService {
     });
 
     if (user) {
-      result = {
+      return {
         code: ResultCode.EENTEXIST,
+        statusCode: 400,
         message: 'username/email already registered',
       };
     } else {
       const created = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
-        throw new InternalServerErrorException({
+        throw new RpcException({
           code: ResultCode.ERROR,
           message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,
         });
       });
 
-      result = {
+      return {
         code: ResultCode.SUCCESS,
-        message: '注册成功',
+        message: 'Register Success',
         d: created,
       };
     }
-
-    return result;
   }
 
   /**

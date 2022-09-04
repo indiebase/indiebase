@@ -6,6 +6,7 @@ import {
   Req,
   Res,
   Session,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -13,7 +14,11 @@ import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CsrfGuard, ProtectGuard } from '@letscollab/helper';
+import {
+  CsrfGuard,
+  MicroserviceExceptionFilter,
+  ProtectGuard,
+} from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
 @Controller('v1/user')
@@ -36,10 +41,10 @@ export class UserController {
     return this.userService.getUser([{ id }]);
   }
 
+  @UseFilters(MicroserviceExceptionFilter)
   @MessagePattern({ cmd: 'signup_github' })
   async signupGithub(@Payload() profile) {
     const { _json: json, username, profileUrl, id, displayName } = profile;
-
     return this.userService.signup({
       username: username,
       profileUrl: profileUrl,

@@ -28,14 +28,14 @@ export const setupUserApiDoc = (app: INestApplication) =>
       });
 
       SwaggerModule.setup('openapi/user', app, userDoc, {
-        uiConfig: {
-          persistAuthorization: true,
-        },
-        uiHooks: {
-          preHandler(req: FastifyRequest, res, next) {
-            next();
-          },
-        },
+        // uiConfig: {
+        //   persistAuthorization: true,
+        // },
+        // uiHooks: {
+        //   preHandler(req: FastifyRequest, res, next) {
+        //     next();
+        //   },
+        // },
       });
     } catch (e) {
       console.log(e);

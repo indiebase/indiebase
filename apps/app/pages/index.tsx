@@ -11,6 +11,7 @@ import {
   Group,
   Stack,
   Transition,
+  Global,
 } from '@mantine/core';
 import { useCallback, useRef, useState } from 'react';
 import {
@@ -22,7 +23,6 @@ import {
   MoveOut,
   StickyIn,
   FadeIn,
-  ZoomIn,
   MoveIn,
 } from 'components/Scroll';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
@@ -30,7 +30,7 @@ import RightArrow from 'components/RightArrow.json';
 import { ScrollData } from 'components/Scroll/types';
 import { FC } from 'react';
 import { CSSProperties } from '@emotion/serialize';
-import { TextParticle } from 'components';
+import { GPUAccel, TextParticle } from 'components';
 
 const TransitionShape: FC<{
   mounted?: boolean;
@@ -63,12 +63,12 @@ const Home: NextPage = () => {
 
   const handlePage = useCallback(
     (event: ScrollData) => {
-      switch (event.currentPage) {
-        case 1:
-          event.currentProgress < 0.2 && !showPage1Scrap && setPage1Scrap(true);
-          break;
-        default:
-          break;
+      if (
+        event.currentPage === 1 &&
+        event.currentProgress < 0.2 &&
+        !showPage1Scrap
+      ) {
+        setPage1Scrap(true);
       }
     },
     [showPage1Scrap],
@@ -121,10 +121,7 @@ const Home: NextPage = () => {
       </ScrollPage>
 
       <ScrollPage page={1}>
-        <Animator
-          style={{ zIndex: 1 }}
-          animation={batch(StickyIn(), FadeIn(), ZoomIn())}
-        >
+        <Animator style={{ zIndex: 1 }} animation={batch(StickyIn(), FadeIn())}>
           <section style={{ whiteSpace: 'nowrap' }}>
             <Text
               align="center"
@@ -213,168 +210,196 @@ const Home: NextPage = () => {
         />
       </ScrollPage>
 
-      <ScrollPage page={2}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            height: '100%',
-            textAlign: 'center',
-            h4: {
-              color: '#2C2C2C',
-              fontWeight: 'unset',
-            },
-          }}
-        >
-          <Animator animation={MoveIn(0, 0)}>
-            <Title order={3}>
-              <Text
-                inherit
-                component="span"
-                align="center"
-                style={{ fontSize: '65px' }}
-                weight={700}
-                color="#EB167A"
-              >
-                letscollab
-              </Text>
-              <Text
-                inherit
-                component="span"
-                align="center"
-                variant="gradient"
-                gradient={{ from: '#d111e9', to: '#bfb715', deg: 45 }}
-                style={{ fontSize: '60px' }}
-                weight={700}
-              >
-                可以做什么 ?
-              </Text>
-            </Title>
-          </Animator>
-
-          <Animator animation={MoveIn(-1000, 0)}>
-            <h2>创始人</h2>
-            <h4>招募与你志同道合的伙伴，一起做东西，管理项目的财政。</h4>
-            <h4>
-              letscollab pro
-              会提供独立项目的基本业务，诸如用户，内购支付等功能。让产品的开发更加轻松。
-            </h4>
-          </Animator>
-          <Box sx={{ height: 5 }} />
-          <Animator animation={MoveIn(1000, 0)}>
-            <h2>编程爱好者</h2>
-            <h4>
-              letscollab会分配项目所获得的营收，让每个参与者获得应有的回报。
-            </h4>
-            <h4>在项目中与来自五湖四海的Geek朋友交流学习。</h4>
-          </Animator>
-          <Animator animation={MoveIn(-2000, 0)}>
-            <h2>企业</h2>
-            <h4>通过 letscollab 公布开源或其他合适的项目，</h4>
-            <h4>
-              让拥有空余时间的开发者参与进来完善产品并给予报酬，
-              使双方互利共赢。
-            </h4>
-          </Animator>
-        </Box>
-      </ScrollPage>
-
-      <ScrollPage page={3}>
-        <Center sx={{ height: '100%' }}>
-          <Stack mt={200} align="center">
-            <Group
-              position="center"
-              sx={{
-                // height: '100%',
-                h4: {
-                  color: '#2C2C2C',
-                  fontWeight: 'unset',
-                },
-              }}
-            >
-              <Animator animation={batch(FadeIn(), MoveIn(-200, 0))}>
-                <Card sx={{ width: 340 }} mr={40} shadow="md" p="lg">
-                  <Image
-                    src="/logo.svg"
-                    fit="contain"
-                    height={100}
-                    alt="letscollab"
-                  />
-
-                  <Text weight={600} size="lg">
-                    letscollab
-                  </Text>
-
-                  <Text
-                    size="sm"
-                    style={{ color: '#000', lineHeight: 1.5, height: 65 }}
-                    lineClamp={3}
-                  >
-                    The management platform for independent projects makes it
-                    easier for independent developers to generate revenue.
-                  </Text>
-
-                  <Button variant="light" color="cyan" fullWidth mt={14}>
-                    前往
-                  </Button>
-                </Card>
-              </Animator>
-              <Animator animation={batch(FadeIn(), MoveIn(200, 0))}>
-                <Card sx={{ width: 340 }} ml={40} shadow="md" p="lg">
-                  <Image
-                    src="/nawb.svg"
-                    fit="contain"
-                    height={100}
-                    alt="nawb"
-                  />
-
-                  <Text weight={600} size="lg">
-                    Nawb
-                  </Text>
-
-                  <Text
-                    size="sm"
-                    style={{ color: '#000', lineHeight: 1.5, height: 65 }}
-                  >
-                    Mystery
-                  </Text>
-
-                  <Button variant="light" color="blue" fullWidth mt={14}>
-                    前往
-                  </Button>
-                </Card>
-              </Animator>
-            </Group>
-
-            <Animator animation={Fade()}>
-              <Title mt={80} order={3}>
+      <GPUAccel>
+        <ScrollPage page={2}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              height: '100%',
+              textAlign: 'center',
+              h4: {
+                color: '#2C2C2C',
+                fontWeight: 'unset',
+              },
+            }}
+          >
+            <Animator animation={MoveIn(0, 0)}>
+              <Title order={3}>
                 <Text
                   inherit
                   component="span"
                   align="center"
-                  style={{ fontSize: '60px' }}
+                  style={{ fontSize: '65px' }}
                   weight={700}
+                  color="#EB167A"
                 >
-                  加入
+                  letscollab
                 </Text>
                 <Text
                   inherit
                   component="span"
                   align="center"
                   variant="gradient"
-                  gradient={{ from: '#111111', to: '#857C7C', deg: 45 }}
-                  style={{ fontSize: '65px' }}
+                  gradient={{ from: '#d111e9', to: '#bfb715', deg: 45 }}
+                  style={{ fontSize: '60px' }}
                   weight={700}
                 >
-                  deskbtm !
+                  可以做什么 ?
                 </Text>
               </Title>
             </Animator>
-          </Stack>
-        </Center>
-      </ScrollPage>
+
+            <Animator animation={MoveIn(-1000, 0)}>
+              <h2>创始人</h2>
+              <h4>招募与你志同道合的伙伴，一起做东西，管理项目的财政。</h4>
+              <h4>
+                letscollab pro
+                会提供独立项目的基本业务，诸如用户，内购支付等功能。让产品的开发更加轻松。
+              </h4>
+            </Animator>
+            <Box sx={{ height: 5 }} />
+            <Animator animation={MoveIn(1000, 0)}>
+              <h2>编程爱好者</h2>
+              <h4>
+                letscollab会分配项目所获得的营收，让每个参与者获得应有的回报。
+              </h4>
+              <h4>在项目中与来自五湖四海的Geek朋友交流学习。</h4>
+            </Animator>
+            <Animator animation={MoveIn(-2000, 0)}>
+              <h2>企业</h2>
+              <h4>通过 letscollab 公布开源或其他合适的项目，</h4>
+              <h4>
+                让拥有空余时间的开发者参与进来完善产品并给予报酬，
+                使双方互利共赢。
+              </h4>
+            </Animator>
+          </Box>
+        </ScrollPage>
+      </GPUAccel>
+
+      <GPUAccel>
+        <ScrollPage page={3}>
+          <Center sx={{ height: '100%' }}>
+            <Stack mt={200} align="center">
+              <Group
+                position="center"
+                sx={{
+                  h4: {
+                    color: '#2C2C2C',
+                    fontWeight: 'unset',
+                  },
+                }}
+              >
+                <Animator animation={batch(FadeIn(), MoveIn(-200, 0))}>
+                  <Card sx={{ width: 340 }} shadow="md" p="lg">
+                    <Image
+                      src="/abyss.svg"
+                      fit="contain"
+                      height={100}
+                      alt="letscollab"
+                    />
+
+                    <Text weight={600} size="lg">
+                      Abyss
+                    </Text>
+                    <Text
+                      size="sm"
+                      style={{ color: '#000', lineHeight: 1.5, height: 65 }}
+                      lineClamp={3}
+                    >
+                      Mystery.
+                    </Text>
+
+                    <Button variant="light" color="gray" fullWidth mt={14}>
+                      前往
+                    </Button>
+                  </Card>
+                </Animator>
+                <Animator animation={batch(FadeIn(), MoveIn(0, 500))}>
+                  <Card sx={{ width: 340 }} ml={40} mr={40} shadow="md" p="lg">
+                    <Image
+                      src="/nawb.svg"
+                      fit="contain"
+                      height={100}
+                      alt="nawb"
+                    />
+
+                    <Text weight={600} size="lg">
+                      Nawb
+                    </Text>
+
+                    <Text
+                      size="sm"
+                      style={{ color: '#000', lineHeight: 1.5, height: 65 }}
+                    >
+                      Mystery
+                    </Text>
+
+                    <Button variant="light" color="blue" fullWidth mt={14}>
+                      前往
+                    </Button>
+                  </Card>
+                </Animator>
+                <Animator animation={batch(FadeIn(), MoveIn(200, 0))}>
+                  <Card sx={{ width: 340 }} shadow="md" p="lg">
+                    <Image
+                      src="/logo.svg"
+                      fit="contain"
+                      height={100}
+                      alt="letscollab"
+                    />
+
+                    <Text weight={600} size="lg">
+                      letscollab
+                    </Text>
+
+                    <Text
+                      size="sm"
+                      style={{ color: '#000', lineHeight: 1.5, height: 65 }}
+                      lineClamp={3}
+                    >
+                      The management platform for independent projects makes it
+                      easier for independent developers to generate revenue.
+                    </Text>
+
+                    <Button variant="light" color="cyan" fullWidth mt={14}>
+                      前往
+                    </Button>
+                  </Card>
+                </Animator>
+              </Group>
+
+              <Animator animation={Fade()}>
+                <Title mt={80} order={3}>
+                  <Text
+                    inherit
+                    component="span"
+                    align="center"
+                    style={{ fontSize: '60px' }}
+                    weight={700}
+                  >
+                    加入
+                  </Text>
+                  <Text
+                    inherit
+                    component="span"
+                    align="center"
+                    variant="gradient"
+                    gradient={{ from: '#111111', to: '#857C7C', deg: 45 }}
+                    style={{ fontSize: '65px' }}
+                    weight={700}
+                  >
+                    deskbtm !
+                  </Text>
+                </Title>
+              </Animator>
+            </Stack>
+          </Center>
+        </ScrollPage>
+      </GPUAccel>
     </ScrollContainer>
   );
 };

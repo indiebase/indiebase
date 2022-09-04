@@ -13,12 +13,15 @@ import {
   Type,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import FastifySession from 'fastify-session';
+import FastifySession from '@fastify/session';
 import * as ConnectRedis from 'connect-redis';
 import { FastifyInstance } from 'fastify';
 import { type Redis as IRedis, RedisOptions } from 'ioredis';
 import Redis from 'ioredis';
-import fastifyCookie, { FastifyCookieOptions } from 'fastify-cookie';
+import fastifyCookie, {
+  FastifyCookieOptions,
+  FastifyCookie,
+} from '@fastify/cookie';
 
 const RedisStore = ConnectRedis(FastifySession);
 export const REDIS_SESSION_FASTIFY_MODULE = Symbol(

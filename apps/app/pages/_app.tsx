@@ -43,6 +43,7 @@ function LetsCollabApp({
 
       <QueryClientProvider client={queryClient}>
         {!isProduction && <ReactQueryDevtools position="bottom-right" />}
+        {/* {getLayout(<Component {...pageProps} />)} */}
         <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
       </QueryClientProvider>
     </>

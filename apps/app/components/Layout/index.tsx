@@ -1,4 +1,18 @@
 /* eslint-disable  react/no-unescaped-entities */
+// backface-visibility: hidden;
+// perspective: 1000;
+
+// -webkit-backface-visibility: hidden;
+// -webkit-perspective: 1000;
+
+// -moz-backface-visibility: hidden;
+// -moz-perspective: 1000;
+
+// -webkit-transform: translate3d(0, 0, 0);
+// -moz-transform: translate3d(0, 0, 0);
+// -ms-transform: translate3d(0, 0, 0);
+// -o-transform: translate3d(0, 0, 0);
+// transform: translate3d(0, 0, 0);
 
 import {
   AppShell,
@@ -30,7 +44,7 @@ export const Layout: FC<PropsWithChildren> = (props) => {
       toggleColorScheme={toggleColorScheme}
     >
       <Global
-        styles={(theme) => ({
+        styles={() => ({
           '*, *::before, *::after': {
             boxSizing: 'border-box',
           },
@@ -45,6 +59,7 @@ export const Layout: FC<PropsWithChildren> = (props) => {
           <AppShell
             styles={{
               main: {
+                padding: 'unset',
                 background:
                   theme.colorScheme === 'dark'
                     ? theme.colors.dark[6]

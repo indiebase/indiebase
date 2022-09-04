@@ -7,16 +7,14 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import {
-  HttpExceptionFilter,
-  MicroserviceExceptionFilter,
-} from '@letscollab/helper';
+import { HttpExceptionFilter } from '@letscollab/helper';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { fastifyHelmet } from '@fastify/helmet';
+import fastifyHelmet from '@fastify/helmet';
 import { UserSession } from './utils';
 import Fastify from 'fastify';
+import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -43,7 +41,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(fastify),
+    new FastifyAdapter(fastify as any),
     {
       bodyParser: true,
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
@@ -57,6 +55,7 @@ async function bootstrap() {
     const configService = app.get<ConfigService>(ConfigService);
     const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
     const authConfigs = await nacosConfigService.getConfig('service-auth.json');
+    const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
     app.useGlobalPipes(
       new ValidationPipe({
@@ -64,11 +63,11 @@ async function bootstrap() {
         enableDebugMessages: isDevelopment,
         whitelist: true,
         forbidNonWhitelisted: true,
-        // exceptionFactory: i18nValidationErrorFactory,
+        exceptionFactory: i18nValidationErrorFactory,
       }),
     );
 
-    await app.register(fastifyHelmet, {
+    await app.register(fastifyHelmet as any, {
       global: true,
       contentSecurityPolicy: {
         directives: {
@@ -84,14 +83,8 @@ async function bootstrap() {
 
     await setupAuthApiDoc(app);
 
-    const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
-
     app.useLogger(nestWinston);
-
-    app.useGlobalFilters(
-      new MicroserviceExceptionFilter(nestWinston),
-      new HttpExceptionFilter(nestWinston),
-    );
+    app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
