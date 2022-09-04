@@ -3,7 +3,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'unused-imports'],
+  plugins: ['@typescript-eslint/eslint-plugin'],
   extends: ['prettier'],
   root: true,
   env: {
@@ -17,7 +17,7 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/ban-types': 0,
-    'no-unused-vars': ['off'],
-    'unused-imports/no-unused-imports': 'error',
+    'no-unused-vars': 0,
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
 };

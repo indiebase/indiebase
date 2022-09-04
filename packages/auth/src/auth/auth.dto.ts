@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { BaseResSchemaDto } from '@letscollab/helper';
+import { HttpResSchemaDto } from '@letscollab/helper';
 import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
 
-export class JwtSignResDto extends BaseResSchemaDto {
+export class JwtSignResDto extends HttpResSchemaDto {
   @ApiPropertyOptional({
     type: String,
   })

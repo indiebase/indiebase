@@ -1,10 +1,19 @@
-import { Controller, UseGuards, Get, Req, Res, Session } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  Req,
+  Res,
+  Session,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { IVerify } from '@letscollab/helper';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { SessionRpcAuthConsumerGuard } from './session-rpc-auth-consumer.guard';
+
+import { throwRpcException2Http } from '@letscollab/helper';
 import { GithubGuard } from './github.guard';
 
 @Controller('v1/auth')
@@ -47,22 +56,30 @@ export class AuthController {
   async github() {}
 
   @Get('github/callback')
-  // @UseGuards(GithubGuard)
+  @UseGuards(GithubGuard)
   async githubCallback(
     @Req() req: FastifyRequest,
     @Res() res: FastifyReply,
-    @Session() session: FastifyRequest['session'],
+    @Session() session: Record<string, any>,
   ) {
-    const r = await this.authService.signupGithub({ profile: {} });
+    const r = await this.authService.signupGithub(req.user);
 
-    console.log(r);
+    throwRpcException2Http(r);
 
-    res.send({});
+    if (r.code > 0) {
+      session.user = {
+        loggedIn: true,
+        id: r.d.id,
+        username: r.d.username,
+      };
+    }
+
+    res.send(r);
   }
 
   @UseGuards(SessionRpcAuthConsumerGuard)
   @MessagePattern({ cmd: 'auth' })
-  async auth(@Payload() payload: IVerify) {
+  async auth(@Payload() payload) {
     return payload;
   }
 

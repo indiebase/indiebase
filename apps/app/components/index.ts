@@ -4,3 +4,4 @@ export * from './Layout';
 export * from './Modal';
 export * from './hooks';
 export * from './TextParticle';
+export * from './GPUAccel';

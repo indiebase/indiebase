@@ -1,21 +1,8 @@
 import { ResultCode } from '../enum';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class PaginationDto {
-  @ApiProperty({
-    default: 1,
-  })
-  @IsNumber()
-  current?: number = 1;
-
-  @ApiProperty({
-    default: 20,
-  })
-  @IsNumber()
-  pageSize: number = 20;
-}
 export class PaginationReqDto {
   @ApiProperty({
     default: 1,
@@ -34,17 +21,26 @@ export class PaginationReqDto {
 
 export class BaseResSchemaDto {
   @ApiProperty({
-    description: 'Response code',
+    description: 'Response logical code',
     default: ResultCode.SUCCESS,
   })
   code: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Response message',
   })
   message?: string | string[];
 }
-export class PaginationResSchemaDto extends BaseResSchemaDto {
+
+export const HttpResSchemaDto = BaseResSchemaDto;
+
+export class RpcResSchemaDto extends BaseResSchemaDto {
+  d?: any;
+
+  statusCode?: number;
+}
+
+export class PaginationResSchemaDto extends HttpResSchemaDto {
   @ApiProperty({
     description: 'Total items',
   })

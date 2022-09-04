@@ -16,7 +16,7 @@ export class GithubGuard extends AuthGuard('github') {
 
   override handleRequest(err, user, _info, _context) {
     if (err || !user) {
-      throw err || new UnauthorizedException();
+      throw new UnauthorizedException({ message: 'Unauthorized', ...err });
     }
 
     return user;
