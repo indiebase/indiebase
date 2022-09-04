@@ -76,49 +76,51 @@ const Home: NextPage = () => {
 
   return (
     <ScrollContainer vHeight={3500} onScroll={handlePage}>
-      <ScrollPage style={{ zIndex: 10 }} page={0}>
-        <Center
-          sx={{
-            height: 'calc(100vh - 60px)',
-            flexDirection: 'column',
-            zIndex: 1,
-          }}
-        >
-          <Animator animation={batch(Fade(), MoveOut(0, -500))}>
-            <TextParticle
-              text="letscollab"
-              resolution={5}
-              boxWidth={1800}
-              boxHeight={400}
-              size={300}
-            />
-          </Animator>
-          <Button
-            sx={(theme) => ({
-              backgroundColor: theme.colors.dark[6] + '!important',
-            })}
-            onMouseEnter={() => {
-              ref.current.play();
+      <GPUAccel>
+        <ScrollPage style={{ zIndex: 10 }} page={0}>
+          <Center
+            sx={{
+              height: 'calc(100vh - 60px)',
+              flexDirection: 'column',
+              zIndex: 1,
             }}
-            onMouseLeave={() => {
-              ref.current.stop();
-            }}
-            rightIcon={
-              <Lottie
-                lottieRef={ref}
-                style={{ width: 30 }}
-                loop={false}
-                animationData={RightArrow}
-              />
-            }
-            radius="xl"
-            size="xl"
-            uppercase
           >
-            开始
-          </Button>
-        </Center>
-      </ScrollPage>
+            <Animator animation={batch(Fade(), MoveOut(0, -500))}>
+              <TextParticle
+                text="letscollab"
+                resolution={5}
+                boxWidth={1800}
+                boxHeight={400}
+                size={300}
+              />
+            </Animator>
+            <Button
+              sx={(theme) => ({
+                backgroundColor: theme.colors.dark[6] + '!important',
+              })}
+              onMouseEnter={() => {
+                ref.current.play();
+              }}
+              onMouseLeave={() => {
+                ref.current.stop();
+              }}
+              rightIcon={
+                <Lottie
+                  lottieRef={ref}
+                  style={{ width: 30 }}
+                  loop={false}
+                  animationData={RightArrow}
+                />
+              }
+              radius="xl"
+              size="xl"
+              uppercase
+            >
+              开始
+            </Button>
+          </Center>
+        </ScrollPage>
+      </GPUAccel>
 
       <ScrollPage page={1}>
         <Animator style={{ zIndex: 1 }} animation={batch(StickyIn(), FadeIn())}>
