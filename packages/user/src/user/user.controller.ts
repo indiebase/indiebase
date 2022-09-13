@@ -14,11 +14,7 @@ import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 import { FastifyReply, FastifyRequest } from 'fastify';
-import {
-  CsrfGuard,
-  MicroserviceExceptionFilter,
-  ProtectGuard,
-} from '@letscollab/helper';
+import { MicroserviceExceptionFilter, ProtectGuard } from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
 @Controller('v1/user')
@@ -59,12 +55,8 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(CsrfGuard, ProtectGuard, SessionRpcAuthClientGuard)
-  async getUserList(
-    @Session() session,
-    @Req() req: FastifyRequest,
-    @Res() res: FastifyReply,
-  ) {
+  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
+  async getUserList(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     res.send({ token: 1 });
   }
 

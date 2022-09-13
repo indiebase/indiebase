@@ -23,7 +23,8 @@ export class AuthService {
     return lastValueFrom<T>(
       this.userClient.send({ cmd }, c).pipe(
         timeout(4000),
-        catchError((e) => {
+        catchError((err) => {
+          this.logger.error(err);
           throw new InternalServerErrorException({
             message: 'Failed to get user profile',
           });
@@ -55,6 +56,7 @@ export class AuthService {
       this.userClient.send({ cmd: 'signup_github' }, data.profile).pipe(
         timeout(4000),
         catchError((err) => {
+          this.logger.error(err);
           throw new InternalServerErrorException({
             message: 'Fail to register',
           });

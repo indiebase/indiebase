@@ -11,17 +11,16 @@ export class SessionRpcAuthConsumerGuard implements CanActivate {
       .switchToRpc()
       .getData<Record<string, any> & ExtraMountedSession>();
 
-    for (const a of sess.access) {
-      const { action, resource } = a;
+    console.log(sess, sess.access);
 
+    for (const obj of sess.access) {
+      const { action, resource } = obj;
       const hasPermission = await this.casbinService.e.enforce(
         sess.user.username,
         sess.domain,
         resource,
         action,
       );
-
-      console.log(hasPermission);
 
       if (!hasPermission) {
         return false;

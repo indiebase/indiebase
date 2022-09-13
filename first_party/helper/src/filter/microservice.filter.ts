@@ -18,7 +18,6 @@ export class MicroserviceExceptionFilter
   constructor(private readonly logger: Logger) {}
 
   catch(exception: RpcException, host: ArgumentsHost): Observable<any> {
-    console.log('==============================');
     this.logger.error('Rpc Exception: ' + exception, exception.stack);
     return throwError(() => exception.getError());
   }

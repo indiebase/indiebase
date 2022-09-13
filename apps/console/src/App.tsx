@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
+import { queryClientAtom } from 'jotai/query';
 import { AppRouter } from './Router';
 import { Provider } from 'jotai';
 import './App.less';
-import { queryClientAtom } from 'jotai/query';
 
 const queryClient = new QueryClient({
   defaultOptions: {
