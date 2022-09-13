@@ -62,7 +62,7 @@ export function awaitValue(
 }
 
 export const throwRpcException2Http = function (val: RpcResSchemaDto) {
-  switch (val.statusCode) {
+  switch (val.httpStatus) {
     case 400:
       throw new BadRequestException(val);
     case 401:

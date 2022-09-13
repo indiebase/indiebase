@@ -7,12 +7,14 @@ import {
   Delete,
   Query,
   Req,
+  Param,
 } from '@nestjs/common';
 import {
   ApiOperation,
   ApiTags,
   ApiCookieAuth,
   ApiCreatedResponse,
+  ApiParam,
 } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import {
@@ -69,8 +71,11 @@ export class RoleController {
   @Post(':rolename/:username')
   @ApiCookieAuth('SID')
   @ApiOperation({ summary: 'Attach a role to user' })
+  @ApiParam({ name: 'rolename', required: true, schema: { default: 'owner' } })
+  @ApiParam({ name: 'username', required: true, schema: { default: 'Nawbc' } })
   // @UseGuards(Http2RmqAuthGuard)
-  async attachRole2User(@Req() req: FastifyRequest) {
+  async attachRole2User(@Req() req: FastifyRequest, @Param() param) {
+    console.log(param);
     return 1;
   }
 }

@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ResultCode, RpcResSchemaDto } from '@letscollab/helper';
 import { AUTH_RMQ } from '../app.constants';
-import { UserResDto } from './user.dto';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 
@@ -47,8 +46,6 @@ export class UserService {
   public async signup(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
   ): Promise<RpcResSchemaDto> {
-    let result: UserResDto;
-
     const user = await this.userRepo.findOne({
       where: [
         {
@@ -63,7 +60,7 @@ export class UserService {
     if (user) {
       return {
         code: ResultCode.EENTEXIST,
-        statusCode: 400,
+        httpStatus: 400,
         message: 'username/email already registered',
       };
     } else {
@@ -72,7 +69,7 @@ export class UserService {
 
         throw new RpcException({
           code: ResultCode.ERROR,
-          message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err.message,
+          message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err,
         });
       });
 
