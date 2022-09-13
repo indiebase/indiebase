@@ -38,7 +38,7 @@ export class MailService {
 
         return {
           code: ResultCode.SUCCESS,
-          message: '发送成功',
+          message: 'Send Successfully',
         };
       })
       .catch((e) => {
