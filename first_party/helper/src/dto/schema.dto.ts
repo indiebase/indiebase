@@ -37,7 +37,7 @@ export const HttpResSchemaDto = BaseResSchemaDto;
 export class RpcResSchemaDto extends BaseResSchemaDto {
   d?: any;
 
-  statusCode?: number;
+  httpStatus?: number;
 }
 
 export class PaginationResSchemaDto extends HttpResSchemaDto {

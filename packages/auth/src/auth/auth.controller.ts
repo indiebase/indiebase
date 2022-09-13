@@ -1,20 +1,12 @@
-import {
-  Controller,
-  UseGuards,
-  Get,
-  Req,
-  Res,
-  Session,
-  BadRequestException,
-} from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Controller, UseGuards, Get, Req, Res, Session } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { SessionRpcAuthConsumerGuard } from './session-rpc-auth-consumer.guard';
 
-import { throwRpcException2Http } from '@letscollab/helper';
 import { GithubGuard } from './github.guard';
+import { UserResponseDto } from '@letscollab/user';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
@@ -57,14 +49,15 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(GithubGuard)
+  @ApiResponseProperty({
+    type: UserResponseDto,
+  })
   async githubCallback(
     @Req() req: FastifyRequest,
     @Res() res: FastifyReply,
     @Session() session: Record<string, any>,
   ) {
     const r = await this.authService.signupGithub(req.user);
-
-    throwRpcException2Http(r);
 
     if (r.code > 0) {
       session.user = {
@@ -86,7 +79,7 @@ export class AuthController {
 
   @MessagePattern({ cmd: 'set_role_policy' })
   async addRole(@Payload() payload: any) {
-    this.authService.setRolePolicy(payload);
-    return payload;
+    await this.authService.setRolePolicy(payload);
+    return true;
   }
 }

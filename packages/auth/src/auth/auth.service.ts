@@ -5,10 +5,15 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
 import { CasbinService } from '@letscollab/nest-acl';
-import { RpcResSchemaDto } from '@letscollab/helper';
+import {
+  ResultCode,
+  RpcResSchemaDto,
+  throwRpcException2Http,
+} from '@letscollab/helper';
+import { RpcRoleBody } from '../utils';
 
 @Injectable()
 export class AuthService {
@@ -64,17 +69,24 @@ export class AuthService {
       ),
     );
 
+    throwRpcException2Http(r);
+
     return r;
   }
 
-  async setRolePolicy(op: { name: string; possession: string[] }) {
-    console.log(op);
-
-    // const a = await this.casbin.e.addPolicy().catch(() => {
-    //   throw new InternalServerErrorException({
-    //     message: 'Fail to register',
-    //   })
-    // });
+  async setRolePolicy(body: RpcRoleBody) {
+    for await (const item of body.possession) {
+      for (const action of item.action) {
+        await this.casbin.e
+          .addPolicy(body.name, body.domain, item.resource, action)
+          .catch((err) => {
+            throw new RpcException({
+              code: ResultCode.ERROR,
+              message: err,
+            });
+          });
+      }
+    }
   }
 
   public async addRole() {

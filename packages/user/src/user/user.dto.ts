@@ -47,7 +47,7 @@ export class SignupDto {
   captcha: number;
 }
 
-export class UserResDto extends HttpResSchemaDto {
+export class UserResponseDto extends HttpResSchemaDto {
   @ApiPropertyOptional({
     type: () => UserEntity,
   })

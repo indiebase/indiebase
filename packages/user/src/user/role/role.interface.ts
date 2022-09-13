@@ -1,5 +1,5 @@
-export interface Role {
-  id: string;
+export interface RpcRoleBody {
   name: string;
-  description: string;
+  possession: string[];
+  domain: string;
 }

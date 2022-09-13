@@ -7,7 +7,13 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
+import {
+  PaginationReqDto,
+  PaginationResSchemaDto,
+  RoleResource,
+  UserResource,
+} from '@letscollab/helper';
+import { AccessAction } from '@letscollab/nest-acl';
 
 export class CreateRoleDto {
   @ApiProperty({
@@ -34,10 +40,26 @@ export class CreateRoleDto {
 
   @ApiPropertyOptional({
     description: 'Possession',
+    type: [],
+    default: [
+      {
+        resource: UserResource.list,
+        action: [
+          AccessAction.createAny,
+          AccessAction.readAny,
+          AccessAction.updateAny,
+          AccessAction.deleteAny,
+        ],
+      },
+      {
+        resource: RoleResource.list,
+        action: [AccessAction.createAny],
+      },
+    ],
   })
   @IsArray()
   @IsOptional()
-  possession?: string[];
+  possession?: { resource: string; action: AccessAction[] }[];
 }
 export class QueryRoleDto extends PaginationReqDto {
   @ApiPropertyOptional({

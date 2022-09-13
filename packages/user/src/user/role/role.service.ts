@@ -25,39 +25,24 @@ export class RoleService {
   ) {}
 
   async createRole(role: CreateRoleDto) {
-    const roleEntity = this.roleRepo.create({
-      name: role.name,
-      description: role.description,
-      possession: role.possession,
-      domain: role.domain,
-    });
-    await this.roleRepo
-      .save(roleEntity)
-      .then(() => {
-        if (role.possession && role.possession.length > 0) {
-          awaitValue(
-            this.authClient,
-            { cmd: 'set_role_policy' },
-            {
-              name: role.name,
-              possession: role.possession,
-              domain: role.domain,
-            },
-            (e) => {
-              this.logger.error(e);
-              throw new Error('Set role possession error');
-            },
-          );
-        }
-      })
-      .catch(async (err) => {
+    let result = await awaitValue(
+      this.authClient,
+      { cmd: 'set_role_policy' },
+      {
+        name: role.name,
+        possession: role.possession,
+        domain: role.domain,
+      },
+      (err) => {
         this.logger.error(err);
-
         throw new InternalServerErrorException({
           code: ResultCode.ERROR,
-          message: err?.code === 'ER_DUP_ENTRY' ? 'Role repeat' : 'Create fail',
+          message: err,
         });
-      });
+      },
+    );
+
+    console.log(result);
 
     return {
       code: ResultCode.SUCCESS,
@@ -93,6 +78,8 @@ export class RoleService {
       message: 'Update successfully',
     };
   }
+
+  async attachRole(rolename, username) {}
 
   async queryRoles(body: QueryRoleDto) {
     body = Object.assign({}, body);
