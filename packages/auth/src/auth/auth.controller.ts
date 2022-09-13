@@ -80,6 +80,7 @@ export class AuthController {
   @UseGuards(SessionRpcAuthConsumerGuard)
   @MessagePattern({ cmd: 'auth' })
   async auth(@Payload() payload) {
+    console.log(payload);
     return payload;
   }
 

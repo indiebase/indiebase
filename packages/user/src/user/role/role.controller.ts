@@ -66,7 +66,7 @@ export class RoleController {
     return this.roleService.deleteRole(role.id);
   }
 
-  @Post(':roleName/:username')
+  @Post(':rolename/:username')
   @ApiCookieAuth('SID')
   @ApiOperation({ summary: 'Attach a role to user' })
   // @UseGuards(Http2RmqAuthGuard)

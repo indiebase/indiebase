@@ -9,6 +9,9 @@ import {
 import { HttpAdapterHost } from '@nestjs/core';
 import { FastifyRequest, FastifyReply } from 'fastify';
 
+/**
+ * @deprecated
+ */
 @Injectable()
 export class CsrfGuard implements CanActivate {
   constructor(
@@ -25,9 +28,8 @@ export class CsrfGuard implements CanActivate {
         next = http.getNext();
       const instance = this.adapterHost.httpAdapter.getInstance();
 
-      const a = instance.csrfProtection(request, response, next);
+      instance.csrfProtection(request, response, next);
 
-      console.log(a);
       return true;
     } catch (error) {
       this.logger.error(error);

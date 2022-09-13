@@ -26,7 +26,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(fastify),
+    new FastifyAdapter(fastify as any),
     {
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
       bodyParser: true,
@@ -56,7 +56,7 @@ async function bootstrap() {
       }),
     );
 
-    await app.register(fastifyHelmet, {
+    await app.register(fastifyHelmet as any, {
       global: true,
       contentSecurityPolicy: {
         directives: {

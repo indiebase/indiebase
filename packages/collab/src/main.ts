@@ -9,10 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { NacosConfigService } from '@letscollab/nest-nacos';
-import {
-  HttpExceptionFilter,
-  MicroserviceExceptionFilter,
-} from '@letscollab/helper';
+import { HttpExceptionFilter } from '@letscollab/helper';
 import {
   i18nValidationErrorFactory,
   I18nValidationExceptionFilter,
@@ -74,7 +71,6 @@ async function bootstrap() {
 
     app.useGlobalFilters(
       new HttpExceptionFilter(nestWinston),
-      new MicroserviceExceptionFilter(nestWinston),
       new I18nValidationExceptionFilter(),
     );
 
