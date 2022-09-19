@@ -6,9 +6,10 @@ import { AuthService } from './auth.service';
 import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
-import { USER_RMQ } from '../app.constants';
+
 import { GithubStrategy } from './github.strategy';
 import { SessionStrategy } from './session.strategy';
+import { USER_RMQ } from '@letscollab/helper';
 
 const PassportModule = ForwardPassportModule.register({
   defaultStrategy: 'jwt',

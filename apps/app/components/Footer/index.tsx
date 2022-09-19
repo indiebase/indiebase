@@ -12,7 +12,7 @@ export const Footer = function (props) {
         </Group>
         <Stack align="center">
           <Link href="#">皖ICP备20002736号-2</Link>
-          <Text>Copyright© {new Date().getFullYear()} WangHan</Text>
+          <Text>Copyright© {new Date().getFullYear()} Han</Text>
         </Stack>
       </Stack>
       <Box sx={{ height: 40 }} />

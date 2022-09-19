@@ -174,7 +174,7 @@ export class NodeRedisAdapter implements FilteredAdapter {
     return await new Promise((resolve, reject) => {
       this.redisInstance.get('policies', (err, policies) => {
         if (!err) {
-          const parsedPolicies = JSON.parse(policies!) ?? [];
+          const parsedPolicies = JSON.parse(policies !== '' ? policies! : '[]');
           this.policies = parsedPolicies; // for adding and removing policies methods
           parsedPolicies.forEach((policy: any) => {
             this.loadPolicyLine(policy, model);

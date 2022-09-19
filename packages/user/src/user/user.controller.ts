@@ -1,4 +1,3 @@
-import { SessionRpcAuthClientGuard } from '../guard/session-rpc-auth-client.guard';
 import {
   Controller,
   Get,
@@ -14,7 +13,11 @@ import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { MicroserviceExceptionFilter, ProtectGuard } from '@letscollab/helper';
+import {
+  MicroserviceExceptionFilter,
+  ProtectGuard,
+  RpcSessionAuthClientGuard,
+} from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
 @Controller('v1/user')
@@ -38,10 +41,10 @@ export class UserController {
   }
 
   @UseFilters(MicroserviceExceptionFilter)
-  @MessagePattern({ cmd: 'signup_github' })
+  @MessagePattern({ cmd: 'signin_github' })
   async signupGithub(@Payload() profile) {
     const { _json: json, username, profileUrl, id, displayName } = profile;
-    return this.userService.signup({
+    return this.userService.signIn({
       username: username,
       profileUrl: profileUrl,
       signupType: SignupType.github,
@@ -55,14 +58,14 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
   async getUserList(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     res.send({ token: 1 });
   }
 
   @Get('profile/:username')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, SessionRpcAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
   @ApiOperation({
     summary: 'Get a user profile default own',
   })

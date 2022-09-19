@@ -1,4 +1,4 @@
-import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { DynamicModule, Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
@@ -16,6 +16,7 @@ import LokiTransport = require('winston-loki');
 import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NodeRedisAdapter } from './utils';
+import TypeOrmAdapter from 'typeorm-adapter';
 import { RedisSessionModule } from '@letscollab/helper';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -93,11 +94,11 @@ const isDev = process.env.NODE_ENV === 'development';
       imports: [NacosConfigModule],
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('common.json');
+        const configs = await config.getConfig('service-auth.json');
 
         return {
           model: resolve(__dirname, '../model/auth.conf'),
-          adapter: await NodeRedisAdapter.newAdapter(configs.redis),
+          adapter: await TypeOrmAdapter.newAdapter(configs.casbin.db),
         };
       },
     }),
@@ -121,6 +122,8 @@ export class AppModule implements OnModuleInit {
     private readonly nacosNamingService: NacosNamingService,
     private readonly casbinService: CasbinService,
   ) {}
+
+  static forRoot() {}
 
   async onModuleInit() {
     await this.nacosNamingService.registerInstance(

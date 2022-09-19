@@ -8,10 +8,9 @@ import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, MAIL_RMQ } from '../app.constants';
 import { RoleController } from './role/role.controller';
 import { ResourceController } from './res/resource.controller';
-import { IsUserExistedConstraint } from '../utils';
+import { AUTH_RMQ, MAIL_RMQ } from '@letscollab/helper';
 
 @Module({
   imports: [
@@ -45,6 +44,6 @@ import { IsUserExistedConstraint } from '../utils';
     }),
   ],
   controllers: [UserController, RoleController, ResourceController],
-  providers: [UserService, Logger, RoleService, IsUserExistedConstraint],
+  providers: [UserService, Logger, RoleService],
 })
 export class UserModule {}

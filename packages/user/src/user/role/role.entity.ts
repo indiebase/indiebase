@@ -16,7 +16,7 @@ export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar')
+  @Column('varchar', { unique: true })
   name: string;
 
   @Column('varchar')
@@ -31,12 +31,6 @@ export class RoleEntity {
     default: RoleStatus.active,
   })
   status?: RoleStatus;
-
-  @Column('simple-array', {
-    comment: 'Possession',
-    nullable: true,
-  })
-  possession?: string[];
 
   @CreateDateColumn({
     type: 'timestamp',

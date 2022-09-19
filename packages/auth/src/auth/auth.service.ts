@@ -1,4 +1,3 @@
-import { USER_RMQ } from '../app.constants';
 import {
   Inject,
   Injectable,
@@ -10,10 +9,11 @@ import { catchError, lastValueFrom, timeout } from 'rxjs';
 import { CasbinService } from '@letscollab/nest-acl';
 import {
   ResultCode,
+  RpcCreateRoleBody,
   RpcResSchemaDto,
-  throwRpcException2Http,
+  RpcException2Http,
+  USER_RMQ,
 } from '@letscollab/helper';
-import { RpcRoleBody } from '../utils';
 
 @Injectable()
 export class AuthService {
@@ -56,25 +56,22 @@ export class AuthService {
   //   }
   // }
 
-  async signupGithub(data): Promise<RpcResSchemaDto> {
+  async signInGithub(data): Promise<RpcResSchemaDto> {
     const r = await lastValueFrom(
-      this.userClient.send({ cmd: 'signup_github' }, data.profile).pipe(
+      this.userClient.send({ cmd: 'signin_github' }, data.profile).pipe(
         timeout(4000),
         catchError((err) => {
           this.logger.error(err);
-          throw new InternalServerErrorException({
-            message: 'Fail to register',
-          });
+
+          throw RpcException2Http(err);
         }),
       ),
     );
 
-    throwRpcException2Http(r);
-
     return r;
   }
 
-  async setRolePolicy(body: RpcRoleBody) {
+  async createRolePolicy(body: RpcCreateRoleBody) {
     for await (const item of body.possession) {
       for (const action of item.action) {
         await this.casbin.e
@@ -89,7 +86,18 @@ export class AuthService {
     }
   }
 
-  public async addRole() {
-    // this.casbin.e.addPolicies();
+  async updateRolePolicy(body) {}
+
+  async attachRoleForUser({ username, rolename, domain }) {
+    return this.casbin.e
+      .addRoleForUser(username, rolename, domain)
+      .catch((err) => {
+        this.logger.error(err);
+
+        throw new RpcException({
+          code: ResultCode.ERROR,
+          message: err,
+        });
+      });
   }
 }

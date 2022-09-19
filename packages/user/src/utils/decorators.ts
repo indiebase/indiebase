@@ -34,6 +34,11 @@ export class IsUserExistedConstraint implements ValidatorConstraintInterface {
   }
 }
 
+/**
+ *
+ * @deprecated
+ * @param {ValidationOptions} validationOptions
+ */
 export function IsUserExisted(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({

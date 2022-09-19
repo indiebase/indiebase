@@ -3509,6 +3509,7 @@ __metadata:
     ts-node: ^10.6.0
     tsconfig-paths: ^3.10.1
     typeorm: ^0.3.7
+    typeorm-adapter: ^1.5.1
     typescript: ^4.6.3
     winston: ^3.7.2
     winston-loki: ^6.0.5
@@ -27534,7 +27535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typeorm-adapter@npm:^1.4.2":
+"typeorm-adapter@npm:^1.4.2, typeorm-adapter@npm:^1.5.1":
   version: 1.5.1
   resolution: "typeorm-adapter@npm:1.5.1"
   dependencies:

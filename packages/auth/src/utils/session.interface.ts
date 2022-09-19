@@ -14,9 +14,3 @@ export type ExtraMountedSession = {
   domain: string;
   access: IAccessOptions[];
 };
-
-export interface RpcRoleBody {
-  name: string;
-  possession: { resource: string; action: AccessAction[] }[];
-  domain: string;
-}
