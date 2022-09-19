@@ -12,7 +12,6 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
-    "vercel-install": "./vercel-submodule-workaround.sh && yarn",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "yarn workspaces foreach run lint",
     "docker:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
