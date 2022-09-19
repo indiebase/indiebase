@@ -61,39 +61,39 @@ export function awaitValue(
   );
 }
 
-export const throwRpcException2Http = function (val: RpcResSchemaDto) {
-  switch (val.httpStatus) {
+export const RpcException2Http = function (val: RpcResSchemaDto) {
+  switch (val.statusCode) {
     case 400:
-      throw new BadRequestException(val);
+      return new BadRequestException(val);
     case 401:
-      throw new UnauthorizedException(val);
+      return new UnauthorizedException(val);
     case 403:
-      throw new ForbiddenException(val);
+      return new ForbiddenException(val);
     case 404:
-      throw new NotFoundException(val);
+      return new NotFoundException(val);
     case 406:
-      throw new NotAcceptableException(val);
+      return new NotAcceptableException(val);
     case 407:
-      throw new RequestTimeoutException(val);
+      return new RequestTimeoutException(val);
     case 408:
-      throw new ConflictException(val);
+      return new ConflictException(val);
     case 410:
-      throw new GoneException(val);
+      return new GoneException(val);
     case 413:
-      throw new PayloadTooLargeException(val);
+      return new PayloadTooLargeException(val);
     case 415:
-      throw new UnsupportedMediaTypeException(val);
+      return new UnsupportedMediaTypeException(val);
     case 500:
-      throw new InternalServerErrorException(val);
+      return new InternalServerErrorException(val);
     case 501:
-      throw new NotImplementedException(val);
+      return new NotImplementedException(val);
     case 502:
-      throw new BadGatewayException(val);
+      return new BadGatewayException(val);
     case 503:
-      throw new ServiceUnavailableException(val);
+      return new ServiceUnavailableException(val);
     case 504:
-      throw new GatewayTimeoutException(val);
+      return new GatewayTimeoutException(val);
     default:
-      break;
+      return new InternalServerErrorException(val);
   }
 };

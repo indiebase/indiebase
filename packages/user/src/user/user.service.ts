@@ -1,8 +1,7 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ResultCode, RpcResSchemaDto } from '@letscollab/helper';
-import { AUTH_RMQ } from '../app.constants';
+import { AUTH_RMQ, ResultCode, RpcResSchemaDto } from '@letscollab/helper';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 
@@ -43,10 +42,10 @@ export class UserService {
       .getOne();
   }
 
-  public async signup(
+  public async signIn(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
   ): Promise<RpcResSchemaDto> {
-    const user = await this.userRepo.findOne({
+    let user = await this.userRepo.findOne({
       where: [
         {
           username: body.username,
@@ -57,28 +56,27 @@ export class UserService {
       ],
     });
 
-    if (user) {
-      return {
-        code: ResultCode.EENTEXIST,
-        httpStatus: 400,
-        message: 'username/email already registered',
-      };
-    } else {
-      const created = await this.createUser(body).catch((err) => {
+    let message = 'Login Successfully';
+
+    if (!user) {
+      user = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
         throw new RpcException({
           code: ResultCode.ERROR,
-          message: err.code === 'ER_DUP_ENTRY' ? 'User existed' : err,
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message:
+            err.code === 'ER_DUP_ENTRY' ? 'User existed' : 'Fail to register',
         });
       });
-
-      return {
-        code: ResultCode.SUCCESS,
-        message: 'Register Success',
-        d: created,
-      };
+      message = 'Register Successfully';
     }
+
+    return {
+      code: ResultCode.SUCCESS,
+      message,
+      d: user,
+    };
   }
 
   /**

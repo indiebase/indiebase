@@ -1,6 +1,8 @@
 import { RoleEntity } from './role.entity';
 
 import {
+  BadRequestException,
+  HttpException,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -9,9 +11,13 @@ import {
 import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
-import { awaitValue, ResultCode } from '@letscollab/helper';
+import {
+  AUTH_RMQ,
+  awaitValue,
+  ResultCode,
+  RpcException2Http,
+} from '@letscollab/helper';
 import { ClientProxy } from '@nestjs/microservices';
-import { AUTH_RMQ } from '../../app.constants';
 
 @Injectable()
 export class RoleService {
@@ -25,24 +31,48 @@ export class RoleService {
   ) {}
 
   async createRole(role: CreateRoleDto) {
-    let result = await awaitValue(
-      this.authClient,
-      { cmd: 'set_role_policy' },
-      {
-        name: role.name,
-        possession: role.possession,
-        domain: role.domain,
-      },
-      (err) => {
-        this.logger.error(err);
-        throw new InternalServerErrorException({
-          code: ResultCode.ERROR,
-          message: err,
-        });
-      },
-    );
+    const runner = this.dataSource.createQueryRunner();
+    const roleEntity = this.roleRepo.create({
+      name: role.name,
+      description: role.description,
+      domain: role.domain,
+    });
 
-    console.log(result);
+    await runner.connect();
+    await runner.startTransaction();
+    await runner.manager
+      .save(roleEntity)
+      .then(async () => {
+        if (role?.possession.length > 0) {
+          return awaitValue(
+            this.authClient,
+            { cmd: 'set_role_policy' },
+            {
+              name: role.name,
+              possession: role.possession,
+              domain: role.domain,
+            },
+            (err) => {
+              throw RpcException2Http(err);
+            },
+          );
+        }
+      })
+      .catch(async (err) => {
+        await runner.rollbackTransaction();
+
+        this.logger.error(err);
+
+        throw new BadRequestException({
+          message:
+            err?.code === 'ER_DUP_ENTRY'
+              ? `Role [${role.name}] existed`
+              : 'Fail to create',
+        });
+      });
+
+    await runner.commitTransaction();
+    await runner.release();
 
     return {
       code: ResultCode.SUCCESS,
@@ -79,7 +109,16 @@ export class RoleService {
     };
   }
 
-  async attachRole(rolename, username) {}
+  async attachRole(body) {
+    await awaitValue(this.authClient, { cmd: 'set_user_role' }, body, (err) => {
+      throw RpcException2Http(err);
+    });
+
+    return {
+      code: ResultCode.SUCCESS,
+      message: 'Success',
+    };
+  }
 
   async queryRoles(body: QueryRoleDto) {
     body = Object.assign({}, body);

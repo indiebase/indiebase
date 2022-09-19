@@ -1,5 +1,5 @@
 import { RoleStatus } from './role.entity';
-import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional, ApiProperty, ApiParam } from '@nestjs/swagger';
 import {
   IsArray,
   IsNotEmpty,
@@ -11,6 +11,7 @@ import {
   PaginationReqDto,
   PaginationResSchemaDto,
   RoleResource,
+  RpcCreateRoleBody,
   UserResource,
 } from '@letscollab/helper';
 import { AccessAction } from '@letscollab/nest-acl';
@@ -59,7 +60,7 @@ export class CreateRoleDto {
   })
   @IsArray()
   @IsOptional()
-  possession?: { resource: string; action: AccessAction[] }[];
+  possession?: RpcCreateRoleBody['possession'];
 }
 export class QueryRoleDto extends PaginationReqDto {
   @ApiPropertyOptional({
@@ -95,7 +96,7 @@ export class UpdateRoleDto {
   description?: string;
 
   @ApiPropertyOptional({
-    description: 'Role  status',
+    description: 'Role status',
     enum: RoleStatus,
     default: RoleStatus.active,
   })
@@ -109,6 +110,26 @@ export class DeleteRoleDto {
   })
   @IsNumber()
   id: number;
+}
+
+export class AttachRole2UserDto {
+  @ApiProperty({
+    default: 'Nawbc',
+  })
+  @IsString()
+  username: string;
+
+  @ApiProperty({
+    default: 'owner',
+  })
+  @IsString()
+  rolename: string;
+
+  @ApiProperty({
+    default: 'letscollab.letscollab.deskbtm.com',
+  })
+  @IsString()
+  domain: string;
 }
 
 export class RoleDto extends UpdateRoleDto {}

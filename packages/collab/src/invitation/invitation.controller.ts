@@ -13,7 +13,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { InviteMemberDto } from './invitation.dto';
-import { SessionRpcAuthClientGuard } from 'src/guard/session-rpc-auth-client.guard';
+import { RpcSessionAuthClientGuard } from 'src/guard/session-rpc-auth-client.guard';
 
 @Controller('invite')
 @ApiTags('v1/Invitation')
@@ -42,14 +42,14 @@ export class InvitationController {
 
   @Post('create')
   @ApiBearerAuth('jwt')
-  @UseGuards(SessionRpcAuthClientGuard)
+  @UseGuards(RpcSessionAuthClientGuard)
   async inviteMember(@Body() body: InviteMemberDto, @Req() req: { user }) {
     return this.invitationService.inviteMember(body, req.user.body);
   }
 
   @Get('invite/confirm')
   @ApiBearerAuth('jwt')
-  @UseGuards(SessionRpcAuthClientGuard)
+  @UseGuards(RpcSessionAuthClientGuard)
   async confirmInviteMember(@Body() body) {
     // return this.invitationService.updateTeam(body);
   }

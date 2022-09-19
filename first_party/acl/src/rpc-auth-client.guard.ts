@@ -37,53 +37,46 @@ export function RpcAuthClientGuard(
     }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-      try {
-        const access = this.reflector.get<IAccessOptions[]>(
-          ACCESS_META,
-          context.getHandler(),
-        );
+      const access = this.reflector.get<IAccessOptions[]>(
+        ACCESS_META,
+        context.getHandler(),
+      );
 
-        if (!access) {
-          return true;
+      if (!access) return true;
+
+      let input = await this.transfer(context);
+      input = { access, ...input };
+
+      for (const a of access) {
+        if (a.resource.indexOf('_') < 0) {
+          throw new Error(
+            `${a.resource} needs prefix to divide groups e.g groupName_xxxxx`,
+          );
         }
 
-        let input = await this.transfer(context);
-
-        input = { access, ...input };
-
-        for (const a of access) {
-          if (a.resource.indexOf('_') < 0) {
-            throw new Error(
-              `${a.resource} needs prefix to divide groups e.g groupName_xxxxx`,
-            );
-          }
-
-          if (a.action.toLowerCase().indexOf('own') > 0) {
-            if (a.possess) {
-              const isOwn = await a.possess(context);
-              if (!isOwn) {
-                return false;
-              }
-            } else {
-              throw Error(`${a.resource} ${a.action} needs property possess`);
+        if (a.action.toLowerCase().indexOf('own') > 0) {
+          if (a.possess) {
+            const isOwn = await a.possess(context);
+            if (!isOwn) {
+              return false;
             }
+          } else {
+            throw Error(`${a.resource} ${a.action} needs property possess`);
           }
         }
-
-        const pattern = await this.setPattern(context);
-
-        return lastValueFrom<boolean>(
-          this.client.send(pattern, input).pipe(
-            timeout(options?.timeout ?? 3000),
-            catchError((e) => {
-              this.logger.error(e);
-              throw new UnauthorizedException();
-            }),
-          ),
-        );
-      } catch (error) {
-        console.log(error);
       }
+
+      const pattern = await this.setPattern(context);
+
+      return lastValueFrom<boolean>(
+        this.client.send(pattern, input).pipe(
+          timeout(options?.timeout ?? 3000),
+          catchError((e) => {
+            this.logger.error(e);
+            throw new UnauthorizedException();
+          }),
+        ),
+      );
     }
   }
 

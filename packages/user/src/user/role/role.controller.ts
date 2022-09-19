@@ -8,6 +8,7 @@ import {
   Query,
   Req,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiOperation,
@@ -18,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import {
+  AttachRole2UserDto,
   CreateRoleDto,
   DeleteRoleDto,
   QueryRoleDto,
@@ -25,6 +27,12 @@ import {
   UpdateRoleDto,
 } from './role.dto';
 import { FastifyRequest } from 'fastify';
+import {
+  RoleResource,
+  RpcSessionAuthClientGuard,
+  UserResource,
+} from '@letscollab/helper';
+import { UseAccess, AccessAction, CasbinService } from '@letscollab/nest-acl';
 
 @Controller('v1/user/role')
 @ApiTags('v1/Role')
@@ -68,14 +76,15 @@ export class RoleController {
     return this.roleService.deleteRole(role.id);
   }
 
-  @Post(':rolename/:username')
+  @Post('attach')
   @ApiCookieAuth('SID')
   @ApiOperation({ summary: 'Attach a role to user' })
-  @ApiParam({ name: 'rolename', required: true, schema: { default: 'owner' } })
-  @ApiParam({ name: 'username', required: true, schema: { default: 'Nawbc' } })
-  // @UseGuards(Http2RmqAuthGuard)
-  async attachRole2User(@Req() req: FastifyRequest, @Param() param) {
-    console.log(param);
-    return 1;
+  // @UseGuards(RpcSessionAuthClientGuard)
+  @UseAccess({
+    action: AccessAction.createAny,
+    resource: RoleResource.list,
+  })
+  async attachRole2User(@Body() body: AttachRole2UserDto) {
+    return this.roleService.attachRole(body);
   }
 }
