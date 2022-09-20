@@ -1,9 +1,10 @@
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { MailService } from './mail.service';
+import { MailController } from './mail.controller';
 import { Module, Logger } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { MailController } from './mail.controller';
-import { MAIL_RMQ } from '../app.constants';
+import { MAIL_RMQ } from '@letscollab/helper';
+import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+
 @Module({
   imports: [
     ClientsModule.registerAsync([
