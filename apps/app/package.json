@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "vercel-install": "git submodule update --remote && git submodule sync --recursive && yarn",
     "start": "next dev",
     "build": "cross-env NODE_ENV=production next build",
     "postbuild": "next-sitemap",
