@@ -1,6 +1,6 @@
 [submodule "self_hosting"]
 	path = self_hosting
-	url = git@github.com:deskbtm-letscollab/self_hosting.git
+	url = git@github.com:deskbtm-letscollab/self_hosting
 [submodule "pro"]
 	path = pro
 	url = git@github.com:deskbtm-letscollab/letscollab-pro.git
