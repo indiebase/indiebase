@@ -44,6 +44,7 @@ export class UserController {
   @MessagePattern({ cmd: 'signin_github' })
   async signupGithub(@Payload() profile) {
     const { _json: json, username, profileUrl, id, displayName } = profile;
+
     return this.userService.signIn({
       username: username,
       profileUrl: profileUrl,
@@ -60,7 +61,7 @@ export class UserController {
   @ApiCookieAuth('SID')
   @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
   async getUserList(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
-    res.send({ token: 1 });
+    return res.send({ token: 1 });
   }
 
   @Get('profile/:username')

@@ -56,7 +56,7 @@ async function bootstrap() {
       }),
     );
 
-    await app.register(fastifyHelmet as any, {
+    await app.register(fastifyHelmet, {
       global: true,
       contentSecurityPolicy: {
         directives: {
@@ -66,7 +66,6 @@ async function bootstrap() {
           scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
         },
       },
-      enableCSPNonces: true,
       referrerPolicy: true,
     });
 

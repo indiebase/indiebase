@@ -10,7 +10,7 @@ import { AuthGuard } from '@letscollab/passport';
 export class GithubGuard extends AuthGuard('github') {
   override canActivate(
     context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  ): boolean | Promise<boolean> | Observable<boolean> | any {
     return super.canActivate(context);
   }
 

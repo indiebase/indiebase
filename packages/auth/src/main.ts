@@ -73,11 +73,10 @@ async function bootstrap() {
         directives: {
           defaultSrc: [`'self'`],
           styleSrc: [`'self'`, `'unsafe-inline'`],
-          imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
+          imgSrc: [`'self'`, 'data:', '*'],
           scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
         },
       },
-      enableCSPNonces: true,
       referrerPolicy: true,
     });
 

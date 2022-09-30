@@ -8,12 +8,11 @@
   "main": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:prod": "npm run ncc && docker build . -t letscollab/service-auth",
+    "build:prod": "npm run bundle && docker build . -t letscollab/auth",
     "build:local": "npm run bundle && docker build --build-arg RUNTIME_ENV=local --no-cache -t letscollab/msg:local .",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && cross-env NODE_ENV=development DEBUG=\"ioredis:*\" nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/main.ts",
-    "start:dev": "npm run bundle:dev && cross-env NODE_ENV=development node ./dist/index.js",
-    "start:debug": "npm run prebuild && cross-env NODE_ENV=development nest start -d -w",
+    "start:local": "npm run bundle:dev && cross-env NODE_ENV=development node ./dist/index.js",
     "start:prod": "node dist/main",
     "bundle": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
     "bundle:dev": "npm run prebuild && ncc build ./src/main.ts -o dist -s",
@@ -88,7 +87,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.6.0",
     "tsconfig-paths": "^3.10.1",
-    "typescript": "^4.6.3"
+    "typescript": "^4.8.4"
   },
   "jest": {
     "moduleFileExtensions": [

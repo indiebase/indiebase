@@ -8,12 +8,11 @@
   "main": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:docker": "npm run ncc && docker build . -t letscollab/user  --build-arg ENV=production",
+    "build:docker": "npm run bundle && docker build . -t letscollab/user  --build-arg ENV=production",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && cross-env NODE_ENV=development nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/main.ts",
-    "start:debug": "npm run prebuild && cross-env NODE_ENV=development nest start -d -w",
-    "start:dev": "npm run bundle:dev && cross-env NODE_ENV=development node ./dist/index.js",
+    "start:local": "npm run bundle:dev && cross-env NODE_ENV=development node ./dist/index.js",
     "start:prod": "node dist/main",
     "bundle": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
     "bundle:dev": "npm run prebuild && ncc build ./src/main.ts -o dist -s",
@@ -77,7 +76,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
-    "typescript": "^4.6.3"
+    "typescript": "^4.8.4"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { HttpResSchemaDto } from '@letscollab/helper';
 import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
+import { UserEntity } from '@letscollab/user';
 
 export class JwtSignResDto extends HttpResSchemaDto {
   @ApiPropertyOptional({
@@ -9,6 +10,9 @@ export class JwtSignResDto extends HttpResSchemaDto {
   d?: string;
 }
 
+/**
+ * @deprecated
+ */
 export class LocalSignInDto {
   @ApiProperty({
     default: 'letscollabtest',
@@ -31,4 +35,11 @@ export class LocalSignInDto {
     message: 'Password length more than 8',
   })
   password: string;
+}
+
+export class UserResponseDto extends HttpResSchemaDto {
+  @ApiPropertyOptional({
+    type: () => UserEntity,
+  })
+  d?: UserEntity;
 }

@@ -1,4 +1,4 @@
-import { DynamicModule, Logger, Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
@@ -15,7 +15,6 @@ import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NodeRedisAdapter } from './utils';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { RedisSessionModule } from '@letscollab/helper';
 
@@ -50,7 +49,7 @@ const isDev = process.env.NODE_ENV === 'development';
       useFactory: async (config: NacosConfigService) => {
         const configs = await config.getConfig('service-auth.json');
 
-        const transports: any[] = [
+        const transports = [
           new winston.transports.Console({
             format: winston.format.combine(
               winston.format.timestamp(),

@@ -1,7 +1,5 @@
-import { UserEntity } from './user.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
-import { HttpResSchemaDto } from '@letscollab/helper';
 
 export class SignupDto {
   @ApiPropertyOptional({
@@ -45,13 +43,6 @@ export class SignupDto {
     message: 'Invalid CAPTCHA',
   })
   captcha: number;
-}
-
-export class UserResponseDto extends HttpResSchemaDto {
-  @ApiPropertyOptional({
-    type: () => UserEntity,
-  })
-  d?: UserEntity;
 }
 
 export class QueryUserDto {
