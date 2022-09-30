@@ -1,12 +1,13 @@
+import { NacosConfigService } from '@letscollab/nest-nacos';
 import { AuthService } from './auth.service';
 import { GithubGuard } from './github.guard';
-import { UserResponseDto } from '@letscollab/user';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { Controller, UseGuards, Get, Req, Res, Session } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
 import { CasbinService } from '@letscollab/nest-acl';
+import { UserResponseDto } from './auth.dto';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
@@ -14,6 +15,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly casbin: CasbinService,
+    private readonly nacos: NacosConfigService,
   ) {}
 
   /**
@@ -62,24 +64,25 @@ export class AuthController {
   ) {
     const r = await this.authService.signInGithub(req.user);
 
-    if (r.code > 0) {
-      session.user = {
+    r.code > 0 &&
+      session.set('user', {
         loggedIn: true,
         id: r.d.id,
         username: r.d.username,
-      };
-    }
+      });
 
-    res.send(r);
+    return res.send(r);
   }
 
   @Get('demo')
-  async deo() {
-    console.log(
-      await this.casbin.e?.getPolicy(),
-      await this.casbin.e?.getAllRoles(),
-    );
-    return 1;
+  async demo() {
+    const a = await this.nacos.getConfig('common.json');
+    console.log(a.demo);
+    // console.log(
+    //   await this.casbin.e?.getPolicy(),
+    //   await this.casbin.e?.getAllRoles(),
+    // );
+    return a.demo;
   }
 
   @UseGuards(RpcSessionAuthConsumerGuard)

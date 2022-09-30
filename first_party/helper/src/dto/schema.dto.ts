@@ -32,13 +32,13 @@ export class BaseResSchemaDto {
   message?: string | string[];
 }
 
-export const HttpResSchemaDto = BaseResSchemaDto;
-
 export class RpcResSchemaDto extends BaseResSchemaDto {
   d?: any;
 
   statusCode?: number;
 }
+
+export class HttpResSchemaDto extends BaseResSchemaDto {}
 
 export class PaginationResSchemaDto extends HttpResSchemaDto {
   @ApiProperty({
