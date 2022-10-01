@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/user",
   "version": "0.0.1",
-  "description": "",
+  "description": "User service",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

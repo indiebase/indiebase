@@ -27,7 +27,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 async function bootstrap() {
   const fastify = Fastify();
 
-  // compat express
+  // Compat express passport
   fastify.addHook('onRequest', (request: any, reply: any, done) => {
     reply.setHeader = function (key, value) {
       return this.raw.setHeader(key, value);

@@ -122,8 +122,6 @@ export class AppModule implements OnModuleInit {
     private readonly casbinService: CasbinService,
   ) {}
 
-  static forRoot() {}
-
   async onModuleInit() {
     await this.nacosNamingService.registerInstance(
       `@letscollab/auth-${process.env.NODE_ENV}`,

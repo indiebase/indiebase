@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/nest-qiniu",
   "version": "0.0.1",
-  "description": "nestjs nacos module",
+  "description": "Nestjs qiniu module for letscollab",
   "author": "Nawbc",
   "private": true,
   "license": "Apache-2.0",

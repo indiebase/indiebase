@@ -78,6 +78,7 @@ export class AuthController {
   async demo() {
     const a = await this.nacos.getConfig('common.json');
     console.log(a.demo);
+
     // console.log(
     //   await this.casbin.e?.getPolicy(),
     //   await this.casbin.e?.getAllRoles(),
