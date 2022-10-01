@@ -16,12 +16,6 @@ export class RpcSessionAuthConsumerGuard implements CanActivate {
       .switchToRpc()
       .getData<Record<string, any> & ExtraMountedSession>();
 
-    console.log(sess, sess.access);
-    console.log(
-      await this.casbin.e?.getPolicy(),
-      await this.casbin.e?.getAllRoles(),
-    );
-
     for (const obj of sess.access) {
       const { action, resource } = obj;
       const hasPermission = await this.casbin.e.enforce(
@@ -30,8 +24,6 @@ export class RpcSessionAuthConsumerGuard implements CanActivate {
         resource,
         action,
       );
-
-      console.log(hasPermission, '==================');
 
       if (!hasPermission) {
         return false;

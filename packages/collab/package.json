@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/collab",
   "version": "0.0.1",
-  "description": "",
+  "description": "letscollab main service",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

@@ -1,6 +1,7 @@
 {
   "name": "@letscollab/console",
   "version": "0.1.0",
+  "description": "Collaborator, Money, App management",
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",

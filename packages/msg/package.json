@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/msg",
   "version": "0.0.1",
-  "description": "用于发布邮件，信息，通知等等",
+  "description": "Email, notification service",
   "author": "",
   "private": true,
   "scripts": {

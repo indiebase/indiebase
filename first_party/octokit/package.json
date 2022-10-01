@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/nest-octokit",
   "version": "0.0.1",
-  "description": "Github api plugin",
+  "description": "Github api nodule for letscollab",
   "author": "Nawbc",
   "private": true,
   "license": "Apache-2.0",

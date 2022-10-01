@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/auth",
   "version": "0.0.1",
-  "description": "",
+  "description": "Authorization service",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
