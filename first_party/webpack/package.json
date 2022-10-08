@@ -1,0 +1,8 @@
+{
+  "name": "@letscollab/webpack",
+  "version": "0.0.1",
+  "description": "webpack utilities for letscollab",
+  "engines": {
+    "node": ">=14"
+  }
+}

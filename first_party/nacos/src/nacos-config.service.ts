@@ -48,6 +48,8 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     await this.#client.ready();
+
+    console.log(this.#client);
   }
 
   async onModuleDestroy() {

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "projects": {
+    "auth": {
+      "type": "application",
+      "entryFile": "main",
+      "root": "packages/auth",
+      "sourceRoot": "packages/auth/src",
+      "compilerOptions": {
+        "webpack": true,
+        "deleteOutDir": true,
+        "webpackConfigPath": "packages/auth/webpack.config.js",
+        "tsConfigPath": "packages/auth/tsconfig.build.json"
+      }
+    }
+  }
+}
