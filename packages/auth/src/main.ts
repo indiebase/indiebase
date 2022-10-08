@@ -16,6 +16,8 @@ import { UserSession } from './utils';
 import Fastify from 'fastify';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
+declare const module: any;
+
 declare module 'fastify' {
   interface FastifyRequest {
     user: UserSession;
@@ -104,6 +106,11 @@ async function bootstrap() {
     );
   } catch (error) {
     logger.error(error);
+  }
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
   }
 }
 

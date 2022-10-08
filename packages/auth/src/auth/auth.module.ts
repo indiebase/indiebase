@@ -8,7 +8,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 
 import { GithubStrategy } from './github.strategy';
-import { SessionStrategy } from './session.strategy';
 import { USER_RMQ } from '@letscollab/helper';
 
 const PassportModule = ForwardPassportModule.register({
@@ -48,13 +47,11 @@ const PassportModule = ForwardPassportModule.register({
     // LocalStrategy,
     GithubStrategy,
     Logger,
-    SessionStrategy,
   ],
   exports: [
     AuthService,
     // LocalStrategy,
     GithubStrategy,
-    SessionStrategy,
     PassportModule,
   ],
 })
