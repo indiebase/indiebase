@@ -2,7 +2,7 @@
   "name": "@letscollab/helper",
   "version": "0.0.1",
   "description": "common utils",
-  "author": "Nawbc",
+  "author": "Han",
   "private": true,
   "main": "./src/index.ts",
   "publishConfig": {

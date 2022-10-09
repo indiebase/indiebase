@@ -96,7 +96,10 @@ const isDev = process.env.NODE_ENV === 'development';
         const configs = await config.getConfig('service-auth.json');
 
         return {
-          model: resolve(__dirname, '../model/auth.conf'),
+          model: resolve(
+            __dirname,
+            `../model/auth.${process.env.NODE_ENV}.conf`,
+          ),
           adapter: await TypeOrmAdapter.newAdapter(configs.casbin.db),
         };
       },

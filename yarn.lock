@@ -3510,18 +3510,17 @@ __metadata:
     cross-env: ^7.0.3
     esbuild-loader: ^2.20.0
     fastify: ^4.4.0
-    ignore-not-found-export-webpack-plugin: ^1.0.2
     ioredis: ^5.0.4
     jest: ^27.2.5
     mysql2: ^2.3.3
     nest-winston: ^1.6.2
     nestjs-i18n: ^9.0.5
     nodemon: ^2.0.15
+    p-retry: ^5.1.1
     passport: ^0.5.2
     passport-cookie: ^1.0.9
     passport-github2: ^0.1.12
     passport-local: ^1.0.0
-    peer-deps-externals-webpack-plugin: ^1.0.4
     prettier: ^2.3.2
     react-dev-utils: ^12.0.1
     redis: ^3.1.1
@@ -3961,6 +3960,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@letscollab/passport-github@workspace:first_party/passport-github":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/passport-github@workspace:first_party/passport-github"
+  dependencies:
+    "@types/async-retry": ^1
+    "@types/node": ^16.0.0
+    "@types/passport-oauth2": ^1
+    "@types/retry": ^0
+    async-retry: ^1.3.3
+    p-retry: ^5.1.1
+    passport-oauth2: ^1.6.1
+    retry: ^0.13.1
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
 "@letscollab/passport@workspace:^, @letscollab/passport@workspace:first_party/passport":
   version: 0.0.0-use.local
   resolution: "@letscollab/passport@workspace:first_party/passport"
@@ -4056,6 +4071,12 @@ __metadata:
     typescript: ^4.8.4
     winston: ^3.7.2
     winston-loki: ^6.0.5
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/webpack@workspace:first_party/webpack":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/webpack@workspace:first_party/webpack"
   languageName: unknown
   linkType: soft
 
@@ -6137,6 +6158,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/async-retry@npm:^1":
+  version: 1.4.5
+  resolution: "@types/async-retry@npm:1.4.5"
+  dependencies:
+    "@types/retry": "*"
+  checksum: 39413b8bf4bb1bb7dbbd9a7415cc1d0fa8a10b9308afb4578dbdcaabc7e58a980a7c5a2cf7905912b722716e5d5aeb12f76ecf54b402932b863a80bc79108ae1
+  languageName: node
+  linkType: hard
+
 "@types/aws-lambda@npm:^8.10.83":
   version: 8.10.104
   resolution: "@types/aws-lambda@npm:8.10.104"
@@ -6714,7 +6744,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/passport-oauth2@npm:*":
+"@types/passport-oauth2@npm:*, @types/passport-oauth2@npm:^1":
   version: 1.4.11
   resolution: "@types/passport-oauth2@npm:1.4.11"
   dependencies:
@@ -6867,10 +6897,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/retry@npm:*, @types/retry@npm:^0":
+  version: 0.12.2
+  resolution: "@types/retry@npm:0.12.2"
+  checksum: e5675035717b39ce4f42f339657cae9637cf0c0051cf54314a6a2c44d38d91f6544be9ddc0280587789b6afd056be5d99dbe3e9f4df68c286c36321579b1bf4a
+  languageName: node
+  linkType: hard
+
 "@types/retry@npm:0.12.0":
   version: 0.12.0
   resolution: "@types/retry@npm:0.12.0"
   checksum: 61a072c7639f6e8126588bf1eb1ce8835f2cb9c2aba795c4491cf6310e013267b0c8488039857c261c387e9728c1b43205099223f160bb6a76b4374f741b5603
+  languageName: node
+  linkType: hard
+
+"@types/retry@npm:0.12.1":
+  version: 0.12.1
+  resolution: "@types/retry@npm:0.12.1"
+  checksum: 5f46b2556053655f78262bb33040dc58417c900457cc63ff37d6c35349814471453ef511af0cec76a540c601296cd2b22f64bab1ab649c0dacc0223765ba876c
   languageName: node
   linkType: hard
 
@@ -8234,7 +8278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async-retry@npm:1.3.3":
+"async-retry@npm:1.3.3, async-retry@npm:^1.3.3":
   version: 1.3.3
   resolution: "async-retry@npm:1.3.3"
   dependencies:
@@ -15427,15 +15471,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore-not-found-export-webpack-plugin@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "ignore-not-found-export-webpack-plugin@npm:1.0.2"
-  peerDependencies:
-    webpack: ">=4.0.0"
-  checksum: 54d5ed2e9a34b140b101de52460d38f44135046187c9414ba164d0b05c791d4874a046642042fc725815f4599e26a444ad7e761a71f2c1b9719f1598957736c5
-  languageName: node
-  linkType: hard
-
 "ignore@npm:^5.2.0":
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
@@ -21570,6 +21605,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"p-retry@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "p-retry@npm:5.1.1"
+  dependencies:
+    "@types/retry": 0.12.1
+    retry: ^0.13.1
+  checksum: 59502d9f2cafbb8e9813be457342dc8c448f132c0a808690881423a66c019ccbfc580c1a8ba25eb868eeccb92363fa7ffa1cc633c35774bc73f54be086753350
+  languageName: node
+  linkType: hard
+
 "p-try@npm:^1.0.0":
   version: 1.0.0
   resolution: "p-try@npm:1.0.0"
@@ -21901,7 +21946,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport-oauth2@npm:1.x.x":
+"passport-oauth2@npm:1.x.x, passport-oauth2@npm:^1.6.1":
   version: 1.6.1
   resolution: "passport-oauth2@npm:1.6.1"
   dependencies:
@@ -22075,15 +22120,6 @@ __metadata:
     safe-buffer: ^5.0.1
     sha.js: ^2.4.8
   checksum: 2c950a100b1da72123449208e231afc188d980177d021d7121e96a2de7f2abbc96ead2b87d03d8fe5c318face097f203270d7e27908af9f471c165a4e8e69c92
-  languageName: node
-  linkType: hard
-
-"peer-deps-externals-webpack-plugin@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "peer-deps-externals-webpack-plugin@npm:1.0.4"
-  peerDependencies:
-    webpack: ">=2.0.0"
-  checksum: 5474de16827e66f4518358c9b7417b3584384de82e35c46b6d61f1348f0958664d3432b26508e30cf3aabc8c6c568dd8efb5a991908a6fa068bce66fd42ee95d
   languageName: node
   linkType: hard
 
