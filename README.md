@@ -49,7 +49,7 @@ See [Credits.md](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs
 
 附加许可：
 
-Copyright (C) 2021 WangHan <deskbtm@outlook.com>
+Copyright (C) 2021 Han <deskbtm@outlook.com>
 
 a) 本程序的源代码禁止个人私自部署，衍生，源代码仅用于学习交流。
 

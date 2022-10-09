@@ -25,6 +25,8 @@ export class RpcSessionAuthConsumerGuard implements CanActivate {
         action,
       );
 
+      console.log(hasPermission);
+
       if (!hasPermission) {
         return false;
       }

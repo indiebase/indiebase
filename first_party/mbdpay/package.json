@@ -2,7 +2,7 @@
   "name": "@letscollab/mbdpay",
   "version": "0.0.1",
   "description": "Nestjs mianbaoduo module for letscollab",
-  "author": "Nawbc",
+  "author": "Han",
   "private": true,
   "license": "Apache-2.0",
   "main": "./src/index.ts",

@@ -5,7 +5,12 @@ import {
 } from '@letscollab/helper';
 import { AccessAction, UseAccess } from '@letscollab/nest-acl';
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiTags,
+  ApiCookieAuth,
+  ApiHeader,
+} from '@nestjs/swagger';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { createResources } from './resources';
 
@@ -21,6 +26,10 @@ export class ResourceController {
   @UseAccess({
     action: AccessAction.readAny,
     resource: UserResource.list,
+  })
+  @ApiHeader({
+    name: 'Package-Name',
+    description: 'The product package name, same as domain',
   })
   async getResources(@I18n() i18n: I18nContext) {
     return {
