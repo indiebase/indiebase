@@ -1,6 +1,5 @@
 const { WebpackPnpExternals } = require('webpack-pnp-externals');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
-const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -29,12 +28,71 @@ module.exports = {
   mode: 'production',
   resolve: {
     extensions: ['.js', '.json', '.node', '.mjs', '.ts', '.tsx'],
+    plugins: [
+      {
+        apply(resolver) {
+          const resolve = resolver.resolve;
+          resolver.resolve = function (
+            context,
+            path,
+            request,
+            resolveContext,
+            callback,
+          ) {
+            const self = this;
+            resolve.call(
+              self,
+              context,
+              path,
+              request,
+              resolveContext,
+              function (err, innerPath, result) {
+                if (result) return callback(null, innerPath, result);
+                if (err && !err.message.startsWith("Can't resolve"))
+                  return callback(err);
+                if (
+                  request.endsWith('.js') &&
+                  context.issuer &&
+                  (context.issuer.endsWith('.ts') ||
+                    context.issuer.endsWith('.tsx'))
+                ) {
+                  return resolve.call(
+                    self,
+                    context,
+                    path,
+                    request.slice(0, -3),
+                    resolveContext,
+                    function (err, innerPath, result) {
+                      if (result) return callback(null, innerPath, result);
+                      if (err && !err.message.startsWith("Can't resolve"))
+                        return callback(err);
+                      // make not found errors runtime errors
+                      callback(
+                        null,
+                        __dirname +
+                          '/@@notfound.js?' +
+                          (externalMap.get(request) || request),
+                        request,
+                      );
+                    },
+                  );
+                }
+                // make not found errors runtime errors
+                callback(
+                  null,
+                  __dirname +
+                    '/@@notfound.js?' +
+                    (externalMap.get(request) || request),
+                  request,
+                );
+              },
+            );
+          };
+        },
+      },
+    ],
   },
   plugins: [
-    new ModuleNotFoundPlugin(
-      path.resolve(__dirname, '.'),
-      path.resolve(__dirname, '../../yarn.lock'),
-    ),
     new webpack.HotModuleReplacementPlugin(),
     new RunScriptWebpackPlugin({ name: 'main.js', autoRestart: false }),
   ],
