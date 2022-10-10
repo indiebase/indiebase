@@ -171,7 +171,7 @@ export function columnRender<T>({
                 ...rowData,
                 index: columnProps.index || index,
               },
-              inform!,
+              inform,
             );
           }}
         </OptionsCell>

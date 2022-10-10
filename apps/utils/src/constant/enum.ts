@@ -25,6 +25,8 @@ export enum SignupType {
  * Project Status Enum
  */
 export enum PrjStatus {
+  /* proof of concept */
+  poc = 'poc',
   /* working in progress */
   wip = 'wip',
   /*  project dead, */

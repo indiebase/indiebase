@@ -64,6 +64,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const { org: orgParam } = useParams();
+
   const [value] = useAtom(userProfileQuery);
 
   const data = value.d;

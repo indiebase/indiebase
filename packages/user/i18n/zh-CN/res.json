@@ -2,6 +2,6 @@
   "List": "列表",
   "User": "用户",
   "Role": "角色",
-  "user_list": "$t(res.User)$t(res.List)",
-  "role_list": "$t(res.Role)$t(res.List)"
+  "user_list": "用户列表",
+  "role_list": "角色列表"
 }

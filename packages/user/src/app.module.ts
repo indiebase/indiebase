@@ -15,7 +15,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
 import { UserModule } from './user/user.module';
-import { I18nModule } from 'nestjs-i18n';
+import {
+  AcceptLanguageResolver,
+  CookieResolver,
+  HeaderResolver,
+  I18nModule,
+} from 'nestjs-i18n';
 import { utilities, WinstonModule } from 'nest-winston';
 import LokiTransport = require('winston-loki');
 import { InjectRedis, RedisModule } from '@liaoliaots/nestjs-redis';
@@ -112,6 +117,11 @@ export class AuthMiddleware implements NestMiddleware {
         path: resolve(process.cwd(), './i18n'),
         watch: !isProd,
       },
+      resolvers: [
+        new HeaderResolver(['x-custom-lang']),
+        new CookieResolver(),
+        AcceptLanguageResolver,
+      ],
       logging: !isProd,
     }),
     NacosConfigModule.forRootAsync({

@@ -49,7 +49,7 @@
     "ioredis": "^5.0.4",
     "mysql2": "^2.3.3",
     "nest-winston": "^1.6.2",
-    "nestjs-i18n": "^9.0.5",
+    "nestjs-i18n": "^9.2.0",
     "passport": "^0.5.2",
     "passport-cookie": "^1.0.9",
     "passport-github2": "^0.1.12",
