@@ -3615,7 +3615,7 @@ __metadata:
     "@mantine/core": ^4.2.12
     "@mantine/hooks": ^4.2.12
     "@mantine/notifications": ^4.2.12
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.72.0
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
     axios: ^0.27.2
@@ -6286,6 +6286,21 @@ __metadata:
   dependencies:
     defer-to-connect: ^2.0.1
   checksum: fc9cb993e808806692e4a3337c90ece0ec00c89f4b67e3652a356b89730da98bc824273a6d67ca84d5f33cd85f317dcd5ce39d8cc0a2f060145a608a7cb8ce92
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:^1.72.0":
+  version: 1.101.0
+  resolution: "@tabler/icons@npm:1.101.0"
+  peerDependencies:
+    react: ^16.x || 17.x || 18.x
+    react-dom: ^16.x || 17.x || 18.x
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 133fc21cfd361ccde4292b54f9dfde851b2e4578cc41685cc309e1d4d7ee6bd0be0438c4040d7038774ebeb51856a2c423f004cdf55960942ee3f6420e88e654
   languageName: node
   linkType: hard
 

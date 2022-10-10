@@ -12,6 +12,9 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
+    "start:auth": "yarn workspace @letscollab/auth start",
+    "start:user": "yarn workspace @letscollab/user start",
+    "start:msg": "yarn workspace @letscollab/msg start",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "yarn workspaces foreach run lint",
     "docker:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
