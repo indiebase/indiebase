@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 
 import {
   AppShell,
-  Box,
   ColorScheme,
   ColorSchemeProvider,
   Global,
@@ -71,6 +70,9 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             }
             header={
               <ErrorBoundary
+                onError={(err) => {
+                  console.log(err);
+                }}
                 fallbackRender={() => <div style={{ height: 65 }} />}
               >
                 <Suspense fallback={<div style={{ height: 65 }} />}>

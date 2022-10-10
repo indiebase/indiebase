@@ -3,7 +3,6 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useMenu } from './use-menu';
 import { DashboardLayout, userProfileQuery } from '@letscollab/app-utils';
 import { Anchor, Image } from '@mantine/core';
-import { useAtom } from 'jotai';
 
 export const Layout: FC<any> = function () {
   // const { org } = useParams();

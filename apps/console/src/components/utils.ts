@@ -13,6 +13,9 @@ export const getStatusColor = function (status: PrjStatus) {
     case PrjStatus.operating:
       color = 'blue';
       break;
+    case PrjStatus.poc:
+      color = 'cyan';
+      break;
     case PrjStatus.wip:
       color = 'orange';
       break;

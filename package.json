@@ -67,5 +67,8 @@
   },
   "dependencies": {
     "@fastify/cookie": "^8.1.0"
+  },
+  "resolutions": {
+    "cross-env@7.0.3": "patch:cross-env@npm:7.0.3#.yarn/patches/cross-env-npm-7.0.3-96d81820f4.patch"
   }
 }

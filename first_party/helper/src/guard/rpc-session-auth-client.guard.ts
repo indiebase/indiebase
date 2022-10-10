@@ -12,7 +12,6 @@ export class RpcSessionAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {
   override async transfer(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<FastifyRequest>();
 
-    console.log(req);
     // If not logged in,  RpcAuthClientGuard will throw UnAuthorizedException.
     if (!req.session?.user?.loggedIn) {
       throw new UnauthorizedException({ message: 'Please login' });
@@ -20,7 +19,10 @@ export class RpcSessionAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {
 
     return {
       ...req.session,
-      domain: req.headers?.['Package-Name'] ?? req.hostname,
+      domain:
+        (req.body as any)?.packageName ??
+        req.headers?.['package-name'] ??
+        req.hostname,
     };
   }
 }

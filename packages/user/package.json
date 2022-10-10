@@ -44,7 +44,7 @@
     "class-validator": "^0.13.2",
     "mysql2": "^2.3.3",
     "nest-winston": "^1.6.2",
-    "nestjs-i18n": "^9.0.5",
+    "nestjs-i18n": "^9.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.7",
