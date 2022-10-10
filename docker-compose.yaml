@@ -128,6 +128,9 @@ services:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
     logging: *loki-logging
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   loki:
     image: grafana/loki:2.2.1
@@ -138,6 +141,9 @@ services:
       - 13339:3100
     command: -config.file=/etc/loki/config.yaml
     logging: *loki-logging
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   promtail:
     image: grafana/promtail:2.2.1
@@ -146,6 +152,9 @@ services:
       - /var/log:/ext_logs:ro
     command: -config.file=/etc/promtail/config.yaml
     logging: *loki-logging
+    deploy:
+      restart_policy:
+        condition: on-failure
 
   rabbitmq:
     image: rabbitmq:3.9.14-management
@@ -153,6 +162,10 @@ services:
       - 13340:5672
       - 13341:15672
     logging: *loki-logging
+    deploy:
+      restart_policy:
+        condition: on-failure
+
   redis:
     image: redis:6.2.6-alpine
     ports:
@@ -162,6 +175,7 @@ services:
       - ./config/redis:/usr/local/etc/redis
     command: redis-server /usr/local/etc/redis/redis.conf
     logging: *loki-logging
+
 networks:
   agent_network:
     driver: overlay
