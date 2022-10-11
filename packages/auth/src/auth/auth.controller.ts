@@ -60,9 +60,10 @@ export class AuthController {
   async githubCallback(
     @Req() req: FastifyRequest,
     @Res() res: FastifyReply,
-    @Session() session: Record<string, any>,
+    @Session() session,
   ) {
     const r = await this.authService.signInGithub(req.user);
+    console.log(r);
 
     r.code > 0 &&
       session.set('user', {

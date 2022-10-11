@@ -17,6 +17,7 @@ import {
   MicroserviceExceptionFilter,
   ProtectGuard,
   RpcSessionAuthClientGuard,
+  UserInfo,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
 
@@ -79,8 +80,9 @@ export class UserController {
     summary: 'Update a user profile',
   })
   @UseGuards(ProtectGuard)
-  // @UseGuards(Http2RmqAuthGuard)
-  async updateProfile() {
+  @UseGuards(RpcSessionAuthClientGuard)
+  async updateProfile(@UserInfo() user) {
+    console.log(user);
     return 1;
   }
 

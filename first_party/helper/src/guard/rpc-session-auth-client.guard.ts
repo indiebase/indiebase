@@ -4,7 +4,6 @@ import { RpcAuthClientGuard } from '@letscollab/nest-acl';
 import { AUTH_RMQ } from '../constants';
 
 export class RpcSessionAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async setPattern(_: ExecutionContext): Promise<Record<string, any>> {
     return { cmd: 'auth' };
   }
