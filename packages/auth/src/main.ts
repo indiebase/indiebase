@@ -66,18 +66,18 @@ async function bootstrap() {
       }),
     );
 
-    // await app.register(fastifyHelmet as any, {
-    //   global: true,
-    //   contentSecurityPolicy: {
-    //     directives: {
-    //       defaultSrc: [`'self'`],
-    //       styleSrc: [`'self'`, `'unsafe-inline'`],
-    //       imgSrc: [`'self'`, 'data:', '*'],
-    //       scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-    //     },
-    //   },
-    //   referrerPolicy: true,
-    // });
+    await app.register(fastifyHelmet as any, {
+      global: true,
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: [`'self'`],
+          styleSrc: [`'self'`, `'unsafe-inline'`],
+          imgSrc: [`'self'`, 'data:', '*'],
+          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+        },
+      },
+      referrerPolicy: true,
+    });
 
     await setupAuthApiDoc(app);
 
