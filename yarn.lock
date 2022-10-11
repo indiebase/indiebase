@@ -2950,7 +2950,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/session@npm:^9.0.0":
+"@fastify/session@npm:9.0.0":
   version: 9.0.0
   resolution: "@fastify/session@npm:9.0.0"
   dependencies:
@@ -3706,8 +3706,8 @@ __metadata:
   resolution: "@letscollab/auth@workspace:packages/auth"
   dependencies:
     "@fastify/cookie": ^8.1.0
-    "@fastify/helmet": ^10.0.0
-    "@fastify/session": ^9.0.0
+    "@fastify/helmet": 10.0.0
+    "@fastify/session": 9.0.0
     "@fastify/swagger": ^7.5.0
     "@letscollab/helper": "workspace:^"
     "@letscollab/nest-acl": "workspace:^"
