@@ -17,7 +17,8 @@ export const UserRoles = createParamDecorator(
 export const UserInfo = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return data ? request.user[data] : request.user;
+    const session = request.session ?? {};
+    return data ? session.user[data] : session.user;
   },
 );
 

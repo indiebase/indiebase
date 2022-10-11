@@ -4,14 +4,21 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { readJsonSync } from 'fs-extra';
 import { INestApplication } from '@nestjs/common';
 import { RedisService } from '@liaoliaots/nestjs-redis';
-import { type FastifyRequest } from 'fastify';
+import Fastify from 'fastify';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
 export const setupUserApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
-      const redisService = app.get(RedisService);
+      // const fastify: ReturnType<typeof Fastify> = app
+      //   .getHttpAdapter()
+      //   .getInstance();
+
+      // fastify.addHook('preHandler', (req, reply, next) => {
+      //   console.log(req.routerPath);
+      //   next();
+      // });
 
       const userOptions = new DocumentBuilder()
         .setTitle('User Api')
@@ -28,14 +35,9 @@ export const setupUserApiDoc = (app: INestApplication) =>
       });
 
       SwaggerModule.setup('openapi/user', app, userDoc, {
-        // uiConfig: {
-        //   persistAuthorization: true,
-        // },
-        // uiHooks: {
-        //   preHandler(req: FastifyRequest, res, next) {
-        //     next();
-        //   },
-        // },
+        swaggerOptions: {
+          persistAuthorization: true,
+        },
       });
     } catch (e) {
       console.log(e);

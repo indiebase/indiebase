@@ -3,7 +3,15 @@ import { AuthService } from './auth.service';
 import { GithubGuard } from './github.guard';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Controller, UseGuards, Get, Req, Res, Session } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  Req,
+  Res,
+  Session,
+  Post,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
 import { CasbinService } from '@letscollab/nest-acl';
@@ -57,12 +65,10 @@ export class AuthController {
   @ApiResponseProperty({
     type: UserResponseDto,
   })
-  async githubCallback(
-    @Req() req: FastifyRequest,
-    @Res() res: FastifyReply,
-    @Session() session,
-  ) {
+  async githubCallback(@Req() req: FastifyRequest, @Session() session) {
+    console.log(req.user);
     const r = await this.authService.signInGithub(req.user);
+
     console.log(r);
 
     r.code > 0 &&
@@ -70,9 +76,34 @@ export class AuthController {
         loggedIn: true,
         id: r.d.id,
         username: r.d.username,
+        signupType: r.d.signupType,
+        accessToken: req.user.accessToken,
       });
 
-    return res.send(r);
+    return;
+  }
+
+  @Post('lagout')
+  @UseGuards(GithubGuard)
+  @ApiResponseProperty({
+    type: UserResponseDto,
+  })
+  async logout(@Req() req: FastifyRequest, @Session() session) {
+    console.log(req.user);
+    const r = await this.authService.signInGithub(req.user);
+
+    console.log(r);
+
+    r.code > 0 &&
+      session.set('user', {
+        loggedIn: true,
+        id: r.d.id,
+        username: r.d.username,
+        signupType: r.d.signupType,
+        accessToken: req.user.accessToken,
+      });
+
+    return;
   }
 
   @Get('demo')
