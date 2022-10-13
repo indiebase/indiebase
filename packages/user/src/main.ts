@@ -56,18 +56,12 @@ async function bootstrap() {
       }),
     );
 
-    // await app.register(fastifyHelmet, {
-    //   global: true,
-    //   contentSecurityPolicy: {
-    //     directives: {
-    //       defaultSrc: [`'self'`],
-    //       styleSrc: [`'self'`, `'unsafe-inline'`],
-    //       imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
-    //       scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-    //     },
-    //   },
-    //   referrerPolicy: true,
-    // });
+    await app.register(fastifyHelmet, {
+      global: true,
+      crossOriginOpenerPolicy: false,
+      contentSecurityPolicy: false,
+      referrerPolicy: true,
+    });
 
     await setupUserApiDoc(app);
 
