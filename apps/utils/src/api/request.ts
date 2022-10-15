@@ -61,7 +61,7 @@ req.interceptors.response.use(
       const data = response.data;
       console.log(data);
 
-      if (data.statusCode === 401 || response.status === 401) {
+      if (data?.statusCode === 401 || response.status === 401) {
         // location.href = process.env.REACT_APP_LOGIN_SITE_URI;
       }
     } else {

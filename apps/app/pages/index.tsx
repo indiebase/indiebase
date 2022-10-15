@@ -11,7 +11,6 @@ import {
   Group,
   Stack,
   Transition,
-  Global,
 } from '@mantine/core';
 import { useCallback, useRef, useState } from 'react';
 import {
