@@ -15,7 +15,7 @@ services:
       - 13336:9000
 
   apisix:
-    image: apache/apisix:2.14.1-alpine
+    image: apache/apisix:2.15.0-alpine
     volumes:
       - apisix_logs:/usr/local/apisix/logs
       - ./config/apisix/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro

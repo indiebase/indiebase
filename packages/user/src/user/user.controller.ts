@@ -1,7 +1,9 @@
 import {
+  Body,
   Controller,
   Get,
   Patch,
+  Post,
   Req,
   Res,
   Session,
@@ -17,8 +19,10 @@ import {
   MicroserviceExceptionFilter,
   ProtectGuard,
   RpcSessionAuthClientGuard,
+  UserInfo,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
+import { UserSession } from '@letscollab/auth';
 
 @Controller('v1/user')
 @ApiTags('v1/User')
@@ -27,17 +31,17 @@ export class UserController {
 
   @MessagePattern({ cmd: 'get_complete_name' })
   async getFullUser(@Payload() username: string) {
-    return this.userService.getUser([{ username }], true);
+    return this.userService.getUser([{ username }], { rpc: true, full: true });
   }
 
   @MessagePattern({ cmd: 'get_name' })
   async getName(@Payload() username: string) {
-    return this.userService.getUser([{ username }]);
+    return this.userService.getUser([{ username }], { rpc: true });
   }
 
   @MessagePattern({ cmd: 'get_id' })
   async getId(@Payload() id: number) {
-    return this.userService.getUser([{ id }]);
+    return this.userService.getUser([{ id }], { rpc: true });
   }
 
   @UseFilters(MicroserviceExceptionFilter)
@@ -64,14 +68,26 @@ export class UserController {
     return res.send({ token: 1 });
   }
 
-  @Get('profile/:username')
+  @Get('profile')
   @ApiCookieAuth('SID')
   @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
   @ApiOperation({
-    summary: 'Get a user profile default own',
+    summary: 'Get user',
   })
-  async getProfile(@Session() session, @Req() req) {
-    return 1;
+  async getProfile(@UserInfo() info: UserSession) {
+    const user = await this.userService.getUser([{ id: info.id }]);
+    return user;
+  }
+
+  @Post('profile/sync')
+  @ApiCookieAuth('SID')
+  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @ApiOperation({
+    summary: 'Sync profile with platform. e.g. Github',
+  })
+  async syncProfile(@UserInfo() info: UserSession) {
+    const user = await this.userService.getUser([{ id: info.id }]);
+    return user;
   }
 
   @Patch('profile')
@@ -79,9 +95,10 @@ export class UserController {
     summary: 'Update a user profile',
   })
   @UseGuards(ProtectGuard)
-  // @UseGuards(Http2RmqAuthGuard)
-  async updateProfile() {
-    return 1;
+  @UseGuards(RpcSessionAuthClientGuard)
+  async updateProfile(@UserInfo() info: UserSession, @Body() body) {
+    // return this.userService.updateUser({id: info.id});
+    return;
   }
 
   // @Post('signup')
