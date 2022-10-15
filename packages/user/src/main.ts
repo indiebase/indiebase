@@ -26,7 +26,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(fastify as any),
+    new FastifyAdapter(fastify),
     {
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
       bodyParser: true,
@@ -58,14 +58,8 @@ async function bootstrap() {
 
     await app.register(fastifyHelmet, {
       global: true,
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: [`'self'`],
-          styleSrc: [`'self'`, `'unsafe-inline'`],
-          imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
-          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-        },
-      },
+      crossOriginOpenerPolicy: false,
+      contentSecurityPolicy: false,
       referrerPolicy: true,
     });
 

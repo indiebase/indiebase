@@ -1,4 +1,10 @@
-import { HttpStatus, Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpStatus,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { AUTH_RMQ, ResultCode, RpcResSchemaDto } from '@letscollab/helper';
@@ -56,8 +62,6 @@ export class UserService {
       ],
     });
 
-    let message = 'Login Successfully';
-
     if (!user) {
       user = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
@@ -69,24 +73,40 @@ export class UserService {
             err.code === 'ER_DUP_ENTRY' ? 'User existed' : 'Fail to register',
         });
       });
-      message = 'Register Successfully';
     }
 
     return {
       code: ResultCode.SUCCESS,
-      message,
+      message: 'Login Successfully',
       d: user,
+    };
+  }
+
+  public async updateUser(conf, data) {
+    await this.userRepo.update(conf, data).catch((err) => {
+      throw new InternalServerErrorException({
+        code: ResultCode.ERROR,
+        message: 'Modify fail',
+      });
+    });
+    return {
+      code: ResultCode.SUCCESS,
     };
   }
 
   /**
    *
    *
-   * @param username
-   * @param full  Get complete user information that includes password.
+   * @param cond Find condition
+   * @param option  rpc: Is rpc, full: Get complete user information that includes password.
    * @returns
    */
-  public async getUser(cond: any[], full = false) {
+  public async getUser(
+    cond: Partial<UserEntity>[],
+    option: { full?: boolean; rpc?: boolean } = {},
+  ) {
+    const { full = false, rpc = false } = option;
+
     const promise = full
       ? this.findOneFull(cond)
       : this.userRepo.findOne({
@@ -96,10 +116,17 @@ export class UserService {
     const user = await promise.catch((err) => {
       this.logger.error(err.message, err.stack);
 
-      throw new RpcException({
-        code: ResultCode.ERROR,
-        message: err.message,
-      });
+      if (rpc) {
+        throw new RpcException({
+          code: ResultCode.ERROR,
+          message: err.message,
+        });
+      } else {
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: err.message,
+        });
+      }
     });
 
     return {

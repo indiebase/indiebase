@@ -16,18 +16,24 @@ import {
 } from 'nestjs-i18n';
 import fastifyHelmet from '@fastify/helmet';
 import { setupCollabApiDoc } from './utils';
+import Fastify from 'fastify';
+import { useContainer } from 'class-validator';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
+  const fastify = Fastify();
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter(fastify),
     {
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
       bodyParser: true,
     },
   );
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const logger = app.get<Logger>(Logger);
 

@@ -8,19 +8,16 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from '@letscollab/helper';
-import { setupAuthApiDoc } from './utils';
+import { RequestUser, setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import fastifyHelmet from '@fastify/helmet';
-import { UserSession } from './utils';
 import Fastify from 'fastify';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
-declare const module: any;
-
 declare module 'fastify' {
   interface FastifyRequest {
-    user: UserSession;
+    user: RequestUser;
   }
 }
 
@@ -69,16 +66,10 @@ async function bootstrap() {
       }),
     );
 
-    await app.register(fastifyHelmet as any, {
+    await app.register(fastifyHelmet, {
       global: true,
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: [`'self'`],
-          styleSrc: [`'self'`, `'unsafe-inline'`],
-          imgSrc: [`'self'`, 'data:', '*'],
-          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-        },
-      },
+      crossOriginOpenerPolicy: true,
+      contentSecurityPolicy: false,
       referrerPolicy: true,
     });
 
@@ -106,11 +97,6 @@ async function bootstrap() {
     );
   } catch (error) {
     logger.error(error);
-  }
-
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
   }
 }
 

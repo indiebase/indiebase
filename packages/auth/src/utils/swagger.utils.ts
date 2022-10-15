@@ -25,20 +25,10 @@ export const setupAuthApiDoc = (app: INestApplication) =>
         include: [AuthModule],
       });
       SwaggerModule.setup('openapi/auth', app, authDoc, {
-        uiConfig: {
+        swaggerOptions: {
           persistAuthorization: true,
         },
-        uiHooks: {
-          preHandler(req: FastifyRequest, res, next) {
-            console.log('-------------------------------');
-            next();
-          },
-          onRequest(req: FastifyRequest, res, next) {
-            console.log('-------------------------------');
-            next();
-          },
-        },
-      } as FastifySwaggerOptions);
+      });
     } catch (e) {
       console.error(e);
     } finally {
