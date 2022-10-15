@@ -9,7 +9,7 @@ import {
   Image,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { LoginModal } from 'components/Modal';
+import { LoginModalV2 } from 'components/Modal';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 
@@ -40,7 +40,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
       height={65}
       p="md"
     >
-      <LoginModal
+      <LoginModalV2
         opened={modalMeta.opened}
         onClose={() => setModalMeta({ opened: false })}
         initialNo={modalMeta.initialNo}
@@ -114,16 +114,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 setModalMeta({ opened: true, initialNo: 0 });
               }}
             >
-              登录
-            </Anchor>
-            /
-            <Anchor
-              component="span"
-              onClick={(e) => {
-                setModalMeta({ opened: true, initialNo: 1 });
-              }}
-            >
-              注册
+              登录&注册
             </Anchor>
           </Group>
         </Group>
