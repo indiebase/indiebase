@@ -1,4 +1,4 @@
-import { IProject } from '@letscollab/app-utils';
+import { IProject } from '@letscollab/common-trait/';
 import {
   Anchor,
   Avatar,

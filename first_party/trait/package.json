@@ -1,0 +1,9 @@
+{
+  "name": "@letscollab/common-trait",
+  "version": "0.0.1",
+  "main": "./src/index.ts",
+  "description": "The common interface for letscollab",
+  "engines": {
+    "node": ">=14"
+  }
+}

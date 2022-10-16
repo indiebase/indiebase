@@ -24,6 +24,16 @@ Router.events.on('routeChangeStart', NProgress.start);
 Router.events.on('routeChangeComplete', NProgress.done);
 Router.events.on('routeChangeError', NProgress.done);
 
+export async function getStaticProps(context) {
+
+
+  
+
+  return {
+    props: {},
+  };
+}
+
 function LetsCollabApp({
   Component,
   pageProps,

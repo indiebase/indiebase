@@ -1,6 +1,3 @@
-import { AccountStatus, SignupType } from './constant';
-import { OrgSelectProps } from './components';
-
 export interface PaginationReq {
   current?: number;
   pageSize: number;

@@ -11,13 +11,8 @@ import {
   Menu,
   Divider,
 } from '@mantine/core';
-import { FC, forwardRef, useEffect, useMemo, useState } from 'react';
-import {
-  Link,
-  resolvePath,
-  useLocation,
-  useResolvedPath,
-} from 'react-router-dom';
+import { FC, forwardRef, useMemo, useState } from 'react';
+import { Link, resolvePath } from 'react-router-dom';
 import {
   IconSettings,
   IconPlus,
@@ -26,7 +21,7 @@ import {
   IconFileDescription,
   IconLogout,
 } from '@tabler/icons';
-import { useNavigate, useParams, NavLink } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userProfileQuery } from '../../api';
 
@@ -124,7 +119,6 @@ export const Header: FC<NavHeaderProps> = function (props) {
               <div style={{ width: 150 }}>
                 <Select
                   radius="lg"
-                  // withinPortal={false}
                   placeholder="Select Organization"
                   itemComponent={SelectItem}
                   data={orgs ?? []}
@@ -174,28 +168,28 @@ export const Header: FC<NavHeaderProps> = function (props) {
               </Group>
               <Divider mr={10} orientation="vertical" />
               <Group mr={30} spacing={6}>
-                {/* <Menu
-                  color="dark"
-                  control={
+                <Menu width={200} position="bottom-end" withArrow>
+                  <Menu.Target>
                     <Avatar src={data?.avatar} radius="xl" size={26}>
                       <IconUser size={17} />
                     </Avatar>
-                  }
-                >
-                  <Menu.Item icon={<IconSettings size={16} />}>
-                    Settings
-                  </Menu.Item>
-                  <Menu.Item icon={<IconFileDescription size={16} />}>
-                    Docs
-                  </Menu.Item>
-                  <Menu.Item icon={<IconPlus size={16} />}>
-                    Create Organization
-                  </Menu.Item>
-                  <Divider my="lg" variant="dashed" labelPosition="center" />
-                  <Menu.Item icon={<IconLogout size={16} />}>
-                    Sign Out
-                  </Menu.Item>
-                </Menu> */}
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Item icon={<IconSettings size={16} />}>
+                      Settings
+                    </Menu.Item>
+                    <Menu.Item icon={<IconFileDescription size={16} />}>
+                      Docs
+                    </Menu.Item>
+                    <Menu.Item icon={<IconPlus size={16} />}>
+                      Create Organization
+                    </Menu.Item>
+                    <Divider my="xs" variant="dashed" labelPosition="center" />
+                    <Menu.Item icon={<IconLogout size={16} />}>
+                      Sign Out
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
               </Group>
             </Group>
           </MediaQuery>

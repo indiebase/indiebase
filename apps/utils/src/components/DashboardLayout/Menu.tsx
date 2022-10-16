@@ -7,7 +7,6 @@ import {
   UnstyledButton,
   Accordion,
   MantineThemeColors,
-  Avatar,
 } from '@mantine/core';
 import { FC } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -35,6 +34,7 @@ interface MenuItemProps {
 }
 
 function MenuItem({ label, active, onClick }: MenuItemProps) {
+  console.log(active, label);
   return (
     <UnstyledButton
       onClick={onClick}
@@ -69,13 +69,11 @@ export const Menu: FC<MenuProps> = function (props) {
   return (
     <Navbar
       p="md"
+      position={{ top: 65 }}
       hiddenBreakpoint="sm"
       width={{ sm: 200, lg: 250 }}
-      style={{ borderRight: 0 }}
+      style={{ borderRight: 0, zIndex: 'unset' }}
       hidden={props.opened}
-      // onClick={(e) => {
-      //   setActive(null);
-      // }}
     >
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <Accordion
@@ -95,24 +93,24 @@ export const Menu: FC<MenuProps> = function (props) {
               <Accordion.Item
                 key={index1}
                 value={node.label}
+                style={{
+                  border: 'none',
+                  backgroundColor: 'unset',
+                }}
                 onClick={(e) => {
                   e.stopPropagation();
-
-                  // if (!node.children) {
-                  //   return;
-                  // }
-                  // setActive(null);
                   node.to && navigate(node.to, { replace: node.replace });
                 }}
               >
                 <Accordion.Control
+                  pl={8}
                   icon={
                     <ThemeIcon color={node.color} variant="light">
                       {node.icon}
                     </ThemeIcon>
                   }
                 >
-                  {node.label}
+                  <Text weight={500}>{node.label}</Text>
                 </Accordion.Control>
 
                 <Accordion.Panel>
@@ -121,15 +119,7 @@ export const Menu: FC<MenuProps> = function (props) {
                     return (
                       <NavLink key={index} to={sub.to}>
                         {({ isActive }) => (
-                          <MenuItem
-                            active={isActive}
-                            label={sub.label}
-                            // onClick={(e) => {
-                            //   e.stopPropagation();
-                            //   setActive(index);
-                            //   navigate(sub.to);
-                            // }}
-                          />
+                          <MenuItem active={isActive} label={sub.label} />
                         )}
                       </NavLink>
                     );

@@ -10,6 +10,7 @@
     "@dnd-kit/utilities": "^3.2.0",
     "@letscollab-pro/console": "workspace:^",
     "@letscollab/app-utils": "workspace:^",
+    "@letscollab/common-trait": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
     "@mantine/notifications": "^5.5.4",

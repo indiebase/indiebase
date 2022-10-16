@@ -1,20 +1,5 @@
-import { UserProfile } from './user';
-import { PrjStatus } from '../constant';
-import { BaseResSchema } from '../interface';
+import { BaseResSchema, IProject } from '@letscollab/common-trait';
 import { req } from './request';
-
-export interface IProject {
-  id: number;
-  name: string;
-  contactEmail: string;
-  status?: PrjStatus;
-  description?: string;
-  createTime: Date;
-  updateTime: Date;
-  members?: UserProfile[];
-  githubRepoUrl?: string;
-  cover?: string;
-}
 
 export const projectsQuery = async function (): Promise<
   BaseResSchema<IProject[]>

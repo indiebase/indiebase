@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "folke.vscode-monorepo-workspace",
     "streetsidesoftware.code-spell-checker",
     "vivaxy.vscode-conventional-commits",
     "dbaeumer.vscode-eslint",

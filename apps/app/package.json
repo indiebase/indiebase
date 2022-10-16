@@ -16,6 +16,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
+    "@letscollab/common-trait": "workspace:^",
     "@letscollab/nextra-theme-docs": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/form": "^5.5.4",

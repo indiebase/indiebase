@@ -110,7 +110,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
           <Group sx={{ marginLeft: 40, span: { fontSize: 14 } }} spacing={6}>
             <Anchor
               component={'span'}
-              onClick={(e) => {
+              onClick={() => {
                 setModalMeta({ opened: true, initialNo: 0 });
               }}
             >

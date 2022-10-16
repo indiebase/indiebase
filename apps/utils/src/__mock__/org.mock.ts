@@ -1,7 +1,5 @@
-import { PrjStatus } from '../constant/enum';
 import { faker } from '@faker-js/faker';
-import { BaseResSchema } from '../interface';
-import { type IProject } from '../api/org';
+import { BaseResSchema, IProject, PrjStatus } from '@letscollab/common-trait';
 import { mock } from '../api';
 import { FakeSingleUserProfile } from './user.mock';
 

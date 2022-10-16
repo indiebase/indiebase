@@ -3660,6 +3660,7 @@ __metadata:
   dependencies:
     "@ant-design/pro-components": 1.1.8
     "@faker-js/faker": ^7.3.0
+    "@letscollab/common-trait": "workspace:^"
     "@tanstack/query-core": ^4.1.3
     "@types/node": ^16.11.25
     "@types/node-forge": ^1.0.2
@@ -3689,6 +3690,7 @@ __metadata:
     "@emotion/react": ^11.10.4
     "@emotion/server": ^11.10.0
     "@emotion/styled": ^11.10.4
+    "@letscollab/common-trait": "workspace:^"
     "@letscollab/nextra-theme-docs": "workspace:^"
     "@mantine/core": ^5.5.4
     "@mantine/form": ^5.5.4
@@ -3864,6 +3866,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@letscollab/common-trait@workspace:^, @letscollab/common-trait@workspace:first_party/trait":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/common-trait@workspace:first_party/trait"
+  languageName: unknown
+  linkType: soft
+
 "@letscollab/console@workspace:apps/console":
   version: 0.0.0-use.local
   resolution: "@letscollab/console@workspace:apps/console"
@@ -3874,6 +3882,7 @@ __metadata:
     "@dnd-kit/utilities": ^3.2.0
     "@letscollab-pro/console": "workspace:^"
     "@letscollab/app-utils": "workspace:^"
+    "@letscollab/common-trait": "workspace:^"
     "@mantine/core": ^5.5.4
     "@mantine/hooks": ^5.5.4
     "@mantine/notifications": ^5.5.4

@@ -1,4 +1,4 @@
-import { PrjStatus } from '@letscollab/app-utils';
+import { PrjStatus } from '@letscollab/common-trait';
 import { MantineColor } from '@mantine/core';
 
 export const getStatusColor = function (status: PrjStatus) {

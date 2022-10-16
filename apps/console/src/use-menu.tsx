@@ -11,10 +11,13 @@ export const useMenu = () => {
     //TODO: Stupid way
 
     let settingList = [
-      
       {
         label: 'Profile',
         to: `users/${user}/settings/profile`,
+      },
+      {
+        label: 'Profile1',
+        to: `users/${user}/settings/profile1`,
       },
     ];
 
