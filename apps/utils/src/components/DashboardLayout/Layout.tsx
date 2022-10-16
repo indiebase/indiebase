@@ -1,4 +1,4 @@
-import { FC, Suspense, useEffect, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import {
@@ -43,9 +43,12 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
         })}
       />
       <MantineProvider
-        theme={{ colorScheme, primaryColor: 'blue' }}
-        defaultProps={{
-          Button: { size: 'xs' },
+        theme={{
+          colorScheme,
+          primaryColor: 'blue',
+          components: {
+            Button: { defaultProps: { size: 'xs' } },
+          },
         }}
         withGlobalStyles
         withNormalizeCSS

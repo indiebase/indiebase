@@ -1,7 +1,7 @@
 import { Stack, Button, Text, Box, Group } from '@mantine/core';
 import Link from 'next/link';
 
-export const Footer = function (props) {
+export const Footer = function () {
   return (
     <Box p="md">
       <Stack align="center">

@@ -6,7 +6,6 @@ import {
   Text,
   Box,
   Avatar,
-  AvatarsGroup,
   MantineColor,
   Anchor,
   Center,
@@ -124,24 +123,22 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
       </Box>
 
       <Group mt={9} position="apart">
-        <AvatarsGroup
-          styles={(t) => ({
-            truncated: {
-              color: t.colors.green,
-            },
-          })}
-          ml={-2}
-          size="sm"
-          limit={7}
-        >
+        <Avatar.Group ml={-2}>
           {props.members.map((u, i) => {
             return (
-              <Avatar key={i} src={u.avatar} component="a" href={u.profileUrl}>
+              <Avatar
+                radius="xl"
+                size="sm"
+                key={i}
+                src={u.avatar}
+                component="a"
+                href={u.profileUrl}
+              >
                 <IconUser size={14} />
               </Avatar>
             );
           })}
-        </AvatarsGroup>
+        </Avatar.Group>
         <Center>
           <Text style={{ fontSize: 10 }} color="gray">
             Update
