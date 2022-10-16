@@ -10,6 +10,6 @@ export class MailController {
 
   @Post('send-captcha')
   async sendCaptcha(@Body() body: GetCaptchaDto) {
-    this.mailService.sendCaptchaEmail(body);
+    return this.mailService.sendCaptchaEmail(body);
   }
 }

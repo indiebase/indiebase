@@ -6,8 +6,7 @@ import {
   Image,
   Stack,
 } from '@mantine/core';
-import { FC, useCallback } from 'react';
-import * as url from 'url';
+import { FC } from 'react';
 
 export const LoginModalV2: FC<ModalProps & { initialNo?: number }> = function (
   props,
@@ -15,12 +14,13 @@ export const LoginModalV2: FC<ModalProps & { initialNo?: number }> = function (
   const theme = useMantineTheme();
 
   const signUp = () => {
-    window.open(
+    const child = window.open(
       new URL('/v1/auth/oauth/github', process.env.NEXT_PUBLIC_API),
       '_blank',
       'toolbar=yes, location=yes, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=500, height=500',
     );
-    // console.log(process.env.NEXT_PUBLIC_API);
+
+    child.onunload = location.reload;
   };
 
   return (

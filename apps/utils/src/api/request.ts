@@ -71,6 +71,6 @@ req.interceptors.response.use(
   },
 );
 
-export const mock = new MockAdapter(req, { delayResponse: 1000 });
+export const mock = new MockAdapter(req);
 
 process.env.NODE_ENV !== 'development' && mock.restore();

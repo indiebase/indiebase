@@ -1,36 +1,21 @@
-import { OrgSelectProps } from '../components';
-import { AccountStatus, SignupType } from '../constant';
-import { BaseResSchema } from '@letscollab/app-utils';
 import { atom } from 'jotai';
 import { atomWithQuery } from 'jotai/query';
 import { req } from './request';
 import { loadable } from 'jotai/utils';
-
-export interface UserProfile {
-  id: number;
-  signupType: SignupType;
-  githubId?: string;
-  profileUrl?: string;
-  avatar?: string;
-  company?: string;
-  username: string;
-  email: string;
-  bio?: string;
-  nickname?: string;
-  status?: AccountStatus;
-  createTime: Date;
-  updateTime: Date;
-  orgs?: OrgSelectProps[];
-}
+import { BaseResSchema, UserProfile } from '@letscollab/common-trait';
 
 export const userProfileAtom = atom<BaseResSchema<UserProfile>>({} as any);
 
+export const fetchUserProfile = async (): Promise<
+  BaseResSchema<UserProfile>
+> => {
+  const { data } = await req.get('/v1/user/profile');
+  return data ?? {};
+};
+
 export const userProfileQuery = atomWithQuery((get) => ({
   queryKey: ['profile', get(userProfileAtom)],
-  queryFn: async (): Promise<BaseResSchema<UserProfile>> => {
-    const { data } = await req.get('/v1/user/profile');
-    return data ?? {};
-  },
+  queryFn: fetchUserProfile,
 }));
 
 export const loadableUserProfile = loadable(userProfileQuery);

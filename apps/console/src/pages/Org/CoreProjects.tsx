@@ -14,7 +14,7 @@ import {
   rectSortingStrategy,
   arrayMove,
 } from '@dnd-kit/sortable';
-import { IProject } from '@letscollab/app-utils';
+import { IProject } from '@letscollab/common-trait';
 import { Grid, Text, Group } from '@mantine/core';
 import { FC, useCallback, useState } from 'react';
 import { CoreProjectCard } from '../../components';
@@ -75,7 +75,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
               return (
                 <Grid.Col key={i} lg={4} md={6}>
                   <CoreProjectCard
-                    id={e.id}
+                    // id={e.id}
                     cover={e.cover}
                     name={e.name}
                     members={e.members}
