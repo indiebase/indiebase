@@ -2,7 +2,6 @@ import { IProject } from '@letscollab/app-utils';
 import {
   Anchor,
   Avatar,
-  AvatarsGroup,
   Badge,
   Card,
   Group,
@@ -42,24 +41,22 @@ export const ProjectTile: FC<ProjectTileProps> = function (props) {
         <Text lineClamp={2} mt={8} style={{ color: '#777777', fontSize: 10 }}>
           {props.description}
         </Text>
-        <AvatarsGroup
-          styles={(t) => ({
-            truncated: {
-              color: t.colors.green,
-            },
-          })}
-          ml={-5}
-          size="sm"
-          limit={7}
-        >
+        <Avatar.Group ml={-5}>
           {props.members?.map((u, i) => {
             return (
-              <Avatar key={i} src={u.avatar} component="a" href={u.profileUrl}>
+              <Avatar
+                radius="xl"
+                size="sm"
+                key={i}
+                src={u.avatar}
+                component="a"
+                href={u.profileUrl}
+              >
                 <IconUser size={14} />
               </Avatar>
             );
           })}
-        </AvatarsGroup>
+        </Avatar.Group>
       </Group>
     </Card>
   );
