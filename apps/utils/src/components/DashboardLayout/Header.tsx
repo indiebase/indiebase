@@ -174,7 +174,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
               </Group>
               <Divider mr={10} orientation="vertical" />
               <Group mr={30} spacing={6}>
-                <Menu
+                {/* <Menu
                   color="dark"
                   control={
                     <Avatar src={data?.avatar} radius="xl" size={26}>
@@ -195,7 +195,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                   <Menu.Item icon={<IconLogout size={16} />}>
                     Sign Out
                   </Menu.Item>
-                </Menu>
+                </Menu> */}
               </Group>
             </Group>
           </MediaQuery>

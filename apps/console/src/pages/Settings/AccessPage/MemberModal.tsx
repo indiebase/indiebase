@@ -8,7 +8,7 @@ import {
   TextInput,
   useMantineTheme,
 } from '@mantine/core';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { FormInstance } from 'antd';
 import { FC, useRef, useState } from 'react';
 
@@ -37,13 +37,12 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
     initialValues: {
       name: '',
     },
-    validationRules: {
+    validate: {
       name: (value) => !/[^a-zA-Z0-9-_]/g.test(value),
     },
-    errorMessages: {
-      name: '不能包含除_-以外的特殊字符',
-    },
   });
+
+  form.setFieldError('name', '不能包含除_-以外的特殊字符');
 
   return (
     <span>

@@ -7,6 +7,7 @@ import {
   UnstyledButton,
   Accordion,
   MantineThemeColors,
+  Avatar,
 } from '@mantine/core';
 import { FC } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -78,9 +79,10 @@ export const Menu: FC<MenuProps> = function (props) {
     >
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <Accordion
-          disableIconRotation
+          disableChevronRotation
           transitionDuration={0}
-          offsetIcon={false}
+          chevronPosition="right"
+          variant="contained"
           multiple
           styles={(theme) => ({
             item: { borderBottom: 0 },
@@ -92,7 +94,7 @@ export const Menu: FC<MenuProps> = function (props) {
             return (
               <Accordion.Item
                 key={index1}
-                label={node.label}
+                value={node.label}
                 onClick={(e) => {
                   e.stopPropagation();
 
@@ -102,30 +104,37 @@ export const Menu: FC<MenuProps> = function (props) {
                   // setActive(null);
                   node.to && navigate(node.to, { replace: node.replace });
                 }}
-                icon={
-                  <ThemeIcon color={node.color} variant="light">
-                    {node.icon}
-                  </ThemeIcon>
-                }
               >
-                {node?.children?.map((sub, index2) => {
-                  const index = parseInt(`${index1}${index2}`);
-                  return (
-                    <NavLink key={index} to={sub.to}>
-                      {({ isActive }) => (
-                        <MenuItem
-                          active={isActive}
-                          label={sub.label}
-                          // onClick={(e) => {
-                          //   e.stopPropagation();
-                          //   setActive(index);
-                          //   navigate(sub.to);
-                          // }}
-                        />
-                      )}
-                    </NavLink>
-                  );
-                })}
+                <Accordion.Control
+                  icon={
+                    <ThemeIcon color={node.color} variant="light">
+                      {node.icon}
+                    </ThemeIcon>
+                  }
+                >
+                  {node.label}
+                </Accordion.Control>
+
+                <Accordion.Panel>
+                  {node?.children?.map((sub, index2) => {
+                    const index = parseInt(`${index1}${index2}`);
+                    return (
+                      <NavLink key={index} to={sub.to}>
+                        {({ isActive }) => (
+                          <MenuItem
+                            active={isActive}
+                            label={sub.label}
+                            // onClick={(e) => {
+                            //   e.stopPropagation();
+                            //   setActive(index);
+                            //   navigate(sub.to);
+                            // }}
+                          />
+                        )}
+                      </NavLink>
+                    );
+                  })}
+                </Accordion.Panel>
               </Accordion.Item>
             );
           })}
