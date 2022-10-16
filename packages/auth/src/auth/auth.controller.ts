@@ -16,13 +16,13 @@ import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
 import { CasbinService } from '@letscollab/nest-acl';
 import { UserResponseDto } from './auth.dto';
+import { getSubdomain } from '@letscollab/helper';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly casbin: CasbinService,
     private readonly nacos: NacosConfigService,
   ) {}
 
@@ -65,8 +65,12 @@ export class AuthController {
   @ApiResponseProperty({
     type: UserResponseDto,
   })
-  async githubCallback(@Req() req: FastifyRequest, @Session() session) {
-    console.log(req.user);
+  async githubCallback(
+    @Req() req: FastifyRequest,
+    @Session() session,
+    @Res() res: FastifyReply,
+  ) {
+    console.log(req);
     const r = await this.authService.signInGithub(req.user);
 
     console.log(r);
@@ -80,7 +84,16 @@ export class AuthController {
         accessToken: req.user.accessToken,
       });
 
-    return;
+    session.cookie.domain = getSubdomain(
+      new URL(`${req.protocol}://${req.hostname}`).hostname,
+      2,
+    );
+
+    return res
+      .type('text/html')
+      .send(
+        '<html><body><h3 style="text-align:center">Success</h3><script>setTimeout(()=>{window.close()}, 1000)</script></body>',
+      );
   }
 
   @Post('lagout')
@@ -89,10 +102,7 @@ export class AuthController {
     type: UserResponseDto,
   })
   async logout(@Req() req: FastifyRequest, @Session() session) {
-    console.log(req.user);
     const r = await this.authService.signInGithub(req.user);
-
-    console.log(r);
 
     r.code > 0 &&
       session.set('user', {
