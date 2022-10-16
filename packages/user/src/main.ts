@@ -58,7 +58,9 @@ async function bootstrap() {
 
     await app.register(fastifyHelmet, {
       global: true,
-      crossOriginOpenerPolicy: false,
+      crossOriginOpenerPolicy: {
+        policy: 'same-origin-allow-popups',
+      },
       contentSecurityPolicy: false,
       referrerPolicy: true,
     });

@@ -27,3 +27,11 @@ export const is = {
     return this.type(obj, 'Array');
   },
 };
+
+export const getSubdomain = function (
+  domain: string,
+  index: number = 2,
+  prefix = '.',
+) {
+  return prefix + domain.split('.').slice(-index).join('.');
+};
