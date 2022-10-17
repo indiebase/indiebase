@@ -3,13 +3,6 @@ import { HttpResSchemaDto } from '@letscollab/helper';
 import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
 import { UserEntity } from '@letscollab/user';
 
-export class JwtSignResDto extends HttpResSchemaDto {
-  @ApiPropertyOptional({
-    type: String,
-  })
-  d?: string;
-}
-
 /**
  * @deprecated
  */
@@ -23,7 +16,7 @@ export class LocalSignInDto {
   username: string;
 
   @ApiProperty({
-    default: 'dev123456',
+    default: 'letscollab',
   })
   @IsNotEmpty({
     message: 'Password empty',
