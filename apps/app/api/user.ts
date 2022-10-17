@@ -1,6 +1,5 @@
-import { BaseResSchema } from './interface';
 import { req } from './request';
-import { UserProfile } from '@letscollab/common-trait';
+import { BaseResSchema, UserProfile } from '@letscollab/common-trait';
 
 export const fetchUserProfile = async (): Promise<
   BaseResSchema<UserProfile>

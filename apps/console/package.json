@@ -4,6 +4,8 @@
   "description": "Collaborator, Money, App management",
   "private": true,
   "dependencies": {
+    "@ant-design/pro-components": "^2.3.19",
+    "@ant-design/pro-table": "^3.0.16",
     "@babel/core": "^7.16.0",
     "@dnd-kit/core": "^6.0.5",
     "@dnd-kit/sortable": "^7.0.1",

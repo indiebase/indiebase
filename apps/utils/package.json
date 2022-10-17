@@ -9,7 +9,6 @@
     "main": "./dist/index.js"
   },
   "dependencies": {
-    "@ant-design/pro-components": "1.1.8",
     "@faker-js/faker": "^7.3.0",
     "@letscollab/common-trait": "workspace:^",
     "@tanstack/query-core": "^4.1.3",

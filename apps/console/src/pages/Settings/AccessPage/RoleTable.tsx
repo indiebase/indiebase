@@ -1,8 +1,8 @@
-import { ProTable, ActionType, ProColumns } from '@letscollab/app-utils';
 import { useRef } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { RoleModal } from './RoleModal';
-import { Container, Text } from '@mantine/core';
+import { Container } from '@mantine/core';
+import { ProColumns, ActionType, ProTable } from '@ant-design/pro-table';
 
 const columns: ProColumns<any>[] = [
   {
@@ -73,7 +73,6 @@ export const RoleTable = function () {
       locale={{ emptyText: <Container my={20}>Empty</Container> }}
       showSorterTooltip={false}
       headerTitle="角色"
-      toolbar={{}}
       columns={columns}
       request={requestData}
       actionRef={ref}

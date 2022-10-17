@@ -38,11 +38,10 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
       name: '',
     },
     validate: {
-      name: (value) => !/[^a-zA-Z0-9-_]/g.test(value),
+      name: (value) =>
+        /[^a-zA-Z0-9-_]/g.test(value) ? null : '不能包含除_-以外的特殊字符',
     },
   });
-
-  form.setFieldError('name', '不能包含除_-以外的特殊字符');
 
   return (
     <span>

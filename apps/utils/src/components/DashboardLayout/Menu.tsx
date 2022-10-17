@@ -34,7 +34,6 @@ interface MenuItemProps {
 }
 
 function MenuItem({ label, active, onClick }: MenuItemProps) {
-  console.log(active, label);
   return (
     <UnstyledButton
       onClick={onClick}
@@ -89,6 +88,7 @@ export const Menu: FC<MenuProps> = function (props) {
           })}
         >
           {props.menu.map((node, index1) => {
+            const children = node?.children;
             return (
               <Accordion.Item
                 key={index1}
@@ -97,13 +97,14 @@ export const Menu: FC<MenuProps> = function (props) {
                   border: 'none',
                   backgroundColor: 'unset',
                 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  node.to && navigate(node.to, { replace: node.replace });
-                }}
               >
                 <Accordion.Control
                   pl={8}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    node.to && navigate(node.to, { replace: node.replace });
+                  }}
+                  chevron={children ? null : <span></span>}
                   icon={
                     <ThemeIcon color={node.color} variant="light">
                       {node.icon}
@@ -112,19 +113,20 @@ export const Menu: FC<MenuProps> = function (props) {
                 >
                   <Text weight={500}>{node.label}</Text>
                 </Accordion.Control>
-
-                <Accordion.Panel>
-                  {node?.children?.map((sub, index2) => {
-                    const index = parseInt(`${index1}${index2}`);
-                    return (
-                      <NavLink key={index} to={sub.to}>
-                        {({ isActive }) => (
-                          <MenuItem active={isActive} label={sub.label} />
-                        )}
-                      </NavLink>
-                    );
-                  })}
-                </Accordion.Panel>
+                {children ? (
+                  <Accordion.Panel>
+                    {children?.map((sub, index2) => {
+                      const index = parseInt(`${index1}${index2}`);
+                      return (
+                        <NavLink key={index} to={sub.to}>
+                          {({ isActive }) => (
+                            <MenuItem active={isActive} label={sub.label} />
+                          )}
+                        </NavLink>
+                      );
+                    })}
+                  </Accordion.Panel>
+                ) : null}
               </Accordion.Item>
             );
           })}

@@ -5,6 +5,7 @@ import { MenuNode } from '@letscollab/app-utils';
 
 export const useMenu = () => {
   const { org, project, user } = useParams();
+
   console.log(user);
 
   return useMemo<MenuNode[]>(() => {
@@ -13,11 +14,7 @@ export const useMenu = () => {
     let settingList = [
       {
         label: 'Profile',
-        to: `users/${user}/settings/profile`,
-      },
-      {
-        label: 'Profile1',
-        to: `users/${user}/settings/profile1`,
+        to: `users/${user}/profile`,
       },
     ];
 

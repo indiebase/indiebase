@@ -1,15 +1,10 @@
-import {
-  ProTable,
-  ActionType,
-  ProColumns,
-  userProfileQuery,
-} from '@letscollab/app-utils';
 import { Button, Container } from '@mantine/core';
 import { useAtom } from 'jotai';
 import { loadable } from 'jotai/utils';
 import { useRef, useMemo } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { MemberModal } from './MemberModal';
+import { ProColumns, ActionType, ProTable } from '@ant-design/pro-table';
 
 const columns: ProColumns<any>[] = [
   {
