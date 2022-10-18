@@ -6,7 +6,6 @@ import {
   Post,
   Req,
   Res,
-  Session,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
@@ -20,9 +19,9 @@ import {
   ProtectGuard,
   RpcSessionAuthClientGuard,
   UserInfo,
+  type UserSession,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
-import { UserSession } from '@letscollab/auth';
 
 @Controller('v1/user')
 @ApiTags('v1/User')

@@ -26,14 +26,9 @@ export const setupCollabApiDoc = (app: INestApplication) =>
         include: [PrjModule, OrgModule, InvitationModule],
       });
       SwaggerModule.setup('openapi/collab', app, userDoc, {
-        // uiConfig: {
-        //   persistAuthorization: true,
-        // },
-        // uiHooks: {
-        //   preHandler(req: FastifyRequest, res, next) {
-        //     next();
-        //   },
-        // },
+        swaggerOptions: {
+          persistAuthorization: true,
+        },
       });
     } catch (e) {
       console.log(e);

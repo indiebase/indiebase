@@ -66,12 +66,20 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const userItem = {
     logo: data.avatar,
     label: data.username,
-    value: 'users/' + data.username,
+    value: data.username,
+    path: 'users/' + data.username,
   };
   const orgs = data.orgs
-    ? [userItem, ...data.orgs.map((o) => ({ ...o, value: 'orgs/' + o.value }))]
+    ? [
+        userItem,
+        ...data.orgs.map((o) => ({
+          ...o,
+          value: o.value,
+          path: 'orgs/' + o.value,
+        })),
+      ]
     : [];
-
+  console.log(orgs, orgParam);
   const orgDefault = useMemo(
     () => orgs.find((v) => v.value === orgParam) ?? userItem,
     [orgParam, orgs],
@@ -126,7 +134,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                   onChange={(e) => {
                     const r = orgs.find((v) => v.value === e);
                     setOrg(r);
-                    navigate(resolvePath(r.value));
+                    navigate(resolvePath(r.path));
                   }}
                   searchable
                   size="xs"

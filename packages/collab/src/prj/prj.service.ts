@@ -6,14 +6,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
-import { MAIL_RMQ, AUTH_RMQ } from '../app.constants';
 import {
   CreatePrjDto,
   DeletePrjDto,
   QueryPrjDto,
   UpdatePrjDto,
 } from './prj.dto';
-import { ResultCode } from '@letscollab/helper';
+import { AUTH_RMQ, MAIL_RMQ, ResultCode } from '@letscollab/helper';
 import { Repository } from 'typeorm';
 import { PrjEntity } from './prj.entity';
 

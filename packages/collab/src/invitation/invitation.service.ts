@@ -1,4 +1,3 @@
-import { MAIL_RMQ } from '../app.constants';
 import {
   Inject,
   Injectable,
@@ -7,14 +6,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
-import { AUTH_RMQ, USER_RMQ } from '../app.constants';
 
-import { ResultCode } from '@letscollab/helper';
+import { AUTH_RMQ, MAIL_RMQ, ResultCode, USER_RMQ } from '@letscollab/helper';
 import { lastValueFrom, timeout, catchError } from 'rxjs';
-import { UserResDto } from '@letscollab/user';
 import { InvitationEntity, InvitationStatus } from './invitation.entity';
 import { InviteMemberDto } from './invitation.dto';
 import { Repository } from 'typeorm';
+import { UserResponseDto } from '@letscollab/user';
 
 @Injectable()
 export class InvitationService {
@@ -61,8 +59,8 @@ export class InvitationService {
   }
 
   async inviteMember(body: InviteMemberDto, user: any) {
-    const target = await this.getUser<UserResDto>('get_id', body.id);
-    const host = await this.getUser<UserResDto>('get_name', user.username);
+    const target = await this.getUser<UserResponseDto>('get_id', body.id);
+    const host = await this.getUser<UserResponseDto>('get_name', user.username);
 
     if (target.code > 0 && host.code > 0) {
       const record = await this.inviteRepo.findOne({

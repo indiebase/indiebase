@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import {  projectsQuery } from '@letscollab/app-utils';
-import {  IProject } from '@letscollab/common-trait';
+import { projectsQuery } from '@letscollab/app-utils';
+import { IProject } from '@letscollab/common-trait';
 import {
   Group,
   Text,

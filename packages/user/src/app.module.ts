@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  Module,
-  NestMiddleware,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import {
   NacosConfigModule,
   NacosConfigService,
@@ -23,27 +18,13 @@ import {
 } from 'nestjs-i18n';
 import { utilities, WinstonModule } from 'nest-winston';
 import LokiTransport = require('winston-loki');
-import { InjectRedis, RedisModule } from '@liaoliaots/nestjs-redis';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 import * as winston from 'winston';
 import { HttpAdapterHost } from '@nestjs/core';
-import type { Redis } from 'ioredis';
 import { RedisSessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
-
-@Injectable()
-export class AuthMiddleware implements NestMiddleware {
-  constructor(
-    @InjectRedis()
-    private readonly redis: Redis,
-  ) {}
-
-  use(req: any, res: Response, next) {
-    console.log(req.session);
-    next();
-  }
-}
 
 @Module({
   imports: [

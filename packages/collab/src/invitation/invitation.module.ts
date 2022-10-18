@@ -2,10 +2,10 @@ import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '../app.constants';
 import { InvitationController } from './invitation.controller';
 import { InvitationService } from './invitation.service';
 import { InvitationEntity } from './invitation.entity';
+import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '@letscollab/helper';
 
 @Module({
   imports: [

@@ -1,9 +1,9 @@
 import { OCTOKIT_OPTIONS } from './octokit.constants';
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpAdapterHost, Inject, Injectable, Scope } from '@nestjs/common';
 import { OctokitOptions } from './octokit.interface';
 import { Octokit } from 'octokit';
-
-@Injectable()
+import { REQUEST } from '@nestjs/core';
+@Injectable({ scope: Scope.REQUEST })
 export class OctokitService {
   public octokit: Octokit;
   public request: Octokit['request'];
@@ -17,15 +17,19 @@ export class OctokitService {
 
   constructor(
     @Inject(OCTOKIT_OPTIONS)
-    options?: OctokitOptions,
+    private readonly options: OctokitOptions,
+    @Inject(REQUEST)
+    private readonly req,
   ) {
-    let TmpOctokit = Octokit;
+    let InnerOctokit = Octokit;
+
+    console.log(req);
 
     if (options.plugins) {
-      TmpOctokit = Octokit.plugin(...options.plugins);
+      InnerOctokit = Octokit.plugin(...options.plugins);
     }
-
-    this.octokit = new TmpOctokit(options);
+    (options as any)?.demo();
+    this.octokit = new InnerOctokit(options);
 
     this.request = this.octokit.request;
     this.graphql = this.octokit.graphql;

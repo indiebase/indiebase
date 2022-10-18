@@ -1,6 +1,11 @@
 import { resolve } from 'path';
 import configure from './config';
-import { I18nModule } from 'nestjs-i18n';
+import {
+  AcceptLanguageResolver,
+  CookieResolver,
+  HeaderResolver,
+  I18nModule,
+} from 'nestjs-i18n';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,10 +18,12 @@ import {
   NacosConfigModule,
   NacosConfigService,
   NacosNamingModule,
+  NacosNamingService,
 } from '@letscollab/nest-nacos';
 import { InvitationModule } from './invitation/invitation.module';
 import { OrgModule } from './org/org.module';
 import { PrjModule } from './prj/prj.module';
+import { RedisSessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
@@ -34,8 +41,25 @@ const isDev = process.env.NODE_ENV === 'development';
     RedisModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const configs = await config.getConfig('service-collab.json');
-        return configs.redis;
+        const configs = await config.getConfig('common.json');
+        return { config: configs.redis };
+      },
+    }),
+    RedisSessionModule.forRootAsync({
+      inject: [NacosConfigService],
+      async useFactory(config: NacosConfigService) {
+        const { redis, session, cookie } = await config.getConfig(
+          'common.json',
+        );
+
+        return {
+          redis,
+          session: {
+            saveUninitialized: false,
+            ...session,
+          },
+          cookie,
+        };
       },
     }),
     WinstonModule.forRootAsync({
@@ -56,7 +80,7 @@ const isDev = process.env.NODE_ENV === 'development';
         return {
           level: isDev ? 'debug' : 'warn',
           format: winston.format.json(),
-          defaultMeta: { service: 'auth' },
+          defaultMeta: { service: 'collab' },
           exitOnError: false,
           rejectionHandlers: [new LokiTransport(configs.logger.rejectionLoki)],
           transports,
@@ -74,11 +98,16 @@ const isDev = process.env.NODE_ENV === 'development';
       },
     }),
     I18nModule.forRoot({
-      fallbackLanguage: 'zh',
+      fallbackLanguage: 'zh-CN',
       loaderOptions: {
         path: resolve(process.cwd(), './i18n'),
         watch: !isProd,
       },
+      resolvers: [
+        new HeaderResolver(['x-custom-lang']),
+        new CookieResolver(),
+        AcceptLanguageResolver,
+      ],
       logging: !isProd,
     }),
     NacosConfigModule.forRootAsync({
@@ -115,6 +144,9 @@ const isDev = process.env.NODE_ENV === 'development';
         const { auth, oauth_callback } = configs.github;
 
         return {
+          demo: () => {
+            console.log('------------------------');
+          },
           options: {
             auth,
             // oauth_callback,
@@ -125,6 +157,17 @@ const isDev = process.env.NODE_ENV === 'development';
   ],
 })
 export class AppModule implements OnModuleInit {
-  constructor(private readonly nacosConfigService: NacosConfigService) {}
-  async onModuleInit() {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly nacosNamingService: NacosNamingService,
+  ) {}
+  async onModuleInit() {
+    await this.nacosNamingService.registerInstance(
+      `@letscollab/collab-${process.env.NODE_ENV}`,
+      {
+        port: parseInt(this.configService.get('app.port')),
+        ip: this.configService.get('app.hostname'),
+      },
+    );
+  }
 }
