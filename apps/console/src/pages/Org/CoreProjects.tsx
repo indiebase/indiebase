@@ -32,19 +32,14 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-
   const [items, setItems] = useState<IProject[]>(props.list);
-
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-
   const getIndex = useCallback(
     (id: UniqueIdentifier) => items.findIndex((e) => e.id === id),
     [items],
   );
-
   const [hideMore, setHideMore] = useState(true);
   const visibleItems = hideMore ? items.slice(0, 6) : items;
-
   const activeIndex = activeId ? getIndex(activeId) : -1;
 
   return (
@@ -75,7 +70,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
               return (
                 <Grid.Col key={i} lg={4} md={6}>
                   <CoreProjectCard
-                    // id={e.id}
+                    id={e.id}
                     cover={e.cover}
                     name={e.name}
                     members={e.members}

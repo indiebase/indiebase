@@ -6,14 +6,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
-import { USER_RMQ } from '../app.constants';
 import {
   CreateOrgDto,
   DeleteOrgDto,
   QueryOrgDto,
   UpdateOrgDto,
 } from './org.dto';
-import { ResultCode } from '@letscollab/helper';
+import { ResultCode, USER_RMQ } from '@letscollab/helper';
 import { OrgEntity } from './org.entity';
 import { Repository } from 'typeorm';
 import { OctokitService } from '@letscollab/nest-octokit';

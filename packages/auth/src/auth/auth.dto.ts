@@ -29,10 +29,3 @@ export class LocalSignInDto {
   })
   password: string;
 }
-
-export class UserResponseDto extends HttpResSchemaDto {
-  @ApiPropertyOptional({
-    type: () => UserEntity,
-  })
-  d?: UserEntity;
-}

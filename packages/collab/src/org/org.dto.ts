@@ -44,7 +44,7 @@ export class UpdateOrgDto {
   name?: string;
 
   @ApiProperty({
-    description: 'public email',
+    description: 'Public email',
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -85,9 +85,9 @@ export class QueryOrgDto extends PaginationReqDto {
 
 export class QueryOrgResDto extends PaginationResSchemaDto {
   @ApiPropertyOptional({
-    type: () => OrgEntity,
+    type: () => [OrgEntity],
   })
-  d?: OrgEntity;
+  d?: OrgEntity[];
 }
 
 // export class QueryOrgResDto extends PaginationReqDto {

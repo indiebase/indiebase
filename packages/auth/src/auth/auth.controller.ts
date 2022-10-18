@@ -14,15 +14,14 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
-import { CasbinService } from '@letscollab/nest-acl';
-import { UserResponseDto } from './auth.dto';
 import { getSubdomain } from '@letscollab/helper';
+import { UserResponseDto } from '@letscollab/user';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
+    private readonly auth: AuthService,
     private readonly nacos: NacosConfigService,
   ) {}
 
@@ -62,16 +61,12 @@ export class AuthController {
 
   @Get('github/callback')
   @UseGuards(GithubGuard)
-  @ApiResponseProperty({
-    type: UserResponseDto,
-  })
   async githubCallback(
     @Req() req: FastifyRequest,
     @Session() session,
     @Res() res: FastifyReply,
   ) {
-    console.log(req);
-    const r = await this.authService.signInGithub(req.user);
+    const r = await this.auth.signInGithub(req.user);
 
     console.log(r);
 
@@ -96,13 +91,10 @@ export class AuthController {
       );
   }
 
-  @Post('lagout')
+  @Post('logout')
   @UseGuards(GithubGuard)
-  @ApiResponseProperty({
-    type: UserResponseDto,
-  })
   async logout(@Req() req: FastifyRequest, @Session() session) {
-    const r = await this.authService.signInGithub(req.user);
+    const r = await this.auth.signInGithub(req.user);
 
     r.code > 0 &&
       session.set('user', {
@@ -130,19 +122,19 @@ export class AuthController {
 
   @UseGuards(RpcSessionAuthConsumerGuard)
   @MessagePattern({ cmd: 'auth' })
-  async auth(@Payload() payload) {
+  async rpcAuth(@Payload() payload) {
     return payload;
   }
 
   @MessagePattern({ cmd: 'set_role_policy' })
   async addRole(@Payload() payload: any) {
-    await this.authService.createRolePolicy(payload);
+    await this.auth.createRolePolicy(payload);
     return true;
   }
 
   @MessagePattern({ cmd: 'set_user_role' })
   async attachRole(@Payload() payload: any) {
-    await this.authService.attachRoleForUser(payload);
+    await this.auth.attachRoleForUser(payload);
     return true;
   }
 }

@@ -1,5 +1,7 @@
+import { HttpResSchemaDto } from '@letscollab/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
+import { UserEntity } from './user.entity';
 
 export class SignupDto {
   @ApiPropertyOptional({
@@ -50,4 +52,11 @@ export class QueryUserDto {
     default: 'letscollab',
   })
   username?: string;
+}
+
+export class UserResponseDto extends HttpResSchemaDto {
+  @ApiPropertyOptional({
+    type: () => UserEntity,
+  })
+  d?: UserEntity;
 }

@@ -14,7 +14,7 @@ import { IAccessOptions } from './access.decorator';
 
 abstract class BasicAuthGuard {
   abstract transfer(context: ExecutionContext): Promise<Record<string, any>>;
-  abstract setPattern(context: ExecutionContext): Promise<Record<string, any>>;
+  abstract setPattern(context: ExecutionContext): Promise<any>;
 }
 
 type AbstractAuth = abstract new (...args: any) => BasicAuthGuard;

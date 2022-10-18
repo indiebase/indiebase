@@ -56,15 +56,10 @@ async function bootstrap() {
 
     await app.register(fastifyHelmet, {
       global: true,
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: [`'self'`],
-          styleSrc: [`'self'`, `'unsafe-inline'`],
-          imgSrc: [`'self'`, 'data:', 'validator.swagger.io'],
-          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
-        },
+      crossOriginOpenerPolicy: {
+        policy: 'same-origin-allow-popups',
       },
-      enableCSPNonces: true,
+      contentSecurityPolicy: false,
       referrerPolicy: true,
     });
 

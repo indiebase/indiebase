@@ -1,3 +1,4 @@
+import { FastifyRequest } from 'fastify';
 import {
   Body,
   Controller,
@@ -6,9 +7,15 @@ import {
   Post,
   Put,
   Query,
+  Req,
 } from '@nestjs/common';
 import { OrgService } from './org.service';
-import { ApiOkResponse, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiTags,
+  ApiCookieAuth,
+  ApiOperation,
+} from '@nestjs/swagger';
 import {
   CreateOrgDto,
   DeleteOrgDto,
@@ -16,25 +23,43 @@ import {
   QueryOrgResDto,
   UpdateOrgDto,
 } from './org.dto';
+import { UserInfo } from '@letscollab/helper';
+import { OctokitService } from '@letscollab/nest-octokit';
 
-@Controller('v1/org')
+@Controller('v1/collab/org')
 @ApiTags('v1/Organization')
 export class OrgController {
-  constructor(private readonly orgService: OrgService) {}
+  constructor(
+    private readonly org: OrgService,
+    private readonly octokit: OctokitService,
+  ) {}
 
   @Get('list')
   @ApiCookieAuth('SID')
   @ApiOkResponse({
     type: QueryOrgResDto,
   })
-  async queryOrgs(@Query() query: QueryOrgDto) {
-    return this.orgService.queryOrg(query);
+  async queryOrgs(@Query() query: QueryOrgDto, @Req() req: FastifyRequest) {
+    // return this.orgService.queryOrg(query);
+    console.log(req.session.user);
+    return;
+  }
+
+  @Get('github/list')
+  @ApiCookieAuth('SID')
+  @ApiOperation({
+    summary: 'Fetch github orgs',
+  })
+  async githubOrgs(@Query() query: QueryOrgDto, @Req() req: FastifyRequest) {
+    // return this.orgService.queryOrg(query);
+    console.log(req.session.user);
+    return;
   }
 
   @Post()
   @ApiCookieAuth('SID')
-  async createOrg(@Body() body: CreateOrgDto) {
-    return this.orgService.createOrg({
+  async createOrg(@Body() body: CreateOrgDto, @UserInfo() info) {
+    return this.org.createOrg({
       name: body.name,
       // description: body.description,
       // contactEmail: body.contactEmail,
@@ -44,13 +69,13 @@ export class OrgController {
   @Put()
   @ApiCookieAuth('SID')
   async updateOrg(@Body() body: UpdateOrgDto) {
-    return this.orgService.updateOrg(body);
+    return this.org.updateOrg(body);
   }
 
   @Delete()
   @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
   async deleteTeam(@Body() body: DeleteOrgDto) {
-    return this.orgService.deleteOrg(body);
+    return this.org.deleteOrg(body);
   }
 }

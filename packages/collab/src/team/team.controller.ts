@@ -17,7 +17,7 @@ import {
   UpdateTeamDto,
 } from './team.dto';
 
-@Controller('team')
+@Controller('v1/collab/team')
 @ApiTags('v1/Team')
 export class TeamController {
   constructor(private readonly teamService: TeamService) {}
