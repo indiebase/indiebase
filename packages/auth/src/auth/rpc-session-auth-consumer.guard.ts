@@ -1,5 +1,5 @@
+import { ExtraMountedSession } from '@letscollab/helper';
 import { CasbinService } from '@letscollab/nest-acl';
-import { ExtraMountedSession } from '../utils/session.interface';
 import {
   CanActivate,
   ExecutionContext,

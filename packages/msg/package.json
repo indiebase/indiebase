@@ -31,6 +31,8 @@
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.11",
     "@nestjs/microservices": "^9.0.11",
+    "@nestjs/platform-socket.io": "^9.1.4",
+    "@nestjs/websockets": "^9.1.4",
     "amqp-connection-manager": "^4.1.6",
     "amqplib": "^0.10.3",
     "ioredis": "^5.0.4",

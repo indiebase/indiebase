@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
@@ -54,6 +56,28 @@ export class OrgService {
       total,
       current,
       d: list,
+    };
+  }
+
+  async getGithubOrgs() {
+    let { data } = await this.octokit.rest.orgs
+      .listForAuthenticatedUser({
+        page: 1,
+        per_page: 999,
+      })
+      .catch((err) => {
+        this.logger.error(err);
+
+        if (err.status === 401) {
+          throw new UnauthorizedException('Github bad credentials');
+        }
+
+        throw new BadRequestException();
+      });
+
+    return {
+      code: ResultCode.SUCCESS,
+      d: data,
     };
   }
 

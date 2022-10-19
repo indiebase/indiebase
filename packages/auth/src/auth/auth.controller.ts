@@ -68,8 +68,6 @@ export class AuthController {
   ) {
     const r = await this.auth.signInGithub(req.user);
 
-    console.log(r);
-
     r.code > 0 &&
       session.set('user', {
         loggedIn: true,

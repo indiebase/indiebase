@@ -13,7 +13,7 @@ export const setupAuthApiDoc = (app: INestApplication) =>
     try {
       const authOptions = new DocumentBuilder()
         .setTitle('Auth Api')
-        .setDescription('Authz and authn interface')
+        .setDescription('Authz and authn REST API ')
         .setVersion(pkg.version)
         .addCookieAuth('SID', {
           type: 'apiKey',

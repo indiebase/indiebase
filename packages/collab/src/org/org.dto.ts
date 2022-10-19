@@ -11,23 +11,30 @@ export class CreateOrgDto {
   @IsString()
   name: string;
 
-  // @ApiProperty({
-  //   default: 'deskbtm@outlook.com',
-  // })
-  // @IsEmail(
-  //   {},
-  //   {
-  //     message: 'Email incorrect',
-  //   },
-  // )
-  // @IsOptional()
-  // contactEmail?: string;
+  @ApiPropertyOptional({
+    description: 'Coding platform org url',
+    default: 'deskbtm',
+  })
+  @IsString()
+  codingOrgUrl: string;
 
-  // @ApiProperty({
-  //   default: 'xxxxxx',
-  // })
-  // @IsOptional()
-  // description: string;
+  @ApiProperty({
+    default: 'deskbtm@outlook.com',
+  })
+  @IsEmail(
+    {},
+    {
+      message: 'Email incorrect',
+    },
+  )
+  @IsOptional()
+  contactEmail?: string;
+
+  @ApiProperty({
+    default: 'xxxxxx',
+  })
+  @IsOptional()
+  description?: string;
 }
 
 export class UpdateOrgDto {
