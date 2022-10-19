@@ -1,4 +1,4 @@
-import { ExtraMountedSession } from '@letscollab/helper';
+import { RpcAuthData } from '@letscollab/helper';
 import { CasbinService } from '@letscollab/nest-acl';
 import {
   CanActivate,
@@ -12,15 +12,13 @@ export class RpcSessionAuthConsumerGuard implements CanActivate {
   constructor(private readonly casbin: CasbinService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const sess = context
-      .switchToRpc()
-      .getData<Record<string, any> & ExtraMountedSession>();
+    const data = context.switchToRpc().getData<RpcAuthData>();
 
-    for (const obj of sess.access) {
+    for (const obj of data.access) {
       const { action, resource } = obj;
       const hasPermission = await this.casbin.e.enforce(
-        sess.user.username,
-        sess.domain,
+        data.user.username,
+        data.domain,
         resource,
         action,
       );
