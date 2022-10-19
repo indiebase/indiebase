@@ -9,10 +9,9 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
+import { UserService } from './user.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
-import { UserService } from './user.service';
-
 import { FastifyReply, FastifyRequest } from 'fastify';
 import {
   MicroserviceExceptionFilter,
@@ -89,13 +88,23 @@ export class UserController {
     return user;
   }
 
+  @Post('possession')
+  @ApiCookieAuth('SID')
+  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @ApiOperation({
+    summary: 'Sync profile with platform. e.g. Github',
+  })
+  async getPossession(@UserInfo() info: UserSession) {
+    const user = await this.userService.getUser([{ id: info.id }]);
+    return user;
+  }
+
   @Patch('profile')
   @ApiOperation({
     summary: 'Update a user profile',
   })
   @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
   async updateProfile(@UserInfo() info: UserSession, @Body() body) {
-    // return this.userService.updateUser({id: info.id});
     return;
   }
 
