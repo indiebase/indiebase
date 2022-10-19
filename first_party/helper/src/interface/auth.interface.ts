@@ -19,7 +19,7 @@ export type UserSession = {
   [k: string]: any;
 };
 
-export type ExtraMountedSession = {
+export type RpcAuthData = {
   user: UserSession;
   domain: string;
   access: IAccessOptions[];
