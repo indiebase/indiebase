@@ -15,7 +15,6 @@ import {
 import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
 import { getSubdomain } from '@letscollab/helper';
-import { UserResponseDto } from '@letscollab/user';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
