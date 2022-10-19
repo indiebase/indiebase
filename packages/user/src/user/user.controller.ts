@@ -93,8 +93,7 @@ export class UserController {
   @ApiOperation({
     summary: 'Update a user profile',
   })
-  @UseGuards(ProtectGuard)
-  @UseGuards(RpcSessionAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
   async updateProfile(@UserInfo() info: UserSession, @Body() body) {
     // return this.userService.updateUser({id: info.id});
     return;

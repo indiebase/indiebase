@@ -12,7 +12,7 @@ export class GithubStrategy
     super();
   }
 
-  async setOptions() {
+  async getStrategyOptions() {
     const {
       github: { clientID, clientSecret, callbackURL },
     } = await this.nacosConfigService.getConfig('service-auth.json');

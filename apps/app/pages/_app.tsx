@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import Head from 'next/head';
 import { Layout } from 'components';
-import { fetchUserProfile } from 'api/user';
+// import { fetchUserProfile } from 'api/user';
 import 'styles/nextra-doc.css';
 
 const queryClient = new QueryClient();
@@ -24,16 +24,6 @@ if (isProduction) {
 Router.events.on('routeChangeStart', NProgress.start);
 Router.events.on('routeChangeComplete', NProgress.done);
 Router.events.on('routeChangeError', NProgress.done);
-
-export async function getStaticProps(context) {
-  const data = await fetchUserProfile();
-
-  console.log(data);
-
-  return {
-    props: {},
-  };
-}
 
 function LetsCollabApp({
   Component,
@@ -60,7 +50,7 @@ function LetsCollabApp({
   );
 }
 LetsCollabApp.getInitialProps = async (appContext) => {
-  const data = await fetchUserProfile();
+  // const data = await fetchUserProfile();
 
   console.log('object');
   // console.log(data);

@@ -9,7 +9,7 @@ import {
   Image,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { LoginModalV2 } from 'components/Modal';
+import { LoginModal } from 'components/Modal';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 
@@ -22,7 +22,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const matches = useMediaQuery('(max-width: 768px)');
   const [modalMeta, setModalMeta] = useState<{
-    initialNo?: number;
+    initialNo?: string;
     opened: boolean;
   }>({
     opened: false,
@@ -40,7 +40,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
       height={65}
       p="md"
     >
-      <LoginModalV2
+      <LoginModal
         opened={modalMeta.opened}
         onClose={() => setModalMeta({ opened: false })}
         initialNo={modalMeta.initialNo}
@@ -109,9 +109,9 @@ export const Header: FC<NavHeaderProps> = function (props) {
 
           <Group sx={{ marginLeft: 40, span: { fontSize: 14 } }} spacing={6}>
             <Anchor
-              component={'span'}
-              onClick={() => {
-                setModalMeta({ opened: true, initialNo: 0 });
+              component="span"
+              onClick={(e) => {
+                setModalMeta({ opened: true });
               }}
             >
               登录&注册

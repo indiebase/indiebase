@@ -6,8 +6,6 @@ import {
   Get,
   Delete,
   Query,
-  Req,
-  Param,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -15,7 +13,6 @@ import {
   ApiTags,
   ApiCookieAuth,
   ApiCreatedResponse,
-  ApiParam,
 } from '@nestjs/swagger';
 import { RoleService } from './role.service';
 import {
@@ -26,13 +23,8 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import { FastifyRequest } from 'fastify';
-import {
-  RoleResource,
-  RpcSessionAuthClientGuard,
-  UserResource,
-} from '@letscollab/helper';
-import { UseAccess, AccessAction, CasbinService } from '@letscollab/nest-acl';
+import { RoleResource, RpcSessionAuthClientGuard } from '@letscollab/helper';
+import { UseAccess, AccessAction } from '@letscollab/nest-acl';
 
 @Controller('v1/user/role')
 @ApiTags('v1/Role')
@@ -79,7 +71,7 @@ export class RoleController {
   @Post('attach')
   @ApiCookieAuth('SID')
   @ApiOperation({ summary: 'Attach a role to user' })
-  // @UseGuards(RpcSessionAuthClientGuard)
+  @UseGuards(RpcSessionAuthClientGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: RoleResource.list,

@@ -5,7 +5,6 @@ import { readJsonSync } from 'fs-extra';
 import { OrgModule } from '../org/org.module';
 import { PrjModule } from '../prj/prj.module';
 import { InvitationModule } from '../invitation/invitation.module';
-import { type FastifyRequest } from 'fastify';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 

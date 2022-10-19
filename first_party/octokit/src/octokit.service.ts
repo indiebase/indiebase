@@ -1,8 +1,9 @@
 import { OCTOKIT_OPTIONS } from './octokit.constants';
-import { HttpAdapterHost, Inject, Injectable, Scope } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { OctokitOptions } from './octokit.interface';
 import { Octokit } from 'octokit';
 import { REQUEST } from '@nestjs/core';
+
 @Injectable({ scope: Scope.REQUEST })
 export class OctokitService {
   public octokit: Octokit;
@@ -17,27 +18,27 @@ export class OctokitService {
 
   constructor(
     @Inject(OCTOKIT_OPTIONS)
-    private readonly options: OctokitOptions,
+    private options: OctokitOptions,
     @Inject(REQUEST)
     private readonly req,
   ) {
     let InnerOctokit = Octokit;
 
-    console.log(req);
+    let config = options.optionsFactory(req);
 
     if (options.plugins) {
       InnerOctokit = Octokit.plugin(...options.plugins);
     }
-    (options as any)?.demo();
-    this.octokit = new InnerOctokit(options);
 
-    this.request = this.octokit.request;
-    this.graphql = this.octokit.graphql;
-    this.log = this.octokit.log;
-    this.hook = this.octokit.hook;
-    this.auth = this.octokit.auth;
-    this.paginate = this.octokit.paginate;
-    this.rest = this.octokit.rest;
-    this.retry = this.octokit.retry;
+    const octokit = new InnerOctokit(config);
+
+    this.request = octokit.request;
+    this.graphql = octokit.graphql;
+    this.log = octokit.log;
+    this.hook = octokit.hook;
+    this.auth = octokit.auth;
+    this.paginate = octokit.paginate;
+    this.rest = octokit.rest;
+    this.retry = octokit.retry;
   }
 }

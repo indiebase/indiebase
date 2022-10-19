@@ -136,20 +136,22 @@ const isDev = process.env.NODE_ENV === 'development';
     OctokitModule.forRootAsync({
       imports: [NacosConfigModule],
       inject: [NacosConfigService],
-      async useFactory(nacosConfigService: NacosConfigService) {
-        const configs = await nacosConfigService.getConfig(
-          'service-collab.json',
-        );
-
-        const { auth, oauth_callback } = configs.github;
-
+      async useFactory() {
         return {
-          demo: () => {
-            console.log('------------------------');
-          },
-          options: {
-            auth,
-            // oauth_callback,
+          optionsFactory: (req) => {
+            if (req?.session?.user) {
+              const { signupType, accessToken } = req.session.user;
+
+              switch (signupType) {
+                case 'github':
+                  return {
+                    auth: accessToken,
+                  };
+                default:
+                  break;
+              }
+            }
+            return {};
           },
         };
       },

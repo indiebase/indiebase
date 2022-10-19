@@ -40,38 +40,43 @@ export class OrgController {
     type: QueryOrgResDto,
   })
   async queryOrgs(@Query() query: QueryOrgDto, @Req() req: FastifyRequest) {
-    // return this.orgService.queryOrg(query);
-    console.log(req.session.user);
     return;
   }
 
-  @Get('github/list')
-  @ApiCookieAuth('SID')
   @ApiOperation({
     summary: 'Fetch github orgs',
   })
-  async githubOrgs(@Query() query: QueryOrgDto, @Req() req: FastifyRequest) {
-    // return this.orgService.queryOrg(query);
-    console.log(req.session.user);
-    return;
+  @Get('github/list')
+  @ApiCookieAuth('SID')
+  async githubOrgs() {
+    return this.org.getGithubOrgs();
   }
 
+  @ApiOperation({
+    summary: 'Create a letscollab organization',
+  })
   @Post()
   @ApiCookieAuth('SID')
   async createOrg(@Body() body: CreateOrgDto, @UserInfo() info) {
-    return this.org.createOrg({
-      name: body.name,
-      // description: body.description,
-      // contactEmail: body.contactEmail,
-    });
+    // return this.org.createOrg({
+    //   name: body.name,
+    //   // description: body.description,
+    //   // contactEmail: body.contactEmail,
+    // });
   }
 
+  @ApiOperation({
+    summary: 'Update a letscollab organization',
+  })
   @Put()
   @ApiCookieAuth('SID')
   async updateOrg(@Body() body: UpdateOrgDto) {
     return this.org.updateOrg(body);
   }
 
+  @ApiOperation({
+    summary: 'Delete a letscollab organization',
+  })
   @Delete()
   @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)

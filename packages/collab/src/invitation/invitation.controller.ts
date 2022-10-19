@@ -9,13 +9,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { InvitationService } from './invitation.service';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { InviteMemberDto } from './invitation.dto';
 import { RpcSessionAuthClientGuard } from '@letscollab/helper';
 
-@Controller('invite')
+@Controller('v1/collab/invitation')
 @ApiTags('v1/Invitation')
 export class InvitationController {
   constructor(private readonly invitationService: InvitationService) {}
@@ -23,32 +23,29 @@ export class InvitationController {
   @MessagePattern({ cmd: 'get_name' })
   async getUser(@Payload() username: string) {}
 
-  @Get('query')
-  @ApiBearerAuth('jwt')
-  @ApiOkResponse({
-    // type: QueryTeamResDto,
-  })
+  @Get('list')
+  @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
   async queryUsers(@Query() query) {
     // return this.invitationService.queryTeam(query);
   }
 
   @Put('update')
-  @ApiBearerAuth('jwt')
+  @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
   async updateTeam(@Body() body) {
     // return this.invitationService.updateTeam(body);
   }
 
-  @Post('create')
-  @ApiBearerAuth('jwt')
+  @Post()
+  @ApiCookieAuth('SID')
   @UseGuards(RpcSessionAuthClientGuard)
   async inviteMember(@Body() body: InviteMemberDto, @Req() req: { user: any }) {
     return this.invitationService.inviteMember(body, req.user.body);
   }
 
-  @Get('invite/confirm')
-  @ApiBearerAuth('jwt')
+  @Get('confirm')
+  @ApiCookieAuth('SID')
   @UseGuards(RpcSessionAuthClientGuard)
   async confirmInviteMember(@Body() body) {
     // return this.invitationService.updateTeam(body);

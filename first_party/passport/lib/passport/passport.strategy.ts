@@ -4,7 +4,7 @@ import { Type } from '../interfaces';
 
 export interface IPassportStrategy {
   validate: (...args: any[]) => any;
-  setOptions: () => Promise<Record<string, any>> | Record<string, any>;
+  getStrategyOptions: () => Promise<Record<string, any>> | Record<string, any>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -14,7 +14,7 @@ export function PassportStrategy<T extends Type<any> = any>(
   abstract class MixinStrategy implements OnModuleInit {
     private strategy: T;
     abstract validate(...args: any[]): any;
-    abstract setOptions(): Promise<Record<string, any>> | Record<string, any>;
+    abstract getStrategyOptions(): Promise<Record<string, any>> | Record<string, any>;
 
     async onModuleInit() {
       try {
@@ -43,7 +43,7 @@ export function PassportStrategy<T extends Type<any> = any>(
           }
         */
 
-        const options = this.setOptions ? await this.setOptions() : {};
+        const options = this.getStrategyOptions ? await this.getStrategyOptions() : {};
         this.strategy = new Strategy(options, callback);
 
         const passportInstance = this.getPassportInstance();

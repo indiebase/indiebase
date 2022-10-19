@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthGuard } from '@letscollab/passport';
+import { AuthGuard, IAuthModuleOptions } from '@letscollab/passport';
 
 @Injectable()
 export class GithubGuard extends AuthGuard('github') {
@@ -12,6 +12,12 @@ export class GithubGuard extends AuthGuard('github') {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> | any {
     return super.canActivate(context);
+  }
+
+  override getAuthenticateOptions(context: any): IAuthModuleOptions<any> {
+    return {
+      scope: ['user', 'repo', 'admin:org'],
+    };
   }
 
   override handleRequest(err, user, _info, _context) {
