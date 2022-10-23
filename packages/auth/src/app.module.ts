@@ -13,7 +13,7 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { CasbinModule, CasbinService } from '@letscollab/nest-acl';
+import { CasbinModule } from '@letscollab/nest-acl';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { RedisSessionModule } from '@letscollab/helper';

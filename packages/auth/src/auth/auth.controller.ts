@@ -12,7 +12,7 @@ import {
   Session,
   Post,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponseProperty, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
 import { getSubdomain } from '@letscollab/helper';
 
@@ -76,6 +76,9 @@ export class AuthController {
         accessToken: req.user.accessToken,
       });
 
+    session.cookie.expires = new Date(
+      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
+    );
     session.cookie.domain = getSubdomain(
       new URL(`${req.protocol}://${req.hostname}`).hostname,
       2,

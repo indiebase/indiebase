@@ -21,25 +21,26 @@ import {
   type UserSession,
 } from '@letscollab/helper';
 import { SignupType } from './user.enum';
+import { UpdateUserProfileDto } from './user.dto';
 
 @Controller('v1/user')
 @ApiTags('v1/User')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly user: UserService) {}
 
   @MessagePattern({ cmd: 'get_complete_name' })
   async getFullUser(@Payload() username: string) {
-    return this.userService.getUser([{ username }], { rpc: true, full: true });
+    return this.user.getUser([{ username }], { rpc: true, full: true });
   }
 
   @MessagePattern({ cmd: 'get_name' })
   async getName(@Payload() username: string) {
-    return this.userService.getUser([{ username }], { rpc: true });
+    return this.user.getUser([{ username }], { rpc: true });
   }
 
   @MessagePattern({ cmd: 'get_id' })
   async getId(@Payload() id: number) {
-    return this.userService.getUser([{ id }], { rpc: true });
+    return this.user.getUser([{ id }], { rpc: true });
   }
 
   @UseFilters(MicroserviceExceptionFilter)
@@ -47,7 +48,7 @@ export class UserController {
   async signupGithub(@Payload() profile) {
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
-    return this.userService.signIn({
+    return this.user.signIn({
       username: username,
       profileUrl: profileUrl,
       signupType: SignupType.github,
@@ -73,7 +74,7 @@ export class UserController {
     summary: 'Get user',
   })
   async getProfile(@UserInfo() info: UserSession) {
-    const user = await this.userService.getUser([{ id: info.id }]);
+    const user = await this.user.getUser([{ id: info.id }]);
     return user;
   }
 
@@ -84,7 +85,7 @@ export class UserController {
     summary: 'Sync profile with platform. e.g. Github',
   })
   async syncProfile(@UserInfo() info: UserSession) {
-    const user = await this.userService.getUser([{ id: info.id }]);
+    const user = await this.user.getUser([{ id: info.id }]);
     return user;
   }
 
@@ -95,7 +96,7 @@ export class UserController {
     summary: 'Sync profile with platform. e.g. Github',
   })
   async getPossession(@UserInfo() info: UserSession) {
-    const user = await this.userService.getUser([{ id: info.id }]);
+    const user = await this.user.getUser([{ id: info.id }]);
     return user;
   }
 
@@ -104,8 +105,12 @@ export class UserController {
     summary: 'Update a user profile',
   })
   @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
-  async updateProfile(@UserInfo() info: UserSession, @Body() body) {
-    return;
+  async updateUserProfile(
+    @Body() body: UpdateUserProfileDto,
+    @UserInfo() info: UserSession,
+  ) {
+    const { password } = body;
+    return this.user.updateUser({ id: info.id }, { password });
   }
 
   // @Post('signup')
@@ -119,7 +124,7 @@ export class UserController {
   //   @Res() res: FastifyReply,
   //   @Session() session: FastifyRequest['session'],
   // ) {
-  //   const r = await this.userService.signup({
+  //   const r = await this.user.signup({
   //     signupType: SignupType.letscollab,
   //     username: body.username,
   //     password: body.password,
