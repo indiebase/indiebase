@@ -82,11 +82,18 @@ export class UserService {
     };
   }
 
-  public async updateUser(conf, data) {
-    await this.userRepo.update(conf, data).catch((err) => {
+  public async updateUser(
+    cond: { id?: number; username?: string },
+    data: Partial<UserEntity>,
+  ) {
+    const e = await this.userRepo.findOne({ where: cond });
+    const userEntity = this.userRepo.create({ ...e, ...data });
+
+    await this.userRepo.save(userEntity).catch((err) => {
+      this.logger.error(err);
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
-        message: 'Modify fail',
+        message: 'Update profile failed',
       });
     });
     return {
