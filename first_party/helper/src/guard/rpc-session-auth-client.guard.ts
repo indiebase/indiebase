@@ -12,7 +12,7 @@ export class RpcSessionAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {
     const req = context.switchToHttp().getRequest<FastifyRequest>();
 
     // If not logged in,  RpcAuthClientGuard will throw UnAuthorizedException.
-    if (!req.session?.user?.loggedIn) {
+    if (!(req.session as any)?.user?.loggedIn) {
       throw new UnauthorizedException({ message: 'Please login' });
     }
 

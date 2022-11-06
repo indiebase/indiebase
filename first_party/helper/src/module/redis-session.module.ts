@@ -101,7 +101,7 @@ export class RedisSessionModule implements NestModule, OnModuleDestroy {
       this.options.session.cookieName = 'SID';
     }
 
-    await fastifyInstance.register(fastifyCookie, this.options?.cookie);
+    await fastifyInstance.register(fastifyCookie as any, this.options?.cookie);
     await fastifyInstance.register(FastifySession, this.options.session);
   }
 }

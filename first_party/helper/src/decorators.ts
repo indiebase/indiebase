@@ -24,7 +24,7 @@ export const UserInfo = createParamDecorator(
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   return createParamDecorator((_, ctx: ExecutionContext) => {
-    const request: FastifyRequest = ctx.switchToHttp().getRequest();
+    const request: any = ctx.switchToHttp().getRequest();
 
     if (!key) return request.cookies;
 
