@@ -11,10 +11,17 @@ import {
   Res,
   Session,
   Post,
+  Body,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
-import { getSubdomain } from '@letscollab/helper';
+import {
+  ApiProtectHeader,
+  getSubdomain,
+  ProtectGuard,
+} from '@letscollab/helper';
+import { LocalSignInDto } from './auth.dto';
+import { LocalAuthGuard } from './local.guard';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
@@ -27,31 +34,22 @@ export class AuthController {
   /**
    * Give up letscollab's register
    */
-  // @Post('signin')
-  // @ApiCreatedResponse({
-  //   type: UserResDto,
-  // })
-  // @ApiProtectHeader()
-  // @UseGuards(ProtectGuard, LocalAuthGuard)
-  // async signIn(
-  //   @Body() _: LocalSignInDto,
-  //   @Session() session: FastifyRequest['session'],
-  //   @Req() req: FastifyRequest,
-  // ) {
-  //   const user = req.user;
+  @Post('signin')
+  @ApiProtectHeader()
+  @UseGuards(ProtectGuard, LocalAuthGuard)
+  async signIn(
+    @Body() _: LocalSignInDto,
+    @Session() session: FastifyRequest['session'],
+    @Req() req: FastifyRequest,
+  ) {
+    const user = req.user;
 
-  //   session.user = {
-  //     loggedIn: true,
-  //     username: user.username,
-  //     id: user.id,
-  //   };
-
-  //   return {
-  //     code: ResultCode.SUCCESS,
-  //     message: 'Successfully login',
-  //     d: user,
-  //   };
-  // }
+    // session.user = {
+    //   loggedIn: true,
+    //   username: user.username,
+    //   id: user.id,
+    // }
+  }
 
   @Get('oauth/github')
   @ApiBearerAuth('jwt')
@@ -101,8 +99,8 @@ export class AuthController {
         loggedIn: true,
         id: r.d.id,
         username: r.d.username,
-        signupType: r.d.signupType,
         accessToken: req.user.accessToken,
+        refreshToken: req.user.refreshToken,
       });
 
     return;

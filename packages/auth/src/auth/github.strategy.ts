@@ -20,6 +20,7 @@ export class GithubStrategy
   }
 
   async validate(accessToken, refreshToken, profile) {
+    console.log(accessToken, refreshToken, profile, '====================');
     return {
       accessToken,
       refreshToken,

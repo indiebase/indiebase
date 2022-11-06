@@ -98,6 +98,7 @@ export class UserService {
     });
     return {
       code: ResultCode.SUCCESS,
+      message: 'Update Successfully',
     };
   }
 

@@ -20,7 +20,6 @@ import {
   UserInfo,
   type UserSession,
 } from '@letscollab/helper';
-import { SignupType } from './user.enum';
 import { UpdateUserProfileDto } from './user.dto';
 
 @Controller('v1/user')
@@ -51,7 +50,6 @@ export class UserController {
     return this.user.signIn({
       username: username,
       profileUrl: profileUrl,
-      signupType: SignupType.github,
       githubId: id,
       nickname: displayName,
       email: json?.email,
@@ -112,34 +110,4 @@ export class UserController {
     const { password } = body;
     return this.user.updateUser({ id: info.id }, { password });
   }
-
-  // @Post('signup')
-  // @ApiCreatedResponse({
-  //   type: UserResDto,
-  // })
-  // @ApiProtectHeader()
-  // @UseGuards(ProtectGuard, CaptchaGuard)
-  // async signup(
-  //   @Body() body: SignupDto,
-  //   @Res() res: FastifyReply,
-  //   @Session() session: FastifyRequest['session'],
-  // ) {
-  //   const r = await this.user.signup({
-  //     signupType: SignupType.letscollab,
-  //     username: body.username,
-  //     password: body.password,
-  //     email: body.email,
-  //     nickname: body.nickname,
-  //   });
-
-  //   if (r.code > 0) {
-  //     session.user = {
-  //       loggedIn: false,
-  //       username: r.d.username,
-  //       id: r.d.id,
-  //     };
-  //   }
-
-  //   res.send(r);
-  // }
 }

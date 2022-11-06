@@ -14,7 +14,7 @@ export class GithubGuard extends AuthGuard('github') {
     return super.canActivate(context);
   }
 
-  override getAuthenticateOptions(context: any): IAuthModuleOptions<any> {
+  override getAuthenticateOptions(): IAuthModuleOptions<any> {
     return {
       scope: ['user', 'repo', 'admin:org'],
     };

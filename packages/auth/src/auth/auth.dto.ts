@@ -3,9 +3,7 @@ import { HttpResSchemaDto } from '@letscollab/helper';
 import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
 import { UserEntity } from '@letscollab/user';
 
-/**
- * @deprecated
- */
+
 export class LocalSignInDto {
   @ApiProperty({
     default: 'letscollabtest',

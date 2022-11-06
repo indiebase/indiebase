@@ -32,8 +32,8 @@ export class BaseResSchemaDto {
   message?: string | string[];
 }
 
-export class RpcResSchemaDto extends BaseResSchemaDto {
-  d?: any;
+export class RpcResSchemaDto<D = any> extends BaseResSchemaDto {
+  d?: D;
 
   statusCode?: number;
 }

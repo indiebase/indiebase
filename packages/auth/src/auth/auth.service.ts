@@ -3,6 +3,8 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
@@ -14,6 +16,9 @@ import {
   RpcException2Http,
   USER_RMQ,
 } from '@letscollab/helper';
+import * as bcrypt from 'bcrypt';
+import { LocalSignInDto } from './auth.dto';
+import { UserEntity } from '@letscollab/user';
 
 @Injectable()
 export class AuthService {
@@ -38,23 +43,24 @@ export class AuthService {
     );
   }
 
-  // async validateLocal(info: LocalSignInDto) {
-  //   let user = await this.getUser<
-  //     RpcResSchema<UserEntity & { password: string }>
-  //   >('get_complete_name', info.username);
+  async validateLocal(info: LocalSignInDto) {
+    let user = await this.getUser<RpcResSchemaDto<UserEntity>>(
+      'get_complete_name',
+      info.username,
+    );
 
-  //   if (user.code > 0) {
-  //     if (await bcrypt.compare(info.password, user.d.password)) {
-  //       return user.d;
-  //     } else {
-  //       throw new UnauthorizedException('Wrong password');
-  //     }
-  //   } else {
-  //     throw new NotFoundException(
-  //       `${info.username} not existed,  register first plz`,
-  //     );
-  //   }
-  // }
+    if (user.code > 0) {
+      if (await bcrypt.compare(info.password, user.d.password)) {
+        return user.d;
+      } else {
+        throw new UnauthorizedException('Wrong password');
+      }
+    } else {
+      throw new NotFoundException(
+        `${info.username} not existed,  register first plz`,
+      );
+    }
+  }
 
   async signInGithub(data): Promise<RpcResSchemaDto> {
     const r = await lastValueFrom(

@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { TeamEntity } from '@letscollab/collab';
-import { AccountStatus, SignupType } from './user.enum';
+import { AccountStatus } from './user.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('user')
@@ -18,12 +18,6 @@ export class UserEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column('varchar', {
-    length: 64,
-    comment: 'signup type e.g. github letscollab',
-  })
-  signupType: SignupType;
 
   @ApiProperty()
   @Column('char', { unique: true, nullable: true, length: 32 })
@@ -94,7 +88,6 @@ export class UserEntity {
   @BeforeInsert()
   @BeforeUpdate()
   private async hashPassword() {
-    console.log(this.password);
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }

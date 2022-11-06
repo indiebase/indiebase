@@ -8,7 +8,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from '@letscollab/helper';
-import { RequestUser, setupAuthApiDoc } from './utils';
+import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import fastifyHelmet from '@fastify/helmet';
@@ -17,7 +17,7 @@ import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user: RequestUser;
+    user: any;
   }
 }
 
