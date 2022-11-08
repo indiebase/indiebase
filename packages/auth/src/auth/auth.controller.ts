@@ -13,7 +13,7 @@ import {
   Post,
   Body,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
 import {
   ApiProtectHeader,
@@ -35,7 +35,7 @@ export class AuthController {
    * Give up letscollab's register
    */
   @Post('signin')
-  @ApiProtectHeader()
+  // @ApiProtectHeader()
   @UseGuards(ProtectGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
@@ -52,7 +52,6 @@ export class AuthController {
   }
 
   @Get('oauth/github')
-  @ApiBearerAuth('jwt')
   @UseGuards(GithubGuard)
   async github() {}
 

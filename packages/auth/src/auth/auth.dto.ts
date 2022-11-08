@@ -3,19 +3,18 @@ import { HttpResSchemaDto } from '@letscollab/helper';
 import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
 import { UserEntity } from '@letscollab/user';
 
-
 export class LocalSignInDto {
-  @ApiProperty({
-    default: 'letscollabtest',
-  })
+  // @ApiProperty({
+  //   default: 'letscollabtest',
+  // })
   @IsNotEmpty({
     message: 'Username empty',
   })
   username: string;
 
-  @ApiProperty({
-    default: 'letscollab',
-  })
+  // @ApiProperty({
+  //   default: 'letscollab',
+  // })
   @IsNotEmpty({
     message: 'Password empty',
   })
