@@ -64,7 +64,7 @@ export interface NacosNamingInstanceOptions {
 }
 
 export interface NacosNamingClient extends Base {
-  new (options?: NacosNamingClientOptions);
+  new (options?: NacosNamingClientOptions): this;
 
   registerInstance(
     serviceName: string,

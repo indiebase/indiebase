@@ -2,7 +2,7 @@ import { ConsoleLogger } from '@nestjs/common';
 import { format } from 'util';
 
 export class NacosLogger extends ConsoleLogger {
-  info(message: any, ...params) {
+  info(message: any, ...params: any) {
     super.log.apply(this, [format(message, ...params)]);
   }
 

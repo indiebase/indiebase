@@ -72,12 +72,10 @@ async function bootstrap() {
       contentSecurityPolicy: false,
       referrerPolicy: true,
     });
-
     await setupAuthApiDoc(app);
 
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
-
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
       options: {
@@ -90,7 +88,6 @@ async function bootstrap() {
     });
 
     await app.startAllMicroservices();
-
     await app.listen(
       configService.get('app.port'),
       configService.get('app.hostname'),
