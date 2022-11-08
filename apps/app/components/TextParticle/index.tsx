@@ -385,7 +385,7 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
     update();
   }, []);
 
-  return <canvas ref={ref}></canvas>;
+  return <canvas ref={ref} />;
 };
 
 TextParticle.defaultProps = {
