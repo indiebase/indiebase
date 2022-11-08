@@ -1,6 +1,6 @@
 import { Strategy } from 'passport-github2';
 import { IPassportStrategy, PassportStrategy } from '@letscollab/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 
 @Injectable()
@@ -8,7 +8,10 @@ export class GithubStrategy
   extends PassportStrategy(Strategy)
   implements IPassportStrategy
 {
-  constructor(private readonly nacosConfigService: NacosConfigService) {
+  constructor(
+    private readonly nacosConfigService: NacosConfigService,
+    private readonly logger: Logger,
+  ) {
     super();
   }
 
@@ -19,8 +22,9 @@ export class GithubStrategy
     return { clientID, clientSecret, callbackURL };
   }
 
-  async validate(accessToken, refreshToken, profile) {
-    console.log(accessToken, refreshToken, profile, '====================');
+  async validate(accessToken: string, refreshToken: string, profile: any) {
+    this.logger.debug('Github Tokens:', accessToken, refreshToken);
+
     return {
       accessToken,
       refreshToken,

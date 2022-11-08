@@ -44,7 +44,7 @@ export class UserController {
 
   @UseFilters(MicroserviceExceptionFilter)
   @MessagePattern({ cmd: 'signin_github' })
-  async signupGithub(@Payload() profile) {
+  async signupGithub(@Payload() profile: any) {
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
     return this.user.signIn({

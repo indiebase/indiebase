@@ -62,7 +62,7 @@ export class AuthService {
     }
   }
 
-  async signInGithub(data): Promise<RpcResSchemaDto> {
+  async signInGithub(data: any): Promise<RpcResSchemaDto> {
     const r = await lastValueFrom(
       this.userClient.send({ cmd: 'signin_github' }, data.profile).pipe(
         timeout(4000),
@@ -92,9 +92,9 @@ export class AuthService {
     }
   }
 
-  async updateRolePolicy(body) {}
+  async updateRolePolicy(body: any) {}
 
-  async attachRoleForUser({ username, rolename, domain }) {
+  async attachRoleForUser({ username, rolename, domain }: any) {
     return this.casbin.e
       .addRoleForUser(username, rolename, domain)
       .catch((err) => {

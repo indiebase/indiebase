@@ -28,7 +28,7 @@ async function bootstrap() {
 
   // Compat express passport
   fastify.addHook('onRequest', (request: any, reply: any, done) => {
-    reply.setHeader = function (key, value) {
+    reply.setHeader = function (key: string, value: string) {
       return this.raw.setHeader(key, value);
     };
     reply.end = function () {

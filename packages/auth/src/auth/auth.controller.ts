@@ -35,7 +35,7 @@ export class AuthController {
    * Give up letscollab's register
    */
   @Post('signin')
-  // @ApiProtectHeader()
+  @ApiProtectHeader()
   @UseGuards(ProtectGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
@@ -59,7 +59,7 @@ export class AuthController {
   @UseGuards(GithubGuard)
   async githubCallback(
     @Req() req: FastifyRequest,
-    @Session() session,
+    @Session() session: any,
     @Res() res: FastifyReply,
   ) {
     const r = await this.auth.signInGithub(req.user);
@@ -90,7 +90,7 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(GithubGuard)
-  async logout(@Req() req: FastifyRequest, @Session() session) {
+  async logout(@Req() req: FastifyRequest, @Session() session: any) {
     const r = await this.auth.signInGithub(req.user);
 
     r.code > 0 &&
@@ -119,7 +119,7 @@ export class AuthController {
 
   @UseGuards(RpcSessionAuthConsumerGuard)
   @MessagePattern({ cmd: 'auth' })
-  async rpcAuth(@Payload() payload) {
+  async rpcAuth(@Payload() payload: any) {
     return payload;
   }
 
