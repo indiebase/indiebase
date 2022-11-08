@@ -1,7 +1,5 @@
 https://letscollab.deskbtm.com
 
-https://nawb.deskbtm.com/more/lonely-mgmt/start
-
 <img src="https://s2.loli.net/2022/04/25/dPcuzynwbxStgl4.png" />
 
 <br />
