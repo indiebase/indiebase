@@ -19,6 +19,7 @@ export class GithubStrategy
     const {
       github: { clientID, clientSecret, callbackURL },
     } = await this.nacosConfigService.getConfig('service-auth.json');
+
     return { clientID, clientSecret, callbackURL };
   }
 

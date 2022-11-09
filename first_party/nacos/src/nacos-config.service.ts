@@ -8,6 +8,7 @@ import {
 import { NacosConfigClient } from 'nacos';
 import * as stripJsonComments from 'strip-json-comments';
 import { DataParser, NacosConfigClientOptions } from './nacos-config.interface';
+
 export interface SubOptions {
   dataId: string;
   group: string;
@@ -42,6 +43,10 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
     this.#client = new NacosConfigClient({
       ...options,
     });
+
+    if (options.observe) {
+      // this.subscribe();
+    }
 
     this.#parser = options.dataParser ?? this.#jsonParser;
   }

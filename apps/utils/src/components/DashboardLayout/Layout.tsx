@@ -26,9 +26,6 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
 
-  console.log(
-    '------------------------------------------------------------------',
-  );
 
   return (
     <ColorSchemeProvider

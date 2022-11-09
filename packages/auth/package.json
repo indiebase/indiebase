@@ -10,7 +10,6 @@
     "docker:prod": "npm run bundle && docker build --build-arg RUNTIME_ENV=production -t letscollab/auth .",
     "docker:local": "npm run bundle && docker build --build-arg RUNTIME_ENV=local --no-cache -t letscollab/auth-local .",
     "start": "npm run prebuild && cross-env NODE_ENV=development DEBUG=\"ioredis:*\" nodemon -e ts,js --exec ts-node --swc ./src/main.ts",
-    "start2": "cross-env NODE_ENV=development DEBUG=\"ioredis:*\" webpack --config webpack.config.js --watch",
     "preview:dev": "cross-env NODE_ENV=development node ./dist/index.js",
     "bundle": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
     "bundle:dev": "npm run prebuild && ncc build ./src/main.ts -o dist -s",

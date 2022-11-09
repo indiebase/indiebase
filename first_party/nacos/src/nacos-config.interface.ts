@@ -6,6 +6,7 @@ export interface DataParser {
 }
 export interface NacosConfigClientOptions extends ClientOptions {
   dataParser?: DataParser;
+  observe?: boolean;
   [key: string]: any;
 }
 
