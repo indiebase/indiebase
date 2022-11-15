@@ -1,7 +1,7 @@
 {
-  "name": "@letscollab/nest-acl",
+  "name": "@letscollab/nest-ac",
   "version": "0.0.1",
-  "description": "Nestjs microservice access module",
+  "description": "Nestjs microservice access control module for letscollab",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",

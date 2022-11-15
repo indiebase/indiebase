@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
-import { CasbinService } from '@letscollab/nest-acl';
+import { CasbinService } from '@letscollab/nest-ac';
 import {
   ResultCode,
   RpcCreateRoleBody,

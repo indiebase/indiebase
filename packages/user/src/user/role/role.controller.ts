@@ -24,7 +24,7 @@ import {
   UpdateRoleDto,
 } from './role.dto';
 import { RoleResource, RpcSessionAuthClientGuard } from '@letscollab/helper';
-import { UseAccess, AccessAction } from '@letscollab/nest-acl';
+import { UseAccess, AccessAction } from '@letscollab/nest-ac';
 
 @Controller('v1/user/role')
 @ApiTags('v1/Role')

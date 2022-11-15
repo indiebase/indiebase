@@ -22,6 +22,7 @@ import {
 } from '@letscollab/helper';
 import { LocalSignInDto } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
+import { HttpAdapterHost } from '@nestjs/core';
 
 @Controller('v1/auth')
 @ApiTags('v1/Auth')
@@ -29,6 +30,7 @@ export class AuthController {
   constructor(
     private readonly auth: AuthService,
     private readonly nacos: NacosConfigService,
+    private adapterHost: HttpAdapterHost
   ) {}
 
   /**
@@ -109,6 +111,7 @@ export class AuthController {
   async demo() {
     const a = await this.nacos.getConfig('common.json');
     console.log(a.demo);
+    // console.log(this.adapterHost.httpAdapter.);
 
     // console.log(
     //   await this.casbin.e?.getPolicy(),

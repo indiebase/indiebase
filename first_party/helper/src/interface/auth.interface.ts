@@ -1,6 +1,6 @@
 import { CombineResource } from '../resources/index';
-import { AccessAction } from '@letscollab/nest-acl';
-import { IAccessOptions } from '@letscollab/nest-acl';
+import { AccessAction } from '@letscollab/nest-ac';
+import { IAccessOptions } from '@letscollab/nest-ac';
 
 type Possession = { resource: CombineResource; action: AccessAction[] };
 

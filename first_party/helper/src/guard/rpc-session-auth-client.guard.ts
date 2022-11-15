@@ -1,6 +1,6 @@
 import { FastifyRequest } from 'fastify';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { RpcAuthClientGuard } from '@letscollab/nest-acl';
+import { RpcAuthClientGuard } from '@letscollab/nest-ac';
 import { AUTH_RMQ } from '../constants';
 
 export class RpcSessionAuthClientGuard extends RpcAuthClientGuard(AUTH_RMQ) {

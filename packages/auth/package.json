@@ -27,7 +27,7 @@
     "@fastify/session": "9.0.0",
     "@fastify/swagger": "^7.5.0",
     "@letscollab/helper": "workspace:^",
-    "@letscollab/nest-acl": "workspace:^",
+    "@letscollab/nest-ac": "workspace:^",
     "@letscollab/nest-nacos": "workspace:^",
     "@letscollab/passport": "workspace:^",
     "@letscollab/user": "workspace:^",

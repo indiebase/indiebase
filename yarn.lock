@@ -3791,7 +3791,7 @@ __metadata:
     "@fastify/session": 9.0.0
     "@fastify/swagger": ^7.5.0
     "@letscollab/helper": "workspace:^"
-    "@letscollab/nest-acl": "workspace:^"
+    "@letscollab/nest-ac": "workspace:^"
     "@letscollab/nest-nacos": "workspace:^"
     "@letscollab/passport": "workspace:^"
     "@letscollab/user": "workspace:^"
@@ -4023,7 +4023,7 @@ __metadata:
   resolution: "@letscollab/helper@workspace:first_party/helper"
   dependencies:
     "@fastify/session": 9.0.0
-    "@letscollab/nest-acl": "workspace:^"
+    "@letscollab/nest-ac": "workspace:^"
     "@letscollab/nest-nacos": "workspace:^"
     "@letscollab/user": "workspace:^"
     "@liaoliaots/nestjs-redis": ^8.0.0
@@ -4139,9 +4139,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-acl@workspace:^, @letscollab/nest-acl@workspace:first_party/acl":
+"@letscollab/nest-ac@workspace:^, @letscollab/nest-ac@workspace:first_party/acl":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-acl@workspace:first_party/acl"
+  resolution: "@letscollab/nest-ac@workspace:first_party/acl"
   dependencies:
     "@nestjs/cli": ^9.1.1
     "@nestjs/common": ^9.0.11
@@ -4404,12 +4404,6 @@ __metadata:
     typescript: ^4.8.4
     winston: ^3.7.2
     winston-loki: ^6.0.5
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/webpack@workspace:first_party/webpack":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/webpack@workspace:first_party/webpack"
   languageName: unknown
   linkType: soft
 
