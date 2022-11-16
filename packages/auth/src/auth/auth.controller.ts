@@ -24,13 +24,13 @@ import { LocalSignInDto } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
 import { HttpAdapterHost } from '@nestjs/core';
 
-@Controller('v1/auth')
-@ApiTags('v1/Auth')
+@Controller({ path: 'auth', version: '1' })
+@ApiTags('Auth')
 export class AuthController {
   constructor(
     private readonly auth: AuthService,
     private readonly nacos: NacosConfigService,
-    private adapterHost: HttpAdapterHost
+    private adapterHost: HttpAdapterHost,
   ) {}
 
   /**

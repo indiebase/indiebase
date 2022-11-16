@@ -10,7 +10,7 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from '@letscollab/helper';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import fastifyHelmet from '@fastify/helmet';
 import Fastify from 'fastify';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
@@ -76,6 +76,11 @@ async function bootstrap() {
 
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
+    app.enableVersioning({
+      defaultVersion: '1',
+      type: VersioningType.URI,
+    });
+
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
       options: {

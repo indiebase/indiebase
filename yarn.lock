@@ -4139,9 +4139,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-ac@workspace:^, @letscollab/nest-ac@workspace:first_party/acl":
+"@letscollab/nest-ac@workspace:^, @letscollab/nest-ac@workspace:first_party/ac":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-ac@workspace:first_party/acl"
+  resolution: "@letscollab/nest-ac@workspace:first_party/ac"
   dependencies:
     "@nestjs/cli": ^9.1.1
     "@nestjs/common": ^9.0.11
