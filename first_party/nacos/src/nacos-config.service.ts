@@ -31,9 +31,7 @@ export interface StripJsonCommentsOptions {
 @Injectable()
 export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
   #client: NacosConfigClient;
-
   #parser!: DataParser;
-
   #DEFAULT_GROUP = 'DEFAULT_GROUP';
 
   constructor(
@@ -44,10 +42,6 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
       ...options,
     });
 
-    if (options.observe) {
-      // this.subscribe();
-    }
-
     this.#parser = options.dataParser ?? this.#jsonParser;
   }
 
@@ -56,10 +50,9 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleDestroy() {
-    if (this.#client) {
-      await this.#client.close();
-      this.#client = null;
-    }
+    await this.#client.close();
+    this.#observableConfig = null;
+    this.#client = null;
   }
 
   public get client() {
