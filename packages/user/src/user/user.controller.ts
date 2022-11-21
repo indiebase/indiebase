@@ -22,7 +22,10 @@ import {
 } from '@letscollab/helper';
 import { UpdateUserProfileDto } from './user.dto';
 
-@Controller('v1/user')
+@Controller({
+  path: 'user',
+  version: '1',
+})
 @ApiTags('v1/User')
 export class UserController {
   constructor(private readonly user: UserService) {}

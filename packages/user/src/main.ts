@@ -6,11 +6,11 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { ConfigService } from '@nestjs/config';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 import { HttpExceptionFilter } from '@letscollab/helper';
-import { setupUserApiDoc } from './utils';
+import { setupApiDoc } from './utils';
 import fastifyHelmet from '@fastify/helmet';
 import Fastify from 'fastify';
 import {
@@ -64,16 +64,19 @@ async function bootstrap() {
       referrerPolicy: true,
     });
 
-    await setupUserApiDoc(app);
+    await setupApiDoc(app);
 
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
     app.useLogger(nestWinston);
-
     app.useGlobalFilters(
       new HttpExceptionFilter(nestWinston),
       new I18nValidationExceptionFilter(),
     );
+    app.enableVersioning({
+      defaultVersion: '1',
+      type: VersioningType.URI,
+    });
 
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,

@@ -40,7 +40,7 @@ export class UserService {
     });
   }
 
-  private async findOneFull(cond) {
+  private async findOneFull(cond: any) {
     return this.userRepo
       .createQueryBuilder('user')
       .addSelect('user.password')

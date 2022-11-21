@@ -51,7 +51,6 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleDestroy() {
     await this.#client.close();
-    this.#observableConfig = null;
     this.#client = null;
   }
 
@@ -129,7 +128,9 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
     reg: SubOptions,
     listener: (d: any) => any,
   ): Promise<NacosConfigClient> {
-    return this.#client.subscribe(reg, listener);
+    return this.#client.subscribe(reg, (data) => {
+      listener(this.#parser(data));
+    });
   }
 
   public async unSubscribe(

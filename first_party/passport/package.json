@@ -67,5 +67,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/nestjs/passport"
+  },
+  "dependencies": {
+    "@letscollab/nest-nacos": "workspace:^"
   }
 }
