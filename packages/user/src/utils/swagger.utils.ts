@@ -8,7 +8,7 @@ import Fastify from 'fastify';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
-export const setupUserApiDoc = (app: INestApplication) =>
+export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
       // const fastify: ReturnType<typeof Fastify> = app

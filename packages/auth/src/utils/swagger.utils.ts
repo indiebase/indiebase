@@ -8,7 +8,7 @@ import { FastifySwaggerOptions } from '@fastify/swagger';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
-export const setupAuthApiDoc = (app: INestApplication) =>
+export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
       const authOptions = new DocumentBuilder()

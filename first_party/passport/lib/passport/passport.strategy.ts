@@ -1,10 +1,20 @@
+import { NacosConfigService, SubOptions } from '@letscollab/nest-nacos';
 import { OnModuleInit } from '@nestjs/common';
 import * as passport from 'passport';
 import { Type } from '../interfaces';
+import { NacosConfigClient } from 'nacos-config';
+
+type SubStrategy = Array<
+  SubOptions & {
+    getProperty: (options: Record<string, any>) => Record<string, any>;
+  }
+>;
 
 export interface IPassportStrategy {
   validate: (...args: any[]) => any;
-  getStrategyOptions: () => Promise<Record<string, any>> | Record<string, any>;
+  getConfigManager: () => Promise<NacosConfigService> | NacosConfigService;
+
+  getProperties: (options: any) => Promise<SubStrategy>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -14,7 +24,12 @@ export function PassportStrategy<T extends Type<any> = any>(
   abstract class MixinStrategy implements OnModuleInit {
     private strategy: T;
     abstract validate(...args: any[]): any;
-    abstract getStrategyOptions(): Promise<Record<string, any>> | Record<string, any>;
+    abstract getConfigManager():
+      | Promise<NacosConfigService>
+      | NacosConfigService;
+    abstract getProperties: () => Promise<SubStrategy>;
+
+    finalizers: NacosConfigClient[];
 
     async onModuleInit() {
       try {
@@ -43,14 +58,23 @@ export function PassportStrategy<T extends Type<any> = any>(
           }
         */
 
-        const options = this.getStrategyOptions ? await this.getStrategyOptions() : {};
-        this.strategy = new Strategy(options, callback);
+        const configManager = await this.getConfigManager();
+        const subscriptions = await this.getProperties();
 
-        const passportInstance = this.getPassportInstance();
-        if (name) {
-          passportInstance.use(name, this.strategy as any);
-        } else {
-          passportInstance.use(this.strategy as any);
+        for await (const sub of subscriptions) {
+          const { getProperty, ...rest } = sub;
+          const s = await configManager.subscribe(rest, (config) => {
+            const options = getProperty(config);
+            this.strategy = new Strategy(options, callback);
+
+            const passportInstance = this.getPassportInstance();
+            if (name) {
+              passportInstance.use(name, this.strategy as any);
+            } else {
+              passportInstance.use(this.strategy as any);
+            }
+          });
+          this.finalizers.push(s);
         }
       } catch (error) {
         throw error;

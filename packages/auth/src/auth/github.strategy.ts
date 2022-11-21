@@ -9,18 +9,29 @@ export class GithubStrategy
   implements IPassportStrategy
 {
   constructor(
-    private readonly nacosConfigService: NacosConfigService,
+    private readonly nacosConfig: NacosConfigService,
     private readonly logger: Logger,
   ) {
     super();
   }
 
-  async getStrategyOptions() {
-    const {
-      github: { clientID, clientSecret, callbackURL },
-    } = await this.nacosConfigService.getConfig('service-auth.json');
+  getConfigManager() {
+    return this.nacosConfig;
+  }
 
-    return { clientID, clientSecret, callbackURL };
+  async getProperties() {
+    return [
+      {
+        dataId: 'service-auth.json',
+        group: 'DEFAULT_GROUP',
+        getProperty(options: Record<string, any>) {
+          const {
+            github: { clientID, clientSecret, callbackURL },
+          } = options;
+          return { clientID, clientSecret, callbackURL };
+        },
+      },
+    ];
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any) {

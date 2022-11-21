@@ -8,7 +8,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from '@letscollab/helper';
-import { setupAuthApiDoc } from './utils';
+import { setupApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import fastifyHelmet from '@fastify/helmet';
@@ -23,11 +23,7 @@ declare module 'fastify' {
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-let IS_INITIALIZED = false;
-
 async function bootstrap() {
-  IS_INITIALIZED = false;
-
   const fastify = Fastify();
 
   // Compat express passport
@@ -73,14 +69,16 @@ async function bootstrap() {
     contentSecurityPolicy: false,
     referrerPolicy: true,
   });
-  await setupAuthApiDoc(app);
 
-  app.useLogger(nestWinston);
-  app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
   app.enableVersioning({
     defaultVersion: '1',
     type: VersioningType.URI,
   });
+
+  await setupApiDoc(app);
+
+  app.useLogger(nestWinston);
+  app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
@@ -97,20 +95,6 @@ async function bootstrap() {
   await app.listen(
     configService.get('app.port'),
     configService.get('app.hostname'),
-  );
-
-  nacosConfig.subscribe(
-    {
-      dataId: 'service-auth.json',
-      group: 'DEFAULT_GROUP',
-    },
-    async () => {
-      if (IS_INITIALIZED) {
-        await app.close();
-        await bootstrap();
-      }
-      IS_INITIALIZED = true;
-    },
   );
 }
 
