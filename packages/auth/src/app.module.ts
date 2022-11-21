@@ -38,10 +38,10 @@ const isDev = process.env.NODE_ENV === 'development';
     RedisSessionModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
-        const cc = await config.getConfig('common.json');
-        cc.session.saveUninitialized = false;
+        const c = await config.getConfig('common.json');
+        c.session.saveUninitialized = false;
 
-        return cc;
+        return c;
       },
     }),
     WinstonModule.forRootAsync({

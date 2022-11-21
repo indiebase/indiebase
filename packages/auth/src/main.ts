@@ -10,7 +10,7 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from '@letscollab/helper';
 import { setupAuthApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import fastifyHelmet from '@fastify/helmet';
 import Fastify from 'fastify';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
@@ -23,7 +23,11 @@ declare module 'fastify' {
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
+let IS_INITIALIZED = false;
+
 async function bootstrap() {
+  IS_INITIALIZED = false;
+
   const fastify = Fastify();
 
   // Compat express passport
@@ -48,58 +52,66 @@ async function bootstrap() {
     },
   );
 
-  const logger = app.get<Logger>(Logger);
+  const configService = app.get<ConfigService>(ConfigService);
+  const nacosConfig = app.get<NacosConfigService>(NacosConfigService);
+  const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  const authConfig = await nacosConfig.getConfig('service-auth.json');
 
-  try {
-    const configService = app.get<ConfigService>(ConfigService);
-    const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
-    const authConfigs = await nacosConfigService.getConfig('service-auth.json');
-    const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      enableDebugMessages: isDevelopment,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      exceptionFactory: i18nValidationErrorFactory,
+    }),
+  );
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-        enableDebugMessages: isDevelopment,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        exceptionFactory: i18nValidationErrorFactory,
-      }),
-    );
+  await app.register(fastifyHelmet, {
+    global: true,
+    crossOriginOpenerPolicy: false,
+    contentSecurityPolicy: false,
+    referrerPolicy: true,
+  });
+  await setupAuthApiDoc(app);
 
-    await app.register(fastifyHelmet, {
-      global: true,
-      crossOriginOpenerPolicy: false,
-      contentSecurityPolicy: false,
-      referrerPolicy: true,
-    });
-    await setupAuthApiDoc(app);
+  app.useLogger(nestWinston);
+  app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
+  app.enableVersioning({
+    defaultVersion: '1',
+    type: VersioningType.URI,
+  });
 
-    app.useLogger(nestWinston);
-    app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
-    app.enableVersioning({
-      defaultVersion: '1',
-      type: VersioningType.URI,
-    });
-
-    app.connectMicroservice<MicroserviceOptions>({
-      transport: Transport.RMQ,
-      options: {
-        urls: authConfigs.rabbitmq.urls,
-        queue: 'auth_queue',
-        queueOptions: {
-          durable: false,
-        },
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: authConfig.rabbitmq.urls,
+      queue: 'auth_queue',
+      queueOptions: {
+        durable: false,
       },
-    });
+    },
+  });
 
-    await app.startAllMicroservices();
-    await app.listen(
-      configService.get('app.port'),
-      configService.get('app.hostname'),
-    );
-  } catch (error) {
-    logger.error(error);
-  }
+  await app.startAllMicroservices();
+  await app.listen(
+    configService.get('app.port'),
+    configService.get('app.hostname'),
+  );
+
+  nacosConfig.subscribe(
+    {
+      dataId: 'service-auth.json',
+      group: 'DEFAULT_GROUP',
+    },
+    async () => {
+      if (IS_INITIALIZED) {
+        await app.close();
+        await bootstrap();
+      }
+      IS_INITIALIZED = true;
+    },
+  );
 }
 
 bootstrap();
