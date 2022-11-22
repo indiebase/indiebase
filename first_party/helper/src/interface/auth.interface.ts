@@ -12,6 +12,7 @@ export interface RpcCreateRoleBody {
 
 export type UserSession = {
   username: string;
+  // database use id
   id: number;
   role?: string;
   access?: any;

@@ -1,4 +1,5 @@
-import * as passport from 'passport';
+/* eslint-disable @typescript-eslint/ban-types */
+import passport from '@fastify/passport';
 
 export abstract class PassportSerializer {
   abstract serializeUser(user: any, done: Function);
@@ -6,10 +7,11 @@ export abstract class PassportSerializer {
 
   constructor() {
     const passportInstance = this.getPassportInstance();
-    passportInstance.serializeUser((user, done) =>
+
+    passportInstance.registerUserSerializer((user, done) =>
       this.serializeUser(user, done)
     );
-    passportInstance.deserializeUser((payload, done) =>
+    passportInstance.registerUserDeserializer((payload, done) =>
       this.deserializeUser(payload, done)
     );
   }

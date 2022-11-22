@@ -13,7 +13,7 @@ import { ApiCookieAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { InviteMemberDto } from './invitation.dto';
-import { RpcSessionAuthClientGuard } from '@letscollab/helper';
+import { RpcSessionAuthzClientGuard } from '@letscollab/helper';
 
 @Controller('v1/collab/invitation')
 @ApiTags('v1/Invitation')
@@ -39,14 +39,14 @@ export class InvitationController {
 
   @Post()
   @ApiCookieAuth('SID')
-  @UseGuards(RpcSessionAuthClientGuard)
+  @UseGuards(RpcSessionAuthzClientGuard)
   async inviteMember(@Body() body: InviteMemberDto, @Req() req: { user: any }) {
     return this.invitationService.inviteMember(body, req.user.body);
   }
 
   @Get('confirm')
   @ApiCookieAuth('SID')
-  @UseGuards(RpcSessionAuthClientGuard)
+  @UseGuards(RpcSessionAuthzClientGuard)
   async confirmInviteMember(@Body() body) {
     // return this.invitationService.updateTeam(body);
   }

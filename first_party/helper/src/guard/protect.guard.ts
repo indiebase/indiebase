@@ -59,19 +59,19 @@ export class ProtectGuard implements CanActivate {
         (await this.nacosConfigService.getConfig('common.json')) ?? {};
 
       // If remote config is disabled, return true.
-      if (!common.security.enableProtectGuard) {
+      if (!common.apiProtect.enableProtectGuard) {
         return true;
       }
 
       const apiToken = request.headers[
-        common.security?.guardHeader ?? 'Access-Control-Allow-Credential'
+        common.apiProtect?.guardHeader ?? 'Access-Control-Allow-Credential'
       ] as string;
 
       if (!apiToken) {
         throw new BadRequestException();
       }
-      const salt = common.security.apiSalt;
-      const expire = common.security.expire;
+      const salt = common.apiProtect.apiSalt;
+      const expire = common.apiProtect.apiExpire;
       return apiTokenInspect(apiToken, salt, expire);
     } catch (error) {
       this.logger.error(error);

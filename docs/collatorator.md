@@ -45,3 +45,5 @@ Ports Range `23330~23350`
 
 在Windows上开发，使用Docker需要对 0.0.0.0 绑定
 
+
+Nacos配置中带有`#mut`注释的属于可动态配置的。

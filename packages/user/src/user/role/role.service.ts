@@ -109,7 +109,7 @@ export class RoleService {
     };
   }
 
-  async attachRole(body) {
+  async attachRole(body: any) {
     await awaitValue(this.authClient, { cmd: 'set_user_role' }, body, (err) => {
       throw RpcException2Http(err);
     });

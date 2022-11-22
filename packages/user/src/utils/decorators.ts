@@ -1,6 +1,6 @@
 import { UserEntity } from '../user/user.entity';
 import { DataSource } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { applyDecorators, Injectable } from '@nestjs/common';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
@@ -8,6 +8,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
+import { ApiHeader } from '@nestjs/swagger';
 
 @ValidatorConstraint({ async: true })
 @Injectable()

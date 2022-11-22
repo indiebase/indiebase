@@ -69,6 +69,7 @@
     "url": "https://github.com/nestjs/passport"
   },
   "dependencies": {
+    "@fastify/passport": "^2.2.0",
     "@letscollab/nest-nacos": "workspace:^"
   }
 }

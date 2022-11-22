@@ -1,8 +1,7 @@
 import { NacosConfigService, SubOptions } from '@letscollab/nest-nacos';
 import { OnModuleInit } from '@nestjs/common';
-import * as passport from 'passport';
+import passport from '@fastify/passport';
 import { Type } from '../interfaces';
-import { NacosConfigClient } from 'nacos-config';
 
 type SubStrategy = Array<
   SubOptions & {
@@ -10,11 +9,14 @@ type SubStrategy = Array<
   }
 >;
 
-export interface IPassportStrategy {
+export interface ObservablePassportStrategy {
   validate: (...args: any[]) => any;
   getConfigManager: () => Promise<NacosConfigService> | NacosConfigService;
-
-  getProperties: (options: any) => Promise<SubStrategy>;
+  getProperties: () => Promise<SubStrategy>;
+}
+export interface StaticPassportStrategy {
+  validate: (...args: any[]) => any;
+  getStaticOptions: () => Promise<Record<string, any>>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -24,12 +26,11 @@ export function PassportStrategy<T extends Type<any> = any>(
   abstract class MixinStrategy implements OnModuleInit {
     private strategy: T;
     abstract validate(...args: any[]): any;
-    abstract getConfigManager():
+    abstract getConfigManager?: () =>
       | Promise<NacosConfigService>
       | NacosConfigService;
-    abstract getProperties: () => Promise<SubStrategy>;
-
-    finalizers: NacosConfigClient[];
+    abstract getProperties?: () => Promise<SubStrategy>;
+    abstract getStaticOptions?: () => Promise<Record<string, any>>;
 
     async onModuleInit() {
       try {
@@ -46,35 +47,35 @@ export function PassportStrategy<T extends Type<any> = any>(
             done(err, null);
           }
         };
-        /**
-         * Commented out due to the regression it introduced
-         * Read more here: https://github.com/nestjs/passport/issues/446
 
-          const validate = new.target?.prototype?.validate;
-          if (validate) {
-            Object.defineProperty(callback, 'length', {
-              value: validate.length + 1
+        const usePassport = (strategy) => {
+          const passportInstance = this.getPassportInstance();
+          if (name) {
+            passportInstance.use(name, strategy as any);
+          } else {
+            passportInstance.use(strategy as any);
+          }
+        };
+
+        // Dynamic configurable strategy based on Nacos.
+        if (this.getConfigManager && this.getProperties) {
+          const configManager = await this.getConfigManager();
+          const subscriptions = await this.getProperties();
+
+          for await (const sub of subscriptions) {
+            const { getProperty, ...rest } = sub;
+            await configManager.subscribe(rest, (config) => {
+              const options = getProperty(config);
+              const strategy = new Strategy(options, callback);
+
+              usePassport(strategy);
             });
           }
-        */
+        } else {
+          const options = (await this.getStaticOptions?.()) ?? {};
+          const strategy = new Strategy(options, callback);
 
-        const configManager = await this.getConfigManager();
-        const subscriptions = await this.getProperties();
-
-        for await (const sub of subscriptions) {
-          const { getProperty, ...rest } = sub;
-          const s = await configManager.subscribe(rest, (config) => {
-            const options = getProperty(config);
-            this.strategy = new Strategy(options, callback);
-
-            const passportInstance = this.getPassportInstance();
-            if (name) {
-              passportInstance.use(name, this.strategy as any);
-            } else {
-              passportInstance.use(this.strategy as any);
-            }
-          });
-          this.finalizers.push(s);
+          usePassport(strategy);
         }
       } catch (error) {
         throw error;

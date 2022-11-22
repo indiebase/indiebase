@@ -64,6 +64,11 @@ async function bootstrap() {
       referrerPolicy: true,
     });
 
+    app.enableVersioning({
+      defaultVersion: '1',
+      type: VersioningType.URI,
+    });
+
     await setupApiDoc(app);
 
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
@@ -73,10 +78,6 @@ async function bootstrap() {
       new HttpExceptionFilter(nestWinston),
       new I18nValidationExceptionFilter(),
     );
-    app.enableVersioning({
-      defaultVersion: '1',
-      type: VersioningType.URI,
-    });
 
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
