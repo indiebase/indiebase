@@ -1,22 +1,20 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { HttpResSchemaDto } from '@letscollab/helper';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
-import { UserEntity } from '@letscollab/user';
 
 export class LocalSignInDto {
-  // @ApiProperty({
-  //   default: 'letscollabtest',
-  // })
+  @ApiProperty({
+    default: 'Nawbc',
+  })
   @IsNotEmpty({
-    message: 'Username empty',
+    message: "Username shouldn't empty",
   })
   username: string;
 
-  // @ApiProperty({
-  //   default: 'letscollab',
-  // })
+  @ApiProperty({
+    default: 'letscollab',
+  })
   @IsNotEmpty({
-    message: 'Password empty',
+    message: "Password shouldn't be empty",
   })
   @MinLength(8, {
     message: 'Password length less than 8',

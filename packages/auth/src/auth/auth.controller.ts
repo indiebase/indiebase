@@ -45,7 +45,10 @@ export class AuthController {
     @Req() req: FastifyRequest,
   ) {
     const user = req.user;
+    console.log(user);
 
+    console.log(req);
+    console.log(session);
     // session.user = {
     //   loggedIn: true,
     //   username: user.username,
@@ -91,19 +94,16 @@ export class AuthController {
   }
 
   @Post('logout')
-  @UseGuards(GithubGuard)
-  async logout(@Req() req: FastifyRequest, @Session() session: any) {
-    const r = await this.auth.signInGithub(req.user);
+  @UseGuards(LocalAuthGuard)
+  async logout(
+    @Req() req: FastifyRequest,
+    @Res() res: FastifyReply,
+    @Session() session: FastifyRequest['session'],
+  ) {
+    console.log(req, session);
+    (req as any).logout();
 
-    r.code > 0 &&
-      session.set('user', {
-        loggedIn: true,
-        id: r.d.id,
-        username: r.d.username,
-        accessToken: req.user.accessToken,
-        refreshToken: req.user.refreshToken,
-      });
-
+    // res.clearCookie('SID');
     return;
   }
 

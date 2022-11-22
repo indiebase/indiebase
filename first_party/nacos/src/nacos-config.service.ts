@@ -33,6 +33,7 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
   #client: NacosConfigClient;
   #parser!: DataParser;
   #DEFAULT_GROUP = 'DEFAULT_GROUP';
+  #finalizer: { register: SubOptions; client: NacosConfigClient }[] = [];
 
   constructor(
     @Inject(NACOS_CONFIG_OPTIONS)
@@ -50,6 +51,10 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
   }
 
   async onModuleDestroy() {
+    for (const sub of this.#finalizer) {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      this.unSubscribe(sub.register, () => {});
+    }
     await this.#client.close();
     this.#client = null;
   }
@@ -124,19 +129,29 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
     return this.#client.remove(dataId, group, options);
   }
 
-  public async subscribe(
+  /**
+   * When `onModuleDestroy` emit, subscriptions will be auto released .
+   * @param reg
+   * @param listener
+   * @returns
+   */
+  public subscribe(
     reg: SubOptions,
     listener: (d: any) => any,
-  ): Promise<NacosConfigClient> {
-    return this.#client.subscribe(reg, (data) => {
+  ): NacosConfigClient {
+    const sub = this.#client.subscribe(reg, (data) => {
       listener(this.#parser(data));
     });
+
+    this.#finalizer.push({ register: reg, client: sub });
+
+    return sub;
   }
 
-  public async unSubscribe(
+  public unSubscribe(
     reg: SubOptions,
     listener: (d: any) => any,
-  ): Promise<NacosConfigClient> {
+  ): NacosConfigClient {
     return this.#client.unSubscribe(reg, listener);
   }
 

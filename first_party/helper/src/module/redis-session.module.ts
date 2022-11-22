@@ -18,7 +18,7 @@ import * as ConnectRedis from 'connect-redis';
 import { FastifyInstance } from 'fastify';
 import { type Redis as IRedis, RedisOptions } from 'ioredis';
 import Redis from 'ioredis';
-import fastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
+import FastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
 
 const RedisStore = ConnectRedis(FastifySession);
 export const REDIS_SESSION_FASTIFY_MODULE = Symbol(
@@ -101,7 +101,7 @@ export class RedisSessionModule implements NestModule, OnModuleDestroy {
       this.options.session.cookieName = 'SID';
     }
 
-    await fastifyInstance.register(fastifyCookie as any, this.options?.cookie);
+    await fastifyInstance.register(FastifyCookie, this.options?.cookie);
     await fastifyInstance.register(FastifySession, this.options.session);
   }
 }

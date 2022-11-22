@@ -1,11 +1,12 @@
 /// <reference types="@fastify/cookie" />
 
 import {
+  applyDecorators,
   BadRequestException,
   createParamDecorator,
   ExecutionContext,
 } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
+import { ApiHeader } from '@nestjs/swagger';
 
 export const UserRoles = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
@@ -43,3 +44,15 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
     return v;
   })();
 };
+
+export function TestApiHeader() {
+  return applyDecorators(
+    ApiHeader({
+      name: 'Package-Name',
+      description: 'The product package name, same as domain',
+      schema: {
+        default: 'letscollab.letscollab.deskbtm.com',
+      },
+    }),
+  );
+}

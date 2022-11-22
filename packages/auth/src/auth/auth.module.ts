@@ -6,10 +6,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
 import { USER_RMQ } from '@letscollab/helper';
+import { LocalStrategy } from './local.strategy';
+import { AuthSerializer } from './auth.serializer';
 
 @Module({
   imports: [
-    PassportModule,
+    PassportModule.register({ session: true }),
     ClientsModule.registerAsync([
       {
         name: USER_RMQ,
@@ -35,7 +37,13 @@ import { USER_RMQ } from '@letscollab/helper';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, GithubStrategy, Logger],
-  exports: [AuthService, GithubStrategy, PassportModule],
+  providers: [
+    AuthService,
+    GithubStrategy,
+    LocalStrategy,
+    Logger,
+    AuthSerializer,
+  ],
+  exports: [AuthService, GithubStrategy, LocalStrategy, PassportModule],
 })
 export class AuthModule {}

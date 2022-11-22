@@ -1,12 +1,16 @@
 import { Strategy } from 'passport-github2';
-import { IPassportStrategy, PassportStrategy } from '@letscollab/passport';
+import {
+  ObservablePassportStrategy,
+  PassportStrategy,
+} from '@letscollab/passport';
 import { Injectable, Logger } from '@nestjs/common';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 
+// Observable
 @Injectable()
 export class GithubStrategy
   extends PassportStrategy(Strategy)
-  implements IPassportStrategy
+  implements ObservablePassportStrategy
 {
   constructor(
     private readonly nacosConfig: NacosConfigService,

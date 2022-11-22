@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import {
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard, IAuthModuleOptions } from '@letscollab/passport';

@@ -2929,6 +2929,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fastify/flash@npm:^5.0.0":
+  version: 5.1.0
+  resolution: "@fastify/flash@npm:5.1.0"
+  dependencies:
+    fastify-plugin: ^4.0.0
+  checksum: 5aeff7a229d5d1b890a8b8f31efc89974227335e26d71c96505ca18ba4278851c7b6d018ddfb1e3caad41e25dd9083d9aa51bdfcb08a7ee0f8ca8b1d13a47eb0
+  languageName: node
+  linkType: hard
+
 "@fastify/formbody@npm:7.3.0":
   version: 7.3.0
   resolution: "@fastify/formbody@npm:7.3.0"
@@ -2967,6 +2976,16 @@ __metadata:
     path-to-regexp: ^6.1.0
     reusify: ^1.0.4
   checksum: 3d5bc10a49832493c3780138bb76f9cb4c941c0149f722a1ce7fe45086a77186f62c7e475b9f8406162f736935d5f45d4acd4f1c2e94c0b3b861315a8948362b
+  languageName: node
+  linkType: hard
+
+"@fastify/passport@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@fastify/passport@npm:2.2.0"
+  dependencies:
+    "@fastify/flash": ^5.0.0
+    fastify-plugin: ^4.0.0
+  checksum: 8add9da3011a6fb0c82c268c8ba9ae1436def6702ae2ebb78eedaf5dab1379c775c7fd0f976c74ad63399799da048ebb5fc8728f0370ad73e01f628d10ed020e
   languageName: node
   linkType: hard
 
@@ -4312,6 +4331,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": 17.0.3
     "@commitlint/config-angular": 17.0.0
+    "@fastify/passport": ^2.2.0
     "@letscollab/nest-nacos": "workspace:^"
     "@nestjs/common": 9.0.11
     "@nestjs/core": 9.0.11

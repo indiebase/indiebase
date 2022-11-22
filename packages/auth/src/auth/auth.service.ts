@@ -67,8 +67,7 @@ export class AuthService {
       this.userClient.send({ cmd: 'signin_github' }, data.profile).pipe(
         timeout(4000),
         catchError((err) => {
-          this.logger.error(err);
-
+          this.logger.error('[signin_github]: ' + err);
           throw RpcException2Http(err);
         }),
       ),

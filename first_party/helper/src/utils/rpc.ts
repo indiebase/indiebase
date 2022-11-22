@@ -62,6 +62,9 @@ export function awaitValue(
 }
 
 export const RpcException2Http = function (val: RpcResSchemaDto) {
+  // Not return stack.
+  delete (val as any)?.stack;
+
   switch (val.statusCode) {
     case 400:
       return new BadRequestException(val);

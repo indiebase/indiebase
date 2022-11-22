@@ -19,7 +19,7 @@ abstract class BasicAuthGuard {
 
 type AbstractAuth = abstract new (...args: any) => BasicAuthGuard;
 
-export function RpcAuthClientGuard(
+export function RpcAuthzClientGuard(
   clientName: string,
   options?: {
     timeout?: number;

@@ -1,6 +1,6 @@
 import {
   ResultCode,
-  RpcSessionAuthClientGuard,
+  RpcSessionAuthzClientGuard,
   UserResource,
 } from '@letscollab/helper';
 import { AccessAction, UseAccess } from '@letscollab/nest-ac';
@@ -22,7 +22,7 @@ export class ResourceController {
     summary: 'Get resource list',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(RpcSessionAuthClientGuard)
+  @UseGuards(RpcSessionAuthzClientGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: UserResource.list,

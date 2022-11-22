@@ -17,7 +17,7 @@ export class UpdateUserProfileDto {
   email: string;
 
   @ApiProperty({
-    default: 'dev123456',
+    default: 'letscollab',
   })
   @IsOptional()
   @MinLength(8, {

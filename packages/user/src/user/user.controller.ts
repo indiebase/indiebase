@@ -16,7 +16,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import {
   MicroserviceExceptionFilter,
   ProtectGuard,
-  RpcSessionAuthClientGuard,
+  RpcSessionAuthzClientGuard,
   UserInfo,
   type UserSession,
 } from '@letscollab/helper';
@@ -47,7 +47,7 @@ export class UserController {
 
   @UseFilters(MicroserviceExceptionFilter)
   @MessagePattern({ cmd: 'signin_github' })
-  async signupGithub(@Payload() profile: any) {
+  async signInGithub(@Payload() profile: any) {
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
     return this.user.signIn({
@@ -63,14 +63,14 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthzClientGuard)
   async getUserList(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     return res.send({ token: 1 });
   }
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthzClientGuard)
   @ApiOperation({
     summary: 'Get user',
   })
@@ -81,7 +81,7 @@ export class UserController {
 
   @Post('profile/sync')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthzClientGuard)
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
@@ -92,7 +92,7 @@ export class UserController {
 
   @Post('possession')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @UseGuards(ProtectGuard, RpcSessionAuthzClientGuard)
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
@@ -105,12 +105,13 @@ export class UserController {
   @ApiOperation({
     summary: 'Update a user profile',
   })
-  @UseGuards(ProtectGuard, RpcSessionAuthClientGuard)
+  @ApiCookieAuth('SID')
+  @UseGuards(ProtectGuard, RpcSessionAuthzClientGuard)
   async updateUserProfile(
     @Body() body: UpdateUserProfileDto,
     @UserInfo() info: UserSession,
   ) {
-    const { password } = body;
-    return this.user.updateUser({ id: info.id }, { password });
+    const { password, email } = body;
+    return this.user.updateUser({ id: info.id }, { password, email });
   }
 }
