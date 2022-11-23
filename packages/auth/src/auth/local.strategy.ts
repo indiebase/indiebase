@@ -1,5 +1,8 @@
 import { Strategy } from 'passport-local';
-import { PassportStrategy, StaticPassportStrategy } from '@letscollab/passport';
+import {
+  PassportStrategy,
+  StaticPassportStrategy,
+} from '@letscollab-nest/fastify-passport';
 import { Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
@@ -12,7 +15,7 @@ export class LocalStrategy
     super();
   }
 
-  async getStaticOptions() {
+  async useStaticOptions() {
     return {};
   }
 

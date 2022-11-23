@@ -1,7 +1,7 @@
 import { RoleEntity } from './role/role.entity';
 import { RoleService } from './role/role.service';
 import { TeamEntity } from '@letscollab/collab';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { Logger, Module } from '@nestjs/common';

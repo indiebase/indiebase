@@ -1,4 +1,4 @@
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';

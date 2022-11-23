@@ -1,4 +1,4 @@
-import { NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigService } from '@letscollab-nest/nacos';
 import {
   Injectable,
   CanActivate,

@@ -19,6 +19,7 @@ import { FastifyInstance } from 'fastify';
 import { type Redis as IRedis, RedisOptions } from 'ioredis';
 import Redis from 'ioredis';
 import FastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
+import fastifyPassport from '@fastify/passport';
 
 const RedisStore = ConnectRedis(FastifySession);
 export const REDIS_SESSION_FASTIFY_MODULE = Symbol(
@@ -50,12 +51,12 @@ export interface RedisSessionFastifyModuleOptionsFactory {
 
 @Global()
 @Module({})
-export class RedisSessionModule implements NestModule, OnModuleDestroy {
+export class ApplySessionModule implements NestModule, OnModuleDestroy {
   public static forRoot(
     options: RedisSessionFastifyModuleOptions,
   ): DynamicModule {
     return {
-      module: RedisSessionModule,
+      module: ApplySessionModule,
       providers: [
         {
           provide: REDIS_SESSION_FASTIFY_MODULE,
@@ -70,7 +71,7 @@ export class RedisSessionModule implements NestModule, OnModuleDestroy {
   ): DynamicModule {
     return {
       imports: [...(options.imports || [])],
-      module: RedisSessionModule,
+      module: ApplySessionModule,
       providers: [...createAsyncProviders(options)],
     };
   }
@@ -103,6 +104,8 @@ export class RedisSessionModule implements NestModule, OnModuleDestroy {
 
     await fastifyInstance.register(FastifyCookie, this.options?.cookie);
     await fastifyInstance.register(FastifySession, this.options.session);
+    await fastifyInstance.register(fastifyPassport.initialize());
+    await fastifyInstance.register(fastifyPassport.secureSession());
   }
 }
 

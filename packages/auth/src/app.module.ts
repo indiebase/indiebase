@@ -7,7 +7,7 @@ import {
   NacosConfigService,
   NacosNamingModule,
   NacosNamingService,
-} from '@letscollab/nest-nacos';
+} from '@letscollab-nest/nacos';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
@@ -16,7 +16,7 @@ import LokiTransport = require('winston-loki');
 import { CasbinModule } from '@letscollab/nest-ac';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import TypeOrmAdapter from 'typeorm-adapter';
-import { RedisSessionModule } from '@letscollab/helper';
+import { ApplySessionModule } from '@letscollab/helper';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -35,13 +35,17 @@ const isDev = process.env.NODE_ENV === 'development';
         return { config: configs.redis };
       },
     }),
-    RedisSessionModule.forRootAsync({
+    // This module integrated with Redis, Session Cookie, Fastify Passport.
+    ApplySessionModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
         const c = await config.getConfig('common.json');
         c.session.saveUninitialized = false;
-
-        return c;
+        return {
+          session: c.session,
+          cookie: c.cookie,
+          redis: c.redis,
+        };
       },
     }),
     WinstonModule.forRootAsync({

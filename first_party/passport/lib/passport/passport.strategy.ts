@@ -1,4 +1,4 @@
-import { NacosConfigService, SubOptions } from '@letscollab/nest-nacos';
+import { NacosConfigService, SubOptions } from '@letscollab-nest/nacos';
 import { OnModuleInit } from '@nestjs/common';
 import passport from '@fastify/passport';
 import { Type } from '../interfaces';
@@ -11,12 +11,12 @@ type SubStrategy = Array<
 
 export interface ObservablePassportStrategy {
   validate: (...args: any[]) => any;
-  getConfigManager: () => Promise<NacosConfigService> | NacosConfigService;
-  getProperties: () => Promise<SubStrategy>;
+  useConfigManager: () => Promise<NacosConfigService> | NacosConfigService;
+  useProperties: () => Promise<SubStrategy>;
 }
 export interface StaticPassportStrategy {
   validate: (...args: any[]) => any;
-  getStaticOptions: () => Promise<Record<string, any>>;
+  useStaticOptions: () => Promise<Record<string, any>>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -26,11 +26,11 @@ export function PassportStrategy<T extends Type<any> = any>(
   abstract class MixinStrategy implements OnModuleInit {
     private strategy: T;
     abstract validate(...args: any[]): any;
-    abstract getConfigManager?: () =>
+    abstract useConfigManager?: () =>
       | Promise<NacosConfigService>
       | NacosConfigService;
-    abstract getProperties?: () => Promise<SubStrategy>;
-    abstract getStaticOptions?: () => Promise<Record<string, any>>;
+    abstract useProperties?: () => Promise<SubStrategy>;
+    abstract useStaticOptions?: () => Promise<Record<string, any>>;
 
     async onModuleInit() {
       try {
@@ -58,9 +58,9 @@ export function PassportStrategy<T extends Type<any> = any>(
         };
 
         // Dynamic configurable strategy based on Nacos.
-        if (this.getConfigManager && this.getProperties) {
-          const configManager = await this.getConfigManager();
-          const subscriptions = await this.getProperties();
+        if (this.useConfigManager && this.useProperties) {
+          const configManager = await this.useConfigManager();
+          const subscriptions = await this.useProperties();
 
           for await (const sub of subscriptions) {
             const { getProperty, ...rest } = sub;
@@ -72,7 +72,7 @@ export function PassportStrategy<T extends Type<any> = any>(
             });
           }
         } else {
-          const options = (await this.getStaticOptions?.()) ?? {};
+          const options = (await this.useStaticOptions?.()) ?? {};
           const strategy = new Strategy(options, callback);
 
           usePassport(strategy);

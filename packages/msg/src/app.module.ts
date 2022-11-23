@@ -6,7 +6,7 @@ import {
   NacosConfigService,
   NacosNamingModule,
   NacosNamingService,
-} from '@letscollab/nest-nacos';
+} from '@letscollab-nest/nacos';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import { MailerModule } from '@nestjs-modules/mailer';

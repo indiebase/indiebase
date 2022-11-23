@@ -4,7 +4,7 @@ import {
   NacosConfigService,
   NacosNamingModule,
   NacosNamingService,
-} from '@letscollab/nest-nacos';
+} from '@letscollab-nest/nacos';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';

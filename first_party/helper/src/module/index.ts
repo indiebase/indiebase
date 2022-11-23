@@ -1,1 +1,1 @@
-export * from './redis-session.module';
+export * from './apply-session.module';

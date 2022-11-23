@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/passport-github",
+  "name": "@letscollab-nest/fastify-passport-github",
   "version": "0.0.1",
   "description": "Passport github nodule for letscollab",
   "author": "Han",

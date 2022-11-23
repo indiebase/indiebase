@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-nacos",
+  "name": "@letscollab-nest/nacos",
   "version": "0.0.1",
   "description": "Nestjs nacos module for letscollab",
   "author": "Han",

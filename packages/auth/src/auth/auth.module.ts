@@ -1,13 +1,13 @@
 import { Logger, Module } from '@nestjs/common';
-import { PassportModule } from '@letscollab/passport';
+import { PassportModule } from '@letscollab-nest/fastify-passport';
 import { AuthService } from './auth.service';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
 import { USER_RMQ } from '@letscollab/helper';
 import { LocalStrategy } from './local.strategy';
-import { AuthSerializer } from './auth.serializer';
+import { SessionSerializer } from './session.serializer';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { AuthSerializer } from './auth.serializer';
     GithubStrategy,
     LocalStrategy,
     Logger,
-    AuthSerializer,
+    SessionSerializer,
   ],
   exports: [AuthService, GithubStrategy, LocalStrategy, PassportModule],
 })

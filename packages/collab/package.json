@@ -24,11 +24,11 @@
     "typeorm": "ts-node ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
-    "@fastify/cookie": "^8.1.0",
+    "@fastify/cookie": "8.1.0",
     "@fastify/helmet": "10.0.0",
     "@fastify/swagger": "^7.5.0",
+    "@letscollab-nest/nacos": "workspace:^",
     "@letscollab/helper": "workspace:^",
-    "@letscollab/nest-nacos": "workspace:^",
     "@letscollab/nest-octokit": "workspace:^",
     "@letscollab/user": "workspace:^",
     "@liaoliaots/nestjs-redis": "^8.0.0",
