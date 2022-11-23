@@ -106,9 +106,9 @@ const createPassportContext =
       const handler = passport.authenticate(
         type,
         options,
-        async (request, reply, err, user, info, status) => {
+        async (req, _, err, user, info, status) => {
           try {
-            request.authInfo = info;
+            req.authInfo = info;
             resolve(callback(err, user, info, status));
           } catch (err) {
             reject(err);
