@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthGuard } from '@letscollab/passport';
+import { AuthGuard } from '@letscollab-nest/fastify-passport';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {

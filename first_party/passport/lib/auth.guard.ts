@@ -17,6 +17,7 @@ import {
 } from './interfaces/auth-module.options';
 import { defaultOptions } from './options';
 import { memoize } from './utils/memoize.util';
+import { FastifyRequest, FastifyReply } from 'fastify';
 
 export type IAuthGuard = CanActivate & {
   logIn<TRequest extends { logIn: Function } = any>(
@@ -99,18 +100,20 @@ function createAuthGuard(type?: string | string[]): Type<CanActivate> {
 }
 
 const createPassportContext =
-  (request, response) => (type, options, callback: Function) =>
-    new Promise<void>((resolve, reject) =>
-      passport.authenticate(
+  (request: FastifyRequest, response: FastifyReply) =>
+  (type, options, callback: Function) =>
+    new Promise((resolve, reject) => {
+      const handler = passport.authenticate(
         type,
         options,
         async (request, reply, err, user, info, status) => {
           try {
             request.authInfo = info;
-            // return resolve(callback(err, user, info, status));
+            resolve(callback(err, user, info, status));
           } catch (err) {
             reject(err);
           }
         }
-      )(request, response, (err) => (err ? reject(err) : resolve()))
-    );
+      ) as any;
+      return handler(request, response);
+    });

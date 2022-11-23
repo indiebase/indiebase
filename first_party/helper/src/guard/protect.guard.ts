@@ -6,7 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
-import { NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigService } from '@letscollab-nest/nacos';
 import * as forge from 'node-forge';
 import { ApiHeader } from '@nestjs/swagger';
 /**

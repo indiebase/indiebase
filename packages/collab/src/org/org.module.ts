@@ -1,5 +1,5 @@
 // import { UserEntity } from '@letscollab/user';
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { OrgService } from './org.service';
 import { OrgController } from './org.controller';
 import { Logger, Module } from '@nestjs/common';

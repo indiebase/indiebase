@@ -1,4 +1,4 @@
-import { NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigService } from '@letscollab-nest/nacos';
 import { AuthService } from './auth.service';
 import { GithubGuard } from './github.guard';
 import { FastifyReply, FastifyRequest } from 'fastify';

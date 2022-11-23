@@ -2,9 +2,9 @@ import { Strategy } from 'passport-github2';
 import {
   ObservablePassportStrategy,
   PassportStrategy,
-} from '@letscollab/passport';
+} from '@letscollab-nest/fastify-passport';
 import { Injectable, Logger } from '@nestjs/common';
-import { NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigService } from '@letscollab-nest/nacos';
 
 // Observable
 @Injectable()
@@ -19,11 +19,11 @@ export class GithubStrategy
     super();
   }
 
-  getConfigManager() {
+  useConfigManager() {
     return this.nacosConfig;
   }
 
-  async getProperties() {
+  async useProperties() {
     return [
       {
         dataId: 'service-auth.json',

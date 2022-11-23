@@ -1,4 +1,4 @@
-import { NacosConfigModule, NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { PrjService } from './prj.service';
 import { PrjController } from './prj.controller';
 import { Logger, Module } from '@nestjs/common';

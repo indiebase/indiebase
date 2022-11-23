@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigService } from '@letscollab-nest/nacos';
 import { HttpExceptionFilter } from '@letscollab/helper';
 import { setupApiDoc } from './utils';
 import fastifyHelmet from '@fastify/helmet';

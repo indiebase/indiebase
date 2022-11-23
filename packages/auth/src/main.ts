@@ -1,4 +1,4 @@
-import { NacosConfigService } from '@letscollab/nest-nacos';
+import { NacosConfigService } from '@letscollab-nest/nacos';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
@@ -12,7 +12,6 @@ import { setupApiDoc } from './utils';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import fastifyHelmet from '@fastify/helmet';
-import Fastify from 'fastify';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
 declare module 'fastify' {
@@ -27,23 +26,23 @@ declare module 'fastify' {
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
-  const fastify = Fastify();
+  // const fastify = Fastify();
 
   // Compat express passport
-  fastify.addHook('onRequest', (request: any, reply: any, done) => {
-    reply.setHeader = function (key: string, value: string) {
-      return this.raw.setHeader(key, value);
-    };
-    reply.end = function () {
-      this.raw.end();
-    };
-    request.res = reply;
-    done();
-  });
+  // fastify.addHook('onRequest', (request: any, reply: any, done) => {
+  //   reply.setHeader = function (key: string, value: string) {
+  //     return this.raw.setHeader(key, value);
+  //   };
+  //   reply.end = function () {
+  //     this.raw.end();
+  //   };
+  //   request.res = reply;
+  //   done();
+  // });
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(fastify as any),
+    new FastifyAdapter(),
     {
       bodyParser: true,
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],

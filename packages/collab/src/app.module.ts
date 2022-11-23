@@ -19,7 +19,7 @@ import {
   NacosConfigService,
   NacosNamingModule,
   NacosNamingService,
-} from '@letscollab/nest-nacos';
+} from '@letscollab-nest/nacos';
 import { InvitationModule } from './invitation/invitation.module';
 import { OrgModule } from './org/org.module';
 import { PrjModule } from './prj/prj.module';

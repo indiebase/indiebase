@@ -2,10 +2,12 @@ import { Observable } from 'rxjs';
 import {
   ExecutionContext,
   Injectable,
-  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthGuard, IAuthModuleOptions } from '@letscollab/passport';
+import {
+  AuthGuard,
+  IAuthModuleOptions,
+} from '@letscollab-nest/fastify-passport';
 
 @Injectable()
 export class GithubGuard extends AuthGuard('github') {
