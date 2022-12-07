@@ -33,9 +33,9 @@ export class QueryUserDto {
   username?: string;
 }
 
-export class UserResponseDto extends HttpResSchemaDto {
-  @ApiPropertyOptional({
-    type: () => UserEntity,
-  })
-  d?: UserEntity;
-}
+// export class UserResponseDto extends HttpResSchemaDto {
+//   @ApiPropertyOptional({
+//     type: () => UserEntity,
+//   })
+//   d?: UserEntity;
+// }

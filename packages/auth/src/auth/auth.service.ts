@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { catchError, lastValueFrom, timeout } from 'rxjs';
-import { CasbinService } from '@letscollab/nest-ac';
+import { CasbinService } from '@letscollab-nest/accesscontrol';
 import {
   ResultCode,
   RpcCreateRoleBody,
@@ -35,9 +35,7 @@ export class AuthService {
         timeout(4000),
         catchError((err) => {
           this.logger.error(err);
-          throw new InternalServerErrorException({
-            message: 'Failed to get user profile',
-          });
+          throw new InternalServerErrorException('Failed to get user profile');
         }),
       ),
     );
@@ -50,6 +48,10 @@ export class AuthService {
     );
 
     if (user.code > 0) {
+      if (!user.d.password) {
+        throw new UnauthorizedException('Please set your password first');
+      }
+
       if (await bcrypt.compare(info.password, user.d.password)) {
         return user.d;
       } else {
@@ -57,7 +59,7 @@ export class AuthService {
       }
     } else {
       throw new NotFoundException(
-        `${info.username} not existed,  register first plz`,
+        `User ${info.username} not existed,  register first plz`,
       );
     }
   }

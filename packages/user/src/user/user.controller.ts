@@ -19,6 +19,7 @@ import {
   RpcSessionAuthzClientGuard,
   UserInfo,
   type UserSession,
+  SessionGuard,
 } from '@letscollab/helper';
 import { UpdateUserProfileDto } from './user.dto';
 
@@ -26,7 +27,7 @@ import { UpdateUserProfileDto } from './user.dto';
   path: 'user',
   version: '1',
 })
-@ApiTags('v1/User')
+@ApiTags('User')
 export class UserController {
   constructor(private readonly user: UserService) {}
 
@@ -72,7 +73,7 @@ export class UserController {
   @ApiCookieAuth('SID')
   @UseGuards(ProtectGuard, RpcSessionAuthzClientGuard)
   @ApiOperation({
-    summary: 'Get user',
+    summary: 'Get user profile',
   })
   async getProfile(@UserInfo() info: UserSession) {
     const user = await this.user.getUser([{ id: info.id }]);

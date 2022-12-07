@@ -46,14 +46,8 @@ export class AuthController {
   ) {
     const user = req.user;
     console.log(user);
-
-    console.log(req);
-    console.log(session);
-    // session.user = {
-    //   loggedIn: true,
-    //   username: user.username,
-    //   id: user.id,
-    // }
+    // console.log(user);
+    // console.log(req);
   }
 
   @Get('oauth/github')
@@ -97,26 +91,20 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   async logout(
     @Req() req: FastifyRequest,
-    @Res() res: FastifyReply,
+    // @Res() res: FastifyReply,
     @Session() session: FastifyRequest['session'],
   ) {
-    console.log(req, session);
-    (req as any).logout();
+    console.log(session.user);
+    console.log(req);
+    // session.destroy();
 
-    // res.clearCookie('SID');
-    return;
+    return 1;
   }
 
   @Get('demo')
   async demo() {
     const a = await this.nacos.getConfig('common.json');
-    console.log(a.demo);
-    // console.log(this.adapterHost.httpAdapter.);
 
-    // console.log(
-    //   await this.casbin.e?.getPolicy(),
-    //   await this.casbin.e?.getAllRoles(),
-    // );
     return a.demo;
   }
 

@@ -28,7 +28,7 @@ import {
   RpcSessionAuthzClientGuard,
   TestApiHeader,
 } from '@letscollab/helper';
-import { UseAccess, AccessAction } from '@letscollab/nest-ac';
+import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 
 @Controller('v1/user/role')
 @ApiTags('v1/Role')

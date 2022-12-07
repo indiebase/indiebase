@@ -12,7 +12,7 @@ import { lastValueFrom, timeout, catchError } from 'rxjs';
 import { InvitationEntity, InvitationStatus } from './invitation.entity';
 import { InviteMemberDto } from './invitation.dto';
 import { Repository } from 'typeorm';
-import { UserResponseDto } from '@letscollab/user';
+// import { UserResponseDto } from '@letscollab/user';
 
 @Injectable()
 export class InvitationService {
@@ -59,8 +59,8 @@ export class InvitationService {
   }
 
   async inviteMember(body: InviteMemberDto, user: any) {
-    const target = await this.getUser<UserResponseDto>('get_id', body.id);
-    const host = await this.getUser<UserResponseDto>('get_name', user.username);
+    const target = await this.getUser<any>('get_id', body.id);
+    const host = await this.getUser<any>('get_name', user.username);
 
     if (target.code > 0 && host.code > 0) {
       const record = await this.inviteRepo.findOne({

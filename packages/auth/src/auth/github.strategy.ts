@@ -19,12 +19,8 @@ export class GithubStrategy
     super();
   }
 
-  useConfigManager() {
-    return this.nacosConfig;
-  }
-
-  async useProperties() {
-    return [
+  async usePassport(appStrategy, use) {
+    const subscriptions = [
       {
         dataId: 'service-auth.json',
         group: 'DEFAULT_GROUP',
@@ -36,6 +32,14 @@ export class GithubStrategy
         },
       },
     ];
+
+    for await (const sub of subscriptions) {
+      const { getProperty, ...rest } = sub;
+      await this.nacosConfig.subscribe(rest, (config) => {
+        const options = getProperty(config);
+        use(appStrategy(options));
+      });
+    }
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any) {

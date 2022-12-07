@@ -1,5 +1,5 @@
 import { RpcAuthData } from '@letscollab/helper';
-import { CasbinService } from '@letscollab/nest-ac';
+import { CasbinService } from '@letscollab-nest/accesscontrol';
 import {
   CanActivate,
   ExecutionContext,

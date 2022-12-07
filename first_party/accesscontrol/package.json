@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-ac",
+  "name": "@letscollab-nest/accesscontrol",
   "version": "0.0.1",
   "description": "Nestjs microservice access control module for letscollab",
   "author": "Han",

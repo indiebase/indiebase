@@ -21,7 +21,7 @@ import LokiTransport = require('winston-loki');
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import * as winston from 'winston';
 import { HttpAdapterHost } from '@nestjs/core';
-import { RedisSessionModule } from '@letscollab/helper';
+import { ApplySessionModule } from '@letscollab/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';
@@ -41,7 +41,7 @@ const isDev = process.env.NODE_ENV === 'development';
         return { config: configs.redis };
       },
     }),
-    RedisSessionModule.forRootAsync({
+    ApplySessionModule.forRootAsync({
       inject: [NacosConfigService],
       async useFactory(config: NacosConfigService) {
         const { redis, session, cookie } = await config.getConfig(
