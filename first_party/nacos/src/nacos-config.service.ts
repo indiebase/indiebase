@@ -139,7 +139,7 @@ export class NacosConfigService implements OnModuleInit, OnModuleDestroy {
     reg: SubOptions,
     listener: (d: any) => any,
   ): NacosConfigClient {
-    const sub = this.#client.subscribe(reg, (data) => {
+    const sub = this.#client.subscribe(reg, (data: any) => {
       listener(this.#parser(data));
     });
 

@@ -18,9 +18,6 @@ declare module 'fastify' {
   interface PassportUser {
     [key: string]: any;
   }
-  // interface FastifyRequest {
-  //   user: any;
-  // }
 }
 
 const isDevelopment = process.env.NODE_ENV === 'development';

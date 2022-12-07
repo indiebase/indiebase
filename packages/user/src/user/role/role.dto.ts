@@ -14,7 +14,7 @@ import {
   RpcCreateRoleBody,
   UserResource,
 } from '@letscollab/helper';
-import { AccessAction } from '@letscollab/nest-ac';
+import { AccessAction } from '@letscollab-nest/accesscontrol';
 
 export class CreateRoleDto {
   @ApiProperty({

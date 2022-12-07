@@ -1,6 +1,6 @@
 import { FastifyRequest } from 'fastify';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { RpcAuthzClientGuard } from '@letscollab/nest-ac';
+import { RpcAuthzClientGuard } from '@letscollab-nest/accesscontrol';
 import { AUTH_RMQ } from '../constants';
 
 export class RpcSessionAuthzClientGuard extends RpcAuthzClientGuard(AUTH_RMQ) {
@@ -10,7 +10,6 @@ export class RpcSessionAuthzClientGuard extends RpcAuthzClientGuard(AUTH_RMQ) {
 
   override async transfer(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest<FastifyRequest>();
-
     // If not logged in,  RpcAuthzClientGuard will throw UnAuthorizedException.
     if (!(req.session as any)?.user?.loggedIn) {
       throw new UnauthorizedException({ message: 'Please login' });

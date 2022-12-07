@@ -3,7 +3,7 @@ import {
   RpcSessionAuthzClientGuard,
   UserResource,
 } from '@letscollab/helper';
-import { AccessAction, UseAccess } from '@letscollab/nest-ac';
+import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import {
   ApiOperation,

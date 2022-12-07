@@ -24,14 +24,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
     this.logger.error('Http Exception: ' + exception, exception.stack);
 
     const statusCode = exception.getStatus();
-    const resException = exception.getResponse();
+    const resException = exception.getResponse() as any;
 
     console.log(exception, resException);
 
     const resExceptionObj =
       typeof resException === 'string'
         ? { message: resException }
-        : resException;
+        : resException.response ?? resException;
 
     response.status(statusCode).send({
       ...resExceptionObj,

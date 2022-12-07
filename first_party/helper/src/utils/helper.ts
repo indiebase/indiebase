@@ -1,3 +1,5 @@
+import path from 'path';
+
 export const is = {
   type(obj: unknown, str: string): boolean {
     return Object.prototype.toString.call(obj) === `[object ${str}]`;
@@ -34,4 +36,23 @@ export const getSubdomain = function (
   prefix = '.',
 ) {
   return prefix + domain.split('.').slice(-index).join('.');
+};
+
+export const overwriteSwaggerStaticAssets = function (finalPath, app) {
+  const httpAdapter = app.getHttpAdapter();
+  const swaggerAssetsAbsoluteFSPath = path.resolve(
+    __dirname,
+    './swagger-ui-dist',
+  );
+  if (httpAdapter && httpAdapter.getType() === 'fastify') {
+    app.useStaticAssets({
+      root: swaggerAssetsAbsoluteFSPath,
+      prefix: finalPath,
+      decorateReply: false,
+    });
+  } else {
+    app.useStaticAssets(swaggerAssetsAbsoluteFSPath, {
+      prefix: finalPath,
+    });
+  }
 };

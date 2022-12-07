@@ -28,9 +28,9 @@ export function RpcAuthzClientGuard(
   @Injectable()
   abstract class InnerClz extends BasicAuthGuard implements CanActivate {
     constructor(
-      private readonly reflector: Reflector,
       @Inject(clientName)
       private readonly client: ClientProxy,
+      private readonly reflector: Reflector,
       private readonly logger: Logger,
     ) {
       super();
@@ -42,15 +42,17 @@ export function RpcAuthzClientGuard(
         context.getHandler(),
       );
 
-      if (!access) return true;
-
+      const pattern = await this.setPattern(context);
       let input = await this.transfer(context);
       input = { access, ...input };
+
+      // No @UseAccess() will pass directly.
+      if (!access) return true;
 
       for (const a of access) {
         if (a.resource.indexOf('_') < 0) {
           throw new Error(
-            `${a.resource} needs prefix to divide groups e.g groupName_xxxxx`,
+            `Resource ${a.resource} needs prefix to divide groups e.g. groupName_xxxxx`,
           );
         }
 
@@ -65,8 +67,6 @@ export function RpcAuthzClientGuard(
           }
         }
       }
-
-      const pattern = await this.setPattern(context);
 
       return lastValueFrom<boolean>(
         this.client.send(pattern, input).pipe(

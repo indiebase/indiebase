@@ -13,11 +13,10 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { CasbinModule } from '@letscollab/nest-ac';
+import { CasbinModule } from '@letscollab-nest/accesscontrol';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { ApplySessionModule } from '@letscollab/helper';
-
 const isDev = process.env.NODE_ENV === 'development';
 
 @Module({

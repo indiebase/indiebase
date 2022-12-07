@@ -1,22 +1,20 @@
-import { NacosConfigService, SubOptions } from '@letscollab-nest/nacos';
 import { OnModuleInit } from '@nestjs/common';
 import passport from '@fastify/passport';
 import { Type } from '../interfaces';
 
-type SubStrategy = Array<
-  SubOptions & {
-    getProperty: (options: Record<string, any>) => Record<string, any>;
-  }
->;
+type UsePassportHook = (
+  strategy: (options) => Type<any>,
+  fn: (p) => void
+) => void;
 
 export interface ObservablePassportStrategy {
   validate: (...args: any[]) => any;
-  useConfigManager: () => Promise<NacosConfigService> | NacosConfigService;
-  useProperties: () => Promise<SubStrategy>;
+  usePassport?: UsePassportHook;
 }
+
 export interface StaticPassportStrategy {
-  validate: (...args: any[]) => any;
-  useStaticOptions: () => Promise<Record<string, any>>;
+  validate(...args: any[]): any;
+  useStaticOptions?: () => Promise<Record<string, any>>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -24,12 +22,8 @@ export function PassportStrategy<T extends Type<any> = any>(
   name?: string | undefined
 ) {
   abstract class MixinStrategy implements OnModuleInit {
-    private strategy: T;
     abstract validate(...args: any[]): any;
-    abstract useConfigManager?: () =>
-      | Promise<NacosConfigService>
-      | NacosConfigService;
-    abstract useProperties?: () => Promise<SubStrategy>;
+    abstract usePassport?: UsePassportHook;
     abstract useStaticOptions?: () => Promise<Record<string, any>>;
 
     async onModuleInit() {
@@ -48,7 +42,7 @@ export function PassportStrategy<T extends Type<any> = any>(
           }
         };
 
-        const usePassport = (strategy) => {
+        const use = (strategy) => {
           const passportInstance = this.getPassportInstance();
           if (name) {
             passportInstance.use(name, strategy as any);
@@ -57,25 +51,14 @@ export function PassportStrategy<T extends Type<any> = any>(
           }
         };
 
-        // Dynamic configurable strategy based on Nacos.
-        if (this.useConfigManager && this.useProperties) {
-          const configManager = await this.useConfigManager();
-          const subscriptions = await this.useProperties();
-
-          for await (const sub of subscriptions) {
-            const { getProperty, ...rest } = sub;
-            await configManager.subscribe(rest, (config) => {
-              const options = getProperty(config);
-              const strategy = new Strategy(options, callback);
-
-              usePassport(strategy);
-            });
-          }
+        // Support Dynamic configurable.
+        if (this.usePassport) {
+          this.usePassport((options) => new Strategy(options, callback), use);
         } else {
           const options = (await this.useStaticOptions?.()) ?? {};
           const strategy = new Strategy(options, callback);
 
-          usePassport(strategy);
+          use(strategy);
         }
       } catch (error) {
         throw error;

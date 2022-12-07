@@ -7,7 +7,6 @@ import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
 import { USER_RMQ } from '@letscollab/helper';
 import { LocalStrategy } from './local.strategy';
-import { SessionSerializer } from './session.serializer';
 
 @Module({
   imports: [
@@ -42,7 +41,6 @@ import { SessionSerializer } from './session.serializer';
     GithubStrategy,
     LocalStrategy,
     Logger,
-    SessionSerializer,
   ],
   exports: [AuthService, GithubStrategy, LocalStrategy, PassportModule],
 })
