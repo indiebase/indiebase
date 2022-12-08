@@ -19,7 +19,6 @@ import {
   RpcSessionAuthzClientGuard,
   UserInfo,
   type UserSession,
-  SessionGuard,
 } from '@letscollab/helper';
 import { UpdateUserProfileDto } from './user.dto';
 

@@ -12,6 +12,7 @@ import {
   Session,
   Post,
   Body,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { RpcSessionAuthConsumerGuard } from './rpc-session-auth-consumer.guard';
@@ -19,6 +20,7 @@ import {
   ApiProtectHeader,
   getSubdomain,
   ProtectGuard,
+  ResultCode,
 } from '@letscollab/helper';
 import { LocalSignInDto } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
@@ -45,6 +47,7 @@ export class AuthController {
     @Req() req: FastifyRequest,
   ) {
     const user = req.user;
+    console.log(req.logOut);
     console.log(user);
     // console.log(user);
     // console.log(req);
@@ -63,7 +66,7 @@ export class AuthController {
   ) {
     const r = await this.auth.signInGithub(req.user);
 
-    r.code > 0 &&
+    if (r.code > 0) {
       session.set('user', {
         loggedIn: true,
         id: r.d.id,
@@ -72,13 +75,14 @@ export class AuthController {
         accessToken: req.user.accessToken,
       });
 
-    session.cookie.expires = new Date(
-      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
-    );
-    session.cookie.domain = getSubdomain(
-      new URL(`${req.protocol}://${req.hostname}`).hostname,
-      2,
-    );
+      session.cookie.expires = new Date(
+        Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
+      );
+      session.cookie.domain = getSubdomain(
+        new URL(`${req.protocol}://${req.hostname}`).hostname,
+        2,
+      );
+    }
 
     return res
       .type('text/html')
@@ -88,17 +92,11 @@ export class AuthController {
   }
 
   @Post('logout')
-  @UseGuards(LocalAuthGuard)
-  async logout(
-    @Req() req: FastifyRequest,
-    // @Res() res: FastifyReply,
-    @Session() session: FastifyRequest['session'],
-  ) {
-    console.log(session.user);
-    console.log(req);
-    // session.destroy();
-
-    return 1;
+  async logout(@Req() req: FastifyRequest) {
+    await req.logOut().catch(() => {
+      throw new InternalServerErrorException();
+    });
+    return { code: ResultCode.SUCCESS };
   }
 
   @Get('demo')
