@@ -102,7 +102,7 @@ export class ApplySessionModule implements NestModule, OnModuleDestroy {
       this.options.session.cookieName = 'SID';
     }
 
-    await fastifyInstance.register(FastifyCookie, this.options?.cookie);
+    await fastifyInstance.register(FastifyCookie, this.options.cookie);
     await fastifyInstance.register(FastifySession, this.options.session);
     await fastifyInstance.register(fastifyPassport.initialize());
     await fastifyInstance.register(fastifyPassport.secureSession());
