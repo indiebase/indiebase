@@ -43,12 +43,9 @@ export class AuthController {
   @UseGuards(ProtectGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
-    @Session() session: FastifyRequest['session'],
     @Req() req: FastifyRequest,
   ) {
     const user = req.user;
-    console.log(req.logOut);
-    console.log(user);
     // console.log(user);
     // console.log(req);
   }
