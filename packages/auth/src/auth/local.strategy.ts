@@ -21,6 +21,10 @@ export class LocalStrategy
 
   async validate(username: string, password: string): Promise<any> {
     const user = await this.authService.validateLocal({ username, password });
+
+    
+
+
     delete user.password;
 
     return user;
