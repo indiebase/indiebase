@@ -48,12 +48,14 @@ export class AuthService {
     );
 
     if (user.code > 0) {
+      const { d: data } = user;
+
       if (!user.d.password) {
         throw new UnauthorizedException('Please set your password first');
       }
 
-      if (await bcrypt.compare(info.password, user.d.password)) {
-        return user.d;
+      if (await bcrypt.compare(info.password, data.password)) {
+        return data;
       } else {
         throw new UnauthorizedException('Wrong password');
       }
