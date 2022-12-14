@@ -24,8 +24,5 @@
     "**/node_modules/*/**": true,
     "**/build/*/**": true,
     "**/dist/*/**": true
-  },
-  "lldb.showDisassembly": "auto",
-  "lldb.dereferencePointers": true,
-  "lldb.consoleMode": "commands"
+  }
 }
