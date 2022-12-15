@@ -4,7 +4,7 @@ import {
   SignupType,
   BaseResSchema,
   UserProfile,
-} from '@letscollab/common-trait';
+} from '@letscollab-nest/trait';
 import { mock } from '../api';
 
 export const FakeSingleUserProfile = () => ({

@@ -23,14 +23,14 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import {
-  RoleResource,
-  RpcSessionAuthzClientGuard,
-  TestApiHeader,
-} from '@letscollab/helper';
+import { RpcSessionAuthzClientGuard, TestApiHeader } from '@letscollab/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
+import { RoleResource } from '@letscollab-nest/trait';
 
-@Controller('v1/user/role')
+@Controller({
+  path: 'user/role',
+  version: '1',
+})
 @ApiTags('v1/Role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}

@@ -18,7 +18,6 @@ import {
   I18nValidationExceptionFilter,
 } from 'nestjs-i18n';
 import { useContainer } from 'class-validator';
-import { join, resolve } from 'path';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

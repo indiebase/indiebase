@@ -19,7 +19,7 @@ import {
   IconArrowNarrowUp,
   IconUsers,
 } from '@tabler/icons';
-import { IProject } from '@letscollab/common-trait';
+import { IProject } from '@letscollab-nest/trait';
 import CurrencyFormat from 'react-currency-format';
 import { Link } from 'react-router-dom';
 import { FC, useEffect } from 'react';

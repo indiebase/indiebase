@@ -1,9 +1,12 @@
-import { AccountStatus, SignupType } from './enum';
+export enum AccountStatus {
+  inactive = 'inactive',
+  active = 'active',
+}
 
 export interface UserProfile {
   id: number;
-  signupType: SignupType;
   githubId?: string;
+  githubAccessToken?: string;
   profileUrl?: string;
   avatar?: string;
   company?: string;

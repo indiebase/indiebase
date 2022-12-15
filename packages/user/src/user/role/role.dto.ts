@@ -1,4 +1,3 @@
-import { RoleStatus } from './role.entity';
 import { ApiPropertyOptional, ApiProperty, ApiParam } from '@nestjs/swagger';
 import {
   IsArray,
@@ -7,14 +6,14 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
+import { AccessAction } from '@letscollab-nest/accesscontrol';
 import {
-  PaginationReqDto,
-  PaginationResSchemaDto,
   RoleResource,
+  RoleStatus,
   RpcCreateRoleBody,
   UserResource,
-} from '@letscollab/helper';
-import { AccessAction } from '@letscollab-nest/accesscontrol';
+} from '@letscollab-nest/trait';
 
 export class CreateRoleDto {
   @ApiProperty({

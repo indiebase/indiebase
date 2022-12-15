@@ -18,15 +18,15 @@ import {
   ProtectGuard,
   RpcSessionAuthzClientGuard,
   UserInfo,
-  type UserSession,
 } from '@letscollab/helper';
 import { UpdateUserProfileDto } from './user.dto';
+import { UserSession } from '@letscollab-nest/trait';
 
 @Controller({
   path: 'user',
   version: '1',
 })
-@ApiTags('User')
+@ApiTags('v1/User')
 export class UserController {
   constructor(private readonly user: UserService) {}
 
@@ -47,7 +47,8 @@ export class UserController {
 
   @UseFilters(MicroserviceExceptionFilter)
   @MessagePattern({ cmd: 'signin_github' })
-  async signInGithub(@Payload() profile: any) {
+  async signInGithub(@Payload() user: any) {
+    const { profile, accessToken } = user;
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
     return this.user.signIn({
@@ -58,6 +59,7 @@ export class UserController {
       email: json?.email,
       avatar: json?.avatar_url,
       bio: json?.bio,
+      githubAccessToken: accessToken,
     });
   }
 

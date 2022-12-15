@@ -133,7 +133,6 @@ export class AppModule implements OnModuleInit {
   constructor(
     private readonly configService: ConfigService,
     private readonly nacosNamingService: NacosNamingService,
-    private readonly adapterHost: HttpAdapterHost,
   ) {}
 
   async onModuleInit() {

@@ -23,20 +23,6 @@ declare module 'fastify' {
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
-  // const fastify = Fastify();
-
-  // Compat express passport
-  // fastify.addHook('onRequest', (request: any, reply: any, done) => {
-  //   reply.setHeader = function (key: string, value: string) {
-  //     return this.raw.setHeader(key, value);
-  //   };
-  //   reply.end = function () {
-  //     this.raw.end();
-  //   };
-  //   request.res = reply;
-  //   done();
-  // });
-
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),

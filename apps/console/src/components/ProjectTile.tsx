@@ -1,4 +1,4 @@
-import { IProject } from '@letscollab/common-trait/';
+import { IProject } from '@letscollab-nest/trait';
 import {
   Anchor,
   Avatar,

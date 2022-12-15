@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { TeamEntity } from '@letscollab/collab';
-import { AccountStatus } from './user.enum';
 import { ApiProperty } from '@nestjs/swagger';
+import { AccountStatus } from '@letscollab-nest/trait';
 
 @Entity('user')
 export class UserEntity {
@@ -24,6 +24,10 @@ export class UserEntity {
   githubId?: string;
 
   @ApiProperty()
+  @Column('varchar', { unique: true, nullable: true })
+  githubAccessToken?: string;
+
+  @ApiProperty()
   @Column('varchar', { nullable: true })
   profileUrl?: string;
 
@@ -32,7 +36,7 @@ export class UserEntity {
   avatar?: string;
 
   @ApiProperty()
-  @Column('varchar', { comment: 'company', nullable: true })
+  @Column('char', { comment: 'company', nullable: true, length: 64 })
   company?: string;
 
   @ApiProperty()

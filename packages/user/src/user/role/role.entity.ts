@@ -1,3 +1,4 @@
+import { RoleStatus } from '@letscollab-nest/trait';
 import {
   Entity,
   Column,
@@ -5,11 +6,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export enum RoleStatus {
-  inactive = 'inactive',
-  active = 'active',
-}
 
 @Entity('role')
 export class RoleEntity {
