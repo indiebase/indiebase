@@ -1,8 +1,4 @@
-import {
-  ResultCode,
-  RpcSessionAuthzClientGuard,
-  UserResource,
-} from '@letscollab/helper';
+import { ResultCode, RpcSessionAuthzClientGuard } from '@letscollab/helper';
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import {
@@ -13,8 +9,12 @@ import {
 } from '@nestjs/swagger';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { createResources } from './resources';
+import { UserResource } from '@letscollab-nest/trait';
 
-@Controller('v1/user/res')
+@Controller({
+  path: 'user/res',
+  version: '1',
+})
 @ApiTags('v1/Resources')
 export class ResourceController {
   @Get()

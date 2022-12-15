@@ -34,6 +34,7 @@ export class AuthController {
     private readonly nacos: NacosConfigService,
     private adapterHost: HttpAdapterHost,
   ) {}
+  //TODO: recaptcha
 
   /**
    * Give up letscollab's register
@@ -44,10 +45,29 @@ export class AuthController {
   async signIn(
     @Body() _: LocalSignInDto,
     @Req() req: FastifyRequest,
+    @Session() session: any,
   ) {
     const user = req.user;
-    // console.log(user);
-    // console.log(req);
+
+    session.set('user', {
+      loggedIn: true,
+      id: user.id,
+      username: user.username,
+      accessToken: user.githubAccessToken,
+    });
+
+    session.cookie.expires = new Date(
+      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
+    );
+    session.cookie.domain = getSubdomain(
+      new URL(`${req.protocol}://${req.hostname}`).hostname,
+      2,
+    );
+
+    return {
+      code: ResultCode.SUCCESS,
+      message: 'Login Successfully',
+    };
   }
 
   @Get('oauth/github')
@@ -68,8 +88,7 @@ export class AuthController {
         loggedIn: true,
         id: r.d.id,
         username: r.d.username,
-        signupType: r.d.signupType,
-        accessToken: req.user.accessToken,
+        githubAccessToken: req.user.accessToken,
       });
 
       session.cookie.expires = new Date(

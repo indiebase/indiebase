@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 import { atomWithQuery } from 'jotai/query';
 import { req } from './request';
 import { loadable } from 'jotai/utils';
-import { BaseResSchema, UserProfile } from '@letscollab/common-trait';
+import { BaseResSchema, UserProfile } from '@letscollab-nest/trait';
 
 export const userProfileAtom = atom<BaseResSchema<UserProfile>>({} as any);
 

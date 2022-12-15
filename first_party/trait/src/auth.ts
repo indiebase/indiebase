@@ -1,13 +1,11 @@
-import { CombineResource } from '../resources/index';
-import { AccessAction } from '@letscollab-nest/accesscontrol';
 import { IAccessOptions } from '@letscollab-nest/accesscontrol';
 
-type Possession = { resource: CombineResource; action: AccessAction[] };
-
-export interface RpcCreateRoleBody {
-  name: string;
-  possession: Possession[];
-  domain: string;
+/**
+ * Signup Type Enum
+ */
+export enum SignupType {
+  letscollab = 'letscollab',
+  github = 'github',
 }
 
 export type UserSession = {

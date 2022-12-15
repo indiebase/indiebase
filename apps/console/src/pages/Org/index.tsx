@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { projectsQuery } from '@letscollab/app-utils';
-import { IProject } from '@letscollab/common-trait';
+import { IProject } from '@letscollab-nest/trait';
 import {
   Group,
   Text,

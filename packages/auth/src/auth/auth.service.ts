@@ -68,7 +68,7 @@ export class AuthService {
 
   async signInGithub(data: any): Promise<RpcResSchemaDto> {
     const r = await lastValueFrom(
-      this.userClient.send({ cmd: 'signin_github' }, data.profile).pipe(
+      this.userClient.send({ cmd: 'signin_github' }, data).pipe(
         timeout(4000),
         catchError((err) => {
           this.logger.error('[signin_github]: ' + err);

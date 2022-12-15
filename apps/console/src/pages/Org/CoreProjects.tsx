@@ -14,7 +14,7 @@ import {
   rectSortingStrategy,
   arrayMove,
 } from '@dnd-kit/sortable';
-import { IProject } from '@letscollab/common-trait';
+import { IProject } from '@letscollab-nest/trait';
 import { Grid, Text, Group } from '@mantine/core';
 import { FC, useCallback, useState } from 'react';
 import { CoreProjectCard } from '../../components';

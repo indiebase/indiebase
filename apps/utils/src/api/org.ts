@@ -1,4 +1,4 @@
-import { BaseResSchema, IProject } from '@letscollab/common-trait';
+import { BaseResSchema, IProject } from '@letscollab-nest/trait';
 import { req } from './request';
 
 export const projectsQuery = async function (): Promise<

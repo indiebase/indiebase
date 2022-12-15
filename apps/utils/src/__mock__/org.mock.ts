@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { BaseResSchema, IProject, PrjStatus } from '@letscollab/common-trait';
+import { BaseResSchema, IProject, PrjStatus } from '@letscollab-nest/trait';
 import { mock } from '../api';
 import { FakeSingleUserProfile } from './user.mock';
 

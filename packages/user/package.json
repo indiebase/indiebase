@@ -27,6 +27,7 @@
     "@fastify/cookie": "8.1.0",
     "@fastify/helmet": "^10.0.0",
     "@letscollab-nest/nacos": "workspace:^",
+    "@letscollab-nest/trait": "workspace:^",
     "@letscollab/auth": "workspace:^",
     "@letscollab/collab": "workspace:^",
     "@letscollab/helper": "workspace:^",
