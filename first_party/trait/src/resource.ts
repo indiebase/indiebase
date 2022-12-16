@@ -7,12 +7,12 @@ export enum ResourceGroup {
   Prj = 'prj',
 }
 
-export interface IResource {
+export interface Resource {
   name: ResourceGroup | string;
   displayName?: string;
   description?: string;
   isGroup?: boolean;
-  children?: IResource[];
+  children?: Resource[];
 }
 
 // Role
