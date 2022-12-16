@@ -45,7 +45,7 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   })();
 };
 
-export function TestApiHeader() {
+export function InternalTestApiHeader() {
   return applyDecorators(
     ApiHeader({
       name: 'Package-Name',

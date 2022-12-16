@@ -3,7 +3,6 @@ import { resolve } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { readJsonSync } from 'fs-extra';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
-import * as path from 'path';
 import { overwriteSwaggerStaticAssets } from '@letscollab/helper';
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 

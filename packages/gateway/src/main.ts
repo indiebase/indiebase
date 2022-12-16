@@ -1,4 +1,3 @@
-import { NacosConfigService } from '@letscollab-nest/nacos';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
@@ -6,21 +5,21 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { AppModule } from './app.module';
-import { HttpExceptionFilter } from '@letscollab/helper';
 import { setupApiDoc } from './utils';
+import { AppModule } from './app.module';
+import fastifyHelmet from '@fastify/helmet';
+import { HttpExceptionFilter } from '@letscollab/helper';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
-import fastifyHelmet from '@fastify/helmet';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
-
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 declare module 'fastify' {
   interface PassportUser {
     [key: string]: any;
   }
 }
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -29,7 +28,9 @@ async function bootstrap() {
     {
       bodyParser: true,
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
-      cors: true,
+      cors: {
+        credentials: true,
+      },
     },
   );
 
@@ -37,9 +38,7 @@ async function bootstrap() {
 
   try {
     const configService = app.get<ConfigService>(ConfigService);
-    const nacosConfig = app.get<NacosConfigService>(NacosConfigService);
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
-    const authConfig = await nacosConfig.getConfig('service-auth.json');
 
     app.useGlobalPipes(
       new ValidationPipe({
@@ -55,9 +54,12 @@ async function bootstrap() {
       global: true,
       crossOriginOpenerPolicy: false,
       contentSecurityPolicy: false,
-      referrerPolicy: true,
+      referrerPolicy: {
+        policy: 'origin',
+      },
     });
 
+    // Should be front of setupApiDoc
     app.enableVersioning({
       defaultVersion: '1',
       type: VersioningType.URI,
@@ -71,7 +73,7 @@ async function bootstrap() {
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
       options: {
-        urls: authConfig.rabbitmq.urls,
+        urls: configService.get('amqp.urls'),
         queue: 'auth_queue',
         queueOptions: {
           durable: false,

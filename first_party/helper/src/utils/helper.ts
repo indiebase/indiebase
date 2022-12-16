@@ -38,6 +38,12 @@ export const getSubdomain = function (
   return prefix + domain.split('.').slice(-index).join('.');
 };
 
+/**
+ * Overwrite `swagger-ui-dist` for production to resolve not found.
+ *
+ * @param finalPath
+ * @param app
+ */
 export const overwriteSwaggerStaticAssets = function (finalPath, app) {
   const httpAdapter = app.getHttpAdapter();
   const swaggerAssetsAbsoluteFSPath = path.resolve(

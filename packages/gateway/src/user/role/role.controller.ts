@@ -7,6 +7,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  Inject,
 } from '@nestjs/common';
 import {
   ApiOperation,
@@ -14,7 +15,6 @@ import {
   ApiCookieAuth,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
-import { RoleService } from './role.service';
 import {
   AttachRole2UserDto,
   CreateRoleDto,
@@ -23,9 +23,14 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import { RpcSessionAuthzClientGuard, InternalTestApiHeader } from '@letscollab/helper';
+import {
+  AUTH_RMQ,
+  RpcSessionAuthzClientGuard,
+  InternalTestApiHeader,
+} from '@letscollab/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Controller({
   path: 'user/role',
@@ -33,16 +38,17 @@ import { RoleResource } from '@letscollab-nest/trait';
 })
 @ApiTags('v1/Role')
 export class RoleController {
-  constructor(private readonly roleService: RoleService) {}
+  constructor(
+    @Inject(AUTH_RMQ)
+    private readonly authClient: ClientProxy,
+  ) {}
 
   @Post()
   @ApiOperation({
     summary: 'Create a new role',
   })
   @ApiCookieAuth('SID')
-  async create(@Body() role: CreateRoleDto) {
-    return this.roleService.createRole(role);
-  }
+  async create(@Body() role: CreateRoleDto) {}
 
   @Get('list')
   @ApiOperation({
@@ -52,25 +58,19 @@ export class RoleController {
     type: QueryRolesResDto,
   })
   @ApiCookieAuth('SID')
-  async getList(@Query() role: QueryRoleDto) {
-    return this.roleService.queryRoles(role);
-  }
+  async getList(@Query() role: QueryRoleDto) {}
 
   @Patch()
   @ApiOperation({
     summary: 'Update a role',
   })
-  async update(@Body() role: UpdateRoleDto) {
-    return this.roleService.updateRole(role);
-  }
+  async update(@Body() role: UpdateRoleDto) {}
 
   @Delete()
   @ApiOperation({
     summary: 'Delete a role',
   })
-  async delete(@Body() role: DeleteRoleDto) {
-    return this.roleService.deleteRole(role.id);
-  }
+  async delete(@Body() role: DeleteRoleDto) {}
 
   @Post('attach')
   @ApiCookieAuth('SID')
@@ -81,7 +81,5 @@ export class RoleController {
     action: AccessAction.createAny,
     resource: RoleResource.list,
   })
-  async attachRole2User(@Body() body: AttachRole2UserDto) {
-    return this.roleService.attachRole(body);
-  }
+  async attachRole2User(@Body() body: AttachRole2UserDto) {}
 }
