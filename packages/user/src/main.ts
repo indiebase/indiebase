@@ -44,16 +44,16 @@ async function bootstrap() {
 
     const userConfigs = await nacosConfigService.getConfig('service-user.json');
 
-    //dto international
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-        enableDebugMessages: isDevelopment,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        exceptionFactory: i18nValidationErrorFactory,
-      }),
-    );
+    // //dto international
+    // app.useGlobalPipes(
+    //   new ValidationPipe({
+    //     transform: true,
+    //     enableDebugMessages: isDevelopment,
+    //     whitelist: true,
+    //     forbidNonWhitelisted: true,
+    //     exceptionFactory: i18nValidationErrorFactory,
+    //   }),
+    // );
 
     await app.register(fastifyHelmet, {
       global: true,
@@ -79,16 +79,19 @@ async function bootstrap() {
       new I18nValidationExceptionFilter(),
     );
 
-    app.connectMicroservice<MicroserviceOptions>({
-      transport: Transport.RMQ,
-      options: {
-        urls: userConfigs.rabbitmq.urls,
-        queue: 'user_queue',
-        queueOptions: {
-          durable: false,
+    app.connectMicroservice<MicroserviceOptions>(
+      {
+        transport: Transport.RMQ,
+        options: {
+          urls: userConfigs.rabbitmq.urls,
+          queue: 'user_queue',
+          queueOptions: {
+            durable: false,
+          },
         },
       },
-    });
+      { inheritAppConfig: true },
+    );
 
     await app.startAllMicroservices();
 

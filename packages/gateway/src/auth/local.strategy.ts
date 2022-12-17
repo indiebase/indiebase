@@ -4,14 +4,13 @@ import {
   StaticPassportStrategy,
 } from '@letscollab-nest/fastify-passport';
 import { Injectable } from '@nestjs/common';
-import { AuthService } from './auth.service';
 
 @Injectable()
 export class LocalStrategy
   extends PassportStrategy(Strategy, 'local')
   implements StaticPassportStrategy
 {
-  constructor(private readonly authService: AuthService) {
+  constructor() {
     super();
   }
 
@@ -20,10 +19,10 @@ export class LocalStrategy
   }
 
   async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateLocal({ username, password });
+    // const user = await this.authService.validateLocal({ username, password });
 
-    delete user.password;
+    // delete user.password;
 
-    return user;
+    return {};
   }
 }

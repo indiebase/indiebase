@@ -2,7 +2,6 @@ import { RoleEntity } from './role.entity';
 
 import {
   BadRequestException,
-  HttpException,
   Inject,
   Injectable,
   InternalServerErrorException,
