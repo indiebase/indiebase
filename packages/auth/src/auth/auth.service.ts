@@ -15,7 +15,7 @@ import {
   RpcResSchemaDto,
   RpcException2Http,
   USER_RMQ,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import * as bcrypt from 'bcrypt';
 import { LocalSignInDto } from './auth.dto';
 import { UserEntity } from '@letscollab/user';

@@ -21,27 +21,28 @@ import {
 } from '@nestjs/common';
 
 type ValueCallback = (err: any, caught?: any) => any;
+type ValuePattern = { cmd: string } | string;
 
 export function awaitValue(
   client: ClientProxy,
-  pattern: any,
+  pattern: ValuePattern,
   data: any,
 ): Promise<any>;
 export function awaitValue(
   client: ClientProxy,
-  pattern: any,
+  pattern: ValuePattern,
   data: any,
   options?: { duration: number },
 ): Promise<any>;
 export function awaitValue(
   client: ClientProxy,
-  pattern: any,
+  pattern: ValuePattern,
   data: any,
   errorCallback?: ValueCallback,
 ): Promise<any>;
 export function awaitValue(
   client: ClientProxy,
-  pattern: any,
+  pattern: ValuePattern,
   data: any,
   options?: any,
   errorCallback?: any,

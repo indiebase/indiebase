@@ -19,7 +19,7 @@ import {
   ProtectGuard,
   ResultCode,
   USER_RMQ,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import { LocalSignInDto } from './auth.dto';
 import { HttpAdapterHost } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';

@@ -1,7 +1,7 @@
 {
   "name": "@letscollab/gateway",
   "version": "0.0.1",
-  "description": "letscollab gateway",
+  "description": "letscollab api gateway",
   "author": "Han",
   "private": true,
   "main": "./src/index.ts",
@@ -29,8 +29,8 @@
     "@fastify/swagger": "^7.5.0",
     "@letscollab-nest/accesscontrol": "workspace:^",
     "@letscollab-nest/fastify-passport": "workspace:^",
+    "@letscollab-nest/helper": "workspace:^",
     "@letscollab-nest/nacos": "workspace:^",
-    "@letscollab/helper": "workspace:^",
     "@letscollab/user": "workspace:^",
     "@liaoliaots/nestjs-redis": "^8.0.0",
     "@nestjs/common": "^9.0.11",

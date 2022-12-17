@@ -6,7 +6,10 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
+import {
+  PaginationReqDto,
+  PaginationResSchemaDto,
+} from '@letscollab-nest/helper';
 import { AccessAction } from '@letscollab-nest/accesscontrol';
 import {
   RoleResource,

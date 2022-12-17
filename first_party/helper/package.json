@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/helper",
+  "name": "@letscollab-nest/helper",
   "version": "0.0.1",
   "description": "common utils",
   "author": "Han",

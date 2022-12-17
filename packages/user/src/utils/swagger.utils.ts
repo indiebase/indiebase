@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { readJsonSync } from 'fs-extra';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { overwriteSwaggerStaticAssets } from '@letscollab/helper';
+import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 
 export const setupApiDoc = (app: NestFastifyApplication) =>

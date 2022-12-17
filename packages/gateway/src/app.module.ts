@@ -13,7 +13,7 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { ApplySessionModule } from '@letscollab/helper';
+import { ApplySessionModule } from '@letscollab-nest/helper';
 import { UserModule } from './user/user.module';
 import { CollabModule } from './collab/collab.module';
 import { MsgModule } from './msg/msg.module';

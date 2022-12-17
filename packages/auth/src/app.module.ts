@@ -16,7 +16,7 @@ import LokiTransport = require('winston-loki');
 import { CasbinModule } from '@letscollab-nest/accesscontrol';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import TypeOrmAdapter from 'typeorm-adapter';
-import { ApplySessionModule } from '@letscollab/helper';
+import { ApplySessionModule } from '@letscollab-nest/helper';
 const isDev = process.env.NODE_ENV === 'development';
 
 @Module({

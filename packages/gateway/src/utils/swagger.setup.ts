@@ -6,7 +6,7 @@ import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { FastifyRequest } from 'fastify';
 import { FastifySwaggerOptions } from '@fastify/swagger';
-import { overwriteSwaggerStaticAssets } from '@letscollab/helper';
+import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
 
 const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
 

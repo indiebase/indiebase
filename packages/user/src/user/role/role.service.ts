@@ -16,7 +16,7 @@ import {
   awaitValue,
   ResultCode,
   RpcException2Http,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()

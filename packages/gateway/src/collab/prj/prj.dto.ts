@@ -1,4 +1,7 @@
-import { PaginationReqDto, PaginationResSchemaDto } from '@letscollab/helper';
+import {
+  PaginationReqDto,
+  PaginationResSchemaDto,
+} from '@letscollab-nest/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEmail,

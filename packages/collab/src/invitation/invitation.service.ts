@@ -7,7 +7,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy } from '@nestjs/microservices';
 
-import { AUTH_RMQ, MAIL_RMQ, ResultCode, USER_RMQ } from '@letscollab/helper';
+import {
+  AUTH_RMQ,
+  MAIL_RMQ,
+  ResultCode,
+  USER_RMQ,
+} from '@letscollab-nest/helper';
 import { lastValueFrom, timeout, catchError } from 'rxjs';
 import { InvitationEntity, InvitationStatus } from './invitation.entity';
 import { InviteMemberDto } from './invitation.dto';

@@ -6,7 +6,7 @@ import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrgEntity } from './org.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, USER_RMQ, MAIL_RMQ } from '@letscollab/helper';
+import { AUTH_RMQ, USER_RMQ, MAIL_RMQ } from '@letscollab-nest/helper';
 
 @Module({
   imports: [

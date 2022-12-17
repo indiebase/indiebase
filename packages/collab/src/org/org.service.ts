@@ -14,10 +14,10 @@ import {
   QueryOrgDto,
   UpdateOrgDto,
 } from './org.dto';
-import { ResultCode, USER_RMQ } from '@letscollab/helper';
+import { ResultCode, USER_RMQ } from '@letscollab-nest/helper';
 import { OrgEntity } from './org.entity';
 import { Repository } from 'typeorm';
-import { OctokitService } from '@letscollab/nest-octokit';
+import { OctokitService } from '@letscollab-nest/octokit';
 
 @Injectable()
 export class OrgService {
