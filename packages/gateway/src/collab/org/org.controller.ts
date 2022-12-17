@@ -22,7 +22,7 @@ import {
   QueryOrgResDto,
   UpdateOrgDto,
 } from './org.dto';
-import { UserInfo } from '@letscollab/helper';
+import { UserInfo } from '@letscollab-nest/helper';
 
 @Controller('v1/collab/org')
 @ApiTags('v1/Organization')

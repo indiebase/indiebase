@@ -21,7 +21,7 @@ import {
   getSubdomain,
   ProtectGuard,
   ResultCode,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import { LocalSignInDto } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
 import { HttpAdapterHost } from '@nestjs/core';

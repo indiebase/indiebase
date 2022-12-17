@@ -3,7 +3,7 @@ import {
   ResourceGroup,
   RoleResource,
   UserResource,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import { I18nContext } from 'nestjs-i18n';
 
 export const createResources: (i18n: I18nContext) => Resource[] = (i18n) => [

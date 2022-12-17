@@ -2,7 +2,7 @@ import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { TeamController } from './team.controller';
 import { Logger, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_RMQ, USER_RMQ, MAIL_RMQ } from '@letscollab/helper';
+import { AUTH_RMQ, USER_RMQ, MAIL_RMQ } from '@letscollab-nest/helper';
 
 @Module({
   imports: [

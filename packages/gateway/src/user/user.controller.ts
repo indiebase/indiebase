@@ -20,7 +20,7 @@ import {
   ProtectGuard,
   RpcSessionAuthzClientGuard,
   UserInfo,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import { UpdateUserProfileDto } from './user.dto';
 import { UserSession } from '@letscollab-nest/trait';
 

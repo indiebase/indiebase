@@ -5,7 +5,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { InvitationController } from './invitation.controller';
 import { InvitationService } from './invitation.service';
 import { InvitationEntity } from './invitation.entity';
-import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '@letscollab/helper';
+import { AUTH_RMQ, MAIL_RMQ, USER_RMQ } from '@letscollab-nest/helper';
 
 @Module({
   imports: [

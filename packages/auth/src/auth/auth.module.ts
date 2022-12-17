@@ -5,7 +5,7 @@ import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
-import { USER_RMQ } from '@letscollab/helper';
+import { USER_RMQ } from '@letscollab-nest/helper';
 import { LocalStrategy } from './local.strategy';
 
 @Module({
@@ -36,12 +36,7 @@ import { LocalStrategy } from './local.strategy';
     ]),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    GithubStrategy,
-    LocalStrategy,
-    Logger,
-  ],
+  providers: [AuthService, GithubStrategy, LocalStrategy, Logger],
   exports: [AuthService, GithubStrategy, LocalStrategy, PassportModule],
 })
 export class AuthModule {}

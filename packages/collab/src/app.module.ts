@@ -13,7 +13,7 @@ import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { utilities, WinstonModule } from 'nest-winston';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { OctokitModule } from '@letscollab/nest-octokit';
+import { OctokitModule } from '@letscollab-nest/octokit';
 import {
   NacosConfigModule,
   NacosConfigService,
@@ -23,7 +23,7 @@ import {
 import { InvitationModule } from './invitation/invitation.module';
 import { OrgModule } from './org/org.module';
 import { PrjModule } from './prj/prj.module';
-import { RedisSessionModule } from '@letscollab/helper';
+import { RedisSessionModule } from '@letscollab-nest/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';

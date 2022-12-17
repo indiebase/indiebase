@@ -12,7 +12,7 @@ import { ApiCookieAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 import { InviteMemberDto } from './invitation.dto';
-import { RpcSessionAuthzClientGuard } from '@letscollab/helper';
+import { RpcSessionAuthzClientGuard } from '@letscollab-nest/helper';
 
 @Controller('v1/collab/invitation')
 @ApiTags('v1/Invitation')

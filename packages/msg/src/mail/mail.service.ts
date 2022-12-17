@@ -1,7 +1,7 @@
 import { GetCaptchaDto } from './mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CaptchaUtils, ResultCode } from '@letscollab/helper';
+import { CaptchaUtils, ResultCode } from '@letscollab-nest/helper';
 import { InjectRedis } from '@liaoliaots/nestjs-redis';
 import { Logger } from '@nestjs/common';
 import type { Redis } from 'ioredis';

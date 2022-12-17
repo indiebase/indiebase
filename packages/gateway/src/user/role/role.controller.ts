@@ -27,7 +27,7 @@ import {
   AUTH_RMQ,
   RpcSessionAuthzClientGuard,
   InternalTestApiHeader,
-} from '@letscollab/helper';
+} from '@letscollab-nest/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
 import { ClientProxy } from '@nestjs/microservices';

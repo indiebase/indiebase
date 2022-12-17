@@ -21,7 +21,7 @@ import LokiTransport = require('winston-loki');
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import * as winston from 'winston';
 import { HttpAdapterHost } from '@nestjs/core';
-import { ApplySessionModule } from '@letscollab/helper';
+import { ApplySessionModule } from '@letscollab-nest/helper';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = process.env.NODE_ENV === 'development';

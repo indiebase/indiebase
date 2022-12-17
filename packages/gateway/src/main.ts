@@ -8,7 +8,7 @@ import {
 import { setupApiDoc } from './utils';
 import { AppModule } from './app.module';
 import fastifyHelmet from '@fastify/helmet';
-import { HttpExceptionFilter } from '@letscollab/helper';
+import { HttpExceptionFilter } from '@letscollab-nest/helper';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';

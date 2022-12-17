@@ -13,7 +13,7 @@ import {
   QueryTeamDto,
   UpdateTeamDto,
 } from './team.dto';
-import { ResultCode } from '@letscollab/helper';
+import { ResultCode } from '@letscollab-nest/helper';
 import { TeamEntity } from './team.entity';
 import { Repository } from 'typeorm';
 

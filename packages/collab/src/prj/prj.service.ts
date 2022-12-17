@@ -12,7 +12,7 @@ import {
   QueryPrjDto,
   UpdatePrjDto,
 } from './prj.dto';
-import { AUTH_RMQ, MAIL_RMQ, ResultCode } from '@letscollab/helper';
+import { AUTH_RMQ, MAIL_RMQ, ResultCode } from '@letscollab-nest/helper';
 import { Repository } from 'typeorm';
 import { PrjEntity } from './prj.entity';
 

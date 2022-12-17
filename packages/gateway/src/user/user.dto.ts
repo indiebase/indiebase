@@ -1,4 +1,4 @@
-import { HttpResSchemaDto } from '@letscollab/helper';
+import { HttpResSchemaDto } from '@letscollab-nest/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsOptional, MinLength } from 'class-validator';
 import { UserEntity } from './user.entity';

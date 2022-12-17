@@ -10,7 +10,7 @@ import { UserEntity } from './user.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RoleController } from './role/role.controller';
 import { ResourceController } from './res/resource.controller';
-import { AUTH_RMQ, MAIL_RMQ } from '@letscollab/helper';
+import { AUTH_RMQ, MAIL_RMQ } from '@letscollab-nest/helper';
 
 @Module({
   imports: [

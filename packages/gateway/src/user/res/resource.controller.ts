@@ -1,4 +1,7 @@
-import { ResultCode, RpcSessionAuthzClientGuard } from '@letscollab/helper';
+import {
+  ResultCode,
+  RpcSessionAuthzClientGuard,
+} from '@letscollab-nest/helper';
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import {

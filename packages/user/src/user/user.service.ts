@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { AUTH_RMQ, ResultCode, RpcResSchemaDto } from '@letscollab/helper';
+import { AUTH_RMQ, ResultCode, RpcResSchemaDto } from '@letscollab-nest/helper';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 

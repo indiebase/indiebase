@@ -26,11 +26,11 @@
   "dependencies": {
     "@fastify/cookie": "8.1.0",
     "@fastify/helmet": "^10.0.0",
+    "@letscollab-nest/helper": "workspace:^",
     "@letscollab-nest/nacos": "workspace:^",
     "@letscollab-nest/trait": "workspace:^",
     "@letscollab/auth": "workspace:^",
     "@letscollab/collab": "workspace:^",
-    "@letscollab/helper": "workspace:^",
     "@liaoliaots/nestjs-redis": "^8.0.0",
     "@nestjs/common": "^9.0.11",
     "@nestjs/config": "^2.2.0",

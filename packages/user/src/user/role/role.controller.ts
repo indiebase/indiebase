@@ -23,7 +23,10 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import { RpcSessionAuthzClientGuard, InternalTestApiHeader } from '@letscollab/helper';
+import {
+  RpcSessionAuthzClientGuard,
+  InternalTestApiHeader,
+} from '@letscollab-nest/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
 
