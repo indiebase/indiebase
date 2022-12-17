@@ -23,6 +23,7 @@ import {
 import { LocalSignInDto } from './auth.dto';
 import { HttpAdapterHost } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
+import { GithubGuard } from './github.guard';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')
@@ -70,9 +71,11 @@ export class AuthController {
   }
 
   @Get('oauth/github')
+  @UseGuards(GithubGuard)
   async github() {}
 
   @Get('github/callback')
+  @UseGuards(GithubGuard)
   async githubCallback(
     @Req() req: FastifyRequest,
     @Session() session: any,
