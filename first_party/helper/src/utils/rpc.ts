@@ -22,25 +22,26 @@ import {
 
 type ValueCallback = (err: any, caught?: any) => any;
 type ValuePattern = { cmd: string } | string;
+type ValueOptions = { duration: number };
 
-export function awaitValue(
+export function awaitValue<T = any>(
   client: ClientProxy,
   pattern: ValuePattern,
   data: any,
-): Promise<any>;
-export function awaitValue(
+): Promise<T>;
+export function awaitValue<T = any>(
   client: ClientProxy,
   pattern: ValuePattern,
   data: any,
-  options?: { duration: number },
-): Promise<any>;
-export function awaitValue(
+  options?: ValueOptions,
+): Promise<T>;
+export function awaitValue<T = any>(
   client: ClientProxy,
   pattern: ValuePattern,
   data: any,
   errorCallback?: ValueCallback,
-): Promise<any>;
-export function awaitValue(
+): Promise<T>;
+export function awaitValue<T = any>(
   client: ClientProxy,
   pattern: ValuePattern,
   data: any,
@@ -57,7 +58,7 @@ export function awaitValue(
 
   const duration = options?.duration ?? 4000;
 
-  return lastValueFrom(
+  return lastValueFrom<T>(
     client.send(pattern, data).pipe(timeout(duration), catchError(callback)),
   );
 }

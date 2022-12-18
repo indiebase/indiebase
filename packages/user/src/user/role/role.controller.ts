@@ -30,10 +30,7 @@ import {
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
 
-@Controller({
-  path: 'user/role',
-  version: '1',
-})
+@Controller()
 @ApiTags('v1/Role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}

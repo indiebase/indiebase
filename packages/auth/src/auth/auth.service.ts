@@ -11,14 +11,13 @@ import { catchError, lastValueFrom, timeout } from 'rxjs';
 import { CasbinService } from '@letscollab-nest/accesscontrol';
 import {
   ResultCode,
-  RpcCreateRoleBody,
   RpcResSchemaDto,
   RpcException2Http,
   USER_RMQ,
 } from '@letscollab-nest/helper';
 import * as bcrypt from 'bcrypt';
-import { LocalSignInDto } from './auth.dto';
 import { UserEntity } from '@letscollab/user';
+import { LocalSignInDto, RpcCreateRoleBody } from '@letscollab-nest/trait';
 
 @Injectable()
 export class AuthService {

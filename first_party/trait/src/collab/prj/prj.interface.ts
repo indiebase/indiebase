@@ -1,5 +1,4 @@
-import { UserProfile } from './user/user.interface';
-
+import { UserProfile } from '../../user';
 
 /**
  * Project Status Enum
@@ -16,7 +15,6 @@ export enum PrjStatus {
   /* project has closed */
   closed = 'closed',
 }
-
 
 export interface IProject {
   id: number;
