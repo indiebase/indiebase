@@ -12,6 +12,7 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
+    "start:gateway": "yarn workspace @letscollab/gateway start",
     "start:auth": "yarn workspace @letscollab/auth start",
     "start:user": "yarn workspace @letscollab/user start",
     "start:msg": "yarn workspace @letscollab/msg start",

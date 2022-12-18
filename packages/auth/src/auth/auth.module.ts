@@ -1,12 +1,12 @@
 import { Logger, Module } from '@nestjs/common';
 import { PassportModule } from '@letscollab-nest/fastify-passport';
 import { AuthService } from './auth.service';
-import { NacosConfigModule, NacosConfigService } from '@letscollab-nest/nacos';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
-import { USER_RMQ } from '@letscollab-nest/helper';
+import { GATEWAY_QUEUE, USER_RMQ } from '@letscollab-nest/helper';
 import { LocalStrategy } from './local.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -14,18 +14,14 @@ import { LocalStrategy } from './local.strategy';
     ClientsModule.registerAsync([
       {
         name: USER_RMQ,
-        imports: [NacosConfigModule],
-        inject: [NacosConfigService],
-        async useFactory(nacosConfigService: NacosConfigService) {
-          const nacosConfigs = await nacosConfigService.getConfig(
-            'service-user.json',
-          );
-
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        async useFactory(config: ConfigService) {
           return {
             transport: Transport.RMQ,
             options: {
-              urls: nacosConfigs.rabbitmq.urls,
-              queue: 'user_queue',
+              urls: config.get('rmq.urls'),
+              queue: GATEWAY_QUEUE,
               queueOptions: {
                 durable: false,
               },

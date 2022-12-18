@@ -8,9 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { NacosConfigService } from '@letscollab-nest/nacos';
-import { HttpExceptionFilter } from '@letscollab-nest/helper';
-import { setupApiDoc } from './utils';
+import { HttpExceptionFilter, USER_QUEUE } from '@letscollab-nest/helper';
 import fastifyHelmet from '@fastify/helmet';
 import Fastify from 'fastify';
 import {
@@ -40,20 +38,17 @@ async function bootstrap() {
 
   try {
     const configService = app.get<ConfigService>(ConfigService);
-    const nacosConfigService = app.get<NacosConfigService>(NacosConfigService);
-
-    const userConfigs = await nacosConfigService.getConfig('service-user.json');
 
     // //dto international
-    // app.useGlobalPipes(
-    //   new ValidationPipe({
-    //     transform: true,
-    //     enableDebugMessages: isDevelopment,
-    //     whitelist: true,
-    //     forbidNonWhitelisted: true,
-    //     exceptionFactory: i18nValidationErrorFactory,
-    //   }),
-    // );
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        enableDebugMessages: isDevelopment,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        exceptionFactory: i18nValidationErrorFactory,
+      }),
+    );
 
     await app.register(fastifyHelmet, {
       global: true,
@@ -69,8 +64,6 @@ async function bootstrap() {
       type: VersioningType.URI,
     });
 
-    await setupApiDoc(app);
-
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
     app.useLogger(nestWinston);
@@ -83,8 +76,8 @@ async function bootstrap() {
       {
         transport: Transport.RMQ,
         options: {
-          urls: userConfigs.rabbitmq.urls,
-          queue: 'user_queue',
+          urls: configService.get('amqp.urls'),
+          queue: USER_QUEUE,
           queueOptions: {
             durable: false,
           },

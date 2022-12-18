@@ -1,5 +1,5 @@
 import { AccessAction } from '@letscollab-nest/accesscontrol';
-import { UnionResource } from './resource';
+import { UnionResource } from './resource.interface';
 
 export type Possession = { resource: UnionResource; action: AccessAction[] };
 

@@ -15,15 +15,19 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import {
   ApiProtectHeader,
+  awaitValue,
   getSubdomain,
   ProtectGuard,
   ResultCode,
+  RpcException2Http,
+  RpcResSchemaDto,
   USER_RMQ,
 } from '@letscollab-nest/helper';
 import { LocalSignInDto } from './auth.dto';
 import { HttpAdapterHost } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { GithubGuard } from './github.guard';
+import { LocalAuthGuard } from './local.guard';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')
@@ -39,9 +43,9 @@ export class AuthController {
   /**
    * Give up letscollab's register
    */
-  @Post('signin')
+  @Post('sign-in')
   @ApiProtectHeader()
-  @UseGuards(ProtectGuard)
+  @UseGuards(ProtectGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
     @Req() req: FastifyRequest,
@@ -80,7 +84,40 @@ export class AuthController {
     @Req() req: FastifyRequest,
     @Session() session: any,
     @Res() res: FastifyReply,
-  ) {}
+  ) {
+    const r = await awaitValue<RpcResSchemaDto>(
+      this.userClient,
+      { cmd: 'signIn_github' },
+      req.user,
+      (err) => {
+        throw RpcException2Http(err);
+      },
+    );
+
+    if (r.code > 0) {
+      session.set('user', {
+        loggedIn: true,
+        id: r.d.id,
+        username: r.d.username,
+        githubAccessToken: req.user.accessToken,
+      });
+
+      session.cookie.expires = new Date(
+        Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
+      );
+
+      session.cookie.domain = getSubdomain(
+        new URL(`${req.protocol}://${req.hostname}`).hostname,
+        2,
+      );
+    }
+
+    return res
+      .type('text/html')
+      .send(
+        '<html><body><h3 style="text-align:center">Success</h3><script>setTimeout(()=>{window.close()}, 1000)</script></body>',
+      );
+  }
 
   @Post('logout')
   async logout(@Req() req: FastifyRequest) {
