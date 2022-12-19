@@ -32,13 +32,9 @@ export class BaseResSchemaDto {
   message?: string | string[];
 }
 
-export class RpcResSchemaDto<D = any> extends BaseResSchemaDto {
-  d?: D;
-
-  statusCode?: number;
+export class HttpResSchemaDto extends BaseResSchemaDto {
+  d?: Record<string, any> | string | number | any[];
 }
-
-export class HttpResSchemaDto extends BaseResSchemaDto {}
 
 export class PaginationResSchemaDto extends HttpResSchemaDto {
   @ApiProperty({

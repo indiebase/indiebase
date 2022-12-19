@@ -1,25 +1,33 @@
-import { Observable } from 'rxjs';
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthGuard } from '@letscollab-nest/fastify-passport';
-import { FastifyRequest } from 'fastify';
+import { CasbinService } from '@letscollab-nest/accesscontrol';
+import { RpcAuthData } from '@letscollab-nest/trait';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  Scope,
+} from '@nestjs/common';
 
-@Injectable()
-export class SessionGuard extends AuthGuard('session') {
-  override canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> | any {
-    return super.canActivate(context);
-  }
+@Injectable({ scope: Scope.REQUEST })
+export class SessionAuthGuard implements CanActivate {
+  constructor(private readonly casbin: CasbinService) {}
 
-  override handleRequest(
-    err: any,
-    user: any,
-    _info: any,
-    context: ExecutionContext,
-  ) {
-    const req = context.switchToHttp().getRequest<FastifyRequest>();
-    console.log();
-    console.log(req.session);
-    return user;
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const data = context.switchToRpc().getData<RpcAuthData>();
+
+    for (const obj of data.access) {
+      const { action, resource } = obj;
+      const hasPermission = await this.casbin.e.enforce(
+        data.user.username,
+        data.domain,
+        resource,
+        action,
+      );
+
+      if (!hasPermission) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

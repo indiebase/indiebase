@@ -6,9 +6,9 @@
   "private": true,
   "license": "AGPL-3.0",
   "engines": {
+    "yarn": ">2.0.0",
     "node": ">= 16.0.0",
     "npm": "please-use-yarn",
-    "yarn": ">2.0.0",
     "pnpm": "please-use-yarn"
   },
   "scripts": {
@@ -43,7 +43,7 @@
     "typescript": "^4.8.4"
   },
   "workspaces": [
-    "packages/*",
+    "community",
     "first_party/*",
     "third_party/*",
     "apps/*",

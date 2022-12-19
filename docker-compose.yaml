@@ -156,16 +156,6 @@ services:
       restart_policy:
         condition: on-failure
 
-  rabbitmq:
-    image: rabbitmq:3.9.14-management
-    ports:
-      - 13340:5672
-      - 13341:15672
-    logging: *loki-logging
-    deploy:
-      restart_policy:
-        condition: on-failure
-
   redis:
     image: redis:6.2.6-alpine
     ports:

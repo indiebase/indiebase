@@ -19,6 +19,33 @@ abstract class BasicAuthGuard {
 
 type AbstractAuth = abstract new (...args: any) => BasicAuthGuard;
 
+/**
+ *
+ * @param clientName
+ * @param options
+ *
+ *  @example
+ * ```ts
+ * import { FastifyRequest } from 'fastify';
+ * import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
+ *
+ * export class RpcSessionAuthzClientGuard extends RpcAuthzClientGuard('rpc client name') {
+ *    override async setPattern(_: ExecutionContext): Promise<Record<string, any>> {
+ *      return { cmd: 'auth' };
+ *    }
+ *
+ *    override async transfer(context: ExecutionContext) {
+ *      const req = context.switchToHttp().getRequest<FastifyRequest>();
+ *      if (!req.session?.user) {
+ *        throw new UnauthorizedException({ message: 'Please login' });
+ *      }
+ *
+ *      return req.session
+ *    }
+ *  }
+ * ```
+ *
+ */
 export function RpcAuthzClientGuard(
   clientName: string,
   options?: {
