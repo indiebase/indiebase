@@ -15,7 +15,6 @@ import {
   I18nValidationExceptionFilter,
 } from 'nestjs-i18n';
 import fastifyHelmet from '@fastify/helmet';
-import { setupCollabApiDoc } from './utils';
 import Fastify from 'fastify';
 import { useContainer } from 'class-validator';
 
@@ -62,9 +61,6 @@ async function bootstrap() {
       contentSecurityPolicy: false,
       referrerPolicy: true,
     });
-
-    // setup swagger
-    await setupCollabApiDoc(app);
 
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 

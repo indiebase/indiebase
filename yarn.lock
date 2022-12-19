@@ -4431,6 +4431,7 @@ __metadata:
   dependencies:
     "@letscollab-nest/helper": "workspace:^"
     "@letscollab-nest/nacos": "workspace:^"
+    "@letscollab-nest/trait": "workspace:^"
     "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs-modules/mailer": ^1.7.1
     "@nestjs/cli": ^9.1.1

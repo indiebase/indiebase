@@ -20,6 +20,9 @@ class Line {
   v5: string = '';
 }
 
+/**
+ * @deprecated
+ */
 // noinspection FallThroughInSwitchStatementJS
 export class NodeRedisAdapter implements FilteredAdapter {
   private readonly redisInstance;
