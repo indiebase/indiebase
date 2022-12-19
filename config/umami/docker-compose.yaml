@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  umami:
+    image: docker.umami.dev/umami-software/umami:mysql-latest
+    network_mode: overlay
+    restart: always
+    environment:
+      DATABASE_URL: mysql://letscollab:letscollab@mysql:3306/databasename
+      DATABASE_TYPE: mysql
+      HASH_SALT: ZuC7tNxKDodpApDaQFTJxVeiTBYzbBixE44Wg33GiDI
