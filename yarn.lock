@@ -3738,7 +3738,35 @@ __metadata:
     "@types/supertest": ^2.0.11
     casbin: ^5.13.0
     jest: ^27.2.5
-    prettier: ^2.7.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.2.0
+    source-map-support: ^0.5.20
+    supertest: ^6.1.3
+    ts-jest: ^27.0.3
+    ts-loader: ^9.2.3
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.10.1
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-nest/aws-s3@workspace:first_party/s3":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-nest/aws-s3@workspace:first_party/s3"
+  dependencies:
+    "@nestjs/cli": ^9.1.1
+    "@nestjs/common": ^9.0.11
+    "@nestjs/core": ^9.0.11
+    "@nestjs/microservices": ^9.0.11
+    "@nestjs/schematics": ^9.0.2
+    "@nestjs/testing": ^9.0.11
+    "@types/express": ^4.17.13
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    "@types/supertest": ^2.0.11
+    aws-sdk: ^2.1278.0
+    jest: ^27.2.5
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
     rxjs: ^7.2.0
@@ -3824,7 +3852,6 @@ __metadata:
     ioredis: ^5.0.4
     jest: ^27.2.5
     node-forge: ^1.3.1
-    prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rxjs: ^7.2.0
     source-map-support: ^0.5.20
@@ -3883,7 +3910,6 @@ __metadata:
     "@types/supertest": ^2.0.11
     jest: ^27.2.5
     nacos: ^2.2.1
-    prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
     rxjs: ^7.2.0
@@ -3912,7 +3938,6 @@ __metadata:
     "@types/supertest": ^2.0.11
     jest: ^27.2.5
     octokit: ^1.7.1
-    prettier: ^2.7.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
     rxjs: ^7.2.0
@@ -3966,9 +3991,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-pro/console@workspace:^, @letscollab-pro/console@workspace:pro/apps/console":
+"@letscollab-pro/console@workspace:^, @letscollab-pro/console@workspace:pro/console":
   version: 0.0.0-use.local
-  resolution: "@letscollab-pro/console@workspace:pro/apps/console"
+  resolution: "@letscollab-pro/console@workspace:pro/console"
   dependencies:
     "@ant-design/pro-components": ^1.1.25
     "@ant-design/pro-table": ^2.77.0
@@ -4016,55 +4041,6 @@ __metadata:
     jotai: ^1.7.3
     react-router-dom: ^6.3.0
     typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/app@workspace:apps/app":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/app@workspace:apps/app"
-  dependencies:
-    "@emotion/css": ^11.9.0
-    "@emotion/react": ^11.10.4
-    "@emotion/server": ^11.10.0
-    "@emotion/styled": ^11.10.4
-    "@letscollab-nest/trait": "workspace:^"
-    "@letscollab/nextra-theme-docs": "workspace:^"
-    "@mantine/core": ^5.5.4
-    "@mantine/form": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/next": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@mantine/ssr": ^5.5.4
-    "@mdx-js/loader": ^2.1.1
-    "@mdx-js/react": ^2.1.1
-    "@next/mdx": ^12.1.6
-    "@tabler/icons": ^1.92.0
-    "@types/nprogress": ^0.2.0
-    "@types/prismjs": ^1
-    "@types/react": ^18.0.14
-    "@types/react-dom": 18.0.5
-    axios: ^0.27.2
-    cross-env: ^7.0.3
-    eslint: 8.23.0
-    eslint-config-next: 12.2.5
-    localforage: ^1.10.0
-    lottie-react: ^2.2.1
-    next: 12.2.0
-    next-pwa: ^5.5.4
-    next-sitemap: ^3.0.5
-    nextra: 2.0.0-alpha.56
-    nprogress: ^0.2.0
-    prism-react-renderer: ^1.3.3
-    prismjs: ^1.28.0
-    react: ^18.2.0
-    react-device-detect: ^2.2.2
-    react-dom: ^18.2.0
-    react-query: ^3.39.1
-    react-scroll-motion: ^0.3.0
-    react-timer-hook: ^3.0.5
-    react-use: ^17.4.0
-    sass: ^1.49.9
-    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -4232,6 +4208,55 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@letscollab/home@workspace:apps/home":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/home@workspace:apps/home"
+  dependencies:
+    "@emotion/css": ^11.9.0
+    "@emotion/react": ^11.10.4
+    "@emotion/server": ^11.10.0
+    "@emotion/styled": ^11.10.4
+    "@letscollab-nest/trait": "workspace:^"
+    "@letscollab/nextra-theme-docs": "workspace:^"
+    "@mantine/core": ^5.5.4
+    "@mantine/form": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/next": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@mantine/ssr": ^5.5.4
+    "@mdx-js/loader": ^2.1.1
+    "@mdx-js/react": ^2.1.1
+    "@next/mdx": ^12.1.6
+    "@tabler/icons": ^1.92.0
+    "@types/nprogress": ^0.2.0
+    "@types/prismjs": ^1
+    "@types/react": ^18.0.14
+    "@types/react-dom": 18.0.5
+    axios: ^0.27.2
+    cross-env: ^7.0.3
+    eslint: 8.23.0
+    eslint-config-next: 12.2.5
+    localforage: ^1.10.0
+    lottie-react: ^2.2.1
+    next: 12.2.0
+    next-pwa: ^5.5.4
+    next-sitemap: ^3.0.5
+    nextra: 2.0.0-alpha.56
+    nprogress: ^0.2.0
+    prism-react-renderer: ^1.3.3
+    prismjs: ^1.28.0
+    react: ^18.2.0
+    react-device-detect: ^2.2.2
+    react-dom: ^18.2.0
+    react-query: ^3.39.1
+    react-scroll-motion: ^0.3.0
+    react-timer-hook: ^3.0.5
+    react-use: ^17.4.0
+    sass: ^1.49.9
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
 "@letscollab/nextra-theme-docs@workspace:^, @letscollab/nextra-theme-docs@workspace:apps/nextra-theme-docs":
   version: 0.0.0-use.local
   resolution: "@letscollab/nextra-theme-docs@workspace:apps/nextra-theme-docs"
@@ -4264,6 +4289,76 @@ __metadata:
     next: ">=9.5.3"
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/pro@workspace:pro/app":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/pro@workspace:pro/app"
+  dependencies:
+    "@fastify/cookie": 8.1.0
+    "@fastify/helmet": 10.0.0
+    "@fastify/passport": 2.2.0
+    "@fastify/session": 9.0.0
+    "@fastify/swagger": ^7.5.0
+    "@letscollab-nest/accesscontrol": "workspace:^"
+    "@letscollab-nest/fastify-passport": "workspace:^"
+    "@letscollab-nest/helper": "workspace:^"
+    "@letscollab-nest/nacos": "workspace:^"
+    "@liaoliaots/nestjs-redis": ^8.0.0
+    "@nestjs-modules/mailer": ^1.7.1
+    "@nestjs/cli": ^9.1.1
+    "@nestjs/common": ^9.0.11
+    "@nestjs/config": ^2.2.0
+    "@nestjs/core": ^9.0.11
+    "@nestjs/platform-fastify": ^9.0.11
+    "@nestjs/schematics": ^9.0.2
+    "@nestjs/swagger": ^6.1.3
+    "@nestjs/testing": ^9.0.11
+    "@nestjs/typeorm": ^9.0.1
+    "@swc/core": ^1.3.14
+    "@swc/helpers": ^0.4.12
+    "@types/bcrypt": ^5
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    "@types/passport": ^0
+    "@types/passport-github2": ^1.2.5
+    "@types/passport-local": ^1
+    "@types/rimraf": ^3
+    "@types/supertest": ^2.0.11
+    "@vercel/ncc": ^0.34.0
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    connect-redis: ^6.1.3
+    cross-env: ^7.0.3
+    fastify: ^4.4.0
+    ioredis: ^5.0.4
+    jest: ^27.2.5
+    mysql2: ^2.3.3
+    nest-winston: ^1.6.2
+    nestjs-i18n: ^9.2.0
+    nodemon: ^2.0.15
+    p-retry: ^5.1.1
+    passport: ^0.5.2
+    passport-cookie: ^1.0.9
+    passport-github2: ^0.1.12
+    passport-local: ^1.0.0
+    prettier: ^2.7.1
+    redis: ^3.1.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.2.0
+    source-map-support: ^0.5.20
+    supertest: ^6.1.3
+    ts-jest: ^27.0.3
+    ts-loader: ^9.2.3
+    ts-node: ^10.9.1
+    tsconfig-paths: ^3.10.1
+    typeorm: ^0.3.7
+    typeorm-adapter: ^1.5.1
+    typescript: ^4.8.4
+    winston: ^3.7.2
+    winston-loki: ^6.0.5
   languageName: unknown
   linkType: soft
 
@@ -8653,6 +8748,24 @@ __metadata:
   bin:
     lambda: bin/lambda
   checksum: 11316e87b5c4fc36e6bd0495742a3c0ed13befc9527a7b251a58180d141d9afd68b684f37aeb3b53d117d3c2f96747eace31826b683543f1edddc03f392865fd
+  languageName: node
+  linkType: hard
+
+"aws-sdk@npm:^2.1278.0":
+  version: 2.1278.0
+  resolution: "aws-sdk@npm:2.1278.0"
+  dependencies:
+    buffer: 4.9.2
+    events: 1.1.1
+    ieee754: 1.1.13
+    jmespath: 0.16.0
+    querystring: 0.2.0
+    sax: 1.2.1
+    url: 0.10.3
+    util: ^0.12.4
+    uuid: 8.0.0
+    xml2js: 0.4.19
+  checksum: 9375ec5dea3287e2bc05c302d7ba7d4e4fdc5c473ad32452fc7cee7bbc827baa8a3289a035312b55c98e11e9b9a11fbc5f6409b8199b0b8af46565686173657c
   languageName: node
   linkType: hard
 

@@ -41,6 +41,8 @@ WeChat: Nawbc9423
 
 See [Credits.md](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/CREDITS.md)
 
+NB: 项目使用的grafana版本为Apache-2.0开源协议。
+
 ## License
 
 本程序基于 GNU AFFERO GENERAL PUBLIC LICENSE (AGPL-3.0) 协议

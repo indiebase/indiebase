@@ -47,7 +47,7 @@
     "first_party/*",
     "third_party/*",
     "apps/*",
-    "pro/apps/*"
+    "pro/*"
   ],
   "jest": {
     "moduleFileExtensions": [

@@ -1,7 +1,7 @@
 {
-  "name": "@letscollab-nest/accesscontrol",
+  "name": "@letscollab-nest/aws-s3",
   "version": "0.0.1",
-  "description": "Nestjs access control module for letscollab",
+  "description": "Nestjs S3 module for letscollab",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@nestjs/common": "^9.0.11",
     "@nestjs/core": "^9.0.11",
-    "casbin": "^5.13.0",
+    "aws-sdk": "^2.1278.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

@@ -16,7 +16,6 @@ import LokiTransport = require('winston-loki');
 import { ApplySessionModule } from '@letscollab-nest/helper';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { UserModule } from './user/user.module';
-import { CollabModule } from './collab/collab.module';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { MsgModule } from './msg/msg.module';
 import { CasbinModule } from '@letscollab-nest/accesscontrol';
@@ -176,7 +175,7 @@ export class AppModule implements OnModuleInit {
 
   async onModuleInit() {
     await this.nacosNamingService.registerInstance(
-      `@letscollab/gateway-${process.env.NODE_ENV}`,
+      `@letscollab/community-${process.env.NODE_ENV}`,
       {
         port: parseInt(this.configService.get('app.port')),
         ip: this.configService.get('app.hostname'),
