@@ -10,7 +10,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
   override handleRequest(err: any, user: any, _info: any, _context: any) {
     if (err || !user) {
       this.logger.error(err);
-      throw new UnauthorizedException({ message: 'Unauthorized', ...err });
+      throw new UnauthorizedException();
     }
 
     return user;

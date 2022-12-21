@@ -1,35 +1,27 @@
 import { UserService } from '../user/user.service';
 import {
   Injectable,
-  Logger,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { CasbinService } from '@letscollab-nest/accesscontrol';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly logger: Logger,
-    private readonly casbin: CasbinService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   async validateLocal(username: string, password: string) {
-    let user = await this.userService.getUser([{ username: username }], {
+    let user = await this.userService.getUser([{ username }], {
       full: true,
     });
 
-    if (user.code > 0) {
-      const { d: data } = user;
-
-      if (!user.d.password) {
+    if (!!user) {
+      if (!user.password) {
         throw new UnauthorizedException('Please set your password first');
       }
 
-      if (await bcrypt.compare(password, data.password)) {
-        return data;
+      if (await bcrypt.compare(password, user.password)) {
+        return user;
       } else {
         throw new UnauthorizedException('Wrong password');
       }

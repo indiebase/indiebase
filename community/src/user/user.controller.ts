@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { UserInfo } from '@letscollab-nest/helper';
+import { ResultCode, UserInfo, AccessGuard } from '@letscollab-nest/helper';
 import { UpdateUserProfileDto } from './user.dto';
 import { UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
@@ -33,12 +33,16 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard)
+  @UseGuards(CoProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get user profile',
   })
-  async getProfile(@UserInfo() info: UserSession) {
-    return this.userService.getUser([{ id: info.id }]);
+  async getProfile(@UserInfo('id') id: number) {
+    const user = await this.userService.getUser([{ id }]);
+    return {
+      code: ResultCode.SUCCESS,
+      d: user,
+    };
   }
 
   @Post('profile/sync')
@@ -56,7 +60,11 @@ export class UserController {
     summary: 'Sync profile with platform. e.g. Github',
   })
   async getPossession(@UserInfo() info: UserSession) {
-    return this.userService.getUser([{ id: info.id }]);
+    const user = await this.userService.getUser([{ id: info.id }]);
+    return {
+      code: ResultCode.SUCCESS,
+      d: user,
+    };
   }
 
   @Patch('profile')

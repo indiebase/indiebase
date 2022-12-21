@@ -16,10 +16,6 @@ import { InviteMemberDto } from './invitation.dto';
 export class InvitationController {
   constructor() {}
 
-  @MessagePattern({ cmd: 'get_name' })
-  async getUser(@Payload() username: string) {}
-
-  @Get('list')
   @ApiCookieAuth('SID')
   // @UseGuards(Http2RmqAuthGuard)
   async queryUsers(@Query() query: any) {

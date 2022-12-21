@@ -125,7 +125,7 @@ export class AttachRole2UserDto {
     default: 'owner',
   })
   @IsString()
-  rolename: string;
+  roleName: string;
 
   @ApiProperty({
     default: 'letscollab.letscollab.deskbtm.com',

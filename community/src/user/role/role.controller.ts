@@ -1,3 +1,4 @@
+import { RoleService } from './role.service';
 import {
   Controller,
   Post,
@@ -23,7 +24,11 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import { AccessGuard, InternalTestApiHeader } from '@letscollab-nest/helper';
+import {
+  AccessGuard,
+  InternalTestApiHeader,
+  ResultCode,
+} from '@letscollab-nest/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
 
@@ -33,14 +38,16 @@ import { RoleResource } from '@letscollab-nest/trait';
 })
 @ApiTags('v1/Role')
 export class RoleController {
-  constructor() {}
+  constructor(private readonly roleService: RoleService) {}
 
   @Post()
   @ApiOperation({
     summary: 'Create a new role',
   })
   @ApiCookieAuth('SID')
-  async create(@Body() role: CreateRoleDto) {}
+  async create(@Body() role: CreateRoleDto) {
+    return this.roleService.createRole(role);
+  }
 
   @Get('list')
   @ApiOperation({
@@ -69,9 +76,15 @@ export class RoleController {
   @ApiOperation({ summary: 'Attach a role to user' })
   @UseGuards(AccessGuard)
   @InternalTestApiHeader()
-  @UseAccess({
-    action: AccessAction.createAny,
-    resource: RoleResource.list,
-  })
-  async attachRole2User(@Body() body: AttachRole2UserDto) {}
+  // @UseAccess({
+  //   action: AccessAction.createAny,
+  //   resource: RoleResource.list,
+  // })
+  async attachRole2User(@Body() body: AttachRole2UserDto) {
+    await this.roleService.attachRole2User(body);
+    return {
+      code: ResultCode.SUCCESS,
+      message: 'Success',
+    };
+  }
 }

@@ -1,6 +1,6 @@
 import { RoleEntity } from './role.entity';
 import {
-  BadRequestException,
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -10,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { ResultCode } from '@letscollab-nest/helper';
 import { CreateRoleBody } from '@letscollab-nest/trait';
+import { CasbinService } from '@letscollab-nest/accesscontrol';
 
 @Injectable()
 export class RoleService {
@@ -18,14 +19,17 @@ export class RoleService {
     private readonly roleRepo: Repository<RoleEntity>,
     private readonly dataSource: DataSource,
     private readonly logger: Logger,
+    private readonly casbin: CasbinService,
   ) {}
 
   async createRole(role: CreateRoleDto) {
     const runner = this.dataSource.createQueryRunner();
+    const { name, description, domain, possession } = role;
+
     const roleEntity = this.roleRepo.create({
-      name: role.name,
-      description: role.description,
-      domain: role.domain,
+      name,
+      description,
+      domain,
     });
 
     await runner.connect();
@@ -34,31 +38,22 @@ export class RoleService {
       .save(roleEntity)
       .then(async () => {
         if (role?.possession.length > 0) {
-          // return awaitValue(
-          //   this.authClient,
-          //   { cmd: 'set_role_policy' },
-          //   {
-          //     name: role.name,
-          //     possession: role.possession,
-          //     domain: role.domain,
-          //   },
-          //   (err) => {
-          //     throw RpcException2Http(err);
-          //   },
-          // );
+          return this.createRolePolicy({
+            name,
+            possession,
+            domain,
+          });
         }
       })
       .catch(async (err) => {
         await runner.rollbackTransaction();
-
         this.logger.error(err);
 
-        throw new BadRequestException({
-          message:
-            err?.code === 'ER_DUP_ENTRY'
-              ? `Role [${role.name}] existed`
-              : 'Fail to create',
-        });
+        if (err?.code === 'ER_DUP_ENTRY') {
+          throw new ConflictException(`Role [${role.name}] existed`);
+        }
+
+        throw new InternalServerErrorException('Fail to create');
       });
 
     await runner.commitTransaction();
@@ -82,33 +77,33 @@ export class RoleService {
     };
   }
 
-  // async createRolePolicy(body: RpcCreateRoleBody) {
-  //   for await (const item of body.possession) {
-  //     for (const action of item.action) {
-  //       await this.casbin.e
-  //         .addPolicy(body.name, body.domain, item.resource, action)
-  //         .catch((err) => {
-  //           throw new RpcException({
-  //             code: ResultCode.ERROR,
-  //             message: err,
-  //           });
-  //         });
-  //     }
-  //   }
-  // }
+  async createRolePolicy(body: CreateRoleBody) {
+    for await (const item of body.possession) {
+      for (const action of item.action) {
+        await this.casbin.e
+          .addPolicy(body.name, body.domain, item.resource, action)
+          .catch((err) => {
+            this.logger.error(err);
+            throw new InternalServerErrorException({
+              message: 'Error creating role',
+            });
+          });
+      }
+    }
+  }
 
-  // async attachRoleForUser({ username, rolename, domain }: any) {
-  //   return this.casbin.e
-  //     .addRoleForUser(username, rolename, domain)
-  //     .catch((err) => {
-  //       this.logger.error(err);
+  async attachRole2User({ username, roleName, domain }: any) {
+    return this.casbin.e
+      .addRoleForUser(username, roleName, domain)
+      .catch((err) => {
+        this.logger.error(err);
 
-  //       throw new InternalServerErrorException({
-  //         code: ResultCode.ERROR,
-  //         message: err,
-  //       });
-  //     });
-  // }
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: err,
+        });
+      });
+  }
 
   async updateRole(body: UpdateRoleDto) {
     const { id, name, status, description } = body;
@@ -116,9 +111,7 @@ export class RoleService {
       .update({ id }, { name, status, description })
       .catch((err) => {
         this.logger.error(err);
-        throw new InternalServerErrorException({
-          message: err?.code === 'ER_DUP_ENTRY' ? 'Role repeat' : 'Update fail',
-        });
+        throw new InternalServerErrorException('Update fail');
       });
 
     return {
@@ -128,9 +121,7 @@ export class RoleService {
   }
 
   async attachRole(body: any) {
-    // await awaitValue(this.authClient, { cmd: 'set_user_role' }, body, (err) => {
-    //   throw RpcException2Http(err);
-    // });
+    await this.attachRole2User(body).catch(() => {});
 
     return {
       code: ResultCode.SUCCESS,

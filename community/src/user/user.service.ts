@@ -109,13 +109,13 @@ export class UserService {
   ) {
     const { full = false } = option;
 
-    const promise = full
+    const result = full
       ? this.findOneFull(cond)
       : this.userRepo.findOne({
           where: cond,
         });
 
-    const user = await promise.catch((err) => {
+    return result.catch((err) => {
       this.logger.error(err.message, err.stack);
 
       throw new InternalServerErrorException({
@@ -123,10 +123,5 @@ export class UserService {
         message: err.message,
       });
     });
-
-    return {
-      code: user ? ResultCode.SUCCESS : ResultCode.ERROR,
-      d: user,
-    };
   }
 }
