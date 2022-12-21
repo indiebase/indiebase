@@ -9,6 +9,7 @@ import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { ResultCode } from '@letscollab-nest/helper';
+import { CreateRoleBody } from '@letscollab-nest/trait';
 
 @Injectable()
 export class RoleService {
@@ -80,6 +81,34 @@ export class RoleService {
       message: 'Delete successfully',
     };
   }
+
+  // async createRolePolicy(body: RpcCreateRoleBody) {
+  //   for await (const item of body.possession) {
+  //     for (const action of item.action) {
+  //       await this.casbin.e
+  //         .addPolicy(body.name, body.domain, item.resource, action)
+  //         .catch((err) => {
+  //           throw new RpcException({
+  //             code: ResultCode.ERROR,
+  //             message: err,
+  //           });
+  //         });
+  //     }
+  //   }
+  // }
+
+  // async attachRoleForUser({ username, rolename, domain }: any) {
+  //   return this.casbin.e
+  //     .addRoleForUser(username, rolename, domain)
+  //     .catch((err) => {
+  //       this.logger.error(err);
+
+  //       throw new InternalServerErrorException({
+  //         code: ResultCode.ERROR,
+  //         message: err,
+  //       });
+  //     });
+  // }
 
   async updateRole(body: UpdateRoleDto) {
     const { id, name, status, description } = body;

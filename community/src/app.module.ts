@@ -13,7 +13,7 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { ApplySessionModule } from '@letscollab-nest/helper';
+import { ApplySessionModule, isDev, isProd } from '@letscollab-nest/helper';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { UserModule } from './user/user.module';
 import TypeOrmAdapter from 'typeorm-adapter';
@@ -21,8 +21,13 @@ import { MsgModule } from './msg/msg.module';
 import { CasbinModule } from '@letscollab-nest/accesscontrol';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailerModule } from '@nestjs-modules/mailer';
-
-const isDev = process.env.NODE_ENV === 'development';
+import {
+  AcceptLanguageResolver,
+  CookieResolver,
+  HeaderResolver,
+  I18nModule,
+  QueryResolver,
+} from 'nestjs-i18n';
 
 @Module({
   imports: [
@@ -135,6 +140,20 @@ const isDev = process.env.NODE_ENV === 'development';
           autoLoadEntities: true,
         };
       },
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'zh-CN',
+      loaderOptions: {
+        path: resolve(process.cwd(), './i18n'),
+        watch: isDev,
+      },
+      resolvers: [
+        new QueryResolver(),
+        new HeaderResolver(['x-custom-lang']),
+        new CookieResolver(),
+        AcceptLanguageResolver,
+      ],
+      logging: isDev,
     }),
     MailerModule.forRootAsync({
       inject: [NacosConfigService],

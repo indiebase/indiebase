@@ -1,4 +1,4 @@
-import { ApiPropertyOptional, ApiProperty, ApiParam } from '@nestjs/swagger';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsNotEmpty,
@@ -14,7 +14,7 @@ import { AccessAction } from '@letscollab-nest/accesscontrol';
 import {
   RoleResource,
   RoleStatus,
-  RpcCreateRoleBody,
+  CreateRoleBody,
   UserResource,
 } from '@letscollab-nest/trait';
 
@@ -62,7 +62,7 @@ export class CreateRoleDto {
   })
   @IsArray()
   @IsOptional()
-  possession?: RpcCreateRoleBody['possession'];
+  possession?: CreateRoleBody['possession'];
 }
 export class QueryRoleDto extends PaginationReqDto {
   @ApiPropertyOptional({
