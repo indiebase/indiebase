@@ -43,7 +43,7 @@ export class UserService {
 
   public async signIn(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
-  ): Promise<HttpResSchemaDto> {
+  ) {
     let user = await this.userRepo.findOne({
       where: [
         {
@@ -67,11 +67,7 @@ export class UserService {
       });
     }
 
-    return {
-      code: ResultCode.SUCCESS,
-      message: 'Login Successfully',
-      d: user,
-    };
+    return user;
   }
 
   public async updateUser(

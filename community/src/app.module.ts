@@ -49,6 +49,7 @@ const isDev = process.env.NODE_ENV === 'development';
         const { session, cookie, redis } = await config.getConfig(
           'common.json',
         );
+
         session.saveUninitialized = false;
         return {
           session,

@@ -27,9 +27,7 @@ async function bootstrap() {
     {
       bodyParser: true,
       logger: isDevelopment ? ['verbose'] : ['error', 'warn'],
-      cors: {
-        credentials: true,
-      },
+      cors: true,
     },
   );
 

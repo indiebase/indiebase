@@ -33,7 +33,7 @@ export class BaseResSchemaDto {
 }
 
 export class HttpResSchemaDto extends BaseResSchemaDto {
-  d?: Record<string, any> | string | number | any[];
+  d?: any;
 }
 
 export class PaginationResSchemaDto extends HttpResSchemaDto {

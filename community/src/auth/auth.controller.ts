@@ -35,7 +35,7 @@ export class AuthController {
   /**
    * Give up letscollab's register
    */
-  @Post('sign-in')
+  @Post('signin')
   @ApiProtectHeader()
   @UseGuards(ProtectGuard, LocalAuthGuard)
   async signIn(
@@ -81,7 +81,7 @@ export class AuthController {
     const { profile, accessToken } = req.user;
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
-    await this.userService.signIn({
+    const r = await this.userService.signIn({
       username: username,
       profileUrl: profileUrl,
       githubId: id,
@@ -94,7 +94,7 @@ export class AuthController {
 
     session.set('user', {
       loggedIn: true,
-      id: id,
+      id: r.id,
       username,
       githubAccessToken: req.user.accessToken,
     });
@@ -117,9 +117,13 @@ export class AuthController {
 
   @Post('logout')
   async logout(@Req() req: FastifyRequest) {
-    await req.logOut().catch(() => {
-      throw new InternalServerErrorException();
-    });
+    await req
+      .logOut()
+      // Ensure delete session.
+      .then(() => req.session.destroy())
+      .catch(() => {
+        throw new InternalServerErrorException();
+      });
     return { code: ResultCode.SUCCESS };
   }
 }
