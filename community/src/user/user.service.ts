@@ -65,6 +65,14 @@ export class UserService {
             err.code === 'ER_DUP_ENTRY' ? 'User existed' : 'Fail to register',
         });
       });
+    } else {
+      // Update github access token per login.
+      if (user.githubAccessToken !== body.githubAccessToken) {
+        await this.updateUser(
+          { id: user.id },
+          { githubAccessToken: body.githubAccessToken },
+        );
+      }
     }
 
     return user;

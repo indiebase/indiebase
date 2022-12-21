@@ -45,39 +45,44 @@ export const apiTokenInspect = function (
  *
  *
  */
-@Injectable()
-export class ProtectGuard implements CanActivate {
-  constructor(
-    private readonly nacosConfigService: NacosConfigService,
-    private readonly logger: Logger,
-  ) {}
 
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest<FastifyRequest>();
-    try {
-      const common =
-        (await this.nacosConfigService.getConfig('common.json')) ?? {};
+export function ProtectGuard(configName: string) {
+  @Injectable()
+  class ProtectInnerGuard implements CanActivate {
+    constructor(
+      private readonly nacosConfigService: NacosConfigService,
+      private readonly logger: Logger,
+    ) {}
 
-      // If remote config is disabled, return true.
-      if (!common.apiProtect.enableProtectGuard) {
-        return true;
-      }
+    async canActivate(context: ExecutionContext): Promise<boolean> {
+      const request = context.switchToHttp().getRequest<FastifyRequest>();
+      try {
+        const config =
+          (await this.nacosConfigService.getConfig(configName)) ?? {};
 
-      const apiToken = request.headers[
-        common.apiProtect?.guardHeader ?? 'Access-Control-Allow-Credential'
-      ] as string;
+        // If remote config is disabled, return true.
+        if (!config.apiProtect.enableProtectGuard) {
+          return true;
+        }
 
-      if (!apiToken) {
+        const apiToken = request.headers[
+          config.apiProtect?.guardHeader ?? 'Access-Control-Allow-Credential'
+        ] as string;
+
+        if (!apiToken) {
+          throw new BadRequestException();
+        }
+        const salt = config.apiProtect.apiSalt;
+        const expire = config.apiProtect.apiExpire;
+        return apiTokenInspect(apiToken, salt, expire);
+      } catch (error) {
+        this.logger.error(error);
         throw new BadRequestException();
       }
-      const salt = common.apiProtect.apiSalt;
-      const expire = common.apiProtect.apiExpire;
-      return apiTokenInspect(apiToken, salt, expire);
-    } catch (error) {
-      this.logger.error(error);
-      throw new BadRequestException();
     }
   }
+
+  return ProtectInnerGuard as any;
 }
 
 export const ApiProtectHeader = () =>

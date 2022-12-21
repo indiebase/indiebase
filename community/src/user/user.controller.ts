@@ -1,3 +1,4 @@
+import { CoProtectGuard } from './../utils/guards';
 import {
   Body,
   Controller,
@@ -10,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { ProtectGuard, UserInfo } from '@letscollab-nest/helper';
+import { UserInfo } from '@letscollab-nest/helper';
 import { UpdateUserProfileDto } from './user.dto';
 import { UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
@@ -25,14 +26,14 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard)
+  @UseGuards(CoProtectGuard)
   async getUserList(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     return res.send({ token: 1 });
   }
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard)
+  @UseGuards(CoProtectGuard)
   @ApiOperation({
     summary: 'Get user profile',
   })
@@ -42,7 +43,7 @@ export class UserController {
 
   @Post('profile/sync')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard)
+  @UseGuards(CoProtectGuard)
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
@@ -50,7 +51,7 @@ export class UserController {
 
   @Post('possession')
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard)
+  @UseGuards(CoProtectGuard)
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
@@ -63,11 +64,12 @@ export class UserController {
     summary: 'Update a user profile',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard)
+  @UseGuards(CoProtectGuard)
   async updateUserProfile(
     @Body() body: UpdateUserProfileDto,
     @UserInfo() info: UserSession,
   ) {
+    console.log(info);
     const { password, email } = body;
     return this.userService.updateUser({ id: info.id }, { password, email });
   }

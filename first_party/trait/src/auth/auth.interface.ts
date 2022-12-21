@@ -18,7 +18,7 @@ export type UserSession = {
   [k: string]: any;
 };
 
-export type RpcAuthData = {
+export type ValidAuthData = {
   user: UserSession;
   domain: string;
   access: IAccessOptions[];

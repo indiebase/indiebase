@@ -1,3 +1,4 @@
+import { CoProtectGuard } from './../utils/guards';
 import { UserService } from '../user/user.service';
 import { NacosConfigService } from '@letscollab-nest/nacos';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -16,7 +17,6 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   ApiProtectHeader,
   getSubdomain,
-  ProtectGuard,
   ResultCode,
 } from '@letscollab-nest/helper';
 import { LocalSignInDto } from './auth.dto';
@@ -37,7 +37,7 @@ export class AuthController {
    */
   @Post('signin')
   @ApiProtectHeader()
-  @UseGuards(ProtectGuard, LocalAuthGuard)
+  @UseGuards(CoProtectGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
     @Req() req: FastifyRequest,
