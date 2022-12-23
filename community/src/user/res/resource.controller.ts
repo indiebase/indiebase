@@ -1,15 +1,9 @@
-import { AccessGuard, ResultCode } from '@letscollab-nest/helper';
-import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
+import { CoProtectGuard } from '../../utils';
+import { AccessGuard, DevApiHeader, ResultCode } from '@letscollab-nest/helper';
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import {
-  ApiOperation,
-  ApiTags,
-  ApiCookieAuth,
-  ApiHeader,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { createResources } from './resources';
-import { UserResource } from '@letscollab-nest/trait';
 
 @Controller({
   path: 'user/res',
@@ -22,15 +16,8 @@ export class ResourceController {
     summary: 'Get resource list',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(AccessGuard)
-  @UseAccess({
-    action: AccessAction.readAny,
-    resource: UserResource.list,
-  })
-  @ApiHeader({
-    name: 'Package-Name',
-    description: 'The product package name, same as domain',
-  })
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @DevApiHeader()
   async getResources(@I18n() i18n: I18nContext) {
     return {
       code: ResultCode.SUCCESS,

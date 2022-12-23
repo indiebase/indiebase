@@ -4166,7 +4166,6 @@ __metadata:
     passport-github2: ^0.1.12
     passport-local: ^1.0.0
     prettier: ^2.7.1
-    redis: ^3.1.1
     reflect-metadata: ^0.1.13
     rimraf: ^3.0.2
     rxjs: ^7.2.0
@@ -4203,6 +4202,9 @@ __metadata:
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
     "@svgr/webpack": ^5.5.0
     "@tabler/icons": ^1.92.0
+    "@tanstack/query-core": ^4.20.4
+    "@tanstack/react-query": ^4.20.4
+    "@tanstack/react-query-devtools": ^4.20.4
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
     "@types/react-grid-layout": ^1
@@ -4235,7 +4237,8 @@ __metadata:
     jest: ^27.4.3
     jest-resolve: ^27.4.2
     jest-watch-typeahead: ^1.0.0
-    jotai: 1.9.1
+    jotai: ^1.12.0
+    jotai-tanstack-query: ^0.4.0
     less: ^4.1.3
     less-loader: ^11.0.0
     localforage: ^1.10.0
@@ -4256,7 +4259,6 @@ __metadata:
     react-error-boundary: ^3.1.4
     react-grid-layout: ^1.3.4
     react-i18next: ^11.17.4
-    react-query: ^3.39.1
     react-refresh: ^0.11.0
     react-router-dom: ^6.3.0
     react-use: ^17.4.0
@@ -6536,10 +6538,60 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/match-sorter-utils@npm:^8.7.0":
+  version: 8.7.2
+  resolution: "@tanstack/match-sorter-utils@npm:8.7.2"
+  dependencies:
+    remove-accents: 0.4.2
+  checksum: 0821430d7de76911481b5300f4812f7cfefb804bf2f23fb1bab45e66c273379f0c919785ca1aecd8614b72d9e5e0e0edf9f449cbbb87dd91166d77ca285351f6
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:4.20.4, @tanstack/query-core@npm:^4.20.4":
+  version: 4.20.4
+  resolution: "@tanstack/query-core@npm:4.20.4"
+  checksum: bdb652296e4093d8cb042a67b9c035bc0a756e09a3b12aeb070068b07adc1c71174c2e6108f2a8c3322a26cb73ba57f431326aa0b813c81621674b9cc208cd93
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:^4.1.3":
   version: 4.14.5
   resolution: "@tanstack/query-core@npm:4.14.5"
   checksum: 25af0f4999668cd66a4a54c2d2d64dd7002f4852fb901d1d1d64908da4ea43d63e53e512b536987a789039713ffc6ae4ffa2d41cfab676b01704f4937be18a04
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^4.20.4":
+  version: 4.20.4
+  resolution: "@tanstack/react-query-devtools@npm:4.20.4"
+  dependencies:
+    "@tanstack/match-sorter-utils": ^8.7.0
+    superjson: ^1.10.0
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    "@tanstack/react-query": 4.20.4
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 77f55b3f7794ee95284969f4f5dfc8f81a856f31d9fa76343059e9580cb6099841cc63a540c6cdcc841be2c2249affdf49e1ad247f2c150472f856f2ecda9056
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^4.20.4":
+  version: 4.20.4
+  resolution: "@tanstack/react-query@npm:4.20.4"
+  dependencies:
+    "@tanstack/query-core": 4.20.4
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: ba9e2f175c58bde592c0ad14285f289585474763f8d68072d651fa75263a3a7f75eead5b62aa3140db133b95468498bc58817d07513f6f857be2bd8031b491da
   languageName: node
   linkType: hard
 
@@ -10933,6 +10985,15 @@ __metadata:
   dependencies:
     is-what: ^3.14.1
   checksum: 7318dc00ca14f846d14fc886845cff63bf20a3c5f4fcdd31f68c40a213648c78a1093426947ac0f8f8577845e9a7a11eeaaeefb05d9a6f1b78ca5ec60c2aaf6e
+  languageName: node
+  linkType: hard
+
+"copy-anything@npm:^3.0.2":
+  version: 3.0.3
+  resolution: "copy-anything@npm:3.0.3"
+  dependencies:
+    is-what: ^4.1.8
+  checksum: d456dc5ec98dee7c7cf87d809eac30dc2ac942acd4cf970fab394e280ceb6dd7a8a7a5a44fcbcc50e0206658de3cc20b92863562f5797930bb2619f164f4c182
   languageName: node
   linkType: hard
 
@@ -16552,6 +16613,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-what@npm:^4.1.8":
+  version: 4.1.8
+  resolution: "is-what@npm:4.1.8"
+  checksum: b9bec3acff102d14ad467f4c74c9886af310fa160e07a63292c8c181e6768c7c4c1054644e13d67185b963644e4a513bce8c6b8ce3d3ca6f9488a69fccad5f97
+  languageName: node
+  linkType: hard
+
 "is-windows@npm:^1.0.1":
   version: 1.0.2
   resolution: "is-windows@npm:1.0.2"
@@ -17657,7 +17725,57 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:1.9.1, jotai@npm:^1.9.1":
+"jotai-tanstack-query@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "jotai-tanstack-query@npm:0.4.0"
+  peerDependencies:
+    "@tanstack/query-core": "*"
+    jotai: "*"
+  checksum: aed859e6fe02815460117fdc9e3d7e82f1d3d508ebd37c5424cfe07798e74868bce16381542f2b589b881579e1f44c39265b445ee3c4ce33d59b136c0fd047ab
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "jotai@npm:1.12.0"
+  peerDependencies:
+    "@babel/core": "*"
+    "@babel/template": "*"
+    jotai-immer: "*"
+    jotai-optics: "*"
+    jotai-redux: "*"
+    jotai-tanstack-query: "*"
+    jotai-urql: "*"
+    jotai-valtio: "*"
+    jotai-xstate: "*"
+    jotai-zustand: "*"
+    react: ">=16.8"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    "@babel/template":
+      optional: true
+    jotai-immer:
+      optional: true
+    jotai-optics:
+      optional: true
+    jotai-redux:
+      optional: true
+    jotai-tanstack-query:
+      optional: true
+    jotai-urql:
+      optional: true
+    jotai-valtio:
+      optional: true
+    jotai-xstate:
+      optional: true
+    jotai-zustand:
+      optional: true
+  checksum: ffc815a4b73ac027d4eceb5b2c5afb79cfae75ebf06cf5f40bbccd88a93ac1a66a1c08d38d65f0d50510ca906f2ae41aa40a04fb3dea8cc84b34b322cda36490
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^1.9.1":
   version: 1.9.1
   resolution: "jotai@npm:1.9.1"
   peerDependencies:
@@ -27313,6 +27431,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"superjson@npm:^1.10.0":
+  version: 1.12.1
+  resolution: "superjson@npm:1.12.1"
+  dependencies:
+    copy-anything: ^3.0.2
+  checksum: d69badde9892bd2acfb6a2c37f233b7018b64fe88357568a7ab480547d6755ac1ed33a8d438d7ca856178312f5367574de180774d558bc0b75d1439efdfc53ba
+  languageName: node
+  linkType: hard
+
 "supertest@npm:^6.1.3":
   version: 6.3.1
   resolution: "supertest@npm:6.3.1"
@@ -28868,6 +28995,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 8993a0b642f91d7fcdbb02b7b3ac984bd3af4769686f38291fe7fcfe73dfb73d6c64d20dfb7e5e7fbf5a6da8f5392d6f8e5b00c243a04975595946e82c02b883
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
   languageName: node
   linkType: hard
 

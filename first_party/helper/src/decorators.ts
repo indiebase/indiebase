@@ -15,7 +15,7 @@ export const UserRoles = createParamDecorator(
   },
 );
 
-export const UserInfo = createParamDecorator(
+export const MyInfo = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     const session = request.session ?? {};
@@ -45,7 +45,7 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   })();
 };
 
-export function InternalTestApiHeader() {
+export function DevApiHeader() {
   return applyDecorators(
     ApiHeader({
       name: 'Package-Name',

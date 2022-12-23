@@ -10,7 +10,7 @@
     "docker:prod": "npm run bundle && docker build --build-arg RUNTIME_ENV=production -t letscollab/community.",
     "docker:local": "npm run bundle && docker build --build-arg RUNTIME_ENV=local --no-cache -t letscollab/community-local .",
     "start": "npm run prebuild && cross-env NODE_ENV=development DEBUG=\"ioredis:*\" nodemon -e ts,js --exec ts-node --swc ./src/main.ts",
-    "preview:dev": "npm run bundle:dev && cross-env NODE_ENV=development node ./dist/index.js",
+    "preview:dev": "cross-env NODE_ENV=development node ./dist/index.js",
     "bundle": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
     "bundle:dev": "npm run prebuild && ncc build ./src/main.ts -o dist -s",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

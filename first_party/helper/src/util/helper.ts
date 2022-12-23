@@ -38,6 +38,7 @@ export const getSubdomain = function (
   return prefix + domain.split('.').slice(-index).join('.');
 };
 
+
 /**
  * Overwrite `swagger-ui-dist` for production to resolve not found.
  *
@@ -62,3 +63,6 @@ export const overwriteSwaggerStaticAssets = function (finalPath, app) {
     });
   }
 };
+
+export const isDev = process.env.NODE_ENV === 'development';
+export const isProd = process.env.NODE_ENV === 'production';

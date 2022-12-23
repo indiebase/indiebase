@@ -1,7 +1,7 @@
 {
   "name": "@letscollab-nest/helper",
   "version": "0.0.1",
-  "description": "common utils",
+  "description": "Common utils",
   "author": "Han",
   "private": true,
   "main": "./src/index.ts",

@@ -11,9 +11,12 @@ export class AuthService {
   constructor(private readonly userService: UserService) {}
 
   async validateLocal(username: string, password: string) {
-    let user = await this.userService.getUser([{ username }], {
-      full: true,
-    });
+    let user = await this.userService.getUser(
+      { username },
+      {
+        full: true,
+      },
+    );
 
     if (!!user) {
       if (!user.password) {

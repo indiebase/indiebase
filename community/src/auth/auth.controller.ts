@@ -1,4 +1,4 @@
-import { CoProtectGuard } from './../utils/guards';
+import { CoProtectGuard } from '../utils';
 import { UserService } from '../user/user.service';
 import { NacosConfigService } from '@letscollab-nest/nacos';
 import { FastifyReply, FastifyRequest } from 'fastify';

@@ -4,9 +4,11 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HttpResSchemaDto, ResultCode } from '@letscollab-nest/helper';
+import { ResultCode } from '@letscollab-nest/helper';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
+import { QueryUserDto } from './user.dto';
+import { CasbinService } from '@letscollab-nest/accesscontrol';
 
 @Injectable()
 export class UserService {
@@ -14,6 +16,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
     private readonly logger: Logger,
+    private readonly casbin: CasbinService,
   ) {}
 
   private async createUser(
@@ -37,6 +40,7 @@ export class UserService {
     return this.userRepo
       .createQueryBuilder('user')
       .addSelect('user.password')
+      .addSelect('user.githubAccessToken')
       .where(cond)
       .getOne();
   }
@@ -82,8 +86,8 @@ export class UserService {
     cond: { id?: number; username?: string },
     data: Partial<UserEntity>,
   ) {
-    const e = await this.userRepo.findOne({ where: cond });
-    const userEntity = this.userRepo.create({ ...e, ...data });
+    const user = await this.userRepo.findOne({ where: cond });
+    const userEntity = this.userRepo.create({ ...user, ...data });
 
     await this.userRepo.save(userEntity).catch((err) => {
       this.logger.error(err);
@@ -92,8 +96,21 @@ export class UserService {
         message: 'Update profile failed',
       });
     });
+  }
+
+  public async getUserPossession(username: string) {}
+
+  public async getUsers(cond: QueryUserDto) {
+    const { pageSize, current, ...rest } = cond;
+
+    const [list, total] = await this.userRepo.findAndCount({
+      where: rest,
+      skip: (current - 1) * pageSize,
+      take: pageSize,
+    });
     return {
-      code: ResultCode.SUCCESS,
+      list,
+      total,
     };
   }
 
@@ -104,7 +121,7 @@ export class UserService {
    * @returns
    */
   public async getUser(
-    cond: Partial<UserEntity>[],
+    cond: Partial<UserEntity>,
     option: { full?: boolean } = {},
   ) {
     const { full = false } = option;

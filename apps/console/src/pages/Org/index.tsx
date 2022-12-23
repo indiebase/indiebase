@@ -1,4 +1,3 @@
-import { useQuery } from 'react-query';
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { projectsQuery } from '@letscollab/app-utils';
@@ -19,6 +18,7 @@ import { ProjectTile } from '../../components';
 import { Link } from 'react-router-dom';
 import { CoreProjects } from './CoreProjects';
 import { IconLink, IconMail } from '@tabler/icons';
+import { useQuery } from '@tanstack/react-query';
 
 export interface CoreProjectCardProps extends Partial<IProject> {}
 

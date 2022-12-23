@@ -1,3 +1,3 @@
-import { ProtectGuard as InnerProtectGuard } from '@letscollab-nest/helper';
+import { ProtectGuard } from '@letscollab-nest/helper';
 
-export const CoProtectGuard = InnerProtectGuard('mutable.json');
+export const CoProtectGuard = ProtectGuard('mutable.json');

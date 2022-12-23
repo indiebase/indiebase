@@ -22,7 +22,7 @@ import {
   QueryOrgResDto,
   UpdateOrgDto,
 } from './org.dto';
-import { UserInfo } from '@letscollab-nest/helper';
+import { MyInfo } from '@letscollab-nest/helper';
 
 @Controller('v1/collab/org')
 @ApiTags('v1/Organization')
@@ -52,7 +52,7 @@ export class OrgController {
   })
   @Post()
   @ApiCookieAuth('SID')
-  async createOrg(@Body() body: CreateOrgDto, @UserInfo() info) {
+  async createOrg(@Body() body: CreateOrgDto, @MyInfo() info) {
     // return this.org.createOrg({
     //   name: body.name,
     //   // description: body.description,

@@ -11,6 +11,7 @@ import { HttpExceptionFilter } from '@letscollab-nest/helper';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
+import { resolve } from 'path';
 
 declare module 'fastify' {
   interface PassportUser {
@@ -64,6 +65,9 @@ async function bootstrap() {
 
     await setupApiDoc(app);
 
+    app.useStaticAssets({
+      root: resolve(__dirname, '../public'),
+    })
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 

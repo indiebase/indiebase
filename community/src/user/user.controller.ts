@@ -1,20 +1,24 @@
-import { CoProtectGuard } from './../utils/guards';
+import { CoProtectGuard } from '../utils';
 import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Post,
-  Req,
-  Res,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ResultCode, UserInfo, AccessGuard } from '@letscollab-nest/helper';
-import { UpdateUserProfileDto } from './user.dto';
-import { UserSession } from '@letscollab-nest/trait';
+import { ResultCode, MyInfo, AccessGuard } from '@letscollab-nest/helper';
+import {
+  QueryPossessionDto,
+  QueryUserDto,
+  UpdateUserProfileDto,
+} from './user.dto';
+import { UserResource, UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
+import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 
 @Controller({
   path: 'user',
@@ -26,22 +30,62 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard)
-  async getUserList(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
-    return res.send({ token: 1 });
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.readAny,
+    resource: UserResource.list,
+  })
+  async getUserList(@Query() query: QueryUserDto) {
+    const d = await this.userService.getUsers(query);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
   }
 
   @Get('profile')
   @ApiCookieAuth('SID')
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiOperation({
-    summary: 'Get user profile',
+    summary: 'Get my profile',
   })
-  async getProfile(@UserInfo('id') id: number) {
-    const user = await this.userService.getUser([{ id }]);
+  async getMyProfile(@MyInfo('id') id: number) {
+    const user = await this.userService.getUser({ id });
     return {
       code: ResultCode.SUCCESS,
       d: user,
+    };
+  }
+
+  @Get('profile/:id')
+  @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: 'Get a user profile',
+  })
+  async getProfile(@Param('id') id: number) {
+    const user = await this.userService.getUser({ id });
+    return {
+      code: ResultCode.SUCCESS,
+      d: user,
+    };
+  }
+
+  @Patch('profile')
+  @ApiOperation({
+    summary: 'Update my profile',
+  })
+  @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard)
+  async updateUserProfile(
+    @Body() body: UpdateUserProfileDto,
+    @MyInfo('id') id: number,
+  ) {
+    const { password, email } = body;
+    await this.userService.updateUser({ id }, { password, email });
+
+    return {
+      code: ResultCode.SUCCESS,
     };
   }
 
@@ -51,34 +95,23 @@ export class UserController {
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
-  async syncProfile(@UserInfo() info: UserSession) {}
+  async syncProfile(@MyInfo() info: UserSession) {}
 
   @Post('possession')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard)
-  @ApiOperation({
-    summary: 'Sync profile with platform. e.g. Github',
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.readAny,
+    resource: UserResource.list,
   })
-  async getPossession(@UserInfo() info: UserSession) {
-    const user = await this.userService.getUser([{ id: info.id }]);
+  @ApiOperation({
+    summary: 'Getting user owns resources',
+  })
+  async getPossession(@Body() body: QueryPossessionDto) {
+    const user = await this.userService.getUserPossession(body.username);
     return {
       code: ResultCode.SUCCESS,
       d: user,
     };
-  }
-
-  @Patch('profile')
-  @ApiOperation({
-    summary: 'Update a user profile',
-  })
-  @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard)
-  async updateUserProfile(
-    @Body() body: UpdateUserProfileDto,
-    @UserInfo() info: UserSession,
-  ) {
-    console.log(info);
-    const { password, email } = body;
-    return this.userService.updateUser({ id: info.id }, { password, email });
   }
 }

@@ -1,2 +1,2 @@
-export * from './swagger.setup';
 export * from './guards';
+export * from './swagger.setup';

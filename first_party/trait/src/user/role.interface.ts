@@ -3,7 +3,7 @@ import { UnionResource } from './resource.interface';
 
 export type Possession = { resource: UnionResource; action: AccessAction[] };
 
-export interface RpcCreateRoleBody {
+export interface CreateRoleBody {
   name: string;
   possession: Possession[];
   domain: string;

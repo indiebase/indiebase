@@ -24,11 +24,7 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import {
-  AccessGuard,
-  InternalTestApiHeader,
-  ResultCode,
-} from '@letscollab-nest/helper';
+import { AccessGuard, DevApiHeader, ResultCode } from '@letscollab-nest/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
 
@@ -75,7 +71,7 @@ export class RoleController {
   @ApiCookieAuth('SID')
   @ApiOperation({ summary: 'Attach a role to user' })
   @UseGuards(AccessGuard)
-  @InternalTestApiHeader()
+  @DevApiHeader()
   // @UseAccess({
   //   action: AccessAction.createAny,
   //   resource: RoleResource.list,

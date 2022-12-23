@@ -18,15 +18,25 @@ export class UserEntity {
   id: number;
 
   @ApiProperty()
-  @Column('char', { unique: true, nullable: true, length: 32 })
+  @Column('char', {
+    name: 'github_id',
+    unique: true,
+    nullable: true,
+    length: 32,
+  })
   githubId?: string;
 
   @ApiProperty()
-  @Column('varchar', { unique: true, nullable: true })
+  @Column('varchar', {
+    name: 'github_access_token',
+    unique: true,
+    nullable: true,
+    select: false,
+  })
   githubAccessToken?: string;
 
   @ApiProperty()
-  @Column('varchar', { nullable: true })
+  @Column('varchar', { name: 'profile_url', nullable: true })
   profileUrl?: string;
 
   @ApiProperty()

@@ -1,11 +1,11 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter } from 'react-router-dom';
 import { queryClientAtom } from 'jotai/query';
 import { AppRouter } from './Router';
 import { Provider } from 'jotai';
 import { useAtomsDebugValue } from 'jotai/devtools';
 import './App.less';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient({
   defaultOptions: {
