@@ -1,3 +1,4 @@
+import { buttonPrimaryColor } from '@letscollab/console-utils';
 import {
   Button,
   Container,
@@ -9,8 +10,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { FormInstance } from 'antd';
-import { FC, useRef, useState } from 'react';
+import { FC, useState } from 'react';
 
 interface CreateRoleModalProps {
   row?: any;
@@ -18,11 +18,6 @@ interface CreateRoleModalProps {
   id?: number;
   updateModal?: boolean;
 }
-
-const isEmail = (value) =>
-  /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(
-    value,
-  );
 
 const countriesData = [
   { label: 'United States', value: 'US' },
@@ -32,9 +27,7 @@ const countriesData = [
   { label: 'Russia', value: 'RU' },
 ];
 
-export const RoleModal: FC<CreateRoleModalProps> = function (props) {
-  const ref = useRef<FormInstance>();
-
+export const RoleModal: FC<CreateRoleModalProps> = function () {
   const theme = useMantineTheme();
   const [opened, setOpen] = useState<boolean>(false);
 
@@ -68,7 +61,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function (props) {
         transitionTimingFunction="ease"
       >
         <Container>
-          <form onSubmit={form.onSubmit((values) => {})}>
+          <form onSubmit={form.onSubmit(() => {})}>
             <Group grow>
               <TextInput
                 my={15}
@@ -103,7 +96,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function (props) {
               <Button
                 type="submit"
                 variant="gradient"
-                gradient={{ from: 'teal', to: 'lime', deg: 105 }}
+                gradient={buttonPrimaryColor}
               >
                 确定
               </Button>
@@ -117,7 +110,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function (props) {
           setOpen(true);
         }}
         variant="gradient"
-        gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
+        gradient={buttonPrimaryColor}
       >
         添加
       </Button>

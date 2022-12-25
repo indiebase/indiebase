@@ -1,6 +1,4 @@
 import { Button, Container } from '@mantine/core';
-import { useAtom } from 'jotai';
-import { loadable } from 'jotai/utils';
 import { useRef, useMemo } from 'react';
 import { RoleStatus } from 'src/common/enum';
 import { MemberModal } from './MemberModal';

@@ -23,7 +23,7 @@ import {
 } from '@tabler/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userProfileQuery } from '../../api';
+import { userProfileAtom } from '../../atoms';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -58,28 +58,25 @@ const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const navigate = useNavigate();
+  const [profile] = useAtom(userProfileAtom);
   const { org: orgParam } = useParams();
 
-  const [value] = useAtom(userProfileQuery);
-
-  const data = value.d;
   const userItem = {
-    logo: data.avatar,
-    label: data.username,
-    value: data.username,
-    path: 'users/' + data.username,
+    logo: profile.avatar,
+    label: profile.username,
+    value: profile.username,
+    path: 'users/' + profile.username,
   };
-  const orgs = data.orgs
+  const orgs = profile.orgs
     ? [
         userItem,
-        ...data.orgs.map((o) => ({
+        ...profile.orgs.map((o) => ({
           ...o,
           value: o.value,
           path: 'orgs/' + o.value,
         })),
       ]
     : [];
-  console.log(orgs, orgParam);
   const orgDefault = useMemo(
     () => orgs.find((v) => v.value === orgParam) ?? userItem,
     [orgParam, orgs],
@@ -178,7 +175,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
               <Group mr={30} spacing={6}>
                 <Menu width={200} position="bottom-end" withArrow>
                   <Menu.Target>
-                    <Avatar src={data?.avatar} radius="xl" size={26}>
+                    <Avatar src={profile?.avatar} radius="xl" size={26}>
                       <IconUser size={17} />
                     </Avatar>
                   </Menu.Target>

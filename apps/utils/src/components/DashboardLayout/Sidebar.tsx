@@ -12,19 +12,19 @@ import { FC } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import React from 'react';
 
-export interface MenuNode {
+export interface SidebarTileNode {
   label: string;
   to?: string;
   replace?: boolean;
   type?: 'node' | 'link';
   icon?: React.ReactNode;
   color?: keyof MantineThemeColors;
-  children?: MenuNode[];
+  children?: SidebarTileNode[];
   onClick?: () => Promise<void> | void;
 }
-export interface MenuProps {
+export interface SidebarProps {
   opened: boolean;
-  menu: MenuNode[];
+  menu: SidebarTileNode[];
 }
 
 interface MenuItemProps {
@@ -33,7 +33,7 @@ interface MenuItemProps {
   onClick?: (e: any) => void;
 }
 
-function MenuItem({ label, active, onClick }: MenuItemProps) {
+function SidebarTile({ label, active, onClick }: MenuItemProps) {
   return (
     <UnstyledButton
       onClick={onClick}
@@ -62,7 +62,7 @@ function MenuItem({ label, active, onClick }: MenuItemProps) {
   );
 }
 
-export const Menu: FC<MenuProps> = function (props) {
+export const Sidebar: FC<SidebarProps> = function (props) {
   const navigate = useNavigate();
 
   return (
@@ -120,7 +120,7 @@ export const Menu: FC<MenuProps> = function (props) {
                       return (
                         <NavLink key={index} to={sub.to}>
                           {({ isActive }) => (
-                            <MenuItem active={isActive} label={sub.label} />
+                            <SidebarTile active={isActive} label={sub.label} />
                           )}
                         </NavLink>
                       );

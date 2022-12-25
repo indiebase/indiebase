@@ -94,7 +94,7 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
       <Group position="apart" mb={7}>
         <Group spacing={5}>
           <Anchor
-            to="/pro"
+            to={props.name}
             component={Link}
             reloadDocument={false}
             size="sm"

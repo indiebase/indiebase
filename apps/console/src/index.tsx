@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -29,9 +28,10 @@ i18n
     },
   });
 
-// if (process.env.NODE_ENV === 'production') {
-//   console.log = () => {};
-// }
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+  console.info = () => {};
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

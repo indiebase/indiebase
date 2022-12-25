@@ -1,6 +1,6 @@
-import { Stack, Button, Text, Box, Group } from '@mantine/core';
+import { Stack, Button, Text, Box, Group, Anchor } from '@mantine/core';
 
-export const Footer = function (props) {
+export const Footer = function () {
   return (
     <Box p="md">
       <Stack align="center">
@@ -10,8 +10,16 @@ export const Footer = function (props) {
           <Button variant="white">Three</Button>
         </Group>
         <Stack align="center">
-          {/* <Link href="#">皖ICP备20002736号-2</Link> */}
-          <Text>Copyright© {new Date().getFullYear()} Han</Text>
+          <Text size="xs">
+            Copyright© {new Date().getFullYear()}&nbsp;
+            <Anchor href="https://deskbtm.com" target="_blank">
+              Deskbtm
+            </Anchor>
+            &nbsp;
+            <Anchor href="https://github.com/Nawbc" target="_blank">
+              Han
+            </Anchor>
+          </Text>
         </Stack>
       </Stack>
     </Box>

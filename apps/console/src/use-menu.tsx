@@ -1,33 +1,88 @@
 import { useMemo } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
 import { useParams } from 'react-router-dom';
-import { MenuNode } from '@letscollab/app-utils';
+import { SidebarTileNode, userProfileAtom } from '@letscollab/console-utils';
+import { useAtom } from 'jotai';
 
 export const useMenu = () => {
-  const { org, project, user } = useParams();
+  let { org, project, user } = useParams();
+  const [profile] = useAtom(userProfileAtom);
 
-  console.log(user);
+  return useMemo<SidebarTileNode[]>(() => {
+    //TODO:
 
-  return useMemo<MenuNode[]>(() => {
-    //TODO: Stupid way
+    let prefix;
+
+    if (org) {
+      prefix = 'orgs/' + org;
+    } else if (user) {
+      prefix = 'users/' + user;
+    } else {
+      prefix = 'users/' + profile.username;
+    }
 
     let settingList = [
       {
         label: 'Profile',
-        to: `users/${user}/profile`,
+        to: `${prefix}/settings/profile`,
       },
     ];
 
-    if (org) {
-      const slug = ['orgs', org, project].filter(Boolean).join('/');
-      settingList = [
+    const slug = [prefix, project].filter(Boolean).join('/');
+
+    if (user) {
+    }
+
+    if (user && project) {
+      return [
         {
-          label: 'General',
-          to: `${slug}/settings/general`,
+          label: 'Project',
+          icon: <IconFileCode size={16} />,
+          color: 'blue',
+          to: prefix,
         },
         {
-          label: 'Access',
-          to: `${slug}/settings/access`,
+          label: 'Setting',
+          icon: <IconSettings size={16} />,
+          color: 'violet',
+          type: 'node',
+          children: [
+            {
+              label: 'General',
+              to: `${slug}/settings/general`,
+            },
+            {
+              label: 'Access',
+              to: `${slug}/settings/access`,
+            },
+          ],
+        },
+      ];
+    }
+
+    if (org) {
+      return [
+        {
+          label: 'Project',
+          icon: <IconFileCode size={16} />,
+          color: 'blue',
+          to: prefix,
+        },
+        {
+          label: 'Setting',
+          icon: <IconSettings size={16} />,
+          color: 'violet',
+          type: 'node',
+          children: [
+            {
+              label: 'General',
+              to: `${slug}/settings/general`,
+            },
+            {
+              label: 'Access',
+              to: `${slug}/settings/access`,
+            },
+          ],
         },
       ];
     }
@@ -37,8 +92,7 @@ export const useMenu = () => {
         label: 'Project',
         icon: <IconFileCode size={16} />,
         color: 'blue',
-        // replace: true,
-        to: org,
+        to: prefix,
       },
       {
         label: 'Setting',

@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { projectsQuery } from '@letscollab/app-utils';
+import { projectsQuery } from '@letscollab/console-utils';
 import { IProject } from '@letscollab-nest/trait';
 import {
   Group,
@@ -46,7 +46,7 @@ const OrgProfile: FC<any> = function () {
             style={{ maxWidth: 300 }}
             size="xs"
             component="a"
-            href=" www.baidu.com"
+            href="https://www.baidu.com"
             target="_blank"
             lineClamp={1}
           >
