@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 export const useMenu = () => {
   let { org, project, user } = useParams();
   const [profile] = useAtom(userProfileAtom);
+  console.log(useParams()); 
 
   return useMemo<SidebarTileNode[]>(() => {
     //TODO:

@@ -1,8 +1,31 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HttpStatusPage } from '@letscollab/console-utils';
-import { ProLayout } from '@letscollab-pro/console';
+// import { ProLayout } from '@letscollab-pro/console';
 import { Layout } from './Layout';
 import { OrganizationPage, AccessPage } from './pages';
+
+const projectRouter = {
+  path: ':project',
+  children: [
+    {
+      index: true,
+      element: <div>projects</div>,
+    },
+    {
+      path: 'settings',
+      children: [
+        {
+          path: 'general',
+          element: <AccessPage />,
+        },
+        {
+          path: 'access',
+          element: <AccessPage />,
+        },
+      ],
+    },
+  ],
+};
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +52,7 @@ export const router = createBrowserRouter([
               },
             ],
           },
+          projectRouter,
         ],
       },
       {
@@ -38,6 +62,7 @@ export const router = createBrowserRouter([
             index: true,
             element: <OrganizationPage />,
           },
+          projectRouter,
           {
             path: 'settings',
             children: [
@@ -51,24 +76,6 @@ export const router = createBrowserRouter([
               },
             ],
           },
-          {
-            path: ':project',
-            children: [
-              {
-                index: true,
-                element: <div>projects</div>,
-              },
-              {
-                path: 'settings',
-                children: [
-                  {
-                    path: 'access',
-                    element: <AccessPage />,
-                  },
-                ],
-              },
-            ],
-          },
         ],
       },
       {
@@ -79,7 +86,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/pro',
-    element: <ProLayout />,
+    // element: <ProLayout />,
     children: [
       {
         path: ':org',
