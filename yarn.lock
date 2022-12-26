@@ -4172,9 +4172,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/console-utils@workspace:^, @letscollab/console-utils@workspace:apps/utils":
+"@letscollab/console-utils@workspace:^, @letscollab/console-utils@workspace:apps/console-utils":
   version: 0.0.0-use.local
-  resolution: "@letscollab/console-utils@workspace:apps/utils"
+  resolution: "@letscollab/console-utils@workspace:apps/console-utils"
   dependencies:
     "@faker-js/faker": ^7.3.0
     "@letscollab-nest/trait": "workspace:^"
