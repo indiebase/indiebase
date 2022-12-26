@@ -17,7 +17,7 @@ import {
 import { IProject } from '@letscollab-nest/trait';
 import { Grid, Text, Group } from '@mantine/core';
 import { FC, useCallback, useState } from 'react';
-import { CoreProjectCard } from '../../components';
+import { PinnedProjectCard } from '../../components';
 
 export interface CoreProjectsProps {
   list: IProject[];
@@ -69,7 +69,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
             {visibleItems.map((e, i) => {
               return (
                 <Grid.Col key={i} lg={4} md={6}>
-                  <CoreProjectCard
+                  <PinnedProjectCard
                     id={e.id}
                     cover={e.cover}
                     name={e.name}

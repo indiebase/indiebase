@@ -14,7 +14,7 @@ mock.onGet('/v1/prj/list').reply<BaseResSchema<IProject[]>>(200, {
     createTime: faker.date.past(),
     updateTime: faker.date.past(),
     githubRepoUrl: faker.internet.url(),
-    members: Array.from({ length: Math.ceil(Math.random() * 10) }).map(() =>
+    members: Array.from({ length: Math.ceil(Math.random() * 20) }).map(() =>
       FakeSingleUserProfile(),
     ),
     cover: (i + 1) % 3 === 0 ? null : faker.image.food(),

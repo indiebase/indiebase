@@ -60,7 +60,7 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
         onClose={() => setOpen(false)}
         withCloseButton={false}
         shadow="unset"
-        transition="rotate-left"
+        transition="pop-top-right"
         transitionDuration={200}
         transitionTimingFunction="ease"
       >

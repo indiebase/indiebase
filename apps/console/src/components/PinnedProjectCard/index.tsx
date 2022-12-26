@@ -25,10 +25,15 @@ import { Link } from 'react-router-dom';
 import { FC, useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import {
+  AvatarWithPreview,
+  LimitAvatarGroup,
+  ProfilePreviewCard,
+} from '@letscollab/console-utils';
 
-export interface CoreProjectCardProps extends Partial<IProject> {}
+export interface PinnedProjectCardProps extends Partial<IProject> {}
 
-export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
+export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
   const color: MantineColor = getStatusColor(props.status);
   const { id } = props;
   const theme = useMantineTheme();
@@ -63,6 +68,7 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
         zIndex: isDragging ? 999 : 0,
         opacity: isDragging ? 0.8 : 1,
         border: '1px solid #E2E2E2',
+        overflow: 'unset',
         transform: CSS.Transform.toString(transform),
         transition,
       }}
@@ -123,10 +129,10 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
       </Box>
 
       <Group mt={9} position="apart">
-        <Avatar.Group ml={-2}>
+        <LimitAvatarGroup ml={-2} spacing="xs">
           {props.members.map((u, i) => {
             return (
-              <Avatar
+              <AvatarWithPreview
                 radius="xl"
                 size="sm"
                 key={i}
@@ -135,10 +141,10 @@ export const CoreProjectCard: FC<CoreProjectCardProps> = function (props) {
                 href={u.profileUrl}
               >
                 <IconUser size={14} />
-              </Avatar>
+              </AvatarWithPreview>
             );
           })}
-        </Avatar.Group>
+        </LimitAvatarGroup>
         <Center>
           <Text style={{ fontSize: 10 }} color="gray">
             Update

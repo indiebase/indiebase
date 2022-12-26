@@ -1,5 +1,4 @@
-import { useAtom } from 'jotai';
-import React, { PropsWithChildren, useContext, useState } from 'react';
+import { PropsWithChildren } from 'react';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

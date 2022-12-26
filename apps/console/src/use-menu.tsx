@@ -5,8 +5,13 @@ import { SidebarTileNode, userProfileAtom } from '@letscollab/console-utils';
 import { useAtom } from 'jotai';
 
 export const useMenu = () => {
-  let { org, project, user } = useParams();
+  const params = useParams();
+  const { org, project, user } = params;
   const [profile] = useAtom(userProfileAtom);
+  console.log(params['*'], org, project, user);
+
+  // if not match, menu is immutable.
+  const deps = !!params['*'] ? [] : [org, project, user];
 
   return useMemo<SidebarTileNode[]>(() => {
     //TODO:
@@ -16,21 +21,14 @@ export const useMenu = () => {
     if (org) {
       prefix = ['orgs', org, project].filter(Boolean).join('/');
     } else if (user) {
-      prefix = ['users', user, project].filter(Boolean).join('/');
-    } else {
-      prefix = ['users', profile.username, project].filter(Boolean).join('/');
+      prefix = ['users', user ?? profile.username, project]
+        .filter(Boolean)
+        .join('/');
     }
 
-    console.log(prefix);
-
+    // Project
     if (project) {
       return [
-        {
-          label: 'Project',
-          icon: <IconFileCode size={16} />,
-          color: 'blue',
-          to: prefix,
-        },
         {
           label: 'Setting',
           icon: <IconSettings size={16} />,
@@ -50,6 +48,7 @@ export const useMenu = () => {
       ];
     }
 
+    //  Organization
     if (org) {
       return [
         {
@@ -69,6 +68,10 @@ export const useMenu = () => {
               to: `${prefix}/settings/general`,
             },
             {
+              label: 'Member',
+              to: `${prefix}/settings/member`,
+            },
+            {
               label: 'Access',
               to: `${prefix}/settings/access`,
             },
@@ -76,6 +79,8 @@ export const useMenu = () => {
         },
       ];
     }
+
+    // User
     return [
       {
         label: 'Project',
@@ -96,5 +101,5 @@ export const useMenu = () => {
         ],
       },
     ];
-  }, [org, project, user]);
+  }, deps);
 };

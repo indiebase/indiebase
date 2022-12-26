@@ -1,7 +1,6 @@
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { projectsQuery } from '@letscollab/console-utils';
-import { IProject } from '@letscollab-nest/trait';
 import {
   Group,
   Text,
@@ -14,11 +13,9 @@ import {
   Divider,
 } from '@mantine/core';
 import { ProjectFlow } from '../../components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconLink, IconMail } from '@tabler/icons';
 import { useQuery } from '@tanstack/react-query';
-
-export interface CoreProjectCardProps extends Partial<IProject> {}
 
 const OrgProfile: FC<any> = function () {
   return (
@@ -71,7 +68,10 @@ const OrgProfile: FC<any> = function () {
 const Organization = function () {
   const { data } = useQuery(['own-projects'], projectsQuery, {
     suspense: true,
+    retry: 3,
   });
+
+  const nav = useNavigate();
 
   return (
     <>

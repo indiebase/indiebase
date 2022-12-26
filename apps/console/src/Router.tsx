@@ -70,6 +70,10 @@ export const router = createBrowserRouter([
                 path: 'general',
                 element: <AccessPage />,
               },
+              // {
+              //   path: 'member',
+              //   element: <AccessPage />,
+              // },
               {
                 path: 'access',
                 element: <AccessPage />,
