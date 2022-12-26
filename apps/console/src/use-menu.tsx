@@ -7,7 +7,6 @@ import { useAtom } from 'jotai';
 export const useMenu = () => {
   let { org, project, user } = useParams();
   const [profile] = useAtom(userProfileAtom);
-  console.log(useParams()); 
 
   return useMemo<SidebarTileNode[]>(() => {
     //TODO:
@@ -15,26 +14,16 @@ export const useMenu = () => {
     let prefix;
 
     if (org) {
-      prefix = 'orgs/' + org;
+      prefix = ['orgs', org, project].filter(Boolean).join('/');
     } else if (user) {
-      prefix = 'users/' + user;
+      prefix = ['users', user, project].filter(Boolean).join('/');
     } else {
-      prefix = 'users/' + profile.username;
+      prefix = ['users', profile.username, project].filter(Boolean).join('/');
     }
 
-    let settingList = [
-      {
-        label: 'Profile',
-        to: `${prefix}/settings/profile`,
-      },
-    ];
+    console.log(prefix);
 
-    const slug = [prefix, project].filter(Boolean).join('/');
-
-    if (user) {
-    }
-
-    if (user && project) {
+    if (project) {
       return [
         {
           label: 'Project',
@@ -50,11 +39,11 @@ export const useMenu = () => {
           children: [
             {
               label: 'General',
-              to: `${slug}/settings/general`,
+              to: `${prefix}/settings/general`,
             },
             {
               label: 'Access',
-              to: `${slug}/settings/access`,
+              to: `${prefix}/settings/access`,
             },
           ],
         },
@@ -77,17 +66,16 @@ export const useMenu = () => {
           children: [
             {
               label: 'General',
-              to: `${slug}/settings/general`,
+              to: `${prefix}/settings/general`,
             },
             {
               label: 'Access',
-              to: `${slug}/settings/access`,
+              to: `${prefix}/settings/access`,
             },
           ],
         },
       ];
     }
-
     return [
       {
         label: 'Project',
@@ -100,7 +88,12 @@ export const useMenu = () => {
         icon: <IconSettings size={16} />,
         color: 'violet',
         type: 'node',
-        children: settingList,
+        children: [
+          {
+            label: 'Profile',
+            to: `${prefix}/settings/profile`,
+          },
+        ],
       },
     ];
   }, [org, project, user]);

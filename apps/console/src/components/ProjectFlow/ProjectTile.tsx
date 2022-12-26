@@ -11,7 +11,7 @@ import {
 import { IconUser } from '@tabler/icons';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { getStatusColor } from './utils';
+import { getStatusColor } from '../utils';
 
 export interface ProjectTileProps extends Partial<IProject> {}
 

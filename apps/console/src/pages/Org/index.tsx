@@ -6,7 +6,6 @@ import {
   Group,
   Text,
   Box,
-  Input,
   Grid,
   MediaQuery,
   Avatar,
@@ -14,9 +13,8 @@ import {
   Title,
   Divider,
 } from '@mantine/core';
-import { ProjectTile } from '../../components';
+import { ProjectFlow } from '../../components';
 import { Link } from 'react-router-dom';
-import { CoreProjects } from './CoreProjects';
 import { IconLink, IconMail } from '@tabler/icons';
 import { useQuery } from '@tanstack/react-query';
 
@@ -79,47 +77,7 @@ const Organization = function () {
     <>
       <Grid mt={30} grow style={{ flexWrap: 'nowrap' }}>
         <Grid.Col span={9}>
-          <Box>
-            <Text
-              component="span"
-              variant="gradient"
-              gradient={{ from: 'red', to: 'cyan', deg: 45 }}
-              size="lg"
-              weight={400}
-            >
-              Main
-            </Text>
-            <CoreProjects list={data.d} />
-            <Text
-              component="span"
-              variant="gradient"
-              gradient={{ from: 'red', to: 'cyan', deg: 45 }}
-              size="lg"
-              weight={400}
-            >
-              Utils
-            </Text>
-            <Input
-              mt={20}
-              style={{ width: 300 }}
-              variant="default"
-              placeholder="Search project"
-            />
-            <Box my={20}>
-              {data.d.map((e, i) => {
-                return (
-                  <ProjectTile
-                    key={i}
-                    name={e.name}
-                    members={e.members}
-                    updateTime={e.updateTime}
-                    status={e.status}
-                    description={e.description}
-                  />
-                );
-              })}
-            </Box>
-          </Box>
+          <ProjectFlow pins={data.d} list={data.d} />
         </Grid.Col>
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
           <Grid.Col span={3}>
