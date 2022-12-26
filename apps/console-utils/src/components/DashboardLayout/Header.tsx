@@ -61,6 +61,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const [profile] = useAtom(userProfileAtom);
   const { org: orgParam } = useParams();
 
+  console.log(useParams());
+
   const userItem = {
     logo: profile.avatar,
     label: profile.username,

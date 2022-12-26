@@ -56,7 +56,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function () {
         onClose={() => setOpen(false)}
         withCloseButton={false}
         shadow="unset"
-        transition="rotate-left"
+        transition="pop"
         transitionDuration={200}
         transitionTimingFunction="ease"
       >

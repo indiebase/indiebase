@@ -1,8 +1,8 @@
 import { Button, Container } from '@mantine/core';
 import { useRef, useMemo } from 'react';
-import { RoleStatus } from 'src/common/enum';
 import { MemberModal } from './MemberModal';
 import { ProColumns, ActionType, ProTable } from '@ant-design/pro-table';
+import { RoleStatus } from '@letscollab-nest/trait';
 
 const columns: ProColumns<any>[] = [
   {

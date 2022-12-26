@@ -8,7 +8,6 @@ export const useMenu = () => {
   const params = useParams();
   const { org, project, user } = params;
   const [profile] = useAtom(userProfileAtom);
-  console.log(params['*'], org, project, user);
 
   // if not match, menu is immutable.
   const deps = !!params['*'] ? [] : [org, project, user];
