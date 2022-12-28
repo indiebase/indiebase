@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   Box,
-  Avatar,
   MantineColor,
   Anchor,
   Center,
