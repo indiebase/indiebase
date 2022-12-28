@@ -8,9 +8,10 @@ import {
   Accordion,
   MantineThemeColors,
 } from '@mantine/core';
-import { FC } from 'react';
+import { useAtomValue } from 'jotai';
+import React, { FC } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import React from 'react';
+import { navbarSwitchAtom } from '../../atoms';
 
 export interface SidebarTileNode {
   label: string;
@@ -20,10 +21,10 @@ export interface SidebarTileNode {
   icon?: React.ReactNode;
   color?: keyof MantineThemeColors;
   children?: SidebarTileNode[];
+  access?: string[];
   onClick?: () => Promise<void> | void;
 }
 export interface SidebarProps {
-  opened: boolean;
   menu: SidebarTileNode[];
 }
 
@@ -64,6 +65,7 @@ function SidebarTile({ label, active, onClick }: MenuItemProps) {
 
 export const Sidebar: FC<SidebarProps> = function (props) {
   const navigate = useNavigate();
+  const opened = useAtomValue(navbarSwitchAtom);
 
   return (
     <Navbar
@@ -72,7 +74,7 @@ export const Sidebar: FC<SidebarProps> = function (props) {
       hiddenBreakpoint="sm"
       width={{ sm: 200, lg: 250 }}
       style={{ borderRight: 0, zIndex: 'unset' }}
-      hidden={props.opened}
+      hidden={opened}
     >
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         <Accordion

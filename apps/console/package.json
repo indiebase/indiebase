@@ -13,6 +13,7 @@
     "@letscollab-nest/trait": "workspace:^",
     "@letscollab-pro/console": "workspace:^",
     "@letscollab/console-utils": "workspace:^",
+    "@letscollab/react-authz": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
     "@mantine/notifications": "^5.5.4",

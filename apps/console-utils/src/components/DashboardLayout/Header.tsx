@@ -23,7 +23,7 @@ import {
 } from '@tabler/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userProfileAtom } from '../../atoms';
+import { userProfileAtom, navbarSwitchAtom } from '../../atoms';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -59,9 +59,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const [profile] = useAtom(userProfileAtom);
+  const [opened, toggle] = useAtom(navbarSwitchAtom);
   const { org: orgParam } = useParams();
-
-  console.log(useParams());
 
   const userItem = {
     logo: profile.avatar,
@@ -112,8 +111,8 @@ export const Header: FC<NavHeaderProps> = function (props) {
         <Group>
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
             <Burger
-              opened={props.navbarOpened}
-              onClick={props.onNavbarOpen}
+              opened={!opened}
+              onClick={() => toggle(!opened)}
               size="sm"
               color={theme.colors.gray[6]}
             />

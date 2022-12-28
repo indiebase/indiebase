@@ -1,4 +1,4 @@
-import { FC, Suspense, useState } from 'react';
+import { FC, ReactElement, Suspense, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import {
   AppShell,
@@ -10,20 +10,18 @@ import {
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { Header, NavHeaderProps } from './Header';
-import { Sidebar, SidebarTileNode } from './Sidebar';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Footer } from './Footer';
+import { Sidebar } from './Sidebar';
 
 export interface DashboardLayoutProps extends NavHeaderProps {
-  sidebar: SidebarTileNode[];
-  [key: string]: any;
+  sidebar: ReactElement;
 }
 
 export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-  const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
 
   return (
@@ -64,7 +62,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             asideOffsetBreakpoint="sm"
             navbar={
               <ErrorBoundary fallbackRender={() => <div />}>
-                <Sidebar menu={props.sidebar} opened={!opened} />
+                {props.sidebar}
               </ErrorBoundary>
             }
             footer={<Footer />}
@@ -78,8 +76,8 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
                 <Suspense fallback={<div style={{ height: 65 }} />}>
                   <Header
                     {...props}
-                    navbarOpened={opened}
-                    onNavbarOpen={() => setOpened((o) => !o)}
+                    // navbarOpened={opened}
+                    // onNavbarOpen={toggle}
                   />
                 </Suspense>
               </ErrorBoundary>

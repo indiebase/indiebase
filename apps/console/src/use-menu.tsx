@@ -17,9 +17,10 @@ export const useMenu = () => {
 
     let prefix;
 
+    console.log(profile.username);
     if (org) {
       prefix = ['orgs', org, project].filter(Boolean).join('/');
-    } else if (user) {
+    } else {
       prefix = ['users', user ?? profile.username, project]
         .filter(Boolean)
         .join('/');

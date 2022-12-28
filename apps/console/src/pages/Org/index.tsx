@@ -68,7 +68,6 @@ const OrgProfile: FC<any> = function () {
 const Organization = function () {
   const { data } = useQuery(['own-projects'], projectsQuery, {
     suspense: true,
-    retry: 3,
   });
 
   const nav = useNavigate();

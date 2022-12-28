@@ -1,13 +1,14 @@
-import { RouterProvider } from 'react-router-dom';
-import { queryClientAtom } from 'jotai/query';
+// import './App.less';
 import { router } from './Router';
 import { Provider, useAtom } from 'jotai';
+import { RouterProvider } from 'react-router-dom';
 import { useAtomsDebugValue } from 'jotai/devtools';
-import './App.less';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { userProfileAtom, fetchUserProfile } from '@letscollab/console-utils';
-import { PropsWithChildren, ReactElement, ReactNode, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
+import { queryClientAtom } from 'jotai-tanstack-query';
+import { AuthzProvider, Can } from '@letscollab/react-authz';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,7 @@ const DebugAtoms = () => {
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-function InitUser(props: PropsWithChildren) {
+function InitializeUser(props: PropsWithChildren) {
   const [userProfile, setUserProfile] = useAtom(userProfileAtom);
 
   useEffect(() => {
@@ -43,11 +44,15 @@ function App() {
         initialIsOpen={!isProduction}
         position="bottom-right"
       />
-      <Provider initialValues={[[queryClientAtom, queryClient] as any]}>
+      <Provider initialValues={[[queryClientAtom, queryClient]] as const}>
         <DebugAtoms />
-        <InitUser>
-          <RouterProvider router={router} />
-        </InitUser>
+        <InitializeUser>
+          <AuthzProvider mode="manual" possess={{ read: ['data1', 'data2'] }}>
+            <Can i="read" the="data1">
+              <RouterProvider router={router} />
+            </Can>
+          </AuthzProvider>
+        </InitializeUser>
       </Provider>
     </QueryClientProvider>
   );
