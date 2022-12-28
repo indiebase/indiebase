@@ -1,7 +1,7 @@
 import { IProject } from '@letscollab-nest/trait';
 import { Box, Text, Input } from '@mantine/core';
 import { FC } from 'react';
-import { CoreProjects } from 'src/pages/Org/CoreProjects';
+import { CoreProjects } from './CoreProjects';
 import { ProjectTile } from './ProjectTile';
 
 export interface ProjectFlowProps {
@@ -22,7 +22,7 @@ export const ProjectFlow: FC<ProjectFlowProps> = function (props) {
         >
           Main
         </Text>
-        <CoreProjects list={props.pins} />
+        <CoreProjects list={props.pins} col={{ lg: 4, md: 6 }} />
         <Text
           component="span"
           variant="gradient"

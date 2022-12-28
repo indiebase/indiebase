@@ -15,15 +15,20 @@ import {
   arrayMove,
 } from '@dnd-kit/sortable';
 import { IProject } from '@letscollab-nest/trait';
-import { Grid, Text, Group } from '@mantine/core';
+import { Grid, Text, Group, ColProps } from '@mantine/core';
 import { FC, useCallback, useState } from 'react';
 import { PinnedProjectCard } from '../../components';
 
 export interface CoreProjectsProps {
   list: IProject[];
+  col?: ColProps;
+  hiddenCover?: boolean;
+  hiddenMember?: boolean;
 }
 
 export const CoreProjects: FC<CoreProjectsProps> = function (props) {
+  const { col: colProps, hiddenCover, hiddenMember } = props;
+
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
@@ -68,7 +73,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
           <Grid mt={2}>
             {visibleItems.map((e, i) => {
               return (
-                <Grid.Col key={i} lg={4} md={6}>
+                <Grid.Col key={i} {...colProps}>
                   <PinnedProjectCard
                     id={e.id}
                     cover={e.cover}
@@ -77,6 +82,8 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
                     updateTime={e.updateTime}
                     status={e.status}
                     description={e.description}
+                    hiddenCover={hiddenCover}
+                    hiddenMember={hiddenMember}
                   />
                 </Grid.Col>
               );
@@ -102,4 +109,9 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
       ) : null}
     </div>
   );
+};
+
+CoreProjects.defaultProps = {
+  hiddenCover: false,
+  hiddenMember: false,
 };

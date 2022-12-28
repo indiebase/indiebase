@@ -22,20 +22,20 @@ import {
 import { IProject } from '@letscollab-nest/trait';
 import CurrencyFormat from 'react-currency-format';
 import { Link } from 'react-router-dom';
-import { FC, useEffect } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-  AvatarWithPreview,
-  LimitAvatarGroup,
-  ProfilePreviewCard,
-} from '@letscollab/console-utils';
+import { AvatarWithPreview, LimitAvatarGroup } from '@letscollab/console-utils';
 
-export interface PinnedProjectCardProps extends Partial<IProject> {}
+export interface PinnedProjectCardProps extends Partial<IProject> {
+  hiddenCover?: boolean;
+  hiddenMember?: boolean;
+  actions?: ReactElement;
+}
 
 export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
   const color: MantineColor = getStatusColor(props.status);
-  const { id } = props;
+  const { id, hiddenCover, hiddenMember, actions } = props;
   const theme = useMantineTheme();
 
   const {
@@ -113,14 +113,15 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
           {props.status}
         </Badge>
       </Group>
-      <Card.Section>
-        <div style={{ width: '100%', height: '100%' }}></div>
-        <Image
-          src={props.cover ? props.cover : '/images/project-cover.svg'}
-          height={50}
-          alt="cover"
-        />
-      </Card.Section>
+      {!hiddenCover && (
+        <Card.Section>
+          <Image
+            src={props.cover ? props.cover : '/images/project-cover.svg'}
+            height={50}
+            alt="cover"
+          />
+        </Card.Section>
+      )}
 
       <Box style={{ height: 30 }}>
         <Text lineClamp={2} mt={10} style={{ color: '#777777', fontSize: 10 }}>
@@ -129,27 +130,25 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
       </Box>
 
       <Group mt={9} position="apart">
-        <LimitAvatarGroup ml={-2} spacing="xs">
-          {props.members.map((u, i) => {
-            return (
-              <AvatarWithPreview
-                radius="xl"
-                size="sm"
-                key={i}
-                src={u.avatar}
-                component="a"
-                href={u.profileUrl}
-              >
-                <IconUser size={14} />
-              </AvatarWithPreview>
-            );
-          })}
-        </LimitAvatarGroup>
-        <Center>
-          <Text style={{ fontSize: 10 }} color="gray">
-            Update
-          </Text>
-        </Center>
+        {!hiddenMember && (
+          <LimitAvatarGroup ml={-2} spacing="xs">
+            {props.members.map((u, i) => {
+              return (
+                <AvatarWithPreview
+                  radius="xl"
+                  size="sm"
+                  key={i}
+                  src={u.avatar}
+                  component="a"
+                  href={u.profileUrl}
+                >
+                  <IconUser size={14} />
+                </AvatarWithPreview>
+              );
+            })}
+          </LimitAvatarGroup>
+        )}
+        {actions && <Center>{actions}</Center>}
       </Group>
       <Group mt={9} position="right">
         <Center>
@@ -229,4 +228,9 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
       </Group>
     </Card>
   );
+};
+
+PinnedProjectCard.defaultProps = {
+  hiddenCover: false,
+  hiddenMember: false,
 };

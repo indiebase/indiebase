@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { HttpStatusPage } from '@letscollab/console-utils';
 // import { ProLayout } from '@letscollab-pro/console';
 import { Layout } from './Layout';
-import { OrganizationPage, AccessPage } from './pages';
+import { OrganizationPage, AccessPage, MyPage } from './pages';
 
 const projectRouter = {
   path: ':project',
@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <OrganizationPage />,
+            element: <MyPage />,
           },
           {
             path: 'settings',

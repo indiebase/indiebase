@@ -83,12 +83,6 @@ export const useMenu = () => {
     // User
     return [
       {
-        label: 'Project',
-        icon: <IconFileCode size={16} />,
-        color: 'blue',
-        to: prefix,
-      },
-      {
         label: 'Setting',
         icon: <IconSettings size={16} />,
         color: 'violet',

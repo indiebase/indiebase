@@ -5,7 +5,7 @@ import { Anchor, Image } from '@mantine/core';
 import { CommunitySidebar } from './sidebar';
 
 export const Layout: FC<any> = function () {
-  console.warn('--------------Layout render------------------');
+  console.log('%c--------------Layout render------------------', 'color:green');
 
   return (
     <>

@@ -30,7 +30,7 @@ export const protectApiInterceptor = async function (
     console.log(error);
   }
 
-  console.log('request....', config);
+  console.log('%c[Request]....', 'color:green', config);
 
   return config;
 };
@@ -47,7 +47,7 @@ req.interceptors.request.use(protectApiInterceptor, function (error) {
 req.interceptors.response.use(
   function (response) {
     const data = response.data;
-    console.log('[Response].....', response.data);
+    console.log('%c[Response].....', 'color:blue', response.data);
 
     if (data.code <= 0 && data.message) {
     }
