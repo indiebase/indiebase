@@ -45,7 +45,7 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   })();
 };
 
-export function DevApiHeader() {
+export const DevApiHeader = function () {
   return applyDecorators(
     ApiHeader({
       name: 'Package-Name',
@@ -55,4 +55,15 @@ export function DevApiHeader() {
       },
     }),
   );
-}
+};
+
+export const PackageName = createParamDecorator((_, ctx: ExecutionContext) => {
+  const request: any = ctx.switchToHttp().getRequest();
+
+  const domain =
+    request.body?.packageName ??
+    request.headers?.['package-name'] ??
+    request.hostname;
+
+  return domain;
+});

@@ -7,3 +7,5 @@ export const fetchUserProfile = async (): Promise<
   const { data } = await req.get('/v1/user/profile');
   return data ?? {};
 };
+
+export const fetchMyOrgs = async () => {};

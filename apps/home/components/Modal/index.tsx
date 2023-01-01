@@ -22,8 +22,6 @@ const isEmail = (value) =>
   );
 
 const SignInTab = function () {
-  const expiryTimestamp = new Date();
-  expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + 60);
   const [checked, setChecked] = useState(false);
 
   const signUp = () => {
@@ -101,6 +99,9 @@ const SignInTab = function () {
   );
 };
 
+/**
+ * @deprecated
+ */
 export const LoginModalV2: FC<ModalProps & { initialNo?: number }> = function (
   props,
 ) {

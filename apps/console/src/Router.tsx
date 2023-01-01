@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { HttpStatusPage } from '@letscollab/console-utils';
+import { HttpStatusPage } from '@letscollab-community/console-utils';
 // import { ProLayout } from '@letscollab-pro/console';
 import { Layout } from './Layout';
 import { OrganizationPage, AccessPage, MyPage } from './pages';

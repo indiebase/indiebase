@@ -1,5 +1,8 @@
 import { IProject } from '@letscollab-nest/trait';
-import { AvatarWithPreview, LimitAvatarGroup } from '@letscollab/console-utils';
+import {
+  AvatarWithPreview,
+  LimitAvatarGroup,
+} from '@letscollab-community/console-utils';
 import { Anchor, Badge, Card, Group, MantineColor, Text } from '@mantine/core';
 import { IconUser } from '@tabler/icons';
 import { FC } from 'react';

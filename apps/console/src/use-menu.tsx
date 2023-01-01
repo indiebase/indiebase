@@ -1,7 +1,10 @@
 import { useMemo } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
 import { useParams } from 'react-router-dom';
-import { SidebarTileNode, userProfileAtom } from '@letscollab/console-utils';
+import {
+  SidebarTileNode,
+  userProfileAtom,
+} from '@letscollab-community/console-utils';
 import { useAtom } from 'jotai';
 
 export const useMenu = () => {

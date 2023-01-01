@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/community",
+  "name": "@letscollab-community/server",
   "version": "0.0.1",
   "description": "letscollab community",
   "author": "Han",
@@ -28,6 +28,7 @@
     "@fastify/session": "9.0.0",
     "@fastify/swagger": "^7.5.0",
     "@letscollab-nest/accesscontrol": "workspace:^",
+    "@letscollab-nest/aws-s3": "workspace:^",
     "@letscollab-nest/fastify-passport": "workspace:^",
     "@letscollab-nest/helper": "workspace:^",
     "@letscollab-nest/nacos": "workspace:^",

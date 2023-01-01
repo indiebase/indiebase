@@ -10,12 +10,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
-import { ResultCode, MyInfo, AccessGuard } from '@letscollab-nest/helper';
 import {
-  QueryPossessionDto,
-  QueryUserDto,
-  UpdateUserProfileDto,
-} from './user.dto';
+  ResultCode,
+  MyInfo,
+  AccessGuard,
+  PackageName,
+  DevApiHeader,
+} from '@letscollab-nest/helper';
+import { QueryUserDto, UpdateUserProfileDto } from './user.dto';
 import { UserResource, UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
@@ -57,14 +59,18 @@ export class UserController {
     };
   }
 
-  @Get('profile/:id')
+  @Get('profile/:username')
   @ApiCookieAuth('SID')
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get a user profile',
   })
-  async getProfile(@Param('id') id: number) {
-    const user = await this.userService.getUser({ id });
+  @UseAccess({
+    action: AccessAction.readAny,
+    resource: UserResource.list,
+  })
+  async getProfile(@Param('username') username: string) {
+    const user = await this.userService.getUser({ username });
     return {
       code: ResultCode.SUCCESS,
       d: user,
@@ -97,21 +103,21 @@ export class UserController {
   })
   async syncProfile(@MyInfo() info: UserSession) {}
 
-  @Post('possession')
+  @Get('possession')
   @ApiCookieAuth('SID')
   @UseGuards(CoProtectGuard, AccessGuard)
-  @UseAccess({
-    action: AccessAction.readAny,
-    resource: UserResource.list,
-  })
   @ApiOperation({
     summary: 'Getting user owns resources',
   })
-  async getPossession(@Body() body: QueryPossessionDto) {
-    const user = await this.userService.getUserPossession(body.username);
+  @DevApiHeader()
+  async getMyPossession(
+    @MyInfo('username') username: string,
+    @PackageName() packageName: string,
+  ) {
+    const d = await this.userService.getUserPossession(username, [packageName]);
     return {
       code: ResultCode.SUCCESS,
-      d: user,
+      d,
     };
   }
 }

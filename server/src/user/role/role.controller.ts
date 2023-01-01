@@ -8,7 +8,6 @@ import {
   Delete,
   Query,
   UseGuards,
-  Inject,
 } from '@nestjs/common';
 import {
   ApiOperation,

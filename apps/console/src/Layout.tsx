@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { DashboardLayout } from '@letscollab/console-utils';
+import { DashboardLayout } from '@letscollab-community/console-utils';
 import { Anchor, Image } from '@mantine/core';
 import { CommunitySidebar } from './sidebar';
 

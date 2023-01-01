@@ -1,4 +1,4 @@
-import { Sidebar } from '@letscollab/console-utils';
+import { Sidebar } from '@letscollab-community/console-utils';
 import { FC } from 'react';
 import { useMenu } from './use-menu';
 

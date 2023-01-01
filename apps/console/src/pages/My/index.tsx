@@ -1,9 +1,9 @@
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { projectsQuery } from '@letscollab/console-utils';
+import { projectsQuery } from '@letscollab-community/console-utils';
 import { Box, Grid, MediaQuery } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
-import { CoreProjects } from '../../components/ProjectFlow/CoreProjects';
+import { CoreProjects } from '../../components';
 
 const UserActivity: FC<any> = function () {
   return <Box></Box>;

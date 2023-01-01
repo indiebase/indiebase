@@ -38,6 +38,7 @@ export const protectApiInterceptor = async function (
 export const req = axios.create({
   timeout: 8000,
   baseURL: process.env.REACT_APP_API,
+  withCredentials: true,
 });
 
 req.interceptors.request.use(protectApiInterceptor, function (error) {
@@ -73,4 +74,4 @@ req.interceptors.response.use(
 
 export const mock = new MockAdapter(req);
 
-process.env.NODE_ENV !== 'development' && mock.restore();
+process.env.REACT_APP_IS_MOCK !== 'true' && mock.restore();

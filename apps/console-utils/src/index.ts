@@ -7,4 +7,4 @@ export * from './atoms';
 
 console.log(process.env);
 
-Boolean(process.env.REACT_APP_IS_MOCK) && require('./__mock__');
+process.env.REACT_APP_IS_MOCK === 'true' && require('./__mock__');

@@ -1,6 +1,6 @@
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { projectsQuery } from '@letscollab/console-utils';
+import { projectsQuery } from '@letscollab-community/console-utils';
 import {
   Group,
   Text,

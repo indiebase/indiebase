@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/console-utils",
+  "name": "@letscollab-community/console-utils",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",
@@ -11,6 +11,7 @@
   "dependencies": {
     "@faker-js/faker": "^7.3.0",
     "@letscollab-nest/trait": "workspace:^",
+    "@mantine/form": "^5.5.4",
     "nanoid": "^3.3.2",
     "node-forge": "^1.3.1",
     "stegcloak": "^1.1.1"

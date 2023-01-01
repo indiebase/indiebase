@@ -98,7 +98,9 @@ export class UserService {
     });
   }
 
-  public async getUserPossession(username: string) {}
+  public async getUserPossession(username: string, domains: string[]) {
+    return this.casbin.e.getImplicitPermissionsForUser(username, ...domains);
+  }
 
   public async getUsers(cond: QueryUserDto) {
     const { pageSize, current, ...rest } = cond;

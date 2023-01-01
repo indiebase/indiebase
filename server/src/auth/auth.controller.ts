@@ -22,6 +22,7 @@ import {
 import { LocalSignInDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
+import { InjectS3, S3 } from '@letscollab-nest/aws-s3';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')
@@ -29,6 +30,8 @@ export class AuthController {
   constructor(
     private readonly nacos: NacosConfigService,
     private readonly userService: UserService,
+    @InjectS3()
+    private readonly s3: S3,
   ) {}
   //TODO: recaptcha
 
@@ -125,5 +128,10 @@ export class AuthController {
         throw new InternalServerErrorException();
       });
     return { code: ResultCode.SUCCESS };
+  }
+
+  @Post('demo')
+  async demo() {
+    console.log(this.s3);
   }
 }

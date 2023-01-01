@@ -28,8 +28,6 @@ export class AccessGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const access = this.getAccess(context);
-    // No @UseAccess() will pass directly.
-    if (!access) return true;
 
     const req = context.switchToHttp().getRequest<FastifyRequest>();
     const { user } = req.session;
@@ -37,6 +35,9 @@ export class AccessGuard implements CanActivate {
     if (!user?.loggedIn) {
       throw new UnauthorizedException({ message: 'Please login' });
     }
+
+    // No @UseAccess() will pass directly.
+    if (!access) return true;
 
     const domain =
       (req.body as any)?.packageName ??

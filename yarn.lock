@@ -3870,6 +3870,252 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@letscollab-community/console-utils@workspace:^, @letscollab-community/console-utils@workspace:apps/console-utils":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-community/console-utils@workspace:apps/console-utils"
+  dependencies:
+    "@faker-js/faker": ^7.3.0
+    "@letscollab-nest/trait": "workspace:^"
+    "@mantine/form": ^5.5.4
+    "@types/node": ^16.11.25
+    "@types/node-forge": ^1.0.2
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/stegcloak": ^1.0.0
+    nanoid: ^3.3.2
+    node-forge: ^1.3.1
+    stegcloak: ^1.1.1
+  peerDependencies:
+    "@mantine/core": ^4.2.12
+    "@mantine/hooks": ^4.2.12
+    "@mantine/notifications": ^4.2.12
+    "@tabler/icons": ^1.92.0
+    "@tanstack/query-core": ^4.1.3
+    jotai: ^1.7.3
+    jotai-tanstack-query: ^0.4.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-router-dom: ^6.3.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-community/console@workspace:apps/console":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-community/console@workspace:apps/console"
+  dependencies:
+    "@ant-design/pro-components": ^2.3.47
+    "@ant-design/pro-table": ^3.2.7
+    "@babel/core": ^7.16.0
+    "@dnd-kit/core": ^6.0.6
+    "@dnd-kit/sortable": ^7.0.1
+    "@dnd-kit/utilities": ^3.2.1
+    "@letscollab-community/console-utils": "workspace:^"
+    "@letscollab-nest/trait": "workspace:^"
+    "@letscollab-pro/console": "workspace:^"
+    "@letscollab/react-authz": "workspace:^"
+    "@mantine/core": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
+    "@svgr/webpack": ^5.5.0
+    "@tabler/icons": ^1.92.0
+    "@tanstack/query-core": ^4.20.4
+    "@tanstack/react-query": ^4.20.4
+    "@tanstack/react-query-devtools": ^4.20.4
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/react-grid-layout": ^1
+    "@types/webpack-bundle-analyzer": ^4
+    axios: ^0.27.2
+    axios-mock-adapter: ^1.21.1
+    babel-jest: ^27.4.2
+    babel-loader: ^8.2.3
+    babel-plugin-named-asset-import: ^0.3.8
+    babel-preset-react-app: ^10.0.1
+    bfj: ^7.0.2
+    browserslist: ^4.18.1
+    camelcase: ^6.2.1
+    case-sensitive-paths-webpack-plugin: ^2.4.0
+    clsx: ^1.2.1
+    cra-template-typescript: 1.2.0
+    css-loader: ^6.5.1
+    css-minimizer-webpack-plugin: ^3.2.0
+    dotenv: ^10.0.0
+    dotenv-expand: ^5.1.0
+    eslint: ^8.23.0
+    eslint-config-react-app: ^7.0.1
+    eslint-plugin-unused-imports: ^2.0.0
+    eslint-webpack-plugin: ^3.2.0
+    file-loader: ^6.2.0
+    fs-extra: ^10.0.0
+    html-webpack-plugin: ^5.5.0
+    i18next: ^21.8.12
+    i18next-browser-languagedetector: ^6.1.4
+    identity-obj-proxy: ^3.0.0
+    jest: ^27.4.3
+    jest-resolve: ^27.4.2
+    jest-watch-typeahead: ^1.0.0
+    jotai: ^1.12.0
+    jotai-tanstack-query: ^0.4.0
+    less: ^4.1.3
+    less-loader: ^11.0.0
+    localforage: ^1.10.0
+    mini-css-extract-plugin: ^2.4.5
+    node-polyfill-webpack-plugin: ^2.0.0
+    postcss: ^8.4.18
+    postcss-flexbugs-fixes: ^5.0.2
+    postcss-loader: ^6.2.1
+    postcss-normalize: ^10.0.1
+    postcss-preset-env: ^7.0.1
+    prompts: ^2.4.2
+    react: 18.2.0
+    react-app-polyfill: ^3.0.0
+    react-currency-format: ^1.1.0
+    react-dev-utils: ^12.0.1
+    react-dom: 18.2.0
+    react-easy-crop: ^4.6.3
+    react-error-boundary: ^3.1.4
+    react-grid-layout: ^1.3.4
+    react-i18next: ^11.17.4
+    react-refresh: ^0.14.0
+    react-router-dom: ^6.6.0
+    react-use: ^17.4.0
+    resolve: ^1.20.0
+    resolve-url-loader: ^4.0.0
+    sass-loader: ^12.3.0
+    semver: ^7.3.5
+    source-map-loader: ^3.0.0
+    stream-browserify: ^3.0.0
+    style-loader: ^3.3.1
+    terser-webpack-plugin: ^5.2.5
+    web-vitals: ^2.1.4
+    webpack: ^5.64.4
+    webpack-bundle-analyzer: ^4.5.0
+    webpack-dev-server: ^4.6.0
+    webpack-manifest-plugin: ^4.0.2
+    workbox-webpack-plugin: ^6.4.1
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-community/home@workspace:apps/home":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-community/home@workspace:apps/home"
+  dependencies:
+    "@emotion/css": ^11.9.0
+    "@emotion/react": ^11.10.4
+    "@emotion/server": ^11.10.0
+    "@emotion/styled": ^11.10.4
+    "@letscollab-nest/trait": "workspace:^"
+    "@letscollab/nextra-theme-docs": "workspace:^"
+    "@mantine/core": ^5.5.4
+    "@mantine/form": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/next": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@mantine/ssr": ^5.5.4
+    "@mdx-js/loader": ^2.1.1
+    "@mdx-js/react": ^2.1.1
+    "@next/mdx": ^12.1.6
+    "@tabler/icons": ^1.92.0
+    "@types/nprogress": ^0.2.0
+    "@types/prismjs": ^1
+    "@types/react": ^18.0.14
+    "@types/react-dom": 18.0.5
+    axios: ^0.27.2
+    cross-env: ^7.0.3
+    eslint: 8.23.0
+    eslint-config-next: 12.2.5
+    localforage: ^1.10.0
+    lottie-react: ^2.2.1
+    next: 12.2.0
+    next-pwa: ^5.5.4
+    next-sitemap: ^3.0.5
+    nextra: 2.0.0-alpha.56
+    nprogress: ^0.2.0
+    prism-react-renderer: ^1.3.3
+    prismjs: ^1.28.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-query: ^3.39.1
+    react-scroll-motion: ^0.3.0
+    react-timer-hook: ^3.0.5
+    react-use: ^17.4.0
+    sass: ^1.49.9
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-community/server@workspace:server":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-community/server@workspace:server"
+  dependencies:
+    "@fastify/cookie": 8.1.0
+    "@fastify/helmet": 10.0.0
+    "@fastify/passport": 2.2.0
+    "@fastify/session": 9.0.0
+    "@fastify/swagger": ^7.5.0
+    "@letscollab-nest/accesscontrol": "workspace:^"
+    "@letscollab-nest/aws-s3": "workspace:^"
+    "@letscollab-nest/fastify-passport": "workspace:^"
+    "@letscollab-nest/helper": "workspace:^"
+    "@letscollab-nest/nacos": "workspace:^"
+    "@liaoliaots/nestjs-redis": ^8.0.0
+    "@nestjs-modules/mailer": ^1.7.1
+    "@nestjs/cli": ^9.1.1
+    "@nestjs/common": ^9.0.11
+    "@nestjs/config": ^2.2.0
+    "@nestjs/core": ^9.0.11
+    "@nestjs/platform-fastify": ^9.0.11
+    "@nestjs/schematics": ^9.0.2
+    "@nestjs/swagger": ^6.1.3
+    "@nestjs/testing": ^9.0.11
+    "@nestjs/typeorm": ^9.0.1
+    "@swc/core": ^1.3.14
+    "@swc/helpers": ^0.4.12
+    "@types/bcrypt": ^5
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    "@types/passport": ^0
+    "@types/passport-github2": ^1.2.5
+    "@types/passport-local": ^1
+    "@types/rimraf": ^3
+    "@types/supertest": ^2.0.11
+    "@vercel/ncc": ^0.34.0
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    connect-redis: ^6.1.3
+    cross-env: ^7.0.3
+    fastify: ^4.4.0
+    ioredis: ^5.0.4
+    jest: ^27.2.5
+    mysql2: ^2.3.3
+    nest-winston: ^1.6.2
+    nestjs-i18n: ^9.2.0
+    nodemon: ^2.0.15
+    p-retry: ^5.1.1
+    passport: ^0.5.2
+    passport-cookie: ^1.0.9
+    passport-github2: ^0.1.12
+    passport-local: ^1.0.0
+    prettier: ^2.7.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.2.0
+    source-map-support: ^0.5.20
+    supertest: ^6.1.3
+    ts-jest: ^27.0.3
+    ts-loader: ^9.2.3
+    ts-node: ^10.9.1
+    tsconfig-paths: ^3.10.1
+    typeorm: ^0.3.7
+    typeorm-adapter: ^1.5.1
+    typescript: ^4.8.4
+    winston: ^3.7.2
+    winston-loki: ^6.0.5
+  languageName: unknown
+  linkType: soft
+
 "@letscollab-nest/accesscontrol@workspace:^, @letscollab-nest/accesscontrol@workspace:first_party/accesscontrol":
   version: 0.0.0-use.local
   resolution: "@letscollab-nest/accesscontrol@workspace:first_party/accesscontrol"
@@ -3899,7 +4145,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-nest/aws-s3@workspace:first_party/s3":
+"@letscollab-nest/aws-s3@workspace:^, @letscollab-nest/aws-s3@workspace:first_party/s3":
   version: 0.0.0-use.local
   resolution: "@letscollab-nest/aws-s3@workspace:first_party/s3"
   dependencies:
@@ -4139,9 +4385,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-pro/app@workspace:pro/app":
+"@letscollab-pro/console@workspace:^, @letscollab-pro/console@workspace:pro/console":
   version: 0.0.0-use.local
-  resolution: "@letscollab-pro/app@workspace:pro/app"
+  resolution: "@letscollab-pro/console@workspace:pro/console"
+  dependencies:
+    "@ant-design/pro-components": ^1.1.25
+    "@ant-design/pro-table": ^2.77.0
+    "@mantine/core": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@tabler/icons": ^1.92.0
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    axios: ^0.27.2
+    i18next: ^21.8.12
+    jotai: ^1.9.1
+    react: ^18.2.0
+    react-app-polyfill: ^3.0.0
+    react-dev-utils: ^12.0.1
+    react-dom: ^18.2.0
+    react-i18next: ^11.17.4
+    react-refresh: ^0.11.0
+    react-router-dom: ^6.3.0
+    react-use: ^17.4.0
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-pro/server@workspace:pro/server":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-pro/server@workspace:pro/server"
   dependencies:
     "@fastify/cookie": 8.1.0
     "@fastify/helmet": 10.0.0
@@ -4209,32 +4481,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-pro/console@workspace:^, @letscollab-pro/console@workspace:pro/console":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-pro/console@workspace:pro/console"
-  dependencies:
-    "@ant-design/pro-components": ^1.1.25
-    "@ant-design/pro-table": ^2.77.0
-    "@mantine/core": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@tabler/icons": ^1.92.0
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    axios: ^0.27.2
-    i18next: ^21.8.12
-    jotai: ^1.9.1
-    react: ^18.2.0
-    react-app-polyfill: ^3.0.0
-    react-dev-utils: ^12.0.1
-    react-dom: ^18.2.0
-    react-i18next: ^11.17.4
-    react-refresh: ^0.11.0
-    react-router-dom: ^6.3.0
-    react-use: ^17.4.0
-  languageName: unknown
-  linkType: soft
-
 "@letscollab/app-utils@workspace:apps/utils":
   version: 0.0.0-use.local
   resolution: "@letscollab/app-utils@workspace:apps/utils"
@@ -4260,251 +4506,6 @@ __metadata:
     jotai: ^1.7.3
     react-router-dom: ^6.3.0
     typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/community@workspace:community":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/community@workspace:community"
-  dependencies:
-    "@fastify/cookie": 8.1.0
-    "@fastify/helmet": 10.0.0
-    "@fastify/passport": 2.2.0
-    "@fastify/session": 9.0.0
-    "@fastify/swagger": ^7.5.0
-    "@letscollab-nest/accesscontrol": "workspace:^"
-    "@letscollab-nest/fastify-passport": "workspace:^"
-    "@letscollab-nest/helper": "workspace:^"
-    "@letscollab-nest/nacos": "workspace:^"
-    "@liaoliaots/nestjs-redis": ^8.0.0
-    "@nestjs-modules/mailer": ^1.7.1
-    "@nestjs/cli": ^9.1.1
-    "@nestjs/common": ^9.0.11
-    "@nestjs/config": ^2.2.0
-    "@nestjs/core": ^9.0.11
-    "@nestjs/platform-fastify": ^9.0.11
-    "@nestjs/schematics": ^9.0.2
-    "@nestjs/swagger": ^6.1.3
-    "@nestjs/testing": ^9.0.11
-    "@nestjs/typeorm": ^9.0.1
-    "@swc/core": ^1.3.14
-    "@swc/helpers": ^0.4.12
-    "@types/bcrypt": ^5
-    "@types/jest": 27.0.2
-    "@types/node": ^16.0.0
-    "@types/passport": ^0
-    "@types/passport-github2": ^1.2.5
-    "@types/passport-local": ^1
-    "@types/rimraf": ^3
-    "@types/supertest": ^2.0.11
-    "@vercel/ncc": ^0.34.0
-    class-transformer: ^0.5.1
-    class-validator: ^0.13.2
-    connect-redis: ^6.1.3
-    cross-env: ^7.0.3
-    fastify: ^4.4.0
-    ioredis: ^5.0.4
-    jest: ^27.2.5
-    mysql2: ^2.3.3
-    nest-winston: ^1.6.2
-    nestjs-i18n: ^9.2.0
-    nodemon: ^2.0.15
-    p-retry: ^5.1.1
-    passport: ^0.5.2
-    passport-cookie: ^1.0.9
-    passport-github2: ^0.1.12
-    passport-local: ^1.0.0
-    prettier: ^2.7.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.2.0
-    source-map-support: ^0.5.20
-    supertest: ^6.1.3
-    ts-jest: ^27.0.3
-    ts-loader: ^9.2.3
-    ts-node: ^10.9.1
-    tsconfig-paths: ^3.10.1
-    typeorm: ^0.3.7
-    typeorm-adapter: ^1.5.1
-    typescript: ^4.8.4
-    winston: ^3.7.2
-    winston-loki: ^6.0.5
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/console-utils@workspace:^, @letscollab/console-utils@workspace:apps/console-utils":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/console-utils@workspace:apps/console-utils"
-  dependencies:
-    "@faker-js/faker": ^7.3.0
-    "@letscollab-nest/trait": "workspace:^"
-    "@types/node": ^16.11.25
-    "@types/node-forge": ^1.0.2
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    "@types/stegcloak": ^1.0.0
-    nanoid: ^3.3.2
-    node-forge: ^1.3.1
-    stegcloak: ^1.1.1
-  peerDependencies:
-    "@mantine/core": ^4.2.12
-    "@mantine/hooks": ^4.2.12
-    "@mantine/notifications": ^4.2.12
-    "@tabler/icons": ^1.92.0
-    "@tanstack/query-core": ^4.1.3
-    jotai: ^1.7.3
-    jotai-tanstack-query: ^0.4.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-router-dom: ^6.3.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/console@workspace:apps/console":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/console@workspace:apps/console"
-  dependencies:
-    "@ant-design/pro-components": ^2.3.47
-    "@ant-design/pro-table": ^3.2.7
-    "@babel/core": ^7.16.0
-    "@dnd-kit/core": ^6.0.6
-    "@dnd-kit/sortable": ^7.0.1
-    "@dnd-kit/utilities": ^3.2.1
-    "@letscollab-nest/trait": "workspace:^"
-    "@letscollab-pro/console": "workspace:^"
-    "@letscollab/console-utils": "workspace:^"
-    "@letscollab/react-authz": "workspace:^"
-    "@mantine/core": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
-    "@svgr/webpack": ^5.5.0
-    "@tabler/icons": ^1.92.0
-    "@tanstack/query-core": ^4.20.4
-    "@tanstack/react-query": ^4.20.4
-    "@tanstack/react-query-devtools": ^4.20.4
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    "@types/react-grid-layout": ^1
-    "@types/webpack-bundle-analyzer": ^4
-    axios: ^0.27.2
-    axios-mock-adapter: ^1.21.1
-    babel-jest: ^27.4.2
-    babel-loader: ^8.2.3
-    babel-plugin-named-asset-import: ^0.3.8
-    babel-preset-react-app: ^10.0.1
-    bfj: ^7.0.2
-    browserslist: ^4.18.1
-    camelcase: ^6.2.1
-    case-sensitive-paths-webpack-plugin: ^2.4.0
-    clsx: ^1.2.1
-    cra-template-typescript: 1.2.0
-    css-loader: ^6.5.1
-    css-minimizer-webpack-plugin: ^3.2.0
-    dotenv: ^10.0.0
-    dotenv-expand: ^5.1.0
-    eslint: ^8.23.0
-    eslint-config-react-app: ^7.0.1
-    eslint-plugin-unused-imports: ^2.0.0
-    eslint-webpack-plugin: ^3.2.0
-    file-loader: ^6.2.0
-    fs-extra: ^10.0.0
-    html-webpack-plugin: ^5.5.0
-    i18next: ^21.8.12
-    i18next-browser-languagedetector: ^6.1.4
-    identity-obj-proxy: ^3.0.0
-    jest: ^27.4.3
-    jest-resolve: ^27.4.2
-    jest-watch-typeahead: ^1.0.0
-    jotai: ^1.12.0
-    jotai-tanstack-query: ^0.4.0
-    less: ^4.1.3
-    less-loader: ^11.0.0
-    localforage: ^1.10.0
-    mini-css-extract-plugin: ^2.4.5
-    node-polyfill-webpack-plugin: ^2.0.0
-    postcss: ^8.4.18
-    postcss-flexbugs-fixes: ^5.0.2
-    postcss-loader: ^6.2.1
-    postcss-normalize: ^10.0.1
-    postcss-preset-env: ^7.0.1
-    prompts: ^2.4.2
-    react: 18.2.0
-    react-app-polyfill: ^3.0.0
-    react-currency-format: ^1.1.0
-    react-dev-utils: ^12.0.1
-    react-dom: 18.2.0
-    react-easy-crop: ^4.6.3
-    react-error-boundary: ^3.1.4
-    react-grid-layout: ^1.3.4
-    react-i18next: ^11.17.4
-    react-refresh: ^0.14.0
-    react-router-dom: ^6.6.0
-    react-use: ^17.4.0
-    resolve: ^1.20.0
-    resolve-url-loader: ^4.0.0
-    sass-loader: ^12.3.0
-    semver: ^7.3.5
-    source-map-loader: ^3.0.0
-    stream-browserify: ^3.0.0
-    style-loader: ^3.3.1
-    terser-webpack-plugin: ^5.2.5
-    web-vitals: ^2.1.4
-    webpack: ^5.64.4
-    webpack-bundle-analyzer: ^4.5.0
-    webpack-dev-server: ^4.6.0
-    webpack-manifest-plugin: ^4.0.2
-    workbox-webpack-plugin: ^6.4.1
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/home@workspace:apps/home":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/home@workspace:apps/home"
-  dependencies:
-    "@emotion/css": ^11.9.0
-    "@emotion/react": ^11.10.4
-    "@emotion/server": ^11.10.0
-    "@emotion/styled": ^11.10.4
-    "@letscollab-nest/trait": "workspace:^"
-    "@letscollab/nextra-theme-docs": "workspace:^"
-    "@mantine/core": ^5.5.4
-    "@mantine/form": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/next": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@mantine/ssr": ^5.5.4
-    "@mdx-js/loader": ^2.1.1
-    "@mdx-js/react": ^2.1.1
-    "@next/mdx": ^12.1.6
-    "@tabler/icons": ^1.92.0
-    "@types/nprogress": ^0.2.0
-    "@types/prismjs": ^1
-    "@types/react": ^18.0.14
-    "@types/react-dom": 18.0.5
-    axios: ^0.27.2
-    cross-env: ^7.0.3
-    eslint: 8.23.0
-    eslint-config-next: 12.2.5
-    localforage: ^1.10.0
-    lottie-react: ^2.2.1
-    next: 12.2.0
-    next-pwa: ^5.5.4
-    next-sitemap: ^3.0.5
-    nextra: 2.0.0-alpha.56
-    nprogress: ^0.2.0
-    prism-react-renderer: ^1.3.3
-    prismjs: ^1.28.0
-    react: ^18.2.0
-    react-device-detect: ^2.2.2
-    react-dom: ^18.2.0
-    react-query: ^3.39.1
-    react-scroll-motion: ^0.3.0
-    react-timer-hook: ^3.0.5
-    react-use: ^17.4.0
-    sass: ^1.49.9
-    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -25076,18 +25077,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-device-detect@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "react-device-detect@npm:2.2.2"
-  dependencies:
-    ua-parser-js: ^1.0.2
-  peerDependencies:
-    react: ">= 0.14.0"
-    react-dom: ">= 0.14.0"
-  checksum: d9245cf5a1c1e565e88523ed6be580497d1f6a972fb100a81092943bb7e44afdcdbae0d67bebe7424c4ba5b27a5d13df7894d122307f070fc26062704f7ec788
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:18.2.0, react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -28790,13 +28779,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 563a0ef47abae6df27a9a3ab38f75fc681f633ccf1a3502b1108e252e187787893de689220f4544aaf95a371a4eb3141e4a337deb9895de5ac3c1ca76430e5f0
-  languageName: node
-  linkType: hard
-
-"ua-parser-js@npm:^1.0.2":
-  version: 1.0.32
-  resolution: "ua-parser-js@npm:1.0.32"
-  checksum: 79a80efd9c21511fdafc042ab748e0e93c8cdb0e8925bf6d48ad7dbb08e808c60fcecd49e679670def44ef428c005aa1810810f6773e7d8135a7817338080813
   languageName: node
   linkType: hard
 

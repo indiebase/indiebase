@@ -24,7 +24,10 @@ import { Link } from 'react-router-dom';
 import { FC, ReactElement, useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { AvatarWithPreview, LimitAvatarGroup } from '@letscollab/console-utils';
+import {
+  AvatarWithPreview,
+  LimitAvatarGroup,
+} from '@letscollab-community/console-utils';
 
 export interface PinnedProjectCardProps extends Partial<IProject> {
   hiddenCover?: boolean;

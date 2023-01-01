@@ -1,18 +1,4 @@
 /* eslint-disable  react/no-unescaped-entities */
-// backface-visibility: hidden;
-// perspective: 1000;
-
-// -webkit-backface-visibility: hidden;
-// -webkit-perspective: 1000;
-
-// -moz-backface-visibility: hidden;
-// -moz-perspective: 1000;
-
-// -webkit-transform: translate3d(0, 0, 0);
-// -moz-transform: translate3d(0, 0, 0);
-// -ms-transform: translate3d(0, 0, 0);
-// -o-transform: translate3d(0, 0, 0);
-// transform: translate3d(0, 0, 0);
 
 import {
   AppShell,

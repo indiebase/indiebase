@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/home",
+  "name": "@letscollab-community/home",
   "version": "0.1.0",
   "private": true,
   "description": "Main website powered by nextjs",
@@ -38,7 +38,6 @@
     "prism-react-renderer": "^1.3.3",
     "prismjs": "^1.28.0",
     "react": "^18.2.0",
-    "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.1",
     "react-scroll-motion": "^0.3.0",

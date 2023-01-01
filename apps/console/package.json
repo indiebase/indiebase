@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/console",
+  "name": "@letscollab-community/console",
   "version": "0.1.0",
   "description": "Collaborator, Money, App management",
   "private": true,
@@ -10,9 +10,9 @@
     "@dnd-kit/core": "^6.0.6",
     "@dnd-kit/sortable": "^7.0.1",
     "@dnd-kit/utilities": "^3.2.1",
+    "@letscollab-community/console-utils": "workspace:^",
     "@letscollab-nest/trait": "workspace:^",
     "@letscollab-pro/console": "workspace:^",
-    "@letscollab/console-utils": "workspace:^",
     "@letscollab/react-authz": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/hooks": "^5.5.4",

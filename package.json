@@ -43,7 +43,7 @@
     "typescript": "^4.8.4"
   },
   "workspaces": [
-    "community",
+    "server",
     "first_party/*",
     "third_party/*",
     "apps/*",

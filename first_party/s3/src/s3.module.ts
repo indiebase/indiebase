@@ -1,3 +1,10 @@
+/**
+ * Copyright (C)  svtslv (https://github.com/svtslv)
+ * License-Identifier: MIT
+ *
+ * Copyright (C) 2022 Han
+ */
+
 import { DynamicModule, Module } from '@nestjs/common';
 import { S3CoreModule } from './s3.core-module';
 import { S3ModuleAsyncOptions, S3ModuleOptions } from './s3.interfaces';

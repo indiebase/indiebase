@@ -1,4 +1,4 @@
-import { buttonPrimaryColor } from '@letscollab/console-utils';
+import { buttonPrimaryColor } from '@letscollab-community/console-utils';
 import {
   Button,
   Container,

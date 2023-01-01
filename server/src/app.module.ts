@@ -13,7 +13,7 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { ApplySessionModule, isDev, isProd } from '@letscollab-nest/helper';
+import { ApplySessionModule, isDev } from '@letscollab-nest/helper';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { UserModule } from './user/user.module';
 import TypeOrmAdapter from 'typeorm-adapter';
@@ -28,6 +28,8 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
+import { S3Module } from '@letscollab-nest/aws-s3';
+import { Endpoint } from 'aws-sdk';
 
 @Module({
   imports: [
@@ -154,6 +156,22 @@ import {
         AcceptLanguageResolver,
       ],
       logging: isDev,
+    }),
+    S3Module.forRootAsync({
+      inject: [NacosConfigService],
+      useFactory: async (config: NacosConfigService) => {
+        const { s3 } = await config.getConfig('common.json');
+        return {
+          config: {
+            accessKeyId: s3.accessKey,
+            secretAccessKey: s3.secretKey,
+            endpoint: new Endpoint(s3.endpoint),
+            signatureVersion: 'v4',
+            s3ForcePathStyle: true,
+            ssldisabled: true,
+          },
+        };
+      },
     }),
     MailerModule.forRootAsync({
       inject: [NacosConfigService],

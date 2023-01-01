@@ -5,7 +5,10 @@ import { RouterProvider } from 'react-router-dom';
 import { useAtomsDebugValue } from 'jotai/devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { userProfileAtom, fetchUserProfile } from '@letscollab/console-utils';
+import {
+  userProfileAtom,
+  fetchUserProfile,
+} from '@letscollab-community/console-utils';
 import { PropsWithChildren, useEffect } from 'react';
 import { queryClientAtom } from 'jotai-tanstack-query';
 import { AuthzProvider, Can } from '@letscollab/react-authz';
