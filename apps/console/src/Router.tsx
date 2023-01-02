@@ -3,6 +3,7 @@ import { HttpStatusPage } from '@letscollab-community/console-utils';
 // import { ProLayout } from '@letscollab-pro/console';
 import { Layout } from './Layout';
 import { OrganizationPage, AccessPage, MyPage } from './pages';
+import { TwoFactorAuthPage } from './pages/My/Settings';
 
 const projectRouter = {
   path: ':project',
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
               {
                 path: 'profile',
                 element: <div>Settings Profile</div>,
+              },
+              {
+                path: '2fa',
+                element: <TwoFactorAuthPage />,
               },
             ],
           },

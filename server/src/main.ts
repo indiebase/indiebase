@@ -1,4 +1,3 @@
-import { NacosConfigService } from '@letscollab-nest/nacos';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
@@ -12,7 +11,6 @@ import { HttpExceptionFilter } from '@letscollab-nest/helper';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
-import cors from '@fastify/cors';
 import { resolve } from 'path';
 
 declare module 'fastify' {

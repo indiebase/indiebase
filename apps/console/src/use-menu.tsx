@@ -6,14 +6,17 @@ import {
   userProfileAtom,
 } from '@letscollab-community/console-utils';
 import { useAtom } from 'jotai';
+import { useTranslation } from 'react-i18next';
 
 export const useMenu = () => {
   const params = useParams();
   const { org, project, user } = params;
   const [profile] = useAtom(userProfileAtom);
+  const { t, i18n } = useTranslation(['common', 'setting']);
 
   // if not match, menu is immutable.
   const deps = !!params['*'] ? [] : [org, project, user];
+  deps.push(i18n.language);
 
   return useMemo<SidebarTileNode[]>(() => {
     //TODO:
@@ -33,7 +36,7 @@ export const useMenu = () => {
     if (project) {
       return [
         {
-          label: 'Setting',
+          label: t('Setting'),
           icon: <IconSettings size={16} />,
           color: 'violet',
           type: 'node',
@@ -61,7 +64,7 @@ export const useMenu = () => {
           to: prefix,
         },
         {
-          label: 'Setting',
+          label: t('Setting'),
           icon: <IconSettings size={16} />,
           color: 'violet',
           type: 'node',
@@ -86,17 +89,22 @@ export const useMenu = () => {
     // User
     return [
       {
-        label: 'Setting',
+        label: t('Setting'),
         icon: <IconSettings size={16} />,
         color: 'violet',
         type: 'node',
         children: [
           {
-            label: 'Profile',
+            label: t('Profile', { ns: 'setting' }),
             to: `${prefix}/settings/profile`,
+          },
+          {
+            label: t('Two Factor Auth', { ns: 'setting' }),
+            to: `${prefix}/settings/2fa`,
           },
         ],
       },
     ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };

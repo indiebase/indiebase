@@ -169,7 +169,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 height: '100%',
               })}
             >
-              <Group sx={{ marginRight: 10, height: '100%' }} spacing={40}>
+              <Group sx={{ marginRight: 10, height: '100%' }} spacing="xl">
                 {props.nav}
               </Group>
               <Divider mr={10} orientation="vertical" />

@@ -19,5 +19,6 @@ export default registerAs('app', () => {
       process.env.CORS_ORIGINS_STRING,
       process.env.CORS_ORIGINS_REG,
     ),
+    packageName: process.env.PACKAGE_NAME,
   };
 });

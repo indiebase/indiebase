@@ -1,6 +1,4 @@
 import { CoProtectGuard } from '../utils';
-import { UserService } from '../user/user.service';
-import { NacosConfigService } from '@letscollab-nest/nacos';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import {
   Controller,
@@ -15,21 +13,23 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
+  AccessGuard,
   ApiProtectHeader,
   getSubdomain,
+  ProtectGuard,
   ResultCode,
 } from '@letscollab-nest/helper';
 import { LocalSignInDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
 import { InjectS3, S3 } from '@letscollab-nest/aws-s3';
+import { AuthService } from './auth.service';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')
 export class AuthController {
   constructor(
-    private readonly nacos: NacosConfigService,
-    private readonly userService: UserService,
+    private readonly authService: AuthService,
     @InjectS3()
     private readonly s3: S3,
   ) {}
@@ -46,23 +46,7 @@ export class AuthController {
     @Req() req: FastifyRequest,
     @Session() session: any,
   ) {
-    const user = req.user;
-
-    session.set('user', {
-      loggedIn: true,
-      id: user.id,
-      username: user.username,
-      accessToken: user.githubAccessToken,
-    });
-
-    session.cookie.expires = new Date(
-      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
-    );
-
-    session.cookie.domain = getSubdomain(
-      new URL(`${req.protocol}://${req.hostname}`).hostname,
-      2,
-    );
+    await this.authService.handleSingIn(req, session);
 
     return {
       code: ResultCode.SUCCESS,
@@ -81,35 +65,7 @@ export class AuthController {
     @Session() session: any,
     @Res() res: FastifyReply,
   ) {
-    const { profile, accessToken } = req.user;
-    const { _json: json, username, profileUrl, id, displayName } = profile;
-
-    const r = await this.userService.signIn({
-      username: username,
-      profileUrl: profileUrl,
-      githubId: id,
-      nickname: displayName,
-      email: json?.email,
-      avatar: json?.avatar_url,
-      bio: json?.bio,
-      githubAccessToken: accessToken,
-    });
-
-    session.set('user', {
-      loggedIn: true,
-      id: r.id,
-      username,
-      githubAccessToken: req.user.accessToken,
-    });
-
-    session.cookie.expires = new Date(
-      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
-    );
-
-    session.cookie.domain = getSubdomain(
-      new URL(`${req.protocol}://${req.hostname}`).hostname,
-      2,
-    );
+    await this.authService.handleGithubCallback(req, session);
 
     return res
       .type('text/html')
@@ -119,6 +75,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @UseGuards(AccessGuard)
   async logout(@Req() req: FastifyRequest) {
     await req
       .logOut()
@@ -128,6 +85,17 @@ export class AuthController {
         throw new InternalServerErrorException();
       });
     return { code: ResultCode.SUCCESS };
+  }
+
+  @Post('/2fa/gen')
+  @UseGuards(ProtectGuard, AccessGuard)
+  async generateOtp() {
+    this;
+
+    return {
+      code: ResultCode.SUCCESS,
+      d: {},
+    };
   }
 
   @Post('demo')
