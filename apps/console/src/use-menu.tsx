@@ -99,7 +99,7 @@ export const useMenu = () => {
             to: `${prefix}/settings/profile`,
           },
           {
-            label: t('Two Factor Auth', { ns: 'setting' }),
+            label: t('Two-factor authn', { ns: 'setting' }),
             to: `${prefix}/settings/2fa`,
           },
         ],

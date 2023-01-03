@@ -1,5 +1,4 @@
 import { Text, type AvatarProps, Avatar, HoverCard } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import React, { FC, PropsWithChildren } from 'react';
 import { IconUser } from '@tabler/icons';
 import { PolymorphicComponentProps } from '@mantine/utils';
@@ -12,13 +11,10 @@ interface AvatarWithPreviewProps
 export const ProfilePreviewCard: FC<ProfilePreviewCardProps> = function (
   props,
 ) {
-  const [opened, { close, open }] = useDisclosure(false);
   return (
     <HoverCard width={200} position="top" withArrow closeDelay={10} shadow="md">
       <HoverCard.Target>
-        <div onMouseEnter={open} onMouseLeave={close}>
-          {props.children}
-        </div>
+        <div>{props.children}</div>
       </HoverCard.Target>
       <HoverCard.Dropdown>
         <div>status</div>

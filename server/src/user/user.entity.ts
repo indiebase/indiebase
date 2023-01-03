@@ -68,6 +68,30 @@ export class UserEntity {
   password?: string;
 
   @ApiProperty({
+    description: '2fa enabled',
+  })
+  @Column('bool', {
+    name: 'enabled_2fa',
+    default: false,
+  })
+  enabled2FA: boolean;
+
+  @Column('varchar', {
+    name: 'opt_secret',
+    nullable: true,
+  })
+  optSecret?: string;
+
+  @ApiProperty({
+    description: '2fa recovery code',
+  })
+  @Column('simple-array', {
+    name: 'opt_recovery_code',
+    nullable: true,
+  })
+  optRecoveryCode?: string[];
+
+  @ApiProperty({
     enum: AccountStatus,
     description: 'Account status',
   })

@@ -20,7 +20,7 @@ export class UserService {
   ) {}
 
   private async createUser(
-    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime'>,
+    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'enabled2FA'>,
   ): Promise<UserEntity> {
     return new Promise(async (resolve, reject) => {
       const userEntity = this.userRepo.create(body);
@@ -46,7 +46,10 @@ export class UserService {
   }
 
   public async signIn(
-    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'hashPassword'>,
+    body: Omit<
+      UserEntity,
+      'id' | 'updateTime' | 'createTime' | 'hashPassword' | 'enabled2FA'
+    >,
   ) {
     let user = await this.userRepo.findOne({
       where: [
@@ -124,14 +127,14 @@ export class UserService {
    */
   public async getUser(
     cond: Partial<UserEntity>,
-    option: { full?: boolean } = {},
+    option: { full?: boolean } = { full: false },
   ) {
-    const { full = false } = option;
+    const { full } = option;
 
     const result = full
       ? this.findOneFull(cond)
       : this.userRepo.findOne({
-          where: cond,
+          where: cond as any,
         });
 
     return result.catch((err) => {

@@ -1,4 +1,3 @@
-import { buttonPrimaryColor } from '@letscollab-community/console-utils';
 import {
   Button,
   Container,
@@ -96,7 +95,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function () {
               <Button
                 type="submit"
                 variant="gradient"
-                gradient={buttonPrimaryColor}
+                gradient={theme.other.buttonGradient}
               >
                 确定
               </Button>
@@ -110,7 +109,7 @@ export const RoleModal: FC<CreateRoleModalProps> = function () {
           setOpen(true);
         }}
         variant="gradient"
-        gradient={buttonPrimaryColor}
+        gradient={theme.other.buttonGradient}
       >
         添加
       </Button>

@@ -11,19 +11,20 @@ import {
   Body,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   AccessGuard,
   ApiProtectHeader,
-  getSubdomain,
+  MyInfo,
   ProtectGuard,
   ResultCode,
 } from '@letscollab-nest/helper';
-import { LocalSignInDto } from './auth.dto';
+import { LocalSignInDto, OptVerifyDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
 import { InjectS3, S3 } from '@letscollab-nest/aws-s3';
 import { AuthService } from './auth.service';
+import { authenticator } from 'otplib';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')
@@ -40,6 +41,9 @@ export class AuthController {
    */
   @Post('signin')
   @ApiProtectHeader()
+  @ApiOperation({
+    summary: 'SignIn with password',
+  })
   @UseGuards(CoProtectGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
@@ -55,6 +59,10 @@ export class AuthController {
   }
 
   @Get('oauth/github')
+  @ApiOperation({
+    summary: 'SignIn with github OAuth2',
+    description: 'Must use this for first time',
+  })
   @UseGuards(GithubGuard)
   async github() {}
 
@@ -88,18 +96,34 @@ export class AuthController {
   }
 
   @Post('/2fa/gen')
+  @ApiOperation({
+    summary: 'Create one time password, qrcode',
+  })
   @UseGuards(ProtectGuard, AccessGuard)
-  async generateOtp() {
-    this;
+  async generateOtp(@MyInfo('username') username: string) {
+    const d = await this.authService.generateOtp(username);
 
     return {
       code: ResultCode.SUCCESS,
-      d: {},
+      d,
     };
+  }
+
+  @Post('/2fa/verify')
+  @UseGuards(ProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: 'Verify one time password, token',
+  })
+  async verifyOtp(
+    @MyInfo('username') username: string,
+    @Body() body: OptVerifyDto,
+  ) {
+    return this.authService.optVerify(username, body.secret, body.token);
   }
 
   @Post('demo')
   async demo() {
-    console.log(this.s3);
+    console.log(authenticator.generateSecret(16));
+    // console.log(this.s3);
   }
 }

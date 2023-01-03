@@ -4,11 +4,13 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
+  Logger,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
-import { getSubdomain } from '@letscollab-nest/helper';
+import { getSubdomain, ResultCode } from '@letscollab-nest/helper';
 import { FastifyRequest } from 'fastify';
 
 @Injectable()
@@ -16,9 +18,10 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly configService: ConfigService,
+    private readonly logger: Logger,
   ) {}
 
-  async validateLocal(username: string, password: string) {
+  public async validateLocal(username: string, password: string) {
     let user = await this.userService.getUser(
       { username },
       {
@@ -43,7 +46,7 @@ export class AuthService {
     }
   }
 
-  async handleGithubCallback(req: FastifyRequest, session: any) {
+  public async handleGithubCallback(req: FastifyRequest, session: any) {
     const { user } = req;
     const { profile, accessToken } = user;
     const { _json: json, username, profileUrl, id, displayName } = profile;
@@ -76,7 +79,7 @@ export class AuthService {
     );
   }
 
-  async handleSingIn(req: FastifyRequest, session: any) {
+  public async handleSingIn(req: FastifyRequest, session: any) {
     const { user } = req;
     session.set('user', {
       loggedIn: true,
@@ -95,16 +98,43 @@ export class AuthService {
     );
   }
 
-  async generateOtp(username: string) {
+  public async generateOtp(username: string) {
     const secret = authenticator.generateSecret(20);
     const uri = authenticator.keyuri(username, 'letscollab', secret);
     const qrcodeUri = await qrcode.toDataURL(uri);
 
     return {
+      secret,
       uri,
       qrcodeUri,
     };
   }
 
-  async optVerify() {}
+  private createRecoveryCode(length = 8) {
+    return Array.from({ length }).map(() => authenticator.generateSecret(16));
+  }
+
+  public async optVerify(username: string, secret: string, token: string) {
+    try {
+      const isValid = authenticator.check(token, secret);
+      let optRecoveryCode;
+
+      if (isValid) {
+        optRecoveryCode = this.createRecoveryCode();
+        await this.userService.updateUser(
+          { username },
+          { optSecret: secret, optRecoveryCode },
+        );
+      }
+      return {
+        code: isValid ? ResultCode.SUCCESS : ResultCode.ERROR,
+        d: {
+          optRecoveryCode,
+        },
+      };
+    } catch (err) {
+      this.logger.error(err);
+      throw new InternalServerErrorException();
+    }
+  }
 }

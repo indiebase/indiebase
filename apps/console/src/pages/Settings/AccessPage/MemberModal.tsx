@@ -1,4 +1,3 @@
-import { buttonPrimaryColor } from '@letscollab-community/console-utils';
 import {
   Button,
   Container,
@@ -11,7 +10,8 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { FormInstance } from 'antd';
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 
 interface CreateRoleModalProps {
   row?: any;
@@ -32,7 +32,9 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
   const ref = useRef<FormInstance>();
 
   const theme = useMantineTheme();
-  const [opened, setOpen] = useState<boolean>(false);
+
+  // const [opened, setOpen] = useState<boolean>(false);
+  const [opened, { close, open }] = useDisclosure(false);
 
   const form = useForm({
     initialValues: {
@@ -57,7 +59,7 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
         overlayOpacity={0.3}
         overlayBlur={3}
         opened={opened}
-        onClose={() => setOpen(false)}
+        onClose={close}
         withCloseButton={false}
         shadow="unset"
         transition="pop-top-right"
@@ -98,7 +100,7 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
 
             <Group mt={80} grow>
               <Button
-                onClick={() => setOpen(false)}
+                onClick={close}
                 variant="subtle"
                 type="submit"
                 color="gray"
@@ -108,7 +110,7 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
               <Button
                 type="submit"
                 variant="gradient"
-                gradient={buttonPrimaryColor}
+                gradient={theme.other.buttonGradient}
               >
                 确定
               </Button>
@@ -118,11 +120,9 @@ export const MemberModal: FC<CreateRoleModalProps> = function (props) {
       </Modal>
       <Button
         size="xs"
-        onClick={() => {
-          setOpen(true);
-        }}
+        onClick={open}
         variant="gradient"
-        gradient={buttonPrimaryColor}
+        gradient={theme.other.buttonGradient}
       >
         添加
       </Button>
