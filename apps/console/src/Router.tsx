@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HttpStatusPage } from '@letscollab-community/console-utils';
-// import { ProLayout } from '@letscollab-pro/console';
 import { Layout } from './Layout';
 import { OrganizationPage, AccessPage, MyPage } from './pages';
 import { TwoFactorAuthPage } from './pages/My/Settings';
+import { MyProfilePage } from './pages/My/Profile';
 
 const projectRouter = {
   path: ':project',
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'profile',
-                element: <div>Settings Profile</div>,
+                element: <MyProfilePage />,
               },
               {
                 path: '2fa',
@@ -75,10 +75,6 @@ export const router = createBrowserRouter([
                 path: 'general',
                 element: <AccessPage />,
               },
-              // {
-              //   path: 'member',
-              //   element: <AccessPage />,
-              // },
               {
                 path: 'access',
                 element: <AccessPage />,

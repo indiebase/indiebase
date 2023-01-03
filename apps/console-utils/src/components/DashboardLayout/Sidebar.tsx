@@ -73,7 +73,7 @@ export const Sidebar: FC<SidebarProps> = function (props) {
       position={{ top: 65 }}
       hiddenBreakpoint="sm"
       width={{ sm: 200, lg: 250 }}
-      style={{ borderRight: 0, zIndex: 'unset' }}
+      style={{ borderRight: 0, zIndex: 99 }}
       hidden={opened}
     >
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">

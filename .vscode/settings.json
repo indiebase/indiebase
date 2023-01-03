@@ -19,8 +19,7 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
+    "**/.git/**": true,
     "**/node_modules/*/**": true,
     "**/build/*/**": true,
     "**/dist/*/**": true

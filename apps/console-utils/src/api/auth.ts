@@ -9,7 +9,12 @@ export const sendCaptcha = async () => {
 };
 
 export const generateOptApi = async () => {
-  const { data } = await req.post('/v1/auth/2fa/gen');
+  const { data } = await req.post('/v1/auth/2fa');
+  return data;
+};
+
+export const deleteOptApi = async () => {
+  const { data } = await req.delete('/v1/auth/2fa');
   return data;
 };
 

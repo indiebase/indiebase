@@ -1,4 +1,3 @@
-// import './App.less';
 import { router } from './Router';
 import { Provider, useAtom } from 'jotai';
 import { RouterProvider } from 'react-router-dom';

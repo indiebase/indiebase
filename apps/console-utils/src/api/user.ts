@@ -8,4 +8,11 @@ export const fetchUserProfile = async (): Promise<
   return data ?? {};
 };
 
+export const patchUserProfile = async (
+  body: Record<string, any>,
+): Promise<BaseResSchema<UserProfile>> => {
+  const { data } = await req.patch('/v1/user/profile', body);
+  return data ?? {};
+};
+
 export const fetchMyOrgs = async () => {};

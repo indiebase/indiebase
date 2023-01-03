@@ -123,7 +123,7 @@ export class AuthService {
         optRecoveryCode = this.createRecoveryCode();
         await this.userService.updateUser(
           { username },
-          { optSecret: secret, optRecoveryCode },
+          { optSecret: secret, optRecoveryCode, enabled2FA: true },
         );
       }
       return {

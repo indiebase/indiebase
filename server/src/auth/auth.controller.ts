@@ -10,6 +10,7 @@ import {
   Post,
   Body,
   InternalServerErrorException,
+  Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
@@ -95,7 +96,7 @@ export class AuthController {
     return { code: ResultCode.SUCCESS };
   }
 
-  @Post('/2fa/gen')
+  @Post('/2fa')
   @ApiOperation({
     summary: 'Create one time password, qrcode',
   })
@@ -115,6 +116,30 @@ export class AuthController {
     summary: 'Verify one time password, token',
   })
   async verifyOtp(
+    @MyInfo('username') username: string,
+    @Body() body: OptVerifyDto,
+  ) {
+    return this.authService.optVerify(username, body.secret, body.token);
+  }
+
+  @Post('/2fa/disable')
+  @UseGuards(ProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: '',
+  })
+  async disableOtp(
+    @MyInfo('username') username: string,
+    @Body() body: OptVerifyDto,
+  ) {
+    return this.authService.optVerify(username, body.secret, body.token);
+  }
+
+  @Delete('/2fa')
+  @UseGuards(ProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: '',
+  })
+  async deleteOtp(
     @MyInfo('username') username: string,
     @Body() body: OptVerifyDto,
   ) {

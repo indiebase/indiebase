@@ -18,4 +18,5 @@ export interface UserProfile {
   createTime: Date;
   updateTime: Date;
   orgs?: any[];
+  enabled2FA?: boolean;
 }
