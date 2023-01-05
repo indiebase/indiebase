@@ -48,7 +48,9 @@ async function bootstrap() {
     );
 
     // Inject service to ValidatorConstraintInterface
-    useContainer(app.get(AppModule), { fallbackOnErrors: true });
+    useContainer(app.select(AppModule), {
+      fallbackOnErrors: true,
+    });
 
     await app.register(fastifyHelmet, {
       global: true,

@@ -1,4 +1,3 @@
-import { RoleService } from './role.service';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
@@ -25,21 +24,17 @@ import {
   CreateRoleBody,
   UserResource,
 } from '@letscollab-nest/trait';
-import { LiteralObject, Injectable, Inject } from '@nestjs/common';
+import { LiteralObject, Injectable } from '@nestjs/common';
 import { EntityTarget, DataSource } from 'typeorm';
+import { RoleEntity } from './role.entity';
 
-@Injectable()
 @ValidatorConstraint({ async: true })
+@Injectable()
 class IsEntityExistedConstraint implements ValidatorConstraintInterface {
-  constructor(
-    private readonly dataSource: DataSource,
-    @Inject('RoleService')
-    private readonly roleService: RoleService,
-  ) {}
+  constructor(private readonly dataSource: DataSource) {}
 
   validate(name: any, _args: ValidationArguments) {
     console.log(this.dataSource);
-    console.log(this.roleService);
     return true;
     // return this.dataSource
     //   .getRepository(RoleEntity)
@@ -64,12 +59,11 @@ export function IsEntityExisted(
   validationOptions?: ValidationOptions,
 ) {
   return function (object: Object, propertyName: string) {
-    console.log(object);
     registerDecorator({
+      name: 'IsEntityExisted',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      constraints: [],
       validator: IsEntityExistedConstraint,
     });
   };
@@ -82,8 +76,8 @@ export class CreateRoleDto {
   @IsNotEmpty({
     message: `Role name can't be empty`,
   })
-  @Validate(IsEntityExistedConstraint, { message: '1' })
-  // @IsEntityExisted(RoleEntity, 'name', { message: 'Role name has existed' })
+  // @Validate(IsEntityExistedConstraint, { message: '1' })
+  @IsEntityExisted(RoleEntity, 'name', { message: 'Role name has existed' })
   name: string;
 
   @ApiPropertyOptional({
