@@ -8,7 +8,7 @@ https://letscollab.deskbtm.com
 
 ### 1. 什么是 letscollab？
 
-letscollab 类似于 Patreon + OpenCollective + 独立软件管理系统 . 其提供以下几点主要功能：
+letscollab 类似于 OpenCollective + 软件管理. 其提供以下几点主要功能：
 
 - letscollab 用于管理私有独立项目的财政与合作者。
 - 提供针对独立项目的基本业务管理，如用户，内购支付等。
