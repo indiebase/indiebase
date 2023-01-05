@@ -77,7 +77,7 @@ export class OrgService {
     };
   }
 
-  async createOrg(body: CreateOrgDto, id: number) {
+  async createOrg(body: CreateOrgDto) {
     const { name, description, contactEmail, domain, homepage, githubOrgName } =
       body;
 
@@ -100,6 +100,8 @@ export class OrgService {
         message: 'Create',
       });
     });
+
+    return { code: ResultCode.SUCCESS, message: 'Create success' };
   }
 
   async updateOrg(body: UpdateOrgDto) {

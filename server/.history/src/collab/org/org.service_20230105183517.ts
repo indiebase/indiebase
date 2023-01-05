@@ -77,7 +77,7 @@ export class OrgService {
     };
   }
 
-  async createOrg(body: CreateOrgDto, id: number) {
+  async createOrg(body: CreateOrgDto) {
     const { name, description, contactEmail, domain, homepage, githubOrgName } =
       body;
 
@@ -100,6 +100,8 @@ export class OrgService {
         message: 'Create',
       });
     });
+
+    return { code: ResultCode.SUCCESS, message: 'Create success' };
   }
 
   async updateOrg(body: UpdateOrgDto) {
@@ -108,7 +110,7 @@ export class OrgService {
     await this.orgRepo.update({ id }, rest).catch((err) => {
       this.logger.error(err);
       if (err?.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException(`Organization [${body.name}] existed`);
+        throw new ConflictException(`Orga [${body.name}] existed`);
       }
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,

@@ -6,10 +6,12 @@ import {
   BeforeInsert,
   BeforeUpdate,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
 import { AccountStatus } from '@letscollab-nest/trait';
+import { OrgEntity } from '../collab/org/org.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -118,8 +120,8 @@ export class UserEntity {
   @ApiProperty()
   updateTime: Date;
 
-  // @ManyToMany(() => TeamEntity, (t) => t.members)
-  // teams?: TeamEntity[];
+  @ManyToMany(() => OrgEntity, (t) => t.members)
+  organizations?: OrgEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()

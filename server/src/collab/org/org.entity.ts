@@ -4,9 +4,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { OrgStatus } from '@letscollab-nest/trait';
+import { UserEntity } from '../../user/user.entity';
 
 @Entity('organization')
 export class OrgEntity {
@@ -67,7 +70,18 @@ export class OrgEntity {
   })
   updateTime?: Date;
 
-  // @ManyToMany(() => UserEntity, (u) => u.teams, { cascade: true })
-  // @JoinTable()
-  // members?: UserEntity[];
+  @ApiProperty()
+  @Column('int', { name: 'creator_id', unique: true, comment: 'User id' })
+  creatorId: number;
+
+  /**
+   * The same as creator id at first time.
+   */
+  @ApiProperty()
+  @Column('int', { name: 'owner_id', unique: true, comment: 'Owner id' })
+  ownerId: number;
+
+  @ManyToMany(() => UserEntity, (u) => u.organizations, { cascade: true })
+  @JoinTable()
+  members?: UserEntity[];
 }

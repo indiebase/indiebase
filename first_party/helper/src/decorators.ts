@@ -109,6 +109,8 @@ const createValidatorConstraint = function (
  * @param {string} key The database field.
  * @param {ValidationOptions} validationOptions
  */
+
+//TODO: fix https://github.com/nestjs/nest/issues/528
 export function IsEntityExisted(
   entity: EntityTarget<LiteralObject>,
   key: string,

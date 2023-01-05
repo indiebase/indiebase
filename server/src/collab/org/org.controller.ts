@@ -83,8 +83,8 @@ export class OrgController {
     action: AccessAction.createAny,
     resource: OrgResource.list,
   })
-  async createOrg(@Body() body: CreateOrgDto, @MyInfo() info) {
-    await this.orgService.createOrg(body);
+  async createOrg(@Body() body: CreateOrgDto, @MyInfo('id') id: number) {
+    await this.orgService.createOrg(body, id);
 
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
