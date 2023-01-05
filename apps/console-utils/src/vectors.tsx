@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 export const ProjectFallbackBg = (props) => (
   <svg
     width={1920}

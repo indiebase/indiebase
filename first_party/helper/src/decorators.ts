@@ -5,8 +5,18 @@ import {
   BadRequestException,
   createParamDecorator,
   ExecutionContext,
+  LiteralObject,
 } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
+import { DataSource, type EntityTarget } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+  ValidationOptions,
+  registerDecorator,
+} from 'class-validator';
 
 export const UserRoles = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
@@ -67,3 +77,50 @@ export const PackageName = createParamDecorator((_, ctx: ExecutionContext) => {
 
   return domain;
 });
+
+const createValidatorConstraint = function (
+  entity: EntityTarget<LiteralObject>,
+  key: string,
+) {
+  @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
+  @Injectable()
+  class IsEntityExistedConstraint implements ValidatorConstraintInterface {
+    constructor(private readonly dataSource: DataSource) {}
+
+    validate(name: any, _args: ValidationArguments) {
+      return this.dataSource
+        .getRepository(entity)
+        .findOne({
+          where: {
+            [key]: name,
+          },
+        })
+        .then((e) => {
+          return !e;
+        });
+    }
+  }
+
+  return IsEntityExistedConstraint;
+};
+
+/**
+ *  Check if the target entity is existed.
+ * @param {string} key The database field.
+ * @param {ValidationOptions} validationOptions
+ */
+export function IsEntityExisted(
+  entity: EntityTarget<LiteralObject>,
+  key: string,
+  validationOptions?: ValidationOptions,
+) {
+  return function (object: Object, propertyName: string) {
+    registerDecorator({
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: createValidatorConstraint(entity, key),
+    });
+  };
+}

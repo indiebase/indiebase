@@ -1,12 +1,9 @@
-import { resolve } from 'path';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
 import { INestApplication } from '@nestjs/common';
-import { readJsonSync } from 'fs-extra';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
-import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
-
-const pkg = readJsonSync(resolve(process.cwd(), './package.json'));
+import { OrgModule } from '../collab/org/org.module';
 
 export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
@@ -14,7 +11,7 @@ export const setupApiDoc = (app: INestApplication) =>
       const authOptions = new DocumentBuilder()
         .setTitle('Auth Api')
         .setDescription('Authz and authn REST API ')
-        .setVersion(pkg.version)
+        .setVersion('1.0.0')
         .addCookieAuth('SID', {
           type: 'apiKey',
           in: 'cookie',
@@ -24,7 +21,17 @@ export const setupApiDoc = (app: INestApplication) =>
       const userOptions = new DocumentBuilder()
         .setTitle('User Api')
         .setDescription('User REST API')
-        .setVersion(pkg.version)
+        .setVersion('1.0.0')
+        .addCookieAuth('SID', {
+          type: 'apiKey',
+          in: 'cookie',
+        })
+        .build();
+
+      const collabOptions = new DocumentBuilder()
+        .setTitle('Collaboration Api')
+        .setDescription('Collaboration REST API')
+        .setVersion('1.0.0')
         .addCookieAuth('SID', {
           type: 'apiKey',
           in: 'cookie',
@@ -39,8 +46,8 @@ export const setupApiDoc = (app: INestApplication) =>
         include: [UserModule],
       });
 
-      const collabDoc = SwaggerModule.createDocument(app, userOptions, {
-        include: [UserModule],
+      const collabDoc = SwaggerModule.createDocument(app, collabOptions, {
+        include: [OrgModule],
       });
 
       const msgDoc = SwaggerModule.createDocument(app, userOptions, {

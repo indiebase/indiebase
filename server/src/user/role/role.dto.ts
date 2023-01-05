@@ -1,3 +1,4 @@
+import { RoleService } from './role.service';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
@@ -5,8 +6,15 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  registerDecorator,
+  Validate,
+  ValidationArguments,
+  ValidationOptions,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
 } from 'class-validator';
 import {
+  // IsEntityExisted,
   PaginationReqDto,
   PaginationResSchemaDto,
 } from '@letscollab-nest/helper';
@@ -17,6 +25,55 @@ import {
   CreateRoleBody,
   UserResource,
 } from '@letscollab-nest/trait';
+import { LiteralObject, Injectable, Inject } from '@nestjs/common';
+import { EntityTarget, DataSource } from 'typeorm';
+
+@Injectable()
+@ValidatorConstraint({ async: true })
+class IsEntityExistedConstraint implements ValidatorConstraintInterface {
+  constructor(
+    private readonly dataSource: DataSource,
+    @Inject('RoleService')
+    private readonly roleService: RoleService,
+  ) {}
+
+  validate(name: any, _args: ValidationArguments) {
+    console.log(this.dataSource);
+    console.log(this.roleService);
+    return true;
+    // return this.dataSource
+    //   .getRepository(RoleEntity)
+    //   .findOne({
+    //     where: {
+    //       name,
+    //     },
+    //   })
+    //   .then((e) => {
+    //     return !e;
+    //   });
+  }
+}
+/**
+ *  Check if the target entity is existed.
+ * @param {string} key The database field.
+ * @param {ValidationOptions} validationOptions
+ */
+export function IsEntityExisted(
+  entity: EntityTarget<LiteralObject>,
+  key: string,
+  validationOptions?: ValidationOptions,
+) {
+  return function (object: Object, propertyName: string) {
+    console.log(object);
+    registerDecorator({
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: IsEntityExistedConstraint,
+    });
+  };
+}
 
 export class CreateRoleDto {
   @ApiProperty({
@@ -25,6 +82,8 @@ export class CreateRoleDto {
   @IsNotEmpty({
     message: `Role name can't be empty`,
   })
+  @Validate(IsEntityExistedConstraint, { message: '1' })
+  // @IsEntityExisted(RoleEntity, 'name', { message: 'Role name has existed' })
   name: string;
 
   @ApiPropertyOptional({

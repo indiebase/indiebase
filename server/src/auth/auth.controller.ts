@@ -25,7 +25,6 @@ import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
 import { InjectS3, S3 } from '@letscollab-nest/aws-s3';
 import { AuthService } from './auth.service';
-import { authenticator } from 'otplib';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')
@@ -96,7 +95,7 @@ export class AuthController {
     return { code: ResultCode.SUCCESS };
   }
 
-  @Post('/2fa')
+  @Post('2fa')
   @ApiOperation({
     summary: 'Create one time password, qrcode',
   })
@@ -110,7 +109,7 @@ export class AuthController {
     };
   }
 
-  @Post('/2fa/verify')
+  @Post('2fa/verify')
   @UseGuards(ProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Verify one time password, token',
@@ -122,33 +121,27 @@ export class AuthController {
     return this.authService.optVerify(username, body.secret, body.token);
   }
 
-  @Post('/2fa/disable')
+  @Delete('2fa')
   @UseGuards(ProtectGuard, AccessGuard)
   @ApiOperation({
-    summary: '',
+    summary: 'Remove my 2FA',
   })
-  async disableOtp(
-    @MyInfo('username') username: string,
-    @Body() body: OptVerifyDto,
-  ) {
-    return this.authService.optVerify(username, body.secret, body.token);
+  async deleteOtp(@MyInfo('username') username: string) {
+    await this.authService.removeOpt(username);
+
+    return { code: ResultCode.SUCCESS };
   }
 
-  @Delete('/2fa')
-  @UseGuards(ProtectGuard, AccessGuard)
+  @Get('2fa/recovery-codes')
   @ApiOperation({
-    summary: '',
+    summary: 'Show recovery codes',
   })
-  async deleteOtp(
-    @MyInfo('username') username: string,
-    @Body() body: OptVerifyDto,
-  ) {
-    return this.authService.optVerify(username, body.secret, body.token);
-  }
-
-  @Post('demo')
-  async demo() {
-    console.log(authenticator.generateSecret(16));
-    // console.log(this.s3);
+  @UseGuards(ProtectGuard, AccessGuard)
+  async getRecoveryCodes(@MyInfo('username') username: string) {
+    const d = await this.authService.getRecoveryCodes(username);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
   }
 }

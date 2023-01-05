@@ -3,3 +3,8 @@ export interface OrgSelect {
   label: string;
   value: string;
 }
+
+export enum OrgStatus {
+  active = 'active',
+  inactive = 'inactive',
+}

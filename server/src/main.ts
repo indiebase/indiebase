@@ -10,8 +10,8 @@ import fastifyHelmet from '@fastify/helmet';
 import { HttpExceptionFilter } from '@letscollab-nest/helper';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
-import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { resolve } from 'path';
+import { useContainer } from 'class-validator';
 
 declare module 'fastify' {
   interface PassportUser {
@@ -43,9 +43,12 @@ async function bootstrap() {
         enableDebugMessages: isDevelopment,
         whitelist: true,
         forbidNonWhitelisted: true,
-        exceptionFactory: i18nValidationErrorFactory,
+        // exceptionFactory: i18nValidationErrorFactory,
       }),
     );
+
+    // Inject service to ValidatorConstraintInterface
+    useContainer(app.get(AppModule), { fallbackOnErrors: true });
 
     await app.register(fastifyHelmet, {
       global: true,

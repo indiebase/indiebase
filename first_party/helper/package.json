@@ -31,7 +31,6 @@
     "@liaoliaots/nestjs-redis": "^8.0.0",
     "@nestjs/common": "^9.0.11",
     "@nestjs/core": "^9.0.11",
-    "@nestjs/microservices": "^9.0.11",
     "@nestjs/platform-fastify": "^9.0.11",
     "@nestjs/swagger": "^6.1.3",
     "class-transformer": "^0.5.1",

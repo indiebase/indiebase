@@ -4,10 +4,12 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Query,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiOkResponse,
@@ -22,12 +24,24 @@ import {
   QueryOrgResDto,
   UpdateOrgDto,
 } from './org.dto';
-import { MyInfo } from '@letscollab-nest/helper';
+import {
+  AccessGuard,
+  MyInfo,
+  ProtectGuard,
+  ResultCode,
+} from '@letscollab-nest/helper';
+import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
+import { OrgResource, UserResource } from '@letscollab-nest/trait';
+import { OrgService } from './org.service';
+import { CoProtectGuard } from '../../utils';
 
-@Controller('v1/collab/org')
+@Controller({
+  path: 'org',
+  version: '1',
+})
 @ApiTags('v1/Organization')
 export class OrgController {
-  constructor() {}
+  constructor(private readonly orgService: OrgService) {}
 
   @Get('list')
   @ApiCookieAuth('SID')
@@ -41,23 +55,38 @@ export class OrgController {
   @ApiOperation({
     summary: 'Fetch github orgs',
   })
-  @Get('github/list')
+  @Get('github')
   @ApiCookieAuth('SID')
   async githubOrgs() {
     // return this.org.getGithubOrgs();
   }
+
+  @Get(':name')
+  @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: 'Get a organization',
+  })
+  @UseAccess({
+    action: AccessAction.readAny,
+    resource: UserResource.list,
+  })
+  async getOrg(@Param('name') username: string) {}
 
   @ApiOperation({
     summary: 'Create a letscollab organization',
   })
   @Post()
   @ApiCookieAuth('SID')
+  @UseGuards(ProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.createAny,
+    resource: OrgResource.list,
+  })
   async createOrg(@Body() body: CreateOrgDto, @MyInfo() info) {
-    // return this.org.createOrg({
-    //   name: body.name,
-    //   // description: body.description,
-    //   // contactEmail: body.contactEmail,
-    // });
+    await this.orgService.createOrg(body);
+
+    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
 
   @ApiOperation({
@@ -72,10 +101,15 @@ export class OrgController {
   @ApiOperation({
     summary: 'Delete a letscollab organization',
   })
-  @Delete()
+  @Delete(':name')
   @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.deleteAny,
+    resource: OrgResource.list,
+  })
   // @UseGuards(Http2RmqAuthGuard)
-  async deleteTeam(@Body() body: DeleteOrgDto) {
+  async deleteOrg(@Body() body: DeleteOrgDto) {
     // return this.org.deleteOrg(body);
   }
 }

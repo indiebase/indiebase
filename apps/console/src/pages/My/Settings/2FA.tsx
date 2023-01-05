@@ -39,7 +39,7 @@ const SetAuthnApp: FC<SetAuthnAppProps> = function (props) {
 
   const verify = useCallback(async () => {
     if (code.length < 6) {
-      setErrorMsg('Enter complete code please');
+      setErrorMsg('Enter complete code please.');
       return;
     } else {
       setErrorMsg(null);

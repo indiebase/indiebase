@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -18,6 +19,10 @@ export class UserService {
     private readonly logger: Logger,
     private readonly casbin: CasbinService,
   ) {}
+
+  public get repo() {
+    return this.userRepo;
+  }
 
   private async createUser(
     body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'enabled2FA'>,
@@ -66,10 +71,13 @@ export class UserService {
       user = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
+        if (err?.code === 'ER_DUP_ENTRY') {
+          throw new ConflictException(`User [${body.username}] existed`);
+        }
+
         throw new InternalServerErrorException({
           code: ResultCode.ERROR,
-          message:
-            err.code === 'ER_DUP_ENTRY' ? 'User existed' : 'Fail to register',
+          message: 'Fail to register',
         });
       });
     } else {
@@ -85,6 +93,7 @@ export class UserService {
     return user;
   }
 
+  // Fix update doesn't trigger @BeforeInsert() @BeforeUpdate()
   public async updateUser(
     cond: { id?: number; username?: string },
     data: Partial<UserEntity>,

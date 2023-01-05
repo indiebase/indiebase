@@ -21,6 +21,7 @@ import { MsgModule } from './msg/msg.module';
 import { CasbinModule } from '@letscollab-nest/accesscontrol';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { CollabModule } from './collab/collab.module';
 import {
   AcceptLanguageResolver,
   CookieResolver,
@@ -30,13 +31,14 @@ import {
 } from 'nestjs-i18n';
 import { S3Module } from '@letscollab-nest/aws-s3';
 import { Endpoint } from 'aws-sdk';
+import { OctokitModule } from '@letscollab-nest/octokit';
 
 @Module({
   imports: [
     AuthModule,
     UserModule,
     MsgModule,
-    // CollabModule,
+    CollabModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
@@ -169,6 +171,17 @@ import { Endpoint } from 'aws-sdk';
             signatureVersion: 'v4',
             s3ForcePathStyle: true,
             ssldisabled: true,
+          },
+        };
+      },
+    }),
+    OctokitModule.forRootAsync({
+      async useFactory() {
+        return {
+          optionsFactory(req) {
+            return {
+              auth: req.session?.user?.githubAccessToken,
+            };
           },
         };
       },

@@ -25,4 +25,10 @@ export enum UserResource {
   list = 'user_list',
 }
 
-export type UnionResource = RoleResource | UserResource;
+export enum OrgResource {
+  list = 'org_list',
+  memberList = 'org_member_list',
+  projectList = 'org_project_list',
+}
+
+export type UnionResource = RoleResource | UserResource | OrgResource;

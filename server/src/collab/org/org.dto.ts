@@ -3,7 +3,13 @@ import {
   PaginationResSchemaDto,
 } from '@letscollab-nest/helper';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsNumber,
+  IsUrl,
+} from 'class-validator';
 
 export class CreateOrgDto {
   @ApiPropertyOptional({
@@ -14,11 +20,19 @@ export class CreateOrgDto {
   name: string;
 
   @ApiPropertyOptional({
-    description: 'Coding platform org url',
-    default: 'deskbtm',
+    description: 'Github organization name',
+    default: 'deskbtm-letscollab',
   })
   @IsString()
-  codingOrgUrl: string;
+  githubOrgName: string;
+
+  @ApiProperty({
+    description:
+      'Organization domain is the unique id for letscollab. if the package name is not specific, the project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.letscollab.xxxx.',
+    default: 'letscollab.deskbtm.com',
+  })
+  @IsString()
+  domain: string;
 
   @ApiProperty({
     default: 'deskbtm@outlook.com',
@@ -31,6 +45,19 @@ export class CreateOrgDto {
   )
   @IsOptional()
   contactEmail?: string;
+
+  @ApiProperty({
+    description: 'Organization homepage',
+    default: 'https://letscollab.deskbtm.com',
+  })
+  @IsUrl(
+    {},
+    {
+      message: 'Illegal http Url',
+    },
+  )
+  @IsOptional()
+  homepage?: string;
 
   @ApiProperty({
     default: 'xxxxxx',

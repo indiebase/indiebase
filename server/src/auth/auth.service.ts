@@ -12,12 +12,14 @@ import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 import { getSubdomain, ResultCode } from '@letscollab-nest/helper';
 import { FastifyRequest } from 'fastify';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from '../user/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly configService: ConfigService,
     private readonly logger: Logger,
   ) {}
 
@@ -112,6 +114,23 @@ export class AuthService {
 
   private createRecoveryCode(length = 8) {
     return Array.from({ length }).map(() => authenticator.generateSecret(16));
+  }
+
+  public async getRecoveryCodes(username: string) {
+    const user = await this.userService.getUser({ username });
+    return user.optRecoveryCode;
+  }
+
+  public async removeOpt(username: string) {
+    return this.userService.repo
+      .update(
+        { username },
+        { optRecoveryCode: null, optSecret: null, enabled2FA: false },
+      )
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException();
+      });
   }
 
   public async optVerify(username: string, secret: string, token: string) {
