@@ -181,7 +181,9 @@ services:
       - 18099:8081
       - 18082:18080
       - 18878:9325
-    command: '-v=4 volume -mserver=seaweed-master:9333 -ip=seaweed-volume -ip.bind=0.0.0.0 -port=8080 -metricsPort=9325'
+    command: '-v=4 volume -mserver=seaweed-master:9333 -ip=seaweed-volume -ip.bind=0.0.0.0 -port=8080 -metricsPort=9325 -dir=/data'
+    volumes:
+      - seaweed_data:/data
     depends_on:
       - seaweed-master
 
@@ -203,7 +205,9 @@ services:
     ports:
       - 18334:8333
       - 18835:9327
-    command: '-v=4 s3 -filer=seaweed-filer:8888 -ip.bind=0.0.0.0 -metricsPort=9327'
+    command: '-v=4 s3 -config="/etc/seaweedfs/s3-dev.json" -filer=seaweed-filer:8888 -ip.bind=0.0.0.0 -metricsPort=9327'
+    volumes:
+      - ./config/seaweedfs/s3-dev.json:/etc/seaweedfs/s3-dev.json
     depends_on:
       - seaweed-master
       - seaweed-volume
@@ -233,6 +237,7 @@ volumes:
   grafana_data:
   portainer_data:
   prometheus_data:
+  seaweed_data:
   loki_data:
   redis_data:
   apisix_logs:

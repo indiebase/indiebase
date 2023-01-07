@@ -1,6 +1,6 @@
-import { FC, Suspense } from 'react';
+import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Box, Grid, MediaQuery, Title } from '@mantine/core';
+import { Box, Grid, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 const My = function () {

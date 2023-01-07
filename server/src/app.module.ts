@@ -30,8 +30,8 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import { S3Module } from '@letscollab-nest/aws-s3';
-import { Endpoint } from 'aws-sdk';
 import { OctokitModule } from '@letscollab-nest/octokit';
+import { FileModule } from './file';
 
 @Module({
   imports: [
@@ -39,6 +39,7 @@ import { OctokitModule } from '@letscollab-nest/octokit';
     UserModule,
     MsgModule,
     CollabModule,
+    FileModule,
     ConfigModule.forRoot({
       envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
       isGlobal: true,
@@ -163,14 +164,15 @@ import { OctokitModule } from '@letscollab-nest/octokit';
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const { s3 } = await config.getConfig('common.json');
+        console.log(s3);
         return {
           config: {
-            accessKeyId: s3.accessKey,
-            secretAccessKey: s3.secretKey,
-            endpoint: new Endpoint(s3.endpoint),
-            signatureVersion: 'v4',
-            s3ForcePathStyle: true,
-            ssldisabled: true,
+            region: s3.region,
+            endpoint: { url: new URL(s3.endpoint) },
+            credentials: {
+              accessKeyId: s3.accessKey,
+              secretAccessKey: s3.secretKey,
+            },
           },
         };
       },

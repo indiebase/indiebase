@@ -1,3 +1,4 @@
+import { FileModule } from './../file/file.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
 import { INestApplication } from '@nestjs/common';
@@ -21,6 +22,16 @@ export const setupApiDoc = (app: INestApplication) =>
       const userOptions = new DocumentBuilder()
         .setTitle('User Api')
         .setDescription('User REST API')
+        .setVersion('1.0.0')
+        .addCookieAuth('SID', {
+          type: 'apiKey',
+          in: 'cookie',
+        })
+        .build();
+
+      const commonOptions = new DocumentBuilder()
+        .setTitle('COmmon Api')
+        .setDescription('Common REST API')
         .setVersion('1.0.0')
         .addCookieAuth('SID', {
           type: 'apiKey',
@@ -54,6 +65,10 @@ export const setupApiDoc = (app: INestApplication) =>
         include: [UserModule],
       });
 
+      const commonDoc = SwaggerModule.createDocument(app, commonOptions, {
+        include: [FileModule],
+      });
+
       SwaggerModule.setup('openapi/auth', app, authDoc, {
         swaggerOptions: {
           persistAuthorization: true,
@@ -73,6 +88,12 @@ export const setupApiDoc = (app: INestApplication) =>
       });
 
       SwaggerModule.setup('openapi/msg', app, msgDoc, {
+        swaggerOptions: {
+          persistAuthorization: true,
+        },
+      });
+
+      SwaggerModule.setup('openapi/common', app, commonDoc, {
         swaggerOptions: {
           persistAuthorization: true,
         },

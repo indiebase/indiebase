@@ -1,8 +1,14 @@
-import { FC, Suspense } from 'react';
+import { FC, Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { projectsQuery } from '@letscollab-community/console-utils';
-import { Box, Grid, MediaQuery } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
+import {
+  Box,
+  Button,
+  FileButton,
+  Grid,
+  Group,
+  MediaQuery,
+  Text,
+} from '@mantine/core';
 import { CoreProjects } from '../../components';
 
 const UserActivity: FC<any> = function () {
@@ -10,25 +16,32 @@ const UserActivity: FC<any> = function () {
 };
 
 const My = function () {
-  const { data } = useQuery(['own-projects'], projectsQuery, {
-    suspense: true,
-  });
+  // const { data } = useQuery(['own-projects'], projectsQuery, {
+  //   suspense: true,
+  // });
+
+  const [file, setFile] = useState<File | null>(null);
 
   return (
     <>
       <Grid mt={30} grow style={{ flexWrap: 'nowrap' }}>
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
           <Grid.Col span={9}>
-            <UserActivity />
+            <Group position="center">
+              <FileButton onChange={setFile} accept="image/png,image/jpeg">
+                {(props) => <Button {...props}>Upload image</Button>}
+              </FileButton>
+            </Group>
+            {file && (
+              <Text size="sm" align="center" mt="sm">
+                Picked file: {file.name}
+              </Text>
+            )}
+            {/* <UserActivity /> */}
           </Grid.Col>
         </MediaQuery>
         <Grid.Col span={3}>
-          <CoreProjects
-            list={data.d}
-            col={{ sm: 12 }}
-            hiddenCover
-            hiddenMember
-          />
+          <CoreProjects list={[]} col={{ sm: 12 }} hiddenCover hiddenMember />
           {/* <ProjectFlow pins={data.d} list={data.d} /> */}
         </Grid.Col>
       </Grid>
