@@ -102,7 +102,7 @@ export class UserEntity {
     comment: 'Account status',
     default: AccountStatus.active,
   })
-  status?: AccountStatus;
+  status: AccountStatus;
 
   @CreateDateColumn({
     type: 'timestamp',

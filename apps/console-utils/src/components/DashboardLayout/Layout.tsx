@@ -12,6 +12,8 @@ export interface DashboardLayoutProps extends NavHeaderProps {
 export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
   const theme = useMantineTheme();
 
+  console.log('------------------------------------------------------');
+
   return (
     <AppShell
       fixed
@@ -39,11 +41,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
           fallbackRender={() => <div style={{ height: 65 }} />}
         >
           <Suspense fallback={<div style={{ height: 65 }} />}>
-            <Header
-              {...props}
-              // navbarOpened={opened}
-              // onNavbarOpen={toggle}
-            />
+            <Header {...props} />
           </Suspense>
         </ErrorBoundary>
       }

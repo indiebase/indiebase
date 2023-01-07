@@ -32,9 +32,7 @@ export class BaseResSchemaDto {
   message?: string | string[];
 }
 
-export class HttpResSchemaDto extends BaseResSchemaDto {}
-
-export class PaginationResSchemaDto extends HttpResSchemaDto {
+export class PaginationResSchemaDto extends BaseResSchemaDto {
   @ApiProperty({
     description: 'Total items',
   })

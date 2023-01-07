@@ -21,11 +21,11 @@ import {
   CreateOrgDto,
   DeleteOrgDto,
   QueryOrgDto,
-  QueryOrgResDto,
   UpdateOrgDto,
 } from './org.dto';
 import {
   AccessGuard,
+  BaseResSchemaDto,
   MyInfo,
   ProtectGuard,
   ResultCode,
@@ -45,9 +45,7 @@ export class OrgController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @ApiOkResponse({
-    type: QueryOrgResDto,
-  })
+  @ApiOkResponse({})
   async queryOrgs(@Query() query: QueryOrgDto, @Req() req: FastifyRequest) {
     return;
   }
@@ -82,6 +80,9 @@ export class OrgController {
   @UseAccess({
     action: AccessAction.createAny,
     resource: OrgResource.list,
+  })
+  @ApiOkResponse({
+    type: BaseResSchemaDto,
   })
   async createOrg(@Body() body: CreateOrgDto, @MyInfo('id') id: number) {
     await this.orgService.createOrg(body, id);

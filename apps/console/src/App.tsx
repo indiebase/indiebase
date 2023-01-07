@@ -81,16 +81,16 @@ function App() {
             />
             <Provider initialValues={[[queryClientAtom, queryClient]] as const}>
               <DebugAtoms />
-              <InitializeUser>
-                <AuthzProvider
-                  mode="manual"
-                  possess={{ read: ['data1', 'data2'] }}
-                >
-                  <Can i="read" the="data1">
-                    <RouterProvider router={router} />
-                  </Can>
-                </AuthzProvider>
-              </InitializeUser>
+              {/* <InitializeUser> */}
+              <AuthzProvider
+                mode="manual"
+                possess={{ read: ['data1', 'data2'] }}
+              >
+                <Can i="read" the="data1">
+                  <RouterProvider router={router} />
+                </Can>
+              </AuthzProvider>
+              {/* </InitializeUser> */}
             </Provider>
           </QueryClientProvider>
         </NotificationsProvider>

@@ -23,7 +23,7 @@ import {
 } from '@tabler/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { userProfileAtom, navbarSwitchAtom } from '../../atoms';
+import { navbarSwitchAtom, userProfileQueryAtom } from '../../atoms';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -58,9 +58,10 @@ const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
   const navigate = useNavigate();
-  const [profile] = useAtom(userProfileAtom);
+  const [data] = useAtom(userProfileQueryAtom[0]);
   const [opened, toggle] = useAtom(navbarSwitchAtom);
   const { org: orgParam } = useParams();
+  const profile = data.d;
 
   const userItem = {
     logo: profile.avatar,
@@ -68,13 +69,14 @@ export const Header: FC<NavHeaderProps> = function (props) {
     value: profile.username,
     path: 'users/' + profile.username,
   };
-  const orgs = profile.orgs
+  const orgs = profile.organizations
     ? [
         userItem,
-        ...profile.orgs.map((o) => ({
-          ...o,
-          value: o.value,
-          path: 'orgs/' + o.value,
+        ...profile.organizations.map((o) => ({
+          logo: '',
+          value: o.name,
+          label: o.name,
+          path: 'orgs/' + o.name,
         })),
       ]
     : [];
@@ -124,6 +126,14 @@ export const Header: FC<NavHeaderProps> = function (props) {
               </Avatar>
               <div style={{ width: 150 }}>
                 <Select
+                  styles={() => ({
+                    dropdown: {
+                      minWidth: 220,
+                      marginLeft: 35,
+                      // position: 'relative',
+                      // left: 20,
+                    },
+                  })}
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}

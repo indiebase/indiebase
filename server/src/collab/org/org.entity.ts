@@ -39,6 +39,7 @@ export class OrgEntity {
 
   @ApiProperty({
     enum: OrgStatus,
+    description: 'Organization status',
   })
   @Column('simple-enum', {
     name: 'status',
@@ -46,7 +47,7 @@ export class OrgEntity {
     enum: OrgStatus,
     default: OrgStatus.active,
   })
-  status?: OrgStatus;
+  status: OrgStatus;
 
   @ApiProperty()
   @Column({ nullable: true })
@@ -61,27 +62,32 @@ export class OrgEntity {
     type: 'timestamp',
     name: 'create_time',
   })
-  createTime?: Date;
+  createTime: Date;
 
   @ApiProperty()
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'update_time',
   })
-  updateTime?: Date;
+  updateTime: Date;
 
-  @ApiProperty()
-  @Column('int', { name: 'creator_id', unique: true, comment: 'User id' })
+  @ApiProperty({ description: 'Creator id' })
+  @Column('int', { name: 'creator_id', comment: 'User id' })
   creatorId: number;
 
   /**
    * The same as creator id at first time.
    */
-  @ApiProperty()
-  @Column('int', { name: 'owner_id', unique: true, comment: 'Owner id' })
+  @ApiProperty({
+    description: 'Organization owner id, the same as creator id at first time.',
+  })
+  @Column('int', { name: 'owner_id', comment: 'Owner id' })
   ownerId: number;
 
   @ManyToMany(() => UserEntity, (u) => u.organizations, { cascade: true })
-  @JoinTable()
-  members?: UserEntity[];
+  @JoinTable({
+    joinColumns: [{ name: 'organization_id' }],
+    inverseJoinColumns: [{ name: 'user_id' }],
+  })
+  members: UserEntity[];
 }

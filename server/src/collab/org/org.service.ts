@@ -17,16 +17,16 @@ import { ResultCode } from '@letscollab-nest/helper';
 import { OrgEntity } from './org.entity';
 import { Repository } from 'typeorm';
 import { OctokitService } from '@letscollab-nest/octokit';
+import { UserService } from '../../user/user.service';
 
 @Injectable()
 export class OrgService {
   constructor(
     @InjectRepository(OrgEntity)
     private readonly orgRepo: Repository<OrgEntity>,
-
     private readonly logger: Logger,
-
     private readonly octokit: OctokitService,
+    private readonly userService: UserService,
   ) {}
 
   async queryOrg(body: QueryOrgDto) {
@@ -77,6 +77,14 @@ export class OrgService {
     };
   }
 
+  async getOwnOrgs(id: number) {
+    // this.orgRepo.findAndCount({ where: { ownerId: id }, relations: [] });
+
+    return {
+      code: ResultCode.SUCCESS,
+    };
+  }
+
   async createOrg(body: CreateOrgDto, id: number) {
     const { name, description, contactEmail, domain, homepage, githubOrgName } =
       body;
@@ -88,7 +96,16 @@ export class OrgService {
       githubOrgName,
       domain,
       homepage,
+      ownerId: id,
+      creatorId: id,
     });
+
+    const user = await this.userService.repo.findOne({
+      where: { id },
+      relations: ['organizations'],
+    });
+
+    orgEntity.members = [user];
 
     await this.orgRepo.save(orgEntity).catch((err) => {
       this.logger.error(err);
@@ -97,7 +114,7 @@ export class OrgService {
       }
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
-        message: 'Create',
+        message: 'Create organization failed',
       });
     });
   }
@@ -132,3 +149,5 @@ export class OrgService {
     return { code: ResultCode.SUCCESS, message: '删除成功' };
   }
 }
+
+// INSERT INTO `organization`(`id`, `name`, `github_org_name`, `domain`, `contact_email`, `status`, `description`, `homepage`, `create_time`, `update_time`, `creator_id`, `owner_id`) VALUES (DEFAULT, 'deskbtm', 'deskbtm', 'deskbtm.com', 'deskbtm@outlook.com', DEFAULT, 'xxxxxx', 'https://letscollab.deskbtm.com', DEFAULT, DEFAULT, 4, 4)

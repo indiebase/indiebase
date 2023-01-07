@@ -3,7 +3,7 @@ import { IconSettings, IconFileCode } from '@tabler/icons';
 import { useParams } from 'react-router-dom';
 import {
   SidebarTileNode,
-  userProfileAtom,
+  userProfileQueryAtom,
 } from '@letscollab-community/console-utils';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -11,8 +11,9 @@ import { useTranslation } from 'react-i18next';
 export const useMenu = () => {
   const params = useParams();
   const { org, project, user } = params;
-  const [profile] = useAtom(userProfileAtom);
+  const [data] = useAtom(userProfileQueryAtom[0]);
   const { t, i18n } = useTranslation(['common', 'setting']);
+  const profile = data.d;
 
   // if not match, menu is immutable.
   const deps = !!params['*'] ? [] : [org, project, user];

@@ -13,7 +13,7 @@ import {
   Divider,
 } from '@mantine/core';
 import { ProjectFlow } from '../../components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IconLink, IconMail } from '@tabler/icons';
 import { useQuery } from '@tanstack/react-query';
 
@@ -70,7 +70,7 @@ const Organization = function () {
     suspense: true,
   });
 
-  const nav = useNavigate();
+  console.log(data, '----------------');
 
   return (
     <>

@@ -4,21 +4,26 @@ import {
   Controller,
   Get,
   Param,
-  Patch,
   Post,
   Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiCookieAuth, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiCookieAuth,
+  ApiOperation,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 import {
   ResultCode,
   MyInfo,
   AccessGuard,
   PackageName,
   DevApiHeader,
+  ProtectGuard,
 } from '@letscollab-nest/helper';
-import { QueryUserDto, UpdateUserProfileDto } from './user.dto';
+import { OwnOrgsResDto, QueryUserDto, UpdateUserProfileDto } from './user.dto';
 import { UserResource, UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
@@ -46,21 +51,7 @@ export class UserController {
     };
   }
 
-  @Get('profile')
-  @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
-  @ApiOperation({
-    summary: 'Get my profile',
-  })
-  async getMyProfile(@MyInfo('id') id: number) {
-    const user = await this.userService.getUser({ id });
-    return {
-      code: ResultCode.SUCCESS,
-      d: user,
-    };
-  }
-
-  @Get('profile/:username')
+  @Get('list/:username')
   @ApiCookieAuth('SID')
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiOperation({
@@ -75,6 +66,38 @@ export class UserController {
     return {
       code: ResultCode.SUCCESS,
       d: user,
+    };
+  }
+
+  @Get('profile')
+  @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: 'Get my profile',
+  })
+  async getMyProfile(@MyInfo('id') id: number) {
+    const user = await this.userService.getProfile(id);
+    return {
+      code: ResultCode.SUCCESS,
+      d: user,
+    };
+  }
+
+  @Get('orgs')
+  @ApiCookieAuth('SID')
+  @ApiOperation({
+    summary: 'Gets the owned organization',
+  })
+  @ApiOkResponse({
+    type: OwnOrgsResDto,
+  })
+  @UseGuards(ProtectGuard, AccessGuard)
+  async queryOwnOrgs(@MyInfo('id') id: number) {
+    const d = await this.userService.getOwnOrgs(id);
+
+    return {
+      code: ResultCode.SUCCESS,
+      d,
     };
   }
 

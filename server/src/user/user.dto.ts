@@ -1,6 +1,7 @@
-import { HttpResSchemaDto, PaginationReqDto } from '@letscollab-nest/helper';
+import { BaseResSchemaDto, PaginationReqDto } from '@letscollab-nest/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsOptional, MinLength } from 'class-validator';
+import { OrgEntity } from '../collab/org/org.entity';
 import { UserEntity } from './user.entity';
 
 export class UpdateUserProfileDto {
@@ -32,13 +33,20 @@ export class QueryUserDto extends PaginationReqDto {
 }
 
 export class QueryPossessionDto {
-  @ApiProperty({ default: 'Nawbc' })
+  @ApiProperty({ default: 'Nawbc', required: true })
   username: string;
 }
 
-export class UserResponseDto extends HttpResSchemaDto {
+export class UserResponseDto extends BaseResSchemaDto {
   @ApiPropertyOptional({
     type: () => UserEntity,
   })
   d?: UserEntity;
+}
+
+export class OwnOrgsResDto extends BaseResSchemaDto {
+  @ApiProperty({
+    type: [OrgEntity],
+  })
+  d?: any;
 }

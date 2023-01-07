@@ -128,6 +128,20 @@ export class UserService {
     };
   }
 
+  public async getOwnOrgs(id: number) {
+    const user = await this.userRepo
+      .findOne({
+        where: { id },
+        relations: ['organizations'],
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException();
+      });
+
+    return user.organizations;
+  }
+
   /**
    *
    *
@@ -154,5 +168,27 @@ export class UserService {
         message: err.message,
       });
     });
+  }
+
+  /**
+   *
+   *
+   * @param cond Find condition
+   * @returns
+   */
+  public async getProfile(id) {
+    return this.userRepo
+      .findOne({
+        where: { id },
+        relations: ['organizations'],
+      })
+      .catch((err) => {
+        this.logger.error(err.message, err.stack);
+
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: err.message,
+        });
+      });
   }
 }

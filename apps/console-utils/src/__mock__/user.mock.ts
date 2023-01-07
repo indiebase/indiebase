@@ -25,7 +25,7 @@ mock.onGet('/v1/user/profile').reply<BaseResSchema<UserProfile>>(200, {
   message: 'Success',
   d: {
     ...FakeSingleUserProfile(),
-    orgs: Array.from({ length: 5 }).map((_, index) => ({
+    organizations: Array.from({ length: 5 }).map((_, index) => ({
       value: 'organization' + index,
       label: 'organization' + index,
       logo: faker.image.avatar(),

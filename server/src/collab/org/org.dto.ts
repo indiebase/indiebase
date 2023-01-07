@@ -12,14 +12,14 @@ import {
 } from 'class-validator';
 
 export class CreateOrgDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Org name',
-    default: 'deskbtm',
+    default: 'deskbtm-letscollab',
   })
   @IsString()
   name: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Github organization name',
     default: 'deskbtm-letscollab',
   })
@@ -34,7 +34,7 @@ export class CreateOrgDto {
   @IsString()
   domain: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -46,7 +46,7 @@ export class CreateOrgDto {
   @IsOptional()
   contactEmail?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Organization homepage',
     default: 'https://letscollab.deskbtm.com',
   })
@@ -59,7 +59,7 @@ export class CreateOrgDto {
   @IsOptional()
   homepage?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     default: 'xxxxxx',
   })
   @IsOptional()
@@ -71,7 +71,7 @@ export class UpdateOrgDto {
   @IsNumber()
   id: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Team name',
     default: 'letscollab',
   })
@@ -89,16 +89,15 @@ export class UpdateOrgDto {
       message: 'Email incorrect',
     },
   )
-  @IsOptional()
-  contactEmail?: string;
+  contactEmail: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     default: 'xxxxxx',
   })
   @IsOptional()
   description: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Organization domain',
     default: 'letscollab.deskbtm.com',
   })
@@ -118,18 +117,3 @@ export class QueryOrgDto extends PaginationReqDto {
   @IsOptional()
   name?: string;
 }
-
-export class QueryOrgResDto extends PaginationResSchemaDto {
-  @ApiPropertyOptional({
-    // type: () => [OrgEntity],
-  })
-  d?: [];
-}
-
-// export class QueryOrgResDto extends PaginationReqDto {
-//   @ApiPropertyOptional({
-//     nullable: true,
-//   })
-//   @IsOptional()
-//   name?: string;
-// }

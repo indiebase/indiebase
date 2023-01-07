@@ -14,9 +14,9 @@ export interface UserProfile {
   email: string;
   bio?: string;
   nickname?: string;
-  status?: AccountStatus;
+  status: AccountStatus;
   createTime: Date;
   updateTime: Date;
-  orgs?: any[];
+  organizations?: any[];
   enabled2FA?: boolean;
 }
