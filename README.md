@@ -8,13 +8,14 @@ https://letscollab.deskbtm.com
 
 ### 1. 什么是 letscollab？
 
-letscollab 类似于 OpenCollective + 软件管理. 其提供以下几点主要功能：
+letscollab 全称为let's collaborate, 分为Community和Pro版本。
 
-- letscollab 用于管理私有独立项目的财政与合作者。
-- 提供针对独立项目的基本业务管理，如用户，内购支付等一些常见应用业务。
-- letscollab 初始目的是作为管理 Nawb 的辅助产品。
+letscollab community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者,
+而letscollab pro则提供针对独立项目的基本业务管理，如用户，内购支付等一些常见应用业务。
 
-### 2. letscollab 会上 web3.0 吗？
+letscollab 初始目的是作为deksbtm的辅助产品, 用于管理Nawb, Abyss等。
+
+### 2. letscollab 加入 web3.0 吗？
 
 letscollab 将会是一款中心化应用，但其支付等功能或将支持web3.0。
 
