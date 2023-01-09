@@ -11,7 +11,7 @@ https://letscollab.deskbtm.com
 letscollab 类似于 OpenCollective + 软件管理. 其提供以下几点主要功能：
 
 - letscollab 用于管理私有独立项目的财政与合作者。
-- 提供针对独立项目的基本业务管理，如用户，内购支付等。
+- 提供针对独立项目的基本业务管理，如用户，内购支付等一些常见应用业务。
 - letscollab 初始目的是作为管理 Nawb 的辅助产品。
 
 ### 2. letscollab 会上 web3.0 吗？
