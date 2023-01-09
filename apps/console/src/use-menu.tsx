@@ -100,6 +100,30 @@ export const useMenu = () => {
             to: `${prefix}/settings/profile`,
           },
           {
+            label: t('Organizations', { ns: 'setting' }),
+            to: `${prefix}/settings/organization`,
+          },
+          {
+            label: t('Two-factor authn', { ns: 'setting' }),
+            to: `${prefix}/settings/2fa`,
+          },
+        ],
+      },
+      {
+        label: t('Organizations', { ns: 'setting' }),
+        icon: <IconSettings size={16} />,
+        color: 'violet',
+        type: 'node',
+        children: [
+          {
+            label: t('Profile', { ns: 'setting' }),
+            to: `${prefix}/settings/profile`,
+          },
+          {
+            label: t('Organizations', { ns: 'setting' }),
+            to: `${prefix}/settings/organization`,
+          },
+          {
             label: t('Two-factor authn', { ns: 'setting' }),
             to: `${prefix}/settings/2fa`,
           },
