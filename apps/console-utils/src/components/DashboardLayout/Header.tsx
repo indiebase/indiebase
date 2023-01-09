@@ -130,8 +130,6 @@ export const Header: FC<NavHeaderProps> = function (props) {
                     dropdown: {
                       minWidth: 220,
                       marginLeft: 35,
-                      // position: 'relative',
-                      // left: 20,
                     },
                   })}
                   radius="lg"

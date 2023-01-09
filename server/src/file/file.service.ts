@@ -6,17 +6,13 @@ import {
   S3,
 } from '@letscollab-nest/aws-s3';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { nanoid } from 'nanoid';
 import * as path from 'path';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class FileService {
-  constructor(
-    @InjectS3() private readonly s3: S3,
-    private readonly configSrv: ConfigService,
-  ) {}
+  constructor(@InjectS3() private readonly s3: S3) {}
 
   public async save2Bucket(files: MemoryStorageFile[]) {
     const d = [];
@@ -24,6 +20,7 @@ export class FileService {
     for (const file of files) {
       const p = path.parse(file.filename);
       const Key = nanoid(32) + p.ext;
+
       const putCommand = new PutObjectCommand({
         Key,
         Body: file.buffer,
@@ -39,6 +36,6 @@ export class FileService {
       d.push(url);
     }
 
-    return d;
+    return d.length > 1 ? d : d?.[0];
   }
 }

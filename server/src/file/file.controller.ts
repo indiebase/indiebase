@@ -29,13 +29,13 @@ export class FileController {
   @ApiBody({ type: FilesUploadDto })
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(@UploadedFiles() files: MemoryStorageFile[]) {
-    const data = await this.fileService.save2Bucket(files).catch((err) => {
+    const d = await this.fileService.save2Bucket(files).catch((err) => {
       console.error(err);
       throw new InternalServerErrorException();
     });
     return {
       code: ResultCode.SUCCESS,
-      // data,
+      d,
     };
   }
 
