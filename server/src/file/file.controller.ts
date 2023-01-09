@@ -3,6 +3,7 @@ import {
   Delete,
   InternalServerErrorException,
   Post,
+  Put,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileService } from './file.service';
@@ -23,7 +24,7 @@ import { FilesUploadDto } from './file.dto';
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 
-  @Post('upload')
+  @Put('upload')
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FilesUploadDto })
   @UseInterceptors(FilesInterceptor('files'))

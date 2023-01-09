@@ -22,6 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-sdk/s3-request-presigner": "^3.245.0",
     "@fastify/cookie": "8.1.0",
     "@fastify/helmet": "10.0.0",
     "@fastify/multipart": "^7.3.0",

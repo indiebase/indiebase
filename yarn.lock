@@ -1532,6 +1532,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/s3-request-presigner@npm:^3.245.0":
+  version: 3.245.0
+  resolution: "@aws-sdk/s3-request-presigner@npm:3.245.0"
+  dependencies:
+    "@aws-sdk/middleware-endpoint": 3.226.0
+    "@aws-sdk/middleware-sdk-s3": 3.231.0
+    "@aws-sdk/protocol-http": 3.226.0
+    "@aws-sdk/signature-v4-multi-region": 3.226.0
+    "@aws-sdk/smithy-client": 3.234.0
+    "@aws-sdk/types": 3.226.0
+    "@aws-sdk/util-create-request": 3.234.0
+    "@aws-sdk/util-format-url": 3.226.0
+    tslib: ^2.3.1
+  checksum: 11d0c98a5f52abc4c22533d589e4648c4111cc1cd4a3d80ae6e0462cc1b839087019a83d4de095dfb780c690debcedd23a949996fe8db039fe3cff804e01b715
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/service-error-classification@npm:3.229.0":
   version: 3.229.0
   resolution: "@aws-sdk/service-error-classification@npm:3.229.0"
@@ -1681,6 +1698,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/util-create-request@npm:3.234.0":
+  version: 3.234.0
+  resolution: "@aws-sdk/util-create-request@npm:3.234.0"
+  dependencies:
+    "@aws-sdk/middleware-stack": 3.226.0
+    "@aws-sdk/smithy-client": 3.234.0
+    "@aws-sdk/types": 3.226.0
+    tslib: ^2.3.1
+  checksum: c647a09a072237e6a708afcbdbff7d035c676215ff973448a406c8d72be1816516f581964f17d877bf8afb5ffeaa8a0c54acc8805ed8ba9664d698a1dd2ce113
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/util-defaults-mode-browser@npm:3.234.0":
   version: 3.234.0
   resolution: "@aws-sdk/util-defaults-mode-browser@npm:3.234.0"
@@ -1714,6 +1743,17 @@ __metadata:
     "@aws-sdk/types": 3.226.0
     tslib: ^2.3.1
   checksum: 22783fb178e8901385b20b0d19b944ad41297cc19f0561ac1722e86757ca6910fd3766626a0493372f718a0726bef920a5b39cc41fdceb1012f14e833541041b
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/util-format-url@npm:3.226.0":
+  version: 3.226.0
+  resolution: "@aws-sdk/util-format-url@npm:3.226.0"
+  dependencies:
+    "@aws-sdk/querystring-builder": 3.226.0
+    "@aws-sdk/types": 3.226.0
+    tslib: ^2.3.1
+  checksum: 5997b0536c86c07948edd8291008a0818b0ca12d20f8c60e053793d420155981b2ddb4b2bc10cc5f8546a0223e83c7619947035b0ade20cc981b5900b7db0e73
   languageName: node
   linkType: hard
 
@@ -5322,6 +5362,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab-community/server@workspace:server"
   dependencies:
+    "@aws-sdk/s3-request-presigner": ^3.245.0
     "@fastify/cookie": 8.1.0
     "@fastify/helmet": 10.0.0
     "@fastify/multipart": ^7.3.0

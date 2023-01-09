@@ -166,63 +166,29 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf
     logging: *loki-logging
 
-  seaweed-master:
+  seaweed:
     image: chrislusf/seaweedfs:3.37
     ports:
+      # master
       - 19332:9333
       - 19334:19333
       - 19335:9324
-    command: 'master -ip=seaweed-master -ip.bind=0.0.0.0 -metricsPort=9324'
-
-  seaweed-volume:
-    image: chrislusf/seaweedfs:3.37
-    ports:
+      # volume
       - 18079:8080
       - 18099:8081
       - 18082:18080
       - 18878:9325
-    command: '-v=4 volume -mserver=seaweed-master:9333 -ip=seaweed-volume -ip.bind=0.0.0.0 -port=8080 -metricsPort=9325 -dir=/data'
-    volumes:
-      - seaweed_data:/data
-    depends_on:
-      - seaweed-master
-
-  seaweed-filer:
-    image: chrislusf/seaweedfs:3.37
-    ports:
+      # filter
       - 18887:8888
       - 18890:18888
       - 18889:9326
-    command: '-v=4 filer -master=seaweed-master:9333 -ip=seaweed-filer -ip.bind=0.0.0.0 -metricsPort=9326'
-    tty: true
-    stdin_open: true
-    depends_on:
-      - seaweed-master
-      - seaweed-volume
-
-  seaweed-s3:
-    image: chrislusf/seaweedfs:3.37
-    ports:
+      # S3
       - 18334:8333
       - 18835:9327
-    command: '-v=4 s3 -config="/etc/seaweedfs/s3-dev.json" -filer=seaweed-filer:8888 -ip.bind=0.0.0.0 -metricsPort=9327'
+    command: -v=4 server -s3 -ip=seaweed  -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3-dev.json -metricsPort=9324
     volumes:
       - ./config/seaweedfs/s3-dev.json:/etc/seaweedfs/s3-dev.json
-    depends_on:
-      - seaweed-master
-      - seaweed-volume
-      - seaweed-filer
-
-  # seaweed-mount:
-  #   image: chrislusf/seaweedfs:3.37
-  #   privileged: true
-  #   cap_add:
-  #     - ALL
-  #   command: '-v=4 mount -filer=seaweed-filer:8888 -dirAutoCreate -dir=/mnt/seaweedfs -cacheCapacityMB=100 -concurrentWriters=128'
-  #   depends_on:
-  #     - seaweed-master
-  #     - seaweed-volume
-  #     - seaweed-filer
+      - seaweed_data:/data
 
 networks:
   agent_network:

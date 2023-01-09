@@ -164,11 +164,12 @@ import { FileModule } from './file';
       inject: [NacosConfigService],
       useFactory: async (config: NacosConfigService) => {
         const { s3 } = await config.getConfig('common.json');
-        console.log(s3);
+
         return {
           config: {
             region: s3.region,
             endpoint: { url: new URL(s3.endpoint) },
+            forcePathStyle: true,
             credentials: {
               accessKeyId: s3.accessKey,
               secretAccessKey: s3.secretKey,

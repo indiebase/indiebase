@@ -1,6 +1,12 @@
 {
   "identities": [
     {
+      "name": "anonymous",
+      "actions": [
+        "Read:letscollab"
+      ]
+    },
+    {
       "name": "dev_admin_user",
       "credentials": [
         {

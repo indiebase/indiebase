@@ -1,9 +1,15 @@
 import { MemoryStorageFile } from '@letscollab-nest/file-fastify';
-import { InjectS3, PutObjectCommand, S3 } from '@letscollab-nest/aws-s3';
+import {
+  GetObjectCommand,
+  InjectS3,
+  PutObjectCommand,
+  S3,
+} from '@letscollab-nest/aws-s3';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { nanoid } from 'nanoid';
 import * as path from 'path';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class FileService {
@@ -18,21 +24,21 @@ export class FileService {
     for (const file of files) {
       const p = path.parse(file.filename);
       const Key = nanoid(32) + p.ext;
-      const result = await this.s3.send(
-        new PutObjectCommand({
-          Key,
-          Body: file.buffer,
-          Bucket: 'letscollab',
-        }),
-      );
-      console.log(result);
-
-      const getObjectResult = await this.s3.getObject({
-        Bucket: 'community',
+      const putCommand = new PutObjectCommand({
         Key,
+        Body: file.buffer,
+        Bucket: 'letscollab',
       });
+      const getCommand = new GetObjectCommand({
+        Key,
+        Bucket: 'letscollab',
+      });
+      await this.s3.send(putCommand);
+      const url = await getSignedUrl(this.s3, getCommand);
 
-      console.log(getObjectResult);
+      d.push(url);
     }
+
+    return d;
   }
 }
