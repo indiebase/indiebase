@@ -13,7 +13,7 @@ letscollab 全称为let's collaborate, 分为Community和Pro版本。
 letscollab community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者,
 而letscollab pro则提供针对独立项目的基本业务管理，如用户，内购支付等一些常见应用业务。
 
-letscollab 初始目的是作为deksbtm的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [Abyss](https://github.com/deskbtm-abyss/abyss)等。
+letscollab 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [Abyss](https://github.com/deskbtm-abyss/abyss)等。
 
 ### 2. letscollab 加入 web3.0 吗？
 
