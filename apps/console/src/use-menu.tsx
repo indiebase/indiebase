@@ -20,11 +20,10 @@ export const useMenu = () => {
   deps.push(i18n.language);
 
   return useMemo<SidebarTileNode[]>(() => {
-    //TODO:
+    //TODO:optimize this stupid way.
 
     let prefix;
 
-    console.log(profile.username);
     if (org) {
       prefix = ['orgs', org, project].filter(Boolean).join('/');
     } else {
@@ -91,26 +90,6 @@ export const useMenu = () => {
     return [
       {
         label: t('Setting'),
-        icon: <IconSettings size={16} />,
-        color: 'violet',
-        type: 'node',
-        children: [
-          {
-            label: t('Profile', { ns: 'setting' }),
-            to: `${prefix}/settings/profile`,
-          },
-          {
-            label: t('Organizations', { ns: 'setting' }),
-            to: `${prefix}/settings/organization`,
-          },
-          {
-            label: t('Two-factor authn', { ns: 'setting' }),
-            to: `${prefix}/settings/2fa`,
-          },
-        ],
-      },
-      {
-        label: t('Organizations', { ns: 'setting' }),
         icon: <IconSettings size={16} />,
         color: 'violet',
         type: 'node',

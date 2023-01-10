@@ -75,7 +75,7 @@ export class OrgController {
     summary: 'Create a letscollab organization',
   })
   @Post()
-  @ApiCookieAuth('SID')
+@ApiCookieAuth('SID')
   @UseGuards(ProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,

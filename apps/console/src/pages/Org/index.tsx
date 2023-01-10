@@ -92,7 +92,7 @@ export const OrganizationPage = function () {
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
-        <Box m={20} mt={40}>
+        <Box m={20} mt={10}>
           <Organization />
         </Box>
       </Suspense>

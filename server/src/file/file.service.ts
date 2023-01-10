@@ -10,11 +10,18 @@ import { nanoid } from 'nanoid';
 import * as path from 'path';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
+interface SaveBucketOptions {
+  signedUrl?: boolean;
+}
+
 @Injectable()
 export class FileService {
   constructor(@InjectS3() private readonly s3: S3) {}
 
-  public async save2Bucket(files: MemoryStorageFile[]) {
+  public async save2Bucket(
+    files: MemoryStorageFile[],
+    options: SaveBucketOptions = { signedUrl: false },
+  ) {
     const d = [];
 
     for (const file of files) {
@@ -26,12 +33,18 @@ export class FileService {
         Body: file.buffer,
         Bucket: 'letscollab',
       });
-      const getCommand = new GetObjectCommand({
-        Key,
-        Bucket: 'letscollab',
-      });
       await this.s3.send(putCommand);
-      const url = await getSignedUrl(this.s3, getCommand);
+      let url;
+      if (options.signedUrl) {
+        const getCommand = new GetObjectCommand({
+          Key,
+          Bucket: 'letscollab',
+        });
+        url = await getSignedUrl(this.s3, getCommand);
+      } else {
+        const endpoint = await this.s3.config.endpoint();
+        url = `${endpoint.protocol}://${endpoint.hostname}:${endpoint.port}${endpoint.path}letscollab/${Key}`;
+      }
 
       d.push(url);
     }

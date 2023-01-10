@@ -8,7 +8,9 @@ export function save(filename: string, data: string) {
   document.body.removeChild(elem);
 }
 
-export const isEmail = (value) =>
+export const isEmailRegExp = (value) =>
   /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(
     value,
   );
+
+export const isNormalStringRegExp = (value) => /[^a-zA-Z0-9-_]/g.test(value);

@@ -9,7 +9,7 @@ export const fetchUserProfile = async (): Promise<
 };
 
 export const fetchMyOrgs = async (): Promise<BaseResSchema<UserProfile>> => {
-  const { data } = await req.get('/v1/user/profile');
+  const { data } = await req.get('/v1/user/orgs');
   return data ?? {};
 };
 

@@ -9,8 +9,8 @@ import {
   MantineThemeColors,
 } from '@mantine/core';
 import { useAtomValue } from 'jotai';
-import React, { FC } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import React, { FC, useEffect, useState } from 'react';
+import { useNavigate, NavLink, useParams, useLocation } from 'react-router-dom';
 import { navbarSwitchAtom } from '../../atoms';
 
 export interface SidebarTileNode {
@@ -63,9 +63,29 @@ function SidebarTile({ label, active, onClick }: MenuItemProps) {
   );
 }
 
+const useAccordionControl = function (menu: SidebarTileNode[]) {
+  const [value, setValue] = useState<string[] | null>([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    for (const item of menu) {
+      if (Array.isArray(item.children)) {
+        const r = item.children.find((e) => location.pathname.includes(e.to));
+        if (r) {
+          setValue([...value, item.label]);
+          break;
+        }
+      }
+    }
+  }, [menu]);
+
+  return [value, setValue];
+};
+
 export const Sidebar: FC<SidebarProps> = function (props) {
   const navigate = useNavigate();
   const opened = useAtomValue(navbarSwitchAtom);
+  const [value, setValue] = useAccordionControl(props.menu);
 
   return (
     <Navbar
@@ -83,17 +103,20 @@ export const Sidebar: FC<SidebarProps> = function (props) {
           chevronPosition="right"
           variant="contained"
           multiple
+          value={value as string[]}
+          onChange={setValue as any}
           styles={(theme) => ({
             item: { borderBottom: 0 },
             contentInner: { padding: 0 },
             itemTitle: { borderRadius: theme.radius.sm, overflow: 'hidden' },
           })}
         >
-          {props.menu.map((node, index1) => {
+          {props.menu.map((node) => {
             const children = node?.children;
+
             return (
               <Accordion.Item
-                key={index1}
+                key={node.label}
                 value={node.label}
                 style={{
                   border: 'none',
@@ -117,10 +140,9 @@ export const Sidebar: FC<SidebarProps> = function (props) {
                 </Accordion.Control>
                 {children ? (
                   <Accordion.Panel>
-                    {children?.map((sub, index2) => {
-                      const index = parseInt(`${index1}${index2}`);
+                    {children?.map((sub) => {
                       return (
-                        <NavLink key={index} to={sub.to}>
+                        <NavLink key={sub.label} to={sub.to}>
                           {({ isActive }) => (
                             <SidebarTile active={isActive} label={sub.label} />
                           )}

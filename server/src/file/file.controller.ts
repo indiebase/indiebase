@@ -2,13 +2,12 @@ import {
   Controller,
   Delete,
   InternalServerErrorException,
-  Post,
   Put,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileService } from './file.service';
 import { ResultCode } from '@letscollab-nest/helper';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import {
   FileInterceptor,
   FilesInterceptor,
@@ -28,11 +27,34 @@ export class FileController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FilesUploadDto })
   @UseInterceptors(FilesInterceptor('files'))
+  @ApiOperation({
+    summary: 'Upload file',
+  })
   async uploadFiles(@UploadedFiles() files: MemoryStorageFile[]) {
     const d = await this.fileService.save2Bucket(files).catch((err) => {
       console.error(err);
       throw new InternalServerErrorException();
     });
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
+  }
+
+  @Put('upload/signed')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: FilesUploadDto })
+  @ApiOperation({
+    summary: 'Upload file and return the signed url',
+  })
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadFilesSignedUrl(@UploadedFiles() files: MemoryStorageFile[]) {
+    const d = await this.fileService
+      .save2Bucket(files, { signedUrl: true })
+      .catch((err) => {
+        console.error(err);
+        throw new InternalServerErrorException();
+      });
     return {
       code: ResultCode.SUCCESS,
       d,

@@ -37,6 +37,10 @@ export class OrgEntity {
   @Column('varchar', { name: 'contact_email' })
   contactEmail: string;
 
+  @ApiProperty({ description: 'Organization avatar image url' })
+  @Column('varchar', { name: 'avatar_url' })
+  avatarUrl: string;
+
   @ApiProperty({
     enum: OrgStatus,
     description: 'Organization status',

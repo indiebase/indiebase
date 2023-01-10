@@ -195,7 +195,12 @@ export const Header: FC<NavHeaderProps> = function (props) {
                     <Menu.Item icon={<IconFileDescription size={16} />}>
                       Docs
                     </Menu.Item>
-                    <Menu.Item icon={<IconPlus size={16} />}>
+                    <Menu.Item
+                      icon={<IconPlus size={16} />}
+                      onClick={() => {
+                        navigate('/create/org');
+                      }}
+                    >
                       Create Organization
                     </Menu.Item>
                     <Divider my="xs" variant="dashed" labelPosition="center" />
