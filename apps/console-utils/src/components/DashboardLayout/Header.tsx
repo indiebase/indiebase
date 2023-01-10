@@ -40,12 +40,14 @@ export interface OrgSelectProps extends React.ComponentPropsWithoutRef<'div'> {
   value: string;
 }
 
-const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
-  ({ logo, label, value, ...rest }: OrgSelectProps, ref) => {
+export const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
+  ({ logo, label, value, ...rest }, ref) => {
     return (
       <div ref={ref} {...rest}>
         <Group noWrap spacing={7}>
-          <Avatar src={logo} radius="xl" size={15} />
+          <Avatar src={logo} radius="xl" size={15}>
+            <IconBuildingCommunity size={12} />
+          </Avatar>
           <Text lineClamp={1} size="xs">
             {label}
           </Text>
@@ -126,12 +128,12 @@ export const Header: FC<NavHeaderProps> = function (props) {
               </Avatar>
               <div style={{ width: 150 }}>
                 <Select
-                  styles={() => ({
+                  styles={{
                     dropdown: {
                       minWidth: 220,
                       marginLeft: 35,
                     },
-                  })}
+                  }}
                   radius="lg"
                   placeholder="Select Organization"
                   itemComponent={SelectItem}

@@ -54,9 +54,28 @@ export class OrgController {
     summary: 'Fetch github orgs',
   })
   @Get('github')
+  @UseGuards(CoProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrgs() {
-    // return this.org.getGithubOrgs();
+    const d = await this.orgService.getGithubOrgs();
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
+  }
+
+  @ApiOperation({
+    summary: 'Fetch github orgs',
+  })
+  @Get('github/:name')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiCookieAuth('SID')
+  async githubOrg(@Param('name') name: string) {
+    const d = await this.orgService.getGithubOrg(name);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
   }
 
   @Get(':name')
@@ -75,7 +94,7 @@ export class OrgController {
     summary: 'Create a letscollab organization',
   })
   @Post()
-@ApiCookieAuth('SID')
+  @ApiCookieAuth('SID')
   @UseGuards(ProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,

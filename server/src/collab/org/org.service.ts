@@ -71,10 +71,23 @@ export class OrgService {
         throw new BadRequestException();
       });
 
-    return {
-      code: ResultCode.SUCCESS,
-      d: data,
-    };
+    return data;
+  }
+
+  async getGithubOrg(name: string) {
+    let { data } = await this.octokit.rest.orgs
+      .get({ org: name })
+      .catch((err) => {
+        this.logger.error(err);
+
+        if (err.status === 401) {
+          throw new UnauthorizedException('Github bad credentials');
+        }
+
+        throw new BadRequestException();
+      });
+
+    return data;
   }
 
   async getOwnOrgs(id: number) {
