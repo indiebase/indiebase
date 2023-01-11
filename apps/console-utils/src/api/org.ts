@@ -8,16 +8,23 @@ export const projectsQuery = async function (): Promise<
   return data;
 };
 
-export const fetchMyGithubOrgs = async function (): Promise<
+export const fetchMyGithubOrgsApi = async function (): Promise<
   BaseResSchema<Record<string, any>>
 > {
   const { data } = await req.get('/v1/org/github');
   return data;
 };
 
-export const fetchGithubOrg = async function (
+export const fetchGithubOrgApi = async function (
   org,
 ): Promise<BaseResSchema<Record<string, any>>> {
   const { data } = await req.get('/v1/org/github/' + org);
+  return data;
+};
+
+export const createOrgApi = async function (
+  body: Record<string, any>,
+): Promise<BaseResSchema<Record<string, any>>> {
+  const { data } = await req.post('/v1/org', body);
   return data;
 };

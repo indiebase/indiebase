@@ -12,6 +12,10 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 interface SaveBucketOptions {
   signedUrl?: boolean;
+  /**
+   * Save to the /tmp/ directory, if object not be used, will delete automatically.
+   */
+  tmp?: boolean;
 }
 
 @Injectable()
@@ -20,13 +24,13 @@ export class FileService {
 
   public async save2Bucket(
     files: MemoryStorageFile[],
-    options: SaveBucketOptions = { signedUrl: false },
+    options: SaveBucketOptions = { signedUrl: false, tmp: false },
   ) {
     const d = [];
 
     for (const file of files) {
       const p = path.parse(file.filename);
-      const Key = nanoid(32) + p.ext;
+      const Key = options.tmp ? 'tmp/' : '' + nanoid(32) + p.ext;
 
       const putCommand = new PutObjectCommand({
         Key,
@@ -43,7 +47,7 @@ export class FileService {
         url = await getSignedUrl(this.s3, getCommand);
       } else {
         const endpoint = await this.s3.config.endpoint();
-        url = `${endpoint.protocol}://${endpoint.hostname}:${endpoint.port}${endpoint.path}letscollab/${Key}`;
+        url = `${endpoint.protocol}//${endpoint.hostname}:${endpoint.port}${endpoint.path}letscollab/${Key}`;
       }
 
       d.push(url);
@@ -51,4 +55,6 @@ export class FileService {
 
     return d.length > 1 ? d : d?.[0];
   }
+
+  public persistTmpFiles(keys: string[]) {}
 }

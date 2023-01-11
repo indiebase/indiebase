@@ -12,6 +12,8 @@ export interface DashboardLayoutProps extends NavHeaderProps {
 export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
   const theme = useMantineTheme();
 
+  console.log(theme);
+
   console.log('------------------------------------------------------');
 
   return (
@@ -23,6 +25,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             theme.colorScheme === 'dark'
               ? theme.colors.dark[6]
               : theme.colors.white,
+          // paddingLeft: 0,
         },
       }}
       navbarOffsetBreakpoint="sm"

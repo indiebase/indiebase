@@ -1,6 +1,7 @@
 import { Center, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { FC } from 'react';
+import { useRemoveAppShellLeftPadding } from '../hooks';
 
 export const HttpStatusPage: FC<{ label?: string }> = function (props) {
   const matches = useMediaQuery('(max-width: 768px)');
@@ -15,10 +16,11 @@ export const HttpStatusPage: FC<{ label?: string }> = function (props) {
       gradient = { from: '#FF00B3', to: '#EC0047', deg: 45 };
   }
 
+  useRemoveAppShellLeftPadding();
   return (
     <Center
       sx={{
-        height: 'calc(100vh - 60px)',
+        height: 'calc(80vh - 60px)',
       }}
     >
       <Text

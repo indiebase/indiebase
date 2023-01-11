@@ -61,6 +61,12 @@ export class CreateOrgDto {
   })
   @IsOptional()
   description?: string;
+
+  @ApiPropertyOptional({
+    description: 'Organization icon url',
+  })
+  @IsOptional()
+  avatarUrl?: string;
 }
 
 export class UpdateOrgDto {

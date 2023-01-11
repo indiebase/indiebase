@@ -15,6 +15,7 @@
     "@letscollab-pro/console": "workspace:^",
     "@letscollab/react-authz": "workspace:^",
     "@mantine/core": "^5.5.4",
+    "@mantine/dropzone": "^5.10.0",
     "@mantine/form": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
     "@mantine/notifications": "^5.5.4",

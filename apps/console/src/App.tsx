@@ -62,6 +62,9 @@ function App() {
             '*, *::before, *::after': {
               boxSizing: 'border-box',
             },
+            '.remove-padding-left': {
+              paddingLeft: 0,
+            },
           }),
           colorScheme,
           primaryColor: 'blue',

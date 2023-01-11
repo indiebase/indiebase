@@ -3,10 +3,11 @@ import {
   Delete,
   InternalServerErrorException,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileService } from './file.service';
-import { ResultCode } from '@letscollab-nest/helper';
+import { ProtectGuard, ResultCode } from '@letscollab-nest/helper';
 import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import {
   FileInterceptor,
@@ -30,6 +31,7 @@ export class FileController {
   @ApiOperation({
     summary: 'Upload file',
   })
+  @UseGuards(ProtectGuard)
   async uploadFiles(@UploadedFiles() files: MemoryStorageFile[]) {
     const d = await this.fileService.save2Bucket(files).catch((err) => {
       console.error(err);
@@ -47,6 +49,7 @@ export class FileController {
   @ApiOperation({
     summary: 'Upload file and return the signed url',
   })
+  @UseGuards(ProtectGuard)
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFilesSignedUrl(@UploadedFiles() files: MemoryStorageFile[]) {
     const d = await this.fileService

@@ -99,10 +99,18 @@ export class OrgService {
   }
 
   async createOrg(body: CreateOrgDto, id: number) {
-    const { name, description, contactEmail, domain, homepage, githubOrgName } =
-      body;
+    const {
+      name,
+      description,
+      contactEmail,
+      domain,
+      homepage,
+      githubOrgName,
+      avatarUrl,
+    } = body;
 
     const orgEntity = this.orgRepo.create({
+      avatarUrl,
       name,
       contactEmail,
       description,

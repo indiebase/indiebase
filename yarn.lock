@@ -5225,6 +5225,7 @@ __metadata:
     "@letscollab-pro/console": "workspace:^"
     "@letscollab/react-authz": "workspace:^"
     "@mantine/core": ^5.5.4
+    "@mantine/dropzone": ^5.10.0
     "@mantine/form": ^5.5.4
     "@mantine/hooks": ^5.5.4
     "@mantine/notifications": ^5.5.4
@@ -5927,6 +5928,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/dropzone@npm:^5.10.0":
+  version: 5.10.0
+  resolution: "@mantine/dropzone@npm:5.10.0"
+  dependencies:
+    "@mantine/utils": 5.10.0
+    react-dropzone: 14.2.3
+  peerDependencies:
+    "@mantine/core": 5.10.0
+    "@mantine/hooks": 5.10.0
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: d461c3beddcf962534f447fd3d022a912d87969f8065f6c6735dc1e5c08391dc6dd0d8a1a79a2bbe3d983c171cd3d26a9edf1d963ae817c4c37deed539bdcf67
+  languageName: node
+  linkType: hard
+
 "@mantine/form@npm:^5.5.4":
   version: 5.7.1
   resolution: "@mantine/form@npm:5.7.1"
@@ -6003,6 +6019,15 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: 9f9b2e4a150e94b6a791494319a5f80d7fcd0530c36d5b0affdab868b8068eccc8816651cb56082b915c6b43011d36738dc3c6b339088a89d882e198d878d466
+  languageName: node
+  linkType: hard
+
+"@mantine/utils@npm:5.10.0":
+  version: 5.10.0
+  resolution: "@mantine/utils@npm:5.10.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 7fece92e1356af1237154c60b7179c2ce422502df2c968f6ff670f6eba757f2742400aebc7c07f1dd71668dc6c8f87f9036a7c1f0e02fdad48db05ab895cf506
   languageName: node
   linkType: hard
 
@@ -10462,6 +10487,13 @@ __metadata:
   version: 1.0.0
   resolution: "atomic-sleep@npm:1.0.0"
   checksum: b95275afb2f80732f22f43a60178430c468906a415a7ff18bcd0feeebc8eec3930b51250aeda91a476062a90e07132b43a1794e8d8ffcf9b650e8139be75fa36
+  languageName: node
+  linkType: hard
+
+"attr-accept@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "attr-accept@npm:2.2.2"
+  checksum: 496f7249354ab53e522510c1dc8f67a1887382187adde4dc205507d2f014836a247073b05e9d9ea51e2e9c7f71b0d2aa21730af80efa9af2d68303e5f0565c4d
   languageName: node
   linkType: hard
 
@@ -15924,6 +15956,15 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: faf43eecf233f4897b0150aaa874eeeac214e4f9de49738a9e0ef734a30b5260059e85b7edadf852b98e415f875bd5f12587768a93fd52aaf2e479ecf95fab20
+  languageName: node
+  linkType: hard
+
+"file-selector@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "file-selector@npm:0.6.0"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 7d051b6e5d793f3c6e2ab287ba5e7c2c6a0971bccc9d56e044c8047ba483e18f60fc0b5771c951dc707c0d15f4f36ccb4f1f1aaf385d21ec8f7700dadf8325ba
   languageName: node
   linkType: hard
 
@@ -26848,6 +26889,19 @@ __metadata:
     react: ">= 16.3.0"
     react-dom: ">= 16.3.0"
   checksum: 21c3775db086e13020967627c20acd41d1ddbc7c7d7fca51491a5bbb54a0aa7e1730a4bc9af17141eb50a4954e547a5e25b2368f5f54b70db6f2686a897bacf2
+  languageName: node
+  linkType: hard
+
+"react-dropzone@npm:14.2.3":
+  version: 14.2.3
+  resolution: "react-dropzone@npm:14.2.3"
+  dependencies:
+    attr-accept: ^2.2.2
+    file-selector: ^0.6.0
+    prop-types: ^15.8.1
+  peerDependencies:
+    react: ">= 16.8 || 18.0.0"
+  checksum: 174b744d5ca898cf3d84ec1aeb6cef5211c446697e45dc8ece8287a03d291f8d07253206d5a1247ef156fd385d65e7de666d4d5c2986020b8543b8f2434e8b40
   languageName: node
   linkType: hard
 

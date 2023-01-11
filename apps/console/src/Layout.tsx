@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { DashboardLayout } from '@letscollab-community/console-utils';
 import { ActionIcon, Anchor, Image, Menu } from '@mantine/core';
-import { CommunitySidebar } from './sidebar';
+import { CommunitySidebar } from './Sidebar';
 import { IconLanguage } from '@tabler/icons';
 import { useTranslation } from 'react-i18next';
 

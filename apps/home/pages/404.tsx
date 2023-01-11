@@ -7,9 +7,11 @@ export default function Custom404() {
 
   return (
     <Center
-      sx={{
-        height: 'calc(100vh - 60px)',
-      }}
+      sx={
+        {
+          // height: 'calc(100vh - 60px)',
+        }
+      }
     >
       <Text
         component="span"
