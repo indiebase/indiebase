@@ -28,3 +28,10 @@ export const createOrgApi = async function (
   const { data } = await req.post('/v1/org', body);
   return data;
 };
+
+export const inviteMembersApi = async function (
+  body: Record<string, any>,
+): Promise<BaseResSchema<Record<string, any>>> {
+  const { data } = await req.post('/v1/org', body);
+  return data;
+};

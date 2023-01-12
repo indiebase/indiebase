@@ -29,7 +29,12 @@ export class UpdateUserProfileDto {
 
 export class QueryUserDto extends PaginationReqDto {
   @ApiPropertyOptional()
+  @IsOptional()
   username?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  email?: string;
 }
 
 export class QueryPossessionDto {

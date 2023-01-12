@@ -43,6 +43,7 @@ import { CoProtectGuard } from '../../utils';
 export class OrgController {
   constructor(private readonly orgService: OrgService) {}
 
+  //TODO
   @Get('list')
   @ApiCookieAuth('SID')
   @ApiOkResponse({})
@@ -57,7 +58,7 @@ export class OrgController {
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrgs() {
-    const d = await this.orgService.getGithubOrgs();
+    const d = await this.orgService.getGithubOwnOrgs();
     return {
       code: ResultCode.SUCCESS,
       d,
@@ -91,7 +92,7 @@ export class OrgController {
   async getOrg(@Param('name') username: string) {}
 
   @ApiOperation({
-    summary: 'Create a letscollab organization',
+    summary: 'Create an organization',
   })
   @Post()
   @ApiCookieAuth('SID')
@@ -109,17 +110,18 @@ export class OrgController {
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
 
+  //TODO
   @ApiOperation({
-    summary: 'Update a letscollab organization',
+    summary: 'Update an owned organization',
   })
   @Put()
   @ApiCookieAuth('SID')
-  async updateOrg(@Body() body: UpdateOrgDto) {
-    // return this.org.updateOrg(body);
-  }
+  @UseGuards(CoProtectGuard, AccessGuard)
+  async updateOrg(@Body() body: UpdateOrgDto) {}
 
+  //TODO
   @ApiOperation({
-    summary: 'Delete a letscollab organization',
+    summary: 'Delete an owned organization',
   })
   @Delete(':name')
   @ApiCookieAuth('SID')
@@ -128,8 +130,5 @@ export class OrgController {
     action: AccessAction.deleteAny,
     resource: OrgResource.list,
   })
-  // @UseGuards(Http2RmqAuthGuard)
-  async deleteOrg(@Body() body: DeleteOrgDto) {
-    // return this.org.deleteOrg(body);
-  }
+  async deleteOrg(@Body() body: DeleteOrgDto) {}
 }

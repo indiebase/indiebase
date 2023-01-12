@@ -44,10 +44,11 @@ export class UserController {
     resource: UserResource.list,
   })
   async getUserList(@Query() query: QueryUserDto) {
-    const d = await this.userService.getUsers(query);
+    const { list, total } = await this.userService.getUsers(query);
     return {
       code: ResultCode.SUCCESS,
-      d,
+      total,
+      d: list,
     };
   }
 
@@ -93,7 +94,7 @@ export class UserController {
   })
   @UseGuards(ProtectGuard, AccessGuard)
   async queryOwnOrgs(@MyInfo('id') id: number) {
-    const d = await this.userService.getOwnOrgs(id);
+    const d = await this.userService.getOwnedOrganizations(id);
 
     return {
       code: ResultCode.SUCCESS,

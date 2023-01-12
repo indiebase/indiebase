@@ -75,7 +75,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
     ? [
         userItem,
         ...profile.organizations.map((o) => ({
-          logo: '',
+          logo: o.avatarUrl,
           value: o.name,
           label: o.name,
           path: 'orgs/' + o.name,
@@ -191,7 +191,12 @@ export const Header: FC<NavHeaderProps> = function (props) {
                     </Avatar>
                   </Menu.Target>
                   <Menu.Dropdown>
-                    <Menu.Item icon={<IconSettings size={16} />}>
+                    <Menu.Item
+                      onClick={() => {
+                        navigate(`/users/${profile.username}/settings/profile`);
+                      }}
+                      icon={<IconSettings size={16} />}
+                    >
                       Settings
                     </Menu.Item>
                     <Menu.Item icon={<IconFileDescription size={16} />}>

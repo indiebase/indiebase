@@ -16,8 +16,7 @@ export const useMenu = () => {
   const profile = data.d;
 
   // if not match, menu is immutable.
-  const deps = !!params['*'] ? [] : [org, project, user];
-  deps.push(i18n.language);
+  const deps = !!params['*'] ? [] : [org, project, user, i18n.language];
 
   return useMemo<SidebarTileNode[]>(() => {
     //TODO:optimize this stupid way.

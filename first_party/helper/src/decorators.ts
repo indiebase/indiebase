@@ -17,6 +17,7 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
+import validator from 'validator';
 
 export const UserRoles = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
@@ -125,4 +126,12 @@ export function IsEntityExisted(
       validator: createValidatorConstraint(entity, key),
     });
   };
+}
+
+@ValidatorConstraint({ name: 'IsEmailsConstraint', async: true })
+@Injectable()
+export class IsEmailsConstraint implements ValidatorConstraintInterface {
+  validate(emails: string[], _args: ValidationArguments) {
+    return !!emails.find((e) => validator.isEmail(e));
+  }
 }

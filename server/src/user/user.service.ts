@@ -7,9 +7,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ResultCode } from '@letscollab-nest/helper';
 import { UserEntity } from './user.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { QueryUserDto } from './user.dto';
 import { CasbinService } from '@letscollab-nest/accesscontrol';
+
+type CreateUserEntity = Omit<
+  UserEntity,
+  'id' | 'updateTime' | 'createTime' | 'hashPassword' | 'enabled2FA' | 'status'
+>;
 
 @Injectable()
 export class UserService {
@@ -24,9 +29,7 @@ export class UserService {
     return this.userRepo;
   }
 
-  private async createUser(
-    body: Omit<UserEntity, 'id' | 'updateTime' | 'createTime' | 'enabled2FA'>,
-  ): Promise<UserEntity> {
+  private async createUser(body: CreateUserEntity): Promise<UserEntity> {
     return new Promise(async (resolve, reject) => {
       const userEntity = this.userRepo.create(body);
 
@@ -50,12 +53,7 @@ export class UserService {
       .getOne();
   }
 
-  public async signIn(
-    body: Omit<
-      UserEntity,
-      'id' | 'updateTime' | 'createTime' | 'hashPassword' | 'enabled2FA'
-    >,
-  ) {
+  public async signIn(body: CreateUserEntity) {
     let user = await this.userRepo.findOne({
       where: [
         {
@@ -115,10 +113,16 @@ export class UserService {
   }
 
   public async getUsers(cond: QueryUserDto) {
-    const { pageSize, current, ...rest } = cond;
+    const { pageSize, current, username, email } = cond;
+    const condition = [];
+    username && condition.push({ username: Like(`%${username}%`) });
+    email && condition.push({ email: Like(`%${email}%`) });
 
+    if (condition.length < 1) {
+      return { list: [], total: 0 };
+    }
     const [list, total] = await this.userRepo.findAndCount({
-      where: rest,
+      where: condition,
       skip: (current - 1) * pageSize,
       take: pageSize,
     });
@@ -128,7 +132,7 @@ export class UserService {
     };
   }
 
-  public async getOwnOrgs(id: number) {
+  public async getOwnedOrganizations(id: number) {
     const user = await this.userRepo
       .findOne({
         where: { id },

@@ -1,4 +1,3 @@
-import { ConfigService } from '@nestjs/config';
 import { UserService } from '../user/user.service';
 import {
   Injectable,
@@ -12,9 +11,6 @@ import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 import { getSubdomain, ResultCode } from '@letscollab-nest/helper';
 import { FastifyRequest } from 'fastify';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from '../user/user.entity';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {

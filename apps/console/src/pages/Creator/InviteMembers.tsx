@@ -1,20 +1,134 @@
-import { useViewportSize } from '@mantine/hooks';
-import { FC } from 'react';
-import { Global, Text } from '@mantine/core';
+import { useDebouncedState, useViewportSize } from '@mantine/hooks';
+import { FC, forwardRef, Suspense, useRef, useState } from 'react';
+import {
+  Avatar,
+  Box,
+  Button,
+  Global,
+  Group,
+  MultiSelect,
+  Stack,
+  Text,
+  useMantineTheme,
+} from '@mantine/core';
 import ReactConfetti from 'react-confetti';
-import { useRemoveAppShellLeftPadding } from '@letscollab-community/console-utils';
+import { searchUsersApi } from '@letscollab-community/console-utils';
+import debounce from 'lodash.debounce';
+import { IconBuildingCommunity } from '@tabler/icons';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export interface InviteMembersProps {
   confetti?: boolean;
 }
 
-export const InviteMembers: FC<InviteMembersProps> = function ({ confetti }) {
-  const { height, width } = useViewportSize();
+export const SelectItem = forwardRef<HTMLDivElement, any>(
+  ({ logo, label, username, ...rest }, ref) => {
+    return (
+      <div ref={ref} {...rest}>
+        <Group noWrap spacing={7}>
+          <Avatar src={logo} radius="xl" size={18}>
+            <IconBuildingCommunity size={12} />
+          </Avatar>
+          <Text lineClamp={1} size={14}>
+            {username}
+          </Text>
+          <Text lineClamp={1} size="xs" color="gray">
+            {label}
+          </Text>
+        </Group>
+      </div>
+    );
+  },
+);
 
-  useRemoveAppShellLeftPadding();
+interface InviteUserProps {
+  onChange(items: string[]): void;
+}
+
+export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
+  const [members, setMembers] = useDebouncedState<any[]>([], 100);
+  const [value, setValue] = useState([]);
+  const ref = useRef<any>();
+  const theme = useMantineTheme();
+
+  const handleSearch = debounce((query) => {
+    searchUsersApi({ email: query }).then(({ d }) => {
+      if (d.length < 1) return;
+      const items = d.map((val) => ({
+        logo: val.avatar,
+        username: val.username,
+        value: val.email,
+        label: val.email,
+      }));
+      const result = [];
+
+      for (const item of items) {
+        if (members.length > 0) {
+          const m = members.find((m) => item.value === m.value);
+          if (!m) {
+            result.push(item);
+          }
+        } else {
+          result.push(item);
+        }
+      }
+
+      setMembers([...result, ...members]);
+    });
+  }, 500);
 
   return (
-    <div>
+    <>
+      <Group align="center" spacing={10} mt={50}>
+        <MultiSelect
+          ref={ref}
+          creatable
+          value={value}
+          onChange={(value) => {
+            setValue(value);
+            onChange(value);
+          }}
+          limit={20}
+          getCreateLabel={(query) => `+ Invite unregister: ${query}`}
+          itemComponent={SelectItem}
+          style={{
+            width: 600,
+          }}
+          placeholder="Enter the email. Unregistered users will be sent an invitation to register."
+          searchable
+          clearable
+          onSearchChange={handleSearch}
+          onCreate={(query) => {
+            const item = { value: query, label: query };
+            setMembers([...members, item]);
+            return item;
+          }}
+          data={members}
+        />
+        <Button
+          variant="gradient"
+          size="md"
+          type="submit"
+          style={{
+            width: 120,
+            height: 36,
+            alignSelf: 'flex-start',
+          }}
+          gradient={theme.other.buttonGradient}
+        >
+          Invite
+        </Button>
+      </Group>
+    </>
+  );
+};
+
+export const InviteMembers: FC<InviteMembersProps> = function ({ confetti }) {
+  const { height, width } = useViewportSize();
+  const theme = useMantineTheme();
+
+  return (
+    <Stack align="center">
       <ReactConfetti
         width={width - 16}
         height={height}
@@ -34,17 +148,40 @@ export const InviteMembers: FC<InviteMembersProps> = function ({ confetti }) {
 
       <Text
         variant="gradient"
-        gradient={{ from: 'teal', to: 'lime' }}
+        gradient={{ from: '#018d63', to: 'lime', deg: 45 }}
         fw={700}
         size={32}
-        ta="center"
       >
         Create Organization Successfully !
       </Text>
-    </div>
+
+      <Text mt={20} fw={400} size={21}>
+        Now, invite some members.
+      </Text>
+
+      <InviteUser onChange={(items) => {}} />
+    </Stack>
   );
 };
 
 InviteMembers.defaultProps = {
+  confetti: false,
+};
+
+export const InviteMembersPage: FC<{ confetti?: boolean }> = function ({
+  confetti,
+}) {
+  return (
+    <ErrorBoundary fallbackRender={() => <div>Error</div>}>
+      <Suspense>
+        <Box m={20} mt={10}>
+          <InviteMembers confetti={confetti} />
+        </Box>
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+InviteMembersPage.defaultProps = {
   confetti: false,
 };

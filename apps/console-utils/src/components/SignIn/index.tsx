@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { projectsQuery } from '@letscollab-community/console-utils';
+import { isEmailRegExp } from '../../utils';
 import {
   Button,
   Container,
@@ -15,7 +15,7 @@ import { useForm } from '@mantine/form';
 import { useQuery } from '@tanstack/react-query';
 import { showNotification } from '@mantine/notifications';
 import { IconX, IconMail, IconKey } from '@tabler/icons';
-import { isEmail } from '../../utils';
+import { projectsQuery } from '../../api';
 
 export const SignIn = function () {
   const { data } = useQuery(['own-projects'], projectsQuery, {
@@ -28,7 +28,7 @@ export const SignIn = function () {
       password: '',
     },
     validate: {
-      username: (value) => (isEmail(value) ? null : '邮箱地址格式不正确'),
+      username: (value) => (isEmailRegExp(value) ? null : '邮箱地址格式不正确'),
       password: (value) => (value.length >= 8 ? null : '密码长度至少为8'),
     },
   });

@@ -29,7 +29,7 @@ export class OrgService {
     private readonly userService: UserService,
   ) {}
 
-  async queryOrg(body: QueryOrgDto) {
+  public async queryOrg(body: QueryOrgDto) {
     body = Object.assign({}, body);
     const { name, current, pageSize } = body;
     let cond = [];
@@ -55,7 +55,11 @@ export class OrgService {
     };
   }
 
-  async getGithubOrgs() {
+  /**
+   *  Get own organization from github.
+   * @returns
+   */
+  public async getGithubOwnOrgs() {
     let { data } = await this.octokit.rest.orgs
       .listForAuthenticatedUser({
         page: 1,
@@ -74,7 +78,7 @@ export class OrgService {
     return data;
   }
 
-  async getGithubOrg(name: string) {
+  public async getGithubOrg(name: string) {
     let { data } = await this.octokit.rest.orgs
       .get({ org: name })
       .catch((err) => {
@@ -90,15 +94,23 @@ export class OrgService {
     return data;
   }
 
-  async getOwnOrgs(id: number) {
-    // this.orgRepo.findAndCount({ where: { ownerId: id }, relations: [] });
+  public async getGithubMembers(name: string) {
+    let { data } = await this.octokit.rest.orgs
+      .get({ org: name })
+      .catch((err) => {
+        this.logger.error(err);
 
-    return {
-      code: ResultCode.SUCCESS,
-    };
+        if (err.status === 401) {
+          throw new UnauthorizedException('Github bad credentials');
+        }
+
+        throw new BadRequestException();
+      });
+
+    return data;
   }
 
-  async createOrg(body: CreateOrgDto, id: number) {
+  public async createOrg(body: CreateOrgDto, id: number) {
     const {
       name,
       description,
@@ -131,7 +143,7 @@ export class OrgService {
     await this.orgRepo.save(orgEntity).catch((err) => {
       this.logger.error(err);
       if (err?.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException(`Org [${body.name}] existed`);
+        throw new ConflictException(`Organization [${body.name}] existed`);
       }
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
@@ -140,7 +152,7 @@ export class OrgService {
     });
   }
 
-  async updateOrg(body: UpdateOrgDto) {
+  public async updateOrg(body: UpdateOrgDto) {
     const { id, ...rest } = body;
     this.orgRepo.remove;
     await this.orgRepo.update({ id }, rest).catch((err) => {
@@ -157,7 +169,7 @@ export class OrgService {
     return { code: ResultCode.SUCCESS, message: '更新成功' };
   }
 
-  async deleteOrg(body: DeleteOrgDto) {
+  public async deleteOrg(body: DeleteOrgDto) {
     const { id } = body;
     await this.orgRepo.delete({ id }).catch((err) => {
       this.logger.error(err);
@@ -170,5 +182,3 @@ export class OrgService {
     return { code: ResultCode.SUCCESS, message: '删除成功' };
   }
 }
-
-// INSERT INTO `organization`(`id`, `name`, `github_org_name`, `domain`, `contact_email`, `status`, `description`, `homepage`, `create_time`, `update_time`, `creator_id`, `owner_id`) VALUES (DEFAULT, 'deskbtm', 'deskbtm', 'deskbtm.com', 'deskbtm@outlook.com', DEFAULT, 'xxxxxx', 'https://letscollab.deskbtm.com', DEFAULT, DEFAULT, 4, 4)

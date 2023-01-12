@@ -120,3 +120,17 @@ export class QueryOrgDto extends PaginationReqDto {
   @IsOptional()
   name?: string;
 }
+
+export class InviteMemberDto {
+  @ApiProperty()
+  @IsNumber()
+  id: number;
+
+  @ApiProperty({
+    enum: [],
+    // enum: InvitationType,
+    description: 'Invitation type team, project',
+  })
+  @IsNumber()
+  type: any;
+}

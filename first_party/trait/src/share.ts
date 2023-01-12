@@ -1,4 +1,4 @@
-export interface PaginationReq {
+export interface PaginationReqSchema {
   current?: number;
   pageSize: number;
 }

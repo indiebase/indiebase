@@ -19,3 +19,10 @@ export const updateUserProfile = async (
   const { data } = await req.put('/v1/user/profile', body);
   return data ?? {};
 };
+
+export const searchUsersApi = async (
+  body: Partial<UserProfile>,
+): Promise<BaseResSchema<UserProfile[]>> => {
+  const { data } = await req.get('/v1/user/list', { params: body });
+  return data ?? {};
+};

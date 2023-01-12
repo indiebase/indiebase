@@ -56,6 +56,7 @@
     "jotai": "^1.12.0",
     "jotai-tanstack-query": "^0.4.0",
     "localforage": "^1.10.0",
+    "lodash.debounce": "^4.0.8",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.18",
     "postcss-flexbugs-fixes": "^5.0.2",
@@ -91,6 +92,7 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/react-grid-layout": "^1",

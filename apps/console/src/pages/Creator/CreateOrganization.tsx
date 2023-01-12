@@ -4,6 +4,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   Flex,
   Select,
   TextInput,
@@ -21,6 +22,7 @@ import {
   OrgSelectProps,
   SelectItem,
   UploadImage,
+  useRemoveAppShellLeftPadding,
 } from '@letscollab-community/console-utils';
 import { useQuery } from '@tanstack/react-query';
 import { IconBrandGithub } from '@tabler/icons';
@@ -41,6 +43,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
       contactEmail: '',
       domain: '',
       avatarUrl: '',
+      githubOrgName: '',
     },
 
     validate: {
@@ -51,18 +54,18 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
     },
   });
 
-  const { data } = useQuery(['github-orgs'], fetchMyGithubOrgsApi, {
-    suspense: true,
-  });
+  const { data, isSuccess } = useQuery(['github-orgs'], fetchMyGithubOrgsApi);
 
   const githubOrgs = useMemo(
     () =>
-      data.d.map((v) => ({
-        logo: v.avatar_url,
-        label: v.login,
-        value: v.login,
-      })),
-    [data],
+      isSuccess
+        ? data.d.map((v) => ({
+            logo: v.avatar_url,
+            label: v.login,
+            value: v.login,
+          }))
+        : [],
+    [data, isSuccess],
   );
 
   return (
@@ -75,13 +78,6 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
             if (code > 0) onSuccess(true);
           })}
         >
-          <TextInput
-            style={{ width: 500 }}
-            mt={20}
-            withAsterisk
-            label="Organization Name"
-            {...form.getInputProps('name')}
-          />
           <Flex align="flex-end">
             <Select
               icon={
@@ -103,6 +99,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
                 if (!r) return;
                 setGithub(r);
                 form.setFieldValue('githubOrgName', r.value);
+                form.setFieldValue('name', r.value);
                 const { d } = await fetchGithubOrgApi(r.value);
                 form.setFieldValue('contactEmail', d.email);
                 form.setFieldValue('avatarUrl', d.avatar_url);
@@ -117,6 +114,13 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
               }}
             />
           </Flex>
+          <TextInput
+            style={{ width: 500 }}
+            mt={20}
+            withAsterisk
+            label="Organization Name"
+            {...form.getInputProps('name')}
+          />
           <TextInput
             style={{ width: 500 }}
             mt="md"
@@ -150,17 +154,18 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
 };
 
 export const CreateOrganizationPage = function () {
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(false);
+  useRemoveAppShellLeftPadding();
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
-        <Box m={20} mt={10}>
+        <Center m={20} mt={20}>
           {state ? (
             <InviteMembers confetti />
           ) : (
             <CreateOrganization onSuccess={setState} />
           )}
-        </Box>
+        </Center>
       </Suspense>
     </ErrorBoundary>
   );

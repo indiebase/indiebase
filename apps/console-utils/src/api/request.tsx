@@ -1,9 +1,11 @@
+import { IconX } from '@tabler/icons';
+import { showNotification } from '@mantine/notifications';
 import axios, { type AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { nanoid } from 'nanoid';
 import * as forge from 'node-forge';
-const StegCloak = require('stegcloak');
 
+const StegCloak = require('stegcloak');
 const stegcloak = new StegCloak(true, false);
 
 console.debug('Api: ', process.env.REACT_APP_API);
@@ -60,7 +62,17 @@ req.interceptors.response.use(
     console.log('[Response Error].....', error);
     if (response) {
       const data = response.data;
-      console.log(data);
+      console.log(data, '=======================');
+
+      showNotification({
+        message: data?.message,
+        autoClose: 3000,
+        color: 'red',
+        icon: <IconX size={12} />,
+        style: {
+          boxShadow: 'unset',
+        },
+      });
 
       if (data?.statusCode === 401 || response.status === 401) {
         // location.href = process.env.REACT_APP_LOGIN_SITE_URI;

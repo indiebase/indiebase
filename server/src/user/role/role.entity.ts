@@ -1,4 +1,5 @@
 import { RoleStatus } from '@letscollab-nest/trait';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Entity,
   Column,
@@ -21,6 +22,10 @@ export class RoleEntity {
   @Column({ type: 'varchar' })
   domain: string;
 
+  @ApiProperty({
+    enum: RoleStatus,
+    description: 'Role status',
+  })
   @Column('simple-enum', {
     enum: RoleStatus,
     comment: 'Role status',

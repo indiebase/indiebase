@@ -1,16 +1,11 @@
+import { IsEmailsConstraint } from '@letscollab-nest/helper';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { Validate } from 'class-validator';
 
-export class InviteMemberDto {
+export class InviteMembersDto {
   @ApiProperty()
-  @IsNumber()
-  id: number;
-
-  @ApiProperty({
-    enum: [],
-    // enum: InvitationType,
-    description: 'Invitation type team, project',
+  @Validate(IsEmailsConstraint, {
+    message: 'Contain the wrong email.',
   })
-  @IsNumber()
-  type: any;
+  inviteesEmails: string[];
 }
