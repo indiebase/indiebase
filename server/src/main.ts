@@ -12,7 +12,7 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';
 import { useContainer } from 'class-validator';
-import fastyfyMultipart from '@fastify/multipart';
+import fastifyMultipart from '@fastify/multipart';
 
 declare module 'fastify' {
   interface PassportUser {
@@ -75,7 +75,7 @@ async function bootstrap() {
 
     await setupApiDoc(app);
 
-    app.register(fastyfyMultipart);
+    app.register(fastifyMultipart);
 
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),

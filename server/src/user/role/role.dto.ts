@@ -7,6 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 import {
+  IsEntityExisted,
   PaginationReqDto,
   PaginationResSchemaDto,
 } from '@letscollab-nest/helper';
@@ -17,7 +18,7 @@ import {
   CreateRoleBody,
   UserResource,
 } from '@letscollab-nest/trait';
-
+import { RoleEntity } from './role.entity';
 
 export class CreateRoleDto {
   @ApiProperty({
@@ -26,7 +27,7 @@ export class CreateRoleDto {
   @IsNotEmpty({
     message: `Role name can't be empty`,
   })
-  // @IsEntityExisted(RoleEntity, 'name', { message: 'Role name has existed' })
+  @IsEntityExisted(RoleEntity, 'name', { message: 'Role name has existed' })
   name: string;
 
   @ApiPropertyOptional({

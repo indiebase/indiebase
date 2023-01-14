@@ -1,6 +1,6 @@
 import { IsEmailsConstraint } from '@letscollab-nest/helper';
 import { ApiProperty } from '@nestjs/swagger';
-import { Validate } from 'class-validator';
+import { IsString, Validate } from 'class-validator';
 
 export class InviteMembersDto {
   @ApiProperty()
@@ -8,4 +8,10 @@ export class InviteMembersDto {
     message: 'Contain the wrong email.',
   })
   inviteesEmails: string[];
+
+  @ApiProperty({
+    description: 'Organization name',
+  })
+  @IsString()
+  org: string;
 }

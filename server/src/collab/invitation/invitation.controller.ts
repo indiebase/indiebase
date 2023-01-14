@@ -1,4 +1,3 @@
-import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import {
   ProtectGuard,
   AccessGuard,
@@ -6,7 +5,7 @@ import {
   MyInfo,
   ResultCode,
 } from '@letscollab-nest/helper';
-import { OrgResource, UserSession } from '@letscollab-nest/trait';
+import { UserSession } from '@letscollab-nest/trait';
 import {
   Body,
   Controller,
@@ -14,7 +13,6 @@ import {
   Post,
   Put,
   Query,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -48,38 +46,11 @@ export class InvitationController {
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
 
-  @ApiOperation({
-    summary: 'Create an organization invitation0',
-  })
-  @Post('org/:name')
-  @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, AccessGuard)
-  @ApiOkResponse({
-    type: BaseResSchemaDto,
-  })
-  async createInvitations(
-    @Body() body: CreateOrgDto,
-    @MyInfo('id') id: number,
-  ) {
-    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
-  }
-
   @ApiCookieAuth('SID')
   @UseGuards(ProtectGuard, AccessGuard)
   async queryUsers(@Query() query: any) {
     return {};
     // return this.invitationService.queryTeam(query);
-  }
-
-  @Put('update')
-  @ApiOperation({
-    summary: 'Fetch github orgs',
-  })
-  @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, AccessGuard)
-  async updateTeam(@Body() body: any) {
-    return {};
-    // return this.invitationService.updateTeam(body);
   }
 
   @Get('confirm')
@@ -91,13 +62,21 @@ export class InvitationController {
   }
 
   @Post()
+  @ApiOperation({
+    summary: 'Create invitations.',
+  })
   @ApiCookieAuth('SID')
+  @ApiOkResponse({
+    type: BaseResSchemaDto,
+  })
   @UseGuards(ProtectGuard, AccessGuard)
   async inviteMember(
     @Body() body: InviteMembersDto,
     @MyInfo() user: UserSession,
   ) {
-    this.invitationService.inviteMembers(body, user);
+    await this.invitationService.inviteMembers(body, user);
+    const { inviteesEmails, org } = body;
+
     return {};
   }
 }
