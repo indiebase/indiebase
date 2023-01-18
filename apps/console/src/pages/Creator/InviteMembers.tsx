@@ -1,6 +1,7 @@
 import { useDebouncedState, useViewportSize } from '@mantine/hooks';
 import { FC, forwardRef, Suspense, useRef, useState } from 'react';
 import {
+  Anchor,
   Avatar,
   Box,
   Button,
@@ -16,6 +17,7 @@ import { searchUsersApi } from '@letscollab-community/console-utils';
 import debounce from 'lodash.debounce';
 import { IconBuildingCommunity } from '@tabler/icons';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Link } from 'react-router-dom';
 
 export interface InviteMembersProps {
   confetti?: boolean;
@@ -79,53 +81,63 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
 
   return (
     <>
-      <Group align="center" spacing={10} mt={50}>
-        <MultiSelect
-          ref={ref}
-          creatable
-          value={value}
-          onChange={(value) => {
-            setValue(value);
-            onChange(value);
-          }}
-          limit={20}
-          getCreateLabel={(query) => `+ Invite unregister: ${query}`}
-          itemComponent={SelectItem}
-          style={{
-            width: 600,
-          }}
-          placeholder="Enter the email. Unregistered users will be sent an invitation to register."
-          searchable
-          clearable
-          onSearchChange={handleSearch}
-          onCreate={(query) => {
-            const item = { value: query, label: query };
-            setMembers([...members, item]);
-            return item;
-          }}
-          data={members}
-        />
-        <Button
-          variant="gradient"
-          size="md"
-          type="submit"
-          style={{
-            width: 120,
-            height: 36,
-            alignSelf: 'flex-start',
-          }}
-          gradient={theme.other.buttonGradient}
+      <Stack align="flex-end" spacing={8}>
+        <Group align="center" spacing={10} mt={50}>
+          <MultiSelect
+            ref={ref}
+            creatable
+            value={value}
+            onChange={(value) => {
+              setValue(value);
+              onChange(value);
+            }}
+            limit={20}
+            getCreateLabel={(query) => `+ Invite unregister: ${query}`}
+            itemComponent={SelectItem}
+            style={{
+              width: 600,
+            }}
+            placeholder="Enter the email. Unregistered users will be sent an invitation to register."
+            searchable
+            clearable
+            onSearchChange={handleSearch}
+            onCreate={(query) => {
+              const item = { value: query, label: query };
+              setMembers([...members, item]);
+              return item;
+            }}
+            data={members}
+          />
+          <Button
+            variant="gradient"
+            size="md"
+            type="submit"
+            style={{
+              width: 120,
+              height: 36,
+              alignSelf: 'flex-start',
+            }}
+            gradient={theme.other.buttonGradient}
+          >
+            Invite
+          </Button>
+        </Group>
+        <Anchor
+          to="/"
+          replace
+          component={Link}
+          reloadDocument={false}
+          size={12}
         >
-          Invite
-        </Button>
-      </Group>
+          Go home
+        </Anchor>
+      </Stack>
     </>
   );
 };
 
 export const InviteMembers: FC<InviteMembersProps> = function ({ confetti }) {
   const { height, width } = useViewportSize();
-  const theme = useMantineTheme();
 
   return (
     <Stack align="center">

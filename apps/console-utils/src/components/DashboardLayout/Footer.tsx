@@ -11,7 +11,7 @@ export const Footer = function () {
         </Group>
         <Stack align="center">
           <Text size="xs">
-            Copyright© {new Date().getFullYear()}&nbsp;
+            Copyleft© {new Date().getFullYear()}&nbsp;
             <Anchor href="https://deskbtm.com" target="_blank">
               Deskbtm
             </Anchor>

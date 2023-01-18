@@ -27,7 +27,7 @@ export class CreateRoleDto {
   @IsNotEmpty({
     message: `Role name can't be empty`,
   })
-  @IsEntityExisted(RoleEntity, 'name', { message: 'Role name has existed' })
+  @IsEntityExisted(RoleEntity, 'name', 'Role')
   name: string;
 
   @ApiPropertyOptional({

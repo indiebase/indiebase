@@ -1,8 +1,8 @@
-import { Text, Avatar, FileButton, Divider, Image, Box } from '@mantine/core';
+import { Text, Avatar, Box } from '@mantine/core';
 import { IconBuildingCommunity } from '@tabler/icons';
 import { FC, useState } from 'react';
 import { uploadFile } from '../api/utils';
-import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from '@mantine/dropzone';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 interface UploadImageProps {
   size?: number;

@@ -13,7 +13,11 @@ import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
 import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
-import { ApplySessionModule, isDev } from '@letscollab-nest/helper';
+import {
+  ApplySessionModule,
+  isDev,
+  IsEntityExistedConstraint,
+} from '@letscollab-nest/helper';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { UserModule } from './user/user.module';
 import TypeOrmAdapter from 'typeorm-adapter';
@@ -219,7 +223,7 @@ import { FileModule } from './file';
       },
     }),
   ],
-  providers: [Logger],
+  providers: [Logger, IsEntityExistedConstraint],
 })
 export class AppModule implements OnModuleInit {
   constructor(

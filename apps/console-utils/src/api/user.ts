@@ -1,5 +1,5 @@
 import { req } from './request';
-import type { BaseResSchema, UserProfile } from '@letscollab-nest/trait';
+import type { BaseResSchema, Org, UserProfile } from '@letscollab-nest/trait';
 
 export const fetchUserProfile = async (): Promise<
   BaseResSchema<UserProfile>
@@ -8,7 +8,7 @@ export const fetchUserProfile = async (): Promise<
   return data ?? {};
 };
 
-export const fetchMyOrgs = async (): Promise<BaseResSchema<UserProfile>> => {
+export const fetchMyOrgs = async (): Promise<BaseResSchema<Org[]>> => {
   const { data } = await req.get('/v1/user/orgs');
   return data ?? {};
 };

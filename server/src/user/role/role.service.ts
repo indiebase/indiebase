@@ -49,10 +49,6 @@ export class RoleService {
         await runner.rollbackTransaction();
         this.logger.error(err);
 
-        if (err?.code === 'ER_DUP_ENTRY') {
-          throw new ConflictException(`Role [${role.name}] existed`);
-        }
-
         throw new InternalServerErrorException('Fail to create');
       });
 

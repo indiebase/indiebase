@@ -69,10 +69,6 @@ export class UserService {
       user = await this.createUser(body).catch((err) => {
         this.logger.error(err.message, err.stack);
 
-        if (err?.code === 'ER_DUP_ENTRY') {
-          throw new ConflictException(`User [${body.username}] existed`);
-        }
-
         throw new InternalServerErrorException({
           code: ResultCode.ERROR,
           message: 'Fail to register',

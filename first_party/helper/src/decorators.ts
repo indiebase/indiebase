@@ -79,31 +79,32 @@ export const PackageName = createParamDecorator((_, ctx: ExecutionContext) => {
   return domain;
 });
 
-const createValidatorConstraint = function (
-  entity: EntityTarget<LiteralObject>,
-  key: string,
-) {
-  @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
-  @Injectable()
-  class IsEntityExistedConstraint implements ValidatorConstraintInterface {
-    constructor(private readonly dataSource: DataSource) {}
+@ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
+@Injectable()
+export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
+  constructor(private readonly dataSource: DataSource) {}
 
-    validate(name: any, _args: ValidationArguments) {
-      return this.dataSource
-        .getRepository(entity)
-        .findOne({
-          where: {
-            [key]: name,
-          },
-        })
-        .then((e) => {
-          return !e;
-        });
-    }
+  validate(value: any, args: ValidationArguments) {
+    const entity: EntityTarget<any> = args.constraints[0];
+    const key: string = args.constraints[1];
+    return this.dataSource
+      .getRepository(entity)
+      .findOne({
+        where: {
+          [key]: value,
+        },
+      })
+      .then((e) => {
+        return !e;
+      });
   }
 
-  return IsEntityExistedConstraint;
-};
+  defaultMessage(validationArguments?: ValidationArguments): string {
+    return `${validationArguments.constraints?.[2] ?? 'Entity'} ⌜${
+      validationArguments.value
+    }⌟ has existed`;
+  }
+}
 
 /**
  *  Check if the target entity is existed.
@@ -115,15 +116,16 @@ const createValidatorConstraint = function (
 export function IsEntityExisted(
   entity: EntityTarget<LiteralObject>,
   key: string,
-  validationOptions?: ValidationOptions,
+  alias?: string,
+  validationOptions?: ValidationOptions & {},
 ) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      constraints: [],
-      validator: createValidatorConstraint(entity, key),
+      constraints: [entity, key, alias],
+      validator: IsEntityExistedConstraint,
     });
   };
 }

@@ -64,8 +64,12 @@ req.interceptors.response.use(
       const data = response.data;
       console.log(data, '=======================');
 
+      const message = Array.isArray(data?.message)
+        ? data.message.join(';\n')
+        : data?.message;
+
       showNotification({
-        message: data?.message,
+        message,
         autoClose: 3000,
         color: 'red',
         icon: <IconX size={12} />,

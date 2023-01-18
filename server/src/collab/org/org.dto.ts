@@ -1,4 +1,5 @@
-import { PaginationReqDto } from '@letscollab-nest/helper';
+import { OrgEntity } from './org.entity';
+import { IsEntityExisted, PaginationReqDto } from '@letscollab-nest/helper';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -13,6 +14,7 @@ export class CreateOrgDto {
     description: 'Org name',
     default: 'deskbtm-letscollab',
   })
+  @IsEntityExisted(OrgEntity, 'name', 'Organization name')
   @IsString()
   name: string;
 
@@ -20,6 +22,7 @@ export class CreateOrgDto {
     description: 'Github organization name',
     default: 'deskbtm-letscollab',
   })
+  @IsEntityExisted(OrgEntity, 'githubOrgName', 'Github Organization')
   @IsString()
   githubOrgName: string;
 
@@ -28,6 +31,7 @@ export class CreateOrgDto {
       'Organization domain is the unique id for letscollab. if the package name is not specific, the project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.letscollab.xxxx.',
     default: 'letscollab.deskbtm.com',
   })
+  @IsEntityExisted(OrgEntity, 'domain', 'Organization domain')
   @IsString()
   domain: string;
 

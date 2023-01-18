@@ -142,9 +142,7 @@ export class OrgService {
 
     await this.orgRepo.save(orgEntity).catch((err) => {
       this.logger.error(err);
-      if (err?.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException(`Organization [${body.name}] existed`);
-      }
+
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
         message: 'Create organization failed',
@@ -157,9 +155,6 @@ export class OrgService {
     this.orgRepo.remove;
     await this.orgRepo.update({ id }, rest).catch((err) => {
       this.logger.error(err);
-      if (err?.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException(`Organization [${body.name}] existed`);
-      }
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
         message: 'Create',

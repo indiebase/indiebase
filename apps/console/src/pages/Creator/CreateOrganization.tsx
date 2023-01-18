@@ -23,10 +23,12 @@ import {
   SelectItem,
   UploadImage,
   useRemoveAppShellLeftPadding,
+  userProfileQueryAtom,
 } from '@letscollab-community/console-utils';
 import { useQuery } from '@tanstack/react-query';
 import { IconBrandGithub } from '@tabler/icons';
 import { InviteMembers } from './InviteMembers';
+import { useAtom } from 'jotai';
 
 export interface CreateOrganizationProps {
   onSuccess(val: boolean): void;
@@ -55,6 +57,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
   });
 
   const { data, isSuccess } = useQuery(['github-orgs'], fetchMyGithubOrgsApi);
+  const [_, dispatch] = useAtom(userProfileQueryAtom[0]);
 
   const githubOrgs = useMemo(
     () =>
@@ -76,6 +79,8 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
           onSubmit={form.onSubmit(async (values) => {
             const { code } = await createOrgApi(values);
             if (code > 0) onSuccess(true);
+            // Refresh the Header or other Components.
+            dispatch({ type: 'refetch' });
           })}
         >
           <Flex align="flex-end">
