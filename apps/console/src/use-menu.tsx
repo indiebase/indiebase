@@ -102,7 +102,7 @@ export const useMenu = () => {
             to: `${prefix}/settings/organization`,
           },
           {
-            label: t('Two-factor authn', { ns: 'setting' }),
+            label: t('Two-factor auth', { ns: 'setting' }),
             to: `${prefix}/settings/2fa`,
           },
         ],

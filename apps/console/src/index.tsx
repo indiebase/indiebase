@@ -5,7 +5,14 @@ import reportWebVitals from './reportWebVitals';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { commonEn, commonZh, settingEn, settingZh } from './i18n';
+import {
+  commonEn,
+  commonZh,
+  settingEn,
+  settingZh,
+  tableEn,
+  tableZh,
+} from './i18n';
 
 i18n
   .use(initReactI18next)
@@ -15,10 +22,12 @@ i18n
       'zh-CN': {
         common: commonZh,
         setting: settingZh,
+        table: tableZh,
       },
       en: {
         common: commonEn,
         setting: settingEn,
+        table: tableEn,
       },
     },
     fallbackLng: ['zh-CN'],

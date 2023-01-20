@@ -11,13 +11,13 @@ import {
 } from '@letscollab-community/console-utils';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { queryClientAtom } from 'jotai-tanstack-query';
-import { AuthzProvider, Can } from '@letscollab/react-authz';
 import {
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
+import { AuthzProvider, Can } from '@letscollab/react-authz';
 
 const queryClient = new QueryClient({
   defaultOptions: {

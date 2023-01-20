@@ -13,6 +13,7 @@
     "@letscollab-community/console-utils": "workspace:^",
     "@letscollab-nest/trait": "workspace:^",
     "@letscollab-pro/console": "workspace:^",
+    "@letscollab/ant-table": "workspace:^",
     "@letscollab/react-authz": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/dropzone": "^5.10.0",
@@ -81,6 +82,7 @@
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
+    "source-map-explorer": "^2.5.3",
     "source-map-loader": "^3.0.0",
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.1",
@@ -104,6 +106,7 @@
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "node scripts/start.js",
     "start:mock": "../../node_modules/.bin/cross-env REACT_APP_IS_MOCK=true node scripts/start.js",
     "build": "node scripts/build.js",

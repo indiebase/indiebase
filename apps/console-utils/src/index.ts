@@ -8,4 +8,6 @@ export * from './hooks';
 
 console.log(process.env);
 
-process.env.REACT_APP_IS_MOCK === 'true' && require('./__mock__');
+if (process.env.REACT_APP_IS_MOCK) {
+  require('./__mock__');
+}

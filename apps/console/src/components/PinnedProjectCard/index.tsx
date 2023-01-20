@@ -28,6 +28,7 @@ import {
   AvatarWithPreview,
   LimitAvatarGroup,
 } from '@letscollab-community/console-utils';
+import './index.css';
 
 export interface PinnedProjectCardProps extends Partial<IProject> {
   hiddenCover?: boolean;

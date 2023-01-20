@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { RoleModal } from './RoleModal';
 import { Container } from '@mantine/core';
-import { ProColumns, ActionType, ProTable } from '@ant-design/pro-table';
+import { ProColumns, ActionType, ProTable } from '@letscollab/ant-table';
 import { RoleStatus } from '@letscollab-nest/trait';
 
 const columns: ProColumns<any>[] = [
@@ -38,16 +38,16 @@ const columns: ProColumns<any>[] = [
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
-    valueType: 'date',
+    valueType: 'dateRange',
     sorter: {
       compare: (a, b) => a.createTime - b.createTime,
     },
   },
   {
-    filters: false,
     title: '更新时间',
+    hideInSearch: true,
     dataIndex: 'updateTime',
-    valueType: 'date',
+    valueType: 'dateRange',
     key: 'updateTime',
     sorter: {
       compare: (a, b) => a.createTime - b.createTime,
@@ -85,7 +85,7 @@ export const RoleTable = function () {
         showQuickJumper: true,
       }}
       toolBarRender={() => [<RoleModal />]}
-      dateFormatter={(value, valueType) => {
+      dateFormatter={(value) => {
         return value.format('YYYY-MM-DD HH:mm:ss');
       }}
     />
