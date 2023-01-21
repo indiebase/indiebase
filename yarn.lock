@@ -656,7 +656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ant-design/pro-table@npm:3.2.7, @ant-design/pro-table@npm:^3.2.7":
+"@ant-design/pro-table@npm:3.2.7":
   version: 3.2.7
   resolution: "@ant-design/pro-table@npm:3.2.7"
   dependencies:
@@ -5293,7 +5293,6 @@ __metadata:
   resolution: "@letscollab-community/console@workspace:apps/console"
   dependencies:
     "@ant-design/pro-components": ^2.3.47
-    "@ant-design/pro-table": ^3.2.7
     "@babel/core": ^7.16.0
     "@dnd-kit/core": ^6.0.6
     "@dnd-kit/sortable": ^7.0.1

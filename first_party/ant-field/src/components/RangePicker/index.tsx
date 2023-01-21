@@ -24,7 +24,7 @@ const FieldRangePicker: ProFieldFC<{
   ref,
 ) => {
   const [value, setValue] = useState<DateRangePickerValue>();
-  const intl = useIntl();
+  // const intl = useIntl();
   const [startText, endText] = Array.isArray(text) ? text : [];
   const genFormatText = useCallback(
     (formatValue: dayjs.Dayjs) => {
@@ -57,8 +57,11 @@ const FieldRangePicker: ProFieldFC<{
   }
   if (mode === 'edit' || mode === 'update') {
     const momentValue = parseValueToDay(fieldProps.value) as dayjs.Dayjs;
+    //TODO:changed
     const dom = (
       <DateRangePicker
+        style={{ width: 300 }}
+        fullWidth={true}
         placeholder="Pick dates range"
         value={value}
         onChange={setValue}

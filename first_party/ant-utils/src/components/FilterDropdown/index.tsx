@@ -58,6 +58,11 @@ const FilterDropdown: React.FC<DropdownProps> = (props) => {
     onOpenChange || onVisibleChange,
   );
 
+  const { open: opened, onOpenChange: onChange } = dropdownOpenProps;
+
+  console.log(dropdownOpenProps);
+
+  //TODO:changed
   return wrapSSR(
     // <Popover
     //   placement={placement}
@@ -83,12 +88,38 @@ const FilterDropdown: React.FC<DropdownProps> = (props) => {
     // >
     //   <span className={`${prefixCls}-label ${hashId}`}>{label}</span>
     // </Popover>,
-    <Popover width={200} position="bottom" withArrow shadow="md">
-      <Popover.Target>
-        <div>demo</div>
-      </Popover.Target>
-      <Popover.Dropdown></Popover.Dropdown>
-    </Popover>,
+    <>
+      <Popover
+        opened={opened}
+        onChange={onChange}
+        position="bottom"
+        withArrow
+        shadow="md"
+      >
+        <Popover.Target>
+          <span
+            className={`${prefixCls}-label ${hashId}`}
+            onClick={() => onChange(true)}
+          >
+            {label}
+          </span>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <div
+            className={`${prefixCls}-overlay ${prefixCls}-overlay-${placement} ${hashId}`}
+          >
+            {children}
+            {footer && (
+              <DropdownFooter
+                disabled={disabled}
+                footerRender={footerRender}
+                {...footer}
+              />
+            )}
+          </div>
+        </Popover.Dropdown>
+      </Popover>
+    </>,
   );
 };
 

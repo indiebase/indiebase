@@ -1,10 +1,11 @@
 import { useIntl } from '@ant-design/pro-provider';
-import { Input } from 'antd';
+// import { Input } from 'antd';
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import type { ProFieldFC } from '../../index';
 
 // 兼容代码-----------
 import 'antd/es/input/style';
+import { Input } from '@mantine/core';
 //------------
 
 /**
@@ -15,7 +16,10 @@ import 'antd/es/input/style';
 const FieldText: ProFieldFC<{
   text: string;
   emptyText?: React.ReactNode;
-}> = ({ text, mode, render, renderFormItem, fieldProps, emptyText = '-' }, ref) => {
+}> = (
+  { text, mode, render, renderFormItem, fieldProps, emptyText = '-' },
+  ref,
+) => {
   const { autoFocus, prefix = '', suffix = '' } = fieldProps || {};
 
   const intl = useIntl();
@@ -43,7 +47,9 @@ const FieldText: ProFieldFC<{
   }
   if (mode === 'edit' || mode === 'update') {
     const placeholder = intl.getMessage('tableForm.inputPlaceholder', '请输入');
-    const dom = <Input ref={inputRef} placeholder={placeholder} allowClear {...fieldProps} />;
+    const dom = (
+      <Input ref={inputRef as any} placeholder={placeholder} {...fieldProps} />
+    );
 
     if (renderFormItem) {
       return renderFormItem(text, { mode, ...fieldProps }, dom);

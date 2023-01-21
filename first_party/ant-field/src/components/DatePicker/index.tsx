@@ -7,10 +7,9 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import React, { useContext, useState } from 'react';
 import type { ProFieldFC, ProFieldLightProps } from '../../index';
 import { Calendar, DatePicker } from '@mantine/dates';
+import { Popover } from '@mantine/core';
 
 // 兼容代码-----------
-import 'antd/es/date-picker/style';
-import { Popover } from '@mantine/core';
 //----------------------
 
 dayjs.extend(weekOfYear);

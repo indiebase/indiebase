@@ -1,5 +1,6 @@
 import { useIntl } from '@ant-design/pro-provider';
-import { Button, ConfigProvider } from 'antd';
+import { Button, Group, useMantineTheme } from '@mantine/core';
+import { ConfigProvider } from 'antd';
 import classNames from 'classnames';
 import React, { useContext } from 'react';
 import { useStyle } from './style';
@@ -24,17 +25,16 @@ export type DropdownFooterProps = {
 const DropdownFooter: React.FC<DropdownFooterProps> = (props) => {
   const intl = useIntl();
   const { onClear, onConfirm, disabled, footerRender } = props;
-  const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
-  const prefixCls = getPrefixCls('pro-core-dropdown-footer');
-  const { wrapSSR, hashId } = useStyle(prefixCls);
+  const theme = useMantineTheme();
+
   const defaultFooter = [
     <Button
       key="clear"
       style={{
         visibility: onClear ? 'visible' : 'hidden',
       }}
-      type="link"
-      size="small"
+      variant="light"
+      size="xs"
       disabled={disabled}
       onClick={(e) => {
         if (onClear) {
@@ -46,10 +46,10 @@ const DropdownFooter: React.FC<DropdownFooterProps> = (props) => {
       {intl.getMessage('form.lightFilter.clear', '清除')}
     </Button>,
     <Button
+      variant="gradient"
+      gradient={theme.other.buttonGradient}
       key="confirm"
-      data-type="confirm"
-      type="primary"
-      size="small"
+      size="xs"
       onClick={onConfirm}
       disabled={disabled}
     >
@@ -63,15 +63,10 @@ const DropdownFooter: React.FC<DropdownFooterProps> = (props) => {
 
   const renderDom = footerRender?.(onConfirm, onClear) || defaultFooter;
 
-  return wrapSSR(
-    <div
-      className={classNames(prefixCls, hashId)}
-      onClick={(e) =>
-        (e.target as Element).getAttribute('data-type') !== 'confirm' && e.stopPropagation()
-      }
-    >
+  return (
+    <Group mt={25} grow>
       {renderDom}
-    </div>,
+    </Group>
   );
 };
 
