@@ -12,6 +12,7 @@ import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
 import { AccountStatus } from '@letscollab-nest/trait';
 import { OrgEntity } from '../collab/org/org.entity';
+import { ProjectEntity } from '../collab/project/project.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -122,6 +123,9 @@ export class UserEntity {
 
   @ManyToMany(() => OrgEntity, (t) => t.members)
   organizations?: OrgEntity[];
+
+  @ManyToMany(() => ProjectEntity, (t) => t.members)
+  projects?: ProjectEntity[];
 
   @BeforeInsert()
   @BeforeUpdate()

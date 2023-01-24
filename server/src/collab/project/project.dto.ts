@@ -2,18 +2,34 @@ import {
   PaginationReqDto,
   PaginationResSchemaDto,
 } from '@letscollab-nest/helper';
-import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsNumber,
+  Matches,
+} from 'class-validator';
 
-export class CreateTeamDto {
-  @ApiPropertyOptional({
-    description: 'Team name',
+export class CreateProjectDto {
+  @ApiProperty({
+    description: 'Project name',
     default: 'letscollab',
+    required: true,
   })
   @IsString()
   name: string;
 
   @ApiProperty({
+    description: 'Github repository URI',
+    default: 'https://github.com/deskbtm-letscollab/letscollab',
+    required: true,
+  })
+  @Matches(/github\.com/g)
+  githubRepoUrl: string;
+
+  @ApiProperty({
+    description: 'Public email',
     default: 'deskbtm@outlook.com',
   })
   @IsEmail(
@@ -26,19 +42,25 @@ export class CreateTeamDto {
   contactEmail?: string;
 
   @ApiProperty({
+    description: 'Project domain equals project name + organization domain',
+    default: 'letscollab.letscollab.deskbtm.com',
+  })
+  packageName: string;
+
+  @ApiProperty({
     default: 'xxxxxx',
   })
   @IsOptional()
   description: string;
 }
 
-export class UpdateTeamDto {
+export class UpdateProjectDto {
   @ApiProperty()
   @IsNumber()
   id: number;
 
   @ApiProperty({
-    description: 'Team name',
+    description: 'Project name',
     default: 'letscollab',
   })
   @IsOptional()
@@ -65,13 +87,7 @@ export class UpdateTeamDto {
   description: string;
 }
 
-export class DeleteTeamDto {
-  @ApiProperty()
-  @IsNumber()
-  id: number;
-}
-
-export class QueryTeamDto extends PaginationReqDto {
+export class QueryProjectDto extends PaginationReqDto {
   @ApiPropertyOptional({
     nullable: true,
   })
@@ -79,17 +95,16 @@ export class QueryTeamDto extends PaginationReqDto {
   name?: string;
 }
 
-export class QueryTeamResDto extends PaginationResSchemaDto {
-  @ApiPropertyOptional({
-    // type: () => TeamEntity,
-  })
-  d?: any;
+export class DeleteProjectDto {
+  @ApiProperty()
+  @IsNumber()
+  id: number;
 }
 
-// export class QueryTeamResDto extends PaginationReqDto {
-//   @ApiPropertyOptional({
-//     nullable: true,
-//   })
-//   @IsOptional()
-//   name?: string;
-// }
+export class ProjectListResDto extends PaginationResSchemaDto {
+  @ApiPropertyOptional({
+    type: () => {},
+  })
+  d?: any;
+  // d?: PrjEntity;
+}

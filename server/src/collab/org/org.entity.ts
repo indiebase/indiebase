@@ -6,10 +6,12 @@ import {
   UpdateDateColumn,
   JoinTable,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { OrgStatus } from '@letscollab-nest/trait';
 import { UserEntity } from '../../user/user.entity';
+import { ProjectEntity } from '../project/project.entity';
 
 @Entity('organization')
 export class OrgEntity {
@@ -94,4 +96,7 @@ export class OrgEntity {
     inverseJoinColumns: [{ name: 'user_id' }],
   })
   members: UserEntity[];
+
+  @OneToMany(() => ProjectEntity, (p) => p.organization)
+  projects: ProjectEntity[];
 }
