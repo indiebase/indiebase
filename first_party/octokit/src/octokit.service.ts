@@ -3,6 +3,19 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { OctokitOptions } from './octokit.interface';
 import { Octokit } from 'octokit';
 import { REQUEST } from '@nestjs/core';
+import { join } from 'path';
+
+class OctokitExtend {
+  private baseUrl = 'https://github.com';
+
+  public repoUrl(org, repo) {
+    return new URL(`${this.baseUrl}/${[org, repo].filter(Boolean).join('/')}`);
+  }
+
+  public orgUrl(name) {
+    return new URL(`${this.baseUrl}/${[name].filter(Boolean).join('/')}`);
+  }
+}
 
 @Injectable({ scope: Scope.REQUEST })
 export class OctokitService {
@@ -15,6 +28,7 @@ export class OctokitService {
   public paginate: Octokit['paginate'];
   public rest: Octokit['rest'];
   public retry: Octokit['retry'];
+  public extend: OctokitExtend;
 
   constructor(
     @Inject(OCTOKIT_OPTIONS)
@@ -40,5 +54,6 @@ export class OctokitService {
     this.paginate = octokit.paginate;
     this.rest = octokit.rest;
     this.retry = octokit.retry;
+    this.extend = new OctokitExtend();
   }
 }

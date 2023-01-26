@@ -32,6 +32,14 @@ export class OrgEntity {
   githubOrgName: string;
 
   @ApiProperty()
+  @Column('varchar', {
+    name: 'github_org_url',
+    unique: true,
+    comment: 'Github Organization url',
+  })
+  githubOrgUrl: string;
+
+  @ApiProperty()
   @Column('varchar', { unique: true, comment: 'Organization domain' })
   domain: string;
 

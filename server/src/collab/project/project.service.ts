@@ -24,6 +24,7 @@ export class ProjectService {
   ) {}
 
   async createProject(body: CreateProjectDto, id: number) {
+    const {} = body;
     const prjEntity = this.projectRepo.create(body);
     await this.projectRepo.save(prjEntity).catch((err) => {
       this.logger.error(err);

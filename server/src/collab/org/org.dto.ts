@@ -48,19 +48,6 @@ export class CreateOrgDto {
   contactEmail?: string;
 
   @ApiPropertyOptional({
-    description: 'Organization homepage',
-    default: 'https://letscollab.deskbtm.com',
-  })
-  @IsUrl(
-    {},
-    {
-      message: 'Illegal http Url',
-    },
-  )
-  @IsOptional()
-  homepage?: string;
-
-  @ApiPropertyOptional({
     default: 'xxxxxx',
   })
   @IsOptional()
@@ -69,6 +56,7 @@ export class CreateOrgDto {
   @ApiPropertyOptional({
     description: 'Organization icon url',
   })
+  @IsString()
   @IsOptional()
   avatarUrl?: string;
 }
@@ -108,7 +96,22 @@ export class UpdateOrgDto {
     description: 'Organization domain',
     default: 'letscollab.deskbtm.com',
   })
+  @IsEntityExisted(OrgEntity, 'domain', 'Organization domain')
+  @IsOptional()
   domain: string;
+
+  @ApiPropertyOptional({
+    description: 'Organization homepage',
+    default: 'https://letscollab.deskbtm.com',
+  })
+  @IsUrl(
+    {},
+    {
+      message: 'Illegal http Url',
+    },
+  )
+  @IsOptional()
+  homepage?: string;
 }
 
 export class DeleteOrgDto {

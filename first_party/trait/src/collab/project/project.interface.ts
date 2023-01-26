@@ -1,16 +1,16 @@
-import { UserProfile } from './user/user.interface';
+import { UserProfile } from '../../user';
 
 /**
  * Project Status Enum
  */
-export enum PrjStatus {
+export enum ProjectStatus {
   /* proof of concept */
   poc = 'poc',
   /* working in progress */
   wip = 'wip',
-  /*  project dead */
+  /*  project dead, */
   archive = 'archive',
-  /* project is operating, */
+  /* project is opening, */
   operating = 'operating',
   /* project has closed */
   closed = 'closed',
@@ -20,7 +20,7 @@ export interface IProject {
   id: number;
   name: string;
   contactEmail: string;
-  status?: PrjStatus;
+  status?: ProjectStatus;
   description?: string;
   createTime: Date;
   updateTime: Date;

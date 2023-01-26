@@ -1,32 +1,33 @@
 import {
+  IsEntityExisted,
   PaginationReqDto,
   PaginationResSchemaDto,
 } from '@letscollab-nest/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsEmail,
-  IsString,
-  IsOptional,
-  IsNumber,
-  Matches,
-} from 'class-validator';
+import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import { OrgEntity } from '../org/org.entity';
+import { ProjectEntity } from './project.entity';
 
 export class CreateProjectDto {
   @ApiProperty({
     description: 'Project name',
     default: 'letscollab',
-    required: true,
   })
   @IsString()
+  @IsEntityExisted(ProjectEntity, 'name', 'Project name')
   name: string;
 
   @ApiProperty({
-    description: 'Github repository URI',
-    default: 'https://github.com/deskbtm-letscollab/letscollab',
-    required: true,
+    description: 'Github repository name',
+    default: 'letscollab',
   })
-  @Matches(/github\.com/g)
-  githubRepoUrl: string;
+  @IsString()
+  githubRepoName: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsEntityExisted(OrgEntity, 'name', 'Organization', { throwOnExist: false })
+  orgName: string;
 
   @ApiProperty({
     description: 'Public email',
@@ -35,23 +36,23 @@ export class CreateProjectDto {
   @IsEmail(
     {},
     {
-      message: '邮箱格式不正确',
+      message: 'Email incorrect',
     },
   )
-  @IsOptional()
-  contactEmail?: string;
+  contactEmail: string;
 
   @ApiProperty({
     description: 'Project domain equals project name + organization domain',
     default: 'letscollab.letscollab.deskbtm.com',
   })
+  @IsEntityExisted(ProjectEntity, 'packageName', 'Package name')
   packageName: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     default: 'xxxxxx',
   })
   @IsOptional()
-  description: string;
+  description?: string;
 }
 
 export class UpdateProjectDto {
@@ -106,5 +107,4 @@ export class ProjectListResDto extends PaginationResSchemaDto {
     type: () => {},
   })
   d?: any;
-  // d?: PrjEntity;
 }

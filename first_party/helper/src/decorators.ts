@@ -87,6 +87,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
   validate(value: any, args: ValidationArguments) {
     const entity: EntityTarget<any> = args.constraints[0];
     const key: string = args.constraints[1];
+    const throwOnExist: string = args.constraints[3];
     return this.dataSource
       .getRepository(entity)
       .findOne({
@@ -95,14 +96,14 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
         },
       })
       .then((e) => {
-        return !e;
+        return throwOnExist ? !e : e;
       });
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {
     return `${validationArguments.constraints?.[2] ?? 'Entity'} ⌜${
       validationArguments.value
-    }⌟ has existed`;
+    }⌟ ${validationArguments.constraints?.[3] ? 'has existed' : 'not exist'}`;
   }
 }
 
@@ -112,19 +113,26 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
  * @param {ValidationOptions} validationOptions
  */
 
+type ExtendValidationOptions = ValidationOptions & {
+  /**
+   * `false`: Throw NOT EXIST ERROR if entity doesn't exist , default: true.
+   */
+  throwOnExist: boolean;
+};
+
 //TODO: fix https://github.com/nestjs/nest/issues/528
 export function IsEntityExisted(
   entity: EntityTarget<LiteralObject>,
   key: string,
   alias?: string,
-  validationOptions?: ValidationOptions & {},
+  validationOptions: ExtendValidationOptions = { throwOnExist: true },
 ) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      constraints: [entity, key, alias],
+      constraints: [entity, key, alias, validationOptions.throwOnExist],
       validator: IsEntityExistedConstraint,
     });
   };

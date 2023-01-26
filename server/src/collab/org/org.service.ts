@@ -116,7 +116,6 @@ export class OrgService {
       description,
       contactEmail,
       domain,
-      homepage,
       githubOrgName,
       avatarUrl,
     } = body;
@@ -128,9 +127,9 @@ export class OrgService {
       description,
       githubOrgName,
       domain,
-      homepage,
       ownerId: id,
       creatorId: id,
+      githubOrgUrl: this.octokit.extend.orgUrl(name).href,
     });
 
     const user = await this.userService.repo.findOne({
