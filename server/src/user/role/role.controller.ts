@@ -24,7 +24,7 @@ import {
   UpdateRoleDto,
 } from './role.dto';
 import { AccessGuard, DevApiHeader, ResultCode } from '@letscollab-nest/helper';
-import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
+import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
 
 @Controller({
@@ -38,6 +38,10 @@ export class RoleController {
   @Post()
   @ApiOperation({
     summary: 'Create a new role',
+  })
+  @UseAccess({
+    action: AccessAction.createAny,
+    resource: RoleResource.list,
   })
   @ApiCookieAuth('SID')
   async create(@Body() role: CreateRoleDto) {

@@ -29,6 +29,10 @@ export class OrgService {
     private readonly userService: UserService,
   ) {}
 
+  public get repo() {
+    return this.orgRepo;
+  }
+
   public async queryOrg(body: QueryOrgDto) {
     body = Object.assign({}, body);
     const { name, current, pageSize } = body;

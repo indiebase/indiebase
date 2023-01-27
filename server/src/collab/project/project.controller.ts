@@ -1,4 +1,6 @@
+import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { AccessGuard, MyInfo, ResultCode } from '@letscollab-nest/helper';
+import { ProjectResource, UserResource } from '@letscollab-nest/trait';
 import {
   Body,
   Controller,
@@ -49,6 +51,11 @@ export class ProjectController {
     summary: 'Create a project',
   })
   @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.createAny,
+    resource: ProjectResource.list,
+  })
   async createProject(
     @Body() body: CreateProjectDto,
     @MyInfo('id') id: number,

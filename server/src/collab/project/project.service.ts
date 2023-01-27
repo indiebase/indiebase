@@ -13,23 +13,52 @@ import {
 import { Repository } from 'typeorm';
 import { ProjectEntity } from './project.entity';
 import { ResultCode } from '@letscollab-nest/helper';
+import { OctokitService } from '@letscollab-nest/octokit';
+import { OrgService } from '../org/org.service';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectRepository(ProjectEntity)
     private readonly projectRepo: Repository<ProjectEntity>,
-
+    private readonly octokit: OctokitService,
+    private readonly orgService: OrgService,
     private readonly logger: Logger,
   ) {}
 
   async createProject(body: CreateProjectDto, id: number) {
-    const {} = body;
-    const prjEntity = this.projectRepo.create(body);
-    await this.projectRepo.save(prjEntity).catch((err) => {
+    const {
+      name,
+      githubRepoName,
+      orgName,
+      contactEmail,
+      packageName,
+      description,
+    } = body;
+
+    const org = await this.orgService.repo.findOne({
+      where: {
+        name: orgName,
+      },
+    });
+
+    const projectEntity = this.projectRepo.create({
+      name,
+      githubRepoName,
+      githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
+      contactEmail,
+      packageName,
+      description,
+    });
+
+    projectEntity.organization = org;
+
+    await this.projectRepo.save(projectEntity).catch((err) => {
       this.logger.error(err);
+  
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
+        message: 'Create project failed',
       });
     });
   }

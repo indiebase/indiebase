@@ -32,6 +32,14 @@ export class ProjectEntity {
   githubRepoName: string;
 
   @ApiProperty()
+  @Column('varchar', {
+    name: 'github_repo_url',
+    unique: true,
+    comment: 'Github repository url',
+  })
+  githubRepoUrl: string;
+
+  @ApiProperty()
   @Column('varchar', { name: 'contact_email' })
   contactEmail: string;
 
