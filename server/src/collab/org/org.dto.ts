@@ -120,24 +120,16 @@ export class DeleteOrgDto {
   id: number;
 }
 
+export class TransferOrgDto {
+  @ApiProperty()
+  @IsNumber()
+  id: number;
+}
+
 export class QueryOrgDto extends PaginationReqDto {
   @ApiPropertyOptional({
     nullable: true,
   })
   @IsOptional()
   name?: string;
-}
-
-export class InviteMemberDto {
-  @ApiProperty()
-  @IsNumber()
-  id: number;
-
-  @ApiProperty({
-    enum: [],
-    // enum: InvitationType,
-    description: 'Invitation type team, project',
-  })
-  @IsNumber()
-  type: any;
 }

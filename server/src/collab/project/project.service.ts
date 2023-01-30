@@ -42,20 +42,24 @@ export class ProjectService {
       },
     });
 
+    const prefix = org.domain.split('').reverse().join('');
+
     const projectEntity = this.projectRepo.create({
       name,
       githubRepoName,
       githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
       contactEmail,
-      packageName,
+      packageName: packageName ?? `${prefix}.${name}`,
       description,
+      ownerId: id,
+      creatorId: id,
     });
 
     projectEntity.organization = org;
 
     await this.projectRepo.save(projectEntity).catch((err) => {
       this.logger.error(err);
-  
+
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
         message: 'Create project failed',
@@ -92,27 +96,24 @@ export class ProjectService {
   async updateProject(body: UpdateProjectDto) {
     const { id, ...rest } = body;
     this.projectRepo.remove;
+
     await this.projectRepo.update({ id }, rest).catch((err) => {
       this.logger.error(err);
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
-        message: err?.code === 'ER_DUP_ENTRY' ? '项目已存在' : '创建失败',
       });
     });
-
-    return { code: ResultCode.SUCCESS, message: '创建成功' };
   }
 
   async deleteProject(body: DeleteProjectDto) {
     const { id } = body;
     await this.projectRepo.delete({ id }).catch((err) => {
       this.logger.error(err);
+
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
-        message: '删除失败',
+        message: 'Delete failed',
       });
     });
-
-    return { code: ResultCode.SUCCESS, message: '创建成功' };
   }
 }

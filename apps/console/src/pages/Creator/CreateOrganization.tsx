@@ -56,7 +56,10 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
     },
   });
 
-  const { data, isSuccess } = useQuery(['github-orgs'], fetchMyGithubOrgsApi);
+  const { data, isSuccess, isLoading } = useQuery(
+    ['github-orgs'],
+    fetchMyGithubOrgsApi,
+  );
   const [_, dispatch] = useAtom(userProfileQueryAtom[0]);
 
   const githubOrgs = useMemo(
@@ -98,7 +101,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
               style={{ width: 250 }}
               maxDropdownHeight={400}
               clearable
-              nothingFound="Empty"
+              nothingFound={isLoading ? 'Loading...' : 'Empty'}
               onChange={async (e) => {
                 const r = githubOrgs.find((v) => v.value === e);
                 if (!r) return;
@@ -113,6 +116,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
 
             <UploadImage
               src={github?.logo}
+              croppable={true}
               label="Organization icon"
               onChange={(url) => {
                 form.setFieldValue('avatarUrl', url);

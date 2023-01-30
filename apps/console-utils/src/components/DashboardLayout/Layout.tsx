@@ -11,9 +11,6 @@ export interface DashboardLayoutProps extends NavHeaderProps {
 
 export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
   const theme = useMantineTheme();
-
-  console.log(theme);
-
   console.log('------------------------------------------------------');
 
   return (

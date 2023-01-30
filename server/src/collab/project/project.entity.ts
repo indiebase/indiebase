@@ -10,8 +10,9 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProjectStatus } from '@letscollab-nest/trait';
-import { UserEntity } from 'src/user/user.entity';
+import { UserEntity } from '../../user/user.entity';
 import { OrgEntity } from '../org/org.entity';
+import { type OrgEntity as OrgEntityType } from '../org/org.entity';
 
 @Entity('project')
 export class ProjectEntity {
@@ -66,7 +67,6 @@ export class ProjectEntity {
     name: 'status',
     comment: 'Project Status',
     enum: ProjectStatus,
-    nullable: true,
   })
   status?: ProjectStatus;
 
@@ -101,6 +101,19 @@ export class ProjectEntity {
   members?: UserEntity[];
 
   @ApiProperty()
-  @ManyToOne(() => OrgEntity, (o) => o.projects)
-  organization: OrgEntity;
+  @ManyToOne(() => OrgEntity, (o) => o.projects, { cascade: true })
+  organization: OrgEntityType;
+
+  /**
+   * The same as creator id at first time.
+   */
+  @ApiProperty({
+    description: 'Project owner id, the same as creator id at first time.',
+  })
+  @Column('int', { name: 'owner_id', comment: 'Owner id' })
+  ownerId: number;
+
+  @ApiProperty({ description: 'Creator id' })
+  @Column('int', { name: 'creator_id', comment: 'User id' })
+  creatorId: number;
 }

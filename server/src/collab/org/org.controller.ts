@@ -21,6 +21,7 @@ import {
   CreateOrgDto,
   DeleteOrgDto,
   QueryOrgDto,
+  TransferOrgDto,
   UpdateOrgDto,
 } from './org.dto';
 import {
@@ -131,4 +132,16 @@ export class OrgController {
     resource: OrgResource.list,
   })
   async deleteOrg(@Body() body: DeleteOrgDto) {}
+
+  @ApiOperation({
+    summary: 'Delete an owned organization',
+  })
+  // @Delete(':name')
+  @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.deleteAny,
+    resource: OrgResource.list,
+  })
+  async transferOrg(@Body() body: TransferOrgDto) {}
 }

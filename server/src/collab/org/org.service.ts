@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -173,10 +172,8 @@ export class OrgService {
       this.logger.error(err);
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
-        message: '删除失败',
+        message: 'Delete failed',
       });
     });
-
-    return { code: ResultCode.SUCCESS, message: '删除成功' };
   }
 }

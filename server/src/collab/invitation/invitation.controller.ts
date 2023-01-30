@@ -6,15 +6,7 @@ import {
   ResultCode,
 } from '@letscollab-nest/helper';
 import { UserSession } from '@letscollab-nest/trait';
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import {
   ApiCookieAuth,
   ApiOkResponse,

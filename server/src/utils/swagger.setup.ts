@@ -1,10 +1,12 @@
-import { FileModule } from './../file/file.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
+import { InvitationModule } from '../collab/invitation/invitation.module';
+import { FileModule } from './../file/file.module';
 import { INestApplication } from '@nestjs/common';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { OrgModule } from '../collab/org/org.module';
+import { ProjectModule } from '../collab/project/project.module';
 
 export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
@@ -58,7 +60,7 @@ export const setupApiDoc = (app: INestApplication) =>
       });
 
       const collabDoc = SwaggerModule.createDocument(app, collabOptions, {
-        include: [OrgModule],
+        include: [OrgModule, ProjectModule, InvitationModule],
       });
 
       const msgDoc = SwaggerModule.createDocument(app, userOptions, {

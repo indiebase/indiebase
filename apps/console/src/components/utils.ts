@@ -1,22 +1,22 @@
-import { PrjStatus } from '@letscollab-nest/trait';
+import { ProjectStatus } from '@letscollab-nest/trait';
 import { MantineColor } from '@mantine/core';
 
-export const getStatusColor = function (status: PrjStatus) {
+export const getStatusColor = function (status: ProjectStatus) {
   let color: MantineColor;
   switch (status) {
-    case PrjStatus.archive:
+    case ProjectStatus.archive:
       color = 'gray';
       break;
-    case PrjStatus.closed:
+    case ProjectStatus.closed:
       color = 'pink';
       break;
-    case PrjStatus.operating:
+    case ProjectStatus.operating:
       color = 'blue';
       break;
-    case PrjStatus.poc:
+    case ProjectStatus.poc:
       color = 'cyan';
       break;
-    case PrjStatus.wip:
+    case ProjectStatus.wip:
       color = 'orange';
       break;
   }

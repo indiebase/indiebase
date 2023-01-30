@@ -1,6 +1,6 @@
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { AccessGuard, MyInfo, ResultCode } from '@letscollab-nest/helper';
-import { ProjectResource, UserResource } from '@letscollab-nest/trait';
+import { ProjectResource } from '@letscollab-nest/trait';
 import {
   Body,
   Controller,
@@ -85,5 +85,10 @@ export class ProjectController {
   //TODO
   @Delete()
   @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseAccess({
+    action: AccessAction.deleteOwn,
+    resource: ProjectResource.list,
+  })
   async deletePrj(@Body() body: DeleteProjectDto) {}
 }

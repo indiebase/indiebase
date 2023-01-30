@@ -60,6 +60,7 @@ export class OrgEntity {
     comment: 'Organization Status',
     enum: OrgStatus,
     default: OrgStatus.active,
+    nullable: true,
   })
   status: OrgStatus;
 
@@ -105,6 +106,7 @@ export class OrgEntity {
   })
   members: UserEntity[];
 
+  @ApiProperty()
   @OneToMany(() => ProjectEntity, (p) => p.organization)
   projects: ProjectEntity[];
 }

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { BaseResSchema, IProject, PrjStatus } from '@letscollab-nest/trait';
+import { BaseResSchema, IProject, ProjectStatus } from '@letscollab-nest/trait';
 import { mock } from '../api';
 import { FakeSingleUserProfile } from './user.mock';
 
@@ -18,6 +18,6 @@ mock.onGet('/v1/prj/list').reply<BaseResSchema<IProject[]>>(200, {
       FakeSingleUserProfile(),
     ),
     cover: (i + 1) % 3 === 0 ? null : faker.image.food(),
-    status: Object.values(PrjStatus)[Math.floor(Math.random() * 4)],
+    status: Object.values(ProjectStatus)[Math.floor(Math.random() * 4)],
   })),
 });

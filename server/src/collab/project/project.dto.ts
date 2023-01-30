@@ -102,9 +102,9 @@ export class DeleteProjectDto {
   id: number;
 }
 
-export class ProjectListResDto extends PaginationResSchemaDto {
-  @ApiPropertyOptional({
-    type: () => {},
-  })
-  d?: any;
-}
+// export class ProjectListResDto extends PaginationResSchemaDto {
+//   @ApiPropertyOptional({
+//     type: () => {},
+//   })
+//   d?: any;
+// }
