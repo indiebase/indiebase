@@ -32,7 +32,7 @@ export class OrgService {
     return this.orgRepo;
   }
 
-  public async queryOrg(body: QueryOrgDto) {
+  public async query(body: QueryOrgDto) {
     body = Object.assign({}, body);
     const { name, current, pageSize } = body;
     let cond = [];
@@ -56,6 +56,19 @@ export class OrgService {
       current,
       d: list,
     };
+  }
+  public async get(name: string) {
+    return this.orgRepo
+      .findOne({
+        where: { name },
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: `Get organization ${name} failed`,
+        });
+      });
   }
 
   /**
@@ -84,6 +97,25 @@ export class OrgService {
   public async getGithubOrg(name: string) {
     let { data } = await this.octokit.rest.orgs
       .get({ org: name })
+      .catch((err) => {
+        this.logger.error(err);
+
+        if (err.status === 401) {
+          throw new UnauthorizedException('Github bad credentials');
+        }
+
+        throw new BadRequestException();
+      });
+
+    return data;
+  }
+
+  public async getGithubOrgRepos(name: string) {
+    let { data } = await this.octokit.rest.repos
+      .listForOrg({
+        org: name,
+        type: 'all',
+      })
       .catch((err) => {
         this.logger.error(err);
 

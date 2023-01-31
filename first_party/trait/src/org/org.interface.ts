@@ -13,28 +13,17 @@ export enum OrgStatus {
 
 export interface Org {
   id: number;
-
   name: string;
-
   githubOrgName: string;
-
+  avatarUrl?: string;
   domain: string;
-
   contactEmail: string;
-
   status: OrgStatus;
-
   description?: string;
-
   homepage?: string;
-
   createTime: Date;
-
   updateTime: Date;
-
   creatorId: number;
-
   ownerId: number;
-
   members?: UserProfile[];
 }

@@ -1,4 +1,3 @@
-import { FastifyRequest } from 'fastify';
 import {
   Body,
   Controller,
@@ -8,7 +7,6 @@ import {
   Post,
   Put,
   Query,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -28,11 +26,10 @@ import {
   AccessGuard,
   BaseResSchemaDto,
   MyInfo,
-  ProtectGuard,
   ResultCode,
 } from '@letscollab-nest/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
-import { OrgResource, UserResource } from '@letscollab-nest/trait';
+import { OrgResource } from '@letscollab-nest/trait';
 import { OrgService } from './org.service';
 import { CoProtectGuard } from '../../utils';
 
@@ -48,12 +45,12 @@ export class OrgController {
   @Get('list')
   @ApiCookieAuth('SID')
   @ApiOkResponse({})
-  async queryOrgs(@Query() query: QueryOrgDto, @Req() req: FastifyRequest) {
-    return;
+  async queryOrgs(@Query() query: QueryOrgDto) {
+    return this.orgService.query(query);
   }
 
   @ApiOperation({
-    summary: 'Fetch github orgs',
+    summary: 'Fetch github organizations',
   })
   @Get('github')
   @UseGuards(CoProtectGuard, AccessGuard)
@@ -67,7 +64,7 @@ export class OrgController {
   }
 
   @ApiOperation({
-    summary: 'Fetch github orgs',
+    summary: 'Fetch github organization',
   })
   @Get('github/:name')
   @UseGuards(CoProtectGuard, AccessGuard)
@@ -80,24 +77,40 @@ export class OrgController {
     };
   }
 
+  @ApiOperation({
+    summary: 'Fetch github organization repositories',
+  })
+  @Get('github/:name/repos')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiCookieAuth('SID')
+  async githubOrgProjects(@Param('name') name: string) {
+    const d = await this.orgService.getGithubOrgRepos(name);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
+  }
+
   @Get(':name')
   @ApiCookieAuth('SID')
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiOperation({
-    summary: 'Get a organization',
+    summary: 'Get an organization',
   })
-  @UseAccess({
-    action: AccessAction.readAny,
-    resource: UserResource.list,
-  })
-  async getOrg(@Param('name') username: string) {}
+  async getOrg(@Param('name') orgName: string) {
+    const d = await this.orgService.get(orgName);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
+  }
 
   @ApiOperation({
     summary: 'Create an organization',
   })
   @Post()
   @ApiCookieAuth('SID')
-  @UseGuards(ProtectGuard, AccessGuard)
+  @UseGuards(CoProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: OrgResource.list,

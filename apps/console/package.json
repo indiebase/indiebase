@@ -21,7 +21,7 @@
     "@mantine/notifications": "^5.5.4",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
-    "@tabler/icons": "^1.92.0",
+    "@tabler/icons": "^1.119.0",
     "@tanstack/query-core": "^4.20.4",
     "@tanstack/react-query": "^4.20.4",
     "@tanstack/react-query-devtools": "^4.20.4",

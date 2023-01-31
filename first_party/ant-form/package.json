@@ -37,7 +37,7 @@
     "@letscollab/ant-utils": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
-    "@tabler/icons": "^1.92.0",
+    "@tabler/icons": "^1.119.0",
     "@umijs/use-params": "^1.0.9",
     "classnames": "^2.2.6",
     "lodash.merge": "^4.6.2",

@@ -38,7 +38,7 @@
     "@letscollab/ant-utils": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
-    "@tabler/icons": "^1.92.0",
+    "@tabler/icons": "^1.119.0",
     "classnames": "^2.2.6",
     "dayjs": "^1.11.4",
     "i18next": "^21.8.12",

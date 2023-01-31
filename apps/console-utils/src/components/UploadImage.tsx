@@ -8,7 +8,7 @@ import {
   Button,
 } from '@mantine/core';
 import { IconBuildingCommunity } from '@tabler/icons';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useState, ReactElement } from 'react';
 import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import Cropper from 'react-easy-crop';
@@ -24,6 +24,7 @@ interface UploadImageProps {
   croppable?: boolean;
   cropTitle?: string;
   label?: string;
+  icon?: (size) => ReactElement;
 }
 
 const createImage = (url) =>
@@ -80,6 +81,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
   croppable,
   cropTitle,
   onChange,
+  icon,
 }) {
   const [cropped, setCropped] = useState<Blob>();
   const [url, setUrl] = useState<string>();
@@ -151,7 +153,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
           accept={IMAGE_MIME_TYPE}
         >
           <Avatar src={url ?? src} size={size}>
-            <IconBuildingCommunity size={size / 2 - 5} />
+            {icon(size)}
           </Avatar>
         </Dropzone>
       </div>
@@ -220,4 +222,5 @@ UploadImage.defaultProps = {
   limit: 2048,
   croppable: false,
   cropTitle: 'Crop Image',
+  icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
 };

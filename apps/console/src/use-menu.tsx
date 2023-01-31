@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   SidebarTileNode,
   userProfileQueryAtom,
@@ -14,9 +14,13 @@ export const useMenu = () => {
   const [data] = useAtom(userProfileQueryAtom[0]);
   const { t, i18n } = useTranslation(['common', 'setting']);
   const profile = data.d;
+  const { state } = useLocation();
 
   // if not match, menu is immutable.
-  const deps = !!params['*'] ? [] : [org, project, user, i18n.language];
+  const deps =
+    !!params['*'] || state?.menuImmutable
+      ? []
+      : [org, project, user, i18n.language];
 
   return useMemo<SidebarTileNode[]>(() => {
     //TODO:optimize this stupid way.

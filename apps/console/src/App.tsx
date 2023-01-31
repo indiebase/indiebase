@@ -1,15 +1,11 @@
 import { router } from './Router';
-import { Provider, useAtom } from 'jotai';
+import { Provider } from 'jotai';
 import { RouterProvider } from 'react-router-dom';
 import { useAtomsDebugValue } from 'jotai/devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import {
-  userProfileAtom,
-  fetchUserProfile,
-  letscollabCustomTheme,
-} from '@letscollab-community/console-utils';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { letscollabCustomTheme } from '@letscollab-community/console-utils';
+import { useState } from 'react';
 import { queryClientAtom } from 'jotai-tanstack-query';
 import {
   ColorScheme,
@@ -34,17 +30,17 @@ const DebugAtoms = () => {
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-function InitializeUser(props: PropsWithChildren) {
-  const [userProfile, setUserProfile] = useAtom(userProfileAtom);
+// function InitializeUser(props: PropsWithChildren) {
+//   const [userProfile, setUserProfile] = useAtom(userProfileAtom);
 
-  useEffect(() => {
-    fetchUserProfile().then((data) => {
-      setUserProfile(data.d);
-    });
-  }, []);
+//   useEffect(() => {
+//     fetchUserProfile().then((data) => {
+//       setUserProfile(data.d);
+//     });
+//   }, []);
 
-  return <>{userProfile ? props.children : null}</>;
-}
+//   return <>{userProfile ? props.children : null}</>;
+// }
 
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');

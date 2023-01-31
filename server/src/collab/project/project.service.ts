@@ -1,7 +1,9 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -42,14 +44,12 @@ export class ProjectService {
       },
     });
 
-    const prefix = org.domain.split('').reverse().join('');
-
     const projectEntity = this.projectRepo.create({
       name,
       githubRepoName,
       githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
       contactEmail,
-      packageName: packageName ?? `${prefix}.${name}`,
+      packageName: packageName ?? `${org.domain}.${name}`,
       description,
       ownerId: id,
       creatorId: id,
@@ -91,6 +91,25 @@ export class ProjectService {
       current,
       d: list,
     };
+  }
+
+  public async searchGithubRepo(name: string) {
+    let { data } = await this.octokit.rest.search
+      .repos({
+        q: name,
+        sort: 'stars',
+      })
+      .catch((err) => {
+        this.logger.error(err);
+
+        if (err.status === 401) {
+          throw new UnauthorizedException('Github bad credentials');
+        }
+
+        throw new BadRequestException();
+      });
+
+    return data;
   }
 
   async updateProject(body: UpdateProjectDto) {

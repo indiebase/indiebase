@@ -30,7 +30,7 @@ i18n
         table: tableEn,
       },
     },
-    fallbackLng: ['zh-CN'],
+    fallbackLng: ['en'],
     react: {
       useSuspense: true,
     },

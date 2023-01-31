@@ -5,6 +5,7 @@ import { OrganizationPage, AccessPage, MyPage } from './pages';
 import { TwoFactorAuthPage } from './pages/My/Settings';
 import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
+import { CreateProjectPage } from './pages/Creator/CreateProject';
 
 const projectRouter = {
   path: ':project',
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
             element: <OrganizationPage />,
           },
           projectRouter,
+          {
+            path: 'create/project',
+            element: <CreateProjectPage />,
+          },
           {
             path: 'settings',
             children: [

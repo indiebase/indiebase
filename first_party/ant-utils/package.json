@@ -34,7 +34,7 @@
     "@babel/runtime": "^7.18.0",
     "@mantine/core": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
-    "@tabler/icons": "^1.92.0",
+    "@tabler/icons": "^1.119.0",
     "classnames": "^2.2.6",
     "dayjs": "^1.11.4",
     "rc-util": "^5.0.6",

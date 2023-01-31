@@ -5309,7 +5309,7 @@ __metadata:
     "@mantine/notifications": ^5.5.4
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
     "@svgr/webpack": ^5.5.0
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     "@tanstack/query-core": ^4.20.4
     "@tanstack/react-query": ^4.20.4
     "@tanstack/react-query-devtools": ^4.20.4
@@ -5412,7 +5412,7 @@ __metadata:
     "@mdx-js/loader": ^2.1.1
     "@mdx-js/react": ^2.1.1
     "@next/mdx": ^12.1.6
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     "@types/nprogress": ^0.2.0
     "@types/prismjs": ^1
     "@types/react": ^18.0.14
@@ -5813,7 +5813,7 @@ __metadata:
     "@mantine/core": ^5.5.4
     "@mantine/hooks": ^5.5.4
     "@mantine/notifications": ^5.5.4
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^2.1.2
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
     axios: ^0.27.2
@@ -5912,7 +5912,7 @@ __metadata:
     "@mantine/core": ^5.5.4
     "@mantine/dates": ^5.5.4
     "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     "@types/classnames": ^2.2.10
     "@types/lodash.tonumber": ^4.0.6
     "@types/react-color": ^3.0.4
@@ -5941,7 +5941,7 @@ __metadata:
     "@letscollab/ant-utils": "workspace:^"
     "@mantine/core": ^5.5.4
     "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     "@types/lodash.merge": ^4.6.7
     "@umijs/use-params": ^1.0.9
     classnames: ^2.2.6
@@ -5976,7 +5976,7 @@ __metadata:
     "@letscollab/ant-utils": "workspace:^"
     "@mantine/core": ^5.5.4
     "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     classnames: ^2.2.6
     dayjs: ^1.11.4
     i18next: ^21.8.12
@@ -6004,7 +6004,7 @@ __metadata:
     "@babel/runtime": ^7.18.0
     "@mantine/core": ^5.5.4
     "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     classnames: ^2.2.6
     dayjs: ^1.11.4
     rc-util: ^5.0.6
@@ -6101,7 +6101,7 @@ __metadata:
     "@mantine/core": ^5.5.4
     "@mantine/dates": ^5.5.4
     "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.92.0
+    "@tabler/icons": ^1.119.0
     "@types/node": ^16.11.25
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
@@ -8531,9 +8531,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:^1.92.0":
-  version: 1.110.0
-  resolution: "@tabler/icons@npm:1.110.0"
+"@tabler/icons@npm:^1.119.0":
+  version: 1.119.0
+  resolution: "@tabler/icons@npm:1.119.0"
   peerDependencies:
     react: ^16.x || 17.x || 18.x
     react-dom: ^16.x || 17.x || 18.x
@@ -8542,7 +8542,14 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: a2a68c6367cdfd278b01fd0d595a292d53413e0c0d24543057e60f04bc39ca1b2769e18a9c0ef0e116ab6a504f616b78aa48c1ba0c4f02c845b0ab250fa315a0
+  checksum: ef1ac50c1a47b2205cb86ca43c28d69c7b8f547ad9c2c5545190fc4a455e9767f49cb511a6f9e8dc45b046ee7d2dab3d2c87af4fd5bbb1694832a15698158753
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@tabler/icons@npm:2.1.2"
+  checksum: bce682e783c2c6cb27b3dc8bded11c2c003bc6afe4234487826d4b19790ff393b827027ff564bba5604a1b5092406a0fbb47f86171e391799155819881acd87b
   languageName: node
   linkType: hard
 

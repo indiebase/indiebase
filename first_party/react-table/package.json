@@ -12,7 +12,7 @@
     "@mantine/core": "^5.5.4",
     "@mantine/dates": "^5.5.4",
     "@mantine/hooks": "^5.5.4",
-    "@tabler/icons": "^1.92.0"
+    "@tabler/icons": "^1.119.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",

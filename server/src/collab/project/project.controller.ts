@@ -6,6 +6,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Query,
@@ -21,7 +22,7 @@ import { CoProtectGuard } from '../../utils';
 import {
   CreateProjectDto,
   DeleteProjectDto,
-  ProjectListResDto,
+  // ProjectListResDto,
   QueryProjectDto,
   UpdateProjectDto,
 } from './project.dto';
@@ -42,7 +43,7 @@ export class ProjectController {
     summary: 'Get project list',
   })
   @ApiOkResponse({
-    type: ProjectListResDto,
+    // type: ProjectListResDto,
   })
   async getProjects(@Query() query: QueryProjectDto) {}
 
@@ -71,9 +72,23 @@ export class ProjectController {
   @Get('github')
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
-  async githubOrgs() {
+  async githubOrgs(@Param('name') name) {
     return {
       code: ResultCode.SUCCESS,
+    };
+  }
+
+  @ApiOperation({
+    summary: 'Fetch github projects from specified organization',
+  })
+  @Get('github/search/:name')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiCookieAuth('SID')
+  async searchGithubRepo(@Param('name') name) {
+    const d = await this.searchGithubRepo(name);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
     };
   }
 

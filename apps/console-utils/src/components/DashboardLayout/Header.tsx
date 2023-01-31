@@ -45,9 +45,11 @@ export const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
     return (
       <div ref={ref} {...rest}>
         <Group noWrap spacing={7}>
-          <Avatar src={logo} radius="xl" size={15}>
-            <IconBuildingCommunity size={12} />
-          </Avatar>
+          {logo && (
+            <Avatar src={logo} radius="xl" size={15}>
+              <IconBuildingCommunity size={12} />
+            </Avatar>
+          )}
           <Text lineClamp={1} size="xs">
             {label}
           </Text>

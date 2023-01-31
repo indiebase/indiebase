@@ -74,6 +74,17 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
     [data, isSuccess],
   );
 
+  const handleChange = async function (e: string) {
+    const r = githubOrgs.find((v) => v.value === e);
+    if (!r) return;
+    setGithub(r);
+    form.setFieldValue('githubOrgName', r.value);
+    form.setFieldValue('name', r.value);
+    const { d } = await fetchGithubOrgApi(r.value);
+    form.setFieldValue('contactEmail', d.email);
+    form.setFieldValue('avatarUrl', d.avatar_url);
+  };
+
   return (
     <>
       <Box style={{ maxWidth: 800 }}>
@@ -102,16 +113,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
               maxDropdownHeight={400}
               clearable
               nothingFound={isLoading ? 'Loading...' : 'Empty'}
-              onChange={async (e) => {
-                const r = githubOrgs.find((v) => v.value === e);
-                if (!r) return;
-                setGithub(r);
-                form.setFieldValue('githubOrgName', r.value);
-                form.setFieldValue('name', r.value);
-                const { d } = await fetchGithubOrgApi(r.value);
-                form.setFieldValue('contactEmail', d.email);
-                form.setFieldValue('avatarUrl', d.avatar_url);
-              }}
+              onChange={handleChange}
             />
 
             <UploadImage
@@ -127,7 +129,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
             style={{ width: 500 }}
             mt={20}
             withAsterisk
-            label="Organization Name"
+            label="Organization name"
             {...form.getInputProps('name')}
           />
           <TextInput
