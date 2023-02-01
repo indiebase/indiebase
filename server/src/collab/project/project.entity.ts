@@ -67,6 +67,7 @@ export class ProjectEntity {
     name: 'status',
     comment: 'Project Status',
     enum: ProjectStatus,
+    nullable: true,
   })
   status?: ProjectStatus;
 

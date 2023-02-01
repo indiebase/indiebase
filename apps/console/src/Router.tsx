@@ -6,6 +6,7 @@ import { TwoFactorAuthPage } from './pages/My/Settings';
 import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
 import { CreateProjectPage } from './pages/Creator/CreateProject';
+import { InviteMembersPage } from './pages/Creator/InviteMembers';
 
 const projectRouter = {
   path: ':project',
@@ -94,7 +95,16 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'org',
-            element: <CreateOrganizationPage />,
+            children: [
+              {
+                index: true,
+                element: <CreateOrganizationPage />,
+              },
+              {
+                path: ':createdName',
+                element: <InviteMembersPage />,
+              },
+            ],
           },
         ],
       },

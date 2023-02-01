@@ -13,16 +13,14 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import ReactConfetti from 'react-confetti';
-import { searchUsersApi } from '@letscollab-community/console-utils';
+import {
+  searchUsersApi,
+  useRemoveAppShellLeftPadding,
+} from '@letscollab-community/console-utils';
 import debounce from 'lodash.debounce';
 import { IconBuildingCommunity } from '@tabler/icons';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Link, useLocation } from 'react-router-dom';
-
-export interface InviteMembersProps {
-  confetti?: boolean;
-  orgName?: string;
-}
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 export const SelectItem = forwardRef<HTMLDivElement, any>(
   ({ logo, label, username, ...rest }, ref) => {
@@ -55,7 +53,7 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
   const [value, setValue] = useState([]);
   const ref = useRef<any>();
   const theme = useMantineTheme();
-  const { state } = useLocation();
+  const { createdName } = useParams();
 
   const handleSearch = debounce((query) => {
     searchUsersApi({ email: query }).then(({ d }) => {
@@ -136,7 +134,7 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
           >
             Go home
           </Anchor>
-          {state?.orgName && (
+          {createdName && (
             <Anchor
               to="/"
               replace
@@ -153,15 +151,16 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
   );
 };
 
-export const InviteMembers: FC<InviteMembersProps> = function ({ confetti }) {
+export const InviteMembers = function () {
   const { height, width } = useViewportSize();
+  const { state } = useLocation();
 
   return (
     <Stack align="center">
       <ReactConfetti
         width={width - 16}
         height={height}
-        run={confetti}
+        run={state?.confetti}
         recycle={false}
         numberOfPieces={300}
         wind={0}
@@ -197,20 +196,15 @@ InviteMembers.defaultProps = {
   confetti: false,
 };
 
-export const InviteMembersPage: FC<{ confetti?: boolean }> = function ({
-  confetti,
-}) {
+export const InviteMembersPage = function () {
+  useRemoveAppShellLeftPadding();
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
         <Box m={20} mt={10}>
-          <InviteMembers confetti={confetti} />
+          <InviteMembers />
         </Box>
       </Suspense>
     </ErrorBoundary>
   );
-};
-
-InviteMembersPage.defaultProps = {
-  confetti: false,
 };

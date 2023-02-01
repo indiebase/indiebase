@@ -16,7 +16,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {
-  createOrgApi,
+  createProjectApi,
   isDomainRegExp,
   isEmailRegExp,
   isNormalStringRegExp,
@@ -27,7 +27,6 @@ import {
 } from '@letscollab-community/console-utils';
 import { useMutation } from '@tanstack/react-query';
 import { IconBox, IconBrandGithub, IconSearch } from '@tabler/icons';
-import { InviteMembers } from './InviteMembers';
 import { useAtom } from 'jotai';
 import { useParams } from 'react-router-dom';
 
@@ -122,6 +121,7 @@ const PopupSearch: FC<{
           return (
             <SelectItem
               {...v}
+              key={v.value}
               onClick={() => {
                 setValue(v.value);
                 setOpened(false);
@@ -203,7 +203,8 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
       githubRepoName: (value) =>
         isNormalStringRegExp(value) ? null : 'Invalid project name',
       contactEmail: (value) => (isEmailRegExp(value) ? null : 'Invalid email'),
-      packageName: (value) => (isDomainRegExp(value) ? null : 'Invalid domain'),
+      packageName: (value) =>
+        isDomainRegExp(value) || value === '' ? null : 'Invalid package name',
     },
   });
 
@@ -215,7 +216,7 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
         <Title order={4}>Create your project</Title>
         <form
           onSubmit={form.onSubmit(async (values) => {
-            const { code } = await createOrgApi(values);
+            const { code } = await createProjectApi(values);
             if (code > 0) onSuccess(true);
             // Refresh the Header or other Components.
             dispatch({ type: 'refetch' });
@@ -279,17 +280,12 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
 };
 
 export const CreateProjectPage = function () {
-  const [state, setState] = useState(false);
   useRemoveAppShellLeftPadding();
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
         <Center m={20} mt={20}>
-          {state ? (
-            <InviteMembers confetti />
-          ) : (
-            <CreateProject onSuccess={setState} />
-          )}
+          <CreateProject onSuccess={() => {}} />
         </Center>
       </Suspense>
     </ErrorBoundary>

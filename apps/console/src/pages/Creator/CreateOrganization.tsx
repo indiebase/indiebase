@@ -27,11 +27,11 @@ import {
 } from '@letscollab-community/console-utils';
 import { useQuery } from '@tanstack/react-query';
 import { IconBrandGithub } from '@tabler/icons';
-import { InviteMembers } from './InviteMembers';
 import { useAtom } from 'jotai';
+import { useNavigate } from 'react-router-dom';
 
 export interface CreateOrganizationProps {
-  onSuccess(val: boolean): void;
+  onSuccess(org: string): void;
 }
 
 const CreateOrganization: FC<CreateOrganizationProps> = function ({
@@ -92,7 +92,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
         <form
           onSubmit={form.onSubmit(async (values) => {
             const { code } = await createOrgApi(values);
-            if (code > 0) onSuccess(true);
+            if (code > 0) onSuccess(form.values.name);
             // Refresh the Header or other Components.
             dispatch({ type: 'refetch' });
           })}
@@ -165,17 +165,22 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
 };
 
 export const CreateOrganizationPage = function () {
-  const [state, setState] = useState(false);
+  const navigate = useNavigate();
   useRemoveAppShellLeftPadding();
+
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
         <Center m={20} mt={20}>
-          {state ? (
-            <InviteMembers confetti />
-          ) : (
-            <CreateOrganization onSuccess={setState} />
-          )}
+          <CreateOrganization
+            onSuccess={(org) => {
+              navigate(org, {
+                state: {
+                  confetti: true,
+                },
+              });
+            }}
+          />
         </Center>
       </Suspense>
     </ErrorBoundary>
