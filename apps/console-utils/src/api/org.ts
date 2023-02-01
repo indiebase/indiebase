@@ -22,17 +22,19 @@ export const fetchGithubOrgApi = async function (
   return data;
 };
 
-export const fetchGithubOrgReposApi = async function (
-  org,
-): Promise<BaseResSchema<Record<string, any>>> {
-  const { data } = await req.get('/v1/org/github/' + org + '/repos');
+export const fetchGithubOrgReposApi = async function ({
+  queryKey,
+}): Promise<BaseResSchema<Record<string, any>>> {
+  const { data } = await req.get('/v1/org/github/' + queryKey[1] + '/repos');
   return data;
 };
 
-export const searchGithubOrgProjectApi = async function (
-  org,
-): Promise<BaseResSchema<Record<string, any>>> {
-  const { data } = await req.get('/v1/org/github/search' + org);
+export const searchGithubProjectApi = async function (
+  params,
+): Promise<BaseResSchema> {
+  const { data } = await req.get('/v1/project/github/search', {
+    params,
+  });
   return data;
 };
 

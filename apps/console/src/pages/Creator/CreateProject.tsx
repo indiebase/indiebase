@@ -1,4 +1,4 @@
-import { FC, Suspense, useMemo, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   ActionIcon,
@@ -8,7 +8,6 @@ import {
   Flex,
   Group,
   Popover,
-  Select,
   TextInput,
   Title,
   useMantineTheme,
@@ -16,35 +15,34 @@ import {
 import { useForm } from '@mantine/form';
 import {
   createOrgApi,
-  fetchGithubOrgApi,
-  fetchMyGithubOrgsApi,
-  getOrgApi,
   isDomainRegExp,
   isEmailRegExp,
   isNormalStringRegExp,
   OrgSelectProps,
-  searchGithubOrgProjectApi,
-  SelectItem,
+  searchGithubProjectApi,
   UploadImage,
   useRemoveAppShellLeftPadding,
   userProfileQueryAtom,
 } from '@letscollab-community/console-utils';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { IconBox, IconBrandGithub, IconSearch } from '@tabler/icons';
 import { InviteMembers } from './InviteMembers';
 import { useAtom } from 'jotai';
 import { useParams } from 'react-router-dom';
-import debounce from 'lodash.debounce';
 
 export interface CreateProjectProps {
   onSuccess(val: boolean): void;
 }
 
-const PopupSearch: FC<{ label?: string; withAsterisk?: boolean }> = function ({
-  label,
-  withAsterisk,
-}) {
+const PopupSearch: FC<{
+  label?: string;
+  withAsterisk?: boolean;
+  initialData?: Record<string, any>;
+  onSearch(content: string): void;
+  dropdownData?: Record<string, any>[];
+}> = function ({ label, withAsterisk, onSearch, dropdownData }) {
   const [opened, setOpened] = useState(false);
+  const [value, setValue] = useState('');
 
   return (
     <Popover
@@ -57,67 +55,59 @@ const PopupSearch: FC<{ label?: string; withAsterisk?: boolean }> = function ({
       <Group align="flex-end">
         <Popover.Target>
           <TextInput
+            value={value}
             withAsterisk={withAsterisk}
             style={{ width: 250 }}
             label={label}
             icon={<IconBrandGithub size={17} />}
+            onChange={(event) => setValue(event.currentTarget.value)}
             onClick={() => setOpened(!opened)}
           />
         </Popover.Target>
-        <ActionIcon variant="light" size={36} color="blue">
+        <ActionIcon
+          variant="light"
+          size={36}
+          color="blue"
+          onClick={() => {
+            setOpened(true);
+            onSearch(value);
+          }}
+        >
           <IconSearch size={19} />
         </ActionIcon>
       </Group>
       <Popover.Dropdown>
-        <Button>demo</Button>
+        {dropdownData?.map((value) => {
+          return <div></div>;
+        })}
       </Popover.Dropdown>
     </Popover>
   );
 };
 
-// const SelectProject = function () {
-//   const handleSearch = debounce((query) => {
-//     searchGithubOrgProjectApi({ email: query }).then(({ d }) => {
-//       if (d.length < 1) return;
-//       const items = d.map((val) => ({
-//         logo: val.avatar,
-//         username: val.username,
-//         value: val.email,
-//         label: val.email,
-//       }));
-//       const result = [];
+const SelectGithubRepo = function () {
+  const { org } = useParams();
 
-//       for (const item of items) {
-//         if (members.length > 0) {
-//           const m = members.find((m) => item.value === m.value);
-//           if (!m) {
-//             result.push(item);
-//           }
-//         } else {
-//           result.push(item);
-//         }
-//       }
+  const { mutate, data } = useMutation(
+    ['search_project'],
+    searchGithubProjectApi,
+  );
 
-//       setMembers([...result, ...members]);
-//     });
-//   }, 500);
+  const items = data?.d?.items.map(() => {});
 
-//   return (
-//     <Select
-//       mt={16}
-//       label="Pick github repository"
-//       itemComponent={SelectItem}
-//       data={githubOrgs}
-//       searchable
-//       style={{ width: 250 }}
-//       maxDropdownHeight={400}
-//       clearable
-//       nothingFound={'Empty'}
-//       onChange={() => {}}
-//       onSearchChange={handleSearch}
-//     />
-//   );
-// };
+  return (
+    <PopupSearch
+      label="Pick github repository"
+      withAsterisk
+      dropdownData={items ?? []}
+      onSearch={(content) => {
+        mutate({
+          q: `${content}+org:${org}`,
+        });
+      }}
+    />
+  );
+};
 
 const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
   const [github, setGithub] = useState<OrgSelectProps>();
@@ -139,38 +129,7 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
     },
   });
 
-  const { data, isSuccess } = useQuery(
-    ['github-orgs-projects'],
-    fetchMyGithubOrgsApi,
-    {
-      suspense: true,
-    },
-  );
-
   const [_, dispatch] = useAtom(userProfileQueryAtom[0]);
-
-  const githubOrgs = useMemo(
-    () =>
-      isSuccess
-        ? data.d.map((v) => ({
-            logo: v.avatar_url,
-            label: v.login,
-            value: v.login,
-          }))
-        : [],
-    [data, isSuccess],
-  );
-
-  const handleChange = async function (e: string) {
-    const r = githubOrgs.find((v) => v.value === e);
-    if (!r) return;
-    setGithub(r);
-    form.setFieldValue('githubOrgName', r.value);
-    form.setFieldValue('name', r.value);
-    const { d } = await fetchGithubOrgApi(r.value);
-    form.setFieldValue('contactEmail', d.email);
-    form.setFieldValue('avatarUrl', d.avatar_url);
-  };
 
   return (
     <>
@@ -185,7 +144,7 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
           })}
         >
           <Flex align="flex-end">
-            <PopupSearch label="Pick github repository" withAsterisk />
+            <SelectGithubRepo />
             <Box ml={20}>
               <UploadImage
                 src={github?.logo}

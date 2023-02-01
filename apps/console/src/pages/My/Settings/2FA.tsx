@@ -275,7 +275,6 @@ const TwoFactorAuth = function () {
   return (
     <Box style={{ maxWidth: 800 }}>
       <Title order={4}>Configure Two-factor authentication (2FA)</Title>
-
       {profile.d.enabled2FA ? (
         <TwoFactorSetting />
       ) : (

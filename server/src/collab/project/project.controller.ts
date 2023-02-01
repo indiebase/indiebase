@@ -69,23 +69,14 @@ export class ProjectController {
   @ApiOperation({
     summary: 'Fetch github projects from specified organization',
   })
-  @Get('github')
+  @Get('github/search')
   @UseGuards(CoProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
-  async githubOrgs(@Param('name') name) {
-    return {
-      code: ResultCode.SUCCESS,
-    };
-  }
+  async searchGithubRepo(@Query('q') q) {
+    const d = await this.projectService.searchGithubRepo(q);
 
-  @ApiOperation({
-    summary: 'Fetch github projects from specified organization',
-  })
-  @Get('github/search/:name')
-  @UseGuards(CoProtectGuard, AccessGuard)
-  @ApiCookieAuth('SID')
-  async searchGithubRepo(@Param('name') name) {
-    const d = await this.searchGithubRepo(name);
+    console.log(d);
+
     return {
       code: ResultCode.SUCCESS,
       d,

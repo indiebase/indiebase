@@ -93,10 +93,10 @@ export class ProjectService {
     };
   }
 
-  public async searchGithubRepo(name: string) {
+  public async searchGithubRepo(q: string) {
     let { data } = await this.octokit.rest.search
       .repos({
-        q: name,
+        q,
         sort: 'stars',
       })
       .catch((err) => {
