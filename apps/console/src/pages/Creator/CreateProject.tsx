@@ -1,4 +1,4 @@
-import { FC, Suspense, useState } from 'react';
+import { FC, forwardRef, Suspense, useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   ActionIcon,
@@ -7,7 +7,9 @@ import {
   Center,
   Flex,
   Group,
+  Loader,
   Popover,
+  Text,
   TextInput,
   Title,
   useMantineTheme,
@@ -18,7 +20,6 @@ import {
   isDomainRegExp,
   isEmailRegExp,
   isNormalStringRegExp,
-  OrgSelectProps,
   searchGithubProjectApi,
   UploadImage,
   useRemoveAppShellLeftPadding,
@@ -34,13 +35,53 @@ export interface CreateProjectProps {
   onSuccess(val: boolean): void;
 }
 
+export const SelectItem = forwardRef<HTMLDivElement, any>(
+  ({ value, ...rest }, ref) => {
+    const theme = useMantineTheme();
+
+    return (
+      <div ref={ref} {...rest}>
+        <Flex
+          px={8}
+          align="center"
+          sx={{
+            height: 36,
+            borderRadius: 4,
+            cursor: 'default',
+            '&:hover': {
+              backgroundColor: theme.colors.gray[2],
+            },
+          }}
+          onClick={() => {}}
+        >
+          <Group noWrap spacing={7}>
+            <Text lineClamp={1} size={14}>
+              {value}
+            </Text>
+          </Group>
+        </Flex>
+      </div>
+    );
+  },
+);
+
 const PopupSearch: FC<{
   label?: string;
   withAsterisk?: boolean;
   initialData?: Record<string, any>;
   onSearch(content: string): void;
-  dropdownData?: Record<string, any>[];
-}> = function ({ label, withAsterisk, onSearch, dropdownData }) {
+  dropdownData?: { label?: string; value: string }[];
+  isLoading?: boolean;
+  itemComponent?: React.ReactElement;
+  onSelect?: (value: string, index?: number) => void;
+}> = function ({
+  label,
+  withAsterisk,
+  onSearch,
+  dropdownData,
+  isLoading,
+  onSelect,
+}) {
   const [opened, setOpened] = useState(false);
   const [value, setValue] = useState('');
 
@@ -59,9 +100,9 @@ const PopupSearch: FC<{
             withAsterisk={withAsterisk}
             style={{ width: 250 }}
             label={label}
+            onClick={() => setOpened(!opened)}
             icon={<IconBrandGithub size={17} />}
             onChange={(event) => setValue(event.currentTarget.value)}
-            onClick={() => setOpened(!opened)}
           />
         </Popover.Target>
         <ActionIcon
@@ -76,30 +117,65 @@ const PopupSearch: FC<{
           <IconSearch size={19} />
         </ActionIcon>
       </Group>
-      <Popover.Dropdown>
-        {dropdownData?.map((value) => {
-          return <div></div>;
+      <Popover.Dropdown m={0} p={3}>
+        {dropdownData?.map((v, index) => {
+          return (
+            <SelectItem
+              {...v}
+              onClick={() => {
+                setValue(v.value);
+                setOpened(false);
+                onSelect?.(v.value, index);
+              }}
+            ></SelectItem>
+          );
         })}
+
+        {isLoading && (
+          <Center style={{ height: 100 }}>
+            <Loader variant="bars" size="sm" />
+          </Center>
+        )}
       </Popover.Dropdown>
     </Popover>
   );
 };
 
-const SelectGithubRepo = function () {
+interface SelectGithubRepoProps {
+  onResult(value: any): void;
+}
+
+const SelectGithubRepo: FC<SelectGithubRepoProps> = function ({ onResult }) {
   const { org } = useParams();
 
-  const { mutate, data } = useMutation(
+  const { mutate, data, isLoading } = useMutation(
     ['search_project'],
     searchGithubProjectApi,
   );
 
-  const items = data?.d?.items.map(() => {});
+  const items = data?.d ?? [];
+  const d = items.map((v, index) => ({
+    value: v.name,
+    label: v.name,
+    index,
+  }));
+
+  useEffect(() => {
+    mutate({
+      q: `org:${org}`,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <PopupSearch
+      isLoading={isLoading}
       label="Pick github repository"
       withAsterisk
-      dropdownData={items ?? []}
+      dropdownData={d}
+      onSelect={(_, index) => {
+        onResult?.(items[index]);
+      }}
       onSearch={(content) => {
         mutate({
           q: `${content}+org:${org}`,
@@ -110,19 +186,21 @@ const SelectGithubRepo = function () {
 };
 
 const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
-  const [github, setGithub] = useState<OrgSelectProps>();
   const theme = useMantineTheme();
+  const { org } = useParams();
   const form = useForm({
     initialValues: {
       name: '',
       contactEmail: '',
       packageName: '',
-      avatarUrl: '',
-      githubOrgName: '',
+      orgName: org,
+      githubRepoName: '',
     },
 
     validate: {
       name: (value) =>
+        isNormalStringRegExp(value) ? null : 'Invalid project name',
+      githubRepoName: (value) =>
         isNormalStringRegExp(value) ? null : 'Invalid project name',
       contactEmail: (value) => (isEmailRegExp(value) ? null : 'Invalid email'),
       packageName: (value) => (isDomainRegExp(value) ? null : 'Invalid domain'),
@@ -144,10 +222,14 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
           })}
         >
           <Flex align="flex-end">
-            <SelectGithubRepo />
+            <SelectGithubRepo
+              onResult={(value) => {
+                form.setFieldValue('name', value.name);
+                form.setFieldValue('githubRepoName', value.name);
+              }}
+            />
             <Box ml={20}>
               <UploadImage
-                src={github?.logo}
                 croppable={true}
                 icon={(size) => <IconBox size={size / 2 - 3} />}
                 label="Project icon"
@@ -176,6 +258,7 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
             style={{ width: 500 }}
             mt="md"
             label="Contact email"
+            placeholder="Fallback email to notify for this project"
             withAsterisk
             {...form.getInputProps('contactEmail')}
           />

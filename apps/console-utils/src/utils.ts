@@ -15,5 +15,4 @@ export const isEmailRegExp = (value) =>
 
 export const isNormalStringRegExp = (value) => !/[^a-zA-Z0-9-_]/g.test(value);
 
-export const isDomainRegExp = (value) =>
-  /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/.test(value);
+export const isDomainRegExp = (value) => /(?:^\w+|\w+\.\w+)+$/.test(value);

@@ -29,15 +29,6 @@ export const fetchGithubOrgReposApi = async function ({
   return data;
 };
 
-export const searchGithubProjectApi = async function (
-  params,
-): Promise<BaseResSchema> {
-  const { data } = await req.get('/v1/project/github/search', {
-    params,
-  });
-  return data;
-};
-
 export const createOrgApi = async function (
   body: Record<string, any>,
 ): Promise<BaseResSchema<Record<string, any>>> {

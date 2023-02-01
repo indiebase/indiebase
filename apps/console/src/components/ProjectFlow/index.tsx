@@ -39,7 +39,7 @@ export const ProjectFlow: FC<ProjectFlowProps> = function (props) {
           placeholder="Search project"
         />
         <Box my={20}>
-          {props.list.map((e, i) => {
+          {props.list?.map((e, i) => {
             return (
               <ProjectTile
                 key={i}

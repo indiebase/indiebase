@@ -75,11 +75,10 @@ export class ProjectController {
   async searchGithubRepo(@Query('q') q) {
     const d = await this.projectService.searchGithubRepo(q);
 
-    console.log(d);
-
     return {
       code: ResultCode.SUCCESS,
-      d,
+      total: d.total_count,
+      d: d.items,
     };
   }
 

@@ -1,8 +1,4 @@
-import {
-  IsEntityExisted,
-  PaginationReqDto,
-  PaginationResSchemaDto,
-} from '@letscollab-nest/helper';
+import { IsEntityExisted, PaginationReqDto } from '@letscollab-nest/helper';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
 import { OrgEntity } from '../org/org.entity';

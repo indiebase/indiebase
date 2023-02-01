@@ -17,10 +17,11 @@ import { searchUsersApi } from '@letscollab-community/console-utils';
 import debounce from 'lodash.debounce';
 import { IconBuildingCommunity } from '@tabler/icons';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export interface InviteMembersProps {
   confetti?: boolean;
+  orgName?: string;
 }
 
 export const SelectItem = forwardRef<HTMLDivElement, any>(
@@ -28,9 +29,11 @@ export const SelectItem = forwardRef<HTMLDivElement, any>(
     return (
       <div ref={ref} {...rest}>
         <Group noWrap spacing={7}>
-          <Avatar src={logo} radius="xl" size={18}>
-            <IconBuildingCommunity size={12} />
-          </Avatar>
+          {logo && (
+            <Avatar src={logo} radius="xl" size={18}>
+              <IconBuildingCommunity size={12} />
+            </Avatar>
+          )}
           <Text lineClamp={1} size={14}>
             {username}
           </Text>
@@ -52,6 +55,7 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
   const [value, setValue] = useState([]);
   const ref = useRef<any>();
   const theme = useMantineTheme();
+  const { state } = useLocation();
 
   const handleSearch = debounce((query) => {
     searchUsersApi({ email: query }).then(({ d }) => {
@@ -122,15 +126,28 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
             Invite
           </Button>
         </Group>
-        <Anchor
-          to="/"
-          replace
-          component={Link}
-          reloadDocument={false}
-          size={12}
-        >
-          Go home
-        </Anchor>
+        <Group>
+          <Anchor
+            to="/"
+            replace
+            component={Link}
+            reloadDocument={false}
+            size={12}
+          >
+            Go home
+          </Anchor>
+          {state?.orgName && (
+            <Anchor
+              to="/"
+              replace
+              component={Link}
+              reloadDocument={false}
+              size={12}
+            >
+              Create project
+            </Anchor>
+          )}
+        </Group>
       </Stack>
     </>
   );
