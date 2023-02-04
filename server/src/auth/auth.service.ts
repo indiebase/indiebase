@@ -117,7 +117,7 @@ export class AuthService {
     return user.optRecoveryCode;
   }
 
-  public async removeOpt(username: string) {
+  public async removeOtp(username: string) {
     return this.userService.repo
       .update(
         { username },
@@ -129,7 +129,7 @@ export class AuthService {
       });
   }
 
-  public async optVerify(username: string, secret: string, token: string) {
+  public async otpVerify(username: string, secret: string, token: string) {
     try {
       const isValid = authenticator.check(token, secret);
       let optRecoveryCode;

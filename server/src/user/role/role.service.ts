@@ -1,6 +1,5 @@
 import { RoleEntity } from './role.entity';
 import {
-  ConflictException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -10,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { ResultCode } from '@letscollab-nest/helper';
 import { CreateRoleBody } from '@letscollab-nest/trait';
-import { CasbinService } from '@letscollab-nest/accesscontrol';
+import { AccessAction, CasbinService } from '@letscollab-nest/accesscontrol';
 
 @Injectable()
 export class RoleService {
@@ -54,11 +53,6 @@ export class RoleService {
 
     await runner.commitTransaction();
     await runner.release();
-
-    return {
-      code: ResultCode.SUCCESS,
-      message: 'Create successfully',
-    };
   }
 
   async deleteRole(id: number) {
@@ -127,24 +121,49 @@ export class RoleService {
 
   async queryRoles(body: QueryRoleDto) {
     body = Object.assign({}, body);
-    const { name, current, pageSize, id } = body;
-    const cond = [];
+    const { name, current, pageSize, id, domain } = body;
+    let cond = [];
     name && cond.push({ name });
+    domain && cond.push({ domain });
     id && cond.push({ id });
 
-    const [list, total] = await this.roleRepo
+    if (cond.length === 0) {
+      cond = null;
+    }
+
+    let [list, total] = await this.roleRepo
       .findAndCount({
         where: cond,
-        skip: (current - 1) * pageSize,
         take: pageSize,
+        skip: (current - 1) * pageSize,
       })
       .catch((err) => {
         this.logger.error(err);
         throw new InternalServerErrorException();
       });
 
+    const possession = {};
+    for await (const role of list) {
+      const perm = await this.casbin.e.getImplicitPermissionsForUser(
+        role.name,
+        domain,
+      );
+
+      if (perm) {
+        for (const p of perm) {
+          const [_s, _d, obj, action] = p;
+          if (!Array.isArray(possession[obj])) {
+            possession[obj] = [];
+          }
+
+          possession[obj].push(action);
+        }
+      }
+      role.possession = possession;
+    }
+
+
     return {
-      code: ResultCode.SUCCESS,
       total,
       pageSize,
       current,

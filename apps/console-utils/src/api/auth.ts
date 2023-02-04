@@ -22,3 +22,10 @@ export const optVerifyApi = async (params) => {
   const { data } = await req.post('/v1/auth/2fa/verify', params);
   return data;
 };
+
+export const fetchRolesApi = async (params?: any) => {
+  const { data } = await req.get('/v1/user/role/list', {
+    params,
+  });
+  return data;
+};

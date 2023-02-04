@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { IconSettings, IconFileCode } from '@tabler/icons';
 import { useLocation, useParams } from 'react-router-dom';
 import {
@@ -11,20 +11,12 @@ import { useTranslation } from 'react-i18next';
 export const useMenu = () => {
   const params = useParams();
   const { org, project, user } = params;
-  const [data] = useAtom(userProfileQueryAtom[0]);
+  const [{ d: profile }] = useAtom(userProfileQueryAtom[0]);
   const { t, i18n } = useTranslation(['common', 'setting']);
-  const profile = data.d;
-  const { state } = useLocation();
+  const [menu, setMenu] = useState<SidebarTileNode[]>([]);
+  const location = useLocation();
 
-  // if not match, menu is immutable.
-  const deps =
-    !!params['*'] || state?.menuImmutable
-      ? []
-      : [org, project, user, i18n.language];
-
-  return useMemo<SidebarTileNode[]>(() => {
-    //TODO:optimize this stupid way.
-
+  useEffect(() => {
     let prefix;
 
     if (org) {
@@ -37,7 +29,7 @@ export const useMenu = () => {
 
     // Project
     if (project) {
-      return [
+      setMenu([
         {
           label: t('Setting'),
           icon: <IconSettings size={16} />,
@@ -45,23 +37,23 @@ export const useMenu = () => {
           type: 'node',
           children: [
             {
-              label: 'General',
+              label: t('General', { ns: 'setting' }),
               to: `${prefix}/settings/general`,
             },
             {
-              label: 'Access',
+              label: t('Access', { ns: 'setting' }),
               to: `${prefix}/settings/access`,
             },
           ],
         },
-      ];
+      ]);
     }
 
-    //  Organization
+    // Organization
     if (org) {
-      return [
+      setMenu([
         {
-          label: 'Project',
+          label: t('Project', { ns: 'setting' }),
           icon: <IconFileCode size={16} />,
           color: 'blue',
           to: prefix,
@@ -73,45 +65,50 @@ export const useMenu = () => {
           type: 'node',
           children: [
             {
-              label: 'General',
+              label: t('General', { ns: 'setting' }),
               to: `${prefix}/settings/general`,
             },
             {
-              label: 'Member',
+              label: t('Member', { ns: 'setting' }),
               to: `${prefix}/settings/member`,
             },
             {
-              label: 'Access',
+              label: t('Access', { ns: 'setting' }),
               to: `${prefix}/settings/access`,
             },
           ],
         },
-      ];
+      ]);
     }
 
-    // User
-    return [
-      {
-        label: t('Setting'),
-        icon: <IconSettings size={16} />,
-        color: 'violet',
-        type: 'node',
-        children: [
-          {
-            label: t('Profile', { ns: 'setting' }),
-            to: `${prefix}/settings/profile`,
-          },
-          {
-            label: t('Organizations', { ns: 'setting' }),
-            to: `${prefix}/settings/organization`,
-          },
-          {
-            label: t('Two-factor auth', { ns: 'setting' }),
-            to: `${prefix}/settings/2fa`,
-          },
-        ],
-      },
-    ];
+    // My
+    if (user || location.pathname === '/') {
+      setMenu([
+        {
+          label: t('Setting'),
+          icon: <IconSettings size={16} />,
+          color: 'violet',
+          type: 'node',
+          children: [
+            {
+              label: t('Profile', { ns: 'setting' }),
+              to: `${prefix}/settings/profile`,
+            },
+            {
+              label: t('Organizations', { ns: 'setting' }),
+              to: `${prefix}/settings/organizations`,
+            },
+            {
+              label: t('Two-factor auth', { ns: 'setting' }),
+              to: `${prefix}/settings/2fa`,
+            },
+          ],
+        },
+      ]);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [org, project, user, i18n.language]);
+
+  return menu;
 };

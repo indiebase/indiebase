@@ -30,7 +30,7 @@ const nextValue = function (newValues, currentValues, setFocusInput) {
   }
 };
 
-export const OptCode: FC<OptCodeProps> = function (props) {
+export const OtpCode: FC<OptCodeProps> = function (props) {
   const {
     value,
     onChange,
@@ -108,7 +108,7 @@ export const OptCode: FC<OptCodeProps> = function (props) {
   );
 };
 
-OptCode.defaultProps = {
+OtpCode.defaultProps = {
   count: 6,
   autoComplete: 'off',
   autoFocus: false,

@@ -37,7 +37,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-  const [items, setItems] = useState<IProject[]>(props.list);
+  const [items, setItems] = useState<IProject[]>(props.list ?? []);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const getIndex = useCallback(
     (id: UniqueIdentifier) => items.findIndex((e) => e.id === id),

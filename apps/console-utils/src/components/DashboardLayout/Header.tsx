@@ -11,8 +11,8 @@ import {
   Menu,
   Divider,
 } from '@mantine/core';
-import { FC, forwardRef, useMemo, useState } from 'react';
-import { Link, resolvePath } from 'react-router-dom';
+import { FC, forwardRef, useEffect, useMemo, useState } from 'react';
+import { Link, resolvePath, useLocation } from 'react-router-dom';
 import {
   IconSettings,
   IconPlus,
@@ -66,6 +66,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
   const [opened, toggle] = useAtom(navbarSwitchAtom);
   const { org: orgParam } = useParams();
   const profile = data.d;
+  const { pathname } = useLocation();
 
   const userItem = {
     logo: profile.avatar,
@@ -84,12 +85,18 @@ export const Header: FC<NavHeaderProps> = function (props) {
         })),
       ]
     : [];
+  const [org, setOrg] = useState<OrgSelectProps>({} as any);
+
   const orgDefault = useMemo(
     () => orgs.find((v) => v.value === orgParam) ?? userItem,
     [orgParam, orgs],
   );
 
-  const [org, setOrg] = useState<OrgSelectProps>({} as any);
+  useEffect(() => {
+    if (pathname === '/') {
+      setOrg(userItem);
+    }
+  }, [pathname]);
 
   return (
     <MantineHeader

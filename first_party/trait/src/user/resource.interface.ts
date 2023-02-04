@@ -9,7 +9,7 @@ export enum ResourceGroup {
 
 export interface Resource {
   name: ResourceGroup | string;
-  displayName?: string;
+  label?: string;
   description?: string;
   isGroup?: boolean;
   children?: Resource[];

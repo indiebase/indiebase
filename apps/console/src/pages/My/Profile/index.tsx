@@ -19,9 +19,7 @@ const My = function () {
     <>
       <Title order={4}>My Profile</Title>
       <Grid mt={30} grow style={{ flexWrap: 'nowrap' }}>
-        <Grid.Col span={9}>
-          
-        </Grid.Col>
+        <Grid.Col span={9}></Grid.Col>
         <Grid.Col span={3}></Grid.Col>
       </Grid>
     </>

@@ -73,6 +73,7 @@ const PopupSearch: FC<{
   isLoading?: boolean;
   itemComponent?: React.ReactElement;
   onSelect?: (value: string, index?: number) => void;
+  onFocusInput?: (value: string) => void;
 }> = function ({
   label,
   withAsterisk,
@@ -80,6 +81,7 @@ const PopupSearch: FC<{
   dropdownData,
   isLoading,
   onSelect,
+  onFocusInput,
 }) {
   const [opened, setOpened] = useState(false);
   const [value, setValue] = useState('');
@@ -99,7 +101,10 @@ const PopupSearch: FC<{
             withAsterisk={withAsterisk}
             style={{ width: 250 }}
             label={label}
-            onClick={() => setOpened(!opened)}
+            onClick={() => {
+              setOpened(!opened);
+              onFocusInput?.(value);
+            }}
             icon={<IconBrandGithub size={17} />}
             onChange={(event) => setValue(event.currentTarget.value)}
           />
@@ -117,19 +122,27 @@ const PopupSearch: FC<{
         </ActionIcon>
       </Group>
       <Popover.Dropdown m={0} p={3}>
-        {dropdownData?.map((v, index) => {
-          return (
-            <SelectItem
-              {...v}
-              key={v.value}
-              onClick={() => {
-                setValue(v.value);
-                setOpened(false);
-                onSelect?.(v.value, index);
-              }}
-            ></SelectItem>
-          );
-        })}
+        {!isLoading && dropdownData?.length === 0 ? (
+          <Center style={{ height: 100 }}>
+            <Text size="sm" color="gray">
+              Empty
+            </Text>
+          </Center>
+        ) : (
+          dropdownData.map((v, index) => {
+            return (
+              <SelectItem
+                {...v}
+                key={v.value}
+                onClick={() => {
+                  setValue(v.value);
+                  setOpened(false);
+                  onSelect?.(v.value, index);
+                }}
+              ></SelectItem>
+            );
+          })
+        )}
 
         {isLoading && (
           <Center style={{ height: 100 }}>
@@ -175,6 +188,11 @@ const SelectGithubRepo: FC<SelectGithubRepoProps> = function ({ onResult }) {
       dropdownData={d}
       onSelect={(_, index) => {
         onResult?.(items[index]);
+      }}
+      onFocusInput={(value) => {
+        mutate({
+          q: `${value}+org:${org}`,
+        });
       }}
       onSearch={(content) => {
         mutate({

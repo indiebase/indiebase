@@ -2,7 +2,7 @@ import { FC, ReactElement, Suspense, useCallback, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   generateOptApi,
-  OptCode,
+  OtpCode,
   optVerifyApi,
   save,
   userProfileQueryAtom,
@@ -87,7 +87,7 @@ const SetAuthnApp: FC<SetAuthnAppProps> = function (props) {
       <Text size="sm" mt={10} color="gray">
         Please enter your 6-digit code.
       </Text>
-      <OptCode
+      <OtpCode
         groupProps={{ mt: 10, spacing: 'xs' }}
         value={code}
         rule={/^([0-9]{0,})$/}

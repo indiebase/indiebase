@@ -86,7 +86,7 @@ function getButtonText({
       text: intl.getMessage('tableToolBar.columnSetting', '列设置'),
       icon: <SettingOutlined />,
     },
-    //TODO:changed
+    //TODO:antd-changed
     fullScreen: {
       text: intl.getMessage('tableToolBar.fullScreen', '全屏'),
       icon: <FullScreenIcon />,

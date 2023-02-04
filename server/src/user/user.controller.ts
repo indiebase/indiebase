@@ -19,7 +19,7 @@ import {
   ResultCode,
   MyInfo,
   AccessGuard,
-  PackageName,
+  Domain,
   DevApiHeader,
   ProtectGuard,
 } from '@letscollab-nest/helper';
@@ -137,9 +137,9 @@ export class UserController {
   @DevApiHeader()
   async getMyPossession(
     @MyInfo('username') username: string,
-    @PackageName() packageName: string,
+    @Domain() domain: string,
   ) {
-    const d = await this.userService.getUserPossession(username, [packageName]);
+    const d = await this.userService.getUserPossession(username, [domain]);
     return {
       code: ResultCode.SUCCESS,
       d,

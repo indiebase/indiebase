@@ -1,4 +1,4 @@
-import { RoleStatus } from '@letscollab-nest/trait';
+import { Possession, RoleStatus } from '@letscollab-nest/trait';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   Entity,
@@ -44,4 +44,6 @@ export class RoleEntity {
     name: 'update_time',
   })
   updateTime?: Date;
+
+  possession?: Record<string, string[]>;
 }

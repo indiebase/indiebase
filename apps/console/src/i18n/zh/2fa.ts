@@ -1,4 +1,4 @@
-export const settingZh = {
+export const twoFactorZh = {
   Profile: '个人资料',
   Organizations: '组织',
   'Two-factor auth': '双因子认证',

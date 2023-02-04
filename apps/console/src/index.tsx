@@ -9,9 +9,10 @@ import {
   commonEn,
   commonZh,
   settingEn,
-  settingZh,
+  twoFactorZh,
   tableEn,
   tableZh,
+  accessZh,
 } from './i18n';
 
 i18n
@@ -21,7 +22,7 @@ i18n
     resources: {
       'zh-CN': {
         common: commonZh,
-        setting: settingZh,
+        setting: [twoFactorZh, accessZh],
         table: tableZh,
       },
       en: {

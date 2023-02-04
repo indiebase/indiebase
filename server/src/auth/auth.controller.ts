@@ -118,7 +118,7 @@ export class AuthController {
     @MyInfo('username') username: string,
     @Body() body: OptVerifyDto,
   ) {
-    return this.authService.optVerify(username, body.secret, body.token);
+    return this.authService.otpVerify(username, body.secret, body.token);
   }
 
   @Delete('2fa')
@@ -127,7 +127,7 @@ export class AuthController {
     summary: 'Remove my 2FA',
   })
   async deleteOtp(@MyInfo('username') username: string) {
-    await this.authService.removeOpt(username);
+    await this.authService.removeOtp(username);
 
     return { code: ResultCode.SUCCESS };
   }

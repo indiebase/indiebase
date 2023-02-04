@@ -68,17 +68,20 @@ export class CreateRoleDto {
   possession?: CreateRoleBody['possession'];
 }
 export class QueryRoleDto extends PaginationReqDto {
-  @ApiPropertyOptional({
-    default: 'owner',
-  })
+  @ApiPropertyOptional()
   @IsOptional()
   name?: string;
 
-  @ApiPropertyOptional({
-    default: 1,
-  })
+  @ApiPropertyOptional()
   @IsOptional()
   id?: number;
+
+  @ApiProperty({
+    description: "The same as project's packageName",
+    default: 'com.deskbtm.letscollab',
+  })
+  @IsString()
+  domain: string;
 }
 
 export class UpdateRoleDto {

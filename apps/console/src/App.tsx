@@ -30,18 +30,6 @@ const DebugAtoms = () => {
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-// function InitializeUser(props: PropsWithChildren) {
-//   const [userProfile, setUserProfile] = useAtom(userProfileAtom);
-
-//   useEffect(() => {
-//     fetchUserProfile().then((data) => {
-//       setUserProfile(data.d);
-//     });
-//   }, []);
-
-//   return <>{userProfile ? props.children : null}</>;
-// }
-
 function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -80,7 +68,6 @@ function App() {
             />
             <Provider initialValues={[[queryClientAtom, queryClient]] as const}>
               <DebugAtoms />
-              {/* <InitializeUser> */}
               <AuthzProvider
                 mode="manual"
                 possess={{ read: ['data1', 'data2'] }}
@@ -89,7 +76,6 @@ function App() {
                   <RouterProvider router={router} />
                 </Can>
               </AuthzProvider>
-              {/* </InitializeUser> */}
             </Provider>
           </QueryClientProvider>
         </NotificationsProvider>

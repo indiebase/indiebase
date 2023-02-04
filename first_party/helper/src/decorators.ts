@@ -59,22 +59,22 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
 export const DevApiHeader = function () {
   return applyDecorators(
     ApiHeader({
-      name: 'Package-Name',
+      name: 'Domain',
       description: 'The product package name, same as domain',
       schema: {
-        default: 'letscollab.letscollab.deskbtm.com',
+        default: 'com.deskbtm.letscollab',
       },
     }),
   );
 };
 
-export const PackageName = createParamDecorator((_, ctx: ExecutionContext) => {
+export const Domain = createParamDecorator((_, ctx: ExecutionContext) => {
   const request: any = ctx.switchToHttp().getRequest();
 
   const domain =
-    request.body?.packageName ??
-    request.headers?.['package-name'] ??
-    request.hostname;
+    request.body?.domain ??
+    request.headers?.['domain'] ??
+    request.hostname?.split('.').reverse().join('.');
 
   return domain;
 });

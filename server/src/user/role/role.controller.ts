@@ -45,7 +45,11 @@ export class RoleController {
   })
   @ApiCookieAuth('SID')
   async create(@Body() role: CreateRoleDto) {
-    return this.roleService.createRole(role);
+    await this.roleService.createRole(role);
+    return {
+      code: ResultCode.SUCCESS,
+      message: 'Create successfully',
+    };
   }
 
   @Get('list')
@@ -56,7 +60,18 @@ export class RoleController {
     type: QueryRolesResDto,
   })
   @ApiCookieAuth('SID')
-  async getList(@Query() role: QueryRoleDto) {}
+  async getList(@Query() role: QueryRoleDto) {
+    const { total, pageSize, current, d } = await this.roleService.queryRoles(
+      role,
+    );
+    return {
+      code: ResultCode.SUCCESS,
+      total,
+      pageSize,
+      current,
+      d,
+    };
+  }
 
   @Patch()
   @ApiOperation({

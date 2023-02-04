@@ -125,7 +125,7 @@ const FieldDatePicker: ProFieldFC<
             }
           }}
         >
-          <Popover
+          {/* <Popover
             opened={open}
             onChange={(isOpen) => {
               if (!labelTrigger) {
@@ -141,7 +141,7 @@ const FieldDatePicker: ProFieldFC<
                 }}
               />
             </Popover.Dropdown>
-          </Popover>
+          </Popover> */}
           {/* <DatePicker
             picker={picker}
             showTime={showTime}

@@ -56,12 +56,11 @@ const FieldRangePicker: ProFieldFC<{
     return dom;
   }
   if (mode === 'edit' || mode === 'update') {
-    const momentValue = parseValueToDay(fieldProps.value) as dayjs.Dayjs;
-    //TODO:changed
+    // const momentValue = parseValueToDay(fieldProps.value) as dayjs.Dayjs;
+    //TODO:antd-changed
     const dom = (
       <DateRangePicker
         style={{ width: 300 }}
-        fullWidth={true}
         placeholder="Pick dates range"
         value={value}
         onChange={setValue}

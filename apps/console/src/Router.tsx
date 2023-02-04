@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'general',
-                element: <AccessPage />,
+                element: <div />,
               },
               {
                 path: 'access',

@@ -37,7 +37,7 @@ const OrgProfile: FC<any> = function () {
           reloadDocument={false}
         ></Avatar>
         <Stack justify="flex-start">
-          <Title order={4}>{d.name}</Title>
+          <Title order={3}>{d.name}</Title>
         </Stack>
       </Group>
       <Divider my="lg" variant="dashed" labelPosition="center" />

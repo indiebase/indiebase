@@ -1,3 +1,3 @@
 export * from './Org';
-export * from './Settings';
+export * from './Org/Settings';
 export * from './My';

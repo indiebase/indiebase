@@ -4,7 +4,6 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { nanoid } from 'nanoid';
 import * as forge from 'node-forge';
-
 const StegCloak = require('stegcloak');
 const stegcloak = new StegCloak(true, false);
 
@@ -41,6 +40,9 @@ export const req = axios.create({
   timeout: 8000,
   baseURL: process.env.REACT_APP_API,
   withCredentials: true,
+  headers: {
+    Domain: process.env.REACT_APP_PACKAGENAME,
+  },
 });
 
 req.interceptors.request.use(protectApiInterceptor, function (error) {

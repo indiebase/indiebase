@@ -125,18 +125,20 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
           </Button>
         </Group>
         <Group>
-          <Anchor
-            to="/"
-            replace
-            component={Link}
-            reloadDocument={false}
-            size={12}
-          >
-            Go home
-          </Anchor>
           {createdName && (
             <Anchor
-              to="/"
+              to={`/orgs/${createdName}`}
+              replace
+              component={Link}
+              reloadDocument={false}
+              size={12}
+            >
+              Go Organization
+            </Anchor>
+          )}
+          {createdName && (
+            <Anchor
+              to={`/orgs/${createdName}/create/project`}
               replace
               component={Link}
               reloadDocument={false}

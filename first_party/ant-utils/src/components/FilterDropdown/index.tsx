@@ -60,9 +60,7 @@ const FilterDropdown: React.FC<DropdownProps> = (props) => {
 
   const { open: opened, onOpenChange: onChange } = dropdownOpenProps;
 
-  console.log(dropdownOpenProps);
-
-  //TODO:changed
+  //TODO:antd-changed
   return wrapSSR(
     // <Popover
     //   placement={placement}
