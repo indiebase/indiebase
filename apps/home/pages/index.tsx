@@ -86,7 +86,7 @@ const Home: NextPage = () => {
           <Animator animation={batch(Fade(), MoveOut(0, -500))}>
             <GPUAccel>
               <TextParticle
-                text="letscollab"
+                text="PITM"
                 resolution={5}
                 boxWidth={1800}
                 boxHeight={400}
