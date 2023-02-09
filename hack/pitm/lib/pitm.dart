@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'dart:isolate';
-import 'dart:developer';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,24 +25,6 @@ class PITM extends StatefulWidget {
 
 class _PITMState extends State<PITM> {
   final ReceivePort _notificationPort = ReceivePort();
-
-  void _requestNotificationHandlerPermission() async {
-    log('Start listening', name: 'NotificationService');
-    var hasPermission = await NotificationsListener.hasPermission;
-    if (hasPermission == null || hasPermission == false) {
-      NotificationsListener.openPermissionSettings();
-      return;
-    }
-
-    var isRunning = (await NotificationsListener.isRunning) ?? false;
-
-    if (!isRunning) {
-      await NotificationsListener.startService(
-        foreground: false,
-        title: "Listener Running",
-      );
-    }
-  }
 
   // prevent dart from stripping out this function on release build in Flutter 3.x
   @pragma('vm:entry-point')
@@ -72,8 +53,8 @@ class _PITMState extends State<PITM> {
   @override
   void initState() {
     super.initState();
-    _requestNotificationHandlerPermission();
     Get.put(RulesController(), permanent: true);
+    _initListener();
   }
 
   @override
@@ -85,7 +66,6 @@ class _PITMState extends State<PITM> {
   @override
   void dispose() async {
     super.dispose();
-    await NotificationsListener.stopService();
   }
 
   @override

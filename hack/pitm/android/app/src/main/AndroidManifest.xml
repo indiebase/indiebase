@@ -13,12 +13,12 @@
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <!--  Auto start service after reboot-->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
   <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
   <application
     android:name="${applicationName}"
     android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher_round"
     android:label="PITM">
     <activity
       android:name=".MainActivity"
@@ -52,15 +52,6 @@
     <meta-data
       android:name="flutterEmbedding"
       android:value="2" />
-    <!-- 
-         <service
-            android:label="notifications"
-            android:name="dk.cachet.notifications.NotificationListener"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service> -->
 
     <receiver
       android:name="im.zoe.labs.flutter_notification_listener.RebootBroadcastReceiver"

@@ -30,7 +30,7 @@ class IndexController extends GetxController {
         return GetPageRoute(
           transition: Transition.rightToLeft,
           settings: settings,
-          page: () => const SettingsPage(),
+          page: () => SettingsPage(),
         );
     }
     return null;

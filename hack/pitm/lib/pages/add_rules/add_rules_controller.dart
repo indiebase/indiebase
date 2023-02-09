@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pitm/models/rules.dart';
+import 'package:hive/hive.dart';
+import 'package:pitm/models/rule.dart';
 
 class RulesController extends GetxController {
   static RulesController get to => Get.find();
@@ -11,19 +10,28 @@ class RulesController extends GetxController {
 
   final rules = <Rule>[].obs;
 
-  @override
-  void onInit() {
-    String? rulesString = box.read("rules");
+  late Box<Rule> rulesBox;
 
-    if (rulesString != null) {
-      List<dynamic> parsedListJson = jsonDecode(rulesString);
-      List<Rule> itemsList = List<Rule>.from(
-          parsedListJson.map<Rule>((dynamic v) => Rule.fromJson(v)));
-      rules.addAll(itemsList);
+  bool addRule(Rule rule) {
+    if (rulesBox.values.where((element) {
+      return element.packageName == rule.packageName;
+    }).isNotEmpty) {
+      return false;
     }
 
-    ever(rules, (callback) {
-      box.write("rules", jsonEncode(callback));
+    rules.add(rule);
+
+    return true;
+  }
+
+  @override
+  void onInit() async {
+    rulesBox = await Hive.openBox<Rule>('rules');
+
+    rules.addAll(rulesBox.values);
+
+    ever(rules, (callback) async {
+      await rulesBox.addAll(callback);
     });
 
     super.onInit();
@@ -32,6 +40,7 @@ class RulesController extends GetxController {
   @override
   void onClose() {
     Get.printInfo(info: 'Rules: onClose');
+
     super.onClose();
   }
 }
