@@ -4,6 +4,9 @@ https://letscollab.deskbtm.com
 
 <br />
 
+## NB
+项目初期，目前没有版本控制。
+
 ## FAQ
 
 ### 1. 什么是 letscollab？

@@ -10,7 +10,7 @@ class WatcherController extends GetxController {
   final isListening = false.obs;
 
   static showNB({VoidCallback? onConfirm, required String title}) {
-    Get.defaultDialog(
+    return Get.defaultDialog(
       titlePadding: const EdgeInsets.only(top: 20),
       titleStyle: const TextStyle(fontSize: 22),
       contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
@@ -45,14 +45,14 @@ class WatcherController extends GetxController {
     if (hasPermission) {
       toggleNotificationService();
     } else {
-      showNB(
+      await showNB(
           title: 'Notification Listener',
           onConfirm: () {
             NotificationsListener.openPermissionSettings();
           });
     }
     if (!isBatteryOptimizationDisabled) {
-      showNB(
+      await showNB(
         title: 'Battery Optimization !',
         onConfirm: () async {
           await DisableBatteryOptimization

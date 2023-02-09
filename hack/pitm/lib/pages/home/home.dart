@@ -49,13 +49,6 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Column(
-                children: controller.rules
-                    .map((element) => ListTile(
-                          title: Text(element.appName),
-                        ))
-                    .toList(),
-              )
             ],
           );
         }),
