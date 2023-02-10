@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'dart:isolate';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -5,14 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_notification_listener/flutter_notification_listener.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pitm/models/record.dart';
 import 'package:pitm/pages/add_rules/add_rules_controller.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:get/get.dart';
 import 'i18n/i18n.dart';
 import 'constants.dart';
+import 'models/rule.dart';
 import 'notification_utils.dart';
 import 'routes.dart';
 import 'theme.dart';
+
+class UserProvider extends GetConnect {
+  // Get request
+  Future<Response> getUser(int id) => get('http://youapi/users/$id');
+}
 
 class PITM extends StatefulWidget {
   const PITM({super.key});
@@ -35,9 +43,30 @@ class _PITMState extends State<PITM> {
     send?.send(event);
   }
 
-  static void _handleNotificationListener(NotificationEvent event) {
-    print(event);
-    print(1);
+  static void _handleNotificationListener(NotificationEvent event) async {
+    var rules = RulesController.to.rules;
+
+    Rule? rule = rules.firstWhereOrNull(
+        (element) => element.packageName == event.packageName);
+
+    String matchString = '${event.title ?? ''}&&${event.text ?? ''}';
+
+    if (rule != null) {
+      var amount = RegExp(
+        rule.matchPattern,
+        caseSensitive: false,
+        multiLine: false,
+      ).firstMatch(matchString)?.group(0);
+      Record record = Record()
+        ..amount = amount ?? '0'
+        ..appName = rule.appName
+        ..packageName = rule.packageName
+        ..notificationText = event.text ?? ''
+        ..notificationTitle = event.title ?? ''
+        ..timestamp = event.timestamp ?? 0
+        ..createTime = event.createAt!
+        ..uid = event.uniqueId ?? '';
+    }
   }
 
   void _initListener() {

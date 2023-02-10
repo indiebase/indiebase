@@ -41,7 +41,12 @@ class SettingsPage extends StatelessWidget {
                 ..._rulesController.rules
                     .map(
                       (element) => ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed('/add_rules', parameters: {
+                            "action": "update",
+                            "packageName": element.packageName
+                          });
+                        },
                         leading: SizedBox(
                           width: 45,
                           height: 45,

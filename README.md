@@ -28,18 +28,23 @@ letscollab 将会是一款中心化应用，但其支付等功能或将支持web
 2. 编程爱好者: 通过在 letscollab 中发现自己喜爱的项目, 贡献代码并从中获取报酬。
 3. 企业: 通过 letscollab 公布开源或其他项目, 让拥有空余时间的开发者参与进来完善产品并支付给开发者报酬。
 
-## 注意
+## Note Bene
 
 1. letscollab 高度依赖 github, 并将其作为默认的项目管理工具。
 2. letscollab 的部分服务将不开源, 使用需要购买商业 license. letscollab community 基于 AGPL-3.0 开源协议。
 
-## 加入
+## Join
 
 letscollab 社区版本欢迎大家提交 Pr，如果有意愿加入私有部分的开发， 请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/confidentiality-agreement.md)
 <br />
 同样 letscollab 所获取的收益，会分配给项目参与成员。
 
-WeChat: Nawbc9423
+Email: wanghan9423@outlook.com
+
+
+## Sub-projects
+- [PITM](https://github.com/deskbtm-letscollab/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for letscollab pro.
+
 
 ## Credits
 

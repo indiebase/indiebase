@@ -4,7 +4,7 @@ part 'record.g.dart';
 @HiveType(typeId: 0)
 class Record extends HiveObject {
   @HiveField(1)
-  late int amount;
+  late String amount;
 
   @HiveField(2)
   late int timestamp;
@@ -26,4 +26,17 @@ class Record extends HiveObject {
 
   @HiveField(8)
   late String uid;
+
+  Map<String, dynamic> toMap() {
+    return {
+      "amount": amount,
+      "timestamp": timestamp,
+      "createTime": createTime.toIso8601String(),
+      "packageName": packageName,
+      "appName": appName,
+      "notificationText": notificationText,
+      "notificationTitle": notificationTitle,
+      "uid": uid,
+    };
+  }
 }

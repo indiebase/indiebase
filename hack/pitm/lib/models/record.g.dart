@@ -17,7 +17,7 @@ class RecordAdapter extends TypeAdapter<Record> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Record()
-      ..amount = fields[1] as int
+      ..amount = fields[1] as String
       ..timestamp = fields[2] as int
       ..createTime = fields[3] as DateTime
       ..packageName = fields[4] as String

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pitm/models/rule.dart';
+import 'package:pitm/pages/add_rules/add_rules_controller.dart';
 
 import '../../constants.dart';
 
@@ -15,6 +16,7 @@ class RuleFormController extends GetxController {
   final callbackController = TextEditingController();
   final matchPatternController = TextEditingController();
   final selectedApp = Rxn<ApplicationWithIcon>();
+  final deviceApps = <ApplicationWithIcon>[].obs;
 
   final httpMethod = HttpMethods.POST.obs;
 
@@ -33,6 +35,31 @@ class RuleFormController extends GetxController {
     });
 
     super.onInit();
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
+
+    String? packageName = Get.parameters["packageName"];
+
+    var apps = (await DeviceApps.getInstalledApplications(
+      includeAppIcons: true,
+    ));
+
+    deviceApps.addAll(apps.map((e) => e as ApplicationWithIcon));
+
+    if (packageName != null) {
+      Rule? rule = RulesController.to.findRule(packageName);
+      if (rule != null) {
+        callbackController.text = rule.callbackUrl;
+        matchPatternController.text = rule.matchPattern;
+        selectedApp.value = deviceApps
+            .firstWhereOrNull((element) => element.packageName == packageName);
+        httpMethod.value = HttpMethods.values
+            .firstWhere((e) => e.name == rule.callbackHttpMethod);
+      }
+    }
   }
 
   @override

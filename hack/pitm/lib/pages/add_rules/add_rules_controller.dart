@@ -24,6 +24,10 @@ class RulesController extends GetxController {
     return true;
   }
 
+  Rule? findRule(String packageName) {
+    return rules.firstWhere((p0) => p0?.packageName == packageName);
+  }
+
   @override
   void onInit() async {
     rulesBox = await Hive.openBox<Rule>('rules');
@@ -31,7 +35,9 @@ class RulesController extends GetxController {
     rules.addAll(rulesBox.values);
 
     ever(rules, (callback) async {
-      await rulesBox.addAll(callback);
+      if (callback.isNotEmpty) {
+        await rulesBox.addAll(callback);
+      }
     });
 
     super.onInit();

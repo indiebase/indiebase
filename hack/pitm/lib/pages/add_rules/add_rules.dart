@@ -12,53 +12,42 @@ import 'add_rules_controller.dart';
 class AddRulesPage extends GetView<RulesController> {
   AddRulesPage({super.key});
 
-  final _ruleFormController = Get.find<RuleFormController>();
+  final _ruleFormController = RuleFormController.to;
 
   _showDeviceApps(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return FutureBuilder(
-          future: DeviceApps.getInstalledApplications(
-            includeAppIcons: true,
-          ),
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.hasData) {
-              List<Application> apps = snapshot.data ?? [];
-              return FractionallySizedBox(
-                heightFactor: 0.9,
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 20),
-                  itemCount: apps.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    ApplicationWithIcon app =
-                        apps[index] as ApplicationWithIcon;
+        return FractionallySizedBox(
+          heightFactor: 0.9,
+          child: ListView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.only(top: 20),
+            itemCount: _ruleFormController.deviceApps.length,
+            itemBuilder: (BuildContext context, int index) {
+              ApplicationWithIcon app = _ruleFormController.deviceApps[index];
 
-                    return ListTile(
-                      onTap: () {
-                        _ruleFormController.selectedApp.value = app;
-                        Get.back();
-                      },
-                      leading: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CachedMemoryImage(
-                          bytes: app.icon,
-                          width: 50,
-                          height: 50,
-                          uniqueKey: app.packageName,
-                        ),
-                      ),
-                      title: Text(app.appName),
-                      subtitle: Text(app.packageName),
-                    );
-                  },
+              return ListTile(
+                onTap: () {
+                  _ruleFormController.selectedApp.value = app;
+                  Get.back();
+                },
+                leading: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: CachedMemoryImage(
+                    bytes: app.icon,
+                    width: 50,
+                    height: 50,
+                    uniqueKey: app.packageName,
+                  ),
                 ),
+                title: Text(app.appName),
+                subtitle: Text(app.packageName),
               );
-            }
-            return Container();
-          },
+            },
+          ),
         );
       },
     );
@@ -66,6 +55,8 @@ class AddRulesPage extends GetView<RulesController> {
 
   @override
   Widget build(BuildContext context) {
+    var action = Get.parameters["action"] as String;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
@@ -142,7 +133,7 @@ class AddRulesPage extends GetView<RulesController> {
                       // 校验用户名
                       validator: _ruleFormController.validator,
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     const Text(
                       "回调使用http方法",
                       style: TextStyle(fontSize: 12),
@@ -167,7 +158,6 @@ class AddRulesPage extends GetView<RulesController> {
                             .toList(),
                       ),
                     ),
-                    const SizedBox(height: 20),
                     TextFormField(
                       controller: _ruleFormController.callbackController,
                       decoration: const InputDecoration(
@@ -219,8 +209,8 @@ class AddRulesPage extends GetView<RulesController> {
           icon: const Icon(
             UniconsLine.check,
           ),
-          label: const Text(
-            'Done',
+          label: Text(
+            action == "create" ? 'Done' : "Update",
           ),
         ),
       ),
