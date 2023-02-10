@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ui';
 import 'dart:isolate';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -14,6 +13,7 @@ import 'i18n/i18n.dart';
 import 'constants.dart';
 import 'models/rule.dart';
 import 'notification_utils.dart';
+import 'pages/home/watcher_controller.dart';
 import 'routes.dart';
 import 'theme.dart';
 
@@ -43,13 +43,33 @@ class _PITMState extends State<PITM> {
     send?.send(event);
   }
 
+  static _requestCallback(Rule rule, Record record) async {
+    var r = record.toMap();
+    switch (rule.callbackHttpMethod) {
+      case "GET":
+        await GetConnect().get(rule.callbackUrl, query: r);
+        break;
+      case "POST":
+        await GetConnect().post(rule.callbackUrl, r);
+        break;
+      case "PUT":
+        await GetConnect().put(rule.callbackUrl, r);
+        break;
+    }
+  }
+
+  // Note Bene: In some distros will trigger twice.
   static void _handleNotificationListener(NotificationEvent event) async {
+    if (event.title == null) {
+      return;
+    }
     var rules = RulesController.to.rules;
+    var watcher = WatcherController.to;
 
     Rule? rule = rules.firstWhereOrNull(
         (element) => element.packageName == event.packageName);
 
-    String matchString = '${event.title ?? ''}&&${event.text ?? ''}';
+    String matchString = '${event.title}&&${event.text ?? ''}';
 
     if (rule != null) {
       var amount = RegExp(
@@ -66,6 +86,9 @@ class _PITMState extends State<PITM> {
         ..timestamp = event.timestamp ?? 0
         ..createTime = event.createAt!
         ..uid = event.uniqueId ?? '';
+
+      await watcher.addRecord(record);
+      await _requestCallback(rule, record);
     }
   }
 
@@ -82,6 +105,7 @@ class _PITMState extends State<PITM> {
   @override
   void initState() {
     super.initState();
+    Get.put(WatcherController());
     Get.put(RulesController(), permanent: true);
     _initListener();
   }

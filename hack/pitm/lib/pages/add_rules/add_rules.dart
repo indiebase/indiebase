@@ -116,7 +116,7 @@ class AddRulesPage extends GetView<RulesController> {
                                     )
                                   ],
                                 )
-                              : const Text("选择应用",
+                              : const Text("Select app",
                                   style: TextStyle(fontSize: 16)),
                         ),
                       ),
@@ -127,15 +127,15 @@ class AddRulesPage extends GetView<RulesController> {
                       controller: _ruleFormController.matchPatternController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "匹配规则",
-                        helperText: "请使用正则表达式",
+                        labelText: "Match rule",
+                        helperText: "Enter regular expression",
                       ),
                       // 校验用户名
                       validator: _ruleFormController.validator,
                     ),
                     const SizedBox(height: 15),
                     const Text(
-                      "回调使用http方法",
+                      "Http method",
                       style: TextStyle(fontSize: 12),
                     ),
                     Obx(
@@ -162,7 +162,7 @@ class AddRulesPage extends GetView<RulesController> {
                       controller: _ruleFormController.callbackController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "回调地址",
+                        labelText: "callback url",
                       ),
                       // 校验用户名
                       validator: _ruleFormController.validator,
@@ -195,13 +195,16 @@ class AddRulesPage extends GetView<RulesController> {
         ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Rule? rule = _ruleFormController.submit();
-            if (rule != null) {
-              if (controller.addRule(rule)) {
-                Get.back();
-              } else {
-                Fluttertoast.showToast(msg: "${rule.packageName} has exist");
+          onPressed: () async {
+            if (action == "create") {
+              Rule? rule = _ruleFormController.submit();
+              if (rule != null) {
+                bool result = await controller.addRule(rule);
+                if (result) {
+                  Get.back();
+                } else {
+                  Fluttertoast.showToast(msg: "${rule.packageName} has exist");
+                }
               }
             }
           },

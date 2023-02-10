@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pitm/pages/add_rules/add_rules_controller.dart';
 import 'package:unicons/unicons.dart';
 import 'watcher_controller.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final RulesController controller = Get.put(RulesController());
-  final WatcherController watcherController = Get.put(WatcherController());
+  final _watcherController = WatcherController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -22,33 +20,51 @@ class HomePage extends StatelessWidget {
                 child: Wrap(
                   children: [
                     SizedBox(
-                      // width: 150,
-                      // height: 50,
                       child: ElevatedButton.icon(
-                        onPressed: watcherController.toggleNotificationService,
-                        icon: watcherController.isListening.value
+                        onPressed: _watcherController.toggleNotificationService,
+                        icon: _watcherController.isListening.value
                             ? const Icon(UniconsLine.record_audio)
                             : const Icon(UniconsLine.play),
                         label: Text(
-                          watcherController.isListening.value
-                              ? "监听中..."
-                              : "监听通知",
+                          _watcherController.isListening.value
+                              ? "Listening..."
+                              : "Start listen",
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
                     ),
                     const SizedBox(width: 15),
                     FilledButton.tonalIcon(
-                      onPressed: watcherController.toggleNotificationService,
+                      onPressed: _watcherController.exportXlsx,
                       icon: const Icon(UniconsLine.history),
                       label: const Text(
-                        "记录",
+                        "Export History",
                         style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ],
                 ),
               ),
+              ..._watcherController.records.reversed.map(
+                (element) => ListTile(
+                  title: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(element.appName),
+                      const SizedBox(width: 10),
+                      Text(
+                        '${element.amount}￥',
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.green),
+                      )
+                    ],
+                  ),
+                  subtitle: Text(
+                    element.createTime.toString(),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                ),
+              )
             ],
           );
         }),

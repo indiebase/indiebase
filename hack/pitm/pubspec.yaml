@@ -28,6 +28,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   disable_battery_optimization: ^1.1.0+1
+  syncfusion_flutter_xlsio: ^20.1.61-beta
+  path_provider: ^2.0.12
 
 dev_dependencies: 
   flutter_lints: ^2.0.0

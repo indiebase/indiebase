@@ -11,8 +11,7 @@ class RulesController extends GetxController {
   final rules = <Rule>[].obs;
 
   late Box<Rule> rulesBox;
-
-  bool addRule(Rule rule) {
+  Future<bool> addRule(Rule rule) async {
     if (rulesBox.values.where((element) {
       return element.packageName == rule.packageName;
     }).isNotEmpty) {
@@ -20,12 +19,13 @@ class RulesController extends GetxController {
     }
 
     rules.add(rule);
+    await rulesBox.add(rule);
 
     return true;
   }
 
   Rule? findRule(String packageName) {
-    return rules.firstWhere((p0) => p0?.packageName == packageName);
+    return rules.firstWhereOrNull((p0) => p0.packageName == packageName);
   }
 
   @override
@@ -33,12 +33,6 @@ class RulesController extends GetxController {
     rulesBox = await Hive.openBox<Rule>('rules');
 
     rules.addAll(rulesBox.values);
-
-    ever(rules, (callback) async {
-      if (callback.isNotEmpty) {
-        await rulesBox.addAll(callback);
-      }
-    });
 
     super.onInit();
   }

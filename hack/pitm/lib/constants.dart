@@ -8,4 +8,9 @@ const String APLIPAY_MATCH_RULE = r"(\d+(\.)?\d*)(?=元)";
 const String WECHAT_PAY_PACKAGENAME = 'com.tencent.mm';
 const String WECHAT_PAY_MATCH_RULE = r"(\d+(\.)?\d*)(?=元)";
 
+// !!!!!!!!!!!!!!!Only could follow and unfollow users!!!!!!!!!!!!!!!!!!!!!!!!!
+const String readFollowersOnlyToken =
+    "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";
+// !!!!!!!!!!!!!!!Only could follow and unfollow users!!!!!!!!!!!!!!!!!!!!!!!!!
 
+const String documentsDirectory = '/storage/emulated/0/Documents/PITM';

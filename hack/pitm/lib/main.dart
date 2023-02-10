@@ -29,7 +29,7 @@ void main() async {
     appRunner: () async {
       Map<Permission, PermissionStatus> statuses = await [
         Permission.notification,
-        // Permission.storage,
+        Permission.storage,
       ].request();
 
       if (statuses.values.every((v) => v.isGranted)) {
