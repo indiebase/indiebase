@@ -9,8 +9,7 @@ import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 
 export const useMenu = () => {
-  const params = useParams();
-  const { org, project, user } = params;
+  const { org, project, user } = useParams();
   const [{ d: profile }] = useAtom(userProfileQueryAtom[0]);
   const { t, i18n } = useTranslation(['common', 'setting']);
   const [menu, setMenu] = useState<SidebarTileNode[]>([]);
@@ -37,11 +36,11 @@ export const useMenu = () => {
           type: 'node',
           children: [
             {
-              label: t('General', { ns: 'setting' }),
+              label: t('General'),
               to: `${prefix}/settings/general`,
             },
             {
-              label: t('Access', { ns: 'setting' }),
+              label: t('Access'),
               to: `${prefix}/settings/access`,
             },
           ],
@@ -53,7 +52,7 @@ export const useMenu = () => {
     if (org) {
       setMenu([
         {
-          label: t('Project', { ns: 'setting' }),
+          label: t('Project'),
           icon: <IconFileCode size={16} />,
           color: 'blue',
           to: prefix,
@@ -65,15 +64,15 @@ export const useMenu = () => {
           type: 'node',
           children: [
             {
-              label: t('General', { ns: 'setting' }),
+              label: t('General'),
               to: `${prefix}/settings/general`,
             },
             {
-              label: t('Member', { ns: 'setting' }),
+              label: t('Member'),
               to: `${prefix}/settings/member`,
             },
             {
-              label: t('Access', { ns: 'setting' }),
+              label: t('Access'),
               to: `${prefix}/settings/access`,
             },
           ],
@@ -91,15 +90,15 @@ export const useMenu = () => {
           type: 'node',
           children: [
             {
-              label: t('Profile', { ns: 'setting' }),
+              label: t('Profile'),
               to: `${prefix}/settings/profile`,
             },
             {
-              label: t('Organizations', { ns: 'setting' }),
+              label: t('Organizations'),
               to: `${prefix}/settings/organizations`,
             },
             {
-              label: t('Two-factor auth', { ns: 'setting' }),
+              label: t('Two-factor auth'),
               to: `${prefix}/settings/2fa`,
             },
           ],

@@ -5257,9 +5257,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@letscollab-community/console-utils@workspace:^, @letscollab-community/console-utils@workspace:apps/console-utils":
+"@letscollab-community/app-utils@workspace:apps/first_party/utils":
   version: 0.0.0-use.local
-  resolution: "@letscollab-community/console-utils@workspace:apps/console-utils"
+  resolution: "@letscollab-community/app-utils@workspace:apps/first_party/utils"
+  dependencies:
+    "@letscollab-nest/trait": "workspace:^"
+    "@tanstack/query-core": ^4.1.3
+    "@types/node": ^16.11.25
+    "@types/node-forge": ^1.0.2
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/stegcloak": ^1.0.0
+    jotai-tanstack-query: ^0.4.0
+    nanoid: ^3.3.2
+    node-forge: ^1.3.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stegcloak: ^1.1.1
+  peerDependencies:
+    "@mantine/core": ^4.2.12
+    "@mantine/hooks": ^4.2.12
+    "@mantine/notifications": ^4.2.12
+    jotai: ^1.7.3
+    react-router-dom: ^6.3.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-community/console-utils@workspace:^, @letscollab-community/console-utils@workspace:apps/first_party/console-utils":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-community/console-utils@workspace:apps/first_party/console-utils"
   dependencies:
     "@faker-js/faker": ^7.3.0
     "@letscollab-nest/trait": "workspace:^"
@@ -5300,8 +5327,9 @@ __metadata:
     "@letscollab-community/console-utils": "workspace:^"
     "@letscollab-nest/trait": "workspace:^"
     "@letscollab-pro/console": "workspace:^"
+    "@letscollab-react/authz": "workspace:^"
+    "@letscollab-react/table": "workspace:^"
     "@letscollab/ant-table": "workspace:^"
-    "@letscollab/react-authz": "workspace:^"
     "@mantine/core": ^5.5.4
     "@mantine/dropzone": ^5.10.0
     "@mantine/form": ^5.5.4
@@ -5313,6 +5341,7 @@ __metadata:
     "@tanstack/query-core": ^4.20.4
     "@tanstack/react-query": ^4.20.4
     "@tanstack/react-query-devtools": ^4.20.4
+    "@tanstack/react-table": ^8.7.9
     "@types/lodash.debounce": ^4
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
@@ -5900,6 +5929,40 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@letscollab-react/authz@workspace:^, @letscollab-react/authz@workspace:apps/first_party/react-authz":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-react/authz@workspace:apps/first_party/react-authz"
+  dependencies:
+    "@types/node": ^16.11.25
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    casbin.js: ^0.4.1
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@letscollab-react/table@workspace:^, @letscollab-react/table@workspace:apps/first_party/react-table":
+  version: 0.0.0-use.local
+  resolution: "@letscollab-react/table@workspace:apps/first_party/react-table"
+  dependencies:
+    "@types/node": ^16.11.25
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+  peerDependencies:
+    "@mantine/core": ^5.5.4
+    "@mantine/dates": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@tabler/icons": ^1.119.0
+    "@tanstack/react-table": ^8.7.9
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
 "@letscollab/ant-field@workspace:^, @letscollab/ant-field@workspace:first_party/ant-field":
   version: 0.0.0-use.local
   resolution: "@letscollab/ant-field@workspace:first_party/ant-field"
@@ -6017,36 +6080,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/app-utils@workspace:apps/utils":
+"@letscollab/nextra-theme-docs@workspace:^, @letscollab/nextra-theme-docs@workspace:apps/first_party/nextra-theme-docs":
   version: 0.0.0-use.local
-  resolution: "@letscollab/app-utils@workspace:apps/utils"
-  dependencies:
-    "@letscollab-nest/trait": "workspace:^"
-    "@tanstack/query-core": ^4.1.3
-    "@types/node": ^16.11.25
-    "@types/node-forge": ^1.0.2
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    "@types/stegcloak": ^1.0.0
-    jotai-tanstack-query: ^0.4.0
-    nanoid: ^3.3.2
-    node-forge: ^1.3.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stegcloak: ^1.1.1
-  peerDependencies:
-    "@mantine/core": ^4.2.12
-    "@mantine/hooks": ^4.2.12
-    "@mantine/notifications": ^4.2.12
-    jotai: ^1.7.3
-    react-router-dom: ^6.3.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/nextra-theme-docs@workspace:^, @letscollab/nextra-theme-docs@workspace:apps/nextra-theme-docs":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/nextra-theme-docs@workspace:apps/nextra-theme-docs"
+  resolution: "@letscollab/nextra-theme-docs@workspace:apps/first_party/nextra-theme-docs"
   dependencies:
     "@headlessui/react": ^1.6.1
     "@mdx-js/react": ^2.1.0
@@ -6076,39 +6112,6 @@ __metadata:
     next: ">=9.5.3"
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/react-authz@workspace:^, @letscollab/react-authz@workspace:first_party/react-authz":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/react-authz@workspace:first_party/react-authz"
-  dependencies:
-    "@types/node": ^16.11.25
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    casbin.js: ^0.4.1
-  peerDependencies:
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/react-table@workspace:first_party/react-table":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/react-table@workspace:first_party/react-table"
-  dependencies:
-    "@mantine/core": ^5.5.4
-    "@mantine/dates": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.119.0
-    "@types/node": ^16.11.25
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-  peerDependencies:
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
@@ -8618,6 +8621,25 @@ __metadata:
     react-native:
       optional: true
   checksum: ba9e2f175c58bde592c0ad14285f289585474763f8d68072d651fa75263a3a7f75eead5b62aa3140db133b95468498bc58817d07513f6f857be2bd8031b491da
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-table@npm:^8.7.9":
+  version: 8.7.9
+  resolution: "@tanstack/react-table@npm:8.7.9"
+  dependencies:
+    "@tanstack/table-core": 8.7.9
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 3c704ac903405972641c9857e1466025bcdac04ee4890d64b018386cad5a778aca3a8d3f78542ae7a0ed609841d32ef3a7e563b079e87fa93b9ae8570a310499
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.7.9":
+  version: 8.7.9
+  resolution: "@tanstack/table-core@npm:8.7.9"
+  checksum: 78d2314928c29559088e4bada0248cc7f94e93756e1a2c1f37a651db30276e9ae960d647bd3a61b67b3f0f9f7e4dec5dd58eb49b8adb80ee5952ef417b6e581f
   languageName: node
   linkType: hard
 

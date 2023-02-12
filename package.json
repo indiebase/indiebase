@@ -47,6 +47,7 @@
     "first_party/*",
     "third_party/*",
     "apps/*",
+    "apps/first_party/*",
     "pro/*"
   ],
   "jest": {

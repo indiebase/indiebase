@@ -8,7 +8,6 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import {
   commonEn,
   commonZh,
-  settingEn,
   twoFactorZh,
   tableEn,
   tableZh,
@@ -27,7 +26,6 @@ i18n
       },
       en: {
         common: commonEn,
-        setting: settingEn,
         table: tableEn,
       },
     },

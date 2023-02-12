@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HttpStatusPage } from '@letscollab-community/console-utils';
 import { Layout } from './Layout';
-import { OrganizationPage, AccessPage, MyPage } from './pages';
+import { OrganizationPage, AccessPage, MyPage, GeneralPage } from './pages';
 import { TwoFactorAuthPage } from './pages/My/Settings';
 import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
@@ -80,7 +80,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'general',
-                element: <div />,
+                element: <GeneralPage />,
               },
               {
                 path: 'access',

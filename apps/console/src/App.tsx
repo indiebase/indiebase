@@ -13,7 +13,7 @@ import {
   MantineProvider,
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-import { AuthzProvider, Can } from '@letscollab/react-authz';
+import { AuthzProvider, Can } from '@letscollab-react/authz';
 
 const queryClient = new QueryClient({
   defaultOptions: {

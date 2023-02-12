@@ -1,5 +1,4 @@
-export const commonZh = {
-  Setting: '设置',
+export const accessEn = {
   Profile: '个人资料',
   Organizations: '组织',
   'Two-factor auth': '双因子认证',
