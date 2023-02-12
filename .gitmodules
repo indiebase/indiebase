@@ -4,3 +4,6 @@
 [submodule "pro"]
 	path = pro
 	url = https://github.com/deskbtm-letscollab/letscollab-pro.git
+[submodule "apps/pitm"]
+	path = apps/pitm
+	url = https://github.com/deskbtm-letscollab/PITM.git
