@@ -5948,9 +5948,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab-react/table@workspace:apps/first_party/react-table"
   dependencies:
+    "@types/lodash.debounce": ^4
     "@types/node": ^16.11.25
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
+    lodash.debounce: ^4.0.8
   peerDependencies:
     "@mantine/core": ^5.5.4
     "@mantine/dates": ^5.5.4

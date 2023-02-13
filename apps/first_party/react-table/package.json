@@ -8,6 +8,9 @@
     "access": "public",
     "main": "./dist/index.js"
   },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
+  },
   "peerDependencies": {
     "@mantine/core": "^5.5.4",
     "@mantine/dates": "^5.5.4",
@@ -19,6 +22,7 @@
     "typescript": "^4.6.3"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4",
     "@types/node": "^16.11.25",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5"

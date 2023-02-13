@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {
+  ColumnFiltersState,
   ColumnOrderState,
+  FilterFn,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
@@ -21,13 +23,10 @@ import {
   useMantineTheme,
   Button,
 } from '@mantine/core';
-import {
-  IconCaretDown,
-  IconCaretUp,
-  IconChevronDown,
-  IconChevronUp,
-} from '@tabler/icons';
-import { FC } from 'react';
+import { IconCaretDown, IconCaretUp } from '@tabler/icons';
+import { useState } from 'react';
+import { Filter } from './Filter';
+import { RightToolbar } from './RightToolbar';
 
 interface TableProps<T = any> {
   mantineTableProps?: MantineTableProps;
@@ -35,14 +34,25 @@ interface TableProps<T = any> {
   data: T[];
   title?: string;
   globalFilter?: boolean;
-  defaultShowCount?: number;
+  defaultPageSize?: number;
 }
 
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  return true;
+};
+
 export const Table = function <P extends unknown>(props: TableProps<P>) {
-  const { mantineTableProps, columns, data, title } = props;
+  const { mantineTableProps, columns, data, title, defaultPageSize } = props;
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [pageSize, setPageSize] = useState<string>();
+  const [pageIndex, setPageIndex] = useState<number>();
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [globalFilter, setGlobalFilter] = React.useState('');
+
   const theme = useMantineTheme();
 
   const table = useReactTable({
@@ -52,7 +62,15 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
       columnVisibility,
       columnOrder,
       sorting,
+      columnFilters,
+      globalFilter,
     },
+    globalFilterFn: fuzzyFilter,
+    initialState: {
+      pagination: { pageSize: defaultPageSize },
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -74,25 +92,35 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
           borderRadius: 5,
         }}
       >
-        <Group mb="md">
-          {title && (
-            <Title mr="xs" order={3}>
-              {title}
-            </Title>
-          )}
-          <Select
-            size="xs"
-            variant="filled"
-            style={{ width: 70 }}
-            placeholder="show"
-            data={Array.from({ length: 10 }).map((_, index) => {
-              const val = ((index + 1) * 10).toString();
-              return {
-                value: val,
-                label: val,
-              };
-            })}
-          />
+        <Group mb="md" style={{ justifyContent: 'space-between' }}>
+          <Group>
+            {title && (
+              <Title mr="xs" order={3}>
+                {title}
+              </Title>
+            )}
+            <Select
+              size="xs"
+              variant="filled"
+              style={{ width: 70 }}
+              placeholder="show"
+              value={pageSize}
+              onChange={(v) => {
+                setPageSize(v);
+                table.setPageSize(parseInt(v));
+              }}
+              data={Array.from({ length: 10 }).map((_, index) => {
+                const val = ((index + 1) * 10).toString();
+                return {
+                  value: val,
+                  label: val,
+                };
+              })}
+            />
+          </Group>
+          <Group>
+            <RightToolbar table={table} />
+          </Group>
         </Group>
         <MantineTable
           captionSide="bottom"
@@ -132,7 +160,9 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
                               }[header.column.getIsSorted() as string]
                             }
                           </Box>
-                          {header.column.getCanFilter() && <div></div>}
+                          {header.column.getCanFilter() && (
+                            <Filter column={header.column} table={table} />
+                          )}
                         </span>
                       )}
                     </th>
@@ -156,11 +186,14 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
         <br />
         <Group position="center">
           <Pagination
-            page={table.getState().pagination.pageIndex}
-            onChange={table.setPageIndex}
-            total={10}
+            page={table.getState().pagination.pageIndex + 1}
+            onChange={(page) => {
+              console.log(page);
+              table.setPageIndex(page - 1);
+            }}
+            total={table.getPageCount()}
             radius="lg"
-            styles={(theme) => ({
+            styles={() => ({
               item: {
                 float: 'right',
                 fontSize: 14,
@@ -168,13 +201,24 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
             })}
           />
           <Group ml="md" spacing="xs">
-            <Input size="xs" style={{ width: 50 }} placeholder="page" />
+            <Input
+              size="xs"
+              type="number"
+              style={{ width: 50 }}
+              placeholder="page"
+              onChange={(e) => setPageIndex(parseInt(e.target.value))}
+            />
             <Button
               radius="lg"
               size="xs"
               type="submit"
               variant="gradient"
               gradient={theme.other.buttonGradient}
+              onClick={() =>
+                pageIndex <= table.getPageCount() &&
+                pageIndex > 0 &&
+                table.setPageIndex(pageIndex - 1)
+              }
             >
               Go to
             </Button>
@@ -187,36 +231,5 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
 
 Table.defaultProps = {
   globalFilter: true,
-  defaultShowCount: 20,
+  defaultPageSize: 20,
 };
-
-/* <div className="inline-block border border-black shadow rounded">
-        <div className="px-1 border-b border-black">
-          <label>
-            <input
-              {...{
-                type: 'checkbox',
-                checked: table.getIsAllColumnsVisible(),
-                onChange: table.getToggleAllColumnsVisibilityHandler(),
-              }}
-            />{' '}
-            Toggle All
-          </label>
-        </div>
-        {table.getAllLeafColumns().map((column) => {
-          return (
-            <div key={column.id} className="px-1">
-              <label>
-                <input
-                  {...{
-                    type: 'checkbox',
-                    checked: column.getIsVisible(),
-                    onChange: column.getToggleVisibilityHandler(),
-                  }}
-                />{' '}
-                {column.id}
-              </label>
-            </div>
-          );
-        })}
-      </div> */

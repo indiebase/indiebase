@@ -1,5 +1,5 @@
 import { Table } from '@letscollab-react/table';
-import { Grid, useMantineTheme } from '@mantine/core';
+import { Button, Grid, Group, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { createColumnHelper } from '@tanstack/react-table';
 import { Suspense, useState } from 'react';
@@ -11,6 +11,7 @@ type Person = {
   visits: number;
   status: string;
   progress: number;
+  actions: any;
 };
 
 const defaultData: any[] = [
@@ -50,20 +51,40 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.lastName, {
     enableSorting: false,
+    enableColumnFilter: false,
     id: 'lastName',
   }),
   columnHelper.accessor('age', {
+    enableColumnFilter: false,
     header: () => 'Age',
   }),
   columnHelper.accessor('visits', {
     header: () => <span>Visits</span>,
+    enableColumnFilter: false,
   }),
   columnHelper.accessor('status', {
+    enableColumnFilter: false,
     enableSorting: false,
     header: 'Status',
   }),
   columnHelper.accessor('progress', {
+    enableColumnFilter: false,
     header: 'Profile Progress',
+  }),
+  columnHelper.accessor('actions', {
+    enableColumnFilter: false,
+    header: 'Actions',
+    minSize: 200,
+    cell(context) {
+      console.log(context.row.original);
+      return (
+        <Group noWrap>
+          <Button size="xs" variant="light">
+            delete
+          </Button>
+        </Group>
+      );
+    },
   }),
 ];
 
