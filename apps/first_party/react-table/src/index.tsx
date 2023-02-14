@@ -5,6 +5,10 @@ import {
   FilterFn,
   flexRender,
   getCoreRowModel,
+  getFacetedMinMaxValues,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
@@ -35,6 +39,7 @@ interface TableProps<T = any> {
   title?: string;
   globalFilter?: boolean;
   defaultPageSize?: number;
+  onFuzzyFilter?: FilterFn<T>;
 }
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -42,7 +47,14 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 };
 
 export const Table = function <P extends unknown>(props: TableProps<P>) {
-  const { mantineTableProps, columns, data, title, defaultPageSize } = props;
+  const {
+    mantineTableProps,
+    columns,
+    data,
+    title,
+    defaultPageSize,
+    onFuzzyFilter,
+  } = props;
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -58,6 +70,9 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
   const table = useReactTable({
     data,
     columns,
+    filterFns: {
+      fuzzy: onFuzzyFilter,
+    },
     state: {
       columnVisibility,
       columnOrder,
@@ -65,7 +80,7 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
       columnFilters,
       globalFilter,
     },
-    globalFilterFn: fuzzyFilter,
+    globalFilterFn: onFuzzyFilter,
     initialState: {
       pagination: { pageSize: defaultPageSize },
     },
@@ -73,7 +88,11 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    getFacetedMinMaxValues: getFacetedMinMaxValues(),
     onColumnVisibilityChange: setColumnVisibility,
     onColumnOrderChange: setColumnOrder,
     getCoreRowModel: getCoreRowModel(),

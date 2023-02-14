@@ -9,7 +9,7 @@ export interface BaseResSchema<D = any> {
   d: D;
 }
 
-export interface PaginationResSchema extends BaseResSchema {
+export interface PaginationResSchema<D> extends BaseResSchema<D> {
   total: number;
   current: number;
   pageSize: number;

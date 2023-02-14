@@ -6,10 +6,9 @@ import {
   Popover,
   useMantineTheme,
 } from '@mantine/core';
-import { useDebouncedState, useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons';
+import { useDebouncedState } from '@mantine/hooks';
+import { IconSearch, IconX } from '@tabler/icons';
 import { Column, Table } from '@tanstack/react-table';
-import debounce from 'lodash.debounce';
 import { FC, useState } from 'react';
 
 interface FilterProps {
@@ -38,7 +37,7 @@ const PopoverDefaultFooter: FC<any> = function ({
           e.stopPropagation();
         }}
       >
-        清除
+        Clear
       </Button>
 
       <Button
@@ -49,28 +48,46 @@ const PopoverDefaultFooter: FC<any> = function ({
         onClick={onConfirm}
         disabled={disabled}
       >
-        确认
+        Ok
       </Button>
     </Group>
   );
 };
 
-export const TextFilter = function () {
+export const TextFilter: FC<FilterProps> = function ({ column, table }) {
   const [value, setValue] = useDebouncedState('', 20);
   const [opened, setOpened] = useState(false);
 
   return (
     <Popover withArrow shadow="md" opened={opened} onChange={setOpened}>
       <Popover.Target>
-        <ActionIcon onClick={() => setOpened((o) => !o)}>
-          <IconSearch size={12} />
-        </ActionIcon>
+        {!!value ? (
+          <ActionIcon
+            onClick={() => {
+              setValue('');
+              column.setFilterValue('');
+              setOpened(false);
+            }}
+          >
+            <IconX size={12} />
+          </ActionIcon>
+        ) : (
+          <ActionIcon onClick={() => setOpened((o) => !o)}>
+            <IconSearch size={12} />
+          </ActionIcon>
+        )}
       </Popover.Target>
       <Popover.Dropdown>
         <Input value={value} onChange={(e) => setValue(e.target.value)} />
         <PopoverDefaultFooter
-          onClear={() => setValue('')}
-          onConfirm={() => setOpened(false)}
+          onClear={() => {
+            setValue('');
+            column.setFilterValue('');
+          }}
+          onConfirm={() => {
+            setOpened(false);
+            column.setFilterValue(value);
+          }}
         />
       </Popover.Dropdown>
     </Popover>
@@ -82,10 +99,10 @@ export const DatetimeFilter = function () {};
 export const SelectFilter = function () {};
 
 export const Filter: FC<FilterProps> = function ({ column, table }) {
-  console.log(column, table);
+  // console.log(column, table);
   return (
     <>
-      <TextFilter />
+      <TextFilter table={table} column={column} />
     </>
   );
 };

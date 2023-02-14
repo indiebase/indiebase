@@ -26,6 +26,7 @@ export interface SidebarTileNode {
 }
 export interface SidebarProps {
   menu: SidebarTileNode[];
+  semver?: string;
 }
 
 interface MenuItemProps {
@@ -160,7 +161,13 @@ export const Sidebar: FC<SidebarProps> = function (props) {
           })}
         </Accordion>
       </Navbar.Section>
-      {/* <Navbar.Section>a</Navbar.Section> */}
+      {props.semver && (
+        <Navbar.Section>
+          <Text c="dimmed" size="xs">
+            {props?.semver}
+          </Text>
+        </Navbar.Section>
+      )}
     </Navbar>
   );
 };

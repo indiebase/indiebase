@@ -1,8 +1,7 @@
 import { Text, type AvatarProps, Avatar, HoverCard } from '@mantine/core';
-import React, { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { IconUser } from '@tabler/icons';
 import { PolymorphicComponentProps } from '@mantine/utils';
-import { AvatarGroupProps } from '@mantine/core/lib/Avatar/AvatarGroup/AvatarGroup';
 
 interface ProfilePreviewCardProps extends PropsWithChildren {}
 interface AvatarWithPreviewProps
@@ -42,29 +41,4 @@ export const AvatarWithPreview: FC<AvatarWithPreviewProps> = function (props) {
       </Avatar>
     </ProfilePreviewCard>
   );
-};
-
-export interface LimitAvatarGroupProps extends AvatarGroupProps {
-  limit?: number;
-}
-
-export const LimitAvatarGroup: FC<LimitAvatarGroupProps> = function (props) {
-  const children = React.Children.toArray(props.children);
-
-  return (
-    <Avatar.Group {...props}>
-      {children.length > props.limit
-        ? children.splice(0, props.limit)
-        : children}
-      {children.length > props.limit && (
-        <Avatar radius="xl" size="sm">
-          +{children.length - props.limit}
-        </Avatar>
-      )}
-    </Avatar.Group>
-  );
-};
-
-LimitAvatarGroup.defaultProps = {
-  limit: 9,
 };

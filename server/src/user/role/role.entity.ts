@@ -1,4 +1,4 @@
-import { Possession, RoleStatus } from '@letscollab-nest/trait';
+import { RoleStatus } from '@letscollab-nest/trait';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   Entity,
@@ -16,8 +16,8 @@ export class RoleEntity {
   @Column('varchar', { unique: true })
   name: string;
 
-  @Column('varchar')
-  description: string;
+  @Column('varchar', { nullable: true })
+  description?: string;
 
   @Column({ type: 'varchar' })
   domain: string;
@@ -31,19 +31,19 @@ export class RoleEntity {
     comment: 'Role status',
     default: RoleStatus.active,
   })
-  status?: RoleStatus;
+  status: RoleStatus;
 
   @CreateDateColumn({
     type: 'timestamp',
     name: 'create_time',
   })
-  createTime?: Date;
+  createTime: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'update_time',
   })
-  updateTime?: Date;
+  updateTime: Date;
 
   possession?: Record<string, string[]>;
 }
