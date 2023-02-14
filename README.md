@@ -35,11 +35,11 @@ letscollab 将会是一款中心化应用，但其支付等功能或将支持web
 
 ## Join
 
-letscollab 社区版本欢迎大家提交 Pr，如果有意愿加入私有部分的开发， 请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/confidentiality-agreement.md)
+letscollab 社区版本欢迎大家提交 Pr，如果有意愿加入私有部分的开发， 请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/dev/docs/zh-CN/non-disclosure-agreement-zh_cn.md)
 <br />
 同样 letscollab 所获取的收益，会分配给项目参与成员。
 
-Email: wanghan9423@outlook.com
+Email: deskbtm@outlook.com
 
 
 ## Sub-Projects
