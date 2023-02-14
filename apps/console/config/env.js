@@ -86,6 +86,7 @@ function getClientEnvironment(publicUrl) {
         WDS_SOCKET_PATH: process.env.WDS_SOCKET_PATH,
         WDS_SOCKET_PORT: process.env.WDS_SOCKET_PORT,
         REACT_APP_IS_MOCK: process.env.REACT_APP_IS_MOCK === 'true',
+        REACT_APP_SEMVER: process.env.REACT_APP_SEMVER,
         // Whether or not react-refresh is enabled.
         // It is defined here so it is available in the webpackHotDevClient.
         FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
