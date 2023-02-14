@@ -14,7 +14,7 @@ https://letscollab.deskbtm.com
 letscollab 全称为let's collaborate, 分为Community和Pro版本。
 
 letscollab community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者,
-而letscollab pro则更像清凉的Firebase，提供针对独立项目的基本业务管理，如用户管理，内购支付，邀请新人等一些常见应用业务。
+而letscollab pro则更接近于一个轻量的Firebase，提供针对独立项目的基本业务管理，如用户管理，内购支付等一些常见应用业务。
 
 letscollab 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [Abyss](https://github.com/deskbtm-abyss/abyss)等。
 
