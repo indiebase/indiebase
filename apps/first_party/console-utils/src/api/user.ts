@@ -1,5 +1,11 @@
 import { req } from './request';
-import type { BaseResSchema, Org, PaginationResSchema, Role, UserProfile } from '@letscollab-nest/trait';
+import type {
+  BaseResSchema,
+  Org,
+  PaginationResSchema,
+  Role,
+  UserProfile,
+} from '@letscollab-nest/trait';
 
 export const fetchUserProfile = async (): Promise<
   BaseResSchema<UserProfile>
@@ -30,6 +36,7 @@ export const searchUsersApi = async (
 export const fetchRolesApi = async (
   params: Partial<Role>,
 ): Promise<PaginationResSchema<Role[]>> => {
+  console.log(params, '=========================');
   const { data } = await req.get('/v1/user/role/list', {
     params,
   });

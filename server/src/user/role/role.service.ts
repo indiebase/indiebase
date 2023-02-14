@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { ResultCode } from '@letscollab-nest/helper';
 import { CreateRoleBody } from '@letscollab-nest/trait';
-import { AccessAction, CasbinService } from '@letscollab-nest/accesscontrol';
+import { CasbinService } from '@letscollab-nest/accesscontrol';
 
 @Injectable()
 export class RoleService {
@@ -121,21 +121,13 @@ export class RoleService {
 
   async queryRoles(body: QueryRoleDto) {
     body = Object.assign({}, body);
-    const { name, current, pageSize, id, domain } = body;
-    let cond = [];
-    name && cond.push({ name });
-    domain && cond.push({ domain });
-    id && cond.push({ id });
-
-    if (cond.length === 0) {
-      cond = null;
-    }
+    const { name, pageIndex, pageSize, id, domain } = body;
 
     let [list, total] = await this.roleRepo
       .findAndCount({
-        where: cond,
+        where: { id, name, domain },
         take: pageSize,
-        skip: (current - 1) * pageSize,
+        skip: pageIndex * pageSize,
       })
       .catch((err) => {
         this.logger.error(err);
@@ -162,11 +154,10 @@ export class RoleService {
       role.possession = possession;
     }
 
-
     return {
       total,
       pageSize,
-      current,
+      pageIndex,
       d: list,
     };
   }

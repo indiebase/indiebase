@@ -3,6 +3,7 @@ import {
   ColumnFiltersState,
   ColumnOrderState,
   FilterFn,
+  FilterMeta,
   flexRender,
   getCoreRowModel,
   getFacetedMinMaxValues,
@@ -11,6 +12,9 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  OnChangeFn,
+  PaginationState,
+  Row,
   SortingState,
   useReactTable,
   type ColumnDef,
@@ -28,7 +32,7 @@ import {
   Button,
 } from '@mantine/core';
 import { IconCaretDown, IconCaretUp } from '@tabler/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Filter } from './Filter';
 import { RightToolbar } from './RightToolbar';
 
@@ -39,12 +43,11 @@ interface TableProps<T = any> {
   title?: string;
   globalFilter?: boolean;
   defaultPageSize?: number;
-  onFuzzyFilter?: FilterFn<T>;
+  onChangePagination?: OnChangeFn<PaginationState>;
+  pagination?: PaginationState;
+  total: number;
+  onRequestFilter?: (p: T) => void;
 }
-
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  return true;
-};
 
 export const Table = function <P extends unknown>(props: TableProps<P>) {
   const {
@@ -53,12 +56,15 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     data,
     title,
     defaultPageSize,
-    onFuzzyFilter,
+    onRequestFilter,
+    onChangePagination,
+    pagination,
+    total,
   } = props;
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [pageSize, setPageSize] = useState<string>();
+  const [pageSize, setPageSize] = useState<string>(defaultPageSize + '');
   const [pageIndex, setPageIndex] = useState<number>();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -67,23 +73,31 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
 
   const theme = useMantineTheme();
 
+
+  React.forwardRef
+
+  useEffect(() => {
+    const p = {};
+    for (const col of columnFilters) {
+      p[col.id] = col.value;
+    }
+    onRequestFilter(p as any);
+  }, [columnFilters]);
+
   const table = useReactTable({
     data,
     columns,
-    filterFns: {
-      fuzzy: onFuzzyFilter,
-    },
+    pageCount: total ?? -1,
     state: {
       columnVisibility,
       columnOrder,
       sorting,
       columnFilters,
       globalFilter,
+      pagination,
     },
-    globalFilterFn: onFuzzyFilter,
-    initialState: {
-      pagination: { pageSize: defaultPageSize },
-    },
+    // globalFilterFn: onRequestFilter,
+    onPaginationChange: onChangePagination,
     onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
@@ -96,7 +110,8 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     onColumnVisibilityChange: setColumnVisibility,
     onColumnOrderChange: setColumnOrder,
     getCoreRowModel: getCoreRowModel(),
-    debugAll: process.env.NODE_ENV === 'development',
+    manualPagination: true,
+    // debugAll: process.env.NODE_ENV === 'development',
   });
 
   return (
@@ -146,7 +161,6 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
           striped
           highlightOnHover
           withBorder
-          withColumnBorders
           verticalSpacing="sm"
           {...mantineTableProps}
         >
@@ -207,7 +221,6 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
           <Pagination
             page={table.getState().pagination.pageIndex + 1}
             onChange={(page) => {
-              console.log(page);
               table.setPageIndex(page - 1);
             }}
             total={table.getPageCount()}

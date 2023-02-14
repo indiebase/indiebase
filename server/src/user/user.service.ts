@@ -109,7 +109,7 @@ export class UserService {
   }
 
   public async getUsers(cond: QueryUserDto) {
-    const { pageSize, current, username, email } = cond;
+    const { pageSize, pageIndex, username, email } = cond;
     const condition = [];
     username && condition.push({ username: Like(`%${username}%`) });
     email && condition.push({ email: Like(`%${email}%`) });
@@ -119,7 +119,7 @@ export class UserService {
     }
     const [list, total] = await this.userRepo.findAndCount({
       where: condition,
-      skip: (current - 1) * pageSize,
+      skip: (pageIndex - 1) * pageSize,
       take: pageSize,
     });
     return {

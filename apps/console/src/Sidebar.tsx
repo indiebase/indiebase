@@ -5,7 +5,5 @@ import { useMenu } from './use-menu';
 export const CommunitySidebar: FC = function () {
   const menu = useMenu();
 
-  console.log(process.env);
-
   return <Sidebar menu={menu} semver={process.env.REACT_APP_SEMVER} />;
 };

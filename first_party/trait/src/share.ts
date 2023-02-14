@@ -1,5 +1,5 @@
 export interface PaginationReqSchema {
-  current?: number;
+  pageIndex?: number;
   pageSize: number;
 }
 
@@ -11,6 +11,6 @@ export interface BaseResSchema<D = any> {
 
 export interface PaginationResSchema<D> extends BaseResSchema<D> {
   total: number;
-  current: number;
+  pageIndex: number;
   pageSize: number;
 }

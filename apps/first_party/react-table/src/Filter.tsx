@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { IconSearch, IconX } from '@tabler/icons';
-import { Column, Table } from '@tanstack/react-table';
+import type { Column, Table } from '@tanstack/react-table';
 import { FC, useState } from 'react';
 
 interface FilterProps {
@@ -65,7 +65,7 @@ export const TextFilter: FC<FilterProps> = function ({ column, table }) {
           <ActionIcon
             onClick={() => {
               setValue('');
-              column.setFilterValue('');
+              column.setFilterValue(null);
               setOpened(false);
             }}
           >
@@ -82,7 +82,7 @@ export const TextFilter: FC<FilterProps> = function ({ column, table }) {
         <PopoverDefaultFooter
           onClear={() => {
             setValue('');
-            column.setFilterValue('');
+            column.setFilterValue(null);
           }}
           onConfirm={() => {
             setOpened(false);

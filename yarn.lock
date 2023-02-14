@@ -5948,6 +5948,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@letscollab-react/table@workspace:apps/first_party/react-table"
   dependencies:
+    "@letscollab/dash": "workspace:^"
     "@types/lodash.debounce": ^4
     "@types/node": ^16.11.25
     "@types/react": ^18.0.14
@@ -6079,6 +6080,21 @@ __metadata:
     antd: ">=4.23.0"
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/dash@workspace:^, @letscollab/dash@workspace:first_party/dash":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/dash@workspace:first_party/dash"
+  dependencies:
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    cross-env: ^7.0.3
+    jest: ^27.2.5
+    ts-jest: ^27.0.3
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.10.1
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 

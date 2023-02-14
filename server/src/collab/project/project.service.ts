@@ -69,7 +69,7 @@ export class ProjectService {
 
   async queryProject(body: QueryProjectDto) {
     body = Object.assign({}, body);
-    const { name, current, pageSize } = body;
+    const { name, pageIndex, pageSize } = body;
     let cond = [];
     name && cond.push({ name });
 
@@ -81,14 +81,14 @@ export class ProjectService {
       where: cond,
       // relations: ['members'],
       take: pageSize,
-      skip: (current - 1) * pageSize,
+      skip: (pageIndex - 1) * pageSize,
     });
 
     return {
       code: ResultCode.SUCCESS,
       pageSize,
       total,
-      current,
+      pageIndex,
       d: list,
     };
   }

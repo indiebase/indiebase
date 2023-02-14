@@ -26,6 +26,7 @@ import {
 import { AccessGuard, DevApiHeader, ResultCode } from '@letscollab-nest/helper';
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
 import { RoleResource } from '@letscollab-nest/trait';
+import { CoProtectGuard } from '../../utils';
 
 @Controller({
   path: 'user/role',
@@ -59,16 +60,17 @@ export class RoleController {
   @ApiCreatedResponse({
     type: QueryRolesResDto,
   })
+  @UseGuards(CoProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async getList(@Query() role: QueryRoleDto) {
-    const { total, pageSize, current, d } = await this.roleService.queryRoles(
+    const { total, pageSize, pageIndex, d } = await this.roleService.queryRoles(
       role,
     );
     return {
       code: ResultCode.SUCCESS,
       total,
       pageSize,
-      current,
+      pageIndex,
       d,
     };
   }

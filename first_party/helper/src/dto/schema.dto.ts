@@ -9,7 +9,7 @@ export class PaginationReqDto {
   })
   @Type(() => Number)
   @IsNumber()
-  current?: number = 1;
+  pageIndex?: number = 1;
 
   @ApiProperty({
     default: 20,

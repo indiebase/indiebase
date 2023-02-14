@@ -1,6 +1,7 @@
+import { is } from '@letscollab/dash';
 import { Group, Tooltip, ActionIcon, Popover, Checkbox } from '@mantine/core';
 import { IconZoomReset, IconColumnsOff } from '@tabler/icons';
-import { Column, Table } from '@tanstack/react-table';
+import { Table } from '@tanstack/react-table';
 import { FC } from 'react';
 
 interface RightToolbarProps {
@@ -36,7 +37,11 @@ export const RightToolbar: FC<RightToolbarProps> = function ({ table }) {
               <Checkbox
                 key={column.id}
                 size="xs"
-                label={column.id}
+                label={
+                  is.string(column.columnDef.header)
+                    ? column.columnDef.header
+                    : column.id
+                }
                 checked={column.getIsVisible()}
                 onChange={column.getToggleVisibilityHandler()}
               />

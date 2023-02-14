@@ -1,35 +1,5 @@
 import path from 'path';
 
-export const is = {
-  type(obj: unknown, str: string): boolean {
-    return Object.prototype.toString.call(obj) === `[object ${str}]`;
-  },
-  string(obj: unknown): obj is string {
-    return this.type(obj, 'String');
-  },
-  object(obj: unknown): obj is object {
-    return this.type(obj, 'Object');
-  },
-  function(obj: unknown): obj is Function {
-    return this.type(obj, 'Function');
-  },
-  asyncFunction(obj: unknown): obj is Function {
-    return this.type(obj, 'AsyncFunction');
-  },
-  null(obj: unknown): obj is null {
-    return this.type(obj, 'Null');
-  },
-  undefined(obj: unknown): obj is undefined {
-    return this.type(obj, 'Undefined');
-  },
-  number(obj: unknown): obj is number {
-    return this.type(obj, 'Number');
-  },
-  array(obj: unknown): obj is [] {
-    return this.type(obj, 'Array');
-  },
-};
-
 export const getSubdomain = function (
   domain: string,
   index: number = 2,
@@ -38,14 +8,16 @@ export const getSubdomain = function (
   return prefix + domain.split('.').slice(-index).join('.');
 };
 
-
 /**
  * Overwrite `swagger-ui-dist` for production to resolve not found.
  *
  * @param finalPath
  * @param app
  */
-export const overwriteSwaggerStaticAssets = function (finalPath, app) {
+export const overwriteSwaggerStaticAssets = function (
+  finalPath: string,
+  app: any,
+) {
   const httpAdapter = app.getHttpAdapter();
   const swaggerAssetsAbsoluteFSPath = path.resolve(
     __dirname,

@@ -9,6 +9,7 @@
     "main": "./dist/index.js"
   },
   "dependencies": {
+    "@letscollab/dash": "workspace:^",
     "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
