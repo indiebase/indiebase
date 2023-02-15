@@ -26,7 +26,7 @@ const countriesData = [
   { label: 'Russia', value: 'RU' },
 ];
 
-export const RoleModal: FC<CreateRoleModalProps> = function () {
+export const CreateRoleModal: FC<CreateRoleModalProps> = function () {
   const theme = useMantineTheme();
   const [opened, setOpen] = useState<boolean>(false);
 

@@ -6,12 +6,13 @@ import {
   Popover,
   useMantineTheme,
 } from '@mantine/core';
+import { RangeCalendar } from '@mantine/dates';
 import { useDebouncedState } from '@mantine/hooks';
 import { IconSearch, IconX } from '@tabler/icons';
 import type { Column, Table } from '@tanstack/react-table';
 import { FC, useState } from 'react';
 
-interface FilterProps {
+interface BaseFilterProps {
   column: Column<any, unknown>;
   table: Table<any>;
 }
@@ -54,7 +55,7 @@ const PopoverDefaultFooter: FC<any> = function ({
   );
 };
 
-export const TextFilter: FC<FilterProps> = function ({ column, table }) {
+export const TextFilter: FC<BaseFilterProps> = function ({ column }) {
   const [value, setValue] = useDebouncedState('', 20);
   const [opened, setOpened] = useState(false);
 
@@ -64,7 +65,7 @@ export const TextFilter: FC<FilterProps> = function ({ column, table }) {
         {!!value ? (
           <ActionIcon
             onClick={() => {
-              setValue('');
+              setValue(null);
               column.setFilterValue(null);
               setOpened(false);
             }}
@@ -94,15 +95,64 @@ export const TextFilter: FC<FilterProps> = function ({ column, table }) {
   );
 };
 
-export const DatetimeFilter = function () {};
+export const DateRangeFilter: FC<BaseFilterProps> = function ({ column }) {
+  const initValue: [null, null] = [null, null];
+  const [value, setValue] = useState<[Date | null, Date | null]>(initValue);
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <Popover withArrow shadow="md" opened={opened} onChange={setOpened}>
+      <Popover.Target>
+        {!!value?.[0] ? (
+          <ActionIcon
+            onClick={() => {
+              setValue(initValue);
+              column.setFilterValue(initValue);
+              setOpened(false);
+            }}
+          >
+            <IconX size={12} />
+          </ActionIcon>
+        ) : (
+          <ActionIcon onClick={() => setOpened((o) => !o)}>
+            <IconSearch size={12} />
+          </ActionIcon>
+        )}
+      </Popover.Target>
+      <Popover.Dropdown>
+        <RangeCalendar
+          styles={{
+            weekdayCell: {
+              border: 'unset !important',
+            },
+            cell: {
+              border: 'unset !important',
+              backgroundColor: 'unset',
+              padding: '0 !important',
+            },
+            month: {
+              tr: {
+                backgroundColor: 'unset !important',
+              },
+            },
+          }}
+          value={value}
+          onChange={setValue}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+};
 
 export const SelectFilter = function () {};
 
-export const Filter: FC<FilterProps> = function ({ column, table }) {
-  // console.log(column, table);
-  return (
-    <>
-      <TextFilter table={table} column={column} />
-    </>
-  );
+export const Filter: FC<BaseFilterProps> = function ({ column, table }) {
+  switch ((column.columnDef as any).filterType) {
+    case 'text':
+      return <TextFilter table={table} column={column} />;
+    case 'dateRange':
+      return <DateRangeFilter table={table} column={column} />;
+    default:
+      return <></>;
+  }
 };

@@ -5960,6 +5960,7 @@ __metadata:
     "@mantine/hooks": ^5.5.4
     "@tabler/icons": ^1.119.0
     "@tanstack/react-table": ^8.7.9
+    dayjs: "*"
     react: ^18.2.0
     react-dom: ^18.2.0
     typescript: ^4.6.3
@@ -5976,7 +5977,7 @@ __metadata:
     "@chenshuai2144/sketch-color": ^1.0.8
     "@letscollab/ant-utils": "workspace:^"
     "@mantine/core": ^5.5.4
-    "@mantine/dates": ^5.5.4
+    "@mantine/dates": ^5.10.3
     "@mantine/hooks": ^5.5.4
     "@tabler/icons": ^1.119.0
     "@types/classnames": ^2.2.10
@@ -6167,17 +6168,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/dates@npm:^5.5.4":
-  version: 5.10.1
-  resolution: "@mantine/dates@npm:5.10.1"
+"@mantine/dates@npm:^5.10.3":
+  version: 5.10.3
+  resolution: "@mantine/dates@npm:5.10.3"
   dependencies:
-    "@mantine/utils": 5.10.1
+    "@mantine/utils": 5.10.3
   peerDependencies:
-    "@mantine/core": 5.10.1
-    "@mantine/hooks": 5.10.1
+    "@mantine/core": 5.10.3
+    "@mantine/hooks": 5.10.3
     dayjs: ">=1.0.0"
     react: ">=16.8.0"
-  checksum: 68f2d26e7dc91429c2281bab4af8ba895ac26fe08527484467b2bc891ce213f5548de61f0d5afe144927b0a2cd4131dd2117657171ab5c3720bd3cfeadf3fe39
+  checksum: 80e22b0eb2235a373f0d35979bea7aeea671515962f4d119811145da7086f2258663ceb2d19a6ad23a02b6f08e1c53047778ec37cf559d8e81c9061d9f83a159
   languageName: node
   linkType: hard
 
@@ -6284,12 +6285,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/utils@npm:5.10.1":
-  version: 5.10.1
-  resolution: "@mantine/utils@npm:5.10.1"
+"@mantine/utils@npm:5.10.3":
+  version: 5.10.3
+  resolution: "@mantine/utils@npm:5.10.3"
   peerDependencies:
     react: ">=16.8.0"
-  checksum: a5ab487a0b24cc12e0b4ef1e5c49439dfa03e29f8f631eb45565fb6991a31aa762816d520904f22a36eff849b7fa2c0996f35af7e1581e4a069c5a1c81b231d4
+  checksum: 063237e49f3c52e3bbcd99e7a8383ac881718d9e1e039d32249231370a463a19e070cea7f90c3c0fea2933c3c162f5509a0f2add015db2aeb90f7945cd954a12
   languageName: node
   linkType: hard
 

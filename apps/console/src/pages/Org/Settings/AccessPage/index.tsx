@@ -1,6 +1,5 @@
 import { Grid } from '@mantine/core';
 import { RoleTable } from './RoleTable';
-// import { MemberTable } from './MemberTable';
 import { Suspense } from 'react';
 
 export const AccessPage = function (props) {

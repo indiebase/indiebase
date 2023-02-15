@@ -30,7 +30,7 @@
     "@chenshuai2144/sketch-color": "^1.0.8",
     "@letscollab/ant-utils": "workspace:^",
     "@mantine/core": "^5.5.4",
-    "@mantine/dates": "^5.5.4",
+    "@mantine/dates": "^5.10.3",
     "@mantine/hooks": "^5.5.4",
     "@tabler/icons": "^1.119.0",
     "classnames": "^2.2.6",

@@ -47,6 +47,7 @@ interface TableProps<T = any> {
   pagination?: PaginationState;
   total: number;
   onRequestFilter?: (p: T) => void;
+  toolbar?: () => React.ReactElement[];
 }
 
 export const Table = function <P extends unknown>(props: TableProps<P>) {
@@ -60,6 +61,7 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     onChangePagination,
     pagination,
     total,
+    toolbar,
   } = props;
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
@@ -69,12 +71,11 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
-  const [globalFilter, setGlobalFilter] = React.useState('');
+  // const [globalFilter, setGlobalFilter] = React.useState('');
 
   const theme = useMantineTheme();
 
-
-  React.forwardRef
+  React.forwardRef;
 
   useEffect(() => {
     const p = {};
@@ -83,6 +84,8 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     }
     onRequestFilter(p as any);
   }, [columnFilters]);
+
+  console.log(columnFilters);
 
   const table = useReactTable({
     data,
@@ -93,16 +96,15 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
       columnOrder,
       sorting,
       columnFilters,
-      globalFilter,
+      // globalFilter,
       pagination,
     },
-    // globalFilterFn: onRequestFilter,
     onPaginationChange: onChangePagination,
-    onGlobalFilterChange: setGlobalFilter,
+    // onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    // getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -153,6 +155,7 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
             />
           </Group>
           <Group>
+            {toolbar?.()}
             <RightToolbar table={table} />
           </Group>
         </Group>
@@ -171,32 +174,34 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
                   return (
                     <th key={header.id}>
                       {header.isPlaceholder ? null : (
-                        <span
-                          onClick={header.column.getToggleSortingHandler()}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            cursor: 'default',
-                            userSelect: 'none',
-                          }}
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                        <Group noWrap>
+                          <span
+                            onClick={header.column.getToggleSortingHandler()}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              cursor: 'default',
+                              userSelect: 'none',
+                            }}
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
 
-                          <Box ml="xs" style={{ width: 16, height: 16 }}>
-                            {
+                            <Box ml="xs" style={{ width: 16, height: 16 }}>
                               {
-                                asc: <IconCaretDown size={16} />,
-                                desc: <IconCaretUp size={16} />,
-                              }[header.column.getIsSorted() as string]
-                            }
-                          </Box>
+                                {
+                                  asc: <IconCaretDown size={16} />,
+                                  desc: <IconCaretUp size={16} />,
+                                }[header.column.getIsSorted() as string]
+                              }
+                            </Box>
+                          </span>
                           {header.column.getCanFilter() && (
                             <Filter column={header.column} table={table} />
                           )}
-                        </span>
+                        </Group>
                       )}
                     </th>
                   );

@@ -1,6 +1,6 @@
 import { FC, ReactElement, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { AppShell, useMantineTheme } from '@mantine/core';
+import { AppShell, Box, useMantineTheme } from '@mantine/core';
 import { Header, NavHeaderProps } from './Header';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Footer } from './Footer';
@@ -22,7 +22,6 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
             theme.colorScheme === 'dark'
               ? theme.colors.dark[6]
               : theme.colors.white,
-          // paddingLeft: 0,
         },
       }}
       navbarOffsetBreakpoint="sm"
@@ -46,7 +45,9 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
         </ErrorBoundary>
       }
     >
-      <Outlet />
+      <Box mt={30}>
+        <Outlet />
+      </Box>
     </AppShell>
   );
 };
