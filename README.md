@@ -1,7 +1,6 @@
-https://letscollab.deskbtm.com
-
+<a href='https://letscollab.deskbtm.com' target="_blank">
 <img src="https://s2.loli.net/2022/04/25/dPcuzynwbxStgl4.png" />
-
+</a>
 <br />
 
 ## NB
