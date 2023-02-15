@@ -103,9 +103,15 @@ export const RoleTable = function (props) {
       onChangePagination={setPagination}
       pagination={pagination}
       total={Math.ceil(total / pageSize)}
-      onRequestFilter={(p) => {
+      onRequestFilter={(p: any) => {
         console.log(p);
-        // setParams(p);
+        if (!!p?.createTime) {
+          p.createStartAt = p.createTime[0];
+          p.createEndAt = p.createTime[1];
+        }
+
+        delete p.createTime;
+        setParams(p);
       }}
       toolbar={() => [<CreateRoleModal key="create-role-modal" />]}
     ></Table>

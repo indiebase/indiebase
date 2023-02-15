@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { Repository, DataSource, Between } from 'typeorm';
 import { ResultCode } from '@letscollab-nest/helper';
 import { CreateRoleBody } from '@letscollab-nest/trait';
 import { CasbinService } from '@letscollab-nest/accesscontrol';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class RoleService {
@@ -121,11 +122,27 @@ export class RoleService {
 
   async queryRoles(body: QueryRoleDto) {
     body = Object.assign({}, body);
-    const { name, pageIndex, pageSize, id, domain } = body;
+    const {
+      name,
+      pageIndex,
+      pageSize,
+      id,
+      domain,
+      createStartAt,
+      createEndAt,
+    } = body;
 
     let [list, total] = await this.roleRepo
       .findAndCount({
-        where: { id, name, domain },
+        where: {
+          id,
+          name,
+          domain,
+          createTime: Between(
+            createStartAt ?? dayjs().subtract(1000, 'year').toDate(),
+            createEndAt ?? dayjs().add(1000, 'year').toDate(),
+          ),
+        },
         take: pageSize,
         skip: pageIndex * pageSize,
       })

@@ -31,7 +31,6 @@ export const RightToolbar: FC<RightToolbarProps> = function ({ table }) {
             checked={table.getIsAllColumnsVisible()}
             onChange={table.getToggleAllColumnsVisibilityHandler()}
           />
-
           {table.getAllLeafColumns().map((column) => {
             return (
               <Checkbox

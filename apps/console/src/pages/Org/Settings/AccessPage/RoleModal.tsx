@@ -36,7 +36,9 @@ export const CreateRoleModal: FC<CreateRoleModalProps> = function () {
     },
     validate: {
       name: (value) =>
-        /[^a-zA-Z0-9-_]/g.test(value) ? null : '不能包含除_-以外的特殊字符',
+        /[^a-zA-Z0-9-_]/g.test(value)
+          ? null
+          : 'Cannot contain special characters except _-',
     },
   });
 
@@ -65,22 +67,22 @@ export const CreateRoleModal: FC<CreateRoleModalProps> = function () {
               <TextInput
                 my={15}
                 variant="filled"
-                label="角色名"
-                placeholder="请输入角色名"
+                label="Name"
+                placeholder="Role name."
                 {...form.getInputProps('name')}
                 required
               />
             </Group>
 
-            <Textarea label="描述" placeholder="请输入描述" />
+            <Textarea label="Description" placeholder="Role description." />
 
             <MultiSelect
               my={15}
               data={countriesData}
               searchable
               defaultValue={['US', 'FI']}
-              placeholder="请选择角色权限"
-              label="权限"
+              placeholder="Add possessions."
+              label="Possession"
             />
 
             <Group mt={80} grow>
@@ -111,7 +113,7 @@ export const CreateRoleModal: FC<CreateRoleModalProps> = function () {
         variant="gradient"
         gradient={theme.other.buttonGradient}
       >
-        添加
+        Add
       </Button>
     </span>
   );

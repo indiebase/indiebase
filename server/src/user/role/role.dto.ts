@@ -1,7 +1,7 @@
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -87,16 +87,16 @@ export class QueryRoleDto extends PaginationReqDto {
   @ApiPropertyOptional({
     description: 'Role create start at',
   })
-  @IsDate()
+  @IsDateString()
   @IsOptional()
-  createStartAt?: string;
+  createStartAt?: Date;
 
   @ApiPropertyOptional({
     description: 'Role create end at',
   })
-  @IsDate()
+  @IsDateString()
   @IsOptional()
-  createEndAt?: string;
+  createEndAt?: Date;
 }
 
 export class UpdateRoleDto {

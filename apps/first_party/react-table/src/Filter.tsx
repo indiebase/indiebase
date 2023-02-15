@@ -99,6 +99,7 @@ export const DateRangeFilter: FC<BaseFilterProps> = function ({ column }) {
   const initValue: [null, null] = [null, null];
   const [value, setValue] = useState<[Date | null, Date | null]>(initValue);
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <Popover withArrow shadow="md" opened={opened} onChange={setOpened}>
@@ -137,8 +138,24 @@ export const DateRangeFilter: FC<BaseFilterProps> = function ({ column }) {
             },
           }}
           value={value}
-          onChange={setValue}
+          onChange={(v) => {
+            column.setFilterValue(v);
+            setValue(v);
+          }}
         />
+        <Button
+          variant="gradient"
+          gradient={theme.other.buttonGradient}
+          key="confirm"
+          size="xs"
+          fullWidth
+          mt="md"
+          onClick={() => {
+            setOpened(false);
+          }}
+        >
+          Ok
+        </Button>
       </Popover.Dropdown>
     </Popover>
   );

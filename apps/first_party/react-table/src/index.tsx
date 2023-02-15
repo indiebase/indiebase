@@ -85,8 +85,6 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     onRequestFilter(p as any);
   }, [columnFilters]);
 
-  console.log(columnFilters);
-
   const table = useReactTable({
     data,
     columns,
