@@ -2,19 +2,15 @@ import * as React from 'react';
 import {
   ColumnFiltersState,
   ColumnOrderState,
-  FilterFn,
-  FilterMeta,
   flexRender,
   getCoreRowModel,
   getFacetedMinMaxValues,
   getFacetedRowModel,
   getFacetedUniqueValues,
-  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   OnChangeFn,
   PaginationState,
-  Row,
   SortingState,
   useReactTable,
   type ColumnDef,
@@ -28,13 +24,17 @@ import {
   Title,
   Group,
   Input,
+  Text,
   useMantineTheme,
   Button,
+  Center,
+  Container,
 } from '@mantine/core';
-import { IconCaretDown, IconCaretUp } from '@tabler/icons';
+import { IconCaretDown, IconCaretUp, IconRefresh } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { Filter } from './Filter';
 import { RightToolbar } from './RightToolbar';
+import { useForceUpdate } from '@mantine/hooks';
 
 interface TableProps<T = any> {
   mantineTableProps?: MantineTableProps;
@@ -74,8 +74,7 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
   // const [globalFilter, setGlobalFilter] = React.useState('');
 
   const theme = useMantineTheme();
-
-  React.forwardRef;
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     const p = {};
@@ -218,7 +217,42 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
               </tr>
             ))}
           </tbody>
+          {/* <tfoot>
+            {table.getFooterGroups().map((footerGroup) => (
+              <tr key={footerGroup.id}>
+                {footerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.footer,
+                          header.getContext(),
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </tfoot> */}
         </MantineTable>
+        {table.getRowModel().rows.length < 1 && (
+          <Center
+            p={50}
+            style={{
+              border: '1px solid #dee2e6',
+              borderTop: 'none',
+            }}
+          >
+            <Button
+              onClick={() => {
+                setColumnFilters([]);
+              }}
+              leftIcon={<IconRefresh size={16} />}
+              variant="subtle"
+            >
+              Empty data, try refresh
+            </Button>
+          </Center>
+        )}
         <br />
         <Group position="center">
           <Pagination

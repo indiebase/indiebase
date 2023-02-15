@@ -9,6 +9,7 @@ import {
   ButtonProps,
 } from '@mantine/core';
 import { FC, PropsWithChildren, useState } from 'react';
+import { ConfirmButtonFooter } from './ConfirmButtonFooter';
 
 interface ConfirmButtonProps extends PropsWithChildren, ButtonProps {
   label?: string;
@@ -26,7 +27,6 @@ export const ConfirmButton: FC<ConfirmButtonProps> = function ({
   ...rest
 }) {
   const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
   return (
     <Popover
       styles={{ dropdown: { minWidth: 230 } }}
@@ -43,32 +43,16 @@ export const ConfirmButton: FC<ConfirmButtonProps> = function ({
       <Popover.Dropdown>
         <Text size="sm">{content}</Text>
 
-        <Group grow mt="lg">
-          <Button
-            key="cancel"
-            variant="light"
-            size="xs"
-            onClick={() => {
-              setOpened(false);
-              onCancel?.();
-            }}
-          >
-            Cancel
-          </Button>
-
-          <Button
-            variant="gradient"
-            gradient={theme.other.buttonGradient}
-            key="confirm"
-            size="xs"
-            onClick={() => {
-              setOpened(false);
-              onConfirm();
-            }}
-          >
-            Ok
-          </Button>
-        </Group>
+        <ConfirmButtonFooter
+          onCancel={() => {
+            setOpened(false);
+            onCancel?.();
+          }}
+          onConfirm={() => {
+            setOpened(false);
+            onConfirm();
+          }}
+        />
       </Popover.Dropdown>
     </Popover>
   );

@@ -70,22 +70,20 @@ export class ProjectService {
   async queryProject(body: QueryProjectDto) {
     body = Object.assign({}, body);
     const { name, pageIndex, pageSize } = body;
-    let cond = [];
-    name && cond.push({ name });
-
-    if (cond.length === 0) {
-      cond = null;
-    }
 
     const [list, total] = await this.projectRepo.findAndCount({
-      where: cond,
-      // relations: ['members'],
+      where: {
+        name,
+      },
+      relations: ['members'],
       take: pageSize,
       skip: (pageIndex - 1) * pageSize,
-    });
+    }).catch((err) => { 
+      this.logger.error(err);
+      throw new InternalServerErrorException();
+    })
 
     return {
-      code: ResultCode.SUCCESS,
       pageSize,
       total,
       pageIndex,

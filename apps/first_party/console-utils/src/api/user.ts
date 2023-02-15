@@ -3,6 +3,7 @@ import type {
   BaseResSchema,
   Org,
   PaginationResSchema,
+  Resource,
   Role,
   UserProfile,
 } from '@letscollab-nest/trait';
@@ -36,9 +37,15 @@ export const searchUsersApi = async (
 export const fetchRolesApi = async (
   params: Partial<Role>,
 ): Promise<PaginationResSchema<Role[]>> => {
-  console.log(params, '=========================');
   const { data } = await req.get('/v1/user/role/list', {
     params,
   });
+  return data;
+};
+
+export const fetchResourceApi = async (): Promise<
+  PaginationResSchema<Resource[]>
+> => {
+  const { data } = await req.get('/v1/user/res');
   return data;
 };

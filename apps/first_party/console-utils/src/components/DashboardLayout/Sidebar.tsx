@@ -7,7 +7,9 @@ import {
   UnstyledButton,
   Accordion,
   MantineThemeColors,
+  useMantineTheme,
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { useAtomValue } from 'jotai';
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, NavLink, useParams, useLocation } from 'react-router-dom';
@@ -87,6 +89,8 @@ export const Sidebar: FC<SidebarProps> = function (props) {
   const navigate = useNavigate();
   const opened = useAtomValue(navbarSwitchAtom);
   const [value, setValue] = useAccordionControl(props.menu);
+  const theme = useMantineTheme();
+  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
 
   return (
     <Navbar
@@ -94,7 +98,7 @@ export const Sidebar: FC<SidebarProps> = function (props) {
       position={{ top: 65 }}
       hiddenBreakpoint="sm"
       width={{ sm: 200, lg: 250 }}
-      style={{ borderRight: 0, zIndex: 99 }}
+      style={{ borderRight: 0, zIndex: matches ? 99 : 0 }}
       hidden={opened}
       sx={{
         backdropFilter: 'saturate(180%) blur(10px)',

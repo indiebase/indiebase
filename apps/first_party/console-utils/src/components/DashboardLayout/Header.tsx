@@ -24,6 +24,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
 import { navbarSwitchAtom, userProfileQueryAtom } from '../../atoms';
+import { logoutApi } from '../../api/';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -220,7 +221,12 @@ export const Header: FC<NavHeaderProps> = function (props) {
                       Create Organization
                     </Menu.Item>
                     <Divider my="xs" variant="dashed" labelPosition="center" />
-                    <Menu.Item icon={<IconLogout size={16} />}>
+                    <Menu.Item
+                      onClick={async () => {
+                        await logoutApi();
+                      }}
+                      icon={<IconLogout size={16} />}
+                    >
                       Sign Out
                     </Menu.Item>
                   </Menu.Dropdown>

@@ -22,3 +22,8 @@ export const optVerifyApi = async (params) => {
   const { data } = await req.post('/v1/auth/2fa/verify', params);
   return data;
 };
+
+export const logoutApi = async () => {
+  const { data } = await req.post('/v1/auth/logout');
+  return data;
+};

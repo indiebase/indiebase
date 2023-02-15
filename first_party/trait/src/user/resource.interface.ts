@@ -8,11 +8,13 @@ export enum ResourceGroup {
 }
 
 export interface Resource {
-  name: ResourceGroup | string;
+  name: string;
   label?: string;
   description?: string;
-  isGroup?: boolean;
-  children?: Resource[];
+  group: ResourceGroup;
+  groupLabel?: string;
+  /* Is the default permission */
+  default?: boolean;
 }
 
 // Role

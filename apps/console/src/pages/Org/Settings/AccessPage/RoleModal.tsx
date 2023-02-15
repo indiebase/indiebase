@@ -1,14 +1,20 @@
+import { fetchResourceApi } from '@letscollab-community/console-utils';
+import { ConfirmButtonFooter } from '@letscollab-community/console-utils/src/components/ConfirmButtonFooter';
 import {
+  Box,
   Button,
+  CloseButton,
   Container,
   Group,
   Modal,
   MultiSelect,
+  MultiSelectValueProps,
   Textarea,
   TextInput,
   useMantineTheme,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useQuery } from '@tanstack/react-query';
 import { FC, useState } from 'react';
 
 interface CreateRoleModalProps {
@@ -18,17 +24,64 @@ interface CreateRoleModalProps {
   updateModal?: boolean;
 }
 
-const countriesData = [
-  { label: 'United States', value: 'US' },
-  { label: 'Great Britain', value: 'GB' },
-  { label: 'Finland', value: 'FI' },
-  { label: 'France', value: 'FR' },
-  { label: 'Russia', value: 'RU' },
-];
+const flags = {};
+
+function Value({
+  value,
+  label,
+  onRemove,
+  classNames,
+  ...others
+}: MultiSelectValueProps & { value: string }) {
+  // const Flag = flags[value];
+  return (
+    <div {...others}>
+      <Box
+        sx={(theme) => ({
+          display: 'flex',
+          cursor: 'default',
+          alignItems: 'center',
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+          border: `1px solid ${
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[7]
+              : theme.colors.gray[4]
+          }`,
+          paddingLeft: 10,
+          borderRadius: 4,
+        })}
+      >
+        <Box mr={10}>{/* <Flag /> */}</Box>
+        <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
+        <CloseButton
+          onMouseDown={onRemove}
+          variant="transparent"
+          size={22}
+          iconSize={14}
+          tabIndex={-1}
+        />
+      </Box>
+    </div>
+  );
+}
 
 export const CreateRoleModal: FC<CreateRoleModalProps> = function () {
   const theme = useMantineTheme();
   const [opened, setOpen] = useState<boolean>(false);
+
+  const { data, isSuccess } = useQuery(['get_resource'], fetchResourceApi, {
+    keepPreviousData: true,
+    suspense: true,
+  });
+
+  const resource = isSuccess
+    ? data.d.map((v) => ({
+        value: v.name,
+        label: v.label,
+        group: v.groupLabel,
+      }))
+    : [];
 
   const form = useForm({
     initialValues: {
@@ -78,30 +131,21 @@ export const CreateRoleModal: FC<CreateRoleModalProps> = function () {
 
             <MultiSelect
               my={15}
-              data={countriesData}
+              valueComponent={Value}
+              data={resource}
               searchable
               defaultValue={['US', 'FI']}
               placeholder="Add possessions."
               label="Possession"
             />
 
-            <Group mt={80} grow>
-              <Button
-                onClick={() => setOpen(false)}
-                variant="subtle"
-                type="submit"
-                color="gray"
-              >
-                取消
-              </Button>
-              <Button
-                type="submit"
-                variant="gradient"
-                gradient={theme.other.buttonGradient}
-              >
-                确定
-              </Button>
-            </Group>
+            <ConfirmButtonFooter
+              mt={80}
+              type="submit"
+              onCancel={() => {
+                setOpen(false);
+              }}
+            />
           </form>
         </Container>
       </Modal>

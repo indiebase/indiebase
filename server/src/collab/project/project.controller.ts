@@ -42,10 +42,21 @@ export class ProjectController {
   @ApiOperation({
     summary: 'Get project list',
   })
+  @UseGuards(CoProtectGuard, AccessGuard)
   @ApiOkResponse({
     // type: ProjectListResDto,
   })
-  async getProjects(@Query() query: QueryProjectDto) {}
+  async getProjects(@Query() query: QueryProjectDto) {
+    const { total, pageSize, pageIndex, d } =
+      await this.projectService.queryProject(query);
+    return {
+      ode: ResultCode.SUCCESS,
+      total,
+      pageSize,
+      pageIndex,
+      d,
+    };
+  }
 
   @Post()
   @ApiOperation({

@@ -22,7 +22,7 @@ export class ResourceController {
   @UseAccess({
     action: AccessAction.readAny,
     resource: RoleResource.list,
-  })  
+  })
   @DevApiHeader()
   async getResources(@I18n() i18n: I18nContext) {
     return {

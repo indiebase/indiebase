@@ -1,11 +1,11 @@
-import { Center, Text } from '@mantine/core';
+import { Center, Text, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { FC } from 'react';
 import { useRemoveAppShellLeftPadding } from '../hooks';
 
 export const HttpStatusPage: FC<{ label?: string }> = function (props) {
-  const matches = useMediaQuery('(max-width: 768px)');
-
+  const theme = useMantineTheme();
+  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
   let gradient;
 
   switch (props.label) {

@@ -61,6 +61,15 @@ export class ProjectEntity {
   packageName: string;
 
   @ApiProperty({
+    description: 'Project card pinned order',
+  })
+  @Column('int', {
+    name: 'pinned_order',
+    nullable: true,
+  })
+  pinnedOrder?: number;
+
+  @ApiProperty({
     enum: ProjectStatus,
   })
   @Column('simple-enum', {

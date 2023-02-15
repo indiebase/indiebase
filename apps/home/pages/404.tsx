@@ -1,9 +1,10 @@
-import { Center, Text } from '@mantine/core';
+import { Center, Text, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 
 export default function Custom404() {
-  const matches = useMediaQuery('(max-width: 768px)');
+  const theme = useMantineTheme();
+  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
 
   return (
     <Center

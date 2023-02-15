@@ -20,7 +20,7 @@ export interface NavHeaderProps {
 
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
-  const matches = useMediaQuery('(max-width: 768px)');
+  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
   const [modalMeta, setModalMeta] = useState<{
     initialNo?: string;
     opened: boolean;

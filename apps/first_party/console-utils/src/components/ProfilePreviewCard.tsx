@@ -15,7 +15,7 @@ export const ProfilePreviewCard: FC<ProfilePreviewCardProps> = function (
       <HoverCard.Target>
         <div>{props.children}</div>
       </HoverCard.Target>
-      <HoverCard.Dropdown>
+      <HoverCard.Dropdown style={{ zIndex: 10000 }}>
         <div>status</div>
         <Avatar
           ml={0}
