@@ -1,7 +1,7 @@
-export interface PaginationReqSchema {
+export type PaginationReqSchema<T> = T & {
   pageIndex?: number;
-  pageSize: number;
-}
+  pageSize?: number;
+};
 
 export interface BaseResSchema<D = any> {
   code: number;

@@ -57,6 +57,7 @@ export class OrgService {
       d: list,
     };
   }
+
   public async get(name: string) {
     return this.orgRepo
       .findOne({
@@ -108,6 +109,29 @@ export class OrgService {
       });
 
     return data;
+  }
+
+  public async getPinnedProjects(name: string) {
+    const org = await this.orgRepo
+      .findOne({
+        where: {
+          name,
+          projects: {
+            pinned: true,
+          },
+        },
+        relations: {
+          projects: {
+            members: true,
+          },
+        },
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException();
+      });
+
+    return org?.projects ?? [];
   }
 
   public async getGithubOrgRepos(name: string) {

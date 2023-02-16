@@ -99,11 +99,22 @@ export class UserEntity {
     description: 'Account status',
   })
   @Column('simple-enum', {
+    name: 'account_status',
     enum: AccountStatus,
     comment: 'Account status',
     default: AccountStatus.active,
   })
-  status: AccountStatus;
+  accountStatus: AccountStatus;
+
+  @ApiProperty({
+    description: 'User status',
+  })
+  @Column('varchar', {
+    name: 'status',
+    comment: 'User status',
+    nullable: true,
+  })
+  status?: string;
 
   @CreateDateColumn({
     type: 'timestamp',

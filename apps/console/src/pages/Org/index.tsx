@@ -1,6 +1,9 @@
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { getOrgApi, projectsQuery } from '@letscollab-community/console-utils';
+import {
+  fetchOrgApi,
+  fetchOrgProjectsApi,
+} from '@letscollab-community/console-utils';
 import {
   Group,
   Text,
@@ -24,7 +27,7 @@ const OrgProfile: FC<any> = function () {
   const { org } = useParams();
   const {
     data: { d },
-  } = useQuery(['get_org', org], getOrgApi, { suspense: true });
+  } = useQuery(['get_orgs', org], fetchOrgApi, { suspense: true });
 
   return (
     <Box ml={30}>
@@ -77,9 +80,15 @@ const OrgProfile: FC<any> = function () {
 };
 
 const OrgProjects = function () {
-  const { data } = useQuery(['own-projects'], projectsQuery, {
-    suspense: true,
-  });
+  const { org } = useParams();
+
+  const { data } = useQuery(
+    ['own-projects', org],
+    () => fetchOrgProjectsApi(org),
+    {
+      suspense: true,
+    },
+  );
 
   return <ProjectFlow pins={data.d} list={data.d} />;
 };

@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { BaseResSchema, IProject, ProjectStatus } from '@letscollab-nest/trait';
+import { BaseResSchema, Project, ProjectStatus } from '@letscollab-nest/trait';
 import { mock } from '../api';
 import { FakeSingleUserProfile } from './user.mock';
 
-mock.onGet('/v1/prj/list').reply<BaseResSchema<IProject[]>>(200, {
+mock.onGet('/v1/prj/list').reply<BaseResSchema<Project[]>>(200, {
   code: 1,
   message: 'Success',
   d: Array.from({ length: 10 }).map((_, i) => ({

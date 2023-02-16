@@ -25,6 +25,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
 import { navbarSwitchAtom, userProfileQueryAtom } from '../../atoms';
 import { logoutApi } from '../../api/';
+import { useMediaQuery } from '@mantine/hooks';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
@@ -109,6 +110,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
         alignItems: 'center',
       }}
       height={65}
+      // styles={{ root: { zIndex: 0 } }}
       p="md"
     >
       <Group
@@ -125,7 +127,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
         <Group>
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
             <Burger
-              opened={!opened}
+              opened={opened}
               onClick={() => toggle(!opened)}
               size="sm"
               color={theme.colors.gray[6]}

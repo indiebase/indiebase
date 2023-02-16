@@ -70,13 +70,22 @@ export class ProjectEntity {
   pinnedOrder?: number;
 
   @ApiProperty({
+    description: 'Project card pinned',
+  })
+  @Column('boolean', {
+    name: 'pinned',
+    default: false,
+  })
+  pinned?: boolean;
+
+  @ApiProperty({
     enum: ProjectStatus,
   })
   @Column('simple-enum', {
     name: 'status',
     comment: 'Project Status',
     enum: ProjectStatus,
-    nullable: true,
+    default: ProjectStatus.poc,
   })
   status?: ProjectStatus;
 

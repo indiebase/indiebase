@@ -124,6 +124,21 @@ export class OrgController {
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
 
+  @ApiOperation({
+    summary: 'Create an organization',
+  })
+  @Get(':org/pinned_projects')
+  @ApiCookieAuth('SID')
+  @UseGuards(CoProtectGuard, AccessGuard)
+  @ApiOkResponse({
+    type: BaseResSchemaDto,
+  })
+  async getProjects(@Param('org') param) {
+    const d = await this.orgService.getPinnedProjects(param);
+
+    return { code: ResultCode.SUCCESS, message: 'Created successfully', d };
+  }
+
   //TODO
   @ApiOperation({
     summary: 'Update an owned organization',

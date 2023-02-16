@@ -14,19 +14,19 @@ import {
   rectSortingStrategy,
   arrayMove,
 } from '@dnd-kit/sortable';
-import { IProject } from '@letscollab-nest/trait';
+import { Project } from '@letscollab-nest/trait';
 import { Grid, Text, Group, ColProps } from '@mantine/core';
 import { FC, useCallback, useState } from 'react';
-import { PinnedProjectCard } from '../../components';
+import { PinnedProjectCard } from '..';
 
-export interface CoreProjectsProps {
-  list: IProject[];
+export interface ProjectStageProps {
+  list: Project[];
   col?: ColProps;
   hiddenCover?: boolean;
   hiddenMember?: boolean;
 }
 
-export const CoreProjects: FC<CoreProjectsProps> = function (props) {
+export const ProjectStage: FC<ProjectStageProps> = function (props) {
   const { col: colProps, hiddenCover, hiddenMember } = props;
 
   const sensors = useSensors(
@@ -37,7 +37,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-  const [items, setItems] = useState<IProject[]>(props.list ?? []);
+  const [items, setItems] = useState<Project[]>(props.list ?? []);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const getIndex = useCallback(
     (id: UniqueIdentifier) => items.findIndex((e) => e.id === id),
@@ -111,7 +111,7 @@ export const CoreProjects: FC<CoreProjectsProps> = function (props) {
   );
 };
 
-CoreProjects.defaultProps = {
+ProjectStage.defaultProps = {
   hiddenCover: false,
   hiddenMember: false,
 };

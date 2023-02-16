@@ -1,12 +1,10 @@
-import { BaseResSchema, IProject, Org } from '@letscollab-nest/trait';
+import {
+  BaseResSchema,
+  Project,
+  Org,
+  PaginationReqSchema,
+} from '@letscollab-nest/trait';
 import { req } from './request';
-
-export const projectsQuery = async function (): Promise<
-  BaseResSchema<IProject[]>
-> {
-  const { data } = await req.get('/v1/project/list');
-  return data;
-};
 
 export const fetchMyGithubOrgsApi = async function (): Promise<
   BaseResSchema<Record<string, any>>
@@ -36,7 +34,7 @@ export const createOrgApi = async function (
   return data;
 };
 
-export const getOrgApi = async function ({
+export const fetchOrgApi = async function ({
   queryKey,
 }): Promise<BaseResSchema<Org>> {
   const { data } = await req.get('/v1/org/' + queryKey[1]);
@@ -47,5 +45,12 @@ export const inviteMembersApi = async function (
   body: Record<string, any>,
 ): Promise<BaseResSchema<Record<string, any>>> {
   const { data } = await req.post('/v1/org', body);
+  return data;
+};
+
+export const fetchOrgProjectsApi = async function (
+  org,
+): Promise<BaseResSchema<Project[]>> {
+  const { data } = await req.get(`/v1/org/${org}/pinned_projects`);
   return data;
 };

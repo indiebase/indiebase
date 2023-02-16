@@ -6,7 +6,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
   Put,
   Query,
@@ -48,9 +47,9 @@ export class ProjectController {
   })
   async getProjects(@Query() query: QueryProjectDto) {
     const { total, pageSize, pageIndex, d } =
-      await this.projectService.queryProject(query);
+      await this.projectService.queryProjects(query);
     return {
-      ode: ResultCode.SUCCESS,
+      code: ResultCode.SUCCESS,
       total,
       pageSize,
       pageIndex,

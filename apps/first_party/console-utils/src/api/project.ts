@@ -1,4 +1,9 @@
-import { BaseResSchema } from '@letscollab-nest/trait';
+import {
+  BaseResSchema,
+  PaginationReqSchema,
+  Project,
+  QueryOwnedProjects,
+} from '@letscollab-nest/trait';
 import { req } from './request';
 
 export const searchGithubProjectApi = async function (
@@ -12,5 +17,14 @@ export const searchGithubProjectApi = async function (
 
 export const createProjectApi = async function (body): Promise<BaseResSchema> {
   const { data } = await req.post('/v1/project', body);
+  return data;
+};
+
+export const queryOwnedProjectsApi = async function (
+  params: PaginationReqSchema<QueryOwnedProjects>,
+): Promise<BaseResSchema<Project[]>> {
+  const { data } = await req.get('/v1/project/list', {
+    params,
+  });
   return data;
 };

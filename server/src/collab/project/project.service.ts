@@ -67,21 +67,23 @@ export class ProjectService {
     });
   }
 
-  async queryProject(body: QueryProjectDto) {
+  async queryProjects(body: QueryProjectDto) {
     body = Object.assign({}, body);
     const { name, pageIndex, pageSize } = body;
 
-    const [list, total] = await this.projectRepo.findAndCount({
-      where: {
-        name,
-      },
-      relations: ['members'],
-      take: pageSize,
-      skip: (pageIndex - 1) * pageSize,
-    }).catch((err) => { 
-      this.logger.error(err);
-      throw new InternalServerErrorException();
-    })
+    const [list, total] = await this.projectRepo
+      .findAndCount({
+        where: {
+          name,
+        },
+        relations: ['members'],
+        take: pageSize,
+        skip: (pageIndex - 1) * pageSize,
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException();
+      });
 
     return {
       pageSize,

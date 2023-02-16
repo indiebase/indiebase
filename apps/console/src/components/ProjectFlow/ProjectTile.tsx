@@ -1,22 +1,21 @@
-import { IProject } from '@letscollab-nest/trait';
+import { Project } from '@letscollab-nest/trait';
 import {
   AvatarWithPreview,
   LimitAvatarGroup,
 } from '@letscollab-community/console-utils';
-import { Anchor, Badge, Card, Group, MantineColor, Text } from '@mantine/core';
+import { Anchor, Badge, Card, Group, Text } from '@mantine/core';
 import { IconUser } from '@tabler/icons';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { getStatusColor } from '../utils';
+import { statusPalette } from '../StatusTip';
 
-export interface ProjectTileProps extends Partial<IProject> {}
+export interface ProjectTileProps extends Partial<Project> {}
 
 export const ProjectTile: FC<ProjectTileProps> = function (props) {
-  let color: MantineColor = getStatusColor(props.status);
-
   return (
     <Card
-      p="xs"
+      py="xs"
+      px={0}
       style={{ borderBottom: '1px solid #E2E2E2', overflow: 'unset' }}
     >
       <Group position="apart">
@@ -31,7 +30,7 @@ export const ProjectTile: FC<ProjectTileProps> = function (props) {
             {props.name}
           </Anchor>
         </Group>
-        <Badge size="xs" color={color} variant="light">
+        <Badge size="xs" color={statusPalette[props.status]} variant="light">
           {props.status}
         </Badge>
       </Group>
@@ -44,11 +43,13 @@ export const ProjectTile: FC<ProjectTileProps> = function (props) {
           {props.members?.map((u, i) => {
             return (
               <AvatarWithPreview
-                radius="xl"
-                size="sm"
                 key={i}
+                avatar={{
+                  radius: 'xl',
+                  size: 'sm',
+                  component: 'a',
+                }}
                 src={u.avatar}
-                component="a"
                 href={u.profileUrl}
               >
                 <IconUser size={14} />

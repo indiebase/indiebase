@@ -8,15 +8,15 @@ export enum ProjectStatus {
   poc = 'poc',
   /* working in progress */
   wip = 'wip',
-  /*  project dead, */
+  /*  project archive */
   archive = 'archive',
   /* project is opening, */
   operating = 'operating',
-  /* project has closed */
+  /* project dead */
   closed = 'closed',
 }
 
-export interface IProject {
+export interface Project {
   id: number;
   name: string;
   contactEmail: string;
@@ -27,4 +27,9 @@ export interface IProject {
   members?: UserProfile[];
   githubRepoUrl?: string;
   cover?: string;
+}
+
+export interface QueryOwnedProjects {
+  orgName: string;
+  name?: string;
 }

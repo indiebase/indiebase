@@ -1,12 +1,12 @@
-import { IProject } from '@letscollab-nest/trait';
-import { Box, Text, Input } from '@mantine/core';
+import { Project } from '@letscollab-nest/trait';
+import { Box, Text, Input, Center, Button } from '@mantine/core';
 import { FC } from 'react';
-import { CoreProjects } from './CoreProjects';
+import { ProjectStage } from './ProjectStage';
 import { ProjectTile } from './ProjectTile';
 
 export interface ProjectFlowProps {
-  pins: IProject[];
-  list: IProject[];
+  pins: Project[];
+  list: Project[];
 }
 
 export const ProjectFlow: FC<ProjectFlowProps> = function (props) {
@@ -20,9 +20,18 @@ export const ProjectFlow: FC<ProjectFlowProps> = function (props) {
           size="lg"
           weight={400}
         >
-          Main
+          Pinned
         </Text>
-        <CoreProjects list={props.pins} col={{ lg: 4, md: 6 }} />
+        {props.pins.length > 0 ? (
+          <ProjectStage list={props.pins} col={{ lg: 4, md: 6 }} />
+        ) : (
+          <Center style={{ height: 100 }}>
+            <Button size="sm" variant="subtle">
+              No project pinned.
+            </Button>
+          </Center>
+        )}
+        <Box style={{ height: 20 }} />
         <Text
           component="span"
           variant="gradient"
@@ -30,10 +39,10 @@ export const ProjectFlow: FC<ProjectFlowProps> = function (props) {
           size="lg"
           weight={400}
         >
-          Utils
+          All
         </Text>
         <Input
-          mt={20}
+          mt={15}
           style={{ width: 300 }}
           variant="default"
           placeholder="Search project"

@@ -2,6 +2,7 @@ import { req } from './request';
 import type {
   BaseResSchema,
   Org,
+  PaginationReqSchema,
   PaginationResSchema,
   Resource,
   Role,
@@ -35,7 +36,7 @@ export const searchUsersApi = async (
 };
 
 export const fetchRolesApi = async (
-  params: Partial<Role>,
+  params: Partial<PaginationReqSchema<Role>>,
 ): Promise<PaginationResSchema<Role[]>> => {
   const { data } = await req.get('/v1/user/role/list', {
     params,

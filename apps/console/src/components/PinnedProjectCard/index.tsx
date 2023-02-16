@@ -5,23 +5,21 @@ import {
   Image,
   Text,
   Box,
-  MantineColor,
   Anchor,
   Center,
   Button,
   useMantineTheme,
 } from '@mantine/core';
-import { getStatusColor } from '../utils';
 import {
   IconUser,
   IconWallet,
   IconArrowNarrowUp,
   IconUsers,
 } from '@tabler/icons';
-import { IProject } from '@letscollab-nest/trait';
+import { Project } from '@letscollab-nest/trait';
 import CurrencyFormat from 'react-currency-format';
 import { Link } from 'react-router-dom';
-import { FC, ReactElement, useEffect } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -29,17 +27,18 @@ import {
   LimitAvatarGroup,
 } from '@letscollab-community/console-utils';
 import './index.css';
+import { statusPalette, StatusTip } from '../StatusTip';
 
-export interface PinnedProjectCardProps extends Partial<IProject> {
+export interface PinnedProjectCardProps extends Partial<Project> {
   hiddenCover?: boolean;
   hiddenMember?: boolean;
   actions?: ReactElement;
 }
 
 export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
-  const color: MantineColor = getStatusColor(props.status);
   const { id, hiddenCover, hiddenMember, actions } = props;
   const theme = useMantineTheme();
+  const [isHover, setHover] = useState(false);
 
   const {
     attributes,
@@ -68,7 +67,8 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
   return (
     <Card
       style={{
-        zIndex: isDragging ? 999 : 0,
+        // Child above parent of the layer.
+        zIndex: isDragging ? 999 : isHover ? 300 : 0,
         opacity: isDragging ? 0.8 : 1,
         border: '1px solid #E2E2E2',
         overflow: 'unset',
@@ -112,9 +112,17 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
             {props.name}
           </Anchor>
         </Group>
-        <Badge size="xs" color={color} variant="light">
-          {props.status}
-        </Badge>
+
+        <StatusTip onHover={setHover}>
+          <Badge
+            style={{ cursor: 'default' }}
+            size="xs"
+            color={statusPalette[props.status]}
+            variant="light"
+          >
+            {props.status}
+          </Badge>
+        </StatusTip>
       </Group>
       {!hiddenCover && (
         <Card.Section>
@@ -138,11 +146,13 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
             {props.members.map((u, i) => {
               return (
                 <AvatarWithPreview
-                  radius="xl"
-                  size="sm"
                   key={i}
+                  avatar={{
+                    radius: 'xl',
+                    size: 'sm',
+                    component: 'a',
+                  }}
                   src={u.avatar}
-                  component="a"
                   href={u.profileUrl}
                 >
                   <IconUser size={14} />

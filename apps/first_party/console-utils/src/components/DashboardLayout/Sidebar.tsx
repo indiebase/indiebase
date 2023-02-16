@@ -99,7 +99,7 @@ export const Sidebar: FC<SidebarProps> = function (props) {
       hiddenBreakpoint="sm"
       width={{ sm: 200, lg: 250 }}
       style={{ borderRight: 0, zIndex: matches ? 99 : 0 }}
-      hidden={opened}
+      hidden={!opened}
       sx={{
         backdropFilter: 'saturate(180%) blur(10px)',
         backgroundColor: 'hsla(0,0%,100%,.7)',

@@ -85,11 +85,13 @@ export class UpdateProjectDto {
 }
 
 export class QueryProjectDto extends PaginationReqDto {
-  @ApiPropertyOptional({
-    nullable: true,
-  })
+  @ApiPropertyOptional()
   @IsOptional()
   name?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  orgName: string;
 }
 
 export class DeleteProjectDto {
