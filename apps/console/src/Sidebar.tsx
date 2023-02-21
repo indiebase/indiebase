@@ -7,3 +7,4 @@ export const CommunitySidebar: FC = function () {
 
   return <Sidebar menu={menu} semver={process.env.REACT_APP_SEMVER} />;
 };
+

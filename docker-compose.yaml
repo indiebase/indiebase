@@ -72,6 +72,7 @@ services:
     depends_on:
       - mysql
     logging: *loki-logging
+
   mysql:
     image: nacos/nacos-mysql:8.0.16
     env_file:
@@ -88,6 +89,8 @@ services:
       - 9104:9104
     env_file:
       - ./.env.development
+    depends_on:
+      - mysql
 
   portainer-agent:
     image: portainer/agent:2.11.0
@@ -128,6 +131,8 @@ services:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
     logging: *loki-logging
+    depends_on:
+      - prometheus
     deploy:
       restart_policy:
         condition: on-failure
@@ -141,6 +146,8 @@ services:
       - 13339:3100
     command: -config.file=/etc/loki/config.yaml
     logging: *loki-logging
+    depends_on:
+      - mysql
     deploy:
       restart_policy:
         condition: on-failure
@@ -188,6 +195,9 @@ services:
       - seaweed_data:/data
 
 networks:
+  default:
+    driver: overlay
+    attachable: true
   agent_network:
     driver: overlay
     attachable: true
