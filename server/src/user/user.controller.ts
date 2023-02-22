@@ -1,4 +1,4 @@
-import { CoProtectGuard } from '../utils';
+import { CommProtectGuard } from '../utils';
 import {
   Body,
   Controller,
@@ -14,6 +14,8 @@ import {
   ApiCookieAuth,
   ApiOperation,
   ApiOkResponse,
+  ApiOAuth2,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import {
   ResultCode,
@@ -28,6 +30,7 @@ import { UserResource, UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 
+@ApiOAuth2(['pets:write'])
 @Controller({
   path: 'user',
   version: '1',
@@ -38,10 +41,13 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: UserResource.list,
+  })
+  @ApiOperation({
+    description: `Require:user_list:read_any`,
   })
   async getUserList(@Query() query: QueryUserDto) {
     const { list, total } = await this.userService.getUsers(query);
@@ -54,7 +60,7 @@ export class UserController {
 
   @Get('list/:username')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get a user profile',
   })
@@ -72,7 +78,7 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get my profile',
   })
@@ -107,7 +113,7 @@ export class UserController {
     summary: 'Update my profile',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard)
+  @UseGuards(CommProtectGuard)
   async updateUserProfile(
     @Body() body: UpdateUserProfileDto,
     @MyInfo('id') id: number,
@@ -122,7 +128,7 @@ export class UserController {
 
   @Post('profile/sync')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard)
+  @UseGuards(CommProtectGuard)
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
@@ -130,7 +136,7 @@ export class UserController {
 
   @Get('possession')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Getting user owns resources',
   })

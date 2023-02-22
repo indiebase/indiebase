@@ -7,6 +7,10 @@ LATEST_FILE=~/backuplatest
 LATEST=$(cat $LATEST_FILE)
 NOW=$(date "+%F_%H-%M-%S")
 
+if [!-f "$BACKUP_DIR"]; then
+  mkdir -p $BACKUP_DIR
+fi
+
 full_backup() {
   docker run --rm --network letscollab_default -v $BACKUP_DIR/$NOW:/backup \
     --name percona-xtrabackup --volumes-from $(docker ps -q -f name=letscollab_mysql -f ancestor=nacos/nacos-mysql:8.0.16) \

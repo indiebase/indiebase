@@ -17,7 +17,7 @@ import {
   ApiTags,
   ApiOperation,
 } from '@nestjs/swagger';
-import { CoProtectGuard } from '../../utils';
+import { CommProtectGuard } from '../../utils';
 import {
   CreateProjectDto,
   DeleteProjectDto,
@@ -41,7 +41,7 @@ export class ProjectController {
   @ApiOperation({
     summary: 'Get project list',
   })
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOkResponse({
     // type: ProjectListResDto,
   })
@@ -62,7 +62,7 @@ export class ProjectController {
     summary: 'Create a project',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: ProjectResource.list,
@@ -80,7 +80,7 @@ export class ProjectController {
     summary: 'Fetch github projects from specified organization',
   })
   @Get('github/search')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async searchGithubRepo(@Query('q') q) {
     const d = await this.projectService.searchGithubRepo(q);
@@ -100,7 +100,7 @@ export class ProjectController {
   //TODO
   @Delete()
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.deleteOwn,
     resource: ProjectResource.list,

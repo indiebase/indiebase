@@ -15,13 +15,7 @@ import {
   ApiCookieAuth,
   ApiOperation,
 } from '@nestjs/swagger';
-import {
-  CreateOrgDto,
-  DeleteOrgDto,
-  QueryOrgDto,
-  TransferOrgDto,
-  UpdateOrgDto,
-} from './org.dto';
+import { CreateOrgDto, QueryOrgDto, UpdateOrgDto } from './org.dto';
 import {
   AccessGuard,
   BaseResSchemaDto,
@@ -31,7 +25,7 @@ import {
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 import { OrgResource } from '@letscollab-nest/trait';
 import { OrgService } from './org.service';
-import { CoProtectGuard } from '../../utils';
+import { CommProtectGuard } from '../../utils';
 
 @Controller({
   path: 'org',
@@ -53,7 +47,7 @@ export class OrgController {
     summary: 'Fetch github organizations',
   })
   @Get('github')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrgs() {
     const d = await this.orgService.getGithubOwnOrgs();
@@ -67,7 +61,7 @@ export class OrgController {
     summary: 'Fetch github organization',
   })
   @Get('github/:name')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrg(@Param('name') name: string) {
     const d = await this.orgService.getGithubOrg(name);
@@ -81,7 +75,7 @@ export class OrgController {
     summary: 'Fetch github organization repositories',
   })
   @Get('github/:name/repos')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrgProjects(@Param('name') name: string) {
     const d = await this.orgService.getGithubOrgRepos(name);
@@ -93,7 +87,7 @@ export class OrgController {
 
   @Get(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get an organization',
   })
@@ -110,7 +104,7 @@ export class OrgController {
   })
   @Post()
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: OrgResource.list,
@@ -129,47 +123,56 @@ export class OrgController {
   })
   @Get(':org/pinned_projects')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
+  @ApiOkResponse({
+    type: BaseResSchemaDto,
+  })
+  async getPinnedProjects(@Param('org') param) {
+    const d = await this.orgService.getPinnedProjects(param);
+
+    return { code: ResultCode.SUCCESS, message: 'Created successfully', d };
+  }
+
+  @ApiOperation({
+    summary: 'Create an organization',
+  })
+  @Get(':org/projects')
+  @ApiCookieAuth('SID')
+  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
   async getProjects(@Param('org') param) {
     const d = await this.orgService.getPinnedProjects(param);
 
-    return { code: ResultCode.SUCCESS, message: 'Created successfully', d };
+    return { code: ResultCode.SUCCESS, d };
   }
 
-  //TODO
   @ApiOperation({
     summary: 'Update an owned organization',
   })
   @Put()
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
-  async updateOrg(@Body() body: UpdateOrgDto) {}
+  @UseGuards(CommProtectGuard, AccessGuard)
+  async updateOrg(@Body() body: UpdateOrgDto) {
+    await this.orgService.updateOrg(body);
 
-  //TODO
+    return { code: ResultCode.SUCCESS, message: 'Update successfully' };
+  }
+
   @ApiOperation({
     summary: 'Delete an owned organization',
   })
   @Delete(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
+  @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.deleteAny,
     resource: OrgResource.list,
   })
-  async deleteOrg(@Body() body: DeleteOrgDto) {}
+  async deleteOrg(@Param('name') name) {
+    await this.orgService.deleteOrg(name);
 
-  @ApiOperation({
-    summary: 'Delete an owned organization',
-  })
-  // @Delete(':name')
-  @ApiCookieAuth('SID')
-  @UseGuards(CoProtectGuard, AccessGuard)
-  @UseAccess({
-    action: AccessAction.deleteAny,
-    resource: OrgResource.list,
-  })
-  async transferOrg(@Body() body: TransferOrgDto) {}
+    return { code: ResultCode.SUCCESS, message: 'Delete successfully' };
+  }
 }

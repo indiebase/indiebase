@@ -209,22 +209,30 @@ export class OrgService {
   }
 
   public async updateOrg(body: UpdateOrgDto) {
-    const { id, ...rest } = body;
-    this.orgRepo.remove;
-    await this.orgRepo.update({ id }, rest).catch((err) => {
-      this.logger.error(err);
-      throw new InternalServerErrorException({
-        code: ResultCode.ERROR,
-        message: 'Create',
-      });
-    });
+    const { id, contactEmail, description, avatarUrl, domain, homepage } = body;
 
-    return { code: ResultCode.SUCCESS, message: '更新成功' };
+    await this.orgRepo
+      .update(
+        { id },
+        {
+          contactEmail,
+          description,
+          avatarUrl,
+          domain,
+          homepage,
+        },
+      )
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: 'Update failed',
+        });
+      });
   }
 
-  public async deleteOrg(body: DeleteOrgDto) {
-    const { id } = body;
-    await this.orgRepo.delete({ id }).catch((err) => {
+  public async deleteOrg(name: string) {
+    return this.orgRepo.delete({ name }).catch((err) => {
       this.logger.error(err);
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,

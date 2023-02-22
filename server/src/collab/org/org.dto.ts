@@ -51,13 +51,14 @@ export class CreateOrgDto {
     default: 'xxxxxx',
   })
   @IsOptional()
+  @IsString()
   description?: string;
 
   @ApiPropertyOptional({
     description: 'Organization icon url',
   })
-  @IsString()
   @IsOptional()
+  @IsUrl()
   avatarUrl?: string;
 }
 
@@ -65,14 +66,6 @@ export class UpdateOrgDto {
   @ApiProperty()
   @IsNumber()
   id: number;
-
-  @ApiPropertyOptional({
-    description: 'Team name',
-    default: 'letscollab',
-  })
-  @IsOptional()
-  @IsString()
-  name?: string;
 
   @ApiProperty({
     description: 'Public email',
@@ -91,6 +84,13 @@ export class UpdateOrgDto {
   })
   @IsOptional()
   description: string;
+
+  @ApiPropertyOptional({
+    default: 'xxxxxx',
+  })
+  @IsOptional()
+  @IsUrl()
+  avatarUrl: string;
 
   @ApiPropertyOptional({
     description: 'Organization domain',
@@ -115,12 +115,6 @@ export class UpdateOrgDto {
 }
 
 export class DeleteOrgDto {
-  @ApiProperty()
-  @IsNumber()
-  id: number;
-}
-
-export class TransferOrgDto {
   @ApiProperty()
   @IsNumber()
   id: number;

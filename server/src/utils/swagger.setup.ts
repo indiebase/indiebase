@@ -8,6 +8,12 @@ import { UserModule } from '../user/user.module';
 import { OrgModule } from '../collab/org/org.module';
 import { ProjectModule } from '../collab/project/project.module';
 
+const commonContact = [
+  'deskbtm/letscollab',
+  'https://letscollab.deskbtm.com/contact',
+  'deskbtm@outlook.com',
+];
+
 export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
@@ -19,6 +25,8 @@ export const setupApiDoc = (app: INestApplication) =>
           type: 'apiKey',
           in: 'cookie',
         })
+        //@ts-ignore
+        .setContact(...commonContact)
         .build();
 
       const userOptions = new DocumentBuilder()
@@ -29,12 +37,16 @@ export const setupApiDoc = (app: INestApplication) =>
           type: 'apiKey',
           in: 'cookie',
         })
+        //@ts-ignore
+        .setContact(...commonContact)
         .build();
 
       const commonOptions = new DocumentBuilder()
         .setTitle('COmmon Api')
         .setDescription('Common REST API')
         .setVersion('1.0.0')
+        //@ts-ignore
+        .setContact(...commonContact)
         .addCookieAuth('SID', {
           type: 'apiKey',
           in: 'cookie',
@@ -48,6 +60,13 @@ export const setupApiDoc = (app: INestApplication) =>
         .addCookieAuth('SID', {
           type: 'apiKey',
           in: 'cookie',
+        })
+        //@ts-ignore
+        .setContact(...commonContact)
+        .addSecurity('basic', {
+          type: 'http',
+          scheme: 'basic',
+          description: 'Api requires permission',
         })
         .build();
 

@@ -76,7 +76,6 @@ async function bootstrap() {
     await setupApiDoc(app);
 
     app.register(fastifyMultipart);
-
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),
     });

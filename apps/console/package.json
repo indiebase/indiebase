@@ -14,7 +14,6 @@
     "@letscollab-pro/console": "workspace:^",
     "@letscollab-react/authz": "workspace:^",
     "@letscollab-react/table": "workspace:^",
-    "@letscollab/ant-table": "workspace:^",
     "@mantine/core": "^5.5.4",
     "@mantine/dropzone": "^5.10.0",
     "@mantine/form": "^5.5.4",
