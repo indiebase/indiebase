@@ -5,12 +5,14 @@ import {
   UnauthorizedException,
   Logger,
   InternalServerErrorException,
+  OnModuleInit,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
-import { getSubdomain, ResultCode } from '@letscollab-nest/helper';
+import { getSubdomain } from '@letscollab-nest/helper';
 import { FastifyRequest } from 'fastify';
+import { ResultCode } from '@letscollab-nest/trait';
 
 @Injectable()
 export class AuthService {

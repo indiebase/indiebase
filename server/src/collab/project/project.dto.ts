@@ -1,6 +1,13 @@
 import { IsEntityExisted, PaginationReqDto } from '@letscollab-nest/helper';
+import { ParamDirection, ParamSort } from '@letscollab-nest/trait';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsNumber } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsNumber,
+  IsEnum,
+} from 'class-validator';
 import { OrgEntity } from '../org/org.entity';
 import { ProjectEntity } from './project.entity';
 
@@ -84,14 +91,35 @@ export class UpdateProjectDto {
   description: string;
 }
 
-export class QueryProjectDto extends PaginationReqDto {
+export class QueryProjectsDto extends PaginationReqDto {
   @ApiPropertyOptional()
   @IsOptional()
+  @IsNumber()
+  id?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
   name?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
-  orgName: string;
+  @IsString()
+  orgName?: string;
+
+  @ApiPropertyOptional({
+    enum: ParamSort,
+  })
+  @IsOptional()
+  @IsEnum(ParamSort)
+  sort?: ParamSort;
+
+  @ApiPropertyOptional({
+    enum: ParamSort,
+  })
+  @IsOptional()
+  @IsEnum(ParamDirection)
+  direction?: ParamDirection;
 }
 
 export class DeleteProjectDto {

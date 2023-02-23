@@ -6,8 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { InvitationEntity } from './invitation.entity';
 import { Repository } from 'typeorm';
-import { ResultCode } from '@letscollab-nest/helper';
-import { UserSession } from '@letscollab-nest/trait';
+import { ResultCode, UserSession } from '@letscollab-nest/trait';
 import { InviteMembersDto } from './invitation.dto';
 import { UserService } from '../../user/user.service';
 

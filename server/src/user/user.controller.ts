@@ -15,10 +15,8 @@ import {
   ApiOperation,
   ApiOkResponse,
   ApiOAuth2,
-  ApiSecurity,
 } from '@nestjs/swagger';
 import {
-  ResultCode,
   MyInfo,
   AccessGuard,
   Domain,
@@ -26,7 +24,7 @@ import {
   ProtectGuard,
 } from '@letscollab-nest/helper';
 import { OwnOrgsResDto, QueryUserDto, UpdateUserProfileDto } from './user.dto';
-import { UserResource, UserSession } from '@letscollab-nest/trait';
+import { ResultCode, UserResource, UserSession } from '@letscollab-nest/trait';
 import { UserService } from './user.service';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 
@@ -149,6 +147,23 @@ export class UserController {
     return {
       code: ResultCode.SUCCESS,
       d,
+    };
+  }
+
+  @Get('test')
+  @ApiCookieAuth('SID')
+  @UseGuards(CommProtectGuard, AccessGuard)
+  @ApiOperation({
+    summary: 'Test',
+  })
+  @UseAccess({
+    action: AccessAction.readAny,
+    resource: UserResource.list,
+  })
+  @DevApiHeader()
+  async test() {
+    return {
+      code: ResultCode.SUCCESS,
     };
   }
 }

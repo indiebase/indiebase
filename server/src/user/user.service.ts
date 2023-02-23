@@ -1,15 +1,14 @@
 import {
-  ConflictException,
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResultCode } from '@letscollab-nest/helper';
 import { UserEntity } from './user.entity';
 import { Like, Repository } from 'typeorm';
 import { QueryUserDto } from './user.dto';
 import { CasbinService } from '@letscollab-nest/accesscontrol';
+import { ResultCode } from '@letscollab-nest/trait';
 
 type CreateUserEntity = Omit<
   UserEntity,

@@ -123,6 +123,12 @@ export class ProjectEntity {
   @ManyToOne(() => OrgEntity, (o) => o.projects, { cascade: true })
   organization: OrgEntityType;
 
+  @ApiProperty()
+  @Column('varchar', {
+    name: 'org_name',
+  })
+  orgName: string;
+
   /**
    * The same as creator id at first time.
    */

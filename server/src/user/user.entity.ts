@@ -104,7 +104,7 @@ export class UserEntity {
     comment: 'Account status',
     default: AccountStatus.active,
   })
-  accountStatus: AccountStatus;
+  accountStatus?: AccountStatus;
 
   @ApiProperty({
     description: 'User status',

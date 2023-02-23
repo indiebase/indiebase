@@ -14,18 +14,15 @@ import {
   ApiTags,
   ApiCookieAuth,
   ApiOperation,
+  ApiParam,
 } from '@nestjs/swagger';
 import { CreateOrgDto, QueryOrgDto, UpdateOrgDto } from './org.dto';
-import {
-  AccessGuard,
-  BaseResSchemaDto,
-  MyInfo,
-  ResultCode,
-} from '@letscollab-nest/helper';
+import { AccessGuard, BaseResSchemaDto, MyInfo } from '@letscollab-nest/helper';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
-import { OrgResource } from '@letscollab-nest/trait';
+import { OrgResource, ResultCode } from '@letscollab-nest/trait';
 import { OrgService } from './org.service';
 import { CommProtectGuard } from '../../utils';
+import { QueryProjectsDto } from '../project/project.dto';
 
 @Controller({
   path: 'org',
@@ -58,7 +55,7 @@ export class OrgController {
   }
 
   @ApiOperation({
-    summary: 'Fetch github organization',
+    summary: 'Fetch a github organization',
   })
   @Get('github/:name')
   @UseGuards(CommProtectGuard, AccessGuard)
@@ -85,12 +82,12 @@ export class OrgController {
     };
   }
 
-  @Get(':name')
-  @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get an organization',
   })
+  @Get(':name')
+  @ApiCookieAuth('SID')
+  @UseGuards(CommProtectGuard, AccessGuard)
   async getOrg(@Param('name') orgName: string) {
     const d = await this.orgService.get(orgName);
     return {
@@ -134,7 +131,7 @@ export class OrgController {
   }
 
   @ApiOperation({
-    summary: 'Create an organization',
+    summary: 'Get organization projects',
   })
   @Get(':org/projects')
   @ApiCookieAuth('SID')
@@ -142,10 +139,10 @@ export class OrgController {
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
-  async getProjects(@Param('org') param) {
-    const d = await this.orgService.getPinnedProjects(param);
+  async getProjects(@Param('org') orgName, @Query() query: QueryProjectsDto) {
+    const d = await this.orgService.getProjects({ orgName, ...query });
 
-    return { code: ResultCode.SUCCESS, d };
+    return { code: ResultCode.SUCCESS, ...d };
   }
 
   @ApiOperation({
@@ -162,12 +159,17 @@ export class OrgController {
 
   @ApiOperation({
     summary: 'Delete an owned organization',
+    description: 'Require:org_list:deleteOwn',
   })
   @Delete(':name')
+  @ApiParam({
+    name: 'name',
+    type: 'string',
+  })
   @ApiCookieAuth('SID')
   @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
-    action: AccessAction.deleteAny,
+    action: AccessAction.deleteOwn,
     resource: OrgResource.list,
   })
   async deleteOrg(@Param('name') name) {

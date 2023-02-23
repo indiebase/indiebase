@@ -23,9 +23,9 @@ import {
   QueryRolesResDto,
   UpdateRoleDto,
 } from './role.dto';
-import { AccessGuard, DevApiHeader, ResultCode } from '@letscollab-nest/helper';
+import { AccessGuard, DevApiHeader } from '@letscollab-nest/helper';
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
-import { RoleResource } from '@letscollab-nest/trait';
+import { ResultCode, RoleResource } from '@letscollab-nest/trait';
 import { CommProtectGuard } from '../../utils';
 
 @Controller({
@@ -47,6 +47,7 @@ export class RoleController {
   @ApiCookieAuth('SID')
   async create(@Body() role: CreateRoleDto) {
     await this.roleService.createRole(role);
+
     return {
       code: ResultCode.SUCCESS,
       message: 'Create successfully',

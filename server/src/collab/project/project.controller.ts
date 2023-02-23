@@ -1,6 +1,6 @@
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
-import { AccessGuard, MyInfo, ResultCode } from '@letscollab-nest/helper';
-import { ProjectResource } from '@letscollab-nest/trait';
+import { AccessGuard, MyInfo } from '@letscollab-nest/helper';
+import { ProjectResource, ResultCode } from '@letscollab-nest/trait';
 import {
   Body,
   Controller,
@@ -22,7 +22,7 @@ import {
   CreateProjectDto,
   DeleteProjectDto,
   // ProjectListResDto,
-  QueryProjectDto,
+  QueryProjectsDto,
   UpdateProjectDto,
 } from './project.dto';
 import { ProjectService } from './project.service';
@@ -45,7 +45,7 @@ export class ProjectController {
   @ApiOkResponse({
     // type: ProjectListResDto,
   })
-  async getProjects(@Query() query: QueryProjectDto) {
+  async getProjects(@Query() query: QueryProjectsDto) {
     const { total, pageSize, pageIndex, d } =
       await this.projectService.queryProjects(query);
     return {

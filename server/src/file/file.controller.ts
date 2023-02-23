@@ -7,7 +7,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileService } from './file.service';
-import { ProtectGuard, ResultCode } from '@letscollab-nest/helper';
+import { ProtectGuard } from '@letscollab-nest/helper';
 import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 import {
   FileInterceptor,
@@ -16,6 +16,7 @@ import {
   UploadedFiles,
 } from '@letscollab-nest/file-fastify';
 import { FilesUploadDto } from './file.dto';
+import { ResultCode } from '@letscollab-nest/trait';
 
 @Controller({
   path: 'file',

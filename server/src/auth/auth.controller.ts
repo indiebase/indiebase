@@ -18,13 +18,13 @@ import {
   ApiProtectHeader,
   MyInfo,
   ProtectGuard,
-  ResultCode,
 } from '@letscollab-nest/helper';
 import { LocalSignInDto, OptVerifyDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
 import { InjectS3, S3 } from '@letscollab-nest/aws-s3';
 import { AuthService } from './auth.service';
+import { ResultCode } from '@letscollab-nest/trait';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth')

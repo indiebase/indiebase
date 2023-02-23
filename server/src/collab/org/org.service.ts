@@ -1,22 +1,21 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  CreateOrgDto,
-  DeleteOrgDto,
-  QueryOrgDto,
-  UpdateOrgDto,
-} from './org.dto';
-import { ResultCode } from '@letscollab-nest/helper';
+import { CreateOrgDto, QueryOrgDto, UpdateOrgDto } from './org.dto';
 import { OrgEntity } from './org.entity';
 import { Repository } from 'typeorm';
 import { OctokitService } from '@letscollab-nest/octokit';
 import { UserService } from '../../user/user.service';
+import { ResultCode } from '@letscollab-nest/trait';
+import { ProjectService } from '../project/project.service';
+import { QueryProjectsDto } from '../project/project.dto';
 
 @Injectable()
 export class OrgService {
@@ -26,6 +25,7 @@ export class OrgService {
     private readonly logger: Logger,
     private readonly octokit: OctokitService,
     private readonly userService: UserService,
+    private readonly projectService: ProjectService,
   ) {}
 
   public get repo() {
@@ -35,15 +35,9 @@ export class OrgService {
   public async query(body: QueryOrgDto) {
     body = Object.assign({}, body);
     const { name, pageIndex, pageSize } = body;
-    let cond = [];
-    name && cond.push({ name });
-
-    if (cond.length === 0) {
-      cond = null;
-    }
 
     const [list, total] = await this.orgRepo.findAndCount({
-      where: cond,
+      where: {},
       relations: ['members'],
       take: pageSize,
       skip: (pageIndex - 1) * pageSize,
@@ -132,6 +126,10 @@ export class OrgService {
       });
 
     return org?.projects ?? [];
+  }
+
+  public async getProjects(body: QueryProjectsDto) {
+    return this.projectService.queryProjects(body);
   }
 
   public async getGithubOrgRepos(name: string) {
@@ -234,6 +232,7 @@ export class OrgService {
   public async deleteOrg(name: string) {
     return this.orgRepo.delete({ name }).catch((err) => {
       this.logger.error(err);
+
       throw new InternalServerErrorException({
         code: ResultCode.ERROR,
         message: 'Delete failed',

@@ -1,11 +1,11 @@
 import { CommProtectGuard } from '../../utils';
-import { AccessGuard, DevApiHeader, ResultCode } from '@letscollab-nest/helper';
+import { AccessGuard, DevApiHeader } from '@letscollab-nest/helper';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { createResources } from './resources';
 import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
-import { RoleResource } from '@letscollab-nest/trait';
+import { ResultCode, RoleResource } from '@letscollab-nest/trait';
 
 @Controller({
   path: 'user/res',

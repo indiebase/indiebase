@@ -7,8 +7,7 @@ import {
 import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, Between } from 'typeorm';
-import { ResultCode } from '@letscollab-nest/helper';
-import { CreateRoleBody } from '@letscollab-nest/trait';
+import { CreateRoleBody, ResultCode } from '@letscollab-nest/trait';
 import { CasbinService } from '@letscollab-nest/accesscontrol';
 import * as dayjs from 'dayjs';
 

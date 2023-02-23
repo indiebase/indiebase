@@ -1,22 +1,25 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
+  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   CreateProjectDto,
   DeleteProjectDto,
-  QueryProjectDto,
+  QueryProjectsDto,
   UpdateProjectDto,
 } from './project.dto';
 import { Repository } from 'typeorm';
 import { ProjectEntity } from './project.entity';
-import { ResultCode } from '@letscollab-nest/helper';
 import { OctokitService } from '@letscollab-nest/octokit';
 import { OrgService } from '../org/org.service';
+import { ResultCode } from '@letscollab-nest/trait';
 
 @Injectable()
 export class ProjectService {
@@ -24,8 +27,9 @@ export class ProjectService {
     @InjectRepository(ProjectEntity)
     private readonly projectRepo: Repository<ProjectEntity>,
     private readonly octokit: OctokitService,
-    private readonly orgService: OrgService,
     private readonly logger: Logger,
+    @Inject(forwardRef(() => OrgService))
+    private readonly orgService: OrgService,
   ) {}
 
   async createProject(body: CreateProjectDto, id: number) {
@@ -53,6 +57,7 @@ export class ProjectService {
       description,
       ownerId: id,
       creatorId: id,
+      orgName: org.name,
     });
 
     projectEntity.organization = org;
@@ -67,17 +72,24 @@ export class ProjectService {
     });
   }
 
-  async queryProjects(body: QueryProjectDto) {
-    body = Object.assign({}, body);
-    const { name, pageIndex, pageSize } = body;
+  async queryProjects(
+    body: QueryProjectsDto,
+    relations: string[] = ['members'],
+  ) {
+    const { id, name, pageIndex, pageSize, orgName, sort, direction } = body;
 
     const [list, total] = await this.projectRepo
       .findAndCount({
         where: {
+          id,
           name,
+          orgName,
         },
-        relations: ['members'],
+        relations,
         take: pageSize,
+        order: {
+          [sort]: direction,
+        },
         skip: (pageIndex - 1) * pageSize,
       })
       .catch((err) => {
@@ -114,7 +126,6 @@ export class ProjectService {
 
   async updateProject(body: UpdateProjectDto) {
     const { id, ...rest } = body;
-    this.projectRepo.remove;
 
     await this.projectRepo.update({ id }, rest).catch((err) => {
       this.logger.error(err);
