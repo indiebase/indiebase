@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsNumber,
   IsEnum,
+  IsBoolean,
 } from 'class-validator';
 import { OrgEntity } from '../org/org.entity';
 import { ProjectEntity } from './project.entity';
@@ -56,6 +57,13 @@ export class CreateProjectDto {
   })
   @IsOptional()
   description?: string;
+
+  @ApiPropertyOptional({
+    default: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  pinned?: boolean;
 }
 
 export class UpdateProjectDto {
@@ -78,7 +86,7 @@ export class UpdateProjectDto {
   @IsEmail(
     {},
     {
-      message: '邮箱格式不正确',
+      message: 'Email incorrect',
     },
   )
   @IsOptional()
@@ -97,13 +105,17 @@ export class QueryProjectsDto extends PaginationReqDto {
   @IsNumber()
   id?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description: 'Project name',
+  })
   @IsOptional()
   @IsString()
   name?: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiPropertyOptional({
+    description: 'Organization name',
+    default: 'deskbtm',
+  })
   @IsString()
   orgName?: string;
 
@@ -126,6 +138,16 @@ export class DeleteProjectDto {
   @ApiProperty()
   @IsNumber()
   id: number;
+}
+
+export class SearchGithubDto {
+  @ApiPropertyOptional({
+    description:
+      'Details: https://docs.github.com/en/search-github/searching-on-github/searching-for-repositories',
+  })
+  @IsString()
+  @IsOptional()
+  q?: string;
 }
 
 // export class ProjectListResDto extends PaginationResSchemaDto {

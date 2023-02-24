@@ -90,11 +90,11 @@ export class ProjectEntity {
   status?: ProjectStatus;
 
   @ApiProperty()
-  @Column({ nullable: true })
+  @Column('varchar', { nullable: true })
   description?: string;
 
   @ApiProperty()
-  @Column({ nullable: true })
+  @Column('varchar', { nullable: true })
   homepage?: string;
 
   @ApiProperty()

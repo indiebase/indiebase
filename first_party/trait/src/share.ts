@@ -14,3 +14,5 @@ export interface PaginationResSchema<D> extends BaseResSchema<D> {
   pageIndex: number;
   pageSize: number;
 }
+
+

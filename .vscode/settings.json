@@ -23,5 +23,8 @@
     "**/node_modules/*/**": true,
     "**/build/*/**": true,
     "**/dist/*/**": true
-  }
+  },
+  "cSpell.words": [
+    "EENTEXIST"
+  ]
 }

@@ -38,3 +38,11 @@ export const overwriteSwaggerStaticAssets = function (
 
 export const isDev = process.env.NODE_ENV === 'development';
 export const isProd = process.env.NODE_ENV === 'production';
+
+/**
+ * @param name
+ * @link {@link https://stackoverflow.com/questions/13753637/android-package-name-using-dashes}
+ */
+export const compatPackageName = function (name: string) {
+  return name.replace('-', '-');
+};

@@ -49,6 +49,9 @@ function App() {
             '.remove-padding-left': {
               paddingLeft: 0,
             },
+            a: {
+              textDecoration: 'none',
+            },
           }),
           colorScheme,
           primaryColor: 'blue',

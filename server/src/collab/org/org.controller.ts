@@ -85,6 +85,13 @@ export class OrgController {
   @ApiOperation({
     summary: 'Get an organization',
   })
+  @ApiParam({
+    name: 'name',
+    type: 'string',
+    schema: {
+      default: 'deskbtm',
+    },
+  })
   @Get(':name')
   @ApiCookieAuth('SID')
   @UseGuards(CommProtectGuard, AccessGuard)
@@ -116,7 +123,7 @@ export class OrgController {
   }
 
   @ApiOperation({
-    summary: 'Create an organization',
+    summary: 'Get pinned organizations',
   })
   @Get(':org/pinned_projects')
   @ApiCookieAuth('SID')
@@ -161,11 +168,14 @@ export class OrgController {
     summary: 'Delete an owned organization',
     description: 'Require:org_list:deleteOwn',
   })
-  @Delete(':name')
   @ApiParam({
     name: 'name',
     type: 'string',
+    schema: {
+      default: 'deskbtm',
+    },
   })
+  @Delete(':name')
   @ApiCookieAuth('SID')
   @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({

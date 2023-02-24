@@ -41,7 +41,11 @@ export class AccessGuard implements CanActivate {
 
     const domain =
       (req.body as any)?.packageName ??
+      (req.body as any)?.domain ??
+      (req.query as any)?.packageName ??
+      (req.query as any)?.domain ??
       req.headers?.['package-name'] ??
+      req.headers?.['domain'] ??
       req.hostname;
 
     for (const item of access) {
@@ -52,15 +56,8 @@ export class AccessGuard implements CanActivate {
         );
       }
 
-      if (action.toLowerCase().indexOf('own') > 0) {
-        if (possess) {
-          const isOwn = await possess(context);
-          if (!isOwn) {
-            return false;
-          }
-        } else {
-          throw Error(`${resource} ${action} needs property possess`);
-        }
+      if (possess) {
+        return possess(context, req, user);
       }
 
       const hasPermission = await this.casbin.e.enforce(

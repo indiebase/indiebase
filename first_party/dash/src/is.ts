@@ -26,4 +26,10 @@ export const is = {
   array(obj: unknown): obj is [] {
     return this.type(obj, 'Array');
   },
+  arrayBuffer(obj: unknown): obj is ArrayBuffer {
+    return this.type(obj, 'ArrayBuffer');
+  },
+  symbol(obj: unknown): obj is Symbol {
+    return this.type(obj, 'Symbol');
+  },
 };

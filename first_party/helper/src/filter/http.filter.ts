@@ -1,4 +1,4 @@
-import { ResultCode } from '../enum';
+import { ResultCode } from '@letscollab-nest/trait';
 import {
   ExceptionFilter,
   Catch,

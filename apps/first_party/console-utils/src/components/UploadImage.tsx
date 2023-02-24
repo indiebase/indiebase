@@ -6,8 +6,9 @@ import {
   useMantineTheme,
   Group,
   Button,
+  ActionIcon,
 } from '@mantine/core';
-import { IconBuildingCommunity } from '@tabler/icons';
+import { IconBuildingCommunity, IconX } from '@tabler/icons';
 import { FC, useCallback, useState, ReactElement } from 'react';
 import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
@@ -22,6 +23,7 @@ interface UploadImageProps {
    */
   limit?: number;
   croppable?: boolean;
+  clearable?: boolean;
   cropTitle?: string;
   label?: string;
   icon?: (size) => ReactElement;
@@ -79,6 +81,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
   limit,
   label,
   croppable,
+  clearable,
   cropTitle,
   onChange,
   icon,
@@ -144,7 +147,26 @@ export const UploadImage: FC<UploadImageProps> = function ({
           {label}
         </Text>
       ) : null}
-      <div style={{ display: 'inline-block' }}>
+      <div style={{ display: 'inline-block', position: 'relative' }}>
+        {clearable && url && (
+          <ActionIcon
+            size="xs"
+            variant="light"
+            color="red"
+            style={{
+              position: 'absolute',
+              top: -2,
+              right: -7,
+              zIndex: 1,
+              borderRadius: 10,
+            }}
+            onClick={() => {
+              setUrl(null);
+            }}
+          >
+            <IconX size={14} />
+          </ActionIcon>
+        )}
         <Dropzone
           mt={5}
           p={0}

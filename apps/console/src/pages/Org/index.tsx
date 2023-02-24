@@ -95,7 +95,6 @@ const OrgProjects = function () {
 
 const Organization = function () {
   const theme = useMantineTheme();
-
   const navigate = useNavigate();
 
   return (

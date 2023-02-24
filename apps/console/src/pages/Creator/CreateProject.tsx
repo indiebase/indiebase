@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Center,
+  Checkbox,
   Flex,
   Group,
   Loader,
@@ -28,7 +29,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { IconBox, IconBrandGithub, IconSearch } from '@tabler/icons';
 import { useAtom } from 'jotai';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export interface CreateProjectProps {
   onSuccess(val: boolean): void;
@@ -249,7 +250,8 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
             />
             <Box ml={20}>
               <UploadImage
-                croppable={true}
+                croppable
+                clearable
                 icon={(size) => <IconBox size={size / 2 - 3} />}
                 label="Project icon"
                 onChange={(url) => {
@@ -269,7 +271,7 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
             style={{ width: 500 }}
             mt="md"
             label="Package name"
-            placeholder="Example com.deskbtm.letscollab.letscollab"
+            placeholder="Example com.deskbtm.letscollab, doesn't support dashes '-' "
             {...form.getInputProps('packageName')}
           />
 
@@ -277,9 +279,17 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
             style={{ width: 500 }}
             mt="md"
             label="Contact email"
-            placeholder="Fallback email to notify for this project"
             withAsterisk
+            placeholder="Fallback email to notify for this project"
             {...form.getInputProps('contactEmail')}
+          />
+
+          <Checkbox
+            pt="lg"
+            label="Pinned"
+            onChange={(event) => {
+              form.setFieldValue('pinned', event.currentTarget.checked);
+            }}
           />
           <Button
             mt={50}
@@ -298,12 +308,18 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
 };
 
 export const CreateProjectPage = function () {
+  const navigate = useNavigate();
+  const { org } = useParams();
   useRemoveAppShellLeftPadding();
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
         <Center m={20} mt={20}>
-          <CreateProject onSuccess={() => {}} />
+          <CreateProject
+            onSuccess={() => {
+              navigate(`/orgs/${org}`);
+            }}
+          />
         </Center>
       </Suspense>
     </ErrorBoundary>

@@ -141,26 +141,29 @@ export const PinnedProjectCard: FC<PinnedProjectCardProps> = function (props) {
       </Box>
 
       <Group mt={9} position="apart">
-        {!hiddenMember && (
-          <LimitAvatarGroup ml={-2} spacing="xs">
-            {props.members.map((u, i) => {
-              return (
-                <AvatarWithPreview
-                  key={i}
-                  avatar={{
-                    radius: 'xl',
-                    size: 'sm',
-                    component: 'a',
-                  }}
-                  src={u.avatar}
-                  href={u.profileUrl}
-                >
-                  <IconUser size={14} />
-                </AvatarWithPreview>
-              );
-            })}
-          </LimitAvatarGroup>
-        )}
+        {!hiddenMember &&
+          (props.members.length < 1 ? (
+            <Box style={{ height: 26 }} />
+          ) : (
+            <LimitAvatarGroup ml={-2} spacing="xs">
+              {props.members.map((u, i) => {
+                return (
+                  <AvatarWithPreview
+                    key={i}
+                    avatar={{
+                      radius: 'xl',
+                      size: 'sm',
+                      component: 'a',
+                    }}
+                    src={u.avatar}
+                    href={u.profileUrl}
+                  >
+                    <IconUser size={14} />
+                  </AvatarWithPreview>
+                );
+              })}
+            </LimitAvatarGroup>
+          ))}
         {actions && <Center>{actions}</Center>}
       </Group>
       <Group mt={9} position="right">

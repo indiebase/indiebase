@@ -224,21 +224,44 @@ SettingTile.defaultProps = {
   topBorder: true,
 };
 
+const SuccessAlert = () => (
+  <Alert
+    icon={<IconDiscountCheck size={18} />}
+    title="You have enabled 2FA!"
+    color="teal"
+    mt={20}
+    radius="xs"
+  >
+    Two Factor Authentication is an extra layer of protection used to ensure the
+    security of online accounts beyond just a username and password.
+  </Alert>
+);
+
+const Complete: FC<{ onConfirm(): void }> = function ({ onConfirm }) {
+  const theme = useMantineTheme();
+
+  return (
+    <>
+      <SuccessAlert />
+      <Group mt={20} position="right">
+        <Button
+          variant="gradient"
+          gradient={theme.other.buttonGradient}
+          onClick={onConfirm}
+        >
+          Confirm
+        </Button>
+      </Group>
+    </>
+  );
+};
+
 const TwoFactorSetting: FC<SwitchesCardProps> = function () {
   const theme = useMantineTheme();
 
   return (
     <>
-      <Alert
-        icon={<IconDiscountCheck size={18} />}
-        title="You have enabled 2FA!"
-        color="teal"
-        mt={20}
-        radius="xs"
-      >
-        Two Factor Authentication is an extra layer of protection used to ensure
-        the security of online accounts beyond just a username and password.
-      </Alert>
+      <SuccessAlert />
       <SettingTile
         topBorder={false}
         title="Show recovery codes"
@@ -265,38 +288,46 @@ const TwoFactorSetting: FC<SwitchesCardProps> = function () {
   );
 };
 
-const TwoFactorAuth = function () {
+const CreateOptStep = function () {
   const [active, setActive] = useState(0);
   const [recoveryCode, setRecoveryCode] = useState<string[]>();
-  const [profile, dispatch] = useAtom(userProfileQueryAtom[0]);
+  const [_, dispatch] = useAtom(userProfileQueryAtom[0]);
 
-  console.log(profile);
+  return (
+    <Stepper size="xs" mt={30} active={active}>
+      <Stepper.Step label="Configure auth app">
+        <SetAuthnApp
+          onNext={(e) => {
+            setActive(1);
+            setRecoveryCode(e);
+          }}
+        />
+      </Stepper.Step>
+      <Stepper.Step label="Save recovery codes">
+        <SaveRecoveryCode
+          recoveryCode={recoveryCode}
+          onNext={() => setActive(2)}
+        />
+      </Stepper.Step>
+      <Stepper.Step label="Complete">
+        <Complete
+          onConfirm={() => {
+            dispatch({ type: 'refetch' });
+          }}
+        />
+      </Stepper.Step>
+    </Stepper>
+  );
+};
+
+const TwoFactorAuth = function () {
+  const [profile] = useAtom(userProfileQueryAtom[0]);
 
   return (
     <Box style={{ maxWidth: 800 }}>
       <Title order={4}>Configure Two-factor authentication (2FA)</Title>
-      {profile.d.enabled2FA ? (
-        <TwoFactorSetting />
-      ) : (
-        <Stepper size="xs" mt={30} active={active}>
-          <Stepper.Step label="Configure auth app">
-            <SetAuthnApp
-              onNext={(e) => {
-                setActive(1);
-                dispatch({ type: 'refetch' });
-                setRecoveryCode(e);
-              }}
-            />
-          </Stepper.Step>
-          <Stepper.Step label="Save recovery codes">
-            <SaveRecoveryCode
-              recoveryCode={recoveryCode}
-              onNext={() => setActive(2)}
-            />
-          </Stepper.Step>
-          <Stepper.Step label="Complete" />
-        </Stepper>
-      )}
+      {/* <CreateOptStep /> */}
+      {profile.d.enabled2FA ? <TwoFactorSetting /> : <CreateOptStep />}
     </Box>
   );
 };

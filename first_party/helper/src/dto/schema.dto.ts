@@ -1,7 +1,7 @@
-import { ResultCode } from '../enum';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ResultCode } from '@letscollab-nest/trait';
 
 export class PaginationReqDto {
   @ApiProperty({

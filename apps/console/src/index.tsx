@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
 import {
   commonEn,
   commonZh,
@@ -52,6 +54,8 @@ root.render(
     <App />
   </React.StrictMode>,
 );
+
+serviceWorkerRegistration.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

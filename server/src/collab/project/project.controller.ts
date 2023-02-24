@@ -6,6 +6,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Query,
@@ -16,13 +17,13 @@ import {
   ApiOkResponse,
   ApiTags,
   ApiOperation,
+  ApiParam,
 } from '@nestjs/swagger';
 import { CommProtectGuard } from '../../utils';
 import {
   CreateProjectDto,
-  DeleteProjectDto,
-  // ProjectListResDto,
   QueryProjectsDto,
+  SearchGithubDto,
   UpdateProjectDto,
 } from './project.dto';
 import { ProjectService } from './project.service';
@@ -82,8 +83,8 @@ export class ProjectController {
   @Get('github/search')
   @UseGuards(CommProtectGuard, AccessGuard)
   @ApiCookieAuth('SID')
-  async searchGithubRepo(@Query('q') q) {
-    const d = await this.projectService.searchGithubRepo(q);
+  async searchGithubRepo(@Query() query: SearchGithubDto) {
+    const d = await this.projectService.searchGithubRepo(query.q);
 
     return {
       code: ResultCode.SUCCESS,
@@ -95,15 +96,30 @@ export class ProjectController {
   //TODO
   @Put()
   @ApiCookieAuth('SID')
-  async updatePrj(@Body() body: UpdateProjectDto) {}
+  async updateProject(@Body() body: UpdateProjectDto) {}
 
-  //TODO
-  @Delete()
+  @ApiOperation({
+    summary: 'Delete project',
+  })
+  @ApiParam({
+    name: 'name',
+    type: 'string',
+    schema: {
+      default: 'deskbtm',
+    },
+  })
+  @Delete(':name')
   @ApiCookieAuth('SID')
   @UseGuards(CommProtectGuard, AccessGuard)
   @UseAccess({
-    action: AccessAction.deleteOwn,
+    action: AccessAction.deleteAny,
     resource: ProjectResource.list,
   })
-  async deletePrj(@Body() body: DeleteProjectDto) {}
+  async deleteProject(@Param('name') name: string) {
+    await this.projectService.deleteProject(name);
+
+    return {
+      code: ResultCode.SUCCESS,
+    };
+  }
 }

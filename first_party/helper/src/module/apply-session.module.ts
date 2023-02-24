@@ -21,7 +21,7 @@ import Redis from 'ioredis';
 import FastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
 import fastifyPassport from '@fastify/passport';
 
-const RedisStore = ConnectRedis(FastifySession);
+const RedisStore = ConnectRedis(FastifySession as any);
 export const REDIS_SESSION_FASTIFY_MODULE = Symbol(
   'REDIS_SESSION_FASTIFY_MODULE',
 );
@@ -95,7 +95,7 @@ export class ApplySessionModule implements NestModule, OnModuleDestroy {
     }
 
     this.options.session.store = new RedisStore({
-      client: new Redis(this.options.redis),
+      client: new Redis(this.options.redis) as any,
     });
 
     if (!this.options.session.cookieName) {

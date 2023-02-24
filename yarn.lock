@@ -5252,6 +5252,7 @@ __metadata:
     "@letscollab-react/authz": "workspace:^"
     "@letscollab-react/table": "workspace:^"
     "@mantine/core": ^5.5.4
+    "@mantine/dates": ^5.10.3
     "@mantine/dropzone": ^5.10.0
     "@mantine/form": ^5.5.4
     "@mantine/hooks": ^5.5.4
@@ -5419,8 +5420,6 @@ __metadata:
     "@nestjs/swagger": ^6.1.3
     "@nestjs/testing": ^9.0.11
     "@nestjs/typeorm": ^9.0.1
-    "@swc/core": ^1.3.30
-    "@swc/helpers": ^0.4.14
     "@types/bcrypt": ^5
     "@types/jest": 27.0.2
     "@types/node": ^16.0.0
@@ -5595,6 +5594,7 @@ __metadata:
     "@fastify/session": 9.0.0
     "@letscollab-nest/accesscontrol": "workspace:^"
     "@letscollab-nest/nacos": "workspace:^"
+    "@letscollab-nest/trait": "workspace:^"
     "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs/cli": ^9.1.1
     "@nestjs/common": ^9.0.11
@@ -5603,6 +5603,7 @@ __metadata:
     "@nestjs/schematics": ^9.0.2
     "@nestjs/swagger": ^6.1.3
     "@nestjs/testing": ^9.0.11
+    "@types/connect-redis": ^0.0.20
     "@types/fs-extra": ^9.0.13
     "@types/jest": 27.0.2
     "@types/node": ^16.0.0
@@ -5973,6 +5974,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/dates@npm:^5.10.3":
+  version: 5.10.4
+  resolution: "@mantine/dates@npm:5.10.4"
+  dependencies:
+    "@mantine/utils": 5.10.4
+  peerDependencies:
+    "@mantine/core": 5.10.4
+    "@mantine/hooks": 5.10.4
+    dayjs: ">=1.0.0"
+    react: ">=16.8.0"
+  checksum: 14a32aa4c16e030266629dfc5171e930d271682de742541b2298d448df11c9fab40e1d8003eabccfd5449a65ef14681993af6426197da4dcad1f509fb9fff932
+  languageName: node
+  linkType: hard
+
 "@mantine/dropzone@npm:^5.10.0":
   version: 5.10.0
   resolution: "@mantine/dropzone@npm:5.10.0"
@@ -6073,6 +6088,15 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: 7fece92e1356af1237154c60b7179c2ce422502df2c968f6ff670f6eba757f2742400aebc7c07f1dd71668dc6c8f87f9036a7c1f0e02fdad48db05ab895cf506
+  languageName: node
+  linkType: hard
+
+"@mantine/utils@npm:5.10.4":
+  version: 5.10.4
+  resolution: "@mantine/utils@npm:5.10.4"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 96e2602f8500c29b5979d4fe0b3456c8de911ff1bd2ef216d960b23a5370ff6828871aa859538a4004ad095fb63d7e0e76cdfb365bdb930f70f8076d730302c1
   languageName: node
   linkType: hard
 
@@ -8616,6 +8640,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/connect-redis@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "@types/connect-redis@npm:0.0.20"
+  dependencies:
+    "@types/express": "*"
+    "@types/express-session": "*"
+    "@types/redis": ^2.8.0
+    ioredis: ^5.3.0
+  checksum: 11e22b06b2338ab651e819902467292765bd24a11a0b0fd251b8226c0e0962c048106e715d2f71ebef53f161709c81df1e7b153c81388e51a9a8ca60b78d8886
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:*":
   version: 3.4.35
   resolution: "@types/connect@npm:3.4.35"
@@ -8706,6 +8742,15 @@ __metadata:
     "@types/qs": "*"
     "@types/range-parser": "*"
   checksum: 009bfbe1070837454a1056aa710d0390ee5fb8c05dfe5a1691cc3e2ca88dc256f80e1ca27cb51a978681631d2f6431bfc9ec352ea46dd0c6eb183d0170bde5df
+  languageName: node
+  linkType: hard
+
+"@types/express-session@npm:*":
+  version: 1.17.6
+  resolution: "@types/express-session@npm:1.17.6"
+  dependencies:
+    "@types/express": "*"
+  checksum: f5f2201d6b9568d8b9319735a4f6806b5ca144cee450274965aec54bc0a0331ba8bfffc1ad5addadf2e625769e13813a48cb5aea5b166fa05f474a12302dbb38
   languageName: node
   linkType: hard
 
@@ -9213,6 +9258,15 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 231d658c45abdef044a716b4502774f1585d8336d73b2f5bd68f181acbfc874b7a457686ecd29b415b43ed0922c309bab7e2cf96832d188a3f4f1b02f2af760a
+  languageName: node
+  linkType: hard
+
+"@types/redis@npm:^2.8.0":
+  version: 2.8.32
+  resolution: "@types/redis@npm:2.8.32"
+  dependencies:
+    "@types/node": "*"
+  checksum: 2b12103e05977941870c9a248f6ea51f4b7ad7e0f16a7403799c2ed1b3e63b60f693c39f9186be0ea02776934c4595ddcd2a5bde41e530aaad42d26449f6a669
   languageName: node
   linkType: hard
 
@@ -13807,7 +13861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"denque@npm:^2.0.1":
+"denque@npm:^2.0.1, denque@npm:^2.1.0":
   version: 2.1.0
   resolution: "denque@npm:2.1.0"
   checksum: 1d4ae1d05e59ac3a3481e7b478293f4b4c813819342273f3d5b826c7ffa9753c520919ba264f377e09108d24ec6cf0ec0ac729a5686cbb8f32d797126c5dae74
@@ -18069,6 +18123,23 @@ __metadata:
     redis-parser: ^3.0.0
     standard-as-callback: ^2.1.0
   checksum: c3a7df407a41ae516bede8b6db853c568198b13fe4a4785f66be5cd541087121b9d45fb9a6b1b6a5fb668c29ce52ab4685642b994803bdfa0a35f794ea8ef7ae
+  languageName: node
+  linkType: hard
+
+"ioredis@npm:^5.3.0":
+  version: 5.3.1
+  resolution: "ioredis@npm:5.3.1"
+  dependencies:
+    "@ioredis/commands": ^1.1.1
+    cluster-key-slot: ^1.1.0
+    debug: ^4.3.4
+    denque: ^2.1.0
+    lodash.defaults: ^4.2.0
+    lodash.isarguments: ^3.1.0
+    redis-errors: ^1.2.0
+    redis-parser: ^3.0.0
+    standard-as-callback: ^2.1.0
+  checksum: 6c98cb8f8772ad4bb2b6b7a0a224e4a63f4759f9a28e84205f18788552f08221d51f391c10892dca01a1b10b2804d0a7e6082b0b7decd65538a5fb6b0f4f1f82
   languageName: node
   linkType: hard
 

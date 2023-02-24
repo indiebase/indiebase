@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Session,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -24,7 +25,11 @@ import {
   ProtectGuard,
 } from '@letscollab-nest/helper';
 import { OwnOrgsResDto, QueryUserDto, UpdateUserProfileDto } from './user.dto';
-import { ResultCode, UserResource, UserSession } from '@letscollab-nest/trait';
+import {
+  ResultCode,
+  UserResource,
+  type UserSession,
+} from '@letscollab-nest/trait';
 import { UserService } from './user.service';
 import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
 
@@ -45,7 +50,7 @@ export class UserController {
     resource: UserResource.list,
   })
   @ApiOperation({
-    description: `Require:user_list:read_any`,
+    description: `Require:user_list:read`,
   })
   async getUserList(@Query() query: QueryUserDto) {
     const { list, total } = await this.userService.getUsers(query);
@@ -61,10 +66,6 @@ export class UserController {
   @UseGuards(CommProtectGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get a user profile',
-  })
-  @UseAccess({
-    action: AccessAction.readAny,
-    resource: UserResource.list,
   })
   async getProfile(@Param('username') username: string) {
     const user = await this.userService.getUser({ username });
@@ -156,14 +157,15 @@ export class UserController {
   @ApiOperation({
     summary: 'Test',
   })
-  @UseAccess({
-    action: AccessAction.readAny,
-    resource: UserResource.list,
-  })
+  // @UseAccess({
+  //   action: AccessAction.readAny,
+  //   resource: UserResource.list,
+  // })
   @DevApiHeader()
-  async test() {
+  async test(@Session() session, @MyInfo('username') username) {
     return {
       code: ResultCode.SUCCESS,
+      d: session.get(username),
     };
   }
 }

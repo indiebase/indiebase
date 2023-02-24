@@ -15,6 +15,7 @@
     "@letscollab-react/authz": "workspace:^",
     "@letscollab-react/table": "workspace:^",
     "@mantine/core": "^5.5.4",
+    "@mantine/dates": "^5.10.3",
     "@mantine/dropzone": "^5.10.0",
     "@mantine/form": "^5.5.4",
     "@mantine/hooks": "^5.5.4",

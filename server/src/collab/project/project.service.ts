@@ -5,13 +5,11 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
-  OnModuleInit,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   CreateProjectDto,
-  DeleteProjectDto,
   QueryProjectsDto,
   UpdateProjectDto,
 } from './project.dto';
@@ -20,6 +18,7 @@ import { ProjectEntity } from './project.entity';
 import { OctokitService } from '@letscollab-nest/octokit';
 import { OrgService } from '../org/org.service';
 import { ResultCode } from '@letscollab-nest/trait';
+import { compatPackageName } from '@letscollab-nest/helper';
 
 @Injectable()
 export class ProjectService {
@@ -40,6 +39,7 @@ export class ProjectService {
       contactEmail,
       packageName,
       description,
+      pinned,
     } = body;
 
     const org = await this.orgService.repo.findOne({
@@ -53,11 +53,12 @@ export class ProjectService {
       githubRepoName,
       githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
       contactEmail,
-      packageName: packageName ?? `${org.domain}.${name}`,
+      packageName: packageName ?? compatPackageName(`${org.domain}.${name}`),
       description,
       ownerId: id,
       creatorId: id,
       orgName: org.name,
+      pinned,
     });
 
     projectEntity.organization = org;
@@ -135,9 +136,8 @@ export class ProjectService {
     });
   }
 
-  async deleteProject(body: DeleteProjectDto) {
-    const { id } = body;
-    await this.projectRepo.delete({ id }).catch((err) => {
+  async deleteProject(name: string) {
+    await this.projectRepo.delete({ name }).catch((err) => {
       this.logger.error(err);
 
       throw new InternalServerErrorException({
