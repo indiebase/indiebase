@@ -6,34 +6,23 @@ import {
   Group,
   Anchor,
   Avatar,
-  Select,
   Text,
-  Menu,
   Divider,
 } from '@mantine/core';
-import { FC, forwardRef, useEffect, useMemo, useState } from 'react';
-import { Link, resolvePath, useLocation } from 'react-router-dom';
-import {
-  IconSettings,
-  IconPlus,
-  IconUser,
-  IconBuildingCommunity,
-  IconFileDescription,
-  IconLogout,
-} from '@tabler/icons';
-import { useNavigate, useParams } from 'react-router-dom';
-import { atom, useAtom } from 'jotai';
-import { navbarSwitchAtom, userProfileQueryAtom } from '../../atoms';
-import { logoutApi } from '../../api/';
-import { useMediaQuery } from '@mantine/hooks';
+import { FC, forwardRef } from 'react';
+import { Link } from 'react-router-dom';
+import { IconBuildingCommunity } from '@tabler/icons';
+import { useAtom } from 'jotai';
+import { navbarSwitchAtom } from '../../atoms';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
   logo: React.ReactNode;
   logoWidth: number;
   nav?: React.ReactNode;
-  logoHref: string;
-  navbarOpened: boolean;
+  basename: string;
+  menu?: React.ReactElement;
+  leading?: React.ReactElement;
 }
 
 export interface OrgSelectProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -63,42 +52,7 @@ export const SelectItem = forwardRef<HTMLDivElement, OrgSelectProps>(
 
 export const Header: FC<NavHeaderProps> = function (props) {
   const theme = useMantineTheme();
-  const navigate = useNavigate();
-  const [data] = useAtom(userProfileQueryAtom[0]);
   const [opened, toggle] = useAtom(navbarSwitchAtom);
-  const { org: orgParam } = useParams();
-  const profile = data.d;
-  const { pathname } = useLocation();
-
-  const userItem = {
-    logo: profile.avatar,
-    label: profile.username,
-    value: profile.username,
-    path: 'users/' + profile.username,
-  };
-  const orgs = profile.organizations
-    ? [
-        userItem,
-        ...profile.organizations.map((o) => ({
-          logo: o.avatarUrl,
-          value: o.name,
-          label: o.name,
-          path: 'orgs/' + o.name,
-        })),
-      ]
-    : [];
-  const [org, setOrg] = useState<OrgSelectProps>({} as any);
-
-  const orgDefault = useMemo(
-    () => orgs.find((v) => v.value === orgParam) ?? userItem,
-    [orgParam, orgs],
-  );
-
-  useEffect(() => {
-    if (pathname === '/') {
-      setOrg(userItem);
-    }
-  }, [pathname]);
 
   return (
     <MantineHeader
@@ -134,41 +88,13 @@ export const Header: FC<NavHeaderProps> = function (props) {
             />
           </MediaQuery>
           <MediaQuery smallerThan="sm" styles={{ display: 'none', width: 100 }}>
-            <Group spacing="xs" ml={6}>
-              <Avatar src={org.logo ?? orgDefault?.logo} radius="xl" size="sm">
-                <IconBuildingCommunity size={17} />
-              </Avatar>
-              <div style={{ width: 150 }}>
-                <Select
-                  styles={{
-                    dropdown: {
-                      minWidth: 220,
-                      marginLeft: 35,
-                    },
-                  }}
-                  radius="lg"
-                  placeholder="Select Organization"
-                  itemComponent={SelectItem}
-                  data={orgs ?? []}
-                  value={org.value ?? orgDefault?.value}
-                  onChange={(e) => {
-                    const r = orgs.find((v) => v.value === e);
-                    setOrg(r);
-                    navigate(resolvePath(r.path));
-                  }}
-                  searchable
-                  size="xs"
-                  maxDropdownHeight={200}
-                  nothingFound="Empty"
-                />
-              </div>
-            </Group>
+            {props.leading}
           </MediaQuery>
         </Group>
 
         <Anchor
           component={Link}
-          to={props.logoHref}
+          to={props.basename}
           reloadDocument={false}
           underline={false}
           style={{
@@ -196,43 +122,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
               </Group>
               <Divider mr={10} orientation="vertical" />
               <Group mr={30} spacing={6}>
-                <Menu width={200} position="bottom-end" withArrow>
-                  <Menu.Target>
-                    <Avatar src={profile?.avatar} radius="xl" size={26}>
-                      <IconUser size={17} />
-                    </Avatar>
-                  </Menu.Target>
-                  <Menu.Dropdown>
-                    <Menu.Item
-                      onClick={() => {
-                        navigate(`/users/${profile.username}/settings/profile`);
-                      }}
-                      icon={<IconSettings size={16} />}
-                    >
-                      Settings
-                    </Menu.Item>
-                    <Menu.Item icon={<IconFileDescription size={16} />}>
-                      Docs
-                    </Menu.Item>
-                    <Menu.Item
-                      icon={<IconPlus size={16} />}
-                      onClick={() => {
-                        navigate('/create/org');
-                      }}
-                    >
-                      Create Organization
-                    </Menu.Item>
-                    <Divider my="xs" variant="dashed" labelPosition="center" />
-                    <Menu.Item
-                      onClick={async () => {
-                        await logoutApi();
-                      }}
-                      icon={<IconLogout size={16} />}
-                    >
-                      Sign Out
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
+                {props.menu}
               </Group>
             </Group>
           </MediaQuery>

@@ -1,5 +1,3 @@
-import { FC, ReactElement, Suspense, useCallback, useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import {
   generateOptApi,
   OtpCode,
@@ -20,9 +18,11 @@ import {
   Flex,
   Group,
 } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
-import { IconAlertCircle, IconDiscountCheck } from '@tabler/icons';
 import { useAtom } from 'jotai';
+import { useQuery } from '@tanstack/react-query';
+import { ErrorBoundary } from 'react-error-boundary';
+import { IconAlertCircle, IconDiscountCheck } from '@tabler/icons';
+import { FC, ReactElement, Suspense, useCallback, useState } from 'react';
 
 interface SetAuthnAppProps {
   onNext(code: string[]): void;
@@ -99,13 +99,13 @@ const SetAuthnApp: FC<SetAuthnAppProps> = function (props) {
         }}
         autoFocus
       />
-      <div style={{ height: 20 }}>
+      <Box style={{ height: 20 }}>
         {errorMsg && (
           <Text size="sm" mt={5} color="red">
             {errorMsg}
           </Text>
         )}
-      </div>
+      </Box>
       <Button
         mt={10}
         variant="gradient"
@@ -326,7 +326,6 @@ const TwoFactorAuth = function () {
   return (
     <Box style={{ maxWidth: 800 }}>
       <Title order={4}>Configure Two-factor authentication (2FA)</Title>
-      {/* <CreateOptStep /> */}
       {profile.d.enabled2FA ? <TwoFactorSetting /> : <CreateOptStep />}
     </Box>
   );

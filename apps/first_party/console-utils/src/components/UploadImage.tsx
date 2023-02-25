@@ -104,7 +104,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
   const upload = async function (file: File, blob?: Blob) {
     const formData = new FormData();
     formData.append('files', blob ?? file, file.name);
-    const result = await uploadFile(formData);
+    const result = await uploadFile(formData, 'letscollab-community');
     if (result.code > 0) {
       setUrl(result.d);
       onChange?.(result.d);

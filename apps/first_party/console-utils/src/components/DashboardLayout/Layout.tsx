@@ -5,11 +5,15 @@ import { Header, NavHeaderProps } from './Header';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Footer } from './Footer';
 
-export interface DashboardLayoutProps extends NavHeaderProps {
+export interface DashboardLayoutProps {
   sidebar: ReactElement;
+  header?: ReactElement;
 }
 
-export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
+export const DashboardLayout: FC<DashboardLayoutProps> = ({
+  header,
+  sidebar,
+}) => {
   const theme = useMantineTheme();
   console.log('------------------------------------------------------');
 
@@ -27,9 +31,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <ErrorBoundary fallbackRender={() => <div />}>
-          {props.sidebar}
-        </ErrorBoundary>
+        <ErrorBoundary fallbackRender={() => <div />}>{sidebar}</ErrorBoundary>
       }
       footer={<Footer />}
       header={
@@ -40,7 +42,7 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
           fallbackRender={() => <div style={{ height: 65 }} />}
         >
           <Suspense fallback={<div style={{ height: 65 }} />}>
-            <Header {...props} />
+            {header}
           </Suspense>
         </ErrorBoundary>
       }

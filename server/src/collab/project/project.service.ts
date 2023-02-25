@@ -53,7 +53,9 @@ export class ProjectService {
       githubRepoName,
       githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
       contactEmail,
-      packageName: packageName ?? compatPackageName(`${org.domain}.${name}`),
+      packageName: !!packageName
+        ? packageName
+        : compatPackageName(`${org.domain}.${name}`),
       description,
       ownerId: id,
       creatorId: id,

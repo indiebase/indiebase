@@ -9,8 +9,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { FormInstance } from 'antd';
-import { FC, useRef } from 'react';
+import { FC } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 
 interface CreateRoleModalProps {
@@ -29,8 +28,6 @@ const countriesData = [
 ];
 
 export const MemberModal: FC<CreateRoleModalProps> = function (props) {
-  const ref = useRef<FormInstance>();
-
   const theme = useMantineTheme();
 
   // const [opened, setOpen] = useState<boolean>(false);

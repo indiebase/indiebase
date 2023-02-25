@@ -7,6 +7,7 @@ import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
 import { CreateProjectPage } from './pages/Creator/CreateProject';
 import { InviteMembersPage } from './pages/Creator/InviteMembers';
+import { ProLayout } from '@letscollab-pro/console';
 
 const projectRouter = {
   path: ':project',
@@ -116,7 +117,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/pro',
-    // element: <ProLayout />,
+    element: <ProLayout />,
     children: [
       {
         path: ':org',

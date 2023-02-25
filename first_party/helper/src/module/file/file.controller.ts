@@ -2,6 +2,7 @@ import {
   Controller,
   Delete,
   InternalServerErrorException,
+  Param,
   Put,
   UseGuards,
   UseInterceptors,
@@ -25,7 +26,7 @@ import { ResultCode } from '@letscollab-nest/trait';
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 
-  @Put('upload')
+  @Put('upload/:bucket')
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FilesUploadDto })
   @UseInterceptors(FilesInterceptor('files'))
@@ -33,11 +34,16 @@ export class FileController {
     summary: 'Upload file',
   })
   @UseGuards(ProtectGuard)
-  async uploadFiles(@UploadedFiles() files: MemoryStorageFile[]) {
-    const d = await this.fileService.save2Bucket(files).catch((err) => {
-      console.error(err);
-      throw new InternalServerErrorException();
-    });
+  async uploadFiles(
+    @UploadedFiles() files: MemoryStorageFile[],
+    @Param('bucket') bucket: string,
+  ) {
+    const d = await this.fileService
+      .save2Bucket(files, { bucket })
+      .catch((err) => {
+        console.error(err);
+        throw new InternalServerErrorException();
+      });
     return {
       code: ResultCode.SUCCESS,
       d,

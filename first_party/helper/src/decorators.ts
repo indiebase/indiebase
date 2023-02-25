@@ -85,6 +85,9 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
   constructor(private readonly dataSource: DataSource) {}
 
   validate(value: any, args: ValidationArguments) {
+    if (!value || value === '') {
+      return true;
+    }
     const entity: EntityTarget<any> = args.constraints[0];
     const key: string = args.constraints[1];
     const throwOnExist: string = args.constraints[3];

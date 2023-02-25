@@ -16,6 +16,7 @@ interface SaveBucketOptions {
    * Save to the /tmp/ directory, if object not be used, will delete automatically.
    */
   tmp?: boolean;
+  bucket?: string;
 }
 
 @Injectable()
@@ -24,7 +25,11 @@ export class FileService {
 
   public async save2Bucket(
     files: MemoryStorageFile[],
-    options: SaveBucketOptions = { signedUrl: false, tmp: false },
+    options: SaveBucketOptions = {
+      signedUrl: false,
+      tmp: false,
+      bucket: 'letscollab-community',
+    },
   ) {
     const d = [];
 
@@ -35,14 +40,14 @@ export class FileService {
       const putCommand = new PutObjectCommand({
         Key,
         Body: file.buffer,
-        Bucket: 'letscollab',
+        Bucket: options.bucket,
       });
       await this.s3.send(putCommand);
       let url;
       if (options.signedUrl) {
         const getCommand = new GetObjectCommand({
           Key,
-          Bucket: 'letscollab',
+          Bucket: options.bucket,
         });
         url = await getSignedUrl(this.s3, getCommand);
       } else {

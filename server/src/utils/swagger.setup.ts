@@ -1,7 +1,9 @@
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
+import {
+  FileModule,
+  overwriteSwaggerStaticAssets,
+} from '@letscollab-nest/helper';
 import { InvitationModule } from '../collab/invitation/invitation.module';
-import { FileModule } from './../file/file.module';
 import { INestApplication } from '@nestjs/common';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';

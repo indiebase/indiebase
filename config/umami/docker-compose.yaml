@@ -4,7 +4,7 @@ services:
     image: docker.umami.dev/umami-software/umami:mysql-latest
     network_mode: overlay
     ports:
-      - 13345:3000
+      - w:3000
     restart: always
     environment:
       DATABASE_URL: mysql://root:letscollab@mysql:3306/letscollab-analytics
