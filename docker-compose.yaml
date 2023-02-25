@@ -10,7 +10,7 @@ services:
   apisix-dashboard:
     image: apache/apisix-dashboard:2.13-alpine
     volumes:
-      - ./config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+      - ${CONFIG_DIR:-.}/config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
     ports:
       - 13336:9000
 
@@ -18,7 +18,7 @@ services:
     image: apache/apisix:2.15.0-alpine
     volumes:
       - apisix_logs:/usr/local/apisix/logs
-      - ./config/apisix/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ${CONFIG_DIR:-.}/config/apisix/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
     ports:
@@ -47,7 +47,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.25.0
     volumes:
-      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${CONFIG_DIR:-.}/config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     ports:
       - 13334:9090
@@ -56,7 +56,7 @@ services:
   nacos:
     image: nacos/nacos-server:v2.1.2
     env_file:
-      - ./.env.development
+      - ${CONFIG_DIR:-.}/.env
     volumes:
       - nacos_logs:/home/nacos/logs
     ports:
@@ -76,7 +76,7 @@ services:
   mysql:
     image: nacos/nacos-mysql:8.0.16
     env_file:
-      - ./.env.development
+      - ${CONFIG_DIR:-.}/.env
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
@@ -88,7 +88,7 @@ services:
     ports:
       - 9104:9104
     env_file:
-      - ./.env.development
+      - ${CONFIG_DIR:-.}/.env
     depends_on:
       - mysql
 
@@ -123,9 +123,9 @@ services:
     ports:
       - 13335:3000
     volumes:
-      - ./config/grafana/provisioning:/etc/grafana/provisioning
-      - ./config/grafana/dashboards:/var/lib/grafana/dashboards
-      - ./config/grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ${CONFIG_DIR:-.}/config/grafana/provisioning:/etc/grafana/provisioning
+      - ${CONFIG_DIR:-.}/config/grafana/dashboards:/var/lib/grafana/dashboards
+      - ${CONFIG_DIR:-.}/config/grafana/grafana.ini:/etc/grafana/grafana.ini
       - grafana_data:/var/lib/grafana
     environment:
       - TZ=Asia/Shanghai
@@ -140,7 +140,7 @@ services:
   loki:
     image: grafana/loki:2.2.1
     volumes:
-      - ./config/loki/config.yaml:/etc/loki/config.yaml
+      - ${CONFIG_DIR:-.}/config/loki/config.yaml:/etc/loki/config.yaml
       - loki_data:/loki
     ports:
       - 13339:3100
@@ -155,7 +155,7 @@ services:
   promtail:
     image: grafana/promtail:2.2.1
     volumes:
-      - ./config/promtail:/etc/promtail/
+      - ${CONFIG_DIR:-.}/config/promtail:/etc/promtail/
       - /var/log:/ext_logs:ro
     command: -config.file=/etc/promtail/config.yaml
     logging: *loki-logging
@@ -169,7 +169,7 @@ services:
       - 6379:6379
     volumes:
       - redis_data:/data
-      - ./config/redis:/usr/local/etc/redis
+      - ${CONFIG_DIR:-.}/config/redis:/usr/local/etc/redis
     command: redis-server /usr/local/etc/redis/redis.conf
     logging: *loki-logging
 
@@ -189,9 +189,9 @@ services:
       - 18890:18888
       # S3
       - 18334:8333
-    command: -v=4 server -s3 -ip=seaweed  -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3-dev.json -metricsPort=9324
+    command: -v=4 server -s3 -ip=seaweed  -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3.json -metricsPort=9324
     volumes:
-      - ./config/seaweedfs/s3-dev.json:/etc/seaweedfs/s3-dev.json
+      - ${CONFIG_DIR:-.}/config/seaweedfs/s3.json:/etc/seaweedfs/s3.json
       - seaweed_data:/data
 
 networks:

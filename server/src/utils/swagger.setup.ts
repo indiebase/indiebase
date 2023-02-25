@@ -1,14 +1,12 @@
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import {
-  FileModule,
-  overwriteSwaggerStaticAssets,
-} from '@letscollab-nest/helper';
+import { overwriteSwaggerStaticAssets } from '@letscollab-nest/helper';
 import { InvitationModule } from '../collab/invitation/invitation.module';
 import { INestApplication } from '@nestjs/common';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { OrgModule } from '../collab/org/org.module';
 import { ProjectModule } from '../collab/project/project.module';
+import { FileModule } from '../file';
 
 const commonContact = [
   'deskbtm/letscollab',

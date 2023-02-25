@@ -26,6 +26,7 @@ interface UploadImageProps {
   clearable?: boolean;
   cropTitle?: string;
   label?: string;
+  bucket?: string;
   icon?: (size) => ReactElement;
 }
 
@@ -85,6 +86,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
   cropTitle,
   onChange,
   icon,
+  bucket,
 }) {
   const [cropped, setCropped] = useState<Blob>();
   const [url, setUrl] = useState<string>();
@@ -104,7 +106,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
   const upload = async function (file: File, blob?: Blob) {
     const formData = new FormData();
     formData.append('files', blob ?? file, file.name);
-    const result = await uploadFile(formData, 'letscollab-community');
+    const result = await uploadFile(formData, bucket);
     if (result.code > 0) {
       setUrl(result.d);
       onChange?.(result.d);
@@ -245,4 +247,5 @@ UploadImage.defaultProps = {
   croppable: false,
   cropTitle: 'Crop Image',
   icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
+  bucket: 'letscollab-community',
 };

@@ -2,6 +2,7 @@ import {
   Controller,
   Delete,
   InternalServerErrorException,
+  Logger,
   Param,
   Put,
   UseGuards,
@@ -24,7 +25,10 @@ import { ResultCode } from '@letscollab-nest/trait';
   version: '1',
 })
 export class FileController {
-  constructor(private readonly fileService: FileService) {}
+  constructor(
+    private readonly fileService: FileService,
+    private readonly logger: Logger,
+  ) {}
 
   @Put('upload/:bucket')
   @ApiConsumes('multipart/form-data')
@@ -41,8 +45,11 @@ export class FileController {
     const d = await this.fileService
       .save2Bucket(files, { bucket })
       .catch((err) => {
-        console.error(err);
-        throw new InternalServerErrorException();
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          code: ResultCode.ERROR,
+          message: 'Upload file failed',
+        });
       });
     return {
       code: ResultCode.SUCCESS,

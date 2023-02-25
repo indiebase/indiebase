@@ -15,7 +15,6 @@ import * as winston from 'winston';
 import LokiTransport = require('winston-loki');
 import {
   ApplySessionModule,
-  FileModule,
   isDev,
   IsEntityExistedConstraint,
 } from '@letscollab-nest/helper';
@@ -36,6 +35,7 @@ import {
 } from 'nestjs-i18n';
 import { S3Module } from '@letscollab-nest/aws-s3';
 import { OctokitModule } from '@letscollab-nest/octokit';
+import { FileModule } from './file';
 
 @Module({
   imports: [
