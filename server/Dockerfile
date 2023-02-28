@@ -6,7 +6,7 @@ ARG RUNTIME_ENV
 
 ENV NODE_ENV=$RUNTIME_ENV
 
-WORKDIR /opt/letscollab/gateway
+WORKDIR /opt/letscollab-community
 
 COPY ./dist ./dist
 COPY ./model ./model
