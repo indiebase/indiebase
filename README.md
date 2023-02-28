@@ -20,8 +20,8 @@ letscollab community 类似于 OpenCollective, 不过其是用于管理私有独
 
 ## 收益
 
-1. 独立开发者: 通过 letscollab 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。
-2. 开源开发者：避免类似core-js类似事件。[whats-next.md](https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md)
+1. 独立开发者/工作室: 通过 letscollab community 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。通过 letscollab pro 降低成本。
+2. 开源开发者：避免 core-js类似事件。[whats-next.md](https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md)
 3. 编程爱好者: 通过在 letscollab 中发现自己喜爱的项目, 贡献代码并从中获取报酬。
 4. 企业: 通过 letscollab 公布开源或其他项目, 让拥有空余时间的开发者参与进来完善产品并支付给开发者报酬。
 
@@ -32,7 +32,7 @@ letscollab community 类似于 OpenCollective, 不过其是用于管理私有独
 
 ## Join
 
-letscollab community PR welcome，如果有意愿加入私有部分的开发，请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/dev/docs/zh-CN/non-disclosure-agreement-zh_cn.md)
+`letscollab community` PR welcome，如果有意愿加入私有部分的开发，请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/dev/docs/zh-CN/non-disclosure-agreement-zh_cn.md)
 <br />
 同样 letscollab 所获取的收益，会分配给项目参与成员。
 
