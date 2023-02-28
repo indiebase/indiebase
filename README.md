@@ -8,14 +8,14 @@
 
 ## FAQ
 
-1. 什么是 letscollab
+1. 什么是 letscollab ?  
 letscollab 全称为let's collaborate, 分为Community和Pro版本。
 letscollab 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [Abyss](https://github.com/deskbtm-abyss/abyss)等。
-2. 什么是 letscollab community？
+2. 什么是 letscollab community？  
 letscollab community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者,
-3. 什么是 letscollab pro ?
-而letscollab pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付等一些常见应用业务。
-4. letscollab 提供线上服务吗 ?
+3. 什么是 letscollab pro ?  
+而letscollab pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
+4. letscollab 提供线上服务吗 ?  
 不提供，letscollab 是一个完全self hosted的平台。在保证功能的前提下，尽可能使其能够在低配置服务器环境运行。
 
 ## 收益
