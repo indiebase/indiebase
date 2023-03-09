@@ -27,7 +27,7 @@ letscollab community 类似于 OpenCollective, 不过其是用于管理私有独
 
 ## Note Bene
 
-1. letscollab 高度依赖 github, 并将其作为默认的项目管理工具。
+1. letscollab community 高度依赖 github, 并将其作为默认的项目管理工具。
 2. letscollab pro 服务将不开源, 使用需要购买商业 license. letscollab community 基于 AGPL-3.0 开源协议。
 
 ## Join
