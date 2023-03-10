@@ -1,5 +1,5 @@
 export const commonEn = {
-  Setting: 'Setting',
+  Preference: 'Preference',
   Profile: 'Profile',
   Organizations: 'Organizations',
   'Two-factor auth': 'Two-factor auth',

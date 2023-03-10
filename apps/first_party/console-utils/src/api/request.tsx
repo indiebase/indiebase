@@ -26,7 +26,7 @@ export const protectApiInterceptor = async function (
     md.update(s);
     a.push(md.digest().toHex());
 
-    config.headers['Access-Control-Allow-Credential'] = a.join(';');
+    config.headers['X-Letscollab-Api-Credential'] = a.join(';');
   } catch (error) {
     console.log(error);
   }

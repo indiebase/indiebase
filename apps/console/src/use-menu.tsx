@@ -30,7 +30,7 @@ export const useMenu = () => {
     if (project) {
       setMenu([
         {
-          label: t('Setting'),
+          label: t('Preference'),
           icon: <IconSettings size={16} />,
           color: 'violet',
           type: 'node',
@@ -58,7 +58,7 @@ export const useMenu = () => {
           to: prefix,
         },
         {
-          label: t('Setting'),
+          label: t('Preference'),
           icon: <IconSettings size={16} />,
           color: 'violet',
           type: 'node',
@@ -84,7 +84,7 @@ export const useMenu = () => {
     if (user || location.pathname === '/') {
       setMenu([
         {
-          label: t('Setting'),
+          label: t('Preference'),
           icon: <IconSettings size={16} />,
           color: 'violet',
           type: 'node',
