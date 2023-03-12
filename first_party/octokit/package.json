@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/octokit",
+  "name": "@letscollab/nest-octokit",
   "version": "0.0.1",
   "description": "Github api nestjs module for letscollab",
   "author": "Han",

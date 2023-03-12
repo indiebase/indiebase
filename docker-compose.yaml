@@ -1,3 +1,5 @@
+# This is the development environment docker-compose.yml
+
 version: '3.9'
 
 x-logging: &loki-logging

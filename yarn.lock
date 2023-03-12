@@ -3633,13 +3633,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^7.3.0":
-  version: 7.6.0
-  resolution: "@faker-js/faker@npm:7.6.0"
-  checksum: 942af6221774e8c98a0eb6bc75265e05fb81a941170377666c3439aab9495dd321d6beedc5406f07e6ad44262b3e43c20961f666d116ad150b78e7437dd1bb2b
-  languageName: node
-  linkType: hard
-
 "@fastify/accept-negotiator@npm:^1.0.0":
   version: 1.0.0
   resolution: "@fastify/accept-negotiator@npm:1.0.0"
@@ -4515,220 +4508,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@letscollab-community/app-utils@workspace:apps/first_party/utils":
+"@letscollab-collab/server@workspace:collab":
   version: 0.0.0-use.local
-  resolution: "@letscollab-community/app-utils@workspace:apps/first_party/utils"
-  dependencies:
-    "@letscollab-nest/trait": "workspace:^"
-    "@tanstack/query-core": ^4.1.3
-    "@types/node": ^16.11.25
-    "@types/node-forge": ^1.0.2
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    "@types/stegcloak": ^1.0.0
-    jotai-tanstack-query: ^0.4.0
-    nanoid: ^3.3.2
-    node-forge: ^1.3.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stegcloak: ^1.1.1
-  peerDependencies:
-    "@mantine/core": ^4.2.12
-    "@mantine/hooks": ^4.2.12
-    "@mantine/notifications": ^4.2.12
-    jotai: ^1.7.3
-    react-router-dom: ^6.3.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-community/console-utils@workspace:^, @letscollab-community/console-utils@workspace:apps/first_party/console-utils":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-community/console-utils@workspace:apps/first_party/console-utils"
-  dependencies:
-    "@faker-js/faker": ^7.3.0
-    "@letscollab-nest/trait": "workspace:^"
-    "@mantine/form": ^5.5.4
-    "@types/node": ^16.11.25
-    "@types/node-forge": ^1.0.2
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    "@types/stegcloak": ^1.0.0
-    nanoid: ^3.3.2
-    node-forge: ^1.3.1
-    react-easy-crop: ^4.6.3
-    stegcloak: ^1.1.1
-  peerDependencies:
-    "@mantine/core": ^4.2.12
-    "@mantine/hooks": ^4.2.12
-    "@mantine/notifications": ^4.2.12
-    "@tabler/icons": ^1.92.0
-    "@tanstack/query-core": ^4.20.4
-    "@tanstack/react-query": ^4.20.4
-    jotai: ^1.7.3
-    jotai-tanstack-query: ^0.4.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-router-dom: ^6.3.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-community/console@workspace:apps/console":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-community/console@workspace:apps/console"
-  dependencies:
-    "@babel/core": ^7.16.0
-    "@dnd-kit/core": ^6.0.6
-    "@dnd-kit/sortable": ^7.0.1
-    "@dnd-kit/utilities": ^3.2.1
-    "@letscollab-community/console-utils": "workspace:^"
-    "@letscollab-nest/trait": "workspace:^"
-    "@letscollab-pro/console": "workspace:^"
-    "@letscollab-react/authz": "workspace:^"
-    "@letscollab-react/table": "workspace:^"
-    "@mantine/core": ^5.5.4
-    "@mantine/dates": ^5.10.3
-    "@mantine/dropzone": ^5.10.0
-    "@mantine/form": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
-    "@svgr/webpack": ^5.5.0
-    "@tabler/icons": ^1.119.0
-    "@tanstack/query-core": ^4.20.4
-    "@tanstack/react-query": ^4.20.4
-    "@tanstack/react-query-devtools": ^4.20.4
-    "@tanstack/react-table": ^8.7.9
-    "@types/lodash.debounce": ^4
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    "@types/react-grid-layout": ^1
-    "@types/webpack-bundle-analyzer": ^4
-    axios: ^0.27.2
-    axios-mock-adapter: ^1.21.1
-    babel-jest: ^27.4.2
-    babel-loader: ^8.2.3
-    babel-plugin-named-asset-import: ^0.3.8
-    babel-preset-react-app: ^10.0.1
-    bfj: ^7.0.2
-    browserslist: ^4.18.1
-    camelcase: ^6.2.1
-    case-sensitive-paths-webpack-plugin: ^2.4.0
-    clsx: ^1.2.1
-    cra-template-typescript: 1.2.0
-    css-loader: ^6.5.1
-    css-minimizer-webpack-plugin: ^3.2.0
-    dotenv: ^10.0.0
-    dotenv-expand: ^5.1.0
-    eslint: ^8.23.0
-    eslint-config-react-app: ^7.0.1
-    eslint-plugin-unused-imports: ^2.0.0
-    eslint-webpack-plugin: ^3.2.0
-    file-loader: ^6.2.0
-    fs-extra: ^10.0.0
-    html-webpack-plugin: ^5.5.0
-    i18next: ^21.8.12
-    i18next-browser-languagedetector: ^6.1.4
-    identity-obj-proxy: ^3.0.0
-    jest: ^27.4.3
-    jest-resolve: ^27.4.2
-    jest-watch-typeahead: ^1.0.0
-    jotai: ^1.12.0
-    jotai-tanstack-query: ^0.4.0
-    less: ^4.1.3
-    less-loader: ^11.0.0
-    localforage: ^1.10.0
-    lodash.debounce: ^4.0.8
-    mini-css-extract-plugin: ^2.4.5
-    node-polyfill-webpack-plugin: ^2.0.0
-    postcss: ^8.4.18
-    postcss-flexbugs-fixes: ^5.0.2
-    postcss-loader: ^6.2.1
-    postcss-normalize: ^10.0.1
-    postcss-preset-env: ^7.0.1
-    prompts: ^2.4.2
-    react: 18.2.0
-    react-app-polyfill: ^3.0.0
-    react-confetti: ^6.1.0
-    react-currency-format: ^1.1.0
-    react-dev-utils: ^12.0.1
-    react-dom: 18.2.0
-    react-error-boundary: ^3.1.4
-    react-grid-layout: ^1.3.4
-    react-i18next: ^11.17.4
-    react-refresh: ^0.14.0
-    react-router-dom: ^6.6.0
-    react-use: ^17.4.0
-    resolve: ^1.20.0
-    resolve-url-loader: ^4.0.0
-    sass-loader: ^12.3.0
-    semver: ^7.3.5
-    source-map-explorer: ^2.5.3
-    source-map-loader: ^3.0.0
-    stream-browserify: ^3.0.0
-    style-loader: ^3.3.1
-    terser-webpack-plugin: ^5.2.5
-    web-vitals: ^2.1.4
-    webpack: ^5.64.4
-    webpack-bundle-analyzer: ^4.5.0
-    webpack-dev-server: ^4.6.0
-    webpack-manifest-plugin: ^4.0.2
-    workbox-webpack-plugin: ^6.4.1
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-community/home@workspace:apps/home":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-community/home@workspace:apps/home"
-  dependencies:
-    "@emotion/css": ^11.9.0
-    "@emotion/react": ^11.10.4
-    "@emotion/server": ^11.10.0
-    "@emotion/styled": ^11.10.4
-    "@letscollab-nest/trait": "workspace:^"
-    "@letscollab/nextra-theme-docs": "workspace:^"
-    "@mantine/core": ^5.5.4
-    "@mantine/form": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/next": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@mantine/ssr": ^5.5.4
-    "@mdx-js/loader": ^2.1.1
-    "@mdx-js/react": ^2.1.1
-    "@next/mdx": ^12.1.6
-    "@tabler/icons": ^1.119.0
-    "@types/nprogress": ^0.2.0
-    "@types/prismjs": ^1
-    "@types/react": ^18.0.14
-    "@types/react-dom": 18.0.5
-    axios: ^0.27.2
-    cross-env: ^7.0.3
-    eslint: 8.23.0
-    eslint-config-next: 12.2.5
-    localforage: ^1.10.0
-    lottie-react: ^2.2.1
-    next: 12.2.0
-    next-pwa: ^5.5.4
-    next-sitemap: ^3.0.5
-    nextra: 2.0.0-alpha.56
-    nprogress: ^0.2.0
-    prism-react-renderer: ^1.3.3
-    prismjs: ^1.28.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-query: ^3.39.1
-    react-scroll-motion: ^0.3.0
-    react-timer-hook: ^3.0.5
-    react-use: ^17.4.0
-    sass: ^1.49.9
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-community/server@workspace:server":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-community/server@workspace:server"
+  resolution: "@letscollab-collab/server@workspace:collab"
   dependencies:
     "@aws-sdk/s3-request-presigner": ^3.245.0
     "@fastify/cookie": 8.1.0
@@ -4739,10 +4521,10 @@ __metadata:
     "@fastify/swagger": ^7.5.0
     "@letscollab-nest/accesscontrol": "workspace:^"
     "@letscollab-nest/aws-s3": "workspace:^"
-    "@letscollab-nest/fastify-passport": "workspace:^"
-    "@letscollab-nest/file-fastify": "workspace:^"
-    "@letscollab-nest/helper": "workspace:^"
-    "@letscollab-nest/nacos": "workspace:^"
+    "@letscollab-nest/fastify-file": "workspace:^"
+    "@letscollab/nest-nacos": "workspace:^"
+    "@letscollab/nest-passport-fastify": "workspace:^"
+    "@letscollab/server-shared": "workspace:^"
     "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs-modules/mailer": ^1.7.1
     "@nestjs/cli": ^9.1.1
@@ -4859,53 +4641,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-nest/fastify-passport@workspace:^, @letscollab-nest/fastify-passport@workspace:first_party/passport":
+"@letscollab-nest/fastify-file@workspace:^, @letscollab-nest/fastify-file@workspace:third_party/fastify-file":
   version: 0.0.0-use.local
-  resolution: "@letscollab-nest/fastify-passport@workspace:first_party/passport"
-  dependencies:
-    "@commitlint/cli": 17.0.3
-    "@commitlint/config-angular": 17.0.0
-    "@fastify/passport": 2.2.0
-    "@letscollab-nest/nacos": "workspace:^"
-    "@nestjs/common": 9.0.11
-    "@nestjs/core": 9.0.11
-    "@nestjs/jwt": 9.0.0
-    "@nestjs/platform-express": 9.0.11
-    "@nestjs/platform-fastify": 9.0.11
-    "@nestjs/testing": 9.0.11
-    "@types/jest": 28.1.1
-    "@types/node": 17.0.17
-    "@types/passport": 1.0.8
-    "@types/passport-jwt": 3.0.6
-    "@types/passport-local": 1.0.34
-    "@typescript-eslint/eslint-plugin": 5.47.1
-    "@typescript-eslint/parser": 5.47.1
-    eslint: 8.23.0
-    eslint-config-prettier: 8.5.0
-    eslint-plugin-import: 2.26.0
-    husky: 8.0.1
-    jest: 28.1.0
-    lint-staged: 13.0.0
-    pactum: 3.1.9
-    passport: 0.6.0
-    passport-jwt: 4.0.0
-    passport-local: 1.0.0
-    prettier: 2.7.1
-    reflect-metadata: 0.1.13
-    release-it: 15.0.0
-    rimraf: 3.0.2
-    rxjs: 7.5.5
-    ts-jest: 28.0.4
-    typescript: 4.8.4
-  peerDependencies:
-    "@nestjs/common": ^6.0.0 || ^7.0.0 || ^8.0.0
-    passport: ^0.4.0 || ^0.5.0 || ^0.6.0
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-nest/file-fastify@workspace:^, @letscollab-nest/file-fastify@workspace:first_party/file-fastify":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-nest/file-fastify@workspace:first_party/file-fastify"
+  resolution: "@letscollab-nest/fastify-file@workspace:third_party/fastify-file"
   dependencies:
     "@fastify/multipart": ^7.3.0
     "@nestjs/common": ^9.0.11
@@ -4921,202 +4659,278 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-nest/helper@workspace:^, @letscollab-nest/helper@workspace:first_party/helper":
+"@letscollab-react/authz@workspace:^, @letscollab-react/authz@workspace:first_party/react-authz":
   version: 0.0.0-use.local
-  resolution: "@letscollab-nest/helper@workspace:first_party/helper"
+  resolution: "@letscollab-react/authz@workspace:first_party/react-authz"
   dependencies:
-    "@fastify/session": 9.0.0
-    "@letscollab-nest/accesscontrol": "workspace:^"
-    "@letscollab-nest/nacos": "workspace:^"
-    "@letscollab-nest/trait": "workspace:^"
-    "@liaoliaots/nestjs-redis": ^8.0.0
-    "@nestjs/cli": ^9.1.1
-    "@nestjs/common": ^9.0.11
-    "@nestjs/core": ^9.0.11
-    "@nestjs/platform-fastify": ^9.0.11
-    "@nestjs/schematics": ^9.0.2
-    "@nestjs/swagger": ^6.1.3
-    "@nestjs/testing": ^9.0.11
-    "@types/connect-redis": ^0.0.20
-    "@types/fs-extra": ^9.0.13
-    "@types/jest": 27.0.2
-    "@types/node": ^16.0.0
-    "@types/node-forge": ^1.0.2
-    "@types/supertest": ^2.0.11
-    "@types/validator": ^13.7.10
-    class-transformer: ^0.5.1
-    class-validator: ^0.13.2
-    connect-redis: ^6.1.3
-    cross-env: ^7.0.3
-    ioredis: ^5.0.4
-    jest: ^27.2.5
-    node-forge: ^1.3.1
-    reflect-metadata: ^0.1.13
-    rxjs: ^7.2.0
-    source-map-support: ^0.5.20
-    supertest: ^6.1.3
-    ts-jest: ^27.0.3
-    ts-loader: ^9.2.3
-    ts-node: ^10.0.0
-    tsconfig-paths: ^3.10.1
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-nest/mbdpay@workspace:first_party/mbdpay":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-nest/mbdpay@workspace:first_party/mbdpay"
-  dependencies:
-    "@nestjs/cli": ^9.1.1
-    "@nestjs/common": ^9.0.11
-    "@nestjs/core": ^9.0.11
-    "@nestjs/schematics": ^9.0.2
-    "@nestjs/testing": ^9.0.11
-    "@types/express": ^4.17.13
-    "@types/jest": 27.0.2
-    "@types/md5": ^2.3.2
-    "@types/node": ^16.0.0
-    "@types/supertest": ^2.0.11
-    got: 11.8.3
-    jest: ^27.2.5
-    md5: ^2.3.0
-    prettier: ^2.7.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.2.0
-    source-map-support: ^0.5.20
-    supertest: ^6.1.3
-    ts-jest: ^27.0.3
-    ts-loader: ^9.2.3
-    ts-node: ^10.0.0
-    tsconfig-paths: ^3.10.1
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-nest/nacos@workspace:^, @letscollab-nest/nacos@workspace:first_party/nacos":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-nest/nacos@workspace:first_party/nacos"
-  dependencies:
-    "@nestjs/cli": ^9.1.1
-    "@nestjs/common": ^9.0.11
-    "@nestjs/core": ^9.0.11
-    "@nestjs/schematics": ^9.0.2
-    "@nestjs/testing": ^9.0.11
-    "@types/express": ^4.17.13
-    "@types/jest": 27.0.2
-    "@types/node": ^16.0.0
-    "@types/supertest": ^2.0.11
-    jest: ^27.2.5
-    nacos: ^2.2.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.2.0
-    source-map-support: ^0.5.20
-    strip-json-comments: ^3.1.1
-    supertest: ^6.1.3
-    ts-jest: ^27.0.3
-    ts-loader: ^9.2.3
-    ts-node: ^10.0.0
-    tsconfig-paths: ^3.10.1
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-nest/octokit@workspace:first_party/octokit":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-nest/octokit@workspace:first_party/octokit"
-  dependencies:
-    "@nestjs/cli": ^9.1.1
-    "@nestjs/common": ^9.0.11
-    "@nestjs/core": ^9.0.11
-    "@nestjs/schematics": ^9.0.2
-    "@nestjs/testing": ^9.0.11
-    "@types/jest": 27.0.2
-    "@types/node": ^16.0.0
-    "@types/supertest": ^2.0.11
-    jest: ^27.2.5
-    octokit: ^1.7.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.2.0
-    source-map-support: ^0.5.20
-    supertest: ^6.1.3
-    ts-jest: ^27.0.3
-    ts-loader: ^9.2.3
-    ts-node: ^10.0.0
-    tsconfig-paths: ^3.10.1
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-nest/qiniu@workspace:first_party/qiniu":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-nest/qiniu@workspace:first_party/qiniu"
-  dependencies:
-    "@nestjs/cli": ^9.1.1
-    "@nestjs/common": ^9.0.11
-    "@nestjs/core": ^9.0.11
-    "@nestjs/schematics": ^9.0.2
-    "@nestjs/testing": ^9.0.11
-    "@types/jest": 27.0.2
-    "@types/node": ^16.0.0
-    "@types/supertest": ^2.0.11
-    jest: ^27.2.5
-    prettier: ^2.7.1
-    qiniu: ^7.4.0
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.2.0
-    source-map-support: ^0.5.20
-    supertest: ^6.1.3
-    ts-jest: ^27.0.3
-    ts-loader: ^9.2.3
-    ts-node: ^10.0.0
-    tsconfig-paths: ^3.10.1
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-nest/trait@workspace:^, @letscollab-nest/trait@workspace:first_party/trait":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-nest/trait@workspace:first_party/trait"
-  dependencies:
-    "@letscollab-nest/accesscontrol": "workspace:^"
-    "@nestjs/swagger": ^6.1.3
-    "@types/bcrypt": ^5
-    bcrypt: ^5.0.1
-    typeorm: ^0.3.7
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-pro/console@workspace:^, @letscollab-pro/console@workspace:pro/console":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-pro/console@workspace:pro/console"
-  dependencies:
+    "@types/node": ^16.11.25
     "@types/react": ^18.0.14
     "@types/react-dom": ^18.0.5
+    casbin.js: ^0.4.1
   peerDependencies:
-    "@letscollab-community/console-utils": "workspace:^"
-    "@letscollab-nest/trait": "workspace:^"
-    "@letscollab-react/table": "workspace:^"
-    "@mantine/core": ^5.5.4
-    "@mantine/hooks": ^5.5.4
-    "@mantine/notifications": ^5.5.4
-    "@tabler/icons": ^1.119.0
-    i18next: ^21.8.12
-    jotai: ^1.9.1
-    react: 18.2.0
-    react-dom: 18.2.0
-    react-i18next: ^11.17.4
-    react-router-dom: ^6.3.0
-    react-use: ^17.4.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.6.3
   languageName: unknown
   linkType: soft
 
-"@letscollab-pro/server@workspace:pro/server":
+"@letscollab/collab-console@workspace:apps/console":
   version: 0.0.0-use.local
-  resolution: "@letscollab-pro/server@workspace:pro/server"
+  resolution: "@letscollab/collab-console@workspace:apps/console"
+  dependencies:
+    "@babel/core": ^7.16.0
+    "@dnd-kit/core": ^6.0.6
+    "@dnd-kit/sortable": ^7.0.1
+    "@dnd-kit/utilities": ^3.2.1
+    "@letscollab-react/authz": "workspace:^"
+    "@letscollab/console-shared": "workspace:^"
+    "@letscollab/lets-console": "workspace:^"
+    "@letscollab/react-table": "workspace:^"
+    "@letscollab/trait": "workspace:^"
+    "@mantine/core": ^5.5.4
+    "@mantine/dates": ^5.10.3
+    "@mantine/dropzone": ^5.10.0
+    "@mantine/form": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
+    "@svgr/webpack": ^5.5.0
+    "@tabler/icons": ^1.119.0
+    "@tanstack/query-core": ^4.20.4
+    "@tanstack/react-query": ^4.20.4
+    "@tanstack/react-query-devtools": ^4.20.4
+    "@tanstack/react-table": ^8.7.9
+    "@types/lodash.debounce": ^4
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/react-grid-layout": ^1
+    "@types/webpack-bundle-analyzer": ^4
+    axios: ^0.27.2
+    axios-mock-adapter: ^1.21.1
+    babel-jest: ^27.4.2
+    babel-loader: ^8.2.3
+    babel-plugin-named-asset-import: ^0.3.8
+    babel-preset-react-app: ^10.0.1
+    bfj: ^7.0.2
+    browserslist: ^4.18.1
+    camelcase: ^6.2.1
+    case-sensitive-paths-webpack-plugin: ^2.4.0
+    clsx: ^1.2.1
+    cra-template-typescript: 1.2.0
+    css-loader: ^6.5.1
+    css-minimizer-webpack-plugin: ^3.2.0
+    dotenv: ^10.0.0
+    dotenv-expand: ^5.1.0
+    eslint: ^8.23.0
+    eslint-config-react-app: ^7.0.1
+    eslint-plugin-unused-imports: ^2.0.0
+    eslint-webpack-plugin: ^3.2.0
+    file-loader: ^6.2.0
+    fs-extra: ^10.0.0
+    html-webpack-plugin: ^5.5.0
+    i18next: ^21.8.12
+    i18next-browser-languagedetector: ^6.1.4
+    identity-obj-proxy: ^3.0.0
+    jest: ^27.4.3
+    jest-resolve: ^27.4.2
+    jest-watch-typeahead: ^1.0.0
+    jotai: ^1.12.0
+    jotai-tanstack-query: ^0.4.0
+    less: ^4.1.3
+    less-loader: ^11.0.0
+    localforage: ^1.10.0
+    lodash.debounce: ^4.0.8
+    mini-css-extract-plugin: ^2.4.5
+    node-polyfill-webpack-plugin: ^2.0.0
+    postcss: ^8.4.18
+    postcss-flexbugs-fixes: ^5.0.2
+    postcss-loader: ^6.2.1
+    postcss-normalize: ^10.0.1
+    postcss-preset-env: ^7.0.1
+    prompts: ^2.4.2
+    react: 18.2.0
+    react-app-polyfill: ^3.0.0
+    react-confetti: ^6.1.0
+    react-currency-format: ^1.1.0
+    react-dev-utils: ^12.0.1
+    react-dom: 18.2.0
+    react-error-boundary: ^3.1.4
+    react-grid-layout: ^1.3.4
+    react-i18next: ^11.17.4
+    react-refresh: ^0.14.0
+    react-router-dom: ^6.6.0
+    react-use: ^17.4.0
+    resolve: ^1.20.0
+    resolve-url-loader: ^4.0.0
+    sass-loader: ^12.3.0
+    semver: ^7.3.5
+    source-map-explorer: ^2.5.3
+    source-map-loader: ^3.0.0
+    stream-browserify: ^3.0.0
+    style-loader: ^3.3.1
+    terser-webpack-plugin: ^5.2.5
+    web-vitals: ^2.1.4
+    webpack: ^5.64.4
+    webpack-bundle-analyzer: ^4.5.0
+    webpack-dev-server: ^4.6.0
+    webpack-manifest-plugin: ^4.0.2
+    workbox-webpack-plugin: ^6.4.1
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/console-shared@workspace:^, @letscollab/console-shared@workspace:first_party/console-shared":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/console-shared@workspace:first_party/console-shared"
+  dependencies:
+    "@letscollab/trait": "workspace:^"
+    "@mantine/form": ^5.5.4
+    "@types/node": ^16.11.25
+    "@types/node-forge": ^1.0.2
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/stegcloak": ^1.0.0
+    nanoid: ^3.3.2
+    node-forge: ^1.3.1
+    react-easy-crop: ^4.6.3
+    stegcloak: ^1.1.1
+  peerDependencies:
+    "@mantine/core": ^4.2.12
+    "@mantine/hooks": ^4.2.12
+    "@mantine/notifications": ^4.2.12
+    "@tabler/icons": ^1.92.0
+    "@tanstack/query-core": ^4.20.4
+    "@tanstack/react-query": ^4.20.4
+    jotai: ^1.7.3
+    jotai-tanstack-query: ^0.4.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-router-dom: ^6.3.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/dash@workspace:^, @letscollab/dash@workspace:first_party/dash":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/dash@workspace:first_party/dash"
+  dependencies:
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    cross-env: ^7.0.3
+    jest: ^27.2.5
+    ts-jest: ^27.0.3
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.10.1
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/lets-console@workspace:^, @letscollab/lets-console@workspace:lets/console":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/lets-console@workspace:lets/console"
+  dependencies:
+    "@babel/core": ^7.16.0
+    "@dnd-kit/core": ^6.0.6
+    "@dnd-kit/sortable": ^7.0.1
+    "@dnd-kit/utilities": ^3.2.1
+    "@letscollab-react/authz": "workspace:^"
+    "@letscollab/console-shared": "workspace:^"
+    "@letscollab/lets-console": "workspace:^"
+    "@letscollab/react-table": "workspace:^"
+    "@letscollab/trait": "workspace:^"
+    "@mantine/core": ^5.5.4
+    "@mantine/dates": ^5.10.3
+    "@mantine/dropzone": ^5.10.0
+    "@mantine/form": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
+    "@svgr/webpack": ^5.5.0
+    "@tabler/icons": ^1.119.0
+    "@tanstack/query-core": ^4.20.4
+    "@tanstack/react-query": ^4.20.4
+    "@tanstack/react-query-devtools": ^4.20.4
+    "@tanstack/react-table": ^8.7.9
+    "@types/lodash.debounce": ^4
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/react-grid-layout": ^1
+    "@types/webpack-bundle-analyzer": ^4
+    axios: ^0.27.2
+    axios-mock-adapter: ^1.21.1
+    babel-jest: ^27.4.2
+    babel-loader: ^8.2.3
+    babel-plugin-named-asset-import: ^0.3.8
+    babel-preset-react-app: ^10.0.1
+    bfj: ^7.0.2
+    browserslist: ^4.18.1
+    camelcase: ^6.2.1
+    case-sensitive-paths-webpack-plugin: ^2.4.0
+    clsx: ^1.2.1
+    cra-template-typescript: 1.2.0
+    css-loader: ^6.5.1
+    css-minimizer-webpack-plugin: ^3.2.0
+    dotenv: ^10.0.0
+    dotenv-expand: ^5.1.0
+    eslint: ^8.23.0
+    eslint-config-react-app: ^7.0.1
+    eslint-plugin-unused-imports: ^2.0.0
+    eslint-webpack-plugin: ^3.2.0
+    file-loader: ^6.2.0
+    fs-extra: ^10.0.0
+    html-webpack-plugin: ^5.5.0
+    i18next: ^21.8.12
+    i18next-browser-languagedetector: ^6.1.4
+    identity-obj-proxy: ^3.0.0
+    jest: ^27.4.3
+    jest-resolve: ^27.4.2
+    jest-watch-typeahead: ^1.0.0
+    jotai: ^1.12.0
+    jotai-tanstack-query: ^0.4.0
+    less: ^4.1.3
+    less-loader: ^11.0.0
+    localforage: ^1.10.0
+    lodash.debounce: ^4.0.8
+    mini-css-extract-plugin: ^2.4.5
+    node-polyfill-webpack-plugin: ^2.0.0
+    postcss: ^8.4.18
+    postcss-flexbugs-fixes: ^5.0.2
+    postcss-loader: ^6.2.1
+    postcss-normalize: ^10.0.1
+    postcss-preset-env: ^7.0.1
+    prompts: ^2.4.2
+    react: 18.2.0
+    react-app-polyfill: ^3.0.0
+    react-confetti: ^6.1.0
+    react-currency-format: ^1.1.0
+    react-dev-utils: ^12.0.1
+    react-dom: 18.2.0
+    react-error-boundary: ^3.1.4
+    react-grid-layout: ^1.3.4
+    react-i18next: ^11.17.4
+    react-refresh: ^0.14.0
+    react-router-dom: ^6.6.0
+    react-use: ^17.4.0
+    resolve: ^1.20.0
+    resolve-url-loader: ^4.0.0
+    sass-loader: ^12.3.0
+    semver: ^7.3.5
+    source-map-explorer: ^2.5.3
+    source-map-loader: ^3.0.0
+    stream-browserify: ^3.0.0
+    style-loader: ^3.3.1
+    terser-webpack-plugin: ^5.2.5
+    web-vitals: ^2.1.4
+    webpack: ^5.64.4
+    webpack-bundle-analyzer: ^4.5.0
+    webpack-dev-server: ^4.6.0
+    webpack-manifest-plugin: ^4.0.2
+    workbox-webpack-plugin: ^6.4.1
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/lets-server@workspace:lets/server":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/lets-server@workspace:lets/server"
   dependencies:
     "@aws-sdk/s3-request-presigner": ^3.245.0
     "@fastify/cookie": 8.1.0
@@ -5127,10 +4941,10 @@ __metadata:
     "@fastify/swagger": ^7.5.0
     "@letscollab-nest/accesscontrol": "workspace:^"
     "@letscollab-nest/aws-s3": "workspace:^"
-    "@letscollab-nest/fastify-passport": "workspace:^"
-    "@letscollab-nest/file-fastify": "workspace:^"
-    "@letscollab-nest/helper": "workspace:^"
-    "@letscollab-nest/nacos": "workspace:^"
+    "@letscollab-nest/fastify-file": "workspace:^"
+    "@letscollab/nest-nacos": "workspace:^"
+    "@letscollab/nest-passport-fastify": "workspace:^"
+    "@letscollab/server-shared": "workspace:^"
     "@liaoliaots/nestjs-redis": ^8.0.0
     "@nestjs-modules/mailer": ^1.7.1
     "@nestjs/cli": ^9.1.1
@@ -5189,62 +5003,109 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab-react/authz@workspace:^, @letscollab-react/authz@workspace:apps/first_party/react-authz":
+"@letscollab/nest-nacos@workspace:^, @letscollab/nest-nacos@workspace:first_party/nacos":
   version: 0.0.0-use.local
-  resolution: "@letscollab-react/authz@workspace:apps/first_party/react-authz"
+  resolution: "@letscollab/nest-nacos@workspace:first_party/nacos"
   dependencies:
-    "@types/node": ^16.11.25
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    casbin.js: ^0.4.1
-  peerDependencies:
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab-react/table@workspace:^, @letscollab-react/table@workspace:apps/first_party/react-table":
-  version: 0.0.0-use.local
-  resolution: "@letscollab-react/table@workspace:apps/first_party/react-table"
-  dependencies:
-    "@letscollab/dash": "workspace:^"
-    "@types/lodash.debounce": ^4
-    "@types/node": ^16.11.25
-    "@types/react": ^18.0.14
-    "@types/react-dom": ^18.0.5
-    lodash.debounce: ^4.0.8
-  peerDependencies:
-    "@mantine/core": ^5.5.4
-    "@mantine/dates": ^5.10.3
-    "@mantine/hooks": ^5.5.4
-    "@tabler/icons": ^1.119.0
-    "@tanstack/react-table": ^8.7.9
-    dayjs: "*"
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.6.3
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/dash@workspace:^, @letscollab/dash@workspace:first_party/dash":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/dash@workspace:first_party/dash"
-  dependencies:
+    "@nestjs/cli": ^9.1.1
+    "@nestjs/common": ^9.0.11
+    "@nestjs/core": ^9.0.11
+    "@nestjs/schematics": ^9.0.2
+    "@nestjs/testing": ^9.0.11
+    "@types/express": ^4.17.13
     "@types/jest": 27.0.2
     "@types/node": ^16.0.0
-    cross-env: ^7.0.3
+    "@types/supertest": ^2.0.11
     jest: ^27.2.5
+    nacos: ^2.2.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.2.0
+    source-map-support: ^0.5.20
+    strip-json-comments: ^3.1.1
+    supertest: ^6.1.3
     ts-jest: ^27.0.3
+    ts-loader: ^9.2.3
     ts-node: ^10.0.0
     tsconfig-paths: ^3.10.1
     typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
-"@letscollab/nextra-theme-docs@workspace:^, @letscollab/nextra-theme-docs@workspace:apps/first_party/nextra-theme-docs":
+"@letscollab/nest-octokit@workspace:first_party/octokit":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nextra-theme-docs@workspace:apps/first_party/nextra-theme-docs"
+  resolution: "@letscollab/nest-octokit@workspace:first_party/octokit"
+  dependencies:
+    "@nestjs/cli": ^9.1.1
+    "@nestjs/common": ^9.0.11
+    "@nestjs/core": ^9.0.11
+    "@nestjs/schematics": ^9.0.2
+    "@nestjs/testing": ^9.0.11
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    "@types/supertest": ^2.0.11
+    jest: ^27.2.5
+    octokit: ^1.7.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.2.0
+    source-map-support: ^0.5.20
+    supertest: ^6.1.3
+    ts-jest: ^27.0.3
+    ts-loader: ^9.2.3
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.10.1
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/nest-passport-fastify@workspace:^, @letscollab/nest-passport-fastify@workspace:first_party/passport":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/nest-passport-fastify@workspace:first_party/passport"
+  dependencies:
+    "@commitlint/cli": 17.0.3
+    "@commitlint/config-angular": 17.0.0
+    "@fastify/passport": 2.2.0
+    "@letscollab/nest-nacos": "workspace:^"
+    "@nestjs/common": 9.0.11
+    "@nestjs/core": 9.0.11
+    "@nestjs/jwt": 9.0.0
+    "@nestjs/platform-express": 9.0.11
+    "@nestjs/platform-fastify": 9.0.11
+    "@nestjs/testing": 9.0.11
+    "@types/jest": 28.1.1
+    "@types/node": 17.0.17
+    "@types/passport": 1.0.8
+    "@types/passport-jwt": 3.0.6
+    "@types/passport-local": 1.0.34
+    "@typescript-eslint/eslint-plugin": 5.47.1
+    "@typescript-eslint/parser": 5.47.1
+    eslint: 8.23.0
+    eslint-config-prettier: 8.5.0
+    eslint-plugin-import: 2.26.0
+    husky: 8.0.1
+    jest: 28.1.0
+    lint-staged: 13.0.0
+    pactum: 3.1.9
+    passport: 0.6.0
+    passport-jwt: 4.0.0
+    passport-local: 1.0.0
+    prettier: 2.7.1
+    reflect-metadata: 0.1.13
+    release-it: 15.0.0
+    rimraf: 3.0.2
+    rxjs: 7.5.5
+    ts-jest: 28.0.4
+    typescript: 4.8.4
+  peerDependencies:
+    "@nestjs/common": ^6.0.0 || ^7.0.0 || ^8.0.0
+    passport: ^0.4.0 || ^0.5.0 || ^0.6.0
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/nextra-theme-docs@workspace:^, @letscollab/nextra-theme-docs@workspace:third_party/nextra-theme-docs":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/nextra-theme-docs@workspace:third_party/nextra-theme-docs"
   dependencies:
     "@headlessui/react": ^1.6.1
     "@mdx-js/react": ^2.1.0
@@ -5274,6 +5135,158 @@ __metadata:
     next: ">=9.5.3"
     react: ">=16.13.1"
     react-dom: ">=16.13.1"
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/react-table@workspace:^, @letscollab/react-table@workspace:first_party/react-table":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/react-table@workspace:first_party/react-table"
+  dependencies:
+    "@letscollab/dash": "workspace:^"
+    "@types/lodash.debounce": ^4
+    "@types/node": ^16.11.25
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    lodash.debounce: ^4.0.8
+  peerDependencies:
+    "@mantine/core": ^5.5.4
+    "@mantine/dates": ^5.10.3
+    "@mantine/hooks": ^5.5.4
+    "@tabler/icons": ^1.119.0
+    "@tanstack/react-table": ^8.7.9
+    dayjs: "*"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/server-shared@workspace:^, @letscollab/server-shared@workspace:first_party/server-shared":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/server-shared@workspace:first_party/server-shared"
+  dependencies:
+    "@fastify/session": 9.0.0
+    "@letscollab-nest/accesscontrol": "workspace:^"
+    "@letscollab/nest-nacos": "workspace:^"
+    "@letscollab/trait": "workspace:^"
+    "@liaoliaots/nestjs-redis": ^8.0.0
+    "@nestjs/cli": ^9.1.1
+    "@nestjs/common": ^9.0.11
+    "@nestjs/core": ^9.0.11
+    "@nestjs/platform-fastify": ^9.0.11
+    "@nestjs/schematics": ^9.0.2
+    "@nestjs/swagger": ^6.1.3
+    "@nestjs/testing": ^9.0.11
+    "@types/connect-redis": ^0.0.20
+    "@types/fs-extra": ^9.0.13
+    "@types/jest": 27.0.2
+    "@types/node": ^16.0.0
+    "@types/node-forge": ^1.0.2
+    "@types/supertest": ^2.0.11
+    "@types/validator": ^13.7.10
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    connect-redis: ^6.1.3
+    cross-env: ^7.0.3
+    ioredis: ^5.0.4
+    jest: ^27.2.5
+    node-forge: ^1.3.1
+    reflect-metadata: ^0.1.13
+    rxjs: ^7.2.0
+    source-map-support: ^0.5.20
+    supertest: ^6.1.3
+    ts-jest: ^27.0.3
+    ts-loader: ^9.2.3
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.10.1
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/trait@workspace:^, @letscollab/trait@workspace:first_party/trait":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/trait@workspace:first_party/trait"
+  dependencies:
+    "@letscollab-nest/accesscontrol": "workspace:^"
+    "@nestjs/swagger": ^6.1.3
+    "@types/bcrypt": ^5
+    bcrypt: ^5.0.1
+    typeorm: ^0.3.7
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/ui-shared@workspace:first_party/ui-shared":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/ui-shared@workspace:first_party/ui-shared"
+  dependencies:
+    "@letscollab/trait": "workspace:^"
+    "@tanstack/query-core": ^4.1.3
+    "@types/node": ^16.11.25
+    "@types/node-forge": ^1.0.2
+    "@types/react": ^18.0.14
+    "@types/react-dom": ^18.0.5
+    "@types/stegcloak": ^1.0.0
+    jotai-tanstack-query: ^0.4.0
+    nanoid: ^3.3.2
+    node-forge: ^1.3.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stegcloak: ^1.1.1
+  peerDependencies:
+    "@mantine/core": ^4.2.12
+    "@mantine/hooks": ^4.2.12
+    "@mantine/notifications": ^4.2.12
+    jotai: ^1.7.3
+    react-router-dom: ^6.3.0
+    typescript: ^4.6.3
+  languageName: unknown
+  linkType: soft
+
+"@letscollab/www@workspace:apps/www":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/www@workspace:apps/www"
+  dependencies:
+    "@emotion/css": ^11.9.0
+    "@emotion/react": ^11.10.4
+    "@emotion/server": ^11.10.0
+    "@emotion/styled": ^11.10.4
+    "@letscollab/nextra-theme-docs": "workspace:^"
+    "@letscollab/trait": "workspace:^"
+    "@mantine/core": ^5.5.4
+    "@mantine/form": ^5.5.4
+    "@mantine/hooks": ^5.5.4
+    "@mantine/next": ^5.5.4
+    "@mantine/notifications": ^5.5.4
+    "@mantine/ssr": ^5.5.4
+    "@mdx-js/loader": ^2.1.1
+    "@mdx-js/react": ^2.1.1
+    "@next/mdx": ^12.1.6
+    "@tabler/icons": ^1.119.0
+    "@types/nprogress": ^0.2.0
+    "@types/prismjs": ^1
+    "@types/react": ^18.0.14
+    "@types/react-dom": 18.0.5
+    axios: ^0.27.2
+    cross-env: ^7.0.3
+    eslint: 8.23.0
+    eslint-config-next: 12.2.5
+    localforage: ^1.10.0
+    lottie-react: ^2.2.1
+    next: 12.2.0
+    next-pwa: ^5.5.4
+    next-sitemap: ^3.0.5
+    nextra: 2.0.0-alpha.56
+    nprogress: ^0.2.0
+    prism-react-renderer: ^1.3.3
+    prismjs: ^1.28.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-query: ^3.39.1
+    react-scroll-motion: ^0.3.0
+    react-timer-hook: ^3.0.5
+    react-use: ^17.4.0
+    sass: ^1.49.9
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -7159,7 +7172,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sindresorhus/is@npm:^4.0.0, @sindresorhus/is@npm:^4.6.0":
+"@sindresorhus/is@npm:^4.6.0":
   version: 4.6.0
   resolution: "@sindresorhus/is@npm:4.6.0"
   checksum: 83839f13da2c29d55c97abc3bc2c55b250d33a0447554997a85c539e058e57b8da092da396e252b11ec24a0279a0bed1f537fa26302209327060643e327f81d2
@@ -7358,15 +7371,6 @@ __metadata:
   dependencies:
     defer-to-connect: ^1.0.1
   checksum: 4d9158061c5f397c57b4988cde33a163244e4f02df16364f103971957a32886beb104d6180902cbe8b38cb940e234d9f98a4e486200deca621923f62f50a06fe
-  languageName: node
-  linkType: hard
-
-"@szmarczak/http-timer@npm:^4.0.5":
-  version: 4.0.6
-  resolution: "@szmarczak/http-timer@npm:4.0.6"
-  dependencies:
-    defer-to-connect: ^2.0.0
-  checksum: c29df3bcec6fc3bdec2b17981d89d9c9fc9bd7d0c9bcfe92821dc533f4440bc890ccde79971838b4ceed1921d456973c4180d7175ee1d0023ad0562240a58d95
   languageName: node
   linkType: hard
 
@@ -7631,7 +7635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/cacheable-request@npm:^6.0.1, @types/cacheable-request@npm:^6.0.2":
+"@types/cacheable-request@npm:^6.0.2":
   version: 6.0.2
   resolution: "@types/cacheable-request@npm:6.0.2"
   dependencies:
@@ -7976,13 +7980,6 @@ __metadata:
   version: 5.1.1
   resolution: "@types/lru-cache@npm:5.1.1"
   checksum: e1d6c0085f61b16ec5b3073ec76ad1be4844ea036561c3f145fc19f71f084b58a6eb600b14128aa95809d057d28f1d147c910186ae51219f58366ffd2ff2e118
-  languageName: node
-  linkType: hard
-
-"@types/md5@npm:^2.3.2":
-  version: 2.3.2
-  resolution: "@types/md5@npm:2.3.2"
-  checksum: ce59779c5aa9bcafe6e089f7a0be2f25fb4661d437809dd7e895e13e9369855aeee8521a0a954bb38468cd8ed2d7c84d5dbb3ba37544f5a11c8a199e5a8561b6
   languageName: node
   linkType: hard
 
@@ -9023,7 +9020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agentkeepalive@npm:^4.0.2, agentkeepalive@npm:^4.2.1":
+"agentkeepalive@npm:^4.2.1":
   version: 4.2.1
   resolution: "agentkeepalive@npm:4.2.1"
   dependencies:
@@ -9999,13 +9996,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"before@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "before@npm:0.0.1"
-  checksum: 935dfff14587996ff965037cec25d5b21759119c096a48fbbb12a9925163bf8fb33a61a5c5bd9bf3a3c51b49862890c51c355c210f2db5e0ed99d7d3c59b3726
-  languageName: node
-  linkType: hard
-
 "bfj@npm:^7.0.2":
   version: 7.0.2
   resolution: "bfj@npm:7.0.2"
@@ -10058,15 +10048,6 @@ __metadata:
     inherits: ^2.0.4
     readable-stream: ^3.4.0
   checksum: a7a438ee0bc540e80b8eb68cc1ad759a9c87df06874a99411d701d01cc0b36f30cd20050512ac3e77090138890960e07bfee724f3ee6619bb39a569f5cc3b1bc
-  languageName: node
-  linkType: hard
-
-"block-stream2@npm:^2.0.0":
-  version: 2.1.0
-  resolution: "block-stream2@npm:2.1.0"
-  dependencies:
-    readable-stream: ^3.4.0
-  checksum: c6484ea7be7235a89f3cd810ec8eaf52afe1d04acebba8ce1fd243ed07f4df22ef1407b8b0565aad2b22dc3b368cba3c87aabaff29492ac251f0823bc1172760
   languageName: node
   linkType: hard
 
@@ -10492,13 +10473,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacheable-lookup@npm:^5.0.3":
-  version: 5.0.4
-  resolution: "cacheable-lookup@npm:5.0.4"
-  checksum: 763e02cf9196bc9afccacd8c418d942fc2677f22261969a4c2c2e760fa44a2351a81557bd908291c3921fe9beb10b976ba8fa50c5ca837c5a0dd945f16468f2d
-  languageName: node
-  linkType: hard
-
 "cacheable-lookup@npm:^6.0.4":
   version: 6.1.0
   resolution: "cacheable-lookup@npm:6.1.0"
@@ -10801,13 +10775,6 @@ __metadata:
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
   checksum: 6fd5da1f5d18ff5712c1e0aed41da200d7c51c28f11b36ee3c7b483f3696dabc08927fc6b227735eb8f0e1215c9a8abd8154637f3eff8cada5959df7f58b024d
-  languageName: node
-  linkType: hard
-
-"charenc@npm:0.0.2":
-  version: 0.0.2
-  resolution: "charenc@npm:0.0.2"
-  checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
   languageName: node
   linkType: hard
 
@@ -11985,15 +11952,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crc32@npm:^0.2.2":
-  version: 0.2.2
-  resolution: "crc32@npm:0.2.2"
-  bin:
-    crc32: ./bin/runner.js
-  checksum: e4301b6bfbc081dc44a02246657581a8df27c42528bfb4879d0c93afca68040ffd4d87eb8b483df04ee8dd4ad6538844512169156be69b1a4cec23c48b81881d
-  languageName: node
-  linkType: hard
-
 "create-ecdh@npm:^4.0.0":
   version: 4.0.4
   resolution: "create-ecdh@npm:4.0.4"
@@ -12082,13 +12040,6 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: 671cc7c7288c3a8406f3c69a3ae2fc85555c04169e9d611def9a675635472614f1c0ed0ef80955d5b6d4e724f6ced67f0ad1bb006c2ea643488fcfef994d7f52
-  languageName: node
-  linkType: hard
-
-"crypt@npm:0.0.2":
-  version: 0.0.2
-  resolution: "crypt@npm:0.0.2"
-  checksum: baf4c7bbe05df656ec230018af8cf7dbe8c14b36b98726939cef008d473f6fe7a4fad906cfea4062c93af516f1550a3f43ceb4d6615329612c6511378ed9fe34
   languageName: node
   linkType: hard
 
@@ -12670,7 +12621,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"defer-to-connect@npm:^2.0.0, defer-to-connect@npm:^2.0.1":
+"defer-to-connect@npm:^2.0.1":
   version: 2.0.1
   resolution: "defer-to-connect@npm:2.0.1"
   checksum: 8a9b50d2f25446c0bfefb55a48e90afd58f85b21bcf78e9207cd7b804354f6409032a1705c2491686e202e64fc05f147aa5aa45f9aa82627563f045937f5791b
@@ -13367,7 +13318,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"encodeurl@npm:^1.0.1, encodeurl@npm:~1.0.2":
+"encodeurl@npm:~1.0.2":
   version: 1.0.2
   resolution: "encodeurl@npm:1.0.2"
   checksum: e50e3d508cdd9c4565ba72d2012e65038e5d71bdc9198cb125beb6237b5b1ade6c0d343998da9e170fb2eae52c1bed37d4d6d98a46ea423a0cddbed5ac3f780c
@@ -15883,25 +15834,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"got@npm:11.8.3":
-  version: 11.8.3
-  resolution: "got@npm:11.8.3"
-  dependencies:
-    "@sindresorhus/is": ^4.0.0
-    "@szmarczak/http-timer": ^4.0.5
-    "@types/cacheable-request": ^6.0.1
-    "@types/responselike": ^1.0.0
-    cacheable-lookup: ^5.0.3
-    cacheable-request: ^7.0.2
-    decompress-response: ^6.0.0
-    http2-wrapper: ^1.0.0-beta.5.2
-    lowercase-keys: ^2.0.0
-    p-cancelable: ^2.0.0
-    responselike: ^2.0.0
-  checksum: 3b6db107d9765470b18e4cb22f7c7400381be7425b9be5823f0168d6c21b5d6b28b023c0b3ee208f73f6638c3ce251948ca9b54a1e8f936d3691139ac202d01b
-  languageName: node
-  linkType: hard
-
 "got@npm:12.0.4":
   version: 12.0.4
   resolution: "got@npm:12.0.4"
@@ -16523,16 +16455,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http2-wrapper@npm:^1.0.0-beta.5.2":
-  version: 1.0.3
-  resolution: "http2-wrapper@npm:1.0.3"
-  dependencies:
-    quick-lru: ^5.1.1
-    resolve-alpn: ^1.0.0
-  checksum: 74160b862ec699e3f859739101ff592d52ce1cb207b7950295bf7962e4aa1597ef709b4292c673bece9c9b300efad0559fc86c71b1409c7a1e02b7229456003e
-  languageName: node
-  linkType: hard
-
 "http2-wrapper@npm:^2.1.10":
   version: 2.1.11
   resolution: "http2-wrapper@npm:2.1.11"
@@ -17048,13 +16970,6 @@ __metadata:
   version: 2.0.5
   resolution: "is-buffer@npm:2.0.5"
   checksum: 764c9ad8b523a9f5a32af29bdf772b08eb48c04d2ad0a7240916ac2688c983bf5f8504bf25b35e66240edeb9d9085461f9b5dae1f3d2861c6b06a65fe983de42
-  languageName: node
-  linkType: hard
-
-"is-buffer@npm:~1.1.6":
-  version: 1.1.6
-  resolution: "is-buffer@npm:1.1.6"
-  checksum: 4a186d995d8bbf9153b4bd9ff9fd04ae75068fe695d29025d25e592d9488911eeece84eefbd8fa41b8ddcc0711058a71d4c466dcf6f1f6e1d83830052d8ca707
   languageName: node
   linkType: hard
 
@@ -20007,17 +19922,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"md5@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "md5@npm:2.3.0"
-  dependencies:
-    charenc: 0.0.2
-    crypt: 0.0.2
-    is-buffer: ~1.1.6
-  checksum: a63cacf4018dc9dee08c36e6f924a64ced735b37826116c905717c41cebeb41a522f7a526ba6ad578f9c80f02cb365033ccd67fe186ffbcc1a1faeb75daa9b6e
-  languageName: node
-  linkType: hard
-
 "mdast-util-definitions@npm:^5.0.0":
   version: 5.1.1
   resolution: "mdast-util-definitions@npm:5.1.1"
@@ -20820,7 +20724,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:2.6.0, mime@npm:^2.4.4, mime@npm:^2.4.6, mime@npm:^2.5.0, mime@npm:^2.5.2":
+"mime@npm:2.6.0, mime@npm:^2.4.6, mime@npm:^2.5.0, mime@npm:^2.5.2":
   version: 2.6.0
   resolution: "mime@npm:2.6.0"
   bin:
@@ -21439,13 +21343,6 @@ __metadata:
   dependencies:
     obliterator: ^2.0.1
   checksum: aec354c69dcda2fcd01faef279fce7df48c7b364d5ab7b72bf0059db2fb68bfd276255993fa5d29a3c3809ecdcf763555cffd130e135bf9619a0b59a53319e11
-  languageName: node
-  linkType: hard
-
-"mockdate@npm:^3.0.5":
-  version: 3.0.5
-  resolution: "mockdate@npm:3.0.5"
-  checksum: 72b66786d9e072379693f80bf9fb82eb5153c9741030a4294184e3ccaf952d0713fae8966f77780580cf902f8ec7ccc95577b0ad47980d255e2ffb71fc7ca49c
   languageName: node
   linkType: hard
 
@@ -22657,13 +22554,6 @@ __metadata:
   version: 1.1.0
   resolution: "p-cancelable@npm:1.1.0"
   checksum: 2db3814fef6d9025787f30afaee4496a8857a28be3c5706432cbad76c688a6db1874308f48e364a42f5317f5e41e8e7b4f2ff5c8ff2256dbb6264bc361704ece
-  languageName: node
-  linkType: hard
-
-"p-cancelable@npm:^2.0.0":
-  version: 2.1.1
-  resolution: "p-cancelable@npm:2.1.1"
-  checksum: 3dba12b4fb4a1e3e34524535c7858fc82381bbbd0f247cc32dedc4018592a3950ce66b106d0880b4ec4c2d8d6576f98ca885dc1d7d0f274d1370be20e9523ddf
   languageName: node
   linkType: hard
 
@@ -24903,25 +24793,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qiniu@npm:^7.4.0":
-  version: 7.8.0
-  resolution: "qiniu@npm:7.8.0"
-  dependencies:
-    agentkeepalive: ^4.0.2
-    before: ^0.0.1
-    block-stream2: ^2.0.0
-    crc32: ^0.2.2
-    destroy: ^1.0.4
-    encodeurl: ^1.0.1
-    formstream: ^1.1.0
-    mime: ^2.4.4
-    mockdate: ^3.0.5
-    tunnel-agent: ^0.6.0
-    urllib: ^2.34.1
-  checksum: f13e1321971d0c8bfc1198450a4c1d37cbd70be0f73ed8ec36145de4c38f5cf10af2521bd345e61b970ef633545590fee2bf51ec69b752a72bad9b7dd70f742b
-  languageName: node
-  linkType: hard
-
 "qrcode@npm:^1.5.1":
   version: 1.5.1
   resolution: "qrcode@npm:1.5.1"
@@ -25911,7 +25782,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve-alpn@npm:^1.0.0, resolve-alpn@npm:^1.2.0":
+"resolve-alpn@npm:^1.2.0":
   version: 1.2.1
   resolution: "resolve-alpn@npm:1.2.1"
   checksum: f558071fcb2c60b04054c99aebd572a2af97ef64128d59bef7ab73bd50d896a222a056de40ffc545b633d99b304c259ea9d0c06830d5c867c34f0bfa60b8eae0
@@ -28619,15 +28490,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tunnel-agent@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "tunnel-agent@npm:0.6.0"
-  dependencies:
-    safe-buffer: ^5.0.1
-  checksum: 05f6510358f8afc62a057b8b692f05d70c1782b70db86d6a1e0d5e28a32389e52fa6e7707b6c5ecccacc031462e4bc35af85ecfe4bbc341767917b7cf6965711
-  languageName: node
-  linkType: hard
-
 "tween-functions@npm:^1.2.0":
   version: 1.2.0
   resolution: "tween-functions@npm:1.2.0"
@@ -29238,7 +29100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"urllib@npm:^2.29.1, urllib@npm:^2.33.3, urllib@npm:^2.34.1":
+"urllib@npm:^2.29.1, urllib@npm:^2.33.3":
   version: 2.40.0
   resolution: "urllib@npm:2.40.0"
   dependencies:

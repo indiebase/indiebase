@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/fastify-passport",
+  "name": "@letscollab/nest-passport-fastify",
   "version": "8.2.1",
   "description": "Nest - modern, fast, powerful node.js web framework (@passport)",
   "author": "Kamil Mysliwiec",
@@ -71,6 +71,6 @@
   },
   "dependencies": {
     "@fastify/passport": "2.2.0",
-    "@letscollab-nest/nacos": "workspace:^"
+    "@letscollab/nest-nacos": "workspace:^"
   }
 }

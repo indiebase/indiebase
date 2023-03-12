@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/trait",
+  "name": "@letscollab/trait",
   "version": "0.0.1",
   "main": "./src/index.ts",
   "description": "The common interface for letscollab both font-end and back-end",
