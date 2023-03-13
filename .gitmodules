@@ -3,7 +3,7 @@
 	url = https://github.com/deskbtm-letscollab/self_hosting.git
 [submodule "lets"]
 	path = lets
-	url = https://github.com/deskbtm-letscollab/lets.git
+	url = https://github.com/deskbtm-letscollab/lets
 [submodule "apps/pitm"]
 	path = apps/pitm
 	url = https://github.com/deskbtm-letscollab/PITM.git
