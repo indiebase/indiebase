@@ -3,7 +3,7 @@ import {
   ACCESS_META,
   CasbinService,
   IAccessOptions,
-} from '@letscollab-nest/accesscontrol';
+} from '@letscollab-nest/casbin';
 import {
   CanActivate,
   ExecutionContext,

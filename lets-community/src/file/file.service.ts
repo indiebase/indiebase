@@ -4,7 +4,7 @@ import {
   InjectS3,
   PutObjectCommand,
   S3,
-} from '@letscollab-nest/aws-s3';
+} from '@letscollab-nest/s3';
 import { Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import * as path from 'path';

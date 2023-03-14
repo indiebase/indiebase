@@ -13,6 +13,7 @@ import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';
 import { useContainer } from 'class-validator';
 import fastifyMultipart from '@fastify/multipart';
+import { i18nValidationErrorFactory } from 'nestjs-i18n';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -38,7 +39,7 @@ async function bootstrap() {
         enableDebugMessages: isDevelopment,
         whitelist: true,
         forbidNonWhitelisted: true,
-        // exceptionFactory: i18nValidationErrorFactory,
+        exceptionFactory: i18nValidationErrorFactory,
       }),
     );
 
@@ -70,9 +71,11 @@ async function bootstrap() {
     await setupApiDoc(app);
 
     app.register(fastifyMultipart);
+
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),
     });
+    
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
@@ -84,4 +87,3 @@ async function bootstrap() {
     logger.error(error);
   }
 }
-

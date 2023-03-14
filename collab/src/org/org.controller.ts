@@ -22,7 +22,7 @@ import {
   BaseResSchemaDto,
   MyInfo,
 } from '@letscollab/server-shared';
-import { UseAccess, AccessAction } from '@letscollab-nest/accesscontrol';
+import { UseAccess, AccessAction } from '@letscollab-nest/casbin';
 import { OrgResource, ResultCode } from '@letscollab/trait';
 import { OrgService } from './org.service';
 import { CommProtectGuard } from '../../utils';

@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/accesscontrol",
+  "name": "@letscollab-nest/casbin",
   "version": "0.0.1",
   "description": "Nestjs access control module for letscollab",
   "author": "Han",

@@ -1,15 +1,9 @@
-import { FastifyRequest } from 'fastify';
 import {
   ACCESS_META,
   CasbinService,
   IAccessOptions,
-} from '@letscollab-nest/accesscontrol';
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+} from '@letscollab-nest/casbin';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()

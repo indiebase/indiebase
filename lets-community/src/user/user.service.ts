@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Like, Repository } from 'typeorm';
 import { QueryUserDto } from './user.dto';
-import { CasbinService } from '@letscollab-nest/accesscontrol';
+import { CasbinService } from '@letscollab-nest/casbin';
 import { ResultCode } from '@letscollab/trait';
 
 type CreateUserEntity = Omit<

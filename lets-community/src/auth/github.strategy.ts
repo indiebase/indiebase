@@ -2,7 +2,7 @@ import { Strategy } from 'passport-github2';
 import {
   ObservablePassportStrategy,
   PassportStrategy,
-} from '@letscollab/nest-passport-fastify';
+} from '@letscollab-nest/passport-fastify';
 import { Injectable, Logger } from '@nestjs/common';
 import { NacosConfigService } from '@letscollab/nest-nacos';
 

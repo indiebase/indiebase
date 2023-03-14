@@ -3,7 +3,7 @@ import {
   fetchRolesApi,
 } from '@letscollab/console-shared';
 import { RoleColumns } from '@letscollab/trait';
-import { Table } from '@letscollab/react-table';
+import { Table } from '@letscollab-react/table';
 import { Group } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import {

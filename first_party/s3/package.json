@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/aws-s3",
+  "name": "@letscollab-nest/s3",
   "version": "0.0.1",
   "description": "Nestjs S3 module for letscollab",
   "author": "Han",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.245.0",
+    "@aws-sdk/s3-request-presigner": "^3.245.0",
     "@nestjs/common": "^9.0.11",
     "@nestjs/core": "^9.0.11",
     "aws-sdk": "^2.1278.0",

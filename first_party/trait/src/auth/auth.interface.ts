@@ -1,4 +1,4 @@
-import { IAccessOptions } from '@letscollab-nest/accesscontrol';
+import { IAccessOptions } from '@letscollab-nest/casbin';
 
 /**
  * Signup Type Enum

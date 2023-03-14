@@ -24,7 +24,7 @@ import {
   UpdateRoleDto,
 } from './role.dto';
 import { AccessGuard, DevApiHeader } from '@letscollab/server-shared';
-import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
+import { AccessAction, UseAccess } from '@letscollab-nest/casbin';
 import { ResultCode, RoleResource } from '@letscollab/trait';
 import { CommProtectGuard } from '../../utils';
 

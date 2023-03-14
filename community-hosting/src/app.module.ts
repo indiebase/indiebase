@@ -2,12 +2,6 @@ import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { resolve } from 'path';
 import configure from './config';
-import {
-  NacosConfigModule,
-  NacosConfigService,
-  NacosNamingModule,
-  NacosNamingService,
-} from '@letscollab/nest-nacos';
 import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
 import { AuthModule } from './auth/auth.module';
@@ -22,7 +16,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { UserModule } from './user/user.module';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { MsgModule } from './msg/msg.module';
-import { CasbinModule } from '@letscollab-nest/accesscontrol';
+import { CasbinModule } from '@letscollab-nest/casbin';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { CollabModule } from './collab/collab.module';
@@ -33,7 +27,7 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
-import { S3Module } from '@letscollab-nest/aws-s3';
+import { S3Module } from '@letscollab-nest/s3';
 import { OctokitModule } from '@letscollab/nest-octokit';
 import { FileModule } from './file';
 
@@ -50,16 +44,16 @@ import { FileModule } from './file';
       load: configure,
     }),
     RedisModule.forRootAsync({
-      inject: [NacosConfigService],
-      async useFactory(config: NacosConfigService) {
+      inject: [ConfigService],
+      async useFactory(config: ConfigService) {
         const configs = await config.getConfig('common.json');
         return { config: configs.redis };
       },
     }),
     // This module integrated with Redis, Session Cookie, Fastify Passport.
     ApplySessionModule.forRootAsync({
-      inject: [NacosConfigService],
-      async useFactory(config: NacosConfigService) {
+      inject: [ConfigService],
+      async useFactory(config: ConfigService) {
         const { session, cookie, redis } = await config.getConfig(
           'common.json',
         );
@@ -73,8 +67,8 @@ import { FileModule } from './file';
       },
     }),
     WinstonModule.forRootAsync({
-      inject: [NacosConfigService],
-      useFactory: async (config: NacosConfigService) => {
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => {
         const configs = await config.getConfig('community.json');
 
         const transports = [
@@ -99,8 +93,8 @@ import { FileModule } from './file';
     }),
     CasbinModule.forRootAsync({
       imports: [NacosConfigModule],
-      inject: [NacosConfigService],
-      async useFactory(config: NacosConfigService) {
+      inject: [ConfigService],
+      async useFactory(config: ConfigService) {
         const { orm, casbin } = await config.getConfig('common.json');
 
         return {
@@ -119,30 +113,10 @@ import { FileModule } from './file';
         };
       },
     }),
-    NacosNamingModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory(config: ConfigService) {
-        return {
-          serverList: config.get('nacos.serverList'),
-          namespace: config.get('nacos.namespace'),
-        };
-      },
-    }),
-    NacosConfigModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory(config: ConfigService) {
-        return {
-          serverAddr: config.get('nacos.serverList'),
-          namespace: config.get('nacos.namespace'),
-        };
-      },
-    }),
     TypeOrmModule.forRootAsync({
       imports: [NacosConfigModule],
-      inject: [NacosConfigService],
-      async useFactory(nacosConfigService: NacosConfigService) {
+      inject: [ConfigService],
+      async useFactory(ConfigService: ConfigService) {
         const { orm } = await nacosConfigService.getConfig('common.json');
         return {
           ...orm,
@@ -165,8 +139,8 @@ import { FileModule } from './file';
       logging: isDev,
     }),
     S3Module.forRootAsync({
-      inject: [NacosConfigService],
-      useFactory: async (config: NacosConfigService) => {
+      inject: [],
+      useFactory: async (config) => {
         const { s3 } = await config.getConfig('common.json');
 
         return {

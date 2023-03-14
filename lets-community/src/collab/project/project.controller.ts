@@ -1,4 +1,4 @@
-import { AccessAction, UseAccess } from '@letscollab-nest/accesscontrol';
+import { AccessAction, UseAccess } from '@letscollab-nest/casbin';
 import { AccessGuard, MyInfo } from '@letscollab/server-shared';
 import { ProjectResource, ResultCode } from '@letscollab/trait';
 import {

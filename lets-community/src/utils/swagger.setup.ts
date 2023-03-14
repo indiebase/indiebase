@@ -14,7 +14,7 @@ const commonContact = [
   'deskbtm@outlook.com',
 ];
 
-export const setupApiDoc = (app: INestApplication) =>
+export const letsCommunityApiDocs = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
       const authOptions = new DocumentBuilder()

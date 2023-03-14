@@ -8,7 +8,7 @@ import { CreateRoleDto, QueryRoleDto, UpdateRoleDto } from './role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, Between } from 'typeorm';
 import { CreateRoleBody, ResultCode } from '@letscollab/trait';
-import { CasbinService } from '@letscollab-nest/accesscontrol';
+import { CasbinService } from '@letscollab-nest/casbin';
 import * as dayjs from 'dayjs';
 
 @Injectable()

@@ -15,14 +15,14 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   AccessGuard,
-  ApiProtectHeader,
+  ProtectPublicApiHeader,
   MyInfo,
   PublicApiGuard,
 } from '@letscollab/server-shared';
 import { LocalSignInDto, OptVerifyDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
-import { InjectS3, S3 } from '@letscollab-nest/aws-s3';
+import { InjectS3, S3 } from '@letscollab-nest/s3';
 import { AuthService } from './auth.service';
 import { ResultCode } from '@letscollab/trait';
 
@@ -40,7 +40,7 @@ export class AuthController {
    * Give up letscollab's register
    */
   @Post('signin')
-  @ApiProtectHeader()
+  @ProtectPublicApiHeader()
   @ApiOperation({
     summary: 'SignIn with password',
   })
