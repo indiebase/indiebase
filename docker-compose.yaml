@@ -55,28 +55,8 @@ services:
       - 13334:9090
     logging: *loki-logging
 
-  nacos:
-    image: nacos/nacos-server:v2.1.2
-    env_file:
-      - ${CONFIG_DIR:-.}/.env
-    volumes:
-      - nacos_logs:/home/nacos/logs
-    ports:
-      - 13324:8848
-      - 13325:9848
-      - 13326:9555
-    deploy:
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          memory: 1G
-    depends_on:
-      - mysql
-    logging: *loki-logging
-
   mysql:
-    image: nacos/nacos-mysql:8.0.16
+    image: mysql:8.0.32
     env_file:
       - ${CONFIG_DIR:-.}/.env
     volumes:
@@ -170,8 +150,8 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - redis_data:/data
-      - ${CONFIG_DIR:-.}/config/redis:/usr/local/etc/redis
+      - redis_data:/data:rw
+      - ${CONFIG_DIR:-.}/config/redis:/usr/local/etc/redis:ro
     command: redis-server /usr/local/etc/redis/redis.conf
     logging: *loki-logging
 
@@ -193,7 +173,7 @@ services:
       - 18334:8333
     command: -v=4 server -s3 -ip=seaweed  -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3.json -metricsPort=9324
     volumes:
-      - ${CONFIG_DIR:-.}/config/seaweedfs/s3.json:/etc/seaweedfs/s3.json
+      - ${CONFIG_DIR:-.}/config/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
       - seaweed_data:/data
 
 networks:

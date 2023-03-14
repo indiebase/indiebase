@@ -12,11 +12,6 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
-    "start:gateway": "yarn workspace @letscollab/gateway start",
-    "start:auth": "yarn workspace @letscollab/auth start",
-    "start:user": "yarn workspace @letscollab/user start",
-    "start:msg": "yarn workspace @letscollab/msg start",
-    "start:collab": "yarn workspace @letscollab/collab start",
     "lint": "yarn workspaces foreach run lint",
     "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
     "stack:dev": "docker stack deploy -c ./docker-compose.yaml letscollab",
@@ -43,11 +38,11 @@
     "typescript": "^4.8.4"
   },
   "workspaces": [
-    "collab",
     "first_party/*",
     "apps/*",
     "third_party/*",
-    "lets/*"
+    "lets",
+    "lets-pro/*"
   ],
   "jest": {
     "moduleFileExtensions": [

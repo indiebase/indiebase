@@ -6,26 +6,30 @@ BACKUP_DIR=~/backup/incremental
 LATEST_FILE=~/backuplatest
 LATEST=$(cat $LATEST_FILE)
 NOW=$(date "+%F_%H-%M-%S")
+NETWORK=letscollab_default
+TARGET_NAME=letscollab_mysql
+IMAGE=mysql:8.0.32
+PASSWORD=letscollab
 
 if [!-f "$BACKUP_DIR"]; then
   mkdir -p $BACKUP_DIR
 fi
 
 full_backup() {
-  docker run --rm --network letscollab_default -v $BACKUP_DIR/$NOW:/backup \
-    --name percona-xtrabackup --volumes-from $(docker ps -q -f name=letscollab_mysql -f ancestor=nacos/nacos-mysql:8.0.16) \
+  docker run --rm --network $NETWORK -v $BACKUP_DIR/$NOW:/backup \
+    --name percona-xtrabackup --volumes-from $(docker ps -q -f name="$TARGET_NAME" -f ancestor="$IMAGE") \
     percona/percona-xtrabackup:8.0 \
-    xtrabackup --backup --compress=LZ4 --datadir=/var/lib/mysql/ --target-dir=/backup --user=root --password=letscollab -H mysql -P 3306
+    xtrabackup --backup --compress=LZ4 --datadir=/var/lib/mysql/ --target-dir=/backup --user=root --password=$PASSWORD -H mysql -P 3306
   echo $NOW >$LATEST_FILE
 }
 
 incremental_backup() {
-  docker run --rm --network letscollab_default \
+  docker run --rm --network $NETWORK \
     -v $BACKUP_DIR/$NOW:/backup \
     -v $BACKUP_DIR/$LATEST:/incremental-basedir \
-    --name percona-xtrabackup --volumes-from $(docker ps -q -f name=letscollab_mysql -f ancestor=nacos/nacos-mysql:8.0.16) \
+    --name percona-xtrabackup --volumes-from $(docker ps -q -f name="$TARGET_NAME" -f ancestor="$IMAGE") \
     percona/percona-xtrabackup:8.0 \
-    xtrabackup --backup --compress=LZ4 --incremental-basedir=/incremental-basedir --datadir=/var/lib/mysql/ --target-dir=/backup --user=root --password=letscollab -H mysql -P 3306
+    xtrabackup --backup --compress=LZ4 --incremental-basedir=/incremental-basedir --datadir=/var/lib/mysql/ --target-dir=/backup --user=root --password=$PASSWORD -H mysql -P 3306
   echo $NOW >$LATEST_FILE
 }
 

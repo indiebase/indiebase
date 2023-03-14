@@ -1,9 +1,9 @@
 [submodule "self_hosting"]
-	path = self_hosting
-	url = https://github.com/deskbtm-letscollab/self_hosting.git
-[submodule "lets"]
-	path = lets
-	url = https://github.com/deskbtm-letscollab/lets
+path = self_hosting
+url = https://github.com/deskbtm-letscollab/self_hosting.git
 [submodule "apps/pitm"]
-	path = apps/pitm
-	url = https://github.com/deskbtm-letscollab/PITM.git
+path = apps/pitm
+url = https://github.com/deskbtm-letscollab/PITM.git
+[submodule "lets-pro"]
+path = lets-pro
+url = https://github.com/deskbtm-letscollab/lets-pro.git

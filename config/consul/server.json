@@ -1,0 +1,15 @@
+{
+  "node_name": "consul-server",
+  "server": true,
+  "ui_config": {
+    "enabled": true
+  },
+  "data_dir": "/consul/data",
+  "addresses": {
+    "http": "0.0.0.0"
+  },
+  "encrypt": "tNQWGDKCBdZ1hN2kEwZO4rXOcPy8Rlh17wiC0N9xJtQ=",
+  "verify_incoming": false,
+  "verify_outgoing": false,
+  "verify_server_hostname": false
+}
