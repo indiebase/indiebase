@@ -41,8 +41,7 @@
     "first_party/*",
     "apps/*",
     "third_party/*",
-    "lets",
-    "lets-pro/*"
+    "lets"
   ],
   "jest": {
     "moduleFileExtensions": [
