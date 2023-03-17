@@ -1,4 +1,4 @@
-import { CommProtectGuard } from '../utils';
+import { PublicApiGuard } from '../utils';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import {
   Controller,
@@ -44,7 +44,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'SignIn with password',
   })
-  @UseGuards(CommProtectGuard, LocalAuthGuard)
+  @UseGuards(PublicApiGuard, LocalAuthGuard)
   async signIn(
     @Body() _: LocalSignInDto,
     @Req() req: FastifyRequest,

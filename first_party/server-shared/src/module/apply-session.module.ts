@@ -49,6 +49,9 @@ export interface RedisSessionFastifyModuleOptionsFactory {
     | RedisSessionFastifyModuleOptions;
 }
 
+/**
+ * @deprecated
+ */
 @Global()
 @Module({})
 export class ApplySessionModule implements NestModule, OnModuleDestroy {
@@ -96,7 +99,7 @@ export class ApplySessionModule implements NestModule, OnModuleDestroy {
 
     this.options.session.store = new RedisStore({
       client: new Redis(this.options.redis) as any,
-    });
+    }) as any;
 
     if (!this.options.session.cookieName) {
       this.options.session.cookieName = 'SID';

@@ -36,13 +36,16 @@ export const overwriteSwaggerStaticAssets = function (
   }
 };
 
-export const isDev = process.env.NODE_ENV === 'development';
-export const isProd = process.env.NODE_ENV === 'production';
+export const kDevMode = process.env.NODE_ENV === 'development';
+export const kTestMode = process.env.NODE_ENV === 'test';
+export const kReleaseMode = process.env.NODE_ENV === 'production';
 
 /**
+ * 由于安卓package name不支持-,
+ *
  * @param name
- * @link {@link https://stackoverflow.com/questions/13753637/android-package-name-using-dashes}
+ * @see {@link https://stackoverflow.com/questions/13753637/android-package-name-using-dashes}
  */
 export const compatPackageName = function (name: string) {
-  return name.replace('-', '-');
+  return name.replace('-', '_');
 };

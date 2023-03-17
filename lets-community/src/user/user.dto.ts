@@ -1,7 +1,7 @@
 import { BaseResSchemaDto, PaginationReqDto } from '@letscollab/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsOptional, MinLength } from 'class-validator';
-import { OrgEntity } from '../collab/org/org.entity';
+import { OrgEntity } from '../org/org.entity';
 import { UserEntity } from './user.entity';
 
 export class UpdateUserProfileDto {

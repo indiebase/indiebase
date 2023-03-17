@@ -1,4 +1,4 @@
-import { CommProtectGuard } from '../../utils';
+import { PublicApiGuard } from '@letscollab/server-shared';
 import { AccessGuard, DevApiHeader } from '@letscollab/server-shared';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
@@ -18,7 +18,7 @@ export class ResourceController {
     summary: 'Get resource list',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: RoleResource.list,

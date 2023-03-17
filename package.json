@@ -41,7 +41,8 @@
     "first_party/*",
     "apps/*",
     "third_party/*",
-    "lets"
+    "lets-community",
+    "collab-hosting"
   ],
   "jest": {
     "moduleFileExtensions": [
@@ -61,11 +62,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "@fastify/cookie": "^8.1.0"
-  },
-  "resolutions": {
-    "cross-env@7.0.3": "patch:cross-env@npm:7.0.3#.yarn/patches/cross-env-npm-7.0.3-96d81820f4.patch"
   }
 }

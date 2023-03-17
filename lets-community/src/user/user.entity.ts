@@ -11,36 +11,14 @@ import {
 import * as bcrypt from 'bcrypt';
 import { ApiProperty } from '@nestjs/swagger';
 import { AccountStatus } from '@letscollab/trait';
-import { OrgEntity } from '../collab/org/org.entity';
-import { ProjectEntity } from '../collab/project/project.entity';
+import { ProjectEntity } from '../project/project.entity';
+import { OrgEntity } from '../org/org.entity';
 
 @Entity('user')
 export class UserEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ApiProperty()
-  @Column('char', {
-    name: 'github_id',
-    unique: true,
-    nullable: true,
-    length: 32,
-  })
-  githubId?: string;
-
-  @ApiProperty()
-  @Column('varchar', {
-    name: 'github_access_token',
-    unique: true,
-    nullable: true,
-    select: false,
-  })
-  githubAccessToken?: string;
-
-  @ApiProperty()
-  @Column('varchar', { name: 'profile_url', nullable: true })
-  profileUrl?: string;
 
   @ApiProperty()
   @Column('varchar', { comment: 'Avatar url', nullable: true })

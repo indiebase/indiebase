@@ -14,8 +14,6 @@ import { resolve } from 'path';
 import { useContainer } from 'class-validator';
 import fastifyMultipart from '@fastify/multipart';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -84,4 +82,3 @@ async function bootstrap() {
     logger.error(error);
   }
 }
-

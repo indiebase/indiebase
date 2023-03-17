@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
   Logger,
   InternalServerErrorException,
-  OnModuleInit,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
@@ -47,8 +46,8 @@ export class AuthService {
   }
 
   public async handleGithubCallback(req: FastifyRequest, session: any) {
-    const { user } = req;
-    const { profile, accessToken } = user;
+    const { user } = req as any;
+    const { profile, accessToken } = user as any;
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
     const r = await this.userService.signIn({
@@ -80,7 +79,7 @@ export class AuthService {
   }
 
   public async handleSingIn(req: FastifyRequest, session: any) {
-    const { user } = req;
+    const { user } = req as any;
     session.set('user', {
       loggedIn: true,
       id: user.id,

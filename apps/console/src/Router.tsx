@@ -7,7 +7,7 @@ import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
 import { CreateProjectPage } from './pages/Creator/CreateProject';
 import { InviteMembersPage } from './pages/Creator/InviteMembers';
-import { ProLayout } from '@letscollab/lets-console';
+// import { ProLayout } from '@letscollab/lets-console';
 
 const projectRouter = {
   path: ':project',
@@ -115,34 +115,34 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: '/pro',
-    element: <ProLayout />,
-    children: [
-      {
-        path: ':org',
-        children: [
-          {
-            path: ':project',
-            element: <div>demo</div>,
-            children: [
-              {
-                path: 'settings',
-                children: [
-                  {
-                    path: 'access',
-                    element: <AccessPage />,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: '*',
-        element: <HttpStatusPage label="404" />,
-      },
-    ],
-  },
+  // {
+  //   path: '/pro',
+  //   element: <ProLayout />,
+  //   children: [
+  //     {
+  //       path: ':org',
+  //       children: [
+  //         {
+  //           path: ':project',
+  //           element: <div>demo</div>,
+  //           children: [
+  //             {
+  //               path: 'settings',
+  //               children: [
+  //                 {
+  //                   path: 'access',
+  //                   element: <AccessPage />,
+  //                 },
+  //               ],
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       path: '*',
+  //       element: <HttpStatusPage label="404" />,
+  //     },
+  //   ],
+  // },
 ]);

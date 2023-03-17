@@ -37,7 +37,6 @@
     "@liaoliaots/nestjs-redis": "^8.0.0",
     "@nestjs-modules/mailer": "^1.7.1",
     "@nestjs/common": "^9.0.11",
-    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.11",
     "@nestjs/platform-fastify": "^9.0.11",
     "@nestjs/swagger": "^6.1.3",
@@ -91,6 +90,9 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^3.10.1",
     "typescript": "^4.8.4"
+  },
+  "peerDependencies": {
+    "@nestjs/config": "^2.2.0"
   },
   "jest": {
     "moduleFileExtensions": [

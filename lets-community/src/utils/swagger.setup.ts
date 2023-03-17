@@ -1,12 +1,11 @@
+import { StorageModule } from '../storage/storage.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { overwriteSwaggerStaticAssets } from '@letscollab/server-shared';
-import { InvitationModule } from '../collab/invitation/invitation.module';
+import { InvitationModule } from '../invitation/invitation.module';
 import { INestApplication } from '@nestjs/common';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
-import { OrgModule } from '../collab/org/org.module';
-import { ProjectModule } from '../collab/project/project.module';
-import { FileModule } from '../file';
+import { ProjectModule } from '../project/project.module';
+import { OrgModule } from '../org/org.module';
 
 const commonContact = [
   'deskbtm/letscollab',
@@ -78,7 +77,7 @@ export const letsCommunityApiDocs = (app: INestApplication) =>
         include: [UserModule],
       });
 
-      const collabDoc = SwaggerModule.createDocument(app, collabOptions, {
+      const schemaDoc = SwaggerModule.createDocument(app, collabOptions, {
         include: [OrgModule, ProjectModule, InvitationModule],
       });
 
@@ -87,43 +86,10 @@ export const letsCommunityApiDocs = (app: INestApplication) =>
       });
 
       const commonDoc = SwaggerModule.createDocument(app, commonOptions, {
-        include: [FileModule],
+        include: [StorageModule],
       });
 
-      SwaggerModule.setup('openapi/auth', app, authDoc, {
-        swaggerOptions: {
-          persistAuthorization: true,
-        },
-      });
-
-      SwaggerModule.setup('openapi/user', app, userDoc, {
-        swaggerOptions: {
-          persistAuthorization: true,
-        },
-      });
-
-      SwaggerModule.setup('openapi/collab', app, collabDoc, {
-        swaggerOptions: {
-          persistAuthorization: true,
-        },
-      });
-
-      SwaggerModule.setup('openapi/msg', app, msgDoc, {
-        swaggerOptions: {
-          persistAuthorization: true,
-        },
-      });
-
-      SwaggerModule.setup('openapi/common', app, commonDoc, {
-        swaggerOptions: {
-          persistAuthorization: true,
-        },
-      });
-
-      // Resolve swagger-ui-dist
-      if (process.env.NODE_ENV === 'production') {
-        (SwaggerModule as any).serveStatic = overwriteSwaggerStaticAssets;
-      }
+      return [authDoc, userDoc];
     } catch (e) {
       console.error(e);
     } finally {

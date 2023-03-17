@@ -1,4 +1,3 @@
-import { CommProtectGuard } from '../utils';
 import {
   Body,
   Controller,
@@ -40,7 +39,7 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: UserResource.list,
@@ -59,7 +58,7 @@ export class UserController {
 
   @Get('list/:username')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get a user profile',
   })
@@ -73,7 +72,7 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOperation({
     summary: 'Get my profile',
   })
@@ -108,7 +107,7 @@ export class UserController {
     summary: 'Update my profile',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard)
+  @UseGuards(PublicApiGuard)
   async updateUserProfile(
     @Body() body: UpdateUserProfileDto,
     @MyInfo('id') id: number,
@@ -123,7 +122,7 @@ export class UserController {
 
   @Post('profile/sync')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Sync profile with platform. e.g. Github',
   })
@@ -131,7 +130,7 @@ export class UserController {
 
   @Get('possession')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOperation({
     summary: 'Getting user owns resources',
   })
@@ -149,7 +148,7 @@ export class UserController {
 
   @Get('test')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOperation({
     summary: 'Test',
   })

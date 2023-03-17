@@ -45,6 +45,6 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@fastify/multipart": "^7.3.0"
+    "@fastify/multipart": "^7.5.0"
   }
 }

@@ -1,5 +1,5 @@
 import { AccessAction, UseAccess } from '@letscollab-nest/casbin';
-import { AccessGuard, MyInfo } from '@letscollab/server-shared';
+import { AccessGuard, MyInfo, PublicApiGuard } from '@letscollab/server-shared';
 import { ProjectResource, ResultCode } from '@letscollab/trait';
 import {
   Body,
@@ -19,7 +19,6 @@ import {
   ApiOperation,
   ApiParam,
 } from '@nestjs/swagger';
-import { CommProtectGuard } from '../../utils';
 import {
   CreateProjectDto,
   QueryProjectsDto,
@@ -42,7 +41,7 @@ export class ProjectController {
   @ApiOperation({
     summary: 'Get project list',
   })
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOkResponse({
     // type: ProjectListResDto,
   })
@@ -63,7 +62,7 @@ export class ProjectController {
     summary: 'Create a project',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: ProjectResource.list,
@@ -81,7 +80,7 @@ export class ProjectController {
     summary: 'Fetch github projects from specified organization',
   })
   @Get('github/search')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async searchGithubRepo(@Query() query: SearchGithubDto) {
     const d = await this.projectService.searchGithubRepo(query.q);
@@ -110,7 +109,7 @@ export class ProjectController {
   })
   @Delete(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.deleteAny,
     resource: ProjectResource.list,

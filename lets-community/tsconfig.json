@@ -22,5 +22,5 @@
   },
   "include": [
     "src/**/*"
-  ]
+, "../collab-hosting/src/config/app.ts", "../collab-hosting/src/config/index.ts"  ]
 }

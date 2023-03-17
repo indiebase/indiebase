@@ -52,7 +52,7 @@ export class UserService {
       .getOne();
   }
 
-  public async signIn(body: CreateUserEntity) {
+  public async signIn(body: any) {
     let user = await this.userRepo.findOne({
       where: [
         {
@@ -75,12 +75,12 @@ export class UserService {
       });
     } else {
       // Update github access token per login.
-      if (user.githubAccessToken !== body.githubAccessToken) {
-        await this.updateUser(
-          { id: user.id },
-          { githubAccessToken: body.githubAccessToken },
-        );
-      }
+      // if (user.githubAccessToken !== body.githubAccessToken) {
+      //   await this.updateUser(
+      //     { id: user.id },
+      //     { githubAccessToken: body.githubAccessToken },
+      //   );
+      // }
     }
 
     return user;

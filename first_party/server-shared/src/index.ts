@@ -4,3 +4,4 @@ export * from './guard';
 export * from './util';
 export * from './decorators';
 export * from './module';
+export * from './configs';

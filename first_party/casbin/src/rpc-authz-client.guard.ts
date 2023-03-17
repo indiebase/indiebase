@@ -12,12 +12,12 @@ import { Reflector } from '@nestjs/core';
 import { ACCESS_META } from './casbin.constants';
 import { IAccessOptions } from './access.decorator';
 
-abstract class BasicAuthGuard {
+abstract class AbstractAuthGuard {
   abstract transfer(context: ExecutionContext): Promise<Record<string, any>>;
   abstract setPattern(context: ExecutionContext): Promise<any>;
 }
 
-type AbstractAuth = abstract new (...args: any) => BasicAuthGuard;
+type AbstractAuth = abstract new (...args: any) => AbstractAuthGuard;
 
 /**
  *
@@ -53,7 +53,7 @@ export function RpcAuthzClientGuard(
   },
 ): AbstractAuth {
   @Injectable()
-  abstract class InnerClz extends BasicAuthGuard implements CanActivate {
+  abstract class InnerClz extends AbstractAuthGuard implements CanActivate {
     constructor(
       @Inject(clientName)
       private readonly client: ClientProxy,

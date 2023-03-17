@@ -1,0 +1,7 @@
+{
+  "watch": [
+    "../lets-community/src/**/*",
+    "../first_party/server-shared/src/*",
+    "src"
+  ]
+}

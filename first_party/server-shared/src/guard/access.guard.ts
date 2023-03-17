@@ -30,7 +30,7 @@ export class AccessGuard implements CanActivate {
     const access = this.getAccess(context);
 
     const req = context.switchToHttp().getRequest<FastifyRequest>();
-    const { user } = req.session;
+    const { user } = req.session as any;
 
     if (!user?.loggedIn) {
       throw new UnauthorizedException({ message: 'Please login' });

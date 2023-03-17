@@ -21,11 +21,11 @@ import {
   AccessGuard,
   BaseResSchemaDto,
   MyInfo,
+  PublicApiGuard,
 } from '@letscollab/server-shared';
 import { UseAccess, AccessAction } from '@letscollab-nest/casbin';
 import { OrgResource, ResultCode } from '@letscollab/trait';
 import { OrgService } from './org.service';
-import { CommProtectGuard } from '../../utils';
 import { QueryProjectsDto } from '../project/project.dto';
 
 @Controller({
@@ -48,7 +48,7 @@ export class OrgController {
     summary: 'Fetch github organizations',
   })
   @Get('github')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrgs() {
     const d = await this.orgService.getGithubOwnOrgs();
@@ -62,7 +62,7 @@ export class OrgController {
     summary: 'Fetch a github organization',
   })
   @Get('github/:name')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrg(@Param('name') name: string) {
     const d = await this.orgService.getGithubOrg(name);
@@ -76,7 +76,7 @@ export class OrgController {
     summary: 'Fetch github organization repositories',
   })
   @Get('github/:name/repos')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiCookieAuth('SID')
   async githubOrgProjects(@Param('name') name: string) {
     const d = await this.orgService.getGithubOrgRepos(name);
@@ -98,7 +98,7 @@ export class OrgController {
   })
   @Get(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   async getOrg(@Param('name') orgName: string) {
     const d = await this.orgService.get(orgName);
     return {
@@ -112,7 +112,7 @@ export class OrgController {
   })
   @Post()
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: OrgResource.list,
@@ -131,7 +131,7 @@ export class OrgController {
   })
   @Get(':org/pinned_projects')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
@@ -146,7 +146,7 @@ export class OrgController {
   })
   @Get(':org/projects')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
@@ -161,7 +161,7 @@ export class OrgController {
   })
   @Put()
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   async updateOrg(@Body() body: UpdateOrgDto) {
     await this.orgService.updateOrg(body);
 
@@ -181,7 +181,7 @@ export class OrgController {
   })
   @Delete(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(CommProtectGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, AccessGuard)
   @UseAccess({
     action: AccessAction.deleteOwn,
     resource: OrgResource.list,
