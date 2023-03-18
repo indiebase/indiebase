@@ -2,20 +2,20 @@ import { AuthService } from './auth.service';
 import { Strategy } from 'passport-local';
 import {
   PassportStrategy,
-  StaticPassportStrategy,
+  PassportStrategyFactory,
 } from '@letscollab-nest/passport-fastify';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class LocalStrategy
   extends PassportStrategy(Strategy, 'local')
-  implements StaticPassportStrategy
+  implements PassportStrategyFactory
 {
   constructor(private readonly authService: AuthService) {
     super();
   }
 
-  async useStaticOptions() {
+  async useStrategyOptions() {
     return {};
   }
 

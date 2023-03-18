@@ -89,6 +89,12 @@ export const letsCommunityApiDocs = (app: INestApplication) =>
         include: [StorageModule],
       });
 
+      SwaggerModule.setup('openapi/auth', app, authDoc, {
+        swaggerOptions: {
+          persistAuthorization: true,
+        },
+      });
+
       return [authDoc, userDoc];
     } catch (e) {
       console.error(e);

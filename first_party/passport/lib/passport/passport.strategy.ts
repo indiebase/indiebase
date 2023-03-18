@@ -2,19 +2,30 @@ import { OnModuleInit } from '@nestjs/common';
 import passport from '@fastify/passport';
 import { Type } from '../interfaces';
 
-type UsePassportHook = (
+type UseStrategyHook = (
   strategy: (options) => Type<any>,
   fn: (p) => void
 ) => void;
 
-export interface ObservablePassportStrategy {
+/**
+ *
+ * Dynamic configurable
+ *
+ * @example
+ * ```ts
+ * export class GithubStrategy extends PassportStrategy(Strategy) implements PassportStrategyFactory {
+ *    async useStrategy(AppStrategy, use) {
+ *       this.remoteConfigService.on('xx', (event)=>{
+ *          use(AppStrategy(event.options))
+ *       })
+ *    }
+ * }
+ * ```
+ */
+export interface PassportStrategyFactory {
   validate: (...args: any[]) => any;
-  usePassport?: UsePassportHook;
-}
-
-export interface StaticPassportStrategy {
-  validate(...args: any[]): any;
-  useStaticOptions?: () => Promise<Record<string, any>>;
+  useStrategy?: UseStrategyHook;
+  useStrategyOptions?: () => Promise<Record<string, any>>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -23,8 +34,8 @@ export function PassportStrategy<T extends Type<any> = any>(
 ) {
   abstract class MixinStrategy implements OnModuleInit {
     abstract validate(...args: any[]): any;
-    abstract usePassport?: UsePassportHook;
-    abstract useStaticOptions?: () => Promise<Record<string, any>>;
+    abstract useStrategy?: UseStrategyHook;
+    abstract useStrategyOptions?: () => Promise<Record<string, any>>;
 
     async onModuleInit() {
       try {
@@ -52,12 +63,11 @@ export function PassportStrategy<T extends Type<any> = any>(
         };
 
         // Support Dynamic configurable.
-        if (this.usePassport) {
-          this.usePassport((options) => new Strategy(options, callback), use);
+        if (this.useStrategy) {
+          this.useStrategy((options) => new Strategy(options, callback), use);
         } else {
-          const options = (await this.useStaticOptions?.()) ?? {};
+          const options = (await this.useStrategyOptions?.()) ?? {};
           const strategy = new Strategy(options, callback);
-
           use(strategy);
         }
       } catch (error) {

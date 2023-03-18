@@ -24,7 +24,7 @@ export type IAuthGuard = CanActivate & {
     request: TRequest
   ): Promise<void>;
   handleRequest<TUser = any>(err, user, info, context, status?): TUser;
-  getAuthenticateOptions(context): IAuthModuleOptions | undefined;
+  useAuthenticateOptions(context): IAuthModuleOptions | undefined;
 };
 export const AuthGuard: (type?: string | string[]) => Type<IAuthGuard> =
   memoize(createAuthGuard);
@@ -48,7 +48,7 @@ function createAuthGuard(type?: string | string[]): Type<CanActivate> {
       const options = {
         ...defaultOptions,
         ...this.options,
-        ...(await this.getAuthenticateOptions(context))
+        ...(await this.useAuthenticateOptions(context))
       };
       const [request, response] = [
         this.getRequest(context),
@@ -89,7 +89,7 @@ function createAuthGuard(type?: string | string[]): Type<CanActivate> {
       return user;
     }
 
-    getAuthenticateOptions(
+    useAuthenticateOptions(
       context: ExecutionContext
     ): Promise<IAuthModuleOptions> | IAuthModuleOptions | undefined {
       return undefined;
