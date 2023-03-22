@@ -21,10 +21,16 @@ export const setupApiDoc = (app: INestApplication) =>
         .setTitle('Letscollab API')
         .setDescription('Letscollab lets-community REST API ')
         .setVersion('1.0.0')
-        .addCookieAuth('SID', {
-          type: 'apiKey',
-          in: 'cookie',
-        })
+        .addBearerAuth(
+          {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'paseto',
+            description: 'Enter paseto token',
+            in: 'header'
+          },
+          'paseto-token',
+        )
         .setContact(name, url, email)
         .build();
 

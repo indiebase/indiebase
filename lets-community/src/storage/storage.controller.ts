@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { StorageService } from './storage.service';
 import { PublicApiGuard } from '@letscollab/server-shared';
-import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   FileInterceptor,
   FilesInterceptor,
@@ -24,6 +24,7 @@ import { ResultCode } from '@letscollab/trait';
   path: 'storage',
   version: '1',
 })
+@ApiTags('v1/Storage')
 export class StorageController {
   constructor(
     private readonly storage: StorageService,

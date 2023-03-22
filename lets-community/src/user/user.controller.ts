@@ -15,6 +15,7 @@ import {
   ApiOperation,
   ApiOkResponse,
   ApiOAuth2,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import {
   MyInfo,
@@ -34,6 +35,7 @@ import { UseAccess, AccessAction } from '@letscollab/nest-casbin';
   version: '1',
 })
 @ApiTags('v1/User')
+@ApiBearerAuth('paseto-token')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
