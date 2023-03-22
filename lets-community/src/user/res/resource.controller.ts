@@ -4,7 +4,7 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiTags, ApiCookieAuth } from '@nestjs/swagger';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { createResources } from './resources';
-import { AccessAction, UseAccess } from '@letscollab-nest/casbin';
+import { AccessAction, UseAccess } from '@letscollab/nest-casbin';
 import { ResultCode, RoleResource } from '@letscollab/trait';
 
 @Controller({

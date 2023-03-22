@@ -1,5 +1,5 @@
 import { forwardRef, Logger, Module } from '@nestjs/common';
-import { PassportModule } from '@letscollab-nest/passport-fastify';
+import { PassportModule } from '@letscollab/nest-passport-fastify';
 import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
 import { LocalStrategy } from './local.strategy';

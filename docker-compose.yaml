@@ -9,42 +9,44 @@ x-logging: &loki-logging
     max-size: '300m'
 
 services:
-  apisix-dashboard:
-    image: apache/apisix-dashboard:2.13-alpine
-    volumes:
-      - ${CONFIG_DIR:-.}/config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
-    ports:
-      - 13336:9000
+  # apisix-dashboard:
+  #   image: apache/apisix-dashboard:2.13-alpine
+  #   volumes:
+  #     - ${CONFIG_DIR:-.}/config/apisix/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+  #   depends_on:
+  #     - apisix
+  #   ports:
+  #     - 13336:9000
 
-  apisix:
-    image: apache/apisix:2.15.0-alpine
-    volumes:
-      - apisix_logs:/usr/local/apisix/logs
-      - ${CONFIG_DIR:-.}/config/apisix/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
-    depends_on:
-      - etcd
-    ports:
-      - 13320:9080/tcp
-      - 13321:9091/tcp
-      - 13322:9443/tcp
-      - 13323:9092/tcp
-    deploy:
-      restart_policy:
-        condition: on-failure
-    logging: *loki-logging
+  # apisix:
+  #   image: apache/apisix:2.15.0-alpine
+  #   volumes:
+  #     - apisix_logs:/usr/local/apisix/logs
+  #     - ${CONFIG_DIR:-.}/config/apisix/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+  #   depends_on:
+  #     - etcd
+  #   ports:
+  #     - 13320:9080/tcp
+  #     - 13321:9091/tcp
+  #     - 13322:9443/tcp
+  #     - 13323:9092/tcp
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+  #   logging: *loki-logging
 
-  etcd:
-    image: bitnami/etcd:3.4.15
-    volumes:
-      - etcd_data:/bitnami/etcd
-    environment:
-      ETCD_ENABLE_V2: 'true'
-      ALLOW_NONE_AUTHENTICATION: 'yes'
-      ETCD_ADVERTISE_CLIENT_URLS: 'http://0.0.0.0:2379'
-      ETCD_LISTEN_CLIENT_URLS: 'http://0.0.0.0:2379'
-    ports:
-      - 2379:2379/tcp
-    logging: *loki-logging
+  # etcd:
+  #   image: bitnami/etcd:3.4.15
+  #   volumes:
+  #     - etcd_data:/bitnami/etcd
+  #   environment:
+  #     ETCD_ENABLE_V2: 'true'
+  #     ALLOW_NONE_AUTHENTICATION: 'yes'
+  #     ETCD_ADVERTISE_CLIENT_URLS: 'http://0.0.0.0:2379'
+  #     ETCD_LISTEN_CLIENT_URLS: 'http://0.0.0.0:2379'
+  #   ports:
+  #     - 2379:2379/tcp
+  #   logging: *loki-logging
 
   prometheus:
     image: prom/prometheus:v2.25.0
@@ -73,6 +75,8 @@ services:
       - ${CONFIG_DIR:-.}/.env
     depends_on:
       - mysql
+      - grafana
+      - prometheus
 
   portainer-agent:
     image: portainer/agent:2.11.0

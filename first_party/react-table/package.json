@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-react/table",
+  "name": "@letscollab/react-table",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.tsx",
@@ -10,24 +10,24 @@
   },
   "dependencies": {
     "@letscollab/dash": "workspace:^",
-    "lodash.debounce": "^4.0.8"
+    "lodash.debounce": "4.0.8"
   },
   "peerDependencies": {
-    "@mantine/core": "^5.5.4",
-    "@mantine/dates": "^5.10.3",
-    "@mantine/hooks": "^5.5.4",
-    "@tabler/icons": "^1.119.0",
-    "@tanstack/react-table": "^8.7.9",
+    "@mantine/core": "5.5.4",
+    "@mantine/dates": "5.10.3",
+    "@mantine/hooks": "5.5.4",
+    "@tabler/icons": "1.119.0",
+    "@tanstack/react-table": "8.7.9",
     "dayjs": "*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^4.6.3"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.6.3"
   },
   "devDependencies": {
-    "@types/lodash.debounce": "^4",
-    "@types/node": "^16.11.25",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5"
+    "@types/lodash.debounce": "4",
+    "@types/node": "16.11.25",
+    "@types/react": "18.0.14",
+    "@types/react-dom": "18.0.5"
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",

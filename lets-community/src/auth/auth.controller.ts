@@ -1,4 +1,3 @@
-import { PublicApiGuard } from '../utils';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import {
   Controller,
@@ -22,7 +21,7 @@ import {
 import { LocalSignInDto, OptVerifyDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
-import { InjectS3, S3 } from '@letscollab-nest/s3';
+import { InjectS3, S3 } from '@letscollab/nest-s3';
 import { AuthService } from './auth.service';
 import { ResultCode } from '@letscollab/trait';
 

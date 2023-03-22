@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/fastify-file",
+  "name": "@letscollab/nest-fastify-file",
   "version": "0.0.1",
   "description": "fastify-multipart decorators for Nest.js",
   "license": "MIT",
@@ -33,18 +33,18 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "devDependencies": {
-    "@nestjs/common": "^9.0.11",
-    "@nestjs/core": "^9.0.11",
-    "@nestjs/platform-fastify": "^9.0.11",
-    "@types/busboy": "^0.2.4",
-    "@types/node": "^16.0.0",
-    "fastify": "^4.4.0",
-    "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0",
-    "typescript": "^4.8.4"
+    "@nestjs/common": "9.3.11",
+    "@nestjs/core": "9.3.11",
+    "@nestjs/platform-fastify": "9.3.11",
+    "@types/busboy": "0.2.4",
+    "@types/node": "18.0.0",
+    "fastify": "4.4.0",
+    "reflect-metadata": "0.1.13",
+    "rimraf": "3.0.2",
+    "rxjs": "7.2.0",
+    "typescript": "4.8.4"
   },
   "dependencies": {
-    "@fastify/multipart": "^7.5.0"
+    "@fastify/multipart": "7.5.0"
   }
 }

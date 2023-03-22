@@ -13,6 +13,7 @@ export const getSubdomain = function (
  *
  * @param finalPath
  * @param app
+ * @deprecated
  */
 export const overwriteSwaggerStaticAssets = function (
   finalPath: string,
@@ -41,7 +42,7 @@ export const kTestMode = process.env.NODE_ENV === 'test';
 export const kReleaseMode = process.env.NODE_ENV === 'production';
 
 /**
- * 由于安卓package name不支持-,
+ * Android package name doesn't support `-`,
  *
  * @param name
  * @see {@link https://stackoverflow.com/questions/13753637/android-package-name-using-dashes}

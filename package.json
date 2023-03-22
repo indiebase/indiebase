@@ -26,23 +26,23 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.47.1",
     "@typescript-eslint/parser": "5.47.1",
-    "cross-env": "^7.0.3",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.23.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.1",
-    "prettier": "^2.7.1",
-    "standard-version": "^9.3.1",
-    "typescript": "^4.8.4"
+    "cross-env": "7.0.3",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "8.23.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "8.0.1",
+    "prettier": "2.7.1",
+    "standard-version": "9.3.1",
+    "typescript": "4.8.4"
   },
   "workspaces": [
     "first_party/*",
     "apps/*",
     "third_party/*",
     "lets-community",
-    "collab-hosting"
+    "collab"
   ],
   "jest": {
     "moduleFileExtensions": [
@@ -62,5 +62,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "packageManager": "yarn@3.5.0"
 }

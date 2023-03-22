@@ -26,7 +26,7 @@ import {
 import { OwnOrgsResDto, QueryUserDto, UpdateUserProfileDto } from './user.dto';
 import { ResultCode, UserResource, type UserSession } from '@letscollab/trait';
 import { UserService } from './user.service';
-import { UseAccess, AccessAction } from '@letscollab-nest/casbin';
+import { UseAccess, AccessAction } from '@letscollab/nest-casbin';
 
 @ApiOAuth2(['pets:write'])
 @Controller({

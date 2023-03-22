@@ -7,7 +7,7 @@ import {
 import {
   AuthGuard,
   IAuthModuleOptions,
-} from '@letscollab-nest/passport-fastify';
+} from '@letscollab/nest-passport-fastify';
 
 @Injectable()
 export class GithubGuard extends AuthGuard('github') {

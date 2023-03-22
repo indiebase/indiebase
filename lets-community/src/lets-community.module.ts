@@ -1,17 +1,23 @@
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { Module, ModuleMetadata } from '@nestjs/common';
+import { Logger, Module, ModuleMetadata } from '@nestjs/common';
 import { resolve } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import TypeOrmAdapter from 'typeorm-adapter';
-import { S3Module } from '@letscollab-nest/s3';
-import { kDevMode } from '@letscollab/server-shared';
-import { CasbinModule } from '@letscollab-nest/casbin';
+import { S3Module } from '@letscollab/nest-s3';
+import { IsEntityExistedConstraint, kDevMode } from '@letscollab/server-shared';
+import { CasbinModule } from '@letscollab/nest-casbin';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
+import { UserModule } from './user';
+import { StorageModule } from './storage';
+import { OrgModule } from './org';
+import { ProjectModule } from './project';
+import { InvitationModule } from './invitation';
+import { MailModule } from './mail';
 const LokiTransport = require('winston-loki');
 
 /**
@@ -27,12 +33,12 @@ export const createLetsCommunityModule = function (
 ) {
   @Module({
     imports: [
-      // UserModule,
-      // StorageModule,
-      // OrgModule,
-      // ProjectModule,
-      // InvitationModule,
-      // MailModule,
+      UserModule,
+      StorageModule,
+      OrgModule,
+      ProjectModule,
+      InvitationModule,
+      MailModule,
       ...options.imports,
       RedisModule.forRootAsync({
         inject: [ConfigService],
@@ -120,6 +126,7 @@ export const createLetsCommunityModule = function (
           const { host, port, username, password, database } =
             configService.get<MysqlConnectionCredentialsOptions>('mysql');
 
+          console.log(database);
           return {
             type: 'mysql',
             synchronize: kDevMode,
@@ -128,9 +135,8 @@ export const createLetsCommunityModule = function (
             username,
             password,
             database,
-            logging: kDevMode,
             autoLoadEntities: true,
-            charset: 'utf8mb4_unicode_ci',
+            charset: 'utf8mb4_0900_ai_ci',
           };
         },
       }),
@@ -181,6 +187,7 @@ export const createLetsCommunityModule = function (
         },
       }),
     ],
+    providers: [Logger, IsEntityExistedConstraint],
   })
   class LetsCommunityModule {}
 

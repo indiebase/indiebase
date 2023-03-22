@@ -22,20 +22,20 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "@headlessui/react": "^1.6.1",
-    "@mdx-js/react": "^2.1.0",
-    "@reach/skip-nav": "^0.16.0",
-    "classnames": "^2.2.6",
-    "cssnano": "^5.1.12",
-    "flexsearch": "^0.7.21",
-    "focus-visible": "^5.1.0",
-    "github-slugger": "^1.4.0",
-    "intersection-observer": "^0.12.0",
-    "match-sorter": "^4.2.0",
-    "next-themes": "^0.2.0-beta.2",
-    "parse-git-url": "^1.0.1",
-    "scroll-into-view-if-needed": "^2.2.29",
-    "title": "^3.4.2"
+    "@headlessui/react": "1.6.1",
+    "@mdx-js/react": "2.1.0",
+    "@reach/skip-nav": "0.16.0",
+    "classnames": "2.2.6",
+    "cssnano": "5.1.12",
+    "flexsearch": "0.7.21",
+    "focus-visible": "5.1.0",
+    "github-slugger": "1.4.0",
+    "intersection-observer": "0.12.0",
+    "match-sorter": "4.2.0",
+    "next-themes": "0.2.0-beta.2",
+    "parse-git-url": "1.0.1",
+    "scroll-into-view-if-needed": "2.2.29",
+    "title": "3.4.2"
   },
   "peerDependencies": {
     "next": ">=9.5.3",
@@ -43,15 +43,15 @@
     "react-dom": ">=16.13.1"
   },
   "devDependencies": {
-    "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
-    "@types/flexsearch": "^0.7.2",
-    "@types/react": "^18.0.14",
-    "autoprefixer": "^10.4.7",
-    "cross-env": "^7.0.2",
-    "esbuild": "^0.14.54",
+    "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
+    "@types/flexsearch": "0.7.2",
+    "@types/react": "18.0.14",
+    "autoprefixer": "10.4.7",
+    "cross-env": "7.0.2",
+    "esbuild": "0.14.54",
     "nextra": "2.0.0-alpha.56",
-    "postcss": "^8.4.18",
-    "postcss-cli": "^10.0.0",
-    "tailwindcss": "^3.1.4"
+    "postcss": "8.4.18",
+    "postcss-cli": "10.0.0",
+    "tailwindcss": "3.1.4"
   }
 }

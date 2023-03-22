@@ -16,7 +16,7 @@ import {
   FilesInterceptor,
   MemoryStorageFile,
   UploadedFiles,
-} from '@letscollab-nest/fastify-file';
+} from '@letscollab/nest-fastify-file';
 import { FilesUploadDto } from './storage.dto';
 import { ResultCode } from '@letscollab/trait';
 

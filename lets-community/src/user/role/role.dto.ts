@@ -12,7 +12,7 @@ import {
   PaginationReqDto,
   PaginationResSchemaDto,
 } from '@letscollab/server-shared';
-import { AccessAction } from '@letscollab-nest/casbin';
+import { AccessAction } from '@letscollab/nest-casbin';
 import {
   RoleResource,
   RoleStatus,

@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab-nest/passport-fastify",
+  "name": "@letscollab/nest-passport-fastify",
   "version": "8.2.1",
   "description": "Nest - modern, fast, powerful node.js web framework (@passport)",
   "author": "Kamil Mysliwiec",
@@ -17,18 +17,18 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@nestjs/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
-    "passport": "^0.4.0 || ^0.5.0 || ^0.6.0"
+    "@nestjs/common": "6.0.0 || ^7.0.0 || ^8.0.0",
+    "passport": "0.4.0 || ^0.5.0 || ^0.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-angular": "17.0.0",
-    "@nestjs/common": "9.0.11",
-    "@nestjs/core": "9.0.11",
+    "@nestjs/common": "9.3.11",
+    "@nestjs/core": "9.3.11",
     "@nestjs/jwt": "9.0.0",
-    "@nestjs/platform-express": "9.0.11",
-    "@nestjs/platform-fastify": "9.0.11",
-    "@nestjs/testing": "9.0.11",
+    "@nestjs/platform-express": "9.3.11",
+    "@nestjs/platform-fastify": "9.3.11",
+    "@nestjs/testing": "9.3.11",
     "@types/jest": "29.4.1",
     "@types/node": "17.0.17",
     "@types/passport": "1.0.8",

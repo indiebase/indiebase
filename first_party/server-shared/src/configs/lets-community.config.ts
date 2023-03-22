@@ -57,7 +57,7 @@ const logger = registerAs('logger', () => {
   };
 });
 
-const casbin = registerAs('casbin', () => {
+const auth = registerAs('auth', () => {
   return {
     database: process.env.AUTH_CASBIN_DATABASE,
   };
@@ -79,7 +79,7 @@ export const letsCommunityDefaultConfigs = [
   redis,
   mysql,
   smtp,
-  casbin,
+  auth,
   logger,
   storage,
 ];

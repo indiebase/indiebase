@@ -2,7 +2,7 @@ import {
   ACCESS_META,
   CasbinService,
   IAccessOptions,
-} from '@letscollab-nest/casbin';
+} from '@letscollab/nest-casbin';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 

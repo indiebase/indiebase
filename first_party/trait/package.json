@@ -7,12 +7,12 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@letscollab-nest/casbin": "workspace:^",
-    "@nestjs/swagger": "^6.1.3",
-    "bcrypt": "^5.0.1",
-    "typeorm": "^0.3.7"
+    "@letscollab/nest-casbin": "workspace:^",
+    "@nestjs/swagger": "6.2.1",
+    "bcrypt": "5.0.1",
+    "typeorm": "0.3.7"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5"
+    "@types/bcrypt": "5"
   }
 }

@@ -1,10 +1,10 @@
-import { MemoryStorageFile } from '@letscollab-nest/fastify-file';
+import { MemoryStorageFile } from '@letscollab/nest-fastify-file';
 import {
   GetObjectCommand,
   InjectS3,
   PutObjectCommand,
   S3,
-} from '@letscollab-nest/s3';
+} from '@letscollab/nest-s3';
 import { Injectable } from '@nestjs/common';
 import { nanoid } from 'nanoid';
 import * as path from 'path';
