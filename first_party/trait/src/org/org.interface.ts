@@ -1,4 +1,4 @@
-import { UserProfile } from '../../user/user.interface';
+import { UserProfile } from '../user/user.interface';
 export interface OrgSelect {
   logo: string;
   label: string;

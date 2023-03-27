@@ -20,26 +20,26 @@ export class GithubStrategy
   }
 
   async useStrategy(appStrategy, use) {
-    const subscriptions = [
-      {
-        dataId: 'mutable.json',
-        group: 'DEFAULT_GROUP',
-        getProperty(options: Record<string, any>) {
-          const {
-            github: { clientID, clientSecret, callbackURL },
-          } = options;
-          return { clientID, clientSecret, callbackURL };
-        },
-      },
-    ];
+    // const subscriptions = [
+    //   {
+    //     dataId: 'mutable.json',
+    //     group: 'DEFAULT_GROUP',
+    //     getProperty(options: Record<string, any>) {
+    //       const {
+    //         github: { clientID, clientSecret, callbackURL },
+    //       } = options;
+    //       return { clientID, clientSecret, callbackURL };
+    //     },
+    //   },
+    // ];
 
-    for await (const sub of subscriptions) {
-      const { getProperty, ...rest } = sub;
-      await this.nacosConfig.subscribe(rest, (config) => {
-        const options = getProperty(config);
-        use(appStrategy(options));
-      });
-    }
+    // for await (const sub of subscriptions) {
+    //   const { getProperty, ...rest } = sub;
+    //   await this.nacosConfig.subscribe(rest, (config) => {
+    //     const options = getProperty(config);
+    //     use(appStrategy(options));
+    //   });
+    // }
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any) {

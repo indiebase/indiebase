@@ -24,11 +24,9 @@ import {
   Title,
   Group,
   Input,
-  Text,
   useMantineTheme,
   Button,
   Center,
-  Container,
 } from '@mantine/core';
 import { IconCaretDown, IconCaretUp, IconRefresh } from '@tabler/icons';
 import { useEffect, useState } from 'react';
@@ -71,10 +69,8 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
-  // const [globalFilter, setGlobalFilter] = React.useState('');
 
   const theme = useMantineTheme();
-  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     const p = {};

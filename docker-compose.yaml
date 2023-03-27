@@ -175,7 +175,7 @@ services:
       - 18890:18888
       # S3
       - 18334:8333
-    command: -v=4 server -s3 -ip=seaweed  -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3.json -metricsPort=9324
+    command: -v=4 server -s3 -ip=seaweed -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3.json -metricsPort=9324
     volumes:
       - ${CONFIG_DIR:-.}/config/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
       - seaweed_data:/data

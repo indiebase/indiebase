@@ -27,7 +27,7 @@ export const setupApiDoc = (app: INestApplication) =>
             scheme: 'bearer',
             bearerFormat: 'paseto',
             description: 'Enter paseto token',
-            in: 'header'
+            in: 'header',
           },
           'paseto-token',
         )
@@ -49,6 +49,7 @@ export const setupApiDoc = (app: INestApplication) =>
       });
 
       await StoplightElementsModule.setup('/docs/api', app, doc, {
+        favicon: '',
         logo: 'https://user-images.githubusercontent.com/45007226/220814748-96ec88ec-673d-4d38-abae-dce7d7c6695f.png',
       });
     } catch (e) {

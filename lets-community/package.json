@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@fastify/swagger": "7.5.0",
+    "@letscollab/dash": "workspace:^",
     "@letscollab/nest-casbin": "workspace:^",
     "@letscollab/nest-fastify-file": "workspace:^",
     "@letscollab/nest-passport-fastify": "workspace:^",

@@ -55,25 +55,22 @@ async function bootstrap() {
       },
     });
 
-    // Should be front of setupApiDoc
+    // Should be front of setupApiDoc.
     app.enableVersioning({
       defaultVersion: '1',
       type: VersioningType.URI,
     });
-
     app.enableCors({
       origin: config.get('app.corsOrigin'),
       credentials: true,
     });
 
+    // Setup stoplight api doc.
     await setupApiDoc(app);
-
     app.register(fastifyMultipart as any);
-
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),
     });
-
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 

@@ -1,10 +1,14 @@
 import {
+  Body,
   Controller,
   Delete,
+  Get,
   InternalServerErrorException,
   Logger,
   Param,
+  Post,
   Put,
+  Req,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -16,9 +20,10 @@ import {
   FilesInterceptor,
   MemoryStorageFile,
   UploadedFiles,
+  UploadedFile,
 } from '@letscollab/nest-fastify-file';
-import { FilesUploadDto } from './storage.dto';
-import { ResultCode } from '@letscollab/trait';
+import { CreateBucketDto, FilesUploadDto, FileUploadDto } from './storage.dto';
+import { BaseResponseSchema, ResultCode } from '@letscollab/trait';
 
 @Controller({
   path: 'storage',
@@ -31,12 +36,43 @@ export class StorageController {
     private readonly logger: Logger,
   ) {}
 
-  @Put('upload/:bucket')
+  // @Put(':bucket/upload/file')
+  // @ApiConsumes('multipart/form-data')
+  // @ApiBody({ type: FileUploadDto })
+  // @UseInterceptors(FileInterceptor('file'))
+  // @ApiOperation({
+  //   summary: 'Upload single file',
+  //   description:
+  //     'Receives a file and an associated bucket for uploading the file into the specified bucket.',
+  // })
+  // @UseGuards(PublicApiGuard)
+  // async uploadFile(
+  //   @UploadedFile() file: MemoryStorageFile,
+  //   @Param('bucket') bucket: string,
+  // ) {
+  //   const d = await this.storage
+  //     .save2Bucket([file], { bucket })
+  //     .catch((err) => {
+  //       this.logger.error(err);
+  //       throw new InternalServerErrorException({
+  //         code: ResultCode.ERROR,
+  //         message: 'Upload file failed',
+  //       });
+  //     });
+  //   return {
+  //     code: ResultCode.SUCCESS,
+  //     d,
+  //   };
+  // }
+
+  @Put(':bucket/upload/files')
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FilesUploadDto })
-  @UseInterceptors(FilesInterceptor('files'))
+  @UseInterceptors(FilesInterceptor('files', Infinity))
   @ApiOperation({
-    summary: 'Upload file',
+    summary: 'Upload multiple files',
+    description:
+      'Receives multiple files and an associated bucket for uploading the files into the specified bucket.',
   })
   @UseGuards(PublicApiGuard)
   async uploadFiles(
@@ -56,30 +92,74 @@ export class StorageController {
     };
   }
 
-  @Put('upload/signed')
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: FilesUploadDto })
+  // @Put(':bucket/upload/file/')
+  // @ApiConsumes('multipart/form-data')
+  // @ApiBody({ type: FilesUploadDto })
+  // @ApiOperation({
+  //   summary: 'Upload file and return the signed url',
+  // })
+  // @UseGuards(PublicApiGuard)
+  // @UseInterceptors(FilesInterceptor('files'))
+  // async uploadFilesSignedUrl(@UploadedFiles() files: MemoryStorageFile[]) {
+  //   const d = await this.storage
+  //     .save2Bucket(files, { signedUrl: true })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       throw new InternalServerErrorException();
+  //     });
+  //   return {
+  //     code: ResultCode.SUCCESS,
+  //     d,
+  //   };
+  // }
+
+  @Post('bucket')
   @ApiOperation({
-    summary: 'Upload file and return the signed url',
+    summary: 'Create a bucket',
+    description: 'Receives a bucket name and creates the bucket.',
   })
   @UseGuards(PublicApiGuard)
-  @UseInterceptors(FilesInterceptor('files'))
-  async uploadFilesSignedUrl(@UploadedFiles() files: MemoryStorageFile[]) {
-    const d = await this.storage
-      .save2Bucket(files, { signedUrl: true })
-      .catch((err) => {
-        console.error(err);
-        throw new InternalServerErrorException();
-      });
+  async createBucket(
+    @Body() bucket: CreateBucketDto,
+  ): Promise<BaseResponseSchema> {
+    await this.storage.createBucket(bucket.bucket, bucket.description);
+
     return {
       code: ResultCode.SUCCESS,
-      d,
     };
   }
 
-  @Delete()
-  @UseInterceptors(FileInterceptor('file'))
-  async deleteFile() {
+  @Get('buckets')
+  @ApiOperation({
+    summary: 'Get buckets list',
+  })
+  @UseGuards(PublicApiGuard)
+  async getBuckets(): Promise<BaseResponseSchema> {
+    return {
+      code: ResultCode.SUCCESS,
+    };
+  }
+
+  @Get('buckets/files/:id')
+  @ApiOperation({
+    summary: '',
+  })
+  @UseGuards(PublicApiGuard)
+  async getFile(@Req() req): Promise<BaseResponseSchema> {
+    console.log(req);
+    return {
+      code: ResultCode.SUCCESS,
+    };
+  }
+
+  @Delete('buckets/:bucket')
+  @ApiOperation({
+    summary: 'Delete a bucket',
+    description: 'Receives a bucket name and deletes the bucket.',
+  })
+  @UseGuards(PublicApiGuard)
+  async deleteBucket(@Param('bucket') name: string) {
+    await this.storage.deleteBucket(name);
     return {
       code: ResultCode.SUCCESS,
     };

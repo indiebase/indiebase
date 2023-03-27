@@ -26,7 +26,7 @@ const app = registerAs('app', () => {
 const redis = registerAs('redis', () => {
   return {
     host: process.env.DB_REDIS_HOST,
-    port: process.env.DB_REDIS_PORT,
+    port: parseInt(process.env.DB_REDIS_PORT),
     password: process.env.DB_REDIS_PASSWORD,
   };
 });
@@ -34,7 +34,7 @@ const redis = registerAs('redis', () => {
 const mysql = registerAs('mysql', () => {
   return {
     host: process.env.DB_MYSQL_HOST,
-    port: process.env.DB_MYSQL_PORT,
+    port: parseInt(process.env.DB_MYSQL_PORT),
     username: process.env.DB_MYSQL_USER,
     password: process.env.DB_MYSQL_PASSWORD,
     database: process.env.DB_MYSQL_DATABASE,
@@ -63,6 +63,14 @@ const auth = registerAs('auth', () => {
   };
 });
 
+const security = registerAs('security', () => {
+  return {
+    publicApiGuardEnabled: process.env.PUBLIC_API_GUARD_ENABLED === 'true',
+    publicApiGuardSalt: process.env.PUBLIC_API_GUARD_SALT,
+    publicApiGuardExpiresIn: parseInt(process.env.PUBLIC_API_GUARD_EXPIRES_IN),
+  };
+});
+
 const storage = registerAs('storage', () => {
   return {
     s3: {
@@ -82,4 +90,5 @@ export const letsCommunityDefaultConfigs = [
   auth,
   logger,
   storage,
+  security,
 ];

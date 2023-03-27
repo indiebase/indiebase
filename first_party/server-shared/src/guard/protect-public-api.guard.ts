@@ -53,23 +53,28 @@ export class PublicApiGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
     try {
-      const config = (await this.config.get('')) ?? {};
+      const {
+        publicApiGuardEnabled,
+        publicApiGuardSalt,
+        publicApiGuardExpiresIn,
+      } = this.config.get('security');
 
       // If remote config is disabled, return true.
-      if (!config.apiProtect.enableProtectGuard) {
+      if (!publicApiGuardEnabled) {
         return true;
       }
 
       const apiToken = request.headers['X-Lets-Api-Credential'] as string;
 
       if (!apiToken) {
-        throw new BadRequestException({});
+        throw new BadRequestException();
       }
 
-      const salt = config.apiProtect.apiSalt;
-      const expire = config.apiProtect.apiExpire;
-
-      return apiTokenInspect(apiToken, salt, expire);
+      return apiTokenInspect(
+        apiToken,
+        publicApiGuardSalt,
+        publicApiGuardExpiresIn,
+      );
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException();

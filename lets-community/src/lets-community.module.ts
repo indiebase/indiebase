@@ -1,9 +1,10 @@
+import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { Logger, Module, ModuleMetadata } from '@nestjs/common';
+import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { resolve } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { ConfigService } from '@nestjs/config';
 import TypeOrmAdapter from 'typeorm-adapter';
+import { ConfigService } from '@nestjs/config';
 import { S3Module } from '@letscollab/nest-s3';
 import { IsEntityExistedConstraint, kDevMode } from '@letscollab/server-shared';
 import { CasbinModule } from '@letscollab/nest-casbin';
@@ -11,13 +12,15 @@ import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
-import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
 import { UserModule } from './user';
 import { StorageModule } from './storage';
 import { OrgModule } from './org';
 import { ProjectModule } from './project';
 import { InvitationModule } from './invitation';
 import { MailModule } from './mail';
+import { NestFastifyApplication } from '@nestjs/platform-fastify';
+import { FastifyInstance } from 'fastify';
+import { HttpAdapterHost } from '@nestjs/core';
 const LokiTransport = require('winston-loki');
 
 /**
@@ -29,7 +32,7 @@ const LokiTransport = require('winston-loki');
  * @returns
  */
 export const createLetsCommunityModule = function (
-  options: Pick<ModuleMetadata, 'imports'>,
+  options: ModuleMetadata = {},
 ) {
   @Module({
     imports: [
@@ -126,7 +129,6 @@ export const createLetsCommunityModule = function (
           const { host, port, username, password, database } =
             configService.get<MysqlConnectionCredentialsOptions>('mysql');
 
-          console.log(database);
           return {
             type: 'mysql',
             synchronize: kDevMode,
@@ -145,6 +147,7 @@ export const createLetsCommunityModule = function (
         useFactory: async (config) => {
           const { region, endpoint, accessKey, secretKey } =
             config.get('storage.s3');
+
           return {
             config: {
               region,
@@ -187,9 +190,20 @@ export const createLetsCommunityModule = function (
         },
       }),
     ],
-    providers: [Logger, IsEntityExistedConstraint],
+    providers: [
+      Logger,
+      IsEntityExistedConstraint,
+      ...(options.providers ?? []),
+    ],
   })
-  class LetsCommunityModule {}
+  class LetsCommunityModule implements OnModuleInit {
+    constructor(private readonly adapterHost: HttpAdapterHost) {}
 
-  return LetsCommunityModule;
+    async onModuleInit() {
+      const fastifyInstance =
+        this.adapterHost?.httpAdapter?.getInstance() as FastifyInstance;
+    }
+  }
+
+  return LetsCommunityModule as any;
 };
