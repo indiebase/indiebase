@@ -19,17 +19,17 @@ import {
 } from '@nestjs/swagger';
 import {
   MyInfo,
-  AccessGuard,
+  // ,AccessGuard,
   Domain,
   DevApiHeader,
   PublicApiGuard,
+  AccessGuard,
 } from '@letscollab/server-shared';
 import { OwnOrgsResDto, QueryUserDto, UpdateUserProfileDto } from './user.dto';
 import { ResultCode, UserResource, type UserSession } from '@letscollab/trait';
 import { UserService } from './user.service';
 import { UseAccess, AccessAction } from '@letscollab/nest-casbin';
 
-@ApiOAuth2(['pets:write'])
 @Controller({
   path: 'user',
   version: '1',

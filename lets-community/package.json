@@ -18,6 +18,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-sdk/lib-storage": "^3.300.0",
+    "@fastify/http-proxy": "^9.0.0",
     "@fastify/swagger": "7.5.0",
     "@letscollab/dash": "workspace:^",
     "@letscollab/nest-casbin": "workspace:^",
@@ -49,6 +51,7 @@
     "qrcode": "1.5.1",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.2.0",
+    "sharp": "^0.32.0",
     "typeorm": "0.3.7",
     "typeorm-adapter": "1.5.1",
     "winston": "3.7.2",

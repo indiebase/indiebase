@@ -9,21 +9,24 @@ import {
   Post,
   Put,
   Req,
+  Res,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { StorageService } from './storage.service';
-import { PublicApiGuard } from '@letscollab/server-shared';
+import {
+  // FilesSizeValidationPipe,
+  PublicApiGuard,
+} from '@letscollab/server-shared';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
-  FileInterceptor,
   FilesInterceptor,
   MemoryStorageFile,
   UploadedFiles,
-  UploadedFile,
 } from '@letscollab/nest-fastify-file';
-import { CreateBucketDto, FilesUploadDto, FileUploadDto } from './storage.dto';
+import { CreateBucketDto, FilesUploadDto } from './storage.dto';
 import { BaseResponseSchema, ResultCode } from '@letscollab/trait';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 @Controller({
   path: 'storage',
@@ -74,9 +77,11 @@ export class StorageController {
     description:
       'Receives multiple files and an associated bucket for uploading the files into the specified bucket.',
   })
-  @UseGuards(PublicApiGuard)
+  // @UseGuards(PublicApiGuard)
   async uploadFiles(
-    @UploadedFiles() files: MemoryStorageFile[],
+    @Req() req: FastifyRequest,
+    @UploadedFiles()
+    files: MemoryStorageFile[],
     @Param('bucket') bucket: string,
   ) {
     const d = await this.storage.save2Bucket(files, { bucket }).catch((err) => {
@@ -140,17 +145,17 @@ export class StorageController {
     };
   }
 
-  @Get('buckets/files/:id')
+  @Get('buckets/:bucket/files/:id')
   @ApiOperation({
     summary: '',
   })
   @UseGuards(PublicApiGuard)
-  async getFile(@Req() req): Promise<BaseResponseSchema> {
-    console.log(req);
-    return {
-      code: ResultCode.SUCCESS,
-    };
-  }
+  async getFile(
+    @Req() req,
+    @Res() res: FastifyReply,
+    @Param('bucket') bucket: string,
+    @Param('id') id: string,
+  ) {}
 
   @Delete('buckets/:bucket')
   @ApiOperation({

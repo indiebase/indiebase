@@ -56,18 +56,6 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   })();
 };
 
-export const DevApiHeader = function () {
-  return applyDecorators(
-    ApiHeader({
-      name: 'Domain',
-      description: 'The product package name, same as domain',
-      schema: {
-        default: 'com.deskbtm.letscollab',
-      },
-    }),
-  );
-};
-
 export const Domain = createParamDecorator((_, ctx: ExecutionContext) => {
   const request: any = ctx.switchToHttp().getRequest();
 
@@ -148,3 +136,21 @@ export class IsEmailsConstraint implements ValidatorConstraintInterface {
     return !!emails.find((e) => validator.isEmail(e));
   }
 }
+
+export const DevApiHeader = function () {
+  return applyDecorators(
+    ApiHeader({
+      name: 'Domain',
+      description: 'The product package name, same as domain',
+      schema: {
+        default: 'com.deskbtm.letscollab',
+      },
+    }),
+  );
+};
+
+export const PublicApiHeader = () =>
+  ApiHeader({
+    name: 'X-Lets-Api-Credential',
+    description: 'Protect Public Api',
+  });

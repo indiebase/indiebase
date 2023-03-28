@@ -1,17 +1,15 @@
-import {
-  AuthModule,
-  InvitationModule,
-  MailModule,
-  OrgModule,
-  ProjectModule,
-  StorageModule,
-  UserModule,
-} from '@letscollab/lets-community';
+import // AuthModule,
+// InvitationModule,
+// MailModule,
+// OrgModule,
+// ProjectModule,
+// StorageModule,
+// UserModule,
+'@letscollab/lets-community';
 import { StoplightElementsModule } from '@letscollab/nest-stoplight-elements';
 import { apiDocDefaultContact } from '@letscollab/server-shared';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { DemoOrgModule } from '../org/org.module';
 const { name, url, email } = apiDocDefaultContact;
 
 export const setupApiDoc = (app: INestApplication) =>
@@ -36,21 +34,20 @@ export const setupApiDoc = (app: INestApplication) =>
 
       const doc = SwaggerModule.createDocument(app, options, {
         include: [
-          DemoOrgModule,
-          AuthModule,
-          UserModule,
-          OrgModule,
-          ProjectModule,
-          InvitationModule,
-          MailModule,
-          StorageModule,
+          // AuthModule,
+          // // UserModule,
+          // OrgModule,
+          // ProjectModule,
+          // InvitationModule,
+          // MailModule,
+          // StorageModule,
         ],
         deepScanRoutes: true,
       });
 
       await StoplightElementsModule.setup('/docs/api', app, doc, {
-        favicon: '',
-        logo: 'https://user-images.githubusercontent.com/45007226/220814748-96ec88ec-673d-4d38-abae-dce7d7c6695f.png',
+        favicon: 'http://collab.deskbtm.com:23331/favicon.ico',
+        logo: 'http://collab.deskbtm.com:23331/logo192.png',
       });
     } catch (e) {
       console.error(e);

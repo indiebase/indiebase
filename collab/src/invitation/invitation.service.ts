@@ -8,14 +8,13 @@ import { InvitationEntity } from './invitation.entity';
 import { Repository } from 'typeorm';
 import { ResultCode, UserSession } from '@letscollab/trait';
 import { InviteMembersDto } from './invitation.dto';
-import { UserService } from '../user/user.service';
 
 @Injectable()
 export class InvitationService {
   constructor(
     @InjectRepository(InvitationEntity)
     private readonly inviteRepo: Repository<InvitationEntity>,
-    private readonly userService: UserService,
+    private readonly userService: any,
     private readonly logger: Logger,
   ) {}
 

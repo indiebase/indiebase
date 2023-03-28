@@ -3,7 +3,6 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { OctokitOptions } from './octokit.interface';
 import { Octokit } from 'octokit';
 import { REQUEST } from '@nestjs/core';
-import { join } from 'path';
 
 class OctokitExtend {
   private baseUrl = 'https://github.com';

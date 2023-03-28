@@ -13,14 +13,32 @@
     "incremental": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "noImplicitOverride": true,
-    "noImplicitReturns": false
+    "noImplicitReturns": false,
+    "paths": {
+      "@letscollab/lets-community/*": [
+        "../lets-community/src/index.ts"
+      ],
+      "@letscollab/nest-passport-fastify/*": [
+        "../lets-community/src/index.ts"
+      ],
+      "@letscollab/nest-stoplight-elements/*": [
+        "../lets-community/src/index.ts"
+      ],
+      "@letscollab/server-shared/*": [
+        "../lets-community/src/index.ts"
+      ],
+    }
   },
+  "references": [],
   "include": [
     "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

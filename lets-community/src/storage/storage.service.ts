@@ -21,6 +21,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BucketsEntity } from './buckets.entity';
 import { did } from '@letscollab/dash';
+import { promises } from 'stream';
+import * as fs from 'fs';
+import { Upload } from '@aws-sdk/lib-storage';
 
 interface SaveBucketOptions {
   signedUrl?: boolean;
@@ -47,49 +50,77 @@ export class StorageService {
 
   public async save2Bucket(
     files: MemoryStorageFile[],
-    options: SaveBucketOptions = {
-      signedUrl: false,
-      tmp: false,
-      bucket: 'letscollab',
-    },
+    preOptions?: SaveBucketOptions,
   ) {
     const d = [];
+    const { bucket, tmp, signedUrl } = Object.assign(
+      {},
+      {
+        signedUrl: false,
+        tmp: false,
+        bucket: 'letscollab',
+      },
+      preOptions,
+    );
 
-    console.log(files);
-
-    for (const file of files) {
+    for await (const file of files) {
       const p = path.parse(file.filename);
-      const Key = options.tmp ? 'tmp/' : '' + nanoid(32) + p.ext;
+      const Key = tmp ? 'tmp/' : '' + nanoid(32) + p.ext;
 
-      const putCommand = new PutObjectCommand({
-        Key,
-        Body: file.buffer,
-        Bucket: options.bucket,
-      });
-      await this.s3.send(putCommand);
-      let url;
-      const getCommand = new GetObjectCommand({
-        Key,
-        Bucket: options.bucket,
-      });
-      const [err, result] = await did(this.s3.send(getCommand));
+      // const putCommand = new PutObjectCommand({
+      //   Key,
+      //   Bucket: bucket,
+      // });
 
-      if (options.signedUrl) {
-        const getCommand = new GetObjectCommand({
+      const upload = new Upload({
+        client: this.s3,
+        params: {
           Key,
-          Bucket: options.bucket,
+          Bucket: bucket,
+          Body: file.file,
+        },
+      });
+
+      const [err, result] = await did(upload.done());
+
+      console.log(result);
+
+      // const getCommand = new GetObjectCommand({
+      //   Key,
+      //   Bucket: bucket,
+      // });
+      // const [err, result] = await did(this.s3.send(getCommand));
+
+      if (err) {
+        throw new InternalServerErrorException({
+          message: `${file.filename} uploads error`,
         });
-        console.log(getCommand);
-        url = await getSignedUrl(this.s3, getCommand);
-      } else {
-        const endpoint = await this.s3.config.endpoint();
-        url = `${endpoint.protocol}//${endpoint.hostname}:${endpoint.port}${endpoint.path}letscollab/${Key}`;
       }
 
-      d.push(url);
+      // const signedUrl = await getSignedUrl(this.s3, getCommand);
+
+      const endpoint = await this.s3.config.endpoint();
+      const url = `${endpoint.protocol}//${endpoint.hostname}:${endpoint.port}${endpoint.path}${bucket}/${Key}`;
+
+      d.push({
+        bucket,
+        url,
+        fileId: Key,
+        // signedUrl,
+        filename: file.filename,
+      });
     }
 
     return d.length > 1 ? d : d?.[0];
+  }
+
+  public async getFile(bucket: string, fileId: string) {
+    const getCommand = new GetObjectCommand({
+      Key: fileId,
+      Bucket: bucket,
+    });
+
+    const [err, res] = await did(this.s3.send(getCommand));
   }
 
   public persistTmpFile(keys: string[]) {}

@@ -12,13 +12,13 @@ import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
-import { UserModule } from './user';
+// import { UserModule } from './user';
 import { StorageModule } from './storage';
-import { OrgModule } from './org';
-import { ProjectModule } from './project';
-import { InvitationModule } from './invitation';
-import { MailModule } from './mail';
-import { NestFastifyApplication } from '@nestjs/platform-fastify';
+// import { OrgModule } from './org';
+// import { ProjectModule } from './project';
+// import { InvitationModule } from './invitation';
+// import { MailModule } from './mail';
+// import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyInstance } from 'fastify';
 import { HttpAdapterHost } from '@nestjs/core';
 const LokiTransport = require('winston-loki');
@@ -36,12 +36,12 @@ export const createLetsCommunityModule = function (
 ) {
   @Module({
     imports: [
-      UserModule,
+      // UserModule,
       StorageModule,
-      OrgModule,
-      ProjectModule,
-      InvitationModule,
-      MailModule,
+      // OrgModule,
+      // ProjectModule,
+      // InvitationModule,
+      // MailModule,
       ...options.imports,
       RedisModule.forRootAsync({
         inject: [ConfigService],
@@ -200,8 +200,18 @@ export const createLetsCommunityModule = function (
     constructor(private readonly adapterHost: HttpAdapterHost) {}
 
     async onModuleInit() {
-      const fastifyInstance =
-        this.adapterHost?.httpAdapter?.getInstance() as FastifyInstance;
+      // const fastifyInstance =
+      //   this.adapterHost?.httpAdapter?.getInstance() as FastifyInstance;
+      // fastifyInstance.register(proxy, {
+      //   upstream: 'http://127.0.0.1:18334',
+      //   proxyPayloads: false,
+      //   replyOptions: {
+      //     rewriteRequestHeaders: (originalReq, headers) => {
+      //       console.log(originalReq);
+      //       return headers;
+      //     },
+      //   },
+      // });
     }
   }
 

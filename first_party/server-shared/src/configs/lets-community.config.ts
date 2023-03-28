@@ -79,6 +79,9 @@ const storage = registerAs('storage', () => {
       region: process.env.STORAGE_S3_REGION,
       endpoint: process.env.STORAGE_S3_ENDPOINT,
     },
+    file: {
+      limit: process.env.STORAGE_SIZE_LIMIT,
+    },
   };
 });
 

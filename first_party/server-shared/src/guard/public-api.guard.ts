@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 import * as forge from 'node-forge';
-import { ApiHeader } from '@nestjs/swagger';
+
 /**
  *  Inspect token from header
  *
@@ -22,7 +22,7 @@ import { ApiHeader } from '@nestjs/swagger';
  * ```
  *
  */
-export const apiTokenInspect = function (
+const apiTokenInspect = function (
   token: string,
   salt: string,
   expire: number = 0,
@@ -81,9 +81,3 @@ export class PublicApiGuard implements CanActivate {
     }
   }
 }
-
-export const ProtectPublicApiHeader = () =>
-  ApiHeader({
-    name: 'X-Lets-Api-Credential',
-    description: 'Protect Public Api',
-  });

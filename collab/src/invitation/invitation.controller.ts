@@ -12,7 +12,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateOrgDto } from '../org/org.dto';
+
 import { InviteMembersDto } from './invitation.dto';
 import { InvitationService } from './invitation.service';
 
@@ -33,7 +33,7 @@ export class InvitationController {
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
-  async getInvitation(@Body() body: CreateOrgDto, @MyInfo('id') id: number) {
+  async getInvitation(@Body() body: any, @MyInfo('id') id: number) {
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
 

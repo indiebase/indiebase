@@ -14,7 +14,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   AccessGuard,
-  ProtectPublicApiHeader,
+  PublicApiHeader,
   MyInfo,
   PublicApiGuard,
 } from '@letscollab/server-shared';
@@ -39,7 +39,7 @@ export class AuthController {
    * Give up letscollab's register
    */
   @Post('signin')
-  @ProtectPublicApiHeader()
+  @PublicApiHeader()
   @ApiOperation({
     summary: 'SignIn with password',
   })

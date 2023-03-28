@@ -6,7 +6,12 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import fastifyHelmet, { FastifyHelmetOptions } from '@fastify/helmet';
-import { HttpExceptionFilter, kDevMode } from '@letscollab/server-shared';
+import {
+  HttpExceptionFilter,
+  kDevMode,
+  kReleaseMode,
+  sizeParser,
+} from '@letscollab/server-shared';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';
@@ -49,6 +54,7 @@ async function bootstrap() {
     await app.register<FastifyHelmetOptions>(fastifyHelmet as any, {
       global: true,
       crossOriginOpenerPolicy: false,
+      crossOriginResourcePolicy: kReleaseMode,
       contentSecurityPolicy: false,
       referrerPolicy: {
         policy: 'origin',
@@ -67,7 +73,11 @@ async function bootstrap() {
 
     // Setup stoplight api doc.
     await setupApiDoc(app);
-    app.register(fastifyMultipart as any);
+    app.register(fastifyMultipart as any, {
+      limits: {
+        fileSize: sizeParser(config.get('storage.file.limit')),
+      },
+    });
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),
     });

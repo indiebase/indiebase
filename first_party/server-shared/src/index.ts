@@ -5,3 +5,4 @@ export * from './utils';
 export * from './decorators';
 export * from './module';
 export * from './configs';
+export * from './pipe';
