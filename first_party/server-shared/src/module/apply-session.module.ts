@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import FastifySession from '@fastify/session';
-import * as ConnectRedis from 'connect-redis';
+import ConnectRedis from 'connect-redis';
 import { FastifyInstance } from 'fastify';
 import { type Redis as IRedis, RedisOptions } from 'ioredis';
 import Redis from 'ioredis';

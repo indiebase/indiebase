@@ -6,7 +6,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { NacosConfigClient } from 'nacos';
-import * as stripJsonComments from 'strip-json-comments';
+import stripJsonComments from 'strip-json-comments';
 import { DataParser, NacosConfigClientOptions } from './nacos-config.interface';
 
 export interface SubOptions {

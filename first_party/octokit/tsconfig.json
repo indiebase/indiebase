@@ -1,27 +1,5 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "module": "CommonJS",
-    "declaration": true,
-    "removeComments": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2017",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true,
-    "pretty": true
-  },
+  "extends": "../../tsconfig.base.json",
   "include": [
     "src/**/*",
   ],

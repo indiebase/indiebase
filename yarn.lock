@@ -4750,10 +4750,6 @@ __metadata:
     "@fastify/session": 9.0.0
     "@fastify/swagger": 7.5.0
     "@juicyllama/nestjs-redoc": ^2.3.10
-    "@letscollab/lets-community": "workspace:^"
-    "@letscollab/nest-passport-fastify": "workspace:^"
-    "@letscollab/nest-stoplight-elements": "workspace:^"
-    "@letscollab/server-shared": "workspace:^"
     "@liaoliaots/nestjs-redis": 8.0.0
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.3.11
@@ -4850,19 +4846,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/lets-community@workspace:^, @letscollab/lets-community@workspace:lets-community":
+"@letscollab/lets-community@workspace:lets-community":
   version: 0.0.0-use.local
   resolution: "@letscollab/lets-community@workspace:lets-community"
   dependencies:
     "@aws-sdk/lib-storage": ^3.300.0
     "@fastify/http-proxy": ^9.0.0
     "@fastify/swagger": 7.5.0
-    "@letscollab/dash": "workspace:^"
-    "@letscollab/nest-casbin": "workspace:^"
-    "@letscollab/nest-fastify-file": "workspace:^"
-    "@letscollab/nest-passport-fastify": "workspace:^"
-    "@letscollab/nest-s3": "workspace:^"
-    "@letscollab/server-shared": "workspace:^"
     "@liaoliaots/nestjs-redis": 8.0.0
     "@nestjs-modules/mailer": 1.7.1
     "@nestjs/cli": 9.1.1
@@ -4884,6 +4874,7 @@ __metadata:
     "@types/rimraf": 3
     "@types/supertest": 2.0.11
     "@vercel/ncc": 0.34.0
+    bcrypt: 5.0.1
     class-transformer: 0.5.1
     class-validator: 0.13.2
     cross-env: 7.0.3
@@ -4920,7 +4911,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-casbin@workspace:^, @letscollab/nest-casbin@workspace:first_party/casbin":
+"@letscollab/nest-casbin@workspace:first_party/casbin":
   version: 0.0.0-use.local
   resolution: "@letscollab/nest-casbin@workspace:first_party/casbin"
   dependencies:
@@ -4949,7 +4940,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-fastify-file@workspace:^, @letscollab/nest-fastify-file@workspace:third_party/fastify-file":
+"@letscollab/nest-fastify-file@workspace:third_party/fastify-file":
   version: 0.0.0-use.local
   resolution: "@letscollab/nest-fastify-file@workspace:third_party/fastify-file"
   dependencies:
@@ -5023,7 +5014,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-passport-fastify@workspace:^, @letscollab/nest-passport-fastify@workspace:first_party/passport":
+"@letscollab/nest-passport-fastify@workspace:first_party/passport":
   version: 0.0.0-use.local
   resolution: "@letscollab/nest-passport-fastify@workspace:first_party/passport"
   dependencies:
@@ -5066,7 +5057,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-s3@workspace:^, @letscollab/nest-s3@workspace:first_party/s3":
+"@letscollab/nest-s3@workspace:first_party/s3":
   version: 0.0.0-use.local
   resolution: "@letscollab/nest-s3@workspace:first_party/s3"
   dependencies:
@@ -5096,7 +5087,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-stoplight-elements@workspace:^, @letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight":
+"@letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight":
   version: 0.0.0-use.local
   resolution: "@letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight"
   dependencies:
@@ -5205,13 +5196,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/server-shared@workspace:^, @letscollab/server-shared@workspace:first_party/server-shared":
+"@letscollab/server-shared@workspace:first_party/server-shared":
   version: 0.0.0-use.local
   resolution: "@letscollab/server-shared@workspace:first_party/server-shared"
   dependencies:
     "@fastify/session": 9.0.0
-    "@letscollab/nest-casbin": "workspace:^"
-    "@letscollab/trait": "workspace:^"
     "@liaoliaots/nestjs-redis": 8.0.0
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.3.11
@@ -5249,12 +5238,6 @@ __metadata:
 "@letscollab/trait@workspace:^, @letscollab/trait@workspace:first_party/trait":
   version: 0.0.0-use.local
   resolution: "@letscollab/trait@workspace:first_party/trait"
-  dependencies:
-    "@letscollab/nest-casbin": "workspace:^"
-    "@nestjs/swagger": 6.2.1
-    "@types/bcrypt": 5
-    bcrypt: 5.0.1
-    typeorm: 0.3.7
   languageName: unknown
   linkType: soft
 

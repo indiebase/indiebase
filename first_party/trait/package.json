@@ -4,15 +4,6 @@
   "main": "./src/index.ts",
   "description": "The common interface for letscollab both font-end and back-end",
   "engines": {
-    "node": ">=14"
-  },
-  "dependencies": {
-    "@letscollab/nest-casbin": "workspace:^",
-    "@nestjs/swagger": "6.2.1",
-    "bcrypt": "5.0.1",
-    "typeorm": "0.3.7"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "5"
+    "node": ">=16"
   }
 }

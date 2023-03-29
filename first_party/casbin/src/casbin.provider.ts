@@ -1,7 +1,7 @@
 import type { Provider } from '@nestjs/common';
 import type { CasbinAsyncOptions, CasbinOptions } from './casbin.interface';
 import { CASBIN_OPTIONS } from './casbin.constants';
-import assert from 'assert';
+import assert from 'node:assert';
 
 export const createCasbinProvider = function (
   options: CasbinOptions,

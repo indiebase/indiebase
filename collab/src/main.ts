@@ -84,7 +84,11 @@ async function bootstrap() {
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
-    await app.listen(config.get('app.port'), config.get('app.hostname'));
+    const port = config.get('app.port'),
+      hostname = config.get('app.hostname');
+
+    await app.listen(port, hostname);
+    Logger.log(`🚀 Application is running on: http://${hostname}:${port}`);
   } catch (error) {
     logger.error(error);
   }

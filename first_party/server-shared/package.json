@@ -26,8 +26,6 @@
   },
   "dependencies": {
     "@fastify/session": "9.0.0",
-    "@letscollab/nest-casbin": "workspace:^",
-    "@letscollab/trait": "workspace:^",
     "@liaoliaots/nestjs-redis": "8.0.0",
     "@nestjs/common": "9.3.11",
     "@nestjs/core": "9.3.11",

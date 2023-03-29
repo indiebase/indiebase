@@ -14,12 +14,10 @@ import {
   ApiCookieAuth,
   ApiOperation,
   ApiOkResponse,
-  ApiOAuth2,
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import {
   MyInfo,
-  // ,AccessGuard,
   Domain,
   DevApiHeader,
   PublicApiGuard,

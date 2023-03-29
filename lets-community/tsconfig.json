@@ -1,26 +1,27 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "module": "CommonJS",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ESNext",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "incremental": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "skipLibCheck": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true,
-    "noImplicitReturns": false
+    "esModuleInterop": true,
+    "composite": true
   },
   "include": [
     "src/**/*"
-, "../collab-hosting/src/config/app.ts", "../collab-hosting/src/config/index.ts"  ]
+  ],
+  "references": [
+    {
+      "path": "../first_party/dash"
+    },
+    {
+      "path": "../third_party/fastify-file"
+    },
+    {
+      "path": "../first_party/passport",
+    },
+    {
+      "path": "../first_party/s3",
+    },
+    {
+      "path": "../first_party/server-shared",
+    }
+  ]
 }

@@ -151,7 +151,7 @@ export class StorageController {
   })
   @UseGuards(PublicApiGuard)
   async getFile(
-    @Req() req,
+    @Req() req: any,
     @Res() res: FastifyReply,
     @Param('bucket') bucket: string,
     @Param('id') id: string,

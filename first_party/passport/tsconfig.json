@@ -11,8 +11,16 @@
     "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "./",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "composite": true
   },
-  "include": ["lib/**/*", "../index.ts", "test/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [
+    "lib/**/*",
+    "../index.ts",
+    "test/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

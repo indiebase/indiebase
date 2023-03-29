@@ -2,7 +2,7 @@ import { ModuleMetadata } from '@nestjs/common';
 import { Octokit } from 'octokit';
 
 export interface OctokitOptions {
-  optionsFactory: (req) => ConstructorParameters<typeof Octokit>[0];
+  optionsFactory: (req: any) => ConstructorParameters<typeof Octokit>[0];
   plugins?: Parameters<typeof Octokit['plugin']>;
 }
 

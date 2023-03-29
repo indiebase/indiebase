@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowJs": true,
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2015",
+    "removeComments": true,
+    "module": "CommonJS",
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": false,
+    "pretty": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": false,
+    "skipDefaultLibCheck": true,
+    "noImplicitOverride": true,
+    "strictBindCallApply": false,
+    "noImplicitReturns": false,
+    "baseUrl": ".",
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  },
+  "exclude": [
+    "tmp",
+    "dist",
+    "node_modules",
+    "test",
+    "**/*spec.ts"
+  ]
+}

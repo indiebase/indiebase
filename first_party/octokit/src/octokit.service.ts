@@ -7,11 +7,11 @@ import { REQUEST } from '@nestjs/core';
 class OctokitExtend {
   private baseUrl = 'https://github.com';
 
-  public repoUrl(org, repo) {
+  public repoUrl(org: string, repo: string) {
     return new URL(`${this.baseUrl}/${[org, repo].filter(Boolean).join('/')}`);
   }
 
-  public orgUrl(name) {
+  public orgUrl(name: string) {
     return new URL(`${this.baseUrl}/${[name].filter(Boolean).join('/')}`);
   }
 }
@@ -33,7 +33,7 @@ export class OctokitService {
     @Inject(OCTOKIT_OPTIONS)
     private options: OctokitOptions,
     @Inject(REQUEST)
-    private readonly req,
+    private readonly req: any,
   ) {
     let InnerOctokit = Octokit;
 

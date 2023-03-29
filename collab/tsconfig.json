@@ -1,40 +1,19 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "module": "CommonJS",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ESNext",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "incremental": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "skipLibCheck": true,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true,
-    "noImplicitReturns": false,
-    "paths": {
-      "@letscollab/lets-community/*": [
-        "../lets-community/src/index.ts"
-      ],
-      "@letscollab/nest-passport-fastify/*": [
-        "../lets-community/src/index.ts"
-      ],
-      "@letscollab/nest-stoplight-elements/*": [
-        "../lets-community/src/index.ts"
-      ],
-      "@letscollab/server-shared/*": [
-        "../lets-community/src/index.ts"
-      ],
-    }
+    "esModuleInterop": true,
   },
-  "references": [],
+  "references": [
+    {
+      "path": "../lets-community",
+    },
+    {
+      "path": "../first_party/nestjs-stoplight",
+    },
+    {
+      "path": "../first_party/server-shared",
+    },
+  ],
   "include": [
     "src/**/*"
   ],
