@@ -22,8 +22,9 @@
     "noImplicitReturns": false,
     "baseUrl": ".",
     "lib": [
-      "es2017",
-      "dom"
+      "ESNext",
+      "dom",
+      "dom.iterable"
     ]
   },
   "exclude": [

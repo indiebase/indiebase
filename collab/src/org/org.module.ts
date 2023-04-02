@@ -1,5 +1,5 @@
 import { OrgController } from './org.controller';
-import { Logger, Module, forwardRef } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 
 @Module({
   imports: [],

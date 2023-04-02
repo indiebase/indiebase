@@ -2,11 +2,10 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "esModuleInterop": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
     "composite": true
   },
-  "include": [
-    "src/**/*"
-  ],
   "references": [
     {
       "path": "../first_party/dash"
@@ -23,5 +22,12 @@
     {
       "path": "../first_party/server-shared",
     }
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
   ]
 }

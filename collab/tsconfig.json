@@ -2,6 +2,8 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "esModuleInterop": true,
+    "baseUrl": ".",
+    "outDir": "./dist"
   },
   "references": [
     {
@@ -15,9 +17,10 @@
     },
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
   ],
   "exclude": [
+    "dist",
     "node_modules"
   ]
 }
