@@ -4,13 +4,15 @@
     "esModuleInterop": true,
     "composite": true,
     "baseUrl": ".",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "src"
   },
   "include": [
     "src/**/*",
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "test",
   ]
 }

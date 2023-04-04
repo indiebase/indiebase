@@ -12,6 +12,7 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
+    
     "lint": "yarn workspaces foreach run lint",
     "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
     "stack:dev": "docker stack deploy -c ./docker-compose.yaml letscollab",

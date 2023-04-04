@@ -4,8 +4,10 @@
   "description": "Nest - modern, fast, powerful node.js web framework (@passport)",
   "author": "Kamil Mysliwiec",
   "license": "MIT",
-  "main": "./lib/index.ts",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
   "scripts": {
+    "prebuild": "rimraf dist",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"lib/**/*.ts\"",
     "lint": "eslint 'lib/**/*.ts' --fix",

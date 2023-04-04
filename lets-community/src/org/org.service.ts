@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { OctokitService } from '@letscollab/nest-octokit';
 import { CreateOrgDto, QueryOrgDto, UpdateOrgDto } from './org.dto';
 import { ResultCode } from '@letscollab/trait';
 import { OrgEntity } from './org.entity';
@@ -21,7 +20,7 @@ export class OrgService {
     @InjectRepository(OrgEntity)
     private readonly orgRepo: Repository<OrgEntity>,
     private readonly logger: Logger,
-    private readonly octokit: OctokitService,
+    // private readonly octokit: any = {},
     private readonly userService: UserService,
     private readonly projectService: ProjectService,
   ) {}
@@ -69,38 +68,32 @@ export class OrgService {
    * @returns
    */
   public async getGithubOwnOrgs() {
-    let { data } = await this.octokit.rest.orgs
-      .listForAuthenticatedUser({
-        page: 1,
-        per_page: 999,
-      })
-      .catch((err) => {
-        this.logger.error(err);
-
-        if (err.status === 401) {
-          throw new UnauthorizedException('Github bad credentials');
-        }
-
-        throw new BadRequestException();
-      });
-
-    return data;
+    // let { data } = await this.octokit.rest.orgs
+    //   .listForAuthenticatedUser({
+    //     page: 1,
+    //     per_page: 999,
+    //   })
+    //   .catch((err) => {
+    //     this.logger.error(err);
+    //     if (err.status === 401) {
+    //       throw new UnauthorizedException('Github bad credentials');
+    //     }
+    //     throw new BadRequestException();
+    //   });
+    // return data;
   }
 
   public async getGithubOrg(name: string) {
-    let { data } = await this.octokit.rest.orgs
-      .get({ org: name })
-      .catch((err) => {
-        this.logger.error(err);
-
-        if (err.status === 401) {
-          throw new UnauthorizedException('Github bad credentials');
-        }
-
-        throw new BadRequestException();
-      });
-
-    return data;
+    // let { data } = await this.octokit.rest.orgs
+    //   .get({ org: name })
+    //   .catch((err) => {
+    //     this.logger.error(err);
+    //     if (err.status === 401) {
+    //       throw new UnauthorizedException('Github bad credentials');
+    //     }
+    //     throw new BadRequestException();
+    //   });
+    // return data;
   }
 
   public async getPinnedProjects(name: string) {
@@ -116,7 +109,7 @@ export class OrgService {
           projects: {
             members: true,
           },
-        }
+        },
       })
       .catch((err) => {
         this.logger.error(err);
@@ -131,38 +124,32 @@ export class OrgService {
   }
 
   public async getGithubOrgRepos(name: string) {
-    let { data } = await this.octokit.rest.repos
-      .listForOrg({
-        org: name,
-        type: 'all',
-      })
-      .catch((err) => {
-        this.logger.error(err);
-
-        if (err.status === 401) {
-          throw new UnauthorizedException('Github bad credentials');
-        }
-
-        throw new BadRequestException();
-      });
-
-    return data;
+    // let { data } = await this.octokit.rest.repos
+    //   .listForOrg({
+    //     org: name,
+    //     type: 'all',
+    //   })
+    //   .catch((err) => {
+    //     this.logger.error(err);
+    //     if (err.status === 401) {
+    //       throw new UnauthorizedException('Github bad credentials');
+    //     }
+    //     throw new BadRequestException();
+    //   });
+    // return data;
   }
 
   public async getGithubMembers(name: string) {
-    let { data } = await this.octokit.rest.orgs
-      .get({ org: name })
-      .catch((err) => {
-        this.logger.error(err);
-
-        if (err.status === 401) {
-          throw new UnauthorizedException('Github bad credentials');
-        }
-
-        throw new BadRequestException();
-      });
-
-    return data;
+    // let { data } = await this.octokit.rest.orgs
+    //   .get({ org: name })
+    //   .catch((err) => {
+    //     this.logger.error(err);
+    //     if (err.status === 401) {
+    //       throw new UnauthorizedException('Github bad credentials');
+    //     }
+    //     throw new BadRequestException();
+    //   });
+    // return data;
   }
 
   public async createOrg(body: CreateOrgDto, id: number) {
@@ -175,33 +162,33 @@ export class OrgService {
       avatarUrl,
     } = body;
 
-    const orgEntity = this.orgRepo.create({
-      avatarUrl,
-      name,
-      contactEmail,
-      description,
-      githubOrgName,
-      domain,
-      ownerId: id,
-      creatorId: id,
-      githubOrgUrl: this.octokit.extend.orgUrl(name).href,
-    });
+    // const orgEntity = this.orgRepo.create({
+    //   avatarUrl,
+    //   name,
+    //   contactEmail,
+    //   description,
+    //   githubOrgName,
+    //   domain,
+    //   ownerId: id,
+    //   creatorId: id,
+    //   githubOrgUrl: this.octokit.extend.orgUrl(name).href,
+    // });
 
-    const user = await this.userService.repo.findOne({
-      where: { id },
-      relations: ['organizations'],
-    });
+    // const user = await this.userService.repo.findOne({
+    //   where: { id },
+    //   relations: ['organizations'],
+    // });
 
-    orgEntity.members = [user];
+    // orgEntity.members = [user];
 
-    await this.orgRepo.save(orgEntity).catch((err) => {
-      this.logger.error(err);
+    // await this.orgRepo.save(orgEntity).catch((err) => {
+    //   this.logger.error(err);
 
-      throw new InternalServerErrorException({
-        code: ResultCode.ERROR,
-        message: 'Create organization failed',
-      });
-    });
+    //   throw new InternalServerErrorException({
+    //     code: ResultCode.ERROR,
+    //     message: 'Create organization failed',
+    //   });
+    // });
   }
 
   public async updateOrg(body: UpdateOrgDto) {

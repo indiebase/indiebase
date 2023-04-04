@@ -4,7 +4,8 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "composite": true
+    "composite": true,
+    "rootDir": "src"
   },
   "references": [
     {
@@ -28,6 +29,7 @@
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "test"
   ]
 }

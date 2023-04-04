@@ -88,8 +88,8 @@ export class ProjectController {
 
     return {
       code: ResultCode.SUCCESS,
-      total: d.total_count,
-      d: d.items,
+      // total: d.total_count,
+      // d: d.items,
     };
   }
 

@@ -5,11 +5,11 @@
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "main": "./dist/index.js"
+    "access": "public"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -22,7 +22,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "clean": "rm -r ./dist"
   },
   "dependencies": {
     "@nestjs/common": "9.3.11",

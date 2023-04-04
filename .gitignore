@@ -10,6 +10,7 @@
 **/node_modules/*
 **/dist/*
 **/build/*
+/**/*.tsbuildinfo
 src/migration
 temp
 # Logs

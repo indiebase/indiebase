@@ -3,7 +3,8 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "baseUrl": ".",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "src"
   },
   "references": [
     {
@@ -15,12 +16,19 @@
     {
       "path": "../first_party/server-shared",
     },
+    {
+      "path": "../first_party/octokit"
+    },
+    {
+      "path": "../third_party/fastify-file"
+    }
   ],
   "include": [
     "src/**/*",
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "test"
   ]
 }

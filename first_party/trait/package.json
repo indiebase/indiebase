@@ -1,8 +1,12 @@
 {
   "name": "@letscollab/trait",
   "version": "0.0.1",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "description": "The common interface for letscollab both font-end and back-end",
+  "scripts": {
+    "prebuild": "rimraf dist"
+  },
   "engines": {
     "node": ">=16"
   }

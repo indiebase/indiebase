@@ -4,7 +4,6 @@ import {
   PassportStrategy,
 } from '@letscollab/nest-passport-fastify';
 import { Injectable, Logger } from '@nestjs/common';
-import { NacosConfigService } from '@letscollab/nest-nacos';
 
 // Observable
 @Injectable()
@@ -12,10 +11,7 @@ export class GithubStrategy
   extends PassportStrategy(Strategy)
   implements PassportStrategyFactory
 {
-  constructor(
-    private readonly nacosConfig: NacosConfigService,
-    private readonly logger: Logger,
-  ) {
+  constructor(private readonly logger: Logger) {
     super();
   }
 
@@ -32,7 +28,6 @@ export class GithubStrategy
     //     },
     //   },
     // ];
-
     // for await (const sub of subscriptions) {
     //   const { getProperty, ...rest } = sub;
     //   await this.nacosConfig.subscribe(rest, (config) => {

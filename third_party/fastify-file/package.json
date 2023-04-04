@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "fastify-multipart decorators for Nest.js",
   "license": "MIT",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "main": "./dist/index.js"
+    "access": "public"
   },
   "keywords": [
     "nest",

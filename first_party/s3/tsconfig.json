@@ -2,9 +2,17 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "esModuleInterop": true,
-    "composite": true
+    "composite": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "src"
   },
   "include": [
     "src/**/*",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "test"
   ]
 }

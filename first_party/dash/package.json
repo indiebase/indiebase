@@ -4,11 +4,11 @@
   "description": "Common utils",
   "author": "Han",
   "private": true,
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "access": "public",
-    "main": "./dist/index.js"
+    "access": "public"
   },
   "scripts": {
     "prebuild": "rimraf dist",

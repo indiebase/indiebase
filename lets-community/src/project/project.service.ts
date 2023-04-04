@@ -15,7 +15,7 @@ import {
 } from './project.dto';
 import { Repository } from 'typeorm';
 import { ProjectEntity } from './project.entity';
-import { OctokitService } from '@letscollab/nest-octokit';
+
 import { OrgService } from '../org/org.service';
 import { ResultCode } from '@letscollab/trait';
 import { compatPackageName } from '@letscollab/server-shared';
@@ -25,7 +25,6 @@ export class ProjectService {
   constructor(
     @InjectRepository(ProjectEntity)
     private readonly projectRepo: Repository<ProjectEntity>,
-    private readonly octokit: OctokitService,
     private readonly logger: Logger,
     @Inject(forwardRef(() => OrgService))
     private readonly orgService: OrgService,
@@ -51,7 +50,7 @@ export class ProjectService {
     const projectEntity = this.projectRepo.create({
       name,
       githubRepoName,
-      githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
+      // githubRepoUrl: this.octokit.extend.repoUrl(orgName, name).href,
       contactEmail,
       packageName: !!packageName
         ? packageName
@@ -109,22 +108,22 @@ export class ProjectService {
   }
 
   public async searchGithubRepo(q: string) {
-    let { data } = await this.octokit.rest.search
-      .repos({
-        q,
-        sort: 'stars',
-      })
-      .catch((err) => {
-        this.logger.error(err);
+    // let { data } = await this.octokit.rest.search
+    //   .repos({
+    //     q,
+    //     sort: 'stars',
+    //   })
+    //   .catch((err) => {
+    //     this.logger.error(err);
 
-        if (err.status === 401) {
-          throw new UnauthorizedException('Github bad credentials');
-        }
+    //     if (err.status === 401) {
+    //       throw new UnauthorizedException('Github bad credentials');
+    //     }
 
-        throw new BadRequestException();
-      });
+    //     throw new BadRequestException();
+    //   });
 
-    return data;
+    // return data;
   }
 
   async updateProject(body: UpdateProjectDto) {

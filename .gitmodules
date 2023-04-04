@@ -7,6 +7,3 @@ url = https://github.com/deskbtm-letscollab/PITM.git
 [submodule "lets-pro"]
 path = lets-pro
 url = https://github.com/deskbtm-letscollab/lets-pro.git
-[submodule "first_party/nestjs-stoplight"]
-	path = first_party/nestjs-stoplight
-	url = https://github.com/Nawbc/nestjs-stoplight.git

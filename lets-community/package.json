@@ -4,7 +4,8 @@
   "description": "letscollab BaaS community edition",
   "author": "Han",
   "private": true,
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "bundle": "npm run prebuild && ncc build ./src/main.ts -o dist -m",
