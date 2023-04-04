@@ -159,26 +159,26 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf
     logging: *loki-logging
 
-  seaweed:
-    image: chrislusf/seaweedfs:3.37
-    ports:
-      # master
-      - 19332:9333
-      - 19334:19333
-      - 19335:9324
-      # volume
-      - 18079:8080
-      - 18099:8081
-      - 18082:18080
-      # filter
-      - 18887:8888
-      - 18890:18888
-      # S3
-      - 18334:8333
-    command: -v=4 server -s3 -ip=seaweed -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3.json -metricsPort=9324
-    volumes:
-      - ${CONFIG_DIR:-.}/config/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
-      - seaweed_data:/data
+  # seaweed:
+  #   image: chrislusf/seaweedfs:3.37
+  #   ports:
+  #     # master
+  #     - 19332:9333
+  #     - 19334:19333
+  #     - 19335:9324
+  #     # volume
+  #     - 18079:8080
+  #     - 18099:8081
+  #     - 18082:18080
+  #     # filter
+  #     - 18887:8888
+  #     - 18890:18888
+  #     # S3
+  #     - 18334:8333
+  #   command: -v=4 server -s3 -ip=seaweed -ip.bind=0.0.0.0 -dir=/data -s3.config=/etc/seaweedfs/s3.json -metricsPort=9324
+  #   volumes:
+  #     - ${CONFIG_DIR:-.}/config/seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
+  #     - seaweed_data:/data
 
 networks:
   default:
@@ -196,9 +196,10 @@ volumes:
   grafana_data:
   portainer_data:
   prometheus_data:
-  seaweed_data:
   loki_data:
   redis_data:
   apisix_logs:
   nacos_logs:
   loki_logs:
+  # lets storage
+  lets_uploads:

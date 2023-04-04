@@ -1,26 +1,22 @@
 import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, ModuleMetadata } from '@nestjs/common';
 import { resolve } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import TypeOrmAdapter from 'typeorm-adapter';
 import { ConfigService } from '@nestjs/config';
-import { S3Module } from '@letscollab/nest-s3';
 import { IsEntityExistedConstraint, kDevMode } from '@letscollab/server-shared';
 import { CasbinModule } from '@letscollab/nest-casbin';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
-// import { UserModule } from './user';
+import { UserModule } from './user';
 import { StorageModule } from './storage';
-// import { OrgModule } from './org';
-// import { ProjectModule } from './project';
-// import { InvitationModule } from './invitation';
-// import { MailModule } from './mail';
-// import { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { FastifyInstance } from 'fastify';
-import { HttpAdapterHost } from '@nestjs/core';
+import { OrgModule } from './org';
+import { ProjectModule } from './project';
+import { InvitationModule } from './invitation';
+import { MailModule } from './mail';
 const LokiTransport = require('winston-loki');
 
 /**
@@ -36,12 +32,12 @@ export const createLetsCommunityModule = function (
 ) {
   @Module({
     imports: [
-      // UserModule,
+      UserModule,
       StorageModule,
-      // OrgModule,
-      // ProjectModule,
-      // InvitationModule,
-      // MailModule,
+      OrgModule,
+      ProjectModule,
+      InvitationModule,
+      MailModule,
       ...options.imports,
       RedisModule.forRootAsync({
         inject: [ConfigService],
@@ -57,20 +53,6 @@ export const createLetsCommunityModule = function (
           };
         },
       }),
-      // This module integrated with Redis, Session Cookie, Fastify Passport.
-      // ApplySessionModule.forRootAsync({
-      //   inject: [ConfigService],
-      //   async useFactory(config: ConfigService) {
-      //     const { host, password, port } =
-      //       config.get<RedisClientOptions>('redis');
-      //     session.saveUninitialized = false;
-      //     return {
-      //       redis: { host, port, password },
-      //       // session,
-      //       cookie: {},
-      //     };
-      //   },
-      // }),
       WinstonModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (configService: ConfigService) => {
@@ -142,25 +124,25 @@ export const createLetsCommunityModule = function (
           };
         },
       }),
-      S3Module.forRootAsync({
-        inject: [ConfigService],
-        useFactory: async (config) => {
-          const { region, endpoint, accessKey, secretKey } =
-            config.get('storage.s3');
+      // S3Module.forRootAsync({
+      //   inject: [ConfigService],
+      //   useFactory: async (config) => {
+      //     const { region, endpoint, accessKey, secretKey } =
+      //       config.get('storage.s3');
 
-          return {
-            config: {
-              region,
-              endpoint: { url: new URL(endpoint) },
-              forcePathStyle: true,
-              credentials: {
-                accessKeyId: accessKey,
-                secretAccessKey: secretKey,
-              },
-            },
-          };
-        },
-      }),
+      //     return {
+      //       config: {
+      //         region,
+      //         endpoint: { url: new URL(endpoint) },
+      //         forcePathStyle: true,
+      //         credentials: {
+      //           accessKeyId: accessKey,
+      //           secretAccessKey: secretKey,
+      //         },
+      //       },
+      //     };
+      //   },
+      // }),
       MailerModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {
@@ -196,24 +178,7 @@ export const createLetsCommunityModule = function (
       ...(options.providers ?? []),
     ],
   })
-  class LetsCommunityModule implements OnModuleInit {
-    constructor(private readonly adapterHost: HttpAdapterHost) {}
-
-    async onModuleInit() {
-      // const fastifyInstance =
-      //   this.adapterHost?.httpAdapter?.getInstance() as FastifyInstance;
-      // fastifyInstance.register(proxy, {
-      //   upstream: 'http://127.0.0.1:18334',
-      //   proxyPayloads: false,
-      //   replyOptions: {
-      //     rewriteRequestHeaders: (originalReq, headers) => {
-      //       console.log(originalReq);
-      //       return headers;
-      //     },
-      //   },
-      // });
-    }
-  }
+  class LetsCommunityModule {}
 
   return LetsCommunityModule as any;
 };

@@ -26,10 +26,10 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new RunScriptWebpackPlugin({ name: 'server.js', autoRestart: false }),
+    new RunScriptWebpackPlugin({ name: 'main.js', autoRestart: false }),
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'server.js',
+    filename: 'main.js',
   },
 };

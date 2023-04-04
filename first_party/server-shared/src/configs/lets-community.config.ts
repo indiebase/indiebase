@@ -12,8 +12,8 @@ function handleOrigin(origin: string, originReg: string) {
 
 const app = registerAs('app', () => {
   return {
-    hostname: process.env.HTTP_HOSTNAME,
-    port: process.env.HTTP_PORT,
+    hostname: process.env.HTTP_HOSTNAME || '0.0.0.0',
+    port: process.env.HTTP_PORT || 23331,
     corsOrigin: handleOrigin(
       process.env.CORS_ORIGINS_STRING,
       process.env.CORS_ORIGINS_REG,
@@ -25,16 +25,16 @@ const app = registerAs('app', () => {
 
 const redis = registerAs('redis', () => {
   return {
-    host: process.env.DB_REDIS_HOST,
-    port: parseInt(process.env.DB_REDIS_PORT),
+    host: process.env.DB_REDIS_HOST || '0.0.0.0',
+    port: parseInt(process.env.DB_REDIS_PORT) || 6379,
     password: process.env.DB_REDIS_PASSWORD,
   };
 });
 
 const mysql = registerAs('mysql', () => {
   return {
-    host: process.env.DB_MYSQL_HOST,
-    port: parseInt(process.env.DB_MYSQL_PORT),
+    host: process.env.DB_MYSQL_HOST || '0.0.0.0',
+    port: parseInt(process.env.DB_MYSQL_PORT) || 3306,
     username: process.env.DB_MYSQL_USER,
     password: process.env.DB_MYSQL_PASSWORD,
     database: process.env.DB_MYSQL_DATABASE,

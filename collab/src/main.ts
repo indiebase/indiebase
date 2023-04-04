@@ -10,7 +10,6 @@ import {
   HttpExceptionFilter,
   kDevMode,
   kReleaseMode,
-  sizeParser,
 } from '@letscollab/server-shared';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
@@ -19,6 +18,8 @@ import { useContainer } from 'class-validator';
 import fastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { setupApiDoc } from './utils';
+
+declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -74,9 +75,9 @@ async function bootstrap() {
     // Setup stoplight api doc.
     await setupApiDoc(app);
     app.register(fastifyMultipart as any, {
-      limits: {
-        fileSize: sizeParser(config.get('storage.file.limit')),
-      },
+      // limits: {
+      //   fileSize: sizeParser(config.get('storage.file.limit')),
+      // },
     });
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),
@@ -91,6 +92,11 @@ async function bootstrap() {
     Logger.log(`🚀 Application is running on: http://${hostname}:${port}`);
   } catch (error) {
     logger.error(error);
+  }
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
   }
 }
 

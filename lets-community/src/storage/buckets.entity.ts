@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -15,6 +16,7 @@ export class BucketsEntity {
 
   @ApiProperty()
   @Column('varchar', { unique: true, comment: 'Bucket name' })
+  @Index()
   name: string;
 
   @ApiPropertyOptional()

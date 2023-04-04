@@ -1,5 +1,7 @@
+import { BucketsEntity } from './buckets.entity';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEntityExisted } from '@letscollab/server-shared';
 
 // Upload multiple files
 export class FilesUploadDto {
@@ -32,6 +34,7 @@ export class FileUploadDto {
 export class CreateBucketDto {
   @ApiProperty({ type: 'string', default: 'letscollab-dev' })
   @IsString()
+  @IsEntityExisted(BucketsEntity, 'name', 'Bucket name')
   bucket: string;
 
   @ApiPropertyOptional({ type: 'string', default: 'letscollab dev bucket' })
