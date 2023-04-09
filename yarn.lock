@@ -4767,8 +4767,6 @@ __metadata:
     "@nestjs/swagger": 6.2.1
     "@nestjs/testing": 9.3.11
     "@nestjs/typeorm": 9.0.1
-    "@swc/core": ^1.3.42
-    "@swc/helpers": ^0.4.14
     "@types/bcrypt": 5
     "@types/jest": 27.0.2
     "@types/node": 18.0.0
@@ -4794,7 +4792,6 @@ __metadata:
     nodemon: 2.0.15
     prettier: 2.7.1
     reflect-metadata: 0.1.13
-    regenerator-runtime: ^0.13.11
     rimraf: 3.0.2
     run-script-webpack-plugin: ^0.1.1
     rxjs: 7.2.0
@@ -4972,6 +4969,49 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@letscollab/nest-fastify-passport@workspace:first_party/passport":
+  version: 0.0.0-use.local
+  resolution: "@letscollab/nest-fastify-passport@workspace:first_party/passport"
+  dependencies:
+    "@commitlint/cli": 17.0.3
+    "@commitlint/config-angular": 17.0.0
+    "@fastify/passport": 2.2.0
+    "@nestjs/common": 9.3.11
+    "@nestjs/core": 9.3.11
+    "@nestjs/jwt": 9.0.0
+    "@nestjs/platform-express": 9.3.11
+    "@nestjs/platform-fastify": 9.3.11
+    "@nestjs/testing": 9.3.11
+    "@types/jest": 29.4.1
+    "@types/node": 17.0.17
+    "@types/passport": 1.0.8
+    "@types/passport-jwt": 3.0.6
+    "@types/passport-local": 1.0.34
+    "@typescript-eslint/eslint-plugin": 5.47.1
+    "@typescript-eslint/parser": 5.47.1
+    eslint: 8.23.0
+    eslint-config-prettier: 8.5.0
+    eslint-plugin-import: 2.26.0
+    husky: 8.0.1
+    jest: 28.1.0
+    lint-staged: 13.0.0
+    pactum: 3.1.9
+    passport: 0.6.0
+    passport-jwt: 4.0.0
+    passport-local: 1.0.0
+    prettier: 2.7.1
+    reflect-metadata: 0.1.13
+    release-it: 15.0.0
+    rimraf: 3.0.2
+    rxjs: 7.5.5
+    ts-jest: 28.0.4
+    typescript: 4.8.4
+  peerDependencies:
+    "@nestjs/common": 6.0.0 || ^7.0.0 || ^8.0.0
+    passport: 0.4.0 || ^0.5.0 || ^0.6.0
+  languageName: unknown
+  linkType: soft
+
 "@letscollab/nest-nacos@workspace:first_party/nacos":
   version: 0.0.0-use.local
   resolution: "@letscollab/nest-nacos@workspace:first_party/nacos"
@@ -5025,49 +5065,6 @@ __metadata:
     ts-node: 10.0.0
     tsconfig-paths: 3.10.1
     typescript: 4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@letscollab/nest-passport-fastify@workspace:first_party/passport":
-  version: 0.0.0-use.local
-  resolution: "@letscollab/nest-passport-fastify@workspace:first_party/passport"
-  dependencies:
-    "@commitlint/cli": 17.0.3
-    "@commitlint/config-angular": 17.0.0
-    "@fastify/passport": 2.2.0
-    "@nestjs/common": 9.3.11
-    "@nestjs/core": 9.3.11
-    "@nestjs/jwt": 9.0.0
-    "@nestjs/platform-express": 9.3.11
-    "@nestjs/platform-fastify": 9.3.11
-    "@nestjs/testing": 9.3.11
-    "@types/jest": 29.4.1
-    "@types/node": 17.0.17
-    "@types/passport": 1.0.8
-    "@types/passport-jwt": 3.0.6
-    "@types/passport-local": 1.0.34
-    "@typescript-eslint/eslint-plugin": 5.47.1
-    "@typescript-eslint/parser": 5.47.1
-    eslint: 8.23.0
-    eslint-config-prettier: 8.5.0
-    eslint-plugin-import: 2.26.0
-    husky: 8.0.1
-    jest: 28.1.0
-    lint-staged: 13.0.0
-    pactum: 3.1.9
-    passport: 0.6.0
-    passport-jwt: 4.0.0
-    passport-local: 1.0.0
-    prettier: 2.7.1
-    reflect-metadata: 0.1.13
-    release-it: 15.0.0
-    rimraf: 3.0.2
-    rxjs: 7.5.5
-    ts-jest: 28.0.4
-    typescript: 4.8.4
-  peerDependencies:
-    "@nestjs/common": 6.0.0 || ^7.0.0 || ^8.0.0
-    passport: 0.4.0 || ^0.5.0 || ^0.6.0
   languageName: unknown
   linkType: soft
 
@@ -7370,130 +7367,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-darwin-arm64@npm:1.3.42"
-  conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@swc/core-darwin-x64@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-darwin-x64@npm:1.3.42"
-  conditions: os=darwin & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@swc/core-linux-arm-gnueabihf@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.42"
-  conditions: os=linux & cpu=arm
-  languageName: node
-  linkType: hard
-
-"@swc/core-linux-arm64-gnu@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.42"
-  conditions: os=linux & cpu=arm64 & libc=glibc
-  languageName: node
-  linkType: hard
-
-"@swc/core-linux-arm64-musl@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-linux-arm64-musl@npm:1.3.42"
-  conditions: os=linux & cpu=arm64 & libc=musl
-  languageName: node
-  linkType: hard
-
-"@swc/core-linux-x64-gnu@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-linux-x64-gnu@npm:1.3.42"
-  conditions: os=linux & cpu=x64 & libc=glibc
-  languageName: node
-  linkType: hard
-
-"@swc/core-linux-x64-musl@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-linux-x64-musl@npm:1.3.42"
-  conditions: os=linux & cpu=x64 & libc=musl
-  languageName: node
-  linkType: hard
-
-"@swc/core-win32-arm64-msvc@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.42"
-  conditions: os=win32 & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@swc/core-win32-ia32-msvc@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.42"
-  conditions: os=win32 & cpu=ia32
-  languageName: node
-  linkType: hard
-
-"@swc/core-win32-x64-msvc@npm:1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core-win32-x64-msvc@npm:1.3.42"
-  conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@swc/core@npm:^1.3.42":
-  version: 1.3.42
-  resolution: "@swc/core@npm:1.3.42"
-  dependencies:
-    "@swc/core-darwin-arm64": 1.3.42
-    "@swc/core-darwin-x64": 1.3.42
-    "@swc/core-linux-arm-gnueabihf": 1.3.42
-    "@swc/core-linux-arm64-gnu": 1.3.42
-    "@swc/core-linux-arm64-musl": 1.3.42
-    "@swc/core-linux-x64-gnu": 1.3.42
-    "@swc/core-linux-x64-musl": 1.3.42
-    "@swc/core-win32-arm64-msvc": 1.3.42
-    "@swc/core-win32-ia32-msvc": 1.3.42
-    "@swc/core-win32-x64-msvc": 1.3.42
-  dependenciesMeta:
-    "@swc/core-darwin-arm64":
-      optional: true
-    "@swc/core-darwin-x64":
-      optional: true
-    "@swc/core-linux-arm-gnueabihf":
-      optional: true
-    "@swc/core-linux-arm64-gnu":
-      optional: true
-    "@swc/core-linux-arm64-musl":
-      optional: true
-    "@swc/core-linux-x64-gnu":
-      optional: true
-    "@swc/core-linux-x64-musl":
-      optional: true
-    "@swc/core-win32-arm64-msvc":
-      optional: true
-    "@swc/core-win32-ia32-msvc":
-      optional: true
-    "@swc/core-win32-x64-msvc":
-      optional: true
-  checksum: 5c28c03ee6a4e1f630c4a519b56d7e23a0102f70fad977a3ab144a3da96231cf4849e473cdc9ee7be6b9266ba0838d0bc0b6b3575a75540f302befe96cc9606e
-  languageName: node
-  linkType: hard
-
 "@swc/helpers@npm:0.4.2":
   version: 0.4.2
   resolution: "@swc/helpers@npm:0.4.2"
   dependencies:
     tslib: ^2.4.0
   checksum: 0b8c86ad03b17b8fe57dc4498e25dc294ea6bc42558a6b92d8fcd789351dac80199409bef38a2e3ac06aae0fedddfc0ab9c34409acbf74e55d1bbbd74f68b6b7
-  languageName: node
-  linkType: hard
-
-"@swc/helpers@npm:^0.4.14":
-  version: 0.4.14
-  resolution: "@swc/helpers@npm:0.4.14"
-  dependencies:
-    tslib: ^2.4.0
-  checksum: 273fd3f3fc461a92f3790cc551ea054745c6d6959afbe1232e6d7aa1c722bbc114d308aab96bef5c78fc0303c85c7b472ef00e2253251cc89737f3b1af56e5a5
   languageName: node
   linkType: hard
 

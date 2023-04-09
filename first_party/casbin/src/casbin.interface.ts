@@ -3,7 +3,7 @@ import { Type, DynamicModule, ForwardReference } from '@nestjs/common';
 export interface CasbinOptions {
   model: string;
 
-  adapter: string | any;
+  adapter: string | Promise<any>;
 
   imports?: Array<
     Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference

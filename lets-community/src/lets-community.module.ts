@@ -94,7 +94,7 @@ export const createLetsCommunityModule = function (
               __dirname,
               `../model/auth.${process.env.NODE_ENV}.conf`,
             ),
-            adapter: await TypeOrmAdapter.newAdapter({
+            adapter: TypeOrmAdapter.newAdapter({
               type: 'mysql',
               username,
               password,

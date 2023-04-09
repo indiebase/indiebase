@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { HttpStatusPage } from '@letscollab/console-shared';
 import { Layout } from './Layout';
 import { OrganizationPage, AccessPage, MyPage, GeneralPage } from './pages';
-import { TwoFactorAuthPage } from './pages/My/Settings';
+import { TwoFactorAuthPage } from './pages/My/Preferences';
 import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
 import { CreateProjectPage } from './pages/Creator/CreateProject';

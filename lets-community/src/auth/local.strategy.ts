@@ -3,7 +3,7 @@ import { Strategy } from 'passport-local';
 import {
   PassportStrategy,
   PassportStrategyFactory,
-} from '@letscollab/nest-passport-fastify';
+} from '@letscollab/nest-fastify-passport';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
