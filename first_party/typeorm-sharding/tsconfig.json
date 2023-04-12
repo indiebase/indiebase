@@ -4,7 +4,8 @@
     "esModuleInterop": true,
     "composite": true,
     "baseUrl": ".",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "rootDir": "src"
   },
   "include": [
     "src/**/*",

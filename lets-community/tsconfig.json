@@ -12,13 +12,16 @@
       "path": "../first_party/dash"
     },
     {
-      "path": "../third_party/fastify-file"
+      "path": "../first_party/nestjs-casbin"
     },
     {
-      "path": "../first_party/passport",
+      "path": "../third_party/nestjs-fastify-file"
     },
     {
-      "path": "../first_party/s3",
+      "path": "../first_party/nestjs-passport",
+    },
+    {
+      "path": "../first_party/nestjs-s3",
     },
     {
       "path": "../first_party/server-shared",

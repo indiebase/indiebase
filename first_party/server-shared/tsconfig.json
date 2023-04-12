@@ -9,7 +9,7 @@
   },
   "references": [
     {
-      "path": "../casbin",
+      "path": "../nestjs-casbin",
     },
     {
       "path": "../trait"

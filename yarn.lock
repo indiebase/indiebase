@@ -4922,9 +4922,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-casbin@workspace:first_party/casbin":
+"@letscollab/nest-casbin@workspace:first_party/nestjs-casbin":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-casbin@workspace:first_party/casbin"
+  resolution: "@letscollab/nest-casbin@workspace:first_party/nestjs-casbin"
   dependencies:
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.3.11
@@ -4951,9 +4951,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-fastify-file@workspace:third_party/fastify-file":
+"@letscollab/nest-fastify-file@workspace:third_party/nestjs-fastify-file":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-fastify-file@workspace:third_party/fastify-file"
+  resolution: "@letscollab/nest-fastify-file@workspace:third_party/nestjs-fastify-file"
   dependencies:
     "@fastify/multipart": 7.5.0
     "@nestjs/common": 9.3.11
@@ -4969,9 +4969,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-fastify-passport@workspace:first_party/passport":
+"@letscollab/nest-fastify-passport@workspace:first_party/nestjs-passport":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-fastify-passport@workspace:first_party/passport"
+  resolution: "@letscollab/nest-fastify-passport@workspace:first_party/nestjs-passport"
   dependencies:
     "@commitlint/cli": 17.0.3
     "@commitlint/config-angular": 17.0.0
@@ -5012,9 +5012,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-nacos@workspace:first_party/nacos":
+"@letscollab/nest-nacos@workspace:first_party/nestjs-nacos":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-nacos@workspace:first_party/nacos"
+  resolution: "@letscollab/nest-nacos@workspace:first_party/nestjs-nacos"
   dependencies:
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.3.11
@@ -5041,9 +5041,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-octokit@workspace:first_party/octokit":
+"@letscollab/nest-octokit@workspace:first_party/nestjs-octokit":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-octokit@workspace:first_party/octokit"
+  resolution: "@letscollab/nest-octokit@workspace:first_party/nestjs-octokit"
   dependencies:
     "@nestjs/cli": 9.1.1
     "@nestjs/common": 9.3.11
@@ -5068,9 +5068,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-s3@workspace:first_party/s3":
+"@letscollab/nest-s3@workspace:first_party/nestjs-s3":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-s3@workspace:first_party/s3"
+  resolution: "@letscollab/nest-s3@workspace:first_party/nestjs-s3"
   dependencies:
     "@aws-sdk/client-s3": 3.245.0
     "@aws-sdk/s3-request-presigner": 3.245.0

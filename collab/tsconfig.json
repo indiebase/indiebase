@@ -17,10 +17,13 @@
       "path": "../first_party/server-shared",
     },
     {
-      "path": "../first_party/octokit"
+      "path": "../first_party/nestjs-octokit"
     },
     {
-      "path": "../third_party/fastify-file"
+      "path": "../third_party/nestjs-fastify-file"
+    },
+    {
+      "path": "../first_party/nestjs-casbin"
     }
   ],
   "include": [
