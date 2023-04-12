@@ -19,7 +19,7 @@ export class GoogleGuard extends AuthGuard('google') {
 
   override useAuthenticateOptions(): IAuthModuleOptions<any> {
     return {
-      scope: ['user', 'repo', 'admin:org'],
+      scope: ['email', 'profile'],
     };
   }
 

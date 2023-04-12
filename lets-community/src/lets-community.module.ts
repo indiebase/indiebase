@@ -17,6 +17,7 @@ import { OrgModule } from './org';
 import { ProjectModule } from './project';
 import { InvitationModule } from './invitation';
 import { MailModule } from './mail';
+import { AuthModule } from './auth';
 const LokiTransport = require('winston-loki');
 
 /**
@@ -38,6 +39,7 @@ export const createLetsCommunityModule = function (
       ProjectModule,
       InvitationModule,
       MailModule,
+      AuthModule,
       ...options.imports,
       RedisModule.forRootAsync({
         inject: [ConfigService],

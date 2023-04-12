@@ -18,6 +18,9 @@ import { useContainer } from 'class-validator';
 import fastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { setupApiDoc } from './utils';
+import fastifyPassport from '@fastify/passport';
+import FastifySession from '@fastify/session';
+import FastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
 
 declare const module: any;
 
@@ -62,6 +65,15 @@ async function bootstrap() {
       },
     });
 
+    await app.register(FastifyCookie as any, {
+      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+    });
+    await app.register(FastifySession as any, {
+      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+    });
+    await app.register(fastifyPassport.initialize() as any);
+    await app.register(fastifyPassport.secureSession() as any);
+
     // Should be front of setupApiDoc.
     app.enableVersioning({
       defaultVersion: '1',
@@ -74,11 +86,12 @@ async function bootstrap() {
 
     // Setup stoplight api doc.
     await setupApiDoc(app);
-    app.register(fastifyMultipart as any, {
+    await app.register(fastifyMultipart as any, {
       // limits: {
       //   fileSize: sizeParser(config.get('storage.file.limit')),
       // },
     });
+
     app.useStaticAssets({
       root: resolve(__dirname, '../public'),
     });
@@ -96,8 +109,8 @@ async function bootstrap() {
 
   if (module.hot) {
     module.hot.accept();
-    module.hot.dispose(() => {
-      app.close();
+    module.hot.dispose(async () => {
+      await app.close();
     });
   }
 }

@@ -15,7 +15,8 @@ export class GithubStrategy
     super();
   }
 
-  async useStrategy(appStrategy, use) {
+  async useStrategyOptions() {
+    return {};
     // const subscriptions = [
     //   {
     //     dataId: 'mutable.json',

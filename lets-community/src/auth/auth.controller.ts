@@ -8,7 +8,6 @@ import {
   Session,
   Post,
   Body,
-  InternalServerErrorException,
   Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -21,19 +20,14 @@ import {
 import { LocalSignInDto, OptVerifyDto } from './auth.dto';
 import { GithubGuard } from './github.guard';
 import { LocalAuthGuard } from './local.guard';
-import { InjectS3, S3 } from '@letscollab/nest-s3';
 import { AuthService } from './auth.service';
 import { ResultCode } from '@letscollab/trait';
+import { GoogleGuard } from './google.guard';
 
 @Controller({ path: 'auth', version: '1' })
-@ApiTags('Auth')
+@ApiTags('v1/Auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    @InjectS3()
-    private readonly s3: S3,
-  ) {}
-  //TODO: recaptcha
+  constructor(private readonly authService: AuthService) {}
 
   /**
    * Give up letscollab's register
@@ -60,12 +54,14 @@ export class AuthController {
   @Get('oauth/github')
   @ApiOperation({
     summary: 'SignIn with github OAuth2',
-    description: 'Must use this for first time',
   })
   @UseGuards(GithubGuard)
   async github() {}
 
   @Get('github/callback')
+  @ApiOperation({
+    summary: 'OAuth2 github callback',
+  })
   @UseGuards(GithubGuard)
   async githubCallback(
     @Req() req: FastifyRequest,
@@ -81,16 +77,46 @@ export class AuthController {
       );
   }
 
+  @Get('oauth/google')
+  @ApiOperation({
+    summary: 'SignIn with google OAuth2',
+    description: 'Must use this for first time',
+  })
+  @UseGuards(GoogleGuard)
+  async google() {}
+
+  @Get('google/callback')
+  @ApiOperation({
+    summary: 'OAuth2 google callback',
+  })
+  @UseGuards(GoogleGuard)
+  async googleCallback(
+    @Req() req: FastifyRequest,
+    @Session() session: any,
+    @Res() res: FastifyReply,
+  ) {
+    // await this.authService.handleGithubCallback(req, session);
+
+    return res
+      .type('text/html')
+      .send(
+        '<html><body><h3 style="text-align:center">Success</h3><script>setTimeout(()=>{window.close()}, 1000)</script></body>',
+      );
+  }
+
   @Post('logout')
+  @ApiOperation({
+    summary: 'Logout',
+  })
   @UseGuards(AccessGuard)
   async logout(@Req() req: FastifyRequest) {
-    await req
-      .logOut()
-      // Ensure delete session.
-      .then(() => req.session.destroy())
-      .catch(() => {
-        throw new InternalServerErrorException();
-      });
+    // await req
+    //   .logOut()
+    //   // Ensure delete session.
+    //   .then(() => req.session.destroy())
+    //   .catch(() => {
+    //     throw new InternalServerErrorException();
+    //   });
     return { code: ResultCode.SUCCESS };
   }
 
@@ -123,7 +149,7 @@ export class AuthController {
   @Delete('2fa')
   @UseGuards(PublicApiGuard, AccessGuard)
   @ApiOperation({
-    summary: 'Remove my 2FA',
+    summary: 'Remove 2FA',
   })
   async deleteOtp(@MyInfo('username') username: string) {
     await this.authService.removeOtp(username);
@@ -133,7 +159,7 @@ export class AuthController {
 
   @Get('2fa/recovery-codes')
   @ApiOperation({
-    summary: 'Show recovery codes',
+    summary: 'Get recovery codes',
   })
   @UseGuards(PublicApiGuard, AccessGuard)
   async getRecoveryCodes(@MyInfo('username') username: string) {

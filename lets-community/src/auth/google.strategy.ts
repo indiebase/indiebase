@@ -1,4 +1,4 @@
-import { Strategy } from 'passport-github2';
+import { Strategy } from 'passport-google-oauth20';
 import {
   PassportStrategyFactory,
   PassportStrategy,
@@ -15,27 +15,31 @@ export class GoogleStrategy
     super();
   }
 
-  async useStrategy(appStrategy, use) {
-    // const subscriptions = [
-    //   {
-    //     dataId: 'mutable.json',
-    //     group: 'DEFAULT_GROUP',
-    //     getProperty(options: Record<string, any>) {
-    //       const {
-    //         github: { clientID, clientSecret, callbackURL },
-    //       } = options;
-    //       return { clientID, clientSecret, callbackURL };
-    //     },
-    //   },
-    // ];
-    // for await (const sub of subscriptions) {
-    //   const { getProperty, ...rest } = sub;
-    //   await this.nacosConfig.subscribe(rest, (config) => {
-    //     const options = getProperty(config);
-    //     use(appStrategy(options));
-    //   });
-    // }
+  async useStrategyOptions() {
+    return {};
   }
+
+  // async useStrategy(appStrategy, use) {
+  //   // const subscriptions = [
+  //   //   {
+  //   //     dataId: 'mutable.json',
+  //   //     group: 'DEFAULT_GROUP',
+  //   //     getProperty(options: Record<string, any>) {
+  //   //       const {
+  //   //         github: { clientID, clientSecret, callbackURL },
+  //   //       } = options;
+  //   //       return { clientID, clientSecret, callbackURL };
+  //   //     },
+  //   //   },
+  //   // ];
+  //   // for await (const sub of subscriptions) {
+  //   //   const { getProperty, ...rest } = sub;
+  //   //   await this.nacosConfig.subscribe(rest, (config) => {
+  //   //     const options = getProperty(config);
+  //   //     use(appStrategy(options));
+  //   //   });
+  //   // }
+  // }
 
   async validate(accessToken: string, refreshToken: string, profile: any) {
     this.logger.debug('Github Tokens:', accessToken, refreshToken);
