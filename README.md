@@ -4,7 +4,7 @@
 <br />
 
 ## Note Bene
-项目初期，目前没有版本控制。
+At the beginning of the project, there is currently no version control in place.
 
 ## FAQ
 
