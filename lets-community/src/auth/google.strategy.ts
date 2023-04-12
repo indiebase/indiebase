@@ -16,7 +16,12 @@ export class GoogleStrategy
   }
 
   async useStrategyOptions() {
-    return {};
+    return {
+      clientID:
+        '11',
+      clientSecret: 'GOCSPX-11111111',
+      callbackURL: 'http://collab.deskbtm.com:23331/v1/auth/google/callback/',
+    };
   }
 
   // async useStrategy(appStrategy, use) {

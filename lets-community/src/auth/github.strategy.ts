@@ -5,7 +5,6 @@ import {
 } from '@letscollab/nest-fastify-passport';
 import { Injectable, Logger } from '@nestjs/common';
 
-// Observable
 @Injectable()
 export class GithubStrategy
   extends PassportStrategy(Strategy)
@@ -16,7 +15,11 @@ export class GithubStrategy
   }
 
   async useStrategyOptions() {
-    return {};
+    return {
+      clientID: '1111',
+      clientSecret: '1111',
+      callbackURL: 'http://collab.deskbtm.com:23331/v1/auth/github/callback',
+    };
     // const subscriptions = [
     //   {
     //     dataId: 'mutable.json',
