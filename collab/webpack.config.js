@@ -17,7 +17,7 @@ module.exports = {
       modulesDir: path.resolve(__dirname, '../node_modules'),
     }),
   ],
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   module: {
     unsafeCache: true,
     rules: [

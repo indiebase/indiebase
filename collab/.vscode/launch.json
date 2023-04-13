@@ -11,9 +11,9 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\--watch",
+      "program": "${workspaceFolder}\\src\\main.ts",
       "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
+        "${workspaceFolder}/**/*.js"
       ]
     }
   ]
