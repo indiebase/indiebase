@@ -1,11 +1,10 @@
 import { OnModuleInit } from '@nestjs/common';
 import passport from '@fastify/passport';
 import { Type } from '../interfaces';
-
 type UseStrategyHook = (
   strategy: (options) => Type<any>,
   fn: (p) => void
-) => void;
+) => Promise<void> | void;
 
 /**
  *
@@ -24,7 +23,24 @@ type UseStrategyHook = (
  */
 export interface PassportStrategyFactory {
   validate: (...args: any[]) => any;
+
+  /**
+   * It is very useful for dynamic configuration.
+   *
+   * ```ts
+   *  useStrategy(appStrategy, use){   // e.g appStrategy is the LocalStrategy
+   *    remoteConfig.subscribe('xxx-config',(config)=>{
+   *      use(appStrategy(config));    // ->  use(LocalStrategy({usernameField: config.usernameField}))
+   *    })
+   *  }
+   * ```
+   */
   useStrategy?: UseStrategyHook;
+
+  /**
+   *
+   * @returns
+   */
   useStrategyOptions?: () => Promise<Record<string, any>>;
 }
 

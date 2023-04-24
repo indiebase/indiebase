@@ -5,7 +5,6 @@ import {
 } from '@letscollab/nest-fastify-passport';
 import { Injectable, Logger } from '@nestjs/common';
 
-// Observable
 @Injectable()
 export class MicrosoftStrategy
   extends PassportStrategy(Strategy)
@@ -15,6 +14,7 @@ export class MicrosoftStrategy
     super();
   }
 
+  // Support
   async useStrategy(appStrategy, use) {
     // const subscriptions = [
     //   {
