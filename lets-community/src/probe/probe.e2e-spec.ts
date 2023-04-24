@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { HealthModule } from './health.module';
+import { ProbeModule } from './probe.module';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -11,7 +11,7 @@ describe('HealthController (e2e)', () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [HealthModule],
+      imports: [ProbeModule],
     }).compile();
 
     app = moduleFixture.createNestApplication<NestFastifyApplication>(
