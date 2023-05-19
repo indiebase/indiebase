@@ -67,4 +67,4 @@ auth(req) {
   - memory - keeps the history of your "URL" in memory (doesn't read or write to the address bar).
 
 <a href="https://www.zhihu.com/people/mrno-64" target="_blank" rel="noopener noreferrer">
-<img width="60" height="60" src="https://s2.loli.net/2023/05/19/tcnmvw3iCLyQ5YN.png" alt="han zhihu" /></a>
+<img width="40" height="40" src="https://user-images.githubusercontent.com/45007226/239428136-92080c5b-7d02-4218-b264-e87c633f092a.png" alt="han zhihu" /></a>
