@@ -5,7 +5,8 @@
     "composite": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "incremental": true
   },
   "include": [
     "src/**/*"
