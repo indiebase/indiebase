@@ -5100,9 +5100,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight":
+"@letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight-elements":
   version: 0.0.0-use.local
-  resolution: "@letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight"
+  resolution: "@letscollab/nest-stoplight-elements@workspace:first_party/nestjs-stoplight-elements"
   dependencies:
     "@fastify/static": 6.9.0
     "@nestjs/cli": 9.1.1
