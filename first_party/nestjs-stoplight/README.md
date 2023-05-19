@@ -1,14 +1,16 @@
-## This library is not free, it needs your star. 
+## This library is not free, it needs your star.
 
 <img width="800" src="https://user-images.githubusercontent.com/45007226/226185397-b8be4abb-18e9-450d-94cf-31f443091f0a.png"/>
 
 ## Note Bene
+
 1. Only support fastify; PR welcome.
 2. @vercel/ncc. Please add `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@letscollab/nest-stoplight-elements/views .`
 
-## New features. 
+## New features.
 
 This library depends on the forked [stoplight-elements](https://github.com/Nawbc/elements), and provides some new features.
+
 - Upload multiple files.
 
 ## Usage
@@ -32,22 +34,21 @@ await StoplightElementsModule.setup('/docs', app, doc, {
 });
 
 app.listen(3000);
-
 ```
-
 
 ## Options
 
 - favicon - Website favicon.
 - auth - Authorization handler
+
 ```ts
 auth(req) {
   return req['Authorization'];
 },
 ```
 
-
 ---
+
 - apiDescriptionUrl - OpenAPI document URL, supporting http://, https://, and - documents containing $ref to other http(s) documents.
 - apiDescriptionDocument - OpenAPI document, provided as YAML string, JSON string, or JavaScript object.
 - basePath - Helps when using router: 'history' but docs are in a subdirectory like https://example.com/docs/api.
@@ -64,3 +65,6 @@ auth(req) {
 - router - Determines how navigation should work:
   - hash - uses the hash portion of the URL to keep the UI in sync with the URL.
   - memory - keeps the history of your "URL" in memory (doesn't read or write to the address bar).
+
+<a href="https://www.zhihu.com/people/mrno-64" target="_blank" rel="noopener noreferrer">
+<img width="60" height="60" src="https://s2.loli.net/2023/05/19/tcnmvw3iCLyQ5YN.png" alt="han zhihu" /></a>
