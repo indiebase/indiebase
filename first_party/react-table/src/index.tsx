@@ -89,15 +89,12 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
       columnOrder,
       sorting,
       columnFilters,
-      // globalFilter,
       pagination,
     },
     onPaginationChange: onChangePagination,
-    // onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    // getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
@@ -106,7 +103,6 @@ export const Table = function <P extends unknown>(props: TableProps<P>) {
     onColumnOrderChange: setColumnOrder,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
-    // debugAll: process.env.NODE_ENV === 'development',
   });
 
   return (

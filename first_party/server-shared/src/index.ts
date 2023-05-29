@@ -6,3 +6,4 @@ export * from './decorators';
 export * from './module';
 export * from './configs';
 export * from './pipe';
+export * from './constants';
