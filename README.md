@@ -1,5 +1,5 @@
 <a href='https://letscollab.deskbtm.com' target="_blank">
-<img src="https://s2.loli.net/2022/04/25/dPcuzynwbxStgl4.png" />
+<img src="https://user-images.githubusercontent.com/45007226/245068424-e84cd3f6-81b3-4905-a850-18b59479ba79.svg" />
 </a>
 <br />
 
