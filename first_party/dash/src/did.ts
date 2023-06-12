@@ -1,3 +1,14 @@
+/**
+ *
+ * @param {Promise} promise -
+ * @param defaultErr
+ * @returns {Promise}
+ *
+ * @example
+ * ```ts
+ *  const [err, value] = await did(new Promise((resolve, reject)=>resolve("hello")));
+ * ```
+ */
 export const did = function <T, U = Error>(
   promise: Promise<T>,
   defaultErr?: Record<any, any>,

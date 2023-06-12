@@ -4,7 +4,7 @@ import {
   letsCommunityDefaultConfigs,
 } from '@indiebase/server-shared';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import { createLetsCommunityModule } from '@indiebase/lets-community';
+import { createLetsCommunityModule } from '@indiebase/community';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
 import {

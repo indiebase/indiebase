@@ -8,7 +8,7 @@
   },
   "references": [
     {
-      "path": "../lets-community",
+      "path": "../community",
     },
     {
       "path": "../first_party/nestjs-stoplight",

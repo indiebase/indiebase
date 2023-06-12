@@ -17,6 +17,6 @@ undecided:
   - "@indiebase/trait"
   - typeorm-sharding
   - "@indiebase/ui-shared"
-  - "@indiebase/lets-community"
+  - "@indiebase/community"
   - "@indiebase/nest-fastify-file"
   - "@indiebase/nextra-theme-docs"
