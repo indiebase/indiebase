@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { InvitationEntity } from './invitation.entity';
 import { Repository } from 'typeorm';
-import { ResultCode, UserSession } from '@letscollab/trait';
+import { ResultCode, UserSession } from '@indiebase/trait';
 import { InviteMembersDto } from './invitation.dto';
 
 @Injectable()

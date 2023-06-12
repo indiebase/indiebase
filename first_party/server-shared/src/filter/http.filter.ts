@@ -1,4 +1,4 @@
-import { ResultCode } from '@letscollab/trait';
+import { ResultCode } from '@indiebase/trait';
 import {
   ExceptionFilter,
   Catch,

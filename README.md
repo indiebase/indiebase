@@ -32,7 +32,7 @@ letscollab community 类似于 OpenCollective, 不过其是用于管理私有独
 
 ## Join
 
-`letscollab community` PR welcome，如果有意愿加入私有部分的开发，请认真阅读 [letscollab 保密协议](https://github.com/deskbtm-letscollab/letscollab/blob/dev/docs/zh-CN/non-disclosure-agreement-zh_cn.md)
+`letscollab community` PR welcome，如果有意愿加入私有部分的开发，请认真阅读 [letscollab 保密协议](https://github.com/indiebase/letscollab/blob/dev/docs/zh-CN/non-disclosure-agreement-zh_cn.md)
 <br />
 同样 letscollab 所获取的收益，会分配给项目参与成员。
 
@@ -40,7 +40,7 @@ Email: deskbtm@outlook.com
 
 
 ## Sub-Projects
-- [PITM](https://github.com/deskbtm-letscollab/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for letscollab pro.
+- [PITM](https://github.com/indiebase/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for letscollab pro.
 
 ## Architecture
 - [Nestjs](https://github.com/nestjs/nest) Nest is a framework for building efficient, scalable Node.js server-side applications.
@@ -51,7 +51,7 @@ Email: deskbtm@outlook.com
 
 ## Credits
 
-See [Credits.md](https://github.com/deskbtm-letscollab/letscollab/blob/main/docs/CREDITS.md)
+See [Credits.md](https://github.com/indiebase/letscollab/blob/main/docs/CREDITS.md)
 
 NB: 项目使用的grafana(7.5.15)版本为Apache-2.0开源协议。
 

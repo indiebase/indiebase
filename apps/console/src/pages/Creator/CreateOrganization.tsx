@@ -24,7 +24,7 @@ import {
   UploadImage,
   useRemoveAppShellLeftPadding,
   userProfileQueryAtom,
-} from '@letscollab/console-shared';
+} from '@indiebase/console-shared';
 import { useQuery } from '@tanstack/react-query';
 import { IconBrandGithub } from '@tabler/icons';
 import { useAtom } from 'jotai';

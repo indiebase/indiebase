@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-fastify-passport",
+  "name": "@indiebase/nest-fastify-passport",
   "version": "8.2.1",
   "description": "Nest - modern, fast, powerful node.js web framework (@passport)",
   "author": "Kamil Mysliwiec",

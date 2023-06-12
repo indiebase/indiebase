@@ -41,7 +41,7 @@
     "first_party/*",
     "apps/*",
     "third_party/*",
-    "lets-community",
+    "community",
     "collab"
   ],
   "jest": {

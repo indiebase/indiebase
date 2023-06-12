@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/www",
+  "name": "@indiebase/www",
   "version": "0.1.0",
   "private": true,
   "description": "Main website powered by nextjs",
@@ -16,8 +16,8 @@
     "@emotion/react": "11.10.4",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.4",
-    "@letscollab/nextra-theme-docs": "workspace:^",
-    "@letscollab/trait": "workspace:^",
+    "@indiebase/nextra-theme-docs": "workspace:^",
+    "@indiebase/trait": "workspace:^",
     "@mantine/core": "5.10.5",
     "@mantine/form": "5.10.5",
     "@mantine/hooks": "5.10.5",

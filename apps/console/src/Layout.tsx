@@ -13,7 +13,7 @@ import {
   OrgSelectProps,
   SelectItem,
   userProfileQueryAtom,
-} from '@letscollab/console-shared';
+} from '@indiebase/console-shared';
 import {
   ActionIcon,
   Anchor,

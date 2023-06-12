@@ -7,7 +7,7 @@ import type {
   Resource,
   Role,
   UserProfile,
-} from '@letscollab/trait';
+} from '@indiebase/trait';
 
 export const fetchUserProfile = async (): Promise<
   BaseResSchema<UserProfile>

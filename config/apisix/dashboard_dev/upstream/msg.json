@@ -12,8 +12,8 @@
     "namespace_id": "development"
   },
   "pass_host": "pass",
-  "name": "@letscollab/msg-development",
-  "service_name": "@letscollab/msg-development",
+  "name": "@indiebase/msg-development",
+  "service_name": "@indiebase/msg-development",
   "keepalive_pool": {
     "idle_timeout": 60,
     "requests": 1000,

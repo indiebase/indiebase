@@ -3,8 +3,8 @@ import {
   AccessGuard,
   BaseResSchemaDto,
   MyInfo,
-} from '@letscollab/server-shared';
-import { ResultCode, UserSession } from '@letscollab/trait';
+} from '@indiebase/server-shared';
+import { ResultCode, UserSession } from '@indiebase/trait';
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import {
   ApiCookieAuth,

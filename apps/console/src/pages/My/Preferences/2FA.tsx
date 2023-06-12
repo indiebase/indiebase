@@ -4,7 +4,7 @@ import {
   optVerifyApi,
   save,
   userProfileQueryAtom,
-} from '@letscollab/console-shared';
+} from '@indiebase/console-shared';
 import {
   Box,
   Stepper,

@@ -39,9 +39,9 @@ Port: `13339:3100`
 
 Ports Range `23330~23350`
 
-### @letscollab/service-auth
+### @indiebase/service-auth
 
-### @letscollab/service-user
+### @indiebase/service-user
 
 在Windows上开发，使用Docker需要对 0.0.0.0 绑定
 

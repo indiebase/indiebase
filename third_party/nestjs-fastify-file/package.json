@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-fastify-file",
+  "name": "@indiebase/nest-fastify-file",
   "version": "0.0.1",
   "description": "fastify-multipart decorators for Nest.js",
   "license": "MIT",

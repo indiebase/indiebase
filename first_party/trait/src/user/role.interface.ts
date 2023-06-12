@@ -1,4 +1,4 @@
-import { AccessAction } from '@letscollab/nest-casbin';
+import { AccessAction } from '@indiebase/nest-casbin';
 import { UnionResource } from './resource.interface';
 
 export type Possession = { resource: UnionResource; action: AccessAction[] };

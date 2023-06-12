@@ -1,5 +1,5 @@
-import { fetchResourceApi } from '@letscollab/console-shared';
-import { ConfirmButtonFooter } from '@letscollab/console-shared/src/components/ConfirmButtonFooter';
+import { fetchResourceApi } from '@indiebase/console-shared';
+import { ConfirmButtonFooter } from '@indiebase/console-shared/src/components/ConfirmButtonFooter';
 import {
   Box,
   Button,

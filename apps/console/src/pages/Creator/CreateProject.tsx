@@ -25,7 +25,7 @@ import {
   UploadImage,
   useRemoveAppShellLeftPadding,
   userProfileQueryAtom,
-} from '@letscollab/console-shared';
+} from '@indiebase/console-shared';
 import { useMutation } from '@tanstack/react-query';
 import { IconBox, IconBrandGithub, IconSearch } from '@tabler/icons';
 import { useAtom } from 'jotai';

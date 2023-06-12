@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import {
   SidebarTileNode,
   userProfileQueryAtom,
-} from '@letscollab/console-shared';
+} from '@indiebase/console-shared';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 

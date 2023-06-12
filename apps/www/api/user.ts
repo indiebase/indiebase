@@ -1,5 +1,5 @@
 import { req } from './request';
-import { BaseResSchema, UserProfile } from '@letscollab/trait';
+import { BaseResSchema, UserProfile } from '@indiebase/trait';
 
 export const fetchUserProfile = async (): Promise<
   BaseResSchema<UserProfile>

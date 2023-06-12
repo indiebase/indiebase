@@ -10,7 +10,7 @@ import {
   HttpExceptionFilter,
   kDevMode,
   kReleaseMode,
-} from '@letscollab/server-shared';
+} from '@indiebase/server-shared';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';

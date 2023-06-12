@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-stoplight-elements",
+  "name": "@indiebase/nest-stoplight-elements",
   "version": "0.0.1-alpha.9",
   "description": "Stoplight elements for Nestjs",
   "author": "Han",
@@ -7,7 +7,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
-    "url": "https://github.com/deskbtm-letscollab/letscollab"
+    "url": "https://github.com/indiebase/letscollab"
   },
   "publishConfig": {
     "access": "public",

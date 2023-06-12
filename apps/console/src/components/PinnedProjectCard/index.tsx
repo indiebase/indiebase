@@ -16,16 +16,13 @@ import {
   IconArrowNarrowUp,
   IconUsers,
 } from '@tabler/icons';
-import { Project } from '@letscollab/trait';
+import { Project } from '@indiebase/trait';
 import CurrencyFormat from 'react-currency-format';
 import { Link } from 'react-router-dom';
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-  AvatarWithPreview,
-  LimitAvatarGroup,
-} from '@letscollab/console-shared';
+import { AvatarWithPreview, LimitAvatarGroup } from '@indiebase/console-shared';
 import './index.css';
 import { statusPalette, StatusTip } from '../StatusTip';
 

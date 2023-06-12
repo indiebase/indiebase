@@ -9,7 +9,7 @@ import {
 } from '@mantine/core';
 import { FloatingPosition } from '@mantine/core/lib/Floating';
 import { FC, PropsWithChildren } from 'react';
-import { ProjectStatus } from '@letscollab/trait';
+import { ProjectStatus } from '@indiebase/trait';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 
 export const statusPalette: Record<ProjectStatus, MantineColor> = {

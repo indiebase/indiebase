@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { isEmailRegExp } from '@letscollab/server-shared';
+import { isEmailRegExp } from '@indiebase/server-shared';
 import {
   Button,
   Container,

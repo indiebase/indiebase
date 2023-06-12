@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-s3",
+  "name": "@indiebase/nest-s3",
   "version": "0.0.1",
   "description": "Nestjs S3 module for letscollab",
   "author": "Han",

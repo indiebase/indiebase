@@ -1,4 +1,4 @@
-import { BaseResSchema } from '@letscollab/trait';
+import { BaseResSchema } from '@indiebase/trait';
 import { req } from './request';
 
 /**

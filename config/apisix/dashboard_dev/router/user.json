@@ -1,6 +1,6 @@
 {
   "uri": "/*/user/*",
-  "name": "@letscollab/user-development",
+  "name": "@indiebase/user-development",
   "methods": [
     "GET",
     "POST",
@@ -31,7 +31,7 @@
       "namespace_id": "development"
     },
     "pass_host": "pass",
-    "service_name": "@letscollab/user-development",
+    "service_name": "@indiebase/user-development",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,

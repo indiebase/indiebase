@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/react-table",
+  "name": "@indiebase/react-table",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.tsx",
@@ -9,7 +9,7 @@
     "main": "./dist/index.js"
   },
   "dependencies": {
-    "@letscollab/dash": "workspace:^",
+    "@indiebase/dash": "workspace:^",
     "lodash.debounce": "4.0.8"
   },
   "peerDependencies": {

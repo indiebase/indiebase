@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { HttpStatusPage } from '@letscollab/console-shared';
+import { HttpStatusPage } from '@indiebase/console-shared';
 import { Layout } from './Layout';
 import { OrganizationPage, AccessPage, MyPage, GeneralPage } from './pages';
 import { TwoFactorAuthPage } from './pages/My/Preferences';
@@ -7,7 +7,7 @@ import { MyProfilePage } from './pages/My/Profile';
 import { CreateOrganizationPage } from './pages/Creator/CreateOrganization';
 import { CreateProjectPage } from './pages/Creator/CreateProject';
 import { InviteMembersPage } from './pages/Creator/InviteMembers';
-// import { ProLayout } from '@letscollab/lets-console';
+// import { ProLayout } from '@indiebase/lets-console';
 
 const projectRouter = {
   path: ':project',

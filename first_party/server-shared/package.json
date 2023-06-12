@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/server-shared",
+  "name": "@indiebase/server-shared",
   "version": "0.0.1",
   "description": "Common utils for letscollab backend",
   "author": "Han",

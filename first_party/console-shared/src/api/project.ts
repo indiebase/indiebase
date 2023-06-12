@@ -3,7 +3,7 @@ import {
   PaginationReqSchema,
   Project,
   QueryOwnedProjects,
-} from '@letscollab/trait';
+} from '@indiebase/trait';
 import { req } from './request';
 
 export const searchGithubProjectApi = async function (

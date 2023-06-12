@@ -3,7 +3,7 @@ import {
   Project,
   Org,
   PaginationReqSchema,
-} from '@letscollab/trait';
+} from '@indiebase/trait';
 import { req } from './request';
 
 export const fetchMyGithubOrgsApi = async function (): Promise<

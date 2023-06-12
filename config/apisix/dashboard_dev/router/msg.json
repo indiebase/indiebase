@@ -3,7 +3,7 @@
     "/*/msg/*",
     "/msg/*"
   ],
-  "name": "@letscollab/msg-development",
+  "name": "@indiebase/msg-development",
   "methods": [
     "GET",
     "POST",
@@ -34,7 +34,7 @@
       "namespace_id": "development"
     },
     "pass_host": "pass",
-    "service_name": "@letscollab/msg-development",
+    "service_name": "@indiebase/msg-development",
     "keepalive_pool": {
       "idle_timeout": 60,
       "requests": 1000,

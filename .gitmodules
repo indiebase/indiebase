@@ -1,9 +1,9 @@
-[submodule "self_hosting"]
-path = self_hosting
-url = https://github.com/deskbtm-letscollab/self_hosting.git
+[submodule "self_hosted"]
+	path = self_hosted
+	url = https://github.com/indiebase/self_hosted.git
 [submodule "apps/pitm"]
 path = apps/pitm
-url = https://github.com/deskbtm-letscollab/PITM.git
-[submodule "lets-pro"]
-path = lets-pro
-url = https://github.com/deskbtm-letscollab/lets-pro.git
+url = https://github.com/indiebase/PITM.git
+[submodule "pro"]
+path = pro
+url = https://github.com/indiebase/pro.git

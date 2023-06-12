@@ -16,7 +16,7 @@ import ReactConfetti from 'react-confetti';
 import {
   searchUsersApi,
   useRemoveAppShellLeftPadding,
-} from '@letscollab/console-shared';
+} from '@indiebase/console-shared';
 import debounce from 'lodash.debounce';
 import { IconBuildingCommunity } from '@tabler/icons';
 import { ErrorBoundary } from 'react-error-boundary';

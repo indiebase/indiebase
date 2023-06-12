@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-octokit",
+  "name": "@indiebase/nest-octokit",
   "version": "0.0.1",
   "description": "Github api nestjs module for letscollab",
   "author": "Han",
@@ -11,10 +11,10 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "homepage": "https://github.com/deskbtm-letscollab/mbdpay.git",
+  "homepage": "https://github.com/indiebase/mbdpay.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deskbtm-letscollab/mbdpay.git"
+    "url": "https://github.com/indiebase/mbdpay.git"
   },
   "scripts": {
     "prebuild": "rimraf dist",

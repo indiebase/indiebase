@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { useAtomsDebugValue } from 'jotai/devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { letscollabCustomTheme } from '@letscollab/console-shared';
+import { letscollabCustomTheme } from '@indiebase/console-shared';
 import { useState } from 'react';
 import { queryClientAtom } from 'jotai-tanstack-query';
 import {
@@ -13,7 +13,7 @@ import {
   MantineProvider,
 } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
-import { AuthzProvider, Can } from '@letscollab/react-authz';
+import { AuthzProvider, Can } from '@indiebase/react-authz';
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -1,6 +1,6 @@
-import { ConfirmButton, fetchRolesApi } from '@letscollab/console-shared';
-import { RoleColumns } from '@letscollab/trait';
-import { Table } from '@letscollab/react-table';
+import { ConfirmButton, fetchRolesApi } from '@indiebase/console-shared';
+import { RoleColumns } from '@indiebase/trait';
+import { Table } from '@indiebase/react-table';
 import { Group } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import {

@@ -5,9 +5,9 @@ import // AuthModule,
 // ProjectModule,
 // StorageModule,
 // UserModule,
-'@letscollab/lets-community';
-import { StoplightElementsModule } from '@letscollab/nest-stoplight-elements';
-import { apiDocDefaultContact } from '@letscollab/server-shared';
+'@indiebase/lets-community';
+import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
+import { apiDocDefaultContact } from '@indiebase/server-shared';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const { name, url, email } = apiDocDefaultContact;

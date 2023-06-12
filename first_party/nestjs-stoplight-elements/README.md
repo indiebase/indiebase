@@ -5,7 +5,7 @@
 ## Note Bene
 
 1. Only support fastify; PR welcome.
-2. @vercel/ncc. Please add `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@letscollab/nest-stoplight-elements/views .`
+2. @vercel/ncc. Please add `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@indiebase/nest-stoplight-elements/views .`
 
 ## New features.
 

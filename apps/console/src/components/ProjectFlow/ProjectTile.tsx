@@ -1,8 +1,5 @@
-import { Project } from '@letscollab/trait';
-import {
-  AvatarWithPreview,
-  LimitAvatarGroup,
-} from '@letscollab/console-shared';
+import { Project } from '@indiebase/trait';
+import { AvatarWithPreview, LimitAvatarGroup } from '@indiebase/console-shared';
 import { Anchor, Badge, Card, Group, Text } from '@mantine/core';
 import { IconUser } from '@tabler/icons';
 import { FC } from 'react';

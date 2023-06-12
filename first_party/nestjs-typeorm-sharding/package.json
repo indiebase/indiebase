@@ -1,5 +1,5 @@
 {
-  "name": "@letscollab/nest-typeorm-sharding",
+  "name": "@indiebase/nest-typeorm-sharding",
   "version": "0.0.1",
   "description": "Typeorm extension supports sharding",
   "author": {

@@ -1,9 +1,6 @@
 import { FC, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import {
-  fetchOrgApi,
-  fetchOrgProjectsApi,
-} from '@letscollab/console-shared';
+import { fetchOrgApi, fetchOrgProjectsApi } from '@indiebase/console-shared';
 import {
   Group,
   Text,

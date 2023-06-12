@@ -1,4 +1,4 @@
-import { Project } from '@letscollab/trait';
+import { Project } from '@indiebase/trait';
 import { Box, Text, Input, Center, Button } from '@mantine/core';
 import { FC } from 'react';
 import { ProjectStage } from './ProjectStage';
