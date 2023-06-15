@@ -86,7 +86,7 @@ const Home: NextPage = () => {
           <Animator animation={batch(Fade(), MoveOut(0, -500))}>
             <GPUAccel>
               <TextParticle
-                text="letscollab"
+                text="indiebase"
                 resolution={5}
                 boxWidth={1800}
                 boxHeight={400}
@@ -131,7 +131,7 @@ const Home: NextPage = () => {
               style={{ fontSize: '110px' }}
               weight={700}
             >
-              letscollab
+              indiebase
             </Text>
             <Text align="center" style={{ fontSize: '60px' }} weight={700}>
               让独立开发者们的营收更加轻松
@@ -237,7 +237,7 @@ const Home: NextPage = () => {
                   weight={700}
                   color="#EB167A"
                 >
-                  letscollab
+                  indiebase
                 </Text>
                 <Text
                   inherit
@@ -257,7 +257,7 @@ const Home: NextPage = () => {
               <h2>创始人</h2>
               <h4>招募与你志同道合的伙伴，一起做东西，管理项目的财政。</h4>
               <h4>
-                letscollab pro
+                indiebase pro
                 会提供独立项目的基本业务，诸如用户，内购支付等功能。让产品的开发更加轻松。
               </h4>
             </Animator>
@@ -265,13 +265,13 @@ const Home: NextPage = () => {
             <Animator animation={MoveIn(1000, 0)}>
               <h2>编程爱好者</h2>
               <h4>
-                letscollab会分配项目所获得的营收，让每个参与者获得应有的回报。
+                indiebase会分配项目所获得的营收，让每个参与者获得应有的回报。
               </h4>
               <h4>在项目中与来自五湖四海的Geek朋友交流学习。</h4>
             </Animator>
             <Animator animation={MoveIn(-2000, 0)}>
               <h2>企业</h2>
-              <h4>通过 letscollab 公布开源或其他合适的项目，</h4>
+              <h4>通过 indiebase 公布开源或其他合适的项目，</h4>
               <h4>
                 让拥有空余时间的开发者参与进来完善产品并给予报酬，
                 使双方互利共赢。
@@ -300,7 +300,7 @@ const Home: NextPage = () => {
                       src="/abyss.svg"
                       fit="contain"
                       height={100}
-                      alt="letscollab"
+                      alt="indiebase"
                     />
 
                     <Text weight={600} size="lg">
@@ -350,11 +350,11 @@ const Home: NextPage = () => {
                       src="/logo.svg"
                       fit="contain"
                       height={100}
-                      alt="letscollab"
+                      alt="indiebase"
                     />
 
                     <Text weight={600} size="lg">
-                      letscollab
+                      indiebase
                     </Text>
 
                     <Text

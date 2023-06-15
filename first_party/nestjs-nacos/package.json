@@ -1,7 +1,7 @@
 {
   "name": "@indiebase/nest-nacos",
   "version": "0.0.1",
-  "description": "Nestjs nacos module for letscollab",
+  "description": "Nestjs nacos module for indiebase",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",

@@ -13,7 +13,7 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   const options = new DocumentBuilder()
-    .setTitle('LetsCollab REST API')
+    .setTitle('Indiebase REST API')
     .setDescription('Stoplight Elements Test API ')
     .build();
 

@@ -50,13 +50,13 @@ export class ProjectEntity {
 
   @ApiProperty({
     description:
-      'The project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.letscollab.xxxx.',
+      'The project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.indiebase.xxxx.',
   })
   @Column('varchar', {
     name: 'package_name',
     unique: true,
     comment:
-      'The project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.letscollab.xxxx.',
+      'The project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.indiebase.xxxx.',
   })
   packageName: string;
 

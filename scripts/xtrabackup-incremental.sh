@@ -6,10 +6,10 @@ BACKUP_DIR=~/backup/incremental
 LATEST_FILE=~/backuplatest
 LATEST=$(cat $LATEST_FILE)
 NOW=$(date "+%F_%H-%M-%S")
-NETWORK=letscollab_default
-TARGET_NAME=letscollab_mysql
+NETWORK=indiebase_default
+TARGET_NAME=indiebase_mysql
 IMAGE=mysql:8.0.32
-PASSWORD=letscollab
+PASSWORD=indiebase
 
 if [!-f "$BACKUP_DIR"]; then
   mkdir -p $BACKUP_DIR
@@ -35,7 +35,7 @@ incremental_backup() {
 
 show_usage() {
   cat <<'HELP_EOF'
-xtrabakup-incremental.sh is a script to incremental backup letscollab mysql database.
+xtrabakup-incremental.sh is a script to incremental backup indiebase mysql database.
 The backup output folder is `~/backup`.
 Usage:
   .sh [command_options]
@@ -46,7 +46,7 @@ Available command_options:
 HELP_EOF
 }
 
-while (($# > 0)); do
+while ( ($# >0)); do
   case "$1" in
   -n | --init)
     show_usage

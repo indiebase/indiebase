@@ -247,5 +247,5 @@ UploadImage.defaultProps = {
   croppable: false,
   cropTitle: 'Crop Image',
   icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
-  bucket: 'letscollab-community',
+  bucket: 'indiebase-community',
 };

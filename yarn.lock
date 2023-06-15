@@ -3589,17 +3589,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/http-proxy@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@fastify/http-proxy@npm:9.0.0"
-  dependencies:
-    "@fastify/reply-from": ^9.0.0
-    fastify-plugin: ^4.5.0
-    ws: ^8.4.2
-  checksum: 9764b8b9c62b39db4beec557d1542fce512a9f611167eacfb95b7395feeb7da477dc7c39e3814523b255583ae1dc2d70e5113ae2360dfe7419968ed647bf77d1
-  languageName: node
-  linkType: hard
-
 "@fastify/middie@npm:8.1.0":
   version: 8.1.0
   resolution: "@fastify/middie@npm:8.1.0"
@@ -3650,21 +3639,6 @@ __metadata:
     "@fastify/flash": ^5.0.0
     fastify-plugin: ^4.0.0
   checksum: 8add9da3011a6fb0c82c268c8ba9ae1436def6702ae2ebb78eedaf5dab1379c775c7fd0f976c74ad63399799da048ebb5fc8728f0370ad73e01f628d10ed020e
-  languageName: node
-  linkType: hard
-
-"@fastify/reply-from@npm:^9.0.0":
-  version: 9.0.1
-  resolution: "@fastify/reply-from@npm:9.0.1"
-  dependencies:
-    "@fastify/error": ^3.0.0
-    end-of-stream: ^1.4.4
-    fast-querystring: ^1.0.0
-    fastify-plugin: ^4.0.0
-    pump: ^3.0.0
-    tiny-lru: ^10.0.0
-    undici: ^5.19.1
-  checksum: a9d83a1404ebe5fcd8db59fb3175c63fcc785cf54a6d299b48c0fcfce243c9bae236c1e440b7211fa0c24c79fb8083129196f2072af84483182469f25d5e6673
   languageName: node
   linkType: hard
 
@@ -4026,7 +4000,11 @@ __metadata:
   resolution: "@indiebase/community@workspace:community"
   dependencies:
     "@aws-sdk/lib-storage": ^3.300.0
-    "@fastify/http-proxy": ^9.0.0
+    "@fastify/cookie": 8.1.0
+    "@fastify/helmet": 10.0.0
+    "@fastify/multipart": 7.3.0
+    "@fastify/passport": 2.2.0
+    "@fastify/session": 9.0.0
     "@fastify/swagger": 7.5.0
     "@liaoliaots/nestjs-redis": 8.0.0
     "@nestjs-modules/mailer": 1.7.1
@@ -4056,6 +4034,7 @@ __metadata:
     cross-env: 7.0.3
     dayjs: "*"
     fastify: 4.4.0
+    fork-ts-checker-webpack-plugin: 8.0.0
     ioredis: 5.0.4
     jest: 27.2.5
     mysql2: 2.3.3
@@ -4072,6 +4051,7 @@ __metadata:
     qrcode: 1.5.1
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
+    run-script-webpack-plugin: ^0.1.1
     rxjs: 7.2.0
     sharp: ^0.32.0
     source-map-support: 0.5.20
@@ -4083,6 +4063,9 @@ __metadata:
     typeorm: 0.3.7
     typeorm-adapter: 1.5.1
     typescript: 4.8.4
+    webpack: 5.79.0
+    webpack-cli: 5.0.1
+    webpack-node-externals: ^3.0.0
     winston: 3.7.2
     winston-loki: 6.0.5
   languageName: unknown
@@ -10805,7 +10788,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"busboy@npm:^1.0.0, busboy@npm:^1.6.0":
+"busboy@npm:^1.0.0":
   version: 1.6.0
   resolution: "busboy@npm:1.6.0"
   dependencies:
@@ -15664,7 +15647,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify-plugin@npm:^4.0.0, fastify-plugin@npm:^4.2.1, fastify-plugin@npm:^4.5.0":
+"fastify-plugin@npm:^4.0.0, fastify-plugin@npm:^4.2.1":
   version: 4.5.0
   resolution: "fastify-plugin@npm:4.5.0"
   checksum: 3cc36a43ec72ee9974d3cd1989027e77b277b0994e4fc02ed4e6492aabd83a0be66f14fdec56e60d9a41911ea1ff1ea70c9d957a87e46bcdb8fedd859f4988fe
@@ -20716,9 +20699,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"letscollab@workspace:.":
+"indiebase@workspace:.":
   version: 0.0.0-use.local
-  resolution: "letscollab@workspace:."
+  resolution: "indiebase@workspace:."
   dependencies:
     "@typescript-eslint/eslint-plugin": 5.47.1
     "@typescript-eslint/parser": 5.47.1
@@ -31128,15 +31111,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:^5.19.1":
-  version: 5.21.0
-  resolution: "undici@npm:5.21.0"
-  dependencies:
-    busboy: ^1.6.0
-  checksum: 013d5fd503b631d607942c511c2ab3f3fa78ebcab302acab998b43176b4815503ec15ed9752c5a47918b3bff8a0137768001d3eb57625b2bb6f6d30d8a794d6c
-  languageName: node
-  linkType: hard
-
 "unescape@npm:^1.0.1":
   version: 1.0.1
   resolution: "unescape@npm:1.0.1"
@@ -32096,9 +32070,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch::locator=letscollab%40workspace%3A.":
+"webpack@patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch::locator=indiebase%40workspace%3A.":
   version: 5.79.0
-  resolution: "webpack@patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch::version=5.79.0&hash=7664f5&locator=letscollab%40workspace%3A."
+  resolution: "webpack@patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch::version=5.79.0&hash=7664f5&locator=indiebase%40workspace%3A."
   dependencies:
     "@types/eslint-scope": ^3.7.3
     "@types/estree": ^1.0.0
@@ -32882,7 +32856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.1.0, ws@npm:^8.4.2":
+"ws@npm:^8.1.0":
   version: 8.13.0
   resolution: "ws@npm:8.13.0"
   peerDependencies:

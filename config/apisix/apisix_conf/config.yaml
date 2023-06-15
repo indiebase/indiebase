@@ -44,7 +44,7 @@ etcd:
 discovery:
   nacos:
     host:
-      - 'http://nacos:letscollab@nacos:8848'
+      - 'http://nacos:indiebase@nacos:8848'
 
 plugin_attr:
   prometheus:

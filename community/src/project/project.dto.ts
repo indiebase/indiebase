@@ -15,7 +15,7 @@ import { ProjectEntity } from './project.entity';
 export class CreateProjectDto {
   @ApiProperty({
     description: 'Project name',
-    default: 'letscollab',
+    default: 'indiebase',
   })
   @IsString()
   @IsEntityExisted(ProjectEntity, 'name', 'Project name')
@@ -23,7 +23,7 @@ export class CreateProjectDto {
 
   @ApiProperty({
     description: 'Github repository name',
-    default: 'letscollab',
+    default: 'indiebase',
   })
   @IsString()
   githubRepoName: string;
@@ -47,7 +47,7 @@ export class CreateProjectDto {
 
   @ApiProperty({
     description: 'Project domain equals project name + organization domain',
-    default: 'letscollab.letscollab.deskbtm.com',
+    default: 'indiebase.indiebase.deskbtm.com',
   })
   @IsEntityExisted(ProjectEntity, 'packageName', 'Package name')
   packageName: string;
@@ -73,7 +73,7 @@ export class UpdateProjectDto {
 
   @ApiProperty({
     description: 'Project name',
-    default: 'letscollab',
+    default: 'indiebase',
   })
   @IsOptional()
   @IsString()

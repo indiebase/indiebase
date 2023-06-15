@@ -3,7 +3,7 @@
 ## 环境搭建
 
 社区版
-`docker stack deploy -c docker-compose.yaml letscollab  --with-registry-auth`
+`docker stack deploy -c docker-compose.yaml indiebase  --with-registry-auth`
 
 ### portainer
 

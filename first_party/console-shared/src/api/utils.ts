@@ -9,7 +9,7 @@ import { req } from './request';
  */
 export const uploadFile = async (
   body: any,
-  bucket: string = 'letscollab-community',
+  bucket: string = 'indiebase-community',
 ): Promise<BaseResSchema<any>> => {
   const { data } = await req.put('/v1/file/upload/' + bucket, body);
   return data ?? {};

@@ -9,15 +9,6 @@ x-logging: &loki-logging
     max-size: '300m'
 
 services:
-  prometheus:
-    image: prom/prometheus:v2.25.0
-    volumes:
-      - ${CONFIG_DIR:-.}/config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    ports:
-      - 13334:9090
-    logging: *loki-logging
-
   mysql:
     image: mysql:8.0.32
     env_file:
@@ -27,17 +18,6 @@ services:
     ports:
       - 3306:3306
     logging: *loki-logging
-
-  mysqlexporter:
-    image: prom/mysqld-exporter
-    ports:
-      - 9104:9104
-    env_file:
-      - ${CONFIG_DIR:-.}/.env
-    depends_on:
-      - mysql
-      - grafana
-      - prometheus
 
   portainer-agent:
     image: portainer/agent:2.11.0
@@ -63,52 +43,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-
-  # Grafana
-  grafana:
-    image: grafana/grafana:7.5.15
-    ports:
-      - 13335:3000
-    volumes:
-      - ${CONFIG_DIR:-.}/config/grafana/provisioning:/etc/grafana/provisioning
-      - ${CONFIG_DIR:-.}/config/grafana/dashboards:/var/lib/grafana/dashboards
-      - ${CONFIG_DIR:-.}/config/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - grafana_data:/var/lib/grafana
-    environment:
-      - TZ=Asia/Shanghai
-      - LANG=zh_CN.UTF-8
-    logging: *loki-logging
-    depends_on:
-      - prometheus
-    deploy:
-      restart_policy:
-        condition: on-failure
-
-  loki:
-    image: grafana/loki:2.2.1
-    volumes:
-      - ${CONFIG_DIR:-.}/config/loki/config.yaml:/etc/loki/config.yaml
-      - loki_data:/loki
-    ports:
-      - 13339:3100
-    command: -config.file=/etc/loki/config.yaml
-    logging: *loki-logging
-    depends_on:
-      - mysql
-    deploy:
-      restart_policy:
-        condition: on-failure
-
-  promtail:
-    image: grafana/promtail:2.2.1
-    volumes:
-      - ${CONFIG_DIR:-.}/config/promtail:/etc/promtail/
-      - /var/log:/ext_logs:ro
-    command: -config.file=/etc/promtail/config.yaml
-    logging: *loki-logging
-    deploy:
-      restart_policy:
-        condition: on-failure
 
   redis:
     image: redis:6.2.6-alpine

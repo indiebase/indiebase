@@ -17,10 +17,10 @@ import { resolve } from 'path';
 import { useContainer } from 'class-validator';
 import fastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
-import { setupApiDoc } from './utils';
 import fastifyPassport from '@fastify/passport';
 import FastifySession from '@fastify/session';
 import FastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
+import { setupApiDoc } from './swagger.setup';
 
 declare const module: any;
 
@@ -84,7 +84,7 @@ async function bootstrap() {
       credentials: true,
     });
 
-    // Setup stoplight api doc.
+    // Setup swagger api doc with  .
     await setupApiDoc(app);
     await app.register(fastifyMultipart as any, {
       // limits: {

@@ -4,7 +4,6 @@ import {
   letsCommunityDefaultConfigs,
 } from '@indiebase/server-shared';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import { createLetsCommunityModule } from '@indiebase/community';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
 import {
@@ -14,10 +13,11 @@ import {
   CookieResolver,
   AcceptLanguageResolver,
 } from 'nestjs-i18n';
+import { createCommunityModule } from './community.module';
 
 @Module({
   imports: [
-    createLetsCommunityModule({
+    createCommunityModule({
       imports: [
         ConfigModule.forRoot({
           envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
@@ -39,17 +39,6 @@ import {
           logging: kDevMode,
         }),
       ],
-    }),
-    OctokitModule.forRootAsync({
-      async useFactory() {
-        return {
-          optionsFactory(req) {
-            return {
-              auth: req.session?.user?.githubAccessToken,
-            };
-          },
-        };
-      },
     }),
   ],
 })

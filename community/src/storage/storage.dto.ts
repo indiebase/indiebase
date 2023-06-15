@@ -32,12 +32,12 @@ export class FileUploadDto {
 }
 
 export class CreateBucketDto {
-  @ApiProperty({ type: 'string', default: 'letscollab-dev' })
+  @ApiProperty({ type: 'string', default: 'indiebase-dev' })
   @IsString()
   @IsEntityExisted(BucketsEntity, 'name', 'Bucket name')
   bucket: string;
 
-  @ApiPropertyOptional({ type: 'string', default: 'letscollab dev bucket' })
+  @ApiPropertyOptional({ type: 'string', default: 'indiebase dev bucket' })
   @IsString()
   @IsOptional()
   description?: string;

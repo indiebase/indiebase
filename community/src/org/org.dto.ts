@@ -28,8 +28,8 @@ export class CreateOrgDto {
 
   @ApiProperty({
     description:
-      'Organization domain is the unique id for letscollab. if the package name is not specific, the project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.letscollab.xxxx.',
-    default: 'letscollab.deskbtm.com',
+      'Organization domain is the unique id for indiebase. if the package name is not specific, the project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.indiebase.xxxx.',
+    default: 'indiebase.deskbtm.com',
   })
   @IsEntityExisted(OrgEntity, 'domain', 'Organization domain')
   @IsString()
@@ -94,7 +94,7 @@ export class UpdateOrgDto {
 
   @ApiPropertyOptional({
     description: 'Organization domain',
-    default: 'letscollab.deskbtm.com',
+    default: 'indiebase.deskbtm.com',
   })
   @IsEntityExisted(OrgEntity, 'domain', 'Organization domain')
   @IsOptional()
@@ -102,7 +102,7 @@ export class UpdateOrgDto {
 
   @ApiPropertyOptional({
     description: 'Organization homepage',
-    default: 'https://letscollab.deskbtm.com',
+    default: 'https://indiebase.deskbtm.com',
   })
   @IsUrl(
     {},

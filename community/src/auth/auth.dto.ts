@@ -11,7 +11,7 @@ export class LocalSignInDto {
   username: string;
 
   @ApiProperty({
-    default: 'letscollab',
+    default: 'indiebase',
   })
   @IsNotEmpty({
     message: "Password shouldn't be empty",

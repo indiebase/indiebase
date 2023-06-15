@@ -74,7 +74,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
               src="/logo.svg"
               fit="contain"
               width="150px"
-              alt="letscollab"
+              alt="indiebase"
             />
           </Link>
         </Group>

@@ -1,7 +1,7 @@
 {
   "name": "@indiebase/nest-octokit",
   "version": "0.0.1",
-  "description": "Github api nestjs module for letscollab",
+  "description": "Github api nestjs module for indiebase",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",

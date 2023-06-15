@@ -1,7 +1,7 @@
 {
   "name": "@indiebase/server-shared",
   "version": "0.0.1",
-  "description": "Common utils for letscollab backend",
+  "description": "Common utils for indiebase backend",
   "author": "Han",
   "private": true,
   "main": "./dist/index.js",

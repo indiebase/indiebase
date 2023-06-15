@@ -1,7 +1,7 @@
 {
   "name": "@indiebase/nest-s3",
   "version": "0.0.1",
-  "description": "Nestjs S3 module for letscollab",
+  "description": "Nestjs S3 module for indiebase",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",

@@ -18,7 +18,7 @@ export class UpdateUserProfileDto {
   email: string;
 
   @ApiProperty({
-    default: 'letscollab',
+    default: 'indiebase',
   })
   @IsOptional()
   @MinLength(8, {

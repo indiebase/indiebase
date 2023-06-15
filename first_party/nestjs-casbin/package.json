@@ -1,7 +1,7 @@
 {
   "name": "@indiebase/nest-casbin",
   "version": "0.0.1",
-  "description": "Nestjs access control module for letscollab",
+  "description": "Nestjs access control module for indiebase",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",

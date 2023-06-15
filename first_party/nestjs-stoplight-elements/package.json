@@ -7,7 +7,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
-    "url": "https://github.com/indiebase/letscollab"
+    "url": "https://github.com/indiebase/indiebase"
   },
   "publishConfig": {
     "access": "public",

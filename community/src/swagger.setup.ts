@@ -1,11 +1,3 @@
-import // AuthModule,
-// InvitationModule,
-// MailModule,
-// OrgModule,
-// ProjectModule,
-// StorageModule,
-// UserModule,
-'@indiebase/community';
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
 import { apiDocDefaultContact } from '@indiebase/server-shared';
 import { INestApplication } from '@nestjs/common';
@@ -16,8 +8,8 @@ export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     try {
       const options = new DocumentBuilder()
-        .setTitle('Letscollab API')
-        .setDescription('Letscollab community REST API ')
+        .setTitle('indiebase API')
+        .setDescription('indiebase community REST API ')
         .setVersion('1.0.0')
         .addBearerAuth(
           {

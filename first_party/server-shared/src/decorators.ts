@@ -143,7 +143,7 @@ export const DevApiHeader = function () {
       name: 'Domain',
       description: 'The product package name, same as domain',
       schema: {
-        default: 'com.deskbtm.letscollab',
+        default: 'com.deskbtm.indiebase',
       },
     }),
   );

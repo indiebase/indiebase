@@ -7,6 +7,6 @@ services:
       - w:3000
     restart: always
     environment:
-      DATABASE_URL: mysql://root:letscollab@mysql:3306/letscollab-analytics
+      DATABASE_URL: mysql://root:indiebase@mysql:3306/indiebase-analytics
       DATABASE_TYPE: mysql
       HASH_SALT: ZuC7tNxKDodpApDaQFTJxVeiTBYzbBixE44Wg33GiDI

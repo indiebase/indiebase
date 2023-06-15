@@ -137,7 +137,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
             mt="md"
             label="Domain"
             withAsterisk
-            placeholder="Example com.deskbtm.letscollab"
+            placeholder="Example com.deskbtm.indiebase"
             {...form.getInputProps('domain')}
           />
 

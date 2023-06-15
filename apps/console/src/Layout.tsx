@@ -207,7 +207,7 @@ export const Layout: FC<any> = function () {
                 src="/logo.svg"
                 fit="contain"
                 width="180px"
-                alt="letscollab"
+                alt="indiebase"
               />
             }
             menu={<CommunityMenu />}

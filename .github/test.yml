@@ -1,4 +1,4 @@
-# name: letscollab push without deployment
+# name: indiebase push without deployment
 
 # on:
 #   push:
@@ -7,7 +7,7 @@
 #       - '!dev'
 # env:
 #   REGISTRY: docker.io
-#   IMAGE_NAME: letscollab_
+#   IMAGE_NAME: indiebase_
 
 # jobs:
 #   build:

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://letscollab.deskbtm.com
+Host: https://indiebase.deskbtm.com
 
 # Sitemaps
-Sitemap: https://letscollab.deskbtm.com/sitemap.xml
+Sitemap: https://indiebase.deskbtm.com/sitemap.xml

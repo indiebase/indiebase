@@ -271,7 +271,7 @@ const CreateProject: FC<CreateProjectProps> = function ({ onSuccess }) {
             style={{ width: 500 }}
             mt="md"
             label="Package name"
-            placeholder="Example com.deskbtm.letscollab, doesn't support dashes '-' "
+            placeholder="Example com.deskbtm.indiebase, doesn't support dashes '-' "
             {...form.getInputProps('packageName')}
           />
 

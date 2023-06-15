@@ -4,7 +4,7 @@ import { IAccessOptions } from '@indiebase/nest-casbin';
  * Signup Type Enum
  */
 export enum SignupType {
-  letscollab = 'letscollab',
+  indiebase = 'indiebase',
   github = 'github',
 }
 

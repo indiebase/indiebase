@@ -4,7 +4,7 @@
   "private": true,
   "description": "Main website powered by nextjs",
   "scripts": {
-    "start": "next dev -p 1033 -H letscollab.deskbtm.com",
+    "start": "next dev -p 1033 -H indiebase.deskbtm.com",
     "build": "cross-env NODE_ENV=production next build",
     "postbuild": "next-sitemap",
     "preview": "cross-env NODE_ENV=production next start -p 3001",

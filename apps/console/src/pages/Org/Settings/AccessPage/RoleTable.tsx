@@ -80,7 +80,7 @@ export const RoleTable = function (props) {
   } = useQuery(
     ['get_roles', fetchDataOptions],
     () =>
-      fetchRolesApi({ domain: 'com.deskbtm.letscollab', ...fetchDataOptions }),
+      fetchRolesApi({ domain: 'com.deskbtm.indiebase', ...fetchDataOptions }),
     { suspense: true, keepPreviousData: true },
   );
 

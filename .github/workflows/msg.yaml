@@ -48,7 +48,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/letscollab-test/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/indiebase-test/${{ env.IMAGE_NAME }}
 
       - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'

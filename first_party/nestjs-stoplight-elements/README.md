@@ -21,7 +21,7 @@ const app = await NestFactory.create<NestFastifyApplication>(
   new FastifyAdapter(),
 );
 const options = new DocumentBuilder()
-  .setTitle('LetsCollab REST API')
+  .setTitle('indiebase REST API')
   .setDescription('Stoplight Elements Test API ')
   .build();
 

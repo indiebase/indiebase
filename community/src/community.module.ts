@@ -7,6 +7,7 @@ import TypeOrmAdapter from 'typeorm-adapter';
 import { ConfigService } from '@nestjs/config';
 import { IsEntityExistedConstraint, kDevMode } from '@indiebase/server-shared';
 import { CasbinModule } from '@indiebase/nest-casbin';
+import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule, utilities } from 'nest-winston';
@@ -28,9 +29,7 @@ const LokiTransport = require('winston-loki');
  * @param options
  * @returns
  */
-export const createLetsCommunityModule = function (
-  options: ModuleMetadata = {},
-) {
+export const createCommunityModule = function (options: ModuleMetadata = {}) {
   @Module({
     imports: [
       UserModule,
@@ -126,25 +125,6 @@ export const createLetsCommunityModule = function (
           };
         },
       }),
-      // S3Module.forRootAsync({
-      //   inject: [ConfigService],
-      //   useFactory: async (config) => {
-      //     const { region, endpoint, accessKey, secretKey } =
-      //       config.get('storage.s3');
-
-      //     return {
-      //       config: {
-      //         region,
-      //         endpoint: { url: new URL(endpoint) },
-      //         forcePathStyle: true,
-      //         credentials: {
-      //           accessKeyId: accessKey,
-      //           secretAccessKey: secretKey,
-      //         },
-      //       },
-      //     };
-      //   },
-      // }),
       MailerModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {
@@ -173,6 +153,17 @@ export const createLetsCommunityModule = function (
           };
         },
       }),
+      OctokitModule.forRootAsync({
+        async useFactory() {
+          return {
+            optionsFactory(req) {
+              return {
+                auth: req.session?.user?.githubAccessToken,
+              };
+            },
+          };
+        },
+      }),
     ],
     providers: [
       Logger,
@@ -180,7 +171,7 @@ export const createLetsCommunityModule = function (
       ...(options.providers ?? []),
     ],
   })
-  class LetsCommunityModule {}
+  class CommunityModule {}
 
-  return LetsCommunityModule as any;
+  return CommunityModule as any;
 };

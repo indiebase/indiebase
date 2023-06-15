@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { useAtomsDebugValue } from 'jotai/devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { letscollabCustomTheme } from '@indiebase/console-shared';
+import { indiebaseCustomTheme } from '@indiebase/console-shared';
 import { useState } from 'react';
 import { queryClientAtom } from 'jotai-tanstack-query';
 import {
@@ -58,7 +58,7 @@ function App() {
           components: {
             Button: { defaultProps: { size: 'xs' } },
           },
-          other: letscollabCustomTheme,
+          other: indiebaseCustomTheme,
         }}
         withGlobalStyles
         withNormalizeCSS

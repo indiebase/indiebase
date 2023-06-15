@@ -9,10 +9,19 @@
   },
   "references": [
     {
+      "path": "../first_party/nestjs-stoplight",
+    },
+    {
       "path": "../first_party/dash"
     },
     {
+      "path": "../first_party/nestjs-stoplight-elements",
+    },
+    {
       "path": "../first_party/nestjs-casbin"
+    },
+    {
+      "path": "../first_party/nestjs-octokit"
     },
     {
       "path": "../third_party/nestjs-fastify-file"

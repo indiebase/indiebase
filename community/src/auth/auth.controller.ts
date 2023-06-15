@@ -30,7 +30,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   /**
-   * Give up letscollab's register
+   * Give up indiebase's register
    */
   @Post('signin')
   @PublicApiHeader()

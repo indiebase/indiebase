@@ -1,5 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://letscollab.deskbtm.com',
+  siteUrl: process.env.SITE_URL || 'https://indiebase.deskbtm.com',
   generateRobotsTxt: true,
 };

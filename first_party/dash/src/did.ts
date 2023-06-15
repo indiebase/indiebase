@@ -1,7 +1,8 @@
 /**
+ * Get the await result with tuple.
  *
- * @param {Promise} promise -
- * @param defaultErr
+ * @param {Promise} promise - Promise task.
+ * @param defaultErr - default error.
  * @returns {Promise}
  *
  * @example

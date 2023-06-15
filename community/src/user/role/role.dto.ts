@@ -40,7 +40,7 @@ export class CreateRoleDto {
 
   @ApiProperty({
     description: "The same as project's packageName",
-    default: 'letscollab.letscollab.deskbtm.com',
+    default: 'indiebase.indiebase.deskbtm.com',
   })
   @IsString()
   domain: string;
@@ -79,7 +79,7 @@ export class QueryRoleDto extends PaginationReqDto {
 
   @ApiProperty({
     description: "The same as project's packageName",
-    default: 'com.deskbtm.letscollab',
+    default: 'com.deskbtm.indiebase',
   })
   @IsString()
   domain: string;
@@ -149,7 +149,7 @@ export class AttachRole2UserDto {
   roleName: string;
 
   @ApiProperty({
-    default: 'letscollab.letscollab.deskbtm.com',
+    default: 'indiebase.indiebase.deskbtm.com',
   })
   @IsString()
   domain: string;

@@ -99,7 +99,7 @@ export class AuthService {
 
   public async generateOtp(username: string) {
     const secret = authenticator.generateSecret(20);
-    const uri = authenticator.keyuri(username, 'letscollab', secret);
+    const uri = authenticator.keyuri(username, 'indiebase', secret);
     const qrcodeUri = await qrcode.toDataURL(uri);
 
     return {

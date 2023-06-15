@@ -3,15 +3,15 @@
     {
       "name": "anonymous",
       "actions": [
-        "Read:letscollab*"
+        "Read:indiebase*"
       ]
     },
     {
       "name": "dev_admin_user",
       "credentials": [
         {
-          "accessKey": "letscollab_admin",
-          "secretKey": "letscollab_admin"
+          "accessKey": "indiebase_admin",
+          "secretKey": "indiebase_admin"
         }
       ],
       "actions": [
@@ -26,8 +26,8 @@
       "name": "dev_readonly_user",
       "credentials": [
         {
-          "accessKey": "letscollab_readonly",
-          "secretKey": "letscollab_readonly"
+          "accessKey": "indiebase_readonly",
+          "secretKey": "indiebase_readonly"
         }
       ],
       "actions": [
@@ -38,8 +38,8 @@
       "name": "dev_normal_user",
       "credentials": [
         {
-          "accessKey": "letscollab_normal",
-          "secretKey": "letscollab_normal"
+          "accessKey": "indiebase_normal",
+          "secretKey": "indiebase_normal"
         }
       ],
       "actions": [

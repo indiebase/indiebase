@@ -1,5 +1,5 @@
 {
-  "name": "letscollab",
+  "name": "indiebase",
   "version": "0.0.2-alpha.0",
   "description": "",
   "author": "Han",
@@ -13,8 +13,8 @@
   },
   "scripts": {
     "lint": "yarn workspaces foreach run lint",
-    "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml letscollab",
-    "stack:dev": "docker stack deploy -c ./docker-compose.yaml letscollab",
+    "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
+    "stack:dev": "docker stack deploy -c ./docker-compose.yaml indiebase",
     "release": "standard-version",
     "test": "jest",
     "test:watch": "jest --watch",
