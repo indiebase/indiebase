@@ -8,9 +8,9 @@ At the beginning of the project, there is currently no version control in place.
 
 ## FAQ
 
-1. 什么是 indiebase ?  
+1. 什么是 Indiebase ?  
 indiebase 全称为let's collaborate, 分为Community和Pro版本。
-indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [Abyss](https://github.com/deskbtm-abyss/abyss)等。
+indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlgKit](https://github.com/deskbtm-plugkit/plugkit)等。
 2. 什么是 indiebase community？  
 indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
 3. 什么是 indiebase pro ?  
@@ -41,6 +41,7 @@ Email: deskbtm@outlook.com
 
 ## Sub-Projects
 - [PITM](https://github.com/indiebase/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for indiebase pro.
+- [Delag](https://github.com/nawbc/delag) 
 
 ## Architecture
 - [Nestjs](https://github.com/nestjs/nest) Nest is a framework for building efficient, scalable Node.js server-side applications.
