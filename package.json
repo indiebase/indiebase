@@ -40,24 +40,10 @@
   "workspaces": [
     "first_party/*",
     "apps/*",
+    "apps/first_party/*",
     "third_party/*",
-    "community",
-    "collab"
+    "community"
   ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
