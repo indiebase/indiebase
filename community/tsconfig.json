@@ -11,22 +11,22 @@
       "path": "../first_party/dash"
     },
     {
-      "path": "../first_party/nestjs-stoplight-elements",
+      "path": "../first_party/nest-stoplight-elements",
     },
     {
-      "path": "../first_party/nestjs-casbin"
+      "path": "../first_party/nest-casbin"
     },
     {
-      "path": "../first_party/nestjs-octokit"
+      "path": "../first_party/nest-octokit"
     },
     {
-      "path": "../third_party/nestjs-fastify-file"
+      "path": "../third_party/nest-fastify-file"
     },
     {
-      "path": "../first_party/nestjs-passport",
+      "path": "../first_party/nest-passport",
     },
     {
-      "path": "../first_party/nestjs-s3",
+      "path": "../first_party/nest-s3",
     },
     {
       "path": "../first_party/server-shared",

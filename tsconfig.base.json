@@ -21,7 +21,9 @@
     "strictBindCallApply": false,
     "noImplicitReturns": false,
     "lib": [
-      "ESNext"
+      "ESNext",
+      "dom",
+      "dom.iterable"
     ]
   },
   "exclude": [
