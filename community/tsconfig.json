@@ -4,13 +4,9 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "composite": true,
     "rootDir": "src"
   },
   "references": [
-    {
-      "path": "../first_party/nestjs-stoplight",
-    },
     {
       "path": "../first_party/dash"
     },

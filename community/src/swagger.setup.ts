@@ -38,8 +38,8 @@ export const setupApiDoc = (app: INestApplication) =>
       });
 
       await StoplightElementsModule.setup('/docs/api', app, doc, {
-        favicon: 'http://collab.deskbtm.com:23331/favicon.ico',
-        logo: 'http://collab.deskbtm.com:23331/logo192.png',
+        favicon: 'http://indiebase.deskbtm.com:23331/favicon.ico',
+        logo: 'http://indiebase.deskbtm.com:23331/logo192.png',
       });
     } catch (e) {
       console.error(e);

@@ -3,7 +3,6 @@ import {
   kDevMode,
   letsCommunityDefaultConfigs,
 } from '@indiebase/server-shared';
-import { OctokitModule } from '@indiebase/nest-octokit';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
 import {

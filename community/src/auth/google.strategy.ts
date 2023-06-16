@@ -17,10 +17,10 @@ export class GoogleStrategy
 
   async useStrategyOptions() {
     return {
-      clientID:
-        '177638204819-7mtgpl5erj9ckg6590nq62f8d05j1kim.apps.googleusercontent.com',
-      clientSecret: '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',
-      callbackURL: 'http://collab.deskbtm.com:23331/v1/auth/google/callback/',
+      clientID: '',
+      clientSecret: '',
+      callbackURL:
+        'http://indiebase.deskbtm.com:23331/v1/auth/google/callback/',
     };
   }
 

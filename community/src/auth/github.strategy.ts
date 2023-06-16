@@ -18,7 +18,7 @@ export class GithubStrategy
     return {
       clientID: '1111',
       clientSecret: '1111',
-      callbackURL: 'http://collab.deskbtm.com:23331/v1/auth/github/callback',
+      callbackURL: 'http://indiebase.deskbtm.com:23331/v1/auth/github/callback',
     };
     // const subscriptions = [
     //   {

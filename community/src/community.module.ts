@@ -29,7 +29,9 @@ const LokiTransport = require('winston-loki');
  * @param options
  * @returns
  */
-export const createCommunityModule = function (options: ModuleMetadata = {}) {
+export const createCommunityModule = function (
+  options: NonNullable<ModuleMetadata> = {},
+) {
   @Module({
     imports: [
       UserModule,
