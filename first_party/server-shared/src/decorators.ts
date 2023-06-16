@@ -5,7 +5,6 @@ import {
   BadRequestException,
   createParamDecorator,
   ExecutionContext,
-  LiteralObject,
 } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
 import { DataSource, type EntityTarget } from 'typeorm';
@@ -113,7 +112,7 @@ type ExtendValidationOptions = ValidationOptions & {
 
 //TODO: fix https://github.com/nestjs/nest/issues/528
 export function IsEntityExisted(
-  entity: EntityTarget<LiteralObject>,
+  entity: EntityTarget<any>,
   key: string,
   alias?: string,
   validationOptions: ExtendValidationOptions = { throwOnExist: true },

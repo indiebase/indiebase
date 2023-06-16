@@ -24,8 +24,5 @@
     "**/build/*/**": true,
     "**/dist/*/**": true
   },
-  "cSpell.words": [
-    "EENTEXIST"
-  ],
   "workbench.colorCustomizations": {}
 }

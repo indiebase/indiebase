@@ -24,6 +24,7 @@ export type IAuthGuard = CanActivate & {
     request: TRequest
   ): Promise<void>;
   handleRequest<TUser = any>(err, user, info, context, status): TUser;
+  getRequest<T = any>(context: ExecutionContext): T;
   useAuthenticateOptions(context): IAuthModuleOptions | undefined;
 };
 export const AuthGuard: (type?: string | string[]) => Type<IAuthGuard> =
@@ -31,7 +32,7 @@ export const AuthGuard: (type?: string | string[]) => Type<IAuthGuard> =
 
 const NO_STRATEGY_ERROR = `In order to use "defaultStrategy", please, ensure to import PassportModule in each place where AuthGuard() is being used. Otherwise, passport won't work correctly.`;
 
-function createAuthGuard(type?: string | string[]): Type<CanActivate> {
+function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
   class MixinAuthGuard<TUser = any> implements CanActivate {
     @Optional()
     @Inject(AuthModuleOptions)
@@ -96,7 +97,7 @@ function createAuthGuard(type?: string | string[]): Type<CanActivate> {
     }
   }
   const guard = mixin(MixinAuthGuard);
-  return guard;
+  return guard as Type<IAuthGuard>;
 }
 
 const createPassportContext =

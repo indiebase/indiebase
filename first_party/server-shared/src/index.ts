@@ -4,6 +4,6 @@ export * from './guard';
 export * from './utils';
 export * from './decorators';
 export * from './module';
-export * from './configs';
+export * from './config';
 export * from './pipe';
 export * from './constants';

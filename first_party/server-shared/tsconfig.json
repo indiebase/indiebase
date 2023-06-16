@@ -9,10 +9,10 @@
   },
   "references": [
     {
-      "path": "../nestjs-casbin",
+      "path": "../trait"
     },
     {
-      "path": "../trait"
+      "path": "../nest-casbin",
     }
   ],
   "include": [

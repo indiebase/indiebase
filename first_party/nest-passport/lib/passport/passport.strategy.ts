@@ -72,9 +72,9 @@ export function PassportStrategy<T extends Type<any> = any>(
         const use = (strategy) => {
           const passportInstance = this.getPassportInstance();
           if (name) {
-            passportInstance.use(name, strategy as any);
+            passportInstance.use(name, strategy);
           } else {
-            passportInstance.use(strategy as any);
+            passportInstance.use(strategy);
           }
         };
 
