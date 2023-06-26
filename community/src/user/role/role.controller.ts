@@ -61,7 +61,7 @@ export class RoleController {
   @ApiCreatedResponse({
     type: QueryRolesResDto,
   })
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiCookieAuth('SID')
   async getList(@Query() role: QueryRoleDto) {
     const { total, pageSize, pageIndex, d } = await this.roleService.queryRoles(

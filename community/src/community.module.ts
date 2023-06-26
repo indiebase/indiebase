@@ -19,7 +19,6 @@ import { ProjectModule } from './project';
 import { InvitationModule } from './invitation';
 import { MailModule } from './mail';
 import { AuthModule } from './auth';
-const LokiTransport = require('winston-loki');
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Lets Community:
@@ -58,8 +57,7 @@ export const createCommunityModule = function (
       }),
       WinstonModule.forRootAsync({
         inject: [ConfigService],
-        useFactory: async (configService: ConfigService) => {
-          const { host } = configService.get('logger');
+        useFactory: (configService: ConfigService) => {
           const transports = [
             new winston.transports.Console({
               format: winston.format.combine(
@@ -67,20 +65,20 @@ export const createCommunityModule = function (
                 utilities.format.nestLike(),
               ),
             }),
-            new LokiTransport({
-              json: true,
-              host,
-            }),
+            // new LokiTransport({
+            //   json: true,
+            //   host,
+            // }),
           ];
           return {
             level: kDevMode ? 'debug' : 'warn',
             format: winston.format.json(),
             exitOnError: false,
             rejectionHandlers: [
-              new LokiTransport({
-                json: true,
-                host,
-              }),
+              // new LokiTransport({
+              //   json: true,
+              //   host,
+              // }),
             ],
             transports,
           };

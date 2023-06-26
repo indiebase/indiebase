@@ -18,7 +18,7 @@ export class ResourceController {
     summary: 'Get resource list',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: RoleResource.list,

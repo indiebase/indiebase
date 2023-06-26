@@ -6,7 +6,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
-    "main": "./dist/index.js"
+    "main": "dist/index.js"
   },
   "dependencies": {
     "@indiebase/trait": "workspace:^",

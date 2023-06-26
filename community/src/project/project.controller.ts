@@ -42,7 +42,7 @@ export class ProjectController {
   @ApiOperation({
     summary: 'Get project list',
   })
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOkResponse({
     // type: ProjectListResDto,
   })
@@ -63,7 +63,7 @@ export class ProjectController {
     summary: 'Create a project',
   })
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: ProjectResource.list,
@@ -81,7 +81,7 @@ export class ProjectController {
     summary: 'Fetch github projects from specified organization',
   })
   @Get('github/search')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiCookieAuth('SID')
   async searchGithubRepo(@Query() query: SearchGithubDto) {
     const d = await this.projectService.searchGithubRepo(query.q);
@@ -110,7 +110,7 @@ export class ProjectController {
   })
   @Delete(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @UseAccess({
     action: AccessAction.deleteAny,
     resource: ProjectResource.list,

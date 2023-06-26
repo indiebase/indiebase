@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
-import {
-  kDevMode,
-  letsCommunityDefaultConfigs,
-} from '@indiebase/server-shared';
+import { kDevMode, communityDefaultConfigs } from '@indiebase/server-shared';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
 import {
@@ -21,7 +18,7 @@ import { createCommunityModule } from './community.module';
         ConfigModule.forRoot({
           envFilePath: resolve(__dirname, `../.env.${process.env.NODE_ENV}`),
           isGlobal: true,
-          load: [...letsCommunityDefaultConfigs],
+          load: [...communityDefaultConfigs],
         }),
         I18nModule.forRoot({
           fallbackLanguage: 'zh-CN',

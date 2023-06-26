@@ -48,7 +48,7 @@ export class OrgController {
     summary: 'Fetch github organizations',
   })
   @Get('github')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiCookieAuth('SID')
   async githubOrgs() {
     const d = await this.orgService.getGithubOwnOrgs();
@@ -62,7 +62,7 @@ export class OrgController {
     summary: 'Fetch a github organization',
   })
   @Get('github/:name')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiCookieAuth('SID')
   async githubOrg(@Param('name') name: string) {
     const d = await this.orgService.getGithubOrg(name);
@@ -76,7 +76,7 @@ export class OrgController {
     summary: 'Fetch github organization repositories',
   })
   @Get('github/:name/repos')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiCookieAuth('SID')
   async githubOrgProjects(@Param('name') name: string) {
     const d = await this.orgService.getGithubOrgRepos(name);
@@ -98,7 +98,7 @@ export class OrgController {
   })
   @Get(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async getOrg(@Param('name') orgName: string) {
     const d = await this.orgService.get(orgName);
     return {
@@ -112,7 +112,7 @@ export class OrgController {
   })
   @Post()
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @UseAccess({
     action: AccessAction.createAny,
     resource: OrgResource.list,
@@ -131,7 +131,7 @@ export class OrgController {
   })
   @Get(':org/pinned_projects')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
@@ -146,7 +146,7 @@ export class OrgController {
   })
   @Get(':org/projects')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
@@ -161,7 +161,7 @@ export class OrgController {
   })
   @Put()
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async updateOrg(@Body() body: UpdateOrgDto) {
     await this.orgService.updateOrg(body);
 
@@ -181,7 +181,7 @@ export class OrgController {
   })
   @Delete(':name')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @UseAccess({
     action: AccessAction.deleteOwn,
     resource: OrgResource.list,

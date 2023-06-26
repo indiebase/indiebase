@@ -11,7 +11,7 @@
       "path": "../first_party/dash"
     },
     {
-      "path": "../first_party/nest-stoplight-elements",
+      "path": "../first_party/nest-stoplight-elements"
     },
     {
       "path": "../first_party/nest-casbin"
@@ -23,13 +23,16 @@
       "path": "../third_party/nest-fastify-file"
     },
     {
-      "path": "../first_party/nest-passport",
+      "path": "../first_party/nest-passport"
     },
     {
-      "path": "../first_party/nest-s3",
+      "path": "../first_party/nest-s3"
     },
     {
-      "path": "../first_party/server-shared",
+      "path": "../first_party/server-shared"
+    },
+    {
+      "path": "../third_party/nest-casl"
     }
   ],
   "include": [

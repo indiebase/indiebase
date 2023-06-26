@@ -1,8 +1,8 @@
 {
   "name": "@indiebase/trait",
   "version": "0.0.1",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "description": "The common interface for indiebase both font-end and back-end",
   "scripts": {
     "prebuild": "rimraf dist"

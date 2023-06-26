@@ -29,7 +29,7 @@ export class InvitationController {
   })
   @Get('org/:name')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
@@ -38,7 +38,7 @@ export class InvitationController {
   }
 
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async queryUsers(@Query() query: any) {
     return {};
     // return this.invitationService.queryTeam(query);
@@ -60,7 +60,7 @@ export class InvitationController {
   @ApiOkResponse({
     type: BaseResSchemaDto,
   })
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async inviteMember(
     @Body() body: InviteMembersDto,
     @MyInfo() user: UserSession,

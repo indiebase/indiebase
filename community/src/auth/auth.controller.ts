@@ -108,7 +108,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'Logout',
   })
-  @UseGuards(AccessGuard)
+  @UseGuards()
   async logout(@Req() req: FastifyRequest) {
     // await req
     //   .logOut()
@@ -124,7 +124,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'Create one time password, qrcode',
   })
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async generateOtp(@MyInfo('username') username: string) {
     const d = await this.authService.generateOtp(username);
 
@@ -135,7 +135,7 @@ export class AuthController {
   }
 
   @Post('2fa/verify')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Verify one time password, token',
   })
@@ -147,7 +147,7 @@ export class AuthController {
   }
 
   @Delete('2fa')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Remove 2FA',
   })
@@ -161,7 +161,7 @@ export class AuthController {
   @ApiOperation({
     summary: 'Get recovery codes',
   })
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async getRecoveryCodes(@MyInfo('username') username: string) {
     const d = await this.authService.getRecoveryCodes(username);
     return {

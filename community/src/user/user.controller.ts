@@ -39,7 +39,7 @@ export class UserController {
 
   @Get('list')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @UseAccess({
     action: AccessAction.readAny,
     resource: UserResource.list,
@@ -58,7 +58,7 @@ export class UserController {
 
   @Get('list/:username')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Get a user profile',
   })
@@ -72,7 +72,7 @@ export class UserController {
 
   @Get('profile')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Get my profile',
   })
@@ -92,7 +92,7 @@ export class UserController {
   @ApiOkResponse({
     type: OwnOrgsResDto,
   })
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   async queryOwnOrgs(@MyInfo('id') id: number) {
     const d = await this.userService.getOwnedOrganizations(id);
 
@@ -130,7 +130,7 @@ export class UserController {
 
   @Get('possession')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Getting user owns resources',
   })
@@ -148,7 +148,7 @@ export class UserController {
 
   @Get('test')
   @ApiCookieAuth('SID')
-  @UseGuards(PublicApiGuard, AccessGuard)
+  @UseGuards(PublicApiGuard)
   @ApiOperation({
     summary: 'Test',
   })

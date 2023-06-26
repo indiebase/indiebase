@@ -1,79 +1,114 @@
 # This is the development environment docker-compose.yml
-
 version: '3.9'
 
-x-logging: &loki-logging
-  driver: loki:latest
-  options:
-    loki-url: 'http://loki:3100/loki/api/v1/push'
-    max-size: '300m'
+x-logging: &x-logging
+  logging:
+    driver: 'json-file'
+    options:
+      max-file: '5'
+      max-size: '10m'
 
 services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.10.1
+    <<: *x-logging
+    command:
+      - --log.level=DEBUG
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.websecure.http.tls.certResolver=leresolver
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --providers.file.watch=true
+      - --providers.file.directory=/etc/traefik/dynamic/conf.d/
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --certificatesresolvers.leresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+      - --certificatesresolvers.leresolver.acme.httpchallenge=true
+      - --certificatesresolvers.leresolver.acme.email=dev@indiebase.com
+      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+      - ./config/traefik/letsencrypt:/letsencrypt:rw,mode=0600
+    labels:
+      - traefik.enable=true
+      - traefik.http.middlewares.auth.basicauth.removeheader=true
+      # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
+      - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$6c8xlpqg$$QknGn6j7PDysqCyDfOvUO1
+      - traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)
+      - traefik.http.routers.router1.tls.domains[0].main=traefik.localhost
+      - traefik.http.routers.router1.tls.domains[0].sans=*.localhost
+      - traefik.http.routers.dashboard.entrypoints=websecure
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.tls.certresolver=leresolver
+      - traefik.http.services.dashboard.loadbalancer.server.scheme=https
+      - traefik.http.routers.dashboard.middlewares=auth
+    networks:
+      - traefik
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:2.18.3
+    <<: *x-logging
+    command: -H unix:///var/run/docker.sock --tlsskipverify
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`portainer.localhost`)
+      - traefik.http.routers.portainer.entrypoints=websecure
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.tls.certresolver=leresolver
+      - traefik.http.services.portainer.loadbalancer.server.port=9443
+      - traefik.http.services.portainer.loadbalancer.server.scheme=https
+      # - traefik.docker.network=traefik_default
+    deploy:
+      mode: replicated
+      replicas: 1
+    networks:
+      - traefik
+
   mysql:
+    container_name: mysql
     image: mysql:8.0.32
+    <<: *x-logging
+    restart: unless-stopped
     env_file:
       - ${CONFIG_DIR:-.}/.env
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - 3306:3306
-    logging: *loki-logging
-
-  portainer-agent:
-    image: portainer/agent:2.11.0
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
-    networks:
-      - agent_network
-    deploy:
-      mode: global
-      placement:
-        constraints: [node.platform.os == linux]
-
-  portainer:
-    image: portainer/portainer-ce:2.11.0
-    command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
-    ports:
-      - 13331:9443
-    volumes:
-      - portainer_data:/data
-    networks:
-      - agent_network
-    deploy:
-      mode: replicated
-      replicas: 1
 
   redis:
+    container_name: redis
     image: redis:6.2.6-alpine
+    <<: *x-logging
+    restart: unless-stopped
     ports:
       - 6379:6379
     volumes:
       - redis_data:/data:rw
       - ${CONFIG_DIR:-.}/config/redis:/usr/local/etc/redis:ro
     command: redis-server /usr/local/etc/redis/redis.conf
-    logging: *loki-logging
 
 networks:
-  default:
-    driver: overlay
-    attachable: true
-  agent_network:
-    driver: overlay
-    attachable: true
-
+  traefik:
+  
 volumes:
-  etcd_data:
-    driver: local
   mysql_data:
-  postgres_data:
-  grafana_data:
   portainer_data:
-  prometheus_data:
-  loki_data:
   redis_data:
-  apisix_logs:
-  nacos_logs:
-  loki_logs:
-  # lets storage
-  lets_uploads:

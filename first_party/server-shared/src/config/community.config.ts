@@ -85,7 +85,7 @@ const storage = registerAs('storage', () => {
   };
 });
 
-export const letsCommunityDefaultConfigs = [
+export const communityDefaultConfigs = [
   app,
   redis,
   mysql,
