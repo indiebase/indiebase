@@ -34,7 +34,7 @@ export const createCommunityModule = function (
   @Module({
     imports: [
       UserModule,
-      StorageModule,
+      // StorageModule,
       OrgModule,
       ProjectModule,
       InvitationModule,

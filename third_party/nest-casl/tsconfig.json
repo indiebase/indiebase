@@ -14,5 +14,7 @@
     "dist",
     "node_modules",
     "test",
+    "**/*.spec.ts",
+    "**/__specs__"
   ]
 }

@@ -4148,7 +4148,7 @@ __metadata:
     "@nestjs/core": 10.0.0
     "@nestjs/platform-fastify": 10.0.0
     "@nestjs/schematics": 10.0.1
-    "@nestjs/swagger": 6.3.0
+    "@nestjs/swagger": 7.0.11
     "@nestjs/testing": 10.0.0
     "@nestjs/typeorm": 10.0.0
     "@types/bcrypt": 5
@@ -4171,9 +4171,9 @@ __metadata:
     fork-ts-checker-webpack-plugin: 8.0.0
     ioredis: 5.0.4
     jest: 27.2.5
-    mysql2: 2.3.3
+    mysql2: 3.4.2
     nest-winston: 1.6.2
-    nestjs-i18n: 9.2.0
+    nestjs-i18n: 10.2.6
     nodemon: 2.0.15
     otplib: 12.0.1
     p-retry: 5.1.1
@@ -4200,7 +4200,6 @@ __metadata:
     webpack-cli: 5.1.4
     webpack-node-externals: ^3.0.0
     winston: 3.7.2
-    winston-loki: 6.0.5
   languageName: unknown
   linkType: soft
 
@@ -4590,7 +4589,7 @@ __metadata:
     "@nestjs/core": 10.0.0
     "@nestjs/platform-fastify": 10.0.0
     "@nestjs/schematics": 10.0.1
-    "@nestjs/swagger": 6.3.0
+    "@nestjs/swagger": 7.0.11
     "@nestjs/testing": 10.0.0
     "@types/jest": 29.2.4
     "@types/node": 18.16.18
@@ -4711,7 +4710,7 @@ __metadata:
     "@nestjs/core": 10.0.0
     "@nestjs/platform-fastify": 10.0.0
     "@nestjs/schematics": 10.0.1
-    "@nestjs/swagger": 6.3.0
+    "@nestjs/swagger": 7.0.11
     "@nestjs/testing": 10.0.0
     "@types/connect-redis": 0.0.20
     "@types/fs-extra": 9.0.13
@@ -5996,97 +5995,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/snappy-android-arm-eabi@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-android-arm-eabi@npm:7.1.1"
-  conditions: os=android & cpu=arm
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-android-arm64@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-android-arm64@npm:7.1.1"
-  conditions: os=android & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-darwin-arm64@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-darwin-arm64@npm:7.1.1"
-  conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-darwin-x64@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-darwin-x64@npm:7.1.1"
-  conditions: os=darwin & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-freebsd-x64@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-freebsd-x64@npm:7.1.1"
-  conditions: os=freebsd & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-linux-arm-gnueabihf@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-linux-arm-gnueabihf@npm:7.1.1"
-  conditions: os=linux & cpu=arm
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-linux-arm64-gnu@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-linux-arm64-gnu@npm:7.1.1"
-  conditions: os=linux & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-linux-arm64-musl@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-linux-arm64-musl@npm:7.1.1"
-  conditions: os=linux & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-linux-x64-gnu@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-linux-x64-gnu@npm:7.1.1"
-  conditions: os=linux & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-linux-x64-musl@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-linux-x64-musl@npm:7.1.1"
-  conditions: os=linux & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-win32-arm64-msvc@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-win32-arm64-msvc@npm:7.1.1"
-  conditions: os=win32 & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-win32-ia32-msvc@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-win32-ia32-msvc@npm:7.1.1"
-  conditions: os=win32 & cpu=ia32
-  languageName: node
-  linkType: hard
-
-"@napi-rs/snappy-win32-x64-msvc@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@napi-rs/snappy-win32-x64-msvc@npm:7.1.1"
-  conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
 "@nestjs-modules/mailer@npm:1.7.1":
   version: 1.7.1
   resolution: "@nestjs-modules/mailer@npm:1.7.1"
@@ -6372,20 +6280,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/mapped-types@npm:1.2.2":
-  version: 1.2.2
-  resolution: "@nestjs/mapped-types@npm:1.2.2"
+"@nestjs/mapped-types@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@nestjs/mapped-types@npm:2.0.2"
   peerDependencies:
-    "@nestjs/common": ^7.0.8 || ^8.0.0 || ^9.0.0
-    class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0
-    class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0 || ^0.14.0
+    "@nestjs/common": ^8.0.0 || ^9.0.0 || ^10.0.0
+    class-transformer: ^0.4.0 || ^0.5.0
+    class-validator: ^0.13.0 || ^0.14.0
     reflect-metadata: ^0.1.12
   peerDependenciesMeta:
     class-transformer:
       optional: true
     class-validator:
       optional: true
-  checksum: 85f295a1474c6dd1b6fb07556f744fee138571f3c6a4c5e693c72bddc716aeb8e73c02f8146fb3457e4e4a604559aa6c40985e3fbf1b3aadc0ea04a6970016d1
+  checksum: 1fb0dca3838d0dc23107233e95a711e251bfbef9017589d3764c955a1cf190c8372179cee70e3674807896f53a98ab2ba80cd769b4f072fadefb708be1cc911b
   languageName: node
   linkType: hard
 
@@ -6504,19 +6412,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/swagger@npm:6.3.0":
-  version: 6.3.0
-  resolution: "@nestjs/swagger@npm:6.3.0"
+"@nestjs/swagger@npm:7.0.11":
+  version: 7.0.11
+  resolution: "@nestjs/swagger@npm:7.0.11"
   dependencies:
-    "@nestjs/mapped-types": 1.2.2
+    "@nestjs/mapped-types": 2.0.2
     js-yaml: 4.1.0
     lodash: 4.17.21
     path-to-regexp: 3.2.0
-    swagger-ui-dist: 4.18.2
+    swagger-ui-dist: 5.1.0
   peerDependencies:
     "@fastify/static": ^6.0.0
-    "@nestjs/common": ^9.0.0
-    "@nestjs/core": ^9.0.0
+    "@nestjs/common": ^9.0.0 || ^10.0.0
+    "@nestjs/core": ^9.0.0 || ^10.0.0
     class-transformer: "*"
     class-validator: "*"
     reflect-metadata: ^0.1.12
@@ -6527,7 +6435,7 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 33aa9fb622b79b99d25fce1838011d41f519a5bd108e76e3952e5c8b417d21a0d635294978326ba1737824500b0178af7f1054a1d3f16df1c73804b9ae5dff41
+  checksum: a004e180ff11f00cec95e8c55dc235d1077d8df72e53209c604e6f5a57d121ff14d4c566ca77302e8408993d43717fd457d9583b8b42268081683d50554aa345
   languageName: node
   linkType: hard
 
@@ -8850,7 +8758,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/long@npm:^4.0.0, @types/long@npm:^4.0.1":
+"@types/long@npm:^4.0.0":
   version: 4.0.2
   resolution: "@types/long@npm:4.0.2"
   checksum: d16cde7240d834cf44ba1eaec49e78ae3180e724cd667052b194a372f350d024cba8dd3f37b0864931683dab09ca935d52f0c4c1687178af5ada9fc85b0635f4
@@ -8924,7 +8832,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0":
+"@types/node@npm:*":
   version: 20.3.1
   resolution: "@types/node@npm:20.3.1"
   checksum: 63a393ab6d947be17320817b35d7277ef03728e231558166ed07ee30b09fd7c08861be4d746f10fdc63ca7912e8cd023939d4eab887ff6580ff704ff24ed810c
@@ -10832,13 +10740,6 @@ __metadata:
   bin:
     astring: bin/astring
   checksum: 6f034d2acef1dac8bb231e7cc26c573d3c14e1975ea6e04f20312b43d4f462f963209bc64187d25d477a182dc3c33277959a0156ab7a3617aa79b1eac4d88e1f
-  languageName: node
-  linkType: hard
-
-"async-exit-hook@npm:2.0.1":
-  version: 2.0.1
-  resolution: "async-exit-hook@npm:2.0.1"
-  checksum: b72cbdd19ea90fa33a3a57b0dbff83e4bf2f4e4acd70b2b3847a588f9f16a45d38590ee13f285375dd919c224f60fa58dc3d315a87678d3aa24ff686d1c0200a
   languageName: node
   linkType: hard
 
@@ -22955,6 +22856,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"long@npm:^5.2.1":
+  version: 5.2.3
+  resolution: "long@npm:5.2.3"
+  checksum: 885ede7c3de4facccbd2cacc6168bae3a02c3e836159ea4252c87b6e34d40af819824b2d4edce330bfb5c4d6e8ce3ec5864bdcf9473fa1f53a4f8225860e5897
+  languageName: node
+  linkType: hard
+
 "longest-streak@npm:^3.0.0":
   version: 3.1.0
   resolution: "longest-streak@npm:3.1.0"
@@ -23075,6 +22983,13 @@ __metadata:
   version: 7.18.3
   resolution: "lru-cache@npm:7.18.3"
   checksum: e550d772384709deea3f141af34b6d4fa392e2e418c1498c078de0ee63670f1f46f5eee746e8ef7e69e1c895af0d4224e62ee33e66a543a14763b0f2e74c1356
+  languageName: node
+  linkType: hard
+
+"lru-cache@npm:^8.0.0":
+  version: 8.0.5
+  resolution: "lru-cache@npm:8.0.5"
+  checksum: 87d72196d8f46e8299c4ab576ed2ec8a07e3cbef517dc9874399c0b2470bd9bf62aacec3b67f84ed6d74aaa1ef31636d048edf996f76248fd17db72bfb631609
   languageName: node
   linkType: hard
 
@@ -24976,19 +24891,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mysql2@npm:2.3.3":
-  version: 2.3.3
-  resolution: "mysql2@npm:2.3.3"
+"mysql2@npm:3.4.2":
+  version: 3.4.2
+  resolution: "mysql2@npm:3.4.2"
   dependencies:
-    denque: ^2.0.1
+    denque: ^2.1.0
     generate-function: ^2.3.1
     iconv-lite: ^0.6.3
-    long: ^4.0.0
-    lru-cache: ^6.0.0
-    named-placeholders: ^1.1.2
+    long: ^5.2.1
+    lru-cache: ^8.0.0
+    named-placeholders: ^1.1.3
     seq-queue: ^0.0.5
     sqlstring: ^2.3.2
-  checksum: 45e479d0cbdb24ceb9d1846a1708ae2c33aa64f603f7899279b33560b1eec441f1b7a596075896f1305f701cfbc083bceb88bc72ba5d2f3656a3d6102611286a
+  checksum: 804a335d46f708f97f8d732312f45a76db0b4bd8263414bd2394fb8dc9e97b95452de7b0e61c646622e7dc2d41eb51a4ab95a7b24c80567cafe64ee83a9f6bcc
   languageName: node
   linkType: hard
 
@@ -25061,7 +24976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"named-placeholders@npm:^1.1.2":
+"named-placeholders@npm:^1.1.3":
   version: 1.1.3
   resolution: "named-placeholders@npm:1.1.3"
   dependencies:
@@ -25177,9 +25092,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nestjs-i18n@npm:9.2.0":
-  version: 9.2.0
-  resolution: "nestjs-i18n@npm:9.2.0"
+"nestjs-i18n@npm:10.2.6":
+  version: 10.2.6
+  resolution: "nestjs-i18n@npm:10.2.6"
   dependencies:
     accept-language-parser: ^1.5.0
     chokidar: ^3.5.3
@@ -25190,9 +25105,9 @@ __metadata:
   peerDependencies:
     "@nestjs/common": "*"
     "@nestjs/core": "*"
-    class-validator: ~0.13
+    class-validator: "*"
     rxjs: "*"
-  checksum: aacd126d1842f39c338af68ff1309974877753d0f79fe9d55a24df1b44b47d788767e644735290e3d1e20da5347fb7abbc2fcb1c717c763f57d606c3f5e4236b
+  checksum: 53f708942e6566c2db81bdff666895b0059d1074a6cce4f3415a18926dac4708abd0941d768ce597cef65b3f6ecce9779fc3d15cbd192cd8e44591fbdf175bdb
   languageName: node
   linkType: hard
 
@@ -28464,30 +28379,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^6.8.8":
-  version: 6.11.3
-  resolution: "protobufjs@npm:6.11.3"
-  dependencies:
-    "@protobufjs/aspromise": ^1.1.2
-    "@protobufjs/base64": ^1.1.2
-    "@protobufjs/codegen": ^2.0.4
-    "@protobufjs/eventemitter": ^1.1.0
-    "@protobufjs/fetch": ^1.1.0
-    "@protobufjs/float": ^1.0.2
-    "@protobufjs/inquire": ^1.1.0
-    "@protobufjs/path": ^1.1.2
-    "@protobufjs/pool": ^1.1.0
-    "@protobufjs/utf8": ^1.1.0
-    "@types/long": ^4.0.1
-    "@types/node": ">=13.7.0"
-    long: ^4.0.0
-  bin:
-    pbjs: bin/pbjs
-    pbts: bin/pbts
-  checksum: 4a6ce1964167e4c45c53fd8a312d7646415c777dd31b4ba346719947b88e61654912326101f927da387d6b6473ab52a7ea4f54d6f15d63b31130ce28e2e15070
-  languageName: node
-  linkType: hard
-
 "protocols@npm:^1.4.0":
   version: 1.4.8
   resolution: "protocols@npm:1.4.8"
@@ -30986,54 +30877,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snappy@npm:7.1.1":
-  version: 7.1.1
-  resolution: "snappy@npm:7.1.1"
-  dependencies:
-    "@napi-rs/snappy-android-arm-eabi": 7.1.1
-    "@napi-rs/snappy-android-arm64": 7.1.1
-    "@napi-rs/snappy-darwin-arm64": 7.1.1
-    "@napi-rs/snappy-darwin-x64": 7.1.1
-    "@napi-rs/snappy-freebsd-x64": 7.1.1
-    "@napi-rs/snappy-linux-arm-gnueabihf": 7.1.1
-    "@napi-rs/snappy-linux-arm64-gnu": 7.1.1
-    "@napi-rs/snappy-linux-arm64-musl": 7.1.1
-    "@napi-rs/snappy-linux-x64-gnu": 7.1.1
-    "@napi-rs/snappy-linux-x64-musl": 7.1.1
-    "@napi-rs/snappy-win32-arm64-msvc": 7.1.1
-    "@napi-rs/snappy-win32-ia32-msvc": 7.1.1
-    "@napi-rs/snappy-win32-x64-msvc": 7.1.1
-  dependenciesMeta:
-    "@napi-rs/snappy-android-arm-eabi":
-      optional: true
-    "@napi-rs/snappy-android-arm64":
-      optional: true
-    "@napi-rs/snappy-darwin-arm64":
-      optional: true
-    "@napi-rs/snappy-darwin-x64":
-      optional: true
-    "@napi-rs/snappy-freebsd-x64":
-      optional: true
-    "@napi-rs/snappy-linux-arm-gnueabihf":
-      optional: true
-    "@napi-rs/snappy-linux-arm64-gnu":
-      optional: true
-    "@napi-rs/snappy-linux-arm64-musl":
-      optional: true
-    "@napi-rs/snappy-linux-x64-gnu":
-      optional: true
-    "@napi-rs/snappy-linux-x64-musl":
-      optional: true
-    "@napi-rs/snappy-win32-arm64-msvc":
-      optional: true
-    "@napi-rs/snappy-win32-ia32-msvc":
-      optional: true
-    "@napi-rs/snappy-win32-x64-msvc":
-      optional: true
-  checksum: bca04cb0ea04430349304ea1439e5a81ec928f6e1d7a629a92e878727802fc5c43cddba420ea974e7e262ade6a2ffc3e522a802bfbed06d02ee6ecc48f90cb5f
-  languageName: node
-  linkType: hard
-
 "sockjs@npm:^0.3.24":
   version: 0.3.24
   resolution: "sockjs@npm:0.3.24"
@@ -32109,10 +31952,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-ui-dist@npm:4.18.2":
-  version: 4.18.2
-  resolution: "swagger-ui-dist@npm:4.18.2"
-  checksum: 3d3e801104af53a58662303aa82df81510cece64a28422e6de02b5d22eb5f6a354f3c3ab80d12f72442e0ec8cbae9122767d7f8476c4d4a21d5353163bc659a7
+"swagger-ui-dist@npm:5.1.0":
+  version: 5.1.0
+  resolution: "swagger-ui-dist@npm:5.1.0"
+  checksum: 41b91708e757852423a4fddfc07d0e87ef38c4ad9fad5757fbc27b23c9e71593a1c48b53661fa2d9bb241043b6800cd9a57d980943a17c9eb388704e30156120
   languageName: node
   linkType: hard
 
@@ -34756,23 +34599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"winston-loki@npm:6.0.5":
-  version: 6.0.5
-  resolution: "winston-loki@npm:6.0.5"
-  dependencies:
-    async-exit-hook: 2.0.1
-    btoa: ^1.2.1
-    protobufjs: ^6.8.8
-    snappy: 7.1.1
-    winston-transport: ^4.3.0
-  dependenciesMeta:
-    snappy:
-      optional: true
-  checksum: 9164e70290e0e16a08ff7dbaab26f0649c5cfcf3250174e8f7ccd4742c0e9c04dbb4af5d50313331b1a67e614bffbd12121776ece5a3ac8d3212b805b49451e0
-  languageName: node
-  linkType: hard
-
-"winston-transport@npm:^4.3.0, winston-transport@npm:^4.5.0":
+"winston-transport@npm:^4.5.0":
   version: 4.5.0
   resolution: "winston-transport@npm:4.5.0"
   dependencies:
