@@ -4,7 +4,7 @@ import { FC, PropsWithChildren } from 'react';
 export const GPUAccel: FC<PropsWithChildren> = function (props) {
   return (
     <Box
-      className="demo"
+      className="gpu-accel"
       sx={{
         '*': {
           willChange: 'transform, opacity',

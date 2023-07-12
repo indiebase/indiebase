@@ -9,92 +9,117 @@ x-logging: &x-logging
       max-size: '10m'
 
 services:
-  traefik:
-    container_name: traefik
-    image: traefik:v2.10.1
-    <<: *x-logging
-    command:
-      - --log.level=DEBUG
-      - --api.insecure=true
-      - --api.dashboard=true
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.websecure.http.tls.certResolver=leresolver
-      - --entrypoints.web.http.redirections.entryPoint.to=websecure
-      - --entrypoints.web.http.redirections.entryPoint.scheme=https
-      - --providers.file.watch=true
-      - --providers.file.directory=/etc/traefik/dynamic/conf.d/
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --providers.docker.endpoint=unix:///var/run/docker.sock
-      - --certificatesresolvers.leresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --certificatesresolvers.leresolver.acme.httpchallenge=true
-      - --certificatesresolvers.leresolver.acme.email=dev@indiebase.com
-      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
-      - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./config/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
-      - ./config/traefik/letsencrypt:/letsencrypt:rw,mode=0600
-    labels:
-      - traefik.enable=true
-      - traefik.http.middlewares.auth.basicauth.removeheader=true
-      # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
-      - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$6c8xlpqg$$QknGn6j7PDysqCyDfOvUO1
-      - traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)
-      - traefik.http.routers.router1.tls.domains[0].main=traefik.localhost
-      - traefik.http.routers.router1.tls.domains[0].sans=*.localhost
-      - traefik.http.routers.dashboard.entrypoints=websecure
-      - traefik.http.routers.dashboard.service=api@internal
-      - traefik.http.routers.dashboard.tls=true
-      - traefik.http.routers.dashboard.tls.certresolver=leresolver
-      - traefik.http.services.dashboard.loadbalancer.server.scheme=https
-      - traefik.http.routers.dashboard.middlewares=auth
-    networks:
-      - traefik
+  # traefik:
+  #   container_name: traefik
+  #   image: traefik:v2.10.3
+  #   <<: *x-logging
+  #   command:
+  #     - --log.level=DEBUG
+  #     - --api.insecure=true
+  #     - --api.dashboard=true
+  #     - --entrypoints.web.address=:80
+  #     - --entrypoints.websecure.address=:443
+  #     - --entrypoints.websecure.http.tls.certResolver=leresolver
+  #     - --entrypoints.web.http.redirections.entryPoint.to=websecure
+  #     - --entrypoints.web.http.redirections.entryPoint.scheme=https
+  #     - --providers.file.watch=true
+  #     - --providers.file.directory=/etc/traefik/dynamic/conf.d/
+  #     - --providers.docker=true
+  #     - --providers.docker.exposedbydefault=false
+  #     - --providers.docker.endpoint=unix:///var/run/docker.sock
+  #     - --certificatesresolvers.leresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
+  #     - --certificatesresolvers.leresolver.acme.httpchallenge=true
+  #     - --certificatesresolvers.leresolver.acme.email=dev@indiebase.com
+  #     - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
+  #     - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - ./config/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+  #     - ./config/traefik/letsencrypt:/letsencrypt:rw,mode=0600
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.middlewares.auth.basicauth.removeheader=true
+  #     # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
+  #     - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$6c8xlpqg$$QknGn6j7PDysqCyDfOvUO1
+  #     - traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)
+  #     - traefik.http.routers.router1.tls.domains[0].main=traefik.localhost
+  #     - traefik.http.routers.router1.tls.domains[0].sans=*.localhost
+  #     - traefik.http.routers.dashboard.entrypoints=websecure
+  #     - traefik.http.routers.dashboard.service=api@internal
+  #     - traefik.http.routers.dashboard.tls=true
+  #     - traefik.http.routers.dashboard.tls.certresolver=leresolver
+  #     - traefik.http.services.dashboard.loadbalancer.server.scheme=https
+  #     - traefik.http.routers.dashboard.middlewares=auth
+  #   networks:
+  #     - traefik
 
-  portainer:
-    container_name: portainer
-    image: portainer/portainer-ce:2.18.3
-    <<: *x-logging
-    command: -H unix:///var/run/docker.sock --tlsskipverify
-    restart: unless-stopped
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.portainer.rule=Host(`portainer.localhost`)
-      - traefik.http.routers.portainer.entrypoints=websecure
-      - traefik.http.routers.portainer.tls=true
-      - traefik.http.routers.portainer.tls.certresolver=leresolver
-      - traefik.http.services.portainer.loadbalancer.server.port=9443
-      - traefik.http.services.portainer.loadbalancer.server.scheme=https
-      # - traefik.docker.network=traefik_default
-    deploy:
-      mode: replicated
-      replicas: 1
-    networks:
-      - traefik
+  # portainer:
+  #   container_name: portainer
+  #   image: portainer/portainer-ce:2.18.3
+  #   <<: *x-logging
+  #   command: -H unix:///var/run/docker.sock --tlsskipverify
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - portainer_data:/data
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.portainer.rule=Host(`portainer.localhost`)
+  #     - traefik.http.routers.portainer.entrypoints=websecure
+  #     - traefik.http.routers.portainer.tls=true
+  #     - traefik.http.routers.portainer.tls.certresolver=leresolver
+  #     - traefik.http.services.portainer.loadbalancer.server.port=9443
+  #     - traefik.http.services.portainer.loadbalancer.server.scheme=https
+  #     # - traefik.docker.network=traefik_default
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 1
+  #   networks:
+  #     - traefik
 
-  mysql:
-    container_name: mysql
-    image: mysql:8.0.32
+  # mysql:
+  #   container_name: mysql
+  #   image: mysql:8.0.32
+  #   <<: *x-logging
+  #   restart: unless-stopped
+  #   env_file:
+  #     - ${CONFIG_DIR:-.}/.env
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #   ports:
+  #     - 3306:3306
+
+  postgres:
+    image: postgres:15.3-alpine3.18
     <<: *x-logging
     restart: unless-stopped
     env_file:
       - ${CONFIG_DIR:-.}/.env
     volumes:
-      - mysql_data:/var/lib/mysql
+      - pg_data:/var/lib/postgresql/data/pgdata
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - 3306:3306
+      - 5432:5432
+
+  postgrest:
+    image: postgrest/postgrest
+    <<: *x-logging
+    restart: unless-stopped
+    ports:
+      - 13000:3000
+    environment:
+      PGRST_DB_URI: postgres://postgres:indiebase@postgres:5432/postgres?sslmode=disable
+      PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
+      PGRST_DB_SCHEMAS: api
+      PGRST_DB_ANON_ROLE: web_anon
+    depends_on:
+      - postgres
 
   redis:
-    container_name: redis
     image: redis:6.2.6-alpine
     <<: *x-logging
     restart: unless-stopped
@@ -106,9 +131,13 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf
 
 networks:
+  default:
+    driver: overlay
+    attachable: true
   traefik:
   
 volumes:
-  mysql_data:
+  pg_data:
   portainer_data:
   redis_data:
+  pgadmin_data:

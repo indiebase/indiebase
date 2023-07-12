@@ -74,17 +74,17 @@ const Home: NextPage = () => {
   );
 
   return (
-    <ScrollContainer vHeight={3500} onScroll={handlePage}>
-      <ScrollPage style={{ zIndex: 10 }} page={0}>
-        <Center
-          sx={{
-            height: 'calc(100vh - 60px)',
-            flexDirection: 'column',
-            zIndex: 1,
-          }}
-        >
-          <Animator animation={batch(Fade(), MoveOut(0, -500))}>
-            <GPUAccel>
+    <GPUAccel>
+      <ScrollContainer vHeight={3500} onScroll={handlePage}>
+        <ScrollPage style={{ zIndex: 10 }} page={0}>
+          <Center
+            sx={{
+              height: 'calc(100vh - 60px)',
+              flexDirection: 'column',
+              zIndex: 1,
+            }}
+          >
+            <Animator animation={batch(Fade(), MoveOut(0, -500))}>
               <TextParticle
                 text="indiebase"
                 resolution={5}
@@ -92,126 +92,127 @@ const Home: NextPage = () => {
                 boxHeight={400}
                 size={300}
               />
-            </GPUAccel>
-          </Animator>
-          <Button
-            sx={(theme) => ({
-              backgroundColor: theme.colors.dark[6] + '!important',
-            })}
-            onMouseEnter={() => {
-              ref.current.play();
-            }}
-            onMouseLeave={() => {
-              ref.current.stop();
-            }}
-            rightIcon={
-              <Lottie
-                lottieRef={ref}
-                style={{ width: 30 }}
-                loop={false}
-                animationData={RightArrow}
-              />
-            }
-            radius="xl"
-            size="xl"
-            uppercase
-          >
-            开始
-          </Button>
-        </Center>
-      </ScrollPage>
-
-      <ScrollPage page={1}>
-        <Animator style={{ zIndex: 1 }} animation={batch(StickyIn(), FadeIn())}>
-          <section style={{ whiteSpace: 'nowrap' }}>
-            <Text
-              align="center"
-              variant="gradient"
-              gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-              style={{ fontSize: '110px' }}
-              weight={700}
+            </Animator>
+            <Button
+              sx={(theme) => ({
+                backgroundColor: theme.colors.dark[6] + '!important',
+              })}
+              onMouseEnter={() => {
+                ref.current.play();
+              }}
+              onMouseLeave={() => {
+                ref.current.stop();
+              }}
+              rightIcon={
+                <Lottie
+                  lottieRef={ref}
+                  style={{ width: 30 }}
+                  loop={false}
+                  animationData={RightArrow}
+                />
+              }
+              radius="xl"
+              size="xl"
+              uppercase
             >
-              indiebase
-            </Text>
-            <Text align="center" style={{ fontSize: '60px' }} weight={700}>
-              让独立开发者们的营收更加轻松
-            </Text>
-          </section>
-        </Animator>
-        <TransitionShape
-          mounted={showPage1Scrap}
-          duration={1000}
-          style={{
-            borderRadius: 15,
-            width: 160,
-            height: 160,
-            background: 'cyan',
-            display: 'inline-block',
-            position: 'absolute',
-            top: 160,
-            left: 200,
-          }}
-        />
-        <TransitionShape
-          mounted={showPage1Scrap}
-          duration={1000}
-          style={{
-            borderRadius: 130,
-            width: 130,
-            height: 130,
-            background: '#2AFF7C',
-            display: 'inline-block',
-            position: 'absolute',
-            top: 360,
-            right: 200,
-          }}
-        />
-        <TransitionShape
-          mounted={showPage1Scrap}
-          duration={1000}
-          style={{
-            width: 0,
-            height: 0,
-            borderLeft: '80px solid transparent',
-            borderRight: '80px solid transparent',
-            borderTop: '140px solid #7B4DFA',
-            position: 'absolute',
-            bottom: 100,
-            transform: 'rotate(45deg)',
-            left: 500,
-          }}
-        />
-        <TransitionShape
-          mounted={showPage1Scrap}
-          duration={1000}
-          style={{
-            width: 0,
-            height: 0,
-            borderLeft: '80px solid transparent',
-            borderRight: '80px solid transparent',
-            borderTop: '140px solid #7B4DFA',
-            position: 'absolute',
-            bottom: 100,
-            transform: 'rotate(45deg)',
-            left: 500,
-          }}
-        />
-        <TransitionShape
-          mounted={showPage1Scrap}
-          duration={1000}
-          style={{
-            width: 120,
-            height: 300,
-            position: 'absolute',
-            bottom: -150,
-            background: '#E911A1',
-            transform: 'rotate(45deg)',
-            right: 500,
-          }}
-        />
-      </ScrollPage>
+              开始
+            </Button>
+          </Center>
+        </ScrollPage>
 
-      <GPUAccel>
+        <ScrollPage page={1}>
+          <Animator
+            style={{ zIndex: 1 }}
+            animation={batch(StickyIn(), FadeIn())}
+          >
+            <section style={{ whiteSpace: 'nowrap' }}>
+              <Text
+                align="center"
+                variant="gradient"
+                gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+                style={{ fontSize: '110px' }}
+                weight={700}
+              >
+                indiebase
+              </Text>
+              <Text align="center" style={{ fontSize: '60px' }} weight={700}>
+                让独立开发者们的营收更加轻松
+              </Text>
+            </section>
+          </Animator>
+          <TransitionShape
+            mounted={showPage1Scrap}
+            duration={1000}
+            style={{
+              borderRadius: 15,
+              width: 160,
+              height: 160,
+              background: 'cyan',
+              display: 'inline-block',
+              position: 'absolute',
+              top: 160,
+              left: 200,
+            }}
+          />
+          <TransitionShape
+            mounted={showPage1Scrap}
+            duration={1000}
+            style={{
+              borderRadius: 130,
+              width: 130,
+              height: 130,
+              background: '#2AFF7C',
+              display: 'inline-block',
+              position: 'absolute',
+              top: 360,
+              right: 200,
+            }}
+          />
+          <TransitionShape
+            mounted={showPage1Scrap}
+            duration={1000}
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: '80px solid transparent',
+              borderRight: '80px solid transparent',
+              borderTop: '140px solid #7B4DFA',
+              position: 'absolute',
+              bottom: 100,
+              transform: 'rotate(45deg)',
+              left: 500,
+            }}
+          />
+          <TransitionShape
+            mounted={showPage1Scrap}
+            duration={1000}
+            style={{
+              width: 0,
+              height: 0,
+              borderLeft: '80px solid transparent',
+              borderRight: '80px solid transparent',
+              borderTop: '140px solid #7B4DFA',
+              position: 'absolute',
+              bottom: 100,
+              transform: 'rotate(45deg)',
+              left: 500,
+            }}
+          />
+          <TransitionShape
+            mounted={showPage1Scrap}
+            duration={1000}
+            style={{
+              width: 120,
+              height: 300,
+              position: 'absolute',
+              bottom: -150,
+              background: '#E911A1',
+              transform: 'rotate(45deg)',
+              right: 500,
+            }}
+          />
+        </ScrollPage>
+
         <ScrollPage page={2}>
           <Box
             sx={{
@@ -279,9 +280,7 @@ const Home: NextPage = () => {
             </Animator>
           </Box>
         </ScrollPage>
-      </GPUAccel>
 
-      <GPUAccel>
         <ScrollPage page={3}>
           <Center sx={{ height: '100%' }}>
             <Stack mt={200} align="center">
@@ -400,8 +399,8 @@ const Home: NextPage = () => {
             </Stack>
           </Center>
         </ScrollPage>
-      </GPUAccel>
-    </ScrollContainer>
+      </ScrollContainer>
+    </GPUAccel>
   );
 };
 
