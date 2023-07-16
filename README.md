@@ -10,7 +10,7 @@ At the beginning of the project, there is currently no version control in place.
 
 1. 什么是 Indiebase ?  
 indiebase 全称为let's collaborate, 分为Community和Pro版本。
-indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlgKit](https://github.com/deskbtm-plugkit/plugkit)等。
+indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit)等。
 2. 什么是 indiebase community？  
 indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
 3. 什么是 indiebase pro ?  
