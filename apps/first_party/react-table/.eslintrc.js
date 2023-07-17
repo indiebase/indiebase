@@ -2,13 +2,10 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: [
-    '@typescript-eslint/eslint-plugin',
-    'unused-imports',
-    'react-hooks',
-  ],
+  plugins: ['react-hooks', 'unused-imports'],
   extends: ['prettier', 'react-app/jest', 'react-app'],
   root: true,
   env: {
@@ -33,6 +30,16 @@ module.exports = {
       'single',
       {
         allowTemplateLiterals: true,
+      },
+    ],
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
       },
     ],
   },

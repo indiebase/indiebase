@@ -33,13 +33,13 @@ export const createCommunityModule = function (
 ) {
   @Module({
     imports: [
-      UserModule,
+      // UserModule,
       // StorageModule,
-      OrgModule,
-      ProjectModule,
-      InvitationModule,
-      MailModule,
-      AuthModule,
+      // OrgModule,
+      // ProjectModule,
+      // InvitationModule,
+      // MailModule,
+      // AuthModule,
       ...options.imports,
       RedisModule.forRootAsync({
         inject: [ConfigService],
@@ -84,28 +84,28 @@ export const createCommunityModule = function (
           };
         },
       }),
-      CasbinModule.forRootAsync({
-        inject: [ConfigService],
-        async useFactory(config: ConfigService) {
-          const database = config.get('auth.database');
-          const { username, password, host, port } =
-            config.get<MysqlConnectionCredentialsOptions>('mysql');
-          return {
-            model: resolve(
-              __dirname,
-              `../model/auth.${process.env.NODE_ENV}.conf`,
-            ),
-            adapter: TypeOrmAdapter.newAdapter({
-              type: 'mysql',
-              username,
-              password,
-              database,
-              host,
-              port,
-            }),
-          };
-        },
-      }),
+      // CasbinModule.forRootAsync({
+      //   inject: [ConfigService],
+      //   async useFactory(config: ConfigService) {
+      //     const database = config.get('auth.database');
+      //     const { username, password, host, port } =
+      //       config.get<MysqlConnectionCredentialsOptions>('mysql');
+      //     return {
+      //       model: resolve(
+      //         __dirname,
+      //         `../model/auth.${process.env.NODE_ENV}.conf`,
+      //       ),
+      //       adapter: TypeOrmAdapter.newAdapter({
+      //         type: 'mysql',
+      //         username,
+      //         password,
+      //         database,
+      //         host,
+      //         port,
+      //       }),
+      //     };
+      //   },
+      // }),
       TypeOrmModule.forRootAsync({
         inject: [ConfigService],
         async useFactory(configService: ConfigService) {

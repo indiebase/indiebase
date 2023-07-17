@@ -20,7 +20,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BucketsEntity } from './buckets.entity';
-import { did } from '@indiebase/dash';
+import { did } from '@indiebase/gadgets';
 
 interface SaveBucketOptions {
   signedUrl?: boolean;

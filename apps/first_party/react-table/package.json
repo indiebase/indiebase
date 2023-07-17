@@ -9,7 +9,7 @@
     "main": "dist/index.js"
   },
   "dependencies": {
-    "@indiebase/dash": "workspace:^",
+    "@indiebase/gadgets": "workspace:^",
     "lodash.debounce": "4.0.8"
   },
   "peerDependencies": {

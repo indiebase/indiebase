@@ -6,3 +6,5 @@ export * from './github.guard';
 export * from './github.strategy';
 export * from './local.guard';
 export * from './local.strategy';
+export * from './ms.guard';
+export * from './ms.strategy';
