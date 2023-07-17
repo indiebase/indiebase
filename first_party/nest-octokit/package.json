@@ -33,11 +33,11 @@
     "octokit": "1.7.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "10.0.1",
-    "@nestjs/common": "10.0.0",
-    "@nestjs/core": "10.0.0",
+    "@nestjs/cli": "10.1.9",
+    "@nestjs/common": "10.0.5",
+    "@nestjs/core": "10.0.5",
     "@nestjs/schematics": "10.0.1",
-    "@nestjs/testing": "10.0.0",
+    "@nestjs/testing": "10.0.5",
     "@types/jest": "29.4.1",
     "@types/node": "18.16.18",
     "@types/supertest": "2.0.11",

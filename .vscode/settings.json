@@ -23,5 +23,6 @@
     "**/node_modules/*/**": true,
     "**/build/*/**": true,
     "**/dist/*/**": true
-  }
+  },
+  "workbench.colorCustomizations": {}
 }

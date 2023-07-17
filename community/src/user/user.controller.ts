@@ -33,7 +33,7 @@ import { UseAccess, AccessAction } from '@indiebase/nest-casbin';
   version: '1',
 })
 @ApiTags('v1/User')
-@ApiBearerAuth('paseto-token')
+@ApiBearerAuth('p-token')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

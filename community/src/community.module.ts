@@ -1,24 +1,17 @@
-import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Logger, Module, ModuleMetadata } from '@nestjs/common';
 import { resolve } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
-import TypeOrmAdapter from 'typeorm-adapter';
 import { ConfigService } from '@nestjs/config';
 import { IsEntityExistedConstraint, kDevMode } from '@indiebase/server-shared';
-import { CasbinModule } from '@indiebase/nest-casbin';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import { UserModule } from './user';
 import { StorageModule } from './storage';
 import { OrgModule } from './org';
 import { ProjectModule } from './project';
-import { InvitationModule } from './invitation';
-import { MailModule } from './mail';
-import { AuthModule } from './auth';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Lets Community:
@@ -106,25 +99,25 @@ export const createCommunityModule = function (
       //     };
       //   },
       // }),
-      TypeOrmModule.forRootAsync({
-        inject: [ConfigService],
-        async useFactory(configService: ConfigService) {
-          const { host, port, username, password, database } =
-            configService.get<MysqlConnectionCredentialsOptions>('mysql');
+      // TypeOrmModule.forRootAsync({
+      //   inject: [ConfigService],
+      //   async useFactory(configService: ConfigService) {
+      //     const { host, port, username, password, database } =
+      //       configService.get('mysql');
 
-          return {
-            type: 'mysql',
-            synchronize: kDevMode,
-            host,
-            port,
-            username,
-            password,
-            database,
-            autoLoadEntities: true,
-            charset: 'utf8mb4_0900_ai_ci',
-          };
-        },
-      }),
+      //     return {
+      //       type: 'mysql',
+      //       synchronize: kDevMode,
+      //       host,
+      //       port,
+      //       username,
+      //       password,
+      //       database,
+      //       autoLoadEntities: true,
+      //       charset: 'utf8mb4_0900_ai_ci',
+      //     };
+      //   },
+      // }),
       MailerModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {

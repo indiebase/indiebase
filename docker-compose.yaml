@@ -105,19 +105,19 @@ services:
     ports:
       - 5432:5432
 
-  postgrest:
-    image: postgrest/postgrest
-    <<: *x-logging
-    restart: unless-stopped
-    ports:
-      - 13000:3000
-    environment:
-      PGRST_DB_URI: postgres://postgres:indiebase@postgres:5432/postgres?sslmode=disable
-      PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
-      PGRST_DB_SCHEMAS: api
-      PGRST_DB_ANON_ROLE: web_anon
-    depends_on:
-      - postgres
+  # postgrest:
+  #   image: postgrest/postgrest
+  #   <<: *x-logging
+  #   restart: unless-stopped
+  #   ports:
+  #     - 13000:3000
+  #   environment:
+  #     PGRST_DB_URI: postgres://postgres:indiebase@postgres:5432/postgres?sslmode=disable
+  #     PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
+  #     PGRST_DB_SCHEMAS: api
+  #     PGRST_DB_ANON_ROLE: web_anon
+  #   depends_on:
+  #     - postgres
 
   redis:
     image: redis:6.2.6-alpine
@@ -140,4 +140,3 @@ volumes:
   pg_data:
   portainer_data:
   redis_data:
-  pgadmin_data:

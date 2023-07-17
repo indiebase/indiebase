@@ -41,7 +41,6 @@
     "first_party/*",
     "apps/*",
     "apps/first_party/*",
-    "third_party/*",
     "community"
   ],
   "config": {

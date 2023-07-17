@@ -1,7 +1,7 @@
 {
   "name": "@indiebase/nest-knex",
   "version": "0.0.1",
-  "description": "Nestjs access control module for indiebase",
+  "description": "Nestjs knex module for Indiebase",
   "author": "Han",
   "private": true,
   "license": "Apache-2.0",
@@ -25,16 +25,17 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "10.0.0",
-    "@nestjs/core": "10.0.0",
+    "@nestjs/common": "10.0.5",
+    "@nestjs/core": "10.0.5",
+    "knex": "^2.5.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "5.0.1",
     "rxjs": "7.5.5"
   },
   "devDependencies": {
-    "@nestjs/cli": "10.0.1",
+    "@nestjs/cli": "10.1.9",
     "@nestjs/schematics": "10.0.1",
-    "@nestjs/testing": "10.0.0",
+    "@nestjs/testing": "10.0.5",
     "@types/express": "4.17.13",
     "@types/jest": "29.4.1",
     "@types/node": "18.16.18",

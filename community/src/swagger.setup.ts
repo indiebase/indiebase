@@ -19,7 +19,7 @@ export const setupApiDoc = (app: INestApplication) =>
             description: 'Enter paseto token',
             in: 'header',
           },
-          'paseto-token',
+          'p-token',
         )
         .setContact(name, url, email)
         .build();
