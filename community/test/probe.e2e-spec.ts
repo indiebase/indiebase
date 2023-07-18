@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { ProbeModule } from './probe.module';
+import { ProbeModule } from '../src/probe/probe.module';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 
-describe('HealthController (e2e)', () => {
+describe('ProbeController (e2e)', () => {
   let app: NestFastifyApplication;
 
   beforeEach(async () => {

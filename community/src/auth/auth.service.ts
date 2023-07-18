@@ -1,4 +1,4 @@
-import { UserService } from '../user/user.service';
+// import { UserService } from '../user/user.service';
 import {
   Injectable,
   NotFoundException,
@@ -16,33 +16,31 @@ import { ResultCode } from '@indiebase/trait';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
+    // private readonly userService: UserService,
     private readonly logger: Logger,
   ) {}
 
   public async validateLocal(username: string, password: string) {
-    let user = await this.userService.getUser(
-      { username },
-      {
-        full: true,
-      },
-    );
-
-    if (!!user) {
-      if (!user.password) {
-        throw new UnauthorizedException('Please set your password first');
-      }
-
-      if (await bcrypt.compare(password, user.password)) {
-        return user;
-      } else {
-        throw new UnauthorizedException('Wrong password');
-      }
-    } else {
-      throw new NotFoundException(
-        `User ${username} not existed,  register first plz`,
-      );
-    }
+    // let user = await this.userService.getUser(
+    //   { username },
+    //   {
+    //     full: true,
+    //   },
+    // );
+    // if (!!user) {
+    //   if (!user.password) {
+    //     throw new UnauthorizedException('Please set your password first');
+    //   }
+    //   if (await bcrypt.compare(password, user.password)) {
+    //     return user;
+    //   } else {
+    //     throw new UnauthorizedException('Wrong password');
+    //   }
+    // } else {
+    //   throw new NotFoundException(
+    //     `User ${username} not existed,  register first plz`,
+    //   );
+    // }
   }
 
   public async handleGithubCallback(req: FastifyRequest, session: any) {
@@ -50,32 +48,32 @@ export class AuthService {
     const { profile, accessToken } = user as any;
     const { _json: json, username, profileUrl, id, displayName } = profile;
 
-    const r = await this.userService.signIn({
-      username: username,
-      profileUrl: profileUrl,
-      githubId: id,
-      nickname: displayName,
-      email: json?.email,
-      avatar: json?.avatar_url,
-      bio: json?.bio,
-      githubAccessToken: accessToken,
-    });
+    // const r = await this.userService.signIn({
+    //   username: username,
+    //   profileUrl: profileUrl,
+    //   githubId: id,
+    //   nickname: displayName,
+    //   email: json?.email,
+    //   avatar: json?.avatar_url,
+    //   bio: json?.bio,
+    //   githubAccessToken: accessToken,
+    // });
 
-    session.set('user', {
-      loggedIn: true,
-      id: r.id,
-      username,
-      githubAccessToken: user.accessToken,
-    });
+    // session.set('user', {
+    //   loggedIn: true,
+    //   id: r.id,
+    //   username,
+    //   githubAccessToken: user.accessToken,
+    // });
 
-    session.cookie.expires = new Date(
-      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
-    );
+    // session.cookie.expires = new Date(
+    //   Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
+    // );
 
-    session.cookie.domain = getSubdomain(
-      new URL(`${req.protocol}://${req.hostname}`).hostname,
-      2,
-    );
+    // session.cookie.domain = getSubdomain(
+    //   new URL(`${req.protocol}://${req.hostname}`).hostname,
+    //   2,
+    // );
   }
 
   public async handleSingIn(req: FastifyRequest, session: any) {
@@ -114,20 +112,20 @@ export class AuthService {
   }
 
   public async getRecoveryCodes(username: string) {
-    const user = await this.userService.getUser({ username });
-    return user.optRecoveryCode;
+    // const user = await this.userService.getUser({ username });
+    // return user.optRecoveryCode;
   }
 
   public async removeOtp(username: string) {
-    return this.userService.repo
-      .update(
-        { username },
-        { optRecoveryCode: null, optSecret: null, enabled2FA: false },
-      )
-      .catch((err) => {
-        this.logger.error(err);
-        throw new InternalServerErrorException();
-      });
+    // return this.userService.repo
+    //   .update(
+    //     { username },
+    //     { optRecoveryCode: null, optSecret: null, enabled2FA: false },
+    //   )
+    //   .catch((err) => {
+    //     this.logger.error(err);
+    //     throw new InternalServerErrorException();
+    //   });
   }
 
   public async otpVerify(username: string, secret: string, token: string) {
@@ -137,10 +135,10 @@ export class AuthService {
 
       if (isValid) {
         optRecoveryCode = this.createRecoveryCode();
-        await this.userService.updateUser(
-          { username },
-          { optSecret: secret, optRecoveryCode, enabled2FA: true },
-        );
+        // await this.userService.updateUser(
+        //   { username },
+        //   { optSecret: secret, optRecoveryCode, enabled2FA: true },
+        // );
       }
       return {
         code: isValid ? ResultCode.SUCCESS : ResultCode.ERROR,

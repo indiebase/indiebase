@@ -11,8 +11,8 @@ import {
   KnexAsyncOptions,
   KnexOptions,
   KnexOptionsFactory,
-} from './interfaces';
-import { getConnectionToken, handleRetry } from './common/knex.utils';
+} from './knex.interfaces';
+import { getConnectionToken, handleRetry } from './knex.utils';
 import { KNEX_MODULE_OPTIONS } from './knex.constants';
 import { knex, Knex } from 'knex';
 import { ModuleRef } from '@nestjs/core';

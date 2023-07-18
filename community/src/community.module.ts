@@ -3,15 +3,14 @@ import { Logger, Module, ModuleMetadata } from '@nestjs/common';
 import { resolve } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
-import { IsEntityExistedConstraint, kDevMode } from '@indiebase/server-shared';
+import { kDevMode } from '@indiebase/server-shared';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
+// import { } from '@indiebase/nest-knex';
 import * as winston from 'winston';
-import { UserModule } from './user';
-import { StorageModule } from './storage';
-import { OrgModule } from './org';
-import { ProjectModule } from './project';
+import { KnexModule } from '@indiebase/nest-knex';
+import { ProbeModule } from './probe';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Lets Community:
@@ -33,6 +32,7 @@ export const createCommunityModule = function (
       // InvitationModule,
       // MailModule,
       // AuthModule,
+      ProbeModule,
       ...options.imports,
       RedisModule.forRootAsync({
         inject: [ConfigService],
@@ -118,6 +118,19 @@ export const createCommunityModule = function (
       //     };
       //   },
       // }),
+      KnexModule.forRootAsync({
+        useFactory: () => ({
+          config: {
+            client: 'pg',
+            connection: {
+              host: '127.0.0.1',
+              user: 'postgres',
+              password: 'indiebase',
+              database: 'test',
+            },
+          },
+        }),
+      }),
       MailerModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {
@@ -160,7 +173,7 @@ export const createCommunityModule = function (
     ],
     providers: [
       Logger,
-      IsEntityExistedConstraint,
+      // IsEntityExistedConstraint,
       ...(options.providers ?? []),
     ],
   })

@@ -7,7 +7,6 @@ import {
   ExecutionContext,
 } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
-import { DataSource, type EntityTarget } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import {
   ValidatorConstraint,
@@ -66,36 +65,36 @@ export const Domain = createParamDecorator((_, ctx: ExecutionContext) => {
   return domain;
 });
 
-@ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
-@Injectable()
-export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly dataSource: DataSource) {}
+// @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
+// @Injectable()
+// export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
+//   constructor(private readonly dataSource: DataSource) {}
 
-  validate(value: any, args: ValidationArguments) {
-    if (!value || value === '') {
-      return true;
-    }
-    const entity: EntityTarget<any> = args.constraints[0];
-    const key: string = args.constraints[1];
-    const throwOnExist: string = args.constraints[3];
-    return this.dataSource
-      .getRepository(entity)
-      .findOne({
-        where: {
-          [key]: value,
-        },
-      })
-      .then((e) => {
-        return throwOnExist ? !e : e;
-      });
-  }
+//   validate(value: any, args: ValidationArguments) {
+//     if (!value || value === '') {
+//       return true;
+//     }
+//     const entity: EntityTarget<any> = args.constraints[0];
+//     const key: string = args.constraints[1];
+//     const throwOnExist: string = args.constraints[3];
+//     return this.dataSource
+//       .getRepository(entity)
+//       .findOne({
+//         where: {
+//           [key]: value,
+//         },
+//       })
+//       .then((e) => {
+//         return throwOnExist ? !e : e;
+//       });
+//   }
 
-  defaultMessage(validationArguments?: ValidationArguments): string {
-    return `${validationArguments.constraints?.[2] ?? 'Entity'} ⌜${
-      validationArguments.value
-    }⌟ ${validationArguments.constraints?.[3] ? 'has existed' : 'not exist'}`;
-  }
-}
+//   defaultMessage(validationArguments?: ValidationArguments): string {
+//     return `${validationArguments.constraints?.[2] ?? 'Entity'} ⌜${
+//       validationArguments.value
+//     }⌟ ${validationArguments.constraints?.[3] ? 'has existed' : 'not exist'}`;
+//   }
+// }
 
 /**
  *  Check if the target entity is existed.
@@ -111,22 +110,22 @@ type ExtendValidationOptions = ValidationOptions & {
 };
 
 //TODO: fix https://github.com/nestjs/nest/issues/528
-export function IsEntityExisted(
-  entity: EntityTarget<any>,
-  key: string,
-  alias?: string,
-  validationOptions: ExtendValidationOptions = { throwOnExist: true },
-) {
-  return function (object: Object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [entity, key, alias, validationOptions.throwOnExist],
-      validator: IsEntityExistedConstraint,
-    });
-  };
-}
+// export function IsEntityExisted(
+//   entity: EntityTarget<any>,
+//   key: string,
+//   alias?: string,
+//   validationOptions: ExtendValidationOptions = { throwOnExist: true },
+// ) {
+//   return function (object: Object, propertyName: string) {
+//     registerDecorator({
+//       target: object.constructor,
+//       propertyName: propertyName,
+//       options: validationOptions,
+//       constraints: [entity, key, alias, validationOptions.throwOnExist],
+//       validator: IsEntityExistedConstraint,
+//     });
+//   };
+// }
 
 @ValidatorConstraint({ name: 'IsEmailsConstraint', async: true })
 @Injectable()

@@ -3,6 +3,9 @@ const path = require('path');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const swcDefaultConfig =
+  require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
+    .swcOptions;
 
 /**
  * @type {import('webpack').Configuration}
@@ -22,18 +25,26 @@ module.exports = {
     unsafeCache: true,
     rules: [
       {
-        test: /.([jt])sx?$/,
+        test: /\.ts$/,
         exclude: /node_modules/,
         use: {
-          loader: 'ts-loader',
-          options: {
-            configFile: 'tsconfig.json',
-            projectReferences: true,
-            experimentalWatchApi: true,
-            transpileOnly: true,
-          },
+          loader: 'swc-loader',
+          options: swcDefaultConfig,
         },
       },
+      // {
+      //   test: /.([jt])sx?$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'ts-loader',
+      //     options: {
+      //       configFile: 'tsconfig.json',
+      //       projectReferences: true,
+      //       experimentalWatchApi: true,
+      //       transpileOnly: true,
+      //     },
+      //   },
+      // },
     ],
   },
   mode: process.env.NODE_ENV || 'development',

@@ -4,13 +4,13 @@ import { AuthController } from './auth.controller';
 import { GithubStrategy } from './github.strategy';
 import { LocalStrategy } from './local.strategy';
 import { AuthService } from './auth.service';
-import { UserModule } from '../user/user.module';
+// import { UserModule } from '../user/user.module';
 import { GoogleStrategy } from './google.strategy';
 
 @Module({
   imports: [
     PassportModule.register({ session: true }),
-    forwardRef(() => UserModule),
+    // forwardRef(() => UserModule),
   ],
   controllers: [AuthController],
   providers: [

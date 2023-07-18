@@ -15,11 +15,11 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';
 import { useContainer } from 'class-validator';
-import fastifyMultipart from '@fastify/multipart';
+import FastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import fastifyPassport from '@fastify/passport';
 import FastifySession from '@fastify/session';
-import FastifyCookie, { FastifyCookieOptions } from '@fastify/cookie';
+import FastifyCookie from '@fastify/cookie';
 import { setupApiDoc } from './swagger.setup';
 
 declare const module: any;
@@ -68,9 +68,11 @@ async function bootstrap() {
     await app.register(FastifyCookie as any, {
       secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
     });
+
     await app.register(FastifySession as any, {
       secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
     });
+
     await app.register(fastifyPassport.initialize() as any);
     await app.register(fastifyPassport.secureSession() as any);
 
@@ -86,7 +88,7 @@ async function bootstrap() {
 
     // Setup swagger api doc with  .
     await setupApiDoc(app);
-    await app.register(fastifyMultipart as any, {
+    await app.register(FastifyMultipart as any, {
       // limits: {
       //   fileSize: sizeParser(config.get('storage.file.limit')),
       // },
