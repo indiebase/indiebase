@@ -6,6 +6,8 @@
 ## Note Bene 🚧🚧🚧
 At the beginning of the project, there is currently no version control in place.
 
+Indiebase is a self-hosted platform explicitly designed for indie developers or studios. Providing financial services and BaaS.
+
 ## FAQ
 
 1. 什么是 Indiebase ?  
