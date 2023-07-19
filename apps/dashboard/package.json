@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "@indiebase/dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,9 +15,9 @@
   },
   "devDependencies": {
     "@types/eslint": "8",
-    "@types/node": "18.16.18",
-    "@types/react": "18.2.14",
-    "@types/react-dom": "18.2.6",
+    "@types/node": "18.16.19",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "typescript": "5.1.6"

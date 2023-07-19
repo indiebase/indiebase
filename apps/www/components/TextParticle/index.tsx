@@ -1,3 +1,5 @@
+'use client';
+
 import React, { FC, useEffect, useRef } from 'react';
 
 var utils = {
@@ -383,6 +385,7 @@ export const TextParticle: FC<TextParticleProps> = function (props) {
     }
 
     update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <canvas ref={ref} />;

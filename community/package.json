@@ -71,7 +71,7 @@
     "@swc/jest": "^0.2.26",
     "@types/bcrypt": "5",
     "@types/jest": "29.5.3",
-    "@types/node": "18.16.18",
+    "@types/node": "18.16.19",
     "@types/passport": "1.0.12",
     "@types/passport-github2": "1.2.5",
     "@types/passport-google-oauth20": "^2.0.11",

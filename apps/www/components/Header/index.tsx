@@ -1,3 +1,5 @@
+'use client';
+
 import {
   MediaQuery,
   Header as MantineHeader,
@@ -9,13 +11,13 @@ import {
   Image,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { LoginModal } from 'components/Modal';
+import { LoginModal } from 'components/Modals';
 import Link from 'next/link';
 import { FC, useState } from 'react';
 
 export interface NavHeaderProps {
   onNavbarOpen?: () => void;
-  navbarOpened?: boolean;
+  navbarOpened: boolean;
 }
 
 export const Header: FC<NavHeaderProps> = function (props) {
@@ -92,11 +94,11 @@ export const Header: FC<NavHeaderProps> = function (props) {
             >
               <Group sx={{ marginRight: 40 }} spacing={40}>
                 <Anchor component={Link} href="/docs">
-                  文档
+                  Docs
                 </Anchor>
 
                 <Anchor component={Link} href="/pricing">
-                  价格
+                  Pricing
                 </Anchor>
 
                 <Anchor component={Link} href="#">
@@ -114,7 +116,7 @@ export const Header: FC<NavHeaderProps> = function (props) {
                 setModalMeta({ opened: true });
               }}
             >
-              登录&注册
+              Sign In / Sign Up
             </Anchor>
           </Group>
         </Group>

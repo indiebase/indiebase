@@ -1,4 +1,4 @@
-/* eslint-disable  react/no-unescaped-entities */
+'use client';
 
 import {
   AppShell,
@@ -11,10 +11,11 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core';
-import { Footer, Header } from 'components';
 import { FC, useState } from 'react';
 import type { PropsWithChildren } from 'react';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
+import { Footer } from '../Footer';
+import { Header } from '../Header';
 
 export const Layout: FC<PropsWithChildren> = (props) => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
@@ -41,38 +42,37 @@ export const Layout: FC<PropsWithChildren> = (props) => {
         withGlobalStyles
         withNormalizeCSS
       >
-        <NotificationsProvider position="top-right">
-          <AppShell
-            styles={{
-              main: {
-                padding: 'unset',
-                background:
-                  theme.colorScheme === 'dark'
-                    ? theme.colors.dark[6]
-                    : theme.colors.white,
-              },
-            }}
-            navbarOffsetBreakpoint="sm"
-            asideOffsetBreakpoint="sm"
-            navbar={
-              <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-                <Navbar p="md" width={{ sm: 200, lg: 300 }} hidden={!opened}>
-                  <Text>Application navbar</Text>
-                </Navbar>
-              </MediaQuery>
-            }
-            header={
-              <Header
-                navbarOpened={opened}
-                onNavbarOpen={() => setOpened((o) => !o)}
-              />
-            }
-          >
-            {props.children}
-          </AppShell>
+        <Notifications />
+        <AppShell
+          styles={{
+            main: {
+              padding: 'unset',
+              background:
+                theme.colorScheme === 'dark'
+                  ? theme.colors.dark[6]
+                  : theme.colors.white,
+            },
+          }}
+          navbarOffsetBreakpoint="sm"
+          asideOffsetBreakpoint="sm"
+          navbar={
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Navbar p="md" width={{ sm: 200, lg: 300 }} hidden={!opened}>
+                <Text>Application navbar</Text>
+              </Navbar>
+            </MediaQuery>
+          }
+          header={
+            <Header
+              navbarOpened={opened}
+              onNavbarOpen={() => setOpened((o) => !o)}
+            />
+          }
+        >
+          {props.children}
+        </AppShell>
 
-          <Footer />
-        </NotificationsProvider>
+        <Footer />
       </MantineProvider>
     </ColorSchemeProvider>
   );
