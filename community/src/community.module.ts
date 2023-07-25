@@ -7,7 +7,6 @@ import { kDevMode } from '@indiebase/server-shared';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
-// import { } from '@indiebase/nest-knex';
 import * as winston from 'winston';
 import { KnexModule } from '@indiebase/nest-knex';
 import { ProbeModule } from './probe';

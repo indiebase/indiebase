@@ -4,6 +4,7 @@
 <br />
 
 ## Note Bene 🚧🚧🚧
+
 At the beginning of the project, there is currently no version control in place.
 
 Indiebase is a self-hosted platform explicitly designed for indie developers or studios. Providing financial services and BaaS.
@@ -11,14 +12,14 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 ## FAQ
 
 1. 什么是 Indiebase ?  
-indiebase 全称为let's collaborate, 分为Community和Pro版本。
-indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit)等。
+   indiebase 全称为let's collaborate, 分为Community和Pro版本。
+   indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit)等。
 2. 什么是 indiebase community？  
-indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
+   indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
 3. 什么是 indiebase pro ?  
-而indiebase pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
+   而indiebase pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
 4. indiebase 提供线上服务吗 ?  
-不提供，indiebase 是一个完全self hosted的平台。在保证功能的前提下，尽可能使其能够在低配置服务器环境运行。
+   不提供，indiebase 是一个完全self hosted的平台。在保证功能的前提下，尽可能使其能够在低配置服务器环境运行。
 
 ## 收益
 
@@ -40,12 +41,25 @@ indiebase community 类似于 OpenCollective, 不过其是用于管理私有独�
 
 Email: deskbtm@outlook.com
 
-
 ## Sub-Projects
+
 - [PITM](https://github.com/indiebase/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for indiebase pro.
-- [Delag](https://github.com/nawbc/delag) 
+- [Delag](https://github.com/nawbc/delag)
+
+## First Party
+
+Indiebase open-source libraries.
+
+- [passport-paesto](https://github.com/nawbc/passport-paseto)
+- [nestjs-paesto](https://github.com/nawbc/nestjs-paesto)
+- [@indiebase/nest-s3](https://github.com/indiebase/indiebase)
+- [@indiebase/nest-stoplight-elements](https://github.com/indiebase/indiebase)
+- [@indiebase/nest-knex](https://github.com/indiebase/indiebase)
+- [@indiebase/nest-octokit](https://github.com/indiebase/indiebase)
+- [@indiebase/nest-nacos](https://github.com/indiebase/indiebase)
 
 ## Architecture
+
 - [Nestjs](https://github.com/nestjs/nest) Nest is a framework for building efficient, scalable Node.js server-side applications.
 - [Nacos](https://github.com/alibaba/nacos) One-stop solution for dynamic service discovery, configuration management and dynamic DNS service
 - [Seaweedfs](https://github.com/seaweedfs/seaweedfs) SeaweedFS is a simple and highly scalable distributed file system.
@@ -56,16 +70,8 @@ Email: deskbtm@outlook.com
 
 See [Credits.md](https://github.com/indiebase/indiebase/blob/main/docs/CREDITS.md)
 
-NB: 项目使用的grafana(7.5.15)版本为Apache-2.0开源协议。
-
 ## License
 
-本程序基于 GNU AFFERO GENERAL PUBLIC LICENSE (AGPL-3.0) 协议
-
-附加许可：
+If a directory has a LICENSE file, the project is governed by that LICENSE file. The rest of the parts are licensed under the GNU AFFERO GENERAL PUBLIC LICENSE (AGPL-3.0) license.
 
 Copyright (C) 2021 Han <deskbtm@outlook.com>
-
-a) 本程序的源代码禁止个人私自部署，衍生，源代码仅用于学习交流。
-
-b) 不得将此项目的源代码和二进制产品用于任何商业和盈利用途。

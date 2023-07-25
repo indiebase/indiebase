@@ -4,7 +4,7 @@ undecided:
   - "@indiebase/www"
   - "@indiebase/collab"
   - "@indiebase/console-shared"
-  - "@indiebase/gadgets"
+  - "@deskbtm/gadgets"
   - "@indiebase/nest-casbin"
   - "@indiebase/nest-nacos"
   - "@indiebase/nest-octokit"

@@ -1,4 +1,4 @@
-import { is } from '@indiebase/gadgets';
+import { is } from '@deskbtm/gadgets';
 import { Group, Tooltip, ActionIcon, Popover, Checkbox } from '@mantine/core';
 import { IconZoomReset, IconColumnsOff } from '@tabler/icons';
 import { Table } from '@tanstack/react-table';

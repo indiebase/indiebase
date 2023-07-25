@@ -1,3 +1,5 @@
+// inspired by await-to-js
+
 /**
  * Get the await result with tuple.
  *

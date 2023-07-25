@@ -5,6 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import * as request from 'supertest';
+import { describe, beforeEach, it } from '@jest/globals';
 
 describe('AuthController (e2e)', () => {
   let app: NestFastifyApplication;

@@ -5,6 +5,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { describe, beforeEach, it } from '@jest/globals';
 
 describe('ProbeController (e2e)', () => {
   let app: NestFastifyApplication;

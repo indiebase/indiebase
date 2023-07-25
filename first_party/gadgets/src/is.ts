@@ -1,4 +1,18 @@
+/**
+ * Javascript type checking
+ *
+ * @returns {boolean}
+ */
 export const is = {
+  /**
+   *
+   * @param {unknown} obj
+   * @param {string} str
+   * @example
+   * ```ts
+   * is.type({}, 'Object') === true
+   * ```
+   */
   type(obj: unknown, str: string): boolean {
     return Object.prototype.toString.call(obj) === `[object ${str}]`;
   },

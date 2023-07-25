@@ -1,7 +1,7 @@
 {
-  "name": "@indiebase/gadgets",
+  "name": "@deskbtm/gadgets",
   "version": "0.0.1",
-  "description": "Common utils",
+  "description": "Deskbtm javascript gadgets",
   "author": "Han",
   "private": true,
   "main": "dist/index.js",

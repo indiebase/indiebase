@@ -24,5 +24,6 @@
     "**/build/*/**": true,
     "**/dist/*/**": true
   },
-  "workbench.colorCustomizations": {}
+  "workbench.colorCustomizations": {},
+  "jest.rootPath": ".\\first_party\\nest-passport"
 }

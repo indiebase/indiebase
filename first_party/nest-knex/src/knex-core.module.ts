@@ -98,7 +98,6 @@ export class KnexCoreModule implements OnApplicationShutdown {
       };
     }
 
-    // `as Type<KnexOptionsFactory>` is a workaround for microsoft/TypeScript#31603
     const inject = [
       (options.useClass || options.useExisting) as Type<KnexOptionsFactory>,
     ];
