@@ -1,20 +1,20 @@
-import { OpenObserveTransport, OpenObserveTransportOptions } from "../src";
-import { type Logger, createLogger, format } from "winston";
-import { describe, beforeEach, it, afterEach } from "@jest/globals";
+import { OpenObserveTransport, OpenObserveTransportOptions } from '../src';
+import { type Logger, createLogger, format } from 'winston';
+import { describe, beforeEach, it, afterEach } from '@jest/globals';
 
 const { combine, label } = format;
 
-describe("OpenObserve Transport", function () {
+describe('OpenObserve Transport', function () {
   let logger: Logger;
   let bulkLogger: Logger;
 
   beforeEach((done) => {
-    let options: Omit<OpenObserveTransportOptions, "stream"> = {
-      host: "http://127.0.0.1:5080",
-      org: "default",
+    let options: Omit<OpenObserveTransportOptions, 'stream'> = {
+      host: 'http://127.0.0.1:5080',
+      org: 'default',
       basicAuth: {
-        username: "dev@indiebase.com",
-        password: "indiebase",
+        username: 'dev@indiebase.com',
+        password: 'indiebase',
       },
     };
     logger = createLogger({
@@ -23,7 +23,7 @@ describe("OpenObserve Transport", function () {
         new OpenObserveTransport({
           ...options,
           bulk: false,
-          stream: "no_bulk",
+          stream: 'no_bulk',
         }),
       ],
     });
@@ -32,21 +32,21 @@ describe("OpenObserve Transport", function () {
         new OpenObserveTransport({
           ...options,
           bulk: true,
-          stream: "bulk",
+          stream: 'bulk',
         }),
       ],
     });
     done();
   });
 
-  it("Send log immediately", () => {
-    logger.info("test1");
-    logger.error("test1");
-    logger.warn("test1");
+  it('Send log immediately', () => {
+    logger.info('test1');
+    logger.error('test1');
+    logger.warn('test1');
   });
 
-  // afterEach(() => {
-  //   logger.close();
-  //   bulkLogger.close();
-  // });
+  afterEach(() => {
+    logger.close();
+    bulkLogger.close();
+  });
 });
