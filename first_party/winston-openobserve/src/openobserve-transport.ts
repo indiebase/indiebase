@@ -5,6 +5,15 @@ import { MESSAGE } from 'triple-beam';
 import * as assert from 'assert';
 import exitHook from 'async-exit-hook';
 
+function isURL(url: string) {
+  try {
+    new URL('', url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export class OpenObserveTransport extends Transport {
   #sender: Sender;
   #options: OpenObserveTransportOptions;
@@ -14,6 +23,7 @@ export class OpenObserveTransport extends Transport {
 
     assert.ok(options.org, 'Set default org_id');
     assert.ok(options.stream, 'Set default stream name');
+    assert.ok(isURL(options.host), 'Host can not parse');
 
     this.#options = {
       bulk: true,
@@ -27,7 +37,7 @@ export class OpenObserveTransport extends Transport {
 
     this.#sender = new Sender(this.#options);
 
-    if (options.gracefulShutdown) {
+    if (this.#options.gracefulShutdown) {
       exitHook(() => {
         this.close();
       });
@@ -66,17 +76,17 @@ export class OpenObserveTransport extends Transport {
     } = info;
     timestamp = this.#getTimestamp(timestamp);
 
-    let openobserveLabels: Record<string, any> = {
+    let openObserveLabels: Record<string, any> = {
       level,
     };
 
     labels = Object.assign({}, this.#options.labels);
 
-    for (const key in openobserveLabels) {
-      if (Object.prototype.hasOwnProperty.call(openobserveLabels, key)) {
-        const value = openobserveLabels[key];
+    for (const key in openObserveLabels) {
+      if (Object.prototype.hasOwnProperty.call(openObserveLabels, key)) {
+        const value = openObserveLabels[key];
         if (typeof value !== 'string') {
-          openobserveLabels[key] = String(value);
+          openObserveLabels[key] = String(value);
         }
       }
     }

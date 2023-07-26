@@ -23,7 +23,7 @@
       "path": "../first_party/nest-fastify-file"
     },
     {
-      "path": "../first_party/nest-passport"
+      "path": "../first_party/nest-fastify-passport"
     },
     {
       "path": "../first_party/nest-s3"
@@ -36,6 +36,9 @@
     },
     {
       "path": "../first_party/nest-knex"
+    },
+    {
+      "path": "../first_party/winston-openobserve"
     }
   ],
   "include": [

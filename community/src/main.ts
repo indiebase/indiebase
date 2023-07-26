@@ -21,7 +21,6 @@ import fastifyPassport from '@fastify/passport';
 import FastifySession from '@fastify/session';
 import FastifyCookie from '@fastify/cookie';
 import { setupApiDoc } from './swagger.setup';
-
 declare const module: any;
 
 async function bootstrap() {

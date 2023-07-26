@@ -9,6 +9,9 @@ const swcDefaultConfig =
 
 /**
  * @type {import('webpack').Configuration}
+ * @todo swc-loader doesn't support project references.
+ * https://github.com/swc-project/swc/discussions/2156
+ *
  */
 module.exports = {
   context: __dirname,
@@ -16,51 +19,37 @@ module.exports = {
   target: 'node',
   externals: [
     nodeExternals({
-      allowlist: ['webpack/hot/poll?100'],
+      // Fix ky require esm error.
+      allowlist: ['webpack/hot/poll?100', 'winston-openobserve', 'ky'],
       modulesDir: path.resolve(__dirname, '../node_modules'),
     }),
   ],
   devtool: 'eval-source-map',
   module: {
-    unsafeCache: true,
     rules: [
+      // {
+      //   test: /.([jt])sx?$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'swc-loader',
+      //     options: {
+      //       ...swcDefaultConfig,
+      //     },
+      //   },
+      // },
       {
         test: /.([jt])sx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'swc-loader',
+          loader: 'ts-loader',
           options: {
-            ...swcDefaultConfig,
+            configFile: 'tsconfig.json',
             projectReferences: true,
             experimentalWatchApi: true,
             transpileOnly: true,
           },
         },
       },
-      // {
-      //   test: /.([jt])sx?$/,
-      //   exclude: /node_modules/,
-      //   // exclude: /[\\/]node_modules[\\/](?!(ky)[\\/])/,
-      //   use: {
-      //     loader: 'ts-loader',
-      //     options: {
-      //       configFile: 'tsconfig.json',
-      //       projectReferences: true,
-      //       experimentalWatchApi: true,
-      //       transpileOnly: true,
-      //     },
-      //   },
-      // },
-      // {
-      //   test: /.([jt])sx?$/,
-      //   exclude: /node_modules/,
-      //   use: {
-      //     loader: 'esbuild-loader',
-      //     // options: {
-      //     //   // configFile: 'tsconfig.json'
-      //     // },
-      //   },
-      // },
     ],
   },
   mode: process.env.NODE_ENV || 'development',
@@ -74,7 +63,11 @@ module.exports = {
       },
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new RunScriptWebpackPlugin({ name: 'main.js', autoRestart: true }),
+    new RunScriptWebpackPlugin({
+      name: 'main.js',
+      autoRestart: true,
+      nodeArgs: ['--trace-warnings'],
+    }),
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),

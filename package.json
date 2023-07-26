@@ -7,7 +7,7 @@
   "license": "AGPL-3.0",
   "engines": {
     "yarn": ">2.0.0",
-    "node": ">= 16.0.0",
+    "node": ">= 18.0.0",
     "npm": "please-use-yarn",
     "pnpm": "please-use-yarn"
   },

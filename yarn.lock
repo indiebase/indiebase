@@ -3654,7 +3654,6 @@ __metadata:
     "@fastify/passport": 2.3.0
     "@fastify/session": 9.0.0
     "@fastify/swagger": 8.8.0
-    "@indiebase/nest-knex": "workspace:^"
     "@liaoliaots/nestjs-redis": 9.0.5
     "@nestjs-modules/mailer": 1.7.1
     "@nestjs/axios": ^3.0.0
@@ -3867,9 +3866,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-fastify-passport@workspace:first_party/nest-passport":
+"@indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport":
   version: 0.0.0-use.local
-  resolution: "@indiebase/nest-fastify-passport@workspace:first_party/nest-passport"
+  resolution: "@indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport"
   dependencies:
     "@commitlint/cli": 17.0.3
     "@commitlint/config-angular": 17.0.0
@@ -3910,7 +3909,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-knex@workspace:^, @indiebase/nest-knex@workspace:first_party/nest-knex":
+"@indiebase/nest-knex@workspace:first_party/nest-knex":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-knex@workspace:first_party/nest-knex"
   dependencies:
