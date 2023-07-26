@@ -1,4 +1,4 @@
-import type { Format } from "logform";
+import type { Format } from 'logform';
 
 export interface OpenObserveTransportOptions {
   host: string;
@@ -8,10 +8,13 @@ export interface OpenObserveTransportOptions {
   };
   headers?: Record<string, string>;
   onRequestError?: (error: Error) => void;
+  /**
+   * milliseconds
+   */
   timeout?: number;
   bulk?: boolean;
   /**
-   * Request interval, seconds.
+   * Request interval, milliseconds.
    */
   interval?: number;
   labels?: Record<string, string>;

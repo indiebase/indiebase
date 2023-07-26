@@ -1,8 +1,9 @@
-import * as Transport from "winston-transport";
-import { OpenObserveTransportOptions } from "./interface";
-import { Sender } from "./sender";
-import { MESSAGE } from "triple-beam";
-import * as assert from "assert";
+import Transport from 'winston-transport';
+import { OpenObserveTransportOptions } from './interface';
+import { Sender } from './sender';
+import { MESSAGE } from 'triple-beam';
+import * as assert from 'assert';
+import exitHook from 'async-exit-hook';
 
 export class OpenObserveTransport extends Transport {
   #sender: Sender;
@@ -11,20 +12,26 @@ export class OpenObserveTransport extends Transport {
   public constructor(options: OpenObserveTransportOptions) {
     super();
 
-    assert.ok(options.org, "Set default org_id");
-    assert.ok(options.stream, "Set default stream name");
+    assert.ok(options.org, 'Set default org_id');
+    assert.ok(options.stream, 'Set default stream name');
 
     this.#options = {
       bulk: true,
       gracefulShutdown: true,
-      timeout: 10,
-      interval: 10,
+      timeout: 10000,
+      interval: 10000,
       cleanOnError: false,
       useNow: false,
       ...options,
     };
 
     this.#sender = new Sender(this.#options);
+
+    if (options.gracefulShutdown) {
+      exitHook(() => {
+        this.close();
+      });
+    }
   }
 
   #getTimestamp(timestamp) {
@@ -43,7 +50,7 @@ export class OpenObserveTransport extends Transport {
 
   public override log(info: any, next: () => void) {
     setImmediate(() => {
-      this.emit("logged", info);
+      this.emit('logged', info);
     });
 
     let {
@@ -68,7 +75,7 @@ export class OpenObserveTransport extends Transport {
     for (const key in openobserveLabels) {
       if (Object.prototype.hasOwnProperty.call(openobserveLabels, key)) {
         const value = openobserveLabels[key];
-        if (typeof value !== "string") {
+        if (typeof value !== 'string') {
           openobserveLabels[key] = String(value);
         }
       }
@@ -77,7 +84,7 @@ export class OpenObserveTransport extends Transport {
     message = !!this.#options.format
       ? info[MESSAGE]
       : `${message} ${
-          rest && Object.keys(rest).length > 0 ? JSON.stringify(rest) : ""
+          rest && Object.keys(rest).length > 0 ? JSON.stringify(rest) : ''
         }`;
 
     this.#sender
@@ -91,7 +98,7 @@ export class OpenObserveTransport extends Transport {
           orgId: org ?? this.#options.org,
           streamName: stream ?? this.#options.stream,
         },
-        bulk ?? this.#options.bulk
+        bulk ?? this.#options.bulk,
       )
       .then(next);
   }

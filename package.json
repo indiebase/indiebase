@@ -37,12 +37,17 @@
     "standard-version": "9.3.1",
     "typescript": "5.1.6"
   },
-  "workspaces": [
-    "first_party/*",
-    "apps/*",
-    "apps/first_party/*",
-    "community"
-  ],
+  "workspaces": {
+    "packages": [
+      "first_party/*",
+      "apps/*",
+      "apps/first_party/*",
+      "community"
+    ],
+    "nohoist": [
+      "**/ky/**"
+    ]
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

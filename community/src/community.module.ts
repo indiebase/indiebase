@@ -10,11 +10,11 @@ import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
 import { KnexModule } from '@indiebase/nest-knex';
 import { ProbeModule } from './probe';
+// import { OpenObserveTransport } from 'winston-openobserve';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Lets Community:
  * {@link UserModule},{@link StorageModule}, {@link OrgModule}, {@link ProjectModule} etc.
- *
  *
  * @param options
  * @returns
@@ -50,6 +50,17 @@ export const createCommunityModule = function (
       WinstonModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => {
+          // const openObserveTransport = new OpenObserveTransport({
+          //   bulk: true,
+          //   host: '',
+          //   org: 'indiebase',
+          //   stream: 'community',
+          //   basicAuth: {
+          //     username: '',
+          //     password: '',
+          //   },
+          // });
+
           const transports = [
             new winston.transports.Console({
               format: winston.format.combine(
@@ -57,21 +68,13 @@ export const createCommunityModule = function (
                 utilities.format.nestLike(),
               ),
             }),
-            // new LokiTransport({
-            //   json: true,
-            //   host,
-            // }),
+            // openObserveTransport,
           ];
           return {
             level: kDevMode ? 'debug' : 'warn',
             format: winston.format.json(),
             exitOnError: false,
-            rejectionHandlers: [
-              // new LokiTransport({
-              //   json: true,
-              //   host,
-              // }),
-            ],
+            // rejectionHandlers: [openObserveTransport],
             transports,
           };
         },

@@ -1,5 +1,3 @@
-import { IAccessOptions } from '@indiebase/nest-casbin';
-
 /**
  * Signup Type Enum
  */
@@ -21,5 +19,4 @@ export type UserSession = {
 export type ValidAuthData = {
   user: UserSession;
   domain: string;
-  access: IAccessOptions[];
 };

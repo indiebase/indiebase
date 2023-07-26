@@ -1,7 +1,6 @@
-import { AccessAction } from '@indiebase/nest-casbin';
 import { UnionResource } from './resource.interface';
 
-export type Possession = { resource: UnionResource; action: AccessAction[] };
+export type Possession = { resource: UnionResource };
 
 export interface CreateRoleBody {
   name: string;

@@ -1,26 +1,18 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "target": "ES2015",
-    "sourceMap": true,
+    "esModuleInterop": true,
+    "composite": true,
+    "baseUrl": ".",
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitOverride": true
+    "rootDir": "src"
   },
   "include": [
-    "./src"
+    "src/**/*",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "test"
   ]
 }

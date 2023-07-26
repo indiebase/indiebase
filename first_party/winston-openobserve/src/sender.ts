@@ -1,6 +1,6 @@
-import ky from "ky";
-import { LogEntity, OpenObserveTransportOptions } from "./interface";
-import { KyInstance } from "ky/distribution/types/ky";
+import ky from 'ky';
+import { LogEntity, OpenObserveTransportOptions } from './interface';
+import { KyInstance } from 'ky/distribution/types/ky';
 
 export class Sender {
   #options: OpenObserveTransportOptions;
@@ -16,9 +16,9 @@ export class Sender {
 
     if (basicAuth) {
       authVal =
-        "Basic " +
+        'Basic ' +
         Buffer.from(`${basicAuth.username}:${basicAuth.password}`).toString(
-          "base64"
+          'base64',
         );
     }
 
@@ -27,15 +27,15 @@ export class Sender {
       timeout: options.timeout,
       headers: Object.assign(
         {},
-        { contentType: "application/json" },
+        { contentType: 'application/json' },
         options.headers,
         {
           Authorization: authVal,
-        }
+        },
       ),
     });
 
-    const interval = Number(this.#options.interval) * 1000;
+    const interval = Number(this.#options.interval);
     this.#timer = setInterval(this.#batchSend, interval);
   }
 
@@ -57,7 +57,7 @@ export class Sender {
   async #batchSend() {
     if (this.#data) {
       for await (const [key, value] of Object.entries(this.#data)) {
-        const [orgId, streamName] = key.split("/");
+        const [orgId, streamName] = key.split('/');
         await this.#send(orgId, streamName, value);
       }
     }
@@ -70,7 +70,7 @@ export class Sender {
       })
       .catch((err) => {
         this.#options.cleanOnError && this.clean();
-        this.#options?.onRequestError(err);
+        this.#options.onRequestError?.(err);
         return Promise.reject(err);
       });
   }

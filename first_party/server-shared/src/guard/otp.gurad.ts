@@ -1,23 +1,23 @@
-import {
-  ACCESS_META,
-  CasbinService,
-  IAccessOptions,
-} from '@indiebase/nest-casbin';
+// import {
+//   ACCESS_META,
+//   CasbinService,
+//   IAccessOptions,
+// } from '@indiebase/nest-casbin';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class OtpGuard implements CanActivate {
   constructor(
-    private readonly casbin: CasbinService,
+    // private readonly casbin: CasbinService,
     private readonly reflector: Reflector,
   ) {}
 
   getAccess(context: ExecutionContext) {
-    return this.reflector.get<IAccessOptions[]>(
-      ACCESS_META,
-      context.getHandler(),
-    );
+    // return this.reflector.get<IAccessOptions[]>(
+    //   ACCESS_META,
+    //   context.getHandler(),
+    // );
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

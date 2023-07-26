@@ -25,16 +25,22 @@ module.exports = {
     unsafeCache: true,
     rules: [
       {
-        test: /\.ts$/,
+        test: /.([jt])sx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'swc-loader',
-          options: swcDefaultConfig,
+          options: {
+            ...swcDefaultConfig,
+            projectReferences: true,
+            experimentalWatchApi: true,
+            transpileOnly: true,
+          },
         },
       },
       // {
       //   test: /.([jt])sx?$/,
       //   exclude: /node_modules/,
+      //   // exclude: /[\\/]node_modules[\\/](?!(ky)[\\/])/,
       //   use: {
       //     loader: 'ts-loader',
       //     options: {
@@ -43,6 +49,16 @@ module.exports = {
       //       experimentalWatchApi: true,
       //       transpileOnly: true,
       //     },
+      //   },
+      // },
+      // {
+      //   test: /.([jt])sx?$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'esbuild-loader',
+      //     // options: {
+      //     //   // configFile: 'tsconfig.json'
+      //     // },
       //   },
       // },
     ],

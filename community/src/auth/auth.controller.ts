@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
-  AccessGuard,
   PublicApiHeader,
   MyInfo,
   PublicApiGuard,
