@@ -67,9 +67,13 @@ export class Sender {
   }
 
   async #batchSend() {
-    for await (const [key, value] of Object.entries(this.#data)) {
-      const [orgId, streamName] = key.split('/');
-      await this.#send(orgId, streamName, value);
+    try {
+      for await (const [key, value] of Object.entries(this.#data)) {
+        const [orgId, streamName] = key.split('/');
+        await this.#send(orgId, streamName, value);
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -80,7 +84,6 @@ export class Sender {
         json: body,
       })
       .then(() => {
-        this.#isSending = false;
         const v = Object.values(this.#tmpData);
         if (Array.isArray(v) && v.length > 0) {
           this.#data = this.#tmpData;
@@ -89,9 +92,15 @@ export class Sender {
         this.clean();
       })
       .catch((err) => {
-        this.#isSending = false;
-        this.#options.cleanOnError && this.clean();
+        console.error(err);
+        if (err?.cause.code === 'ECONNREFUSED') {
+          this.#options.onConnectionError?.(err, this.close.bind(this));
+        }
+        this.#options.cleanOnRequestError && this.clean();
         this.#options.onRequestError?.(err);
+      })
+      .finally(() => {
+        this.#isSending = false;
       });
   }
 
@@ -101,6 +110,7 @@ export class Sender {
   }
 
   public close() {
+    console.debug('OpenObserve closed');
     this.clean();
     clearInterval(this.#timer);
   }

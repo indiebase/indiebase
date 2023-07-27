@@ -22,16 +22,26 @@ export interface OpenObserveTransportOptions {
   /**
    * Default org_id.
    */
-  org: string;
+  defaultOrg: string;
   /**
    * Default stream name.
    */
-  stream: string;
+  defaultStream: string;
 
   /**
    * Discard any logs that result in an error during transport.
    */
-  cleanOnError?: boolean;
+  cleanOnRequestError?: boolean;
+
+  /**
+   *
+   * When a connection error occurs, close the transport.
+   *
+   * @param error
+   * @param close Close transport, of cause you can not to call it.
+   */
+  onConnectionError?: (error: Error, close: () => void) => void;
+
   format?: Format;
   /**
    * using `Date.now` as timestamp for any logs.

@@ -21,16 +21,16 @@ export class OpenObserveTransport extends Transport {
   public constructor(options: OpenObserveTransportOptions) {
     super();
 
-    assert.ok(options.org, 'Set default org_id');
-    assert.ok(options.stream, 'Set default stream name');
-    assert.ok(isURL(options.host), 'Host can not parse');
+    assert.ok(options.defaultOrg, 'Set default org_id');
+    assert.ok(options.defaultStream, 'Set default stream name');
+    assert.ok(isURL(options.host), 'Host URL can not parse');
 
     this.#options = {
       bulk: true,
       gracefulShutdown: true,
       timeout: 10000,
       interval: 10000,
-      cleanOnError: false,
+      cleanOnRequestError: false,
       useNow: false,
       ...options,
     };
@@ -105,8 +105,8 @@ export class OpenObserveTransport extends Transport {
           level,
           message,
           label,
-          orgId: org ?? this.#options.org,
-          streamName: stream ?? this.#options.stream,
+          orgId: org ?? this.#options.defaultOrg,
+          streamName: stream ?? this.#options.defaultStream,
         },
         bulk ?? this.#options.bulk,
       )

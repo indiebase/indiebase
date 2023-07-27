@@ -49,18 +49,23 @@ export const createCommunityModule = function (
       }),
       WinstonModule.forRootAsync({
         inject: [ConfigService],
-        useFactory: (configService: ConfigService) => {
+        useFactory: (config: ConfigService) => {
+          const { host, defaultOrg, defaultStream, username, password } =
+            config.get('open_observe');
+
           const openObserveTransport = new OpenObserveTransport({
             bulk: true,
-            host: 'http://indiebase.deskbtm.com:5080',
-            org: 'indiebase',
-            stream: 'community',
-            onRequestError(error) {
-              console.log(error, '-----------');
+            host,
+            defaultOrg,
+            defaultStream,
+            interval: 2000,
+            cleanOnRequestError: true,
+            onConnectionError(_error, close) {
+              close();
             },
             basicAuth: {
-              username: 'dev@indiebase.com',
-              password: 'indiebase',
+              username,
+              password,
             },
           });
 
@@ -77,7 +82,8 @@ export const createCommunityModule = function (
             level: kDevMode ? 'debug' : 'warn',
             format: winston.format.json(),
             exitOnError: false,
-            // rejectionHandlers: [openObserveTransport],
+            handleRejections: true,
+            rejectionHandlers: [openObserveTransport],
             transports,
           };
         },
@@ -124,17 +130,23 @@ export const createCommunityModule = function (
       //   },
       // }),
       KnexModule.forRootAsync({
-        useFactory: () => ({
-          config: {
-            client: 'pg',
-            connection: {
-              host: '127.0.0.1',
-              user: 'postgres',
-              password: 'indiebase',
-              database: 'test',
+        inject: [ConfigService],
+        useFactory: (config: ConfigService) => {
+          const { host, port, password, user, database } = config.get('pg');
+
+          return {
+            config: {
+              client: 'pg',
+              connection: {
+                host,
+                port,
+                user,
+                password,
+                database,
+              },
             },
-          },
-        }),
+          };
+        },
       }),
       MailerModule.forRootAsync({
         inject: [ConfigService],

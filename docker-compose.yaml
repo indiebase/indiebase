@@ -127,7 +127,7 @@ services:
       - 6379:6379
     volumes:
       - redis_data:/data:rw
-      - ${CONFIG_DIR:-.}/config/redis:/usr/local/etc/redis:ro
+      - ${CONFIG_DIR:-./docker}/redis:/usr/local/etc/redis:ro
     command: redis-server /usr/local/etc/redis/redis.conf
 
 networks:

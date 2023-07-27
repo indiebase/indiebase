@@ -31,13 +31,13 @@ const redis = registerAs('redis', () => {
   };
 });
 
-const mysql = registerAs('mysql', () => {
+const pg = registerAs('pg', () => {
   return {
-    host: process.env.DB_MYSQL_HOST || '0.0.0.0',
-    port: parseInt(process.env.DB_MYSQL_PORT) || 3306,
-    username: process.env.DB_MYSQL_USER,
-    password: process.env.DB_MYSQL_PASSWORD,
-    database: process.env.DB_MYSQL_DATABASE,
+    host: process.env.DB_PG_HOST || '0.0.0.0',
+    port: parseInt(process.env.DB_PG_PORT) || 5432,
+    user: process.env.DB_PG_USER,
+    password: process.env.DB_PG_PWD,
+    database: process.env.DB_PG_DB,
   };
 });
 
@@ -51,9 +51,14 @@ const smtp = registerAs('smtp', () => {
   };
 });
 
-const logger = registerAs('logger', () => {
+const open_observe = registerAs('open_observe', () => {
   return {
-    host: process.env.LOG_LOKI_HOST,
+    host: process.env.LOG_OO_HOST,
+    defaultOrg: process.env.LOG_OO_DEFAULT_ORG,
+    defaultStream: process.env.LOG_OO_DEFAULT_STREAM,
+    password: process.env.LOG_OO_AUTH_PWD,
+    username: process.env.LOG_OO_AUTH_USERNAME,
+    enable: process.env.LOG_OO_ENABLE,
   };
 });
 
@@ -88,10 +93,10 @@ const storage = registerAs('storage', () => {
 export const communityDefaultConfigs = [
   app,
   redis,
-  mysql,
+  pg,
   smtp,
   auth,
-  logger,
+  open_observe,
   storage,
   security,
 ];
