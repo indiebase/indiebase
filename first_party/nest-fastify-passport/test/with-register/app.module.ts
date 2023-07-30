@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '../../lib';
+import { PassportModule } from '../../src';
 import { AppController } from '../common/app.controller';
 import { AppService } from '../common/app.service';
 import { JwtStrategy } from '../common/jwt.strategy';
@@ -10,10 +10,10 @@ import { LocalStrategy } from '../common/local.strategy';
   controllers: [AppController],
   imports: [
     JwtModule.register({
-      secret: 's3cr3t'
+      secret: 's3cr3t',
     }),
-    PassportModule.register({})
+    PassportModule.register({}),
   ],
-  providers: [AppService, LocalStrategy, JwtStrategy]
+  providers: [AppService, LocalStrategy, JwtStrategy],
 })
 export class AppModule {}
