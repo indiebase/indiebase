@@ -39,6 +39,9 @@
     },
     {
       "path": "../first_party/winston-openobserve"
+    },
+    {
+      "path": "../first_party/nestjs-paseto"
     }
   ],
   "include": [

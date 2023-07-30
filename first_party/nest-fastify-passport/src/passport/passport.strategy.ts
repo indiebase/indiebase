@@ -41,7 +41,7 @@ export interface PassportStrategyFactory {
    *
    * @returns
    */
-  useStrategyOptions?: () => Promise<Record<string, any>>;
+  useStrategyOptions?: () => Promise<Record<string, any>> | Record<string, any>;
 }
 
 export function PassportStrategy<T extends Type<any> = any>(
@@ -51,7 +51,9 @@ export function PassportStrategy<T extends Type<any> = any>(
   abstract class MixinStrategy implements OnModuleInit {
     abstract validate(...args: any[]): any;
     abstract useStrategy?: UseStrategyHook;
-    abstract useStrategyOptions?: () => Promise<Record<string, any>>;
+    abstract useStrategyOptions?: () =>
+      | Promise<Record<string, any>>
+      | Record<string, any>;
 
     async onModuleInit() {
       try {

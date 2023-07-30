@@ -5,18 +5,23 @@ import {
   PassportStrategyFactory,
 } from '@indiebase/nest-fastify-passport';
 import { Injectable } from '@nestjs/common';
+import {
+  PublicPasetoStrategy,
+  fromAuthBearer,
+  type PublicPasetoStrategyOptions,
+} from 'passport-paseto';
 
 @Injectable()
-export class LocalStrategy
-  extends PassportStrategy(Strategy, 'local')
+export class PasetoStrategy
+  extends PassportStrategy(PublicPasetoStrategy, 'paseto')
   implements PassportStrategyFactory
 {
   constructor(private readonly authService: AuthService) {
     super();
   }
 
-  useStrategyOptions() {
-    return {};
+  useStrategyOptions(): PublicPasetoStrategyOptions {
+    return { getToken: fromAuthBearer() };
   }
 
   async validate(username: string, password: string): Promise<any> {

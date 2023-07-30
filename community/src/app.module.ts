@@ -30,7 +30,7 @@ import { createCommunityModule } from './community.module';
             new QueryResolver(),
             new HeaderResolver(['X-Custom-Lang']),
             new CookieResolver(),
-            AcceptLanguageResolver,
+            new AcceptLanguageResolver(),
           ],
           logging: kDevMode,
         }),

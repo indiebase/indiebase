@@ -1,0 +1,22 @@
+{
+  "logs": [
+    {
+      "label": "test",
+      "timestamp": 1546977515828,
+      "message": "testings",
+      "level": "info"
+    },
+    {
+      "label": "test",
+      "timestamp": 1546977615848,
+      "message": "you broke everything",
+      "level": "error"
+    },
+    {
+      "label": "test",
+      "timestamp": 1546977615848,
+      "message": "you broke everything but not quite",
+      "level": "error"
+    }
+  ]
+}

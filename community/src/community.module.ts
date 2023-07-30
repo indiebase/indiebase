@@ -11,6 +11,7 @@ import * as winston from 'winston';
 import { KnexModule } from '@indiebase/nest-knex';
 import { ProbeModule } from './probe';
 import { OpenObserveTransport } from 'winston-openobserve';
+import { AuthModule } from './auth';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Lets Community:
@@ -30,7 +31,7 @@ export const createCommunityModule = function (
       // ProjectModule,
       // InvitationModule,
       // MailModule,
-      // AuthModule,
+      AuthModule,
       ProbeModule,
       ...options.imports,
       RedisModule.forRootAsync({
@@ -47,6 +48,7 @@ export const createCommunityModule = function (
           };
         },
       }),
+
       WinstonModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (config: ConfigService) => {

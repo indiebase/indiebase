@@ -45,9 +45,9 @@ export class Sender {
 
   #pushBatch(data: Record<string, any>, slug: string, entity: LogEntity) {
     if (Array.isArray(this.#data[slug])) {
-      this.#data[slug].push(entity);
+      data[slug].push(entity);
     } else {
-      this.#data[slug] = [entity];
+      data[slug] = [entity];
     }
   }
 
