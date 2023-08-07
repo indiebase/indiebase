@@ -10,6 +10,7 @@ import {
 import { KnexHealthIndicator } from './knex.health';
 import { Knex } from 'knex';
 import { InjectConnection } from '@indiebase/nest-knex';
+import * as path from 'path';
 
 @Controller({
   path: 'probe',
@@ -38,16 +39,16 @@ export class ProbeController {
       table.timestamps();
     });
 
-    // return this.health.check([
-    //   () => this.http.pingCheck('ping_apple', 'time.apple.com'),
-    //   () =>
-    //     this.disk.checkStorage('storage', {
-    //       path: path.resolve('/'),
-    //       thresholdPercent: 0.9,
-    //     }),
-    //   () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
-    //   () => this.db.pingCheck('postgres'),
-    // ]);
+    return this.health.check([
+      () => this.http.pingCheck('ping_apple', 'time.apple.com'),
+      () =>
+        this.disk.checkStorage('storage', {
+          path: path.resolve('/'),
+          thresholdPercent: 0.9,
+        }),
+      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
+      () => this.db.pingCheck('postgres'),
+    ]);
   }
 
   @Get('demo')
@@ -57,15 +58,15 @@ export class ProbeController {
   @HealthCheck()
   async demo() {
     await this.knex('users').insert({});
-    // return this.health.check([
-    //   () => this.http.pingCheck('ping_apple', 'time.apple.com'),
-    //   () =>
-    //     this.disk.checkStorage('storage', {
-    //       path: path.resolve('/'),
-    //       thresholdPercent: 0.9,
-    //     }),
-    //   () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
-    //   () => this.db.pingCheck('postgres'),
-    // ]);
+    return this.health.check([
+      () => this.http.pingCheck('ping_apple', 'time.apple.com'),
+      () =>
+        this.disk.checkStorage('storage', {
+          path: path.resolve('/'),
+          thresholdPercent: 0.9,
+        }),
+      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
+      () => this.db.pingCheck('postgres'),
+    ]);
   }
 }

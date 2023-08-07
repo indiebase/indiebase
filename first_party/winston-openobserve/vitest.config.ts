@@ -1,13 +1,9 @@
-import swc from 'unplugin-swc';
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
     root: './',
   },
-  plugins: [
-    swc.vite({
-      module: { type: 'es6' },
-    }),
-  ],
 });

@@ -13,7 +13,7 @@ export class PasetoService {
     private readonly options?: PasetoModuleOptions,
   ) {
     assert.ok(
-      !options.version && !['V1', 'V2', 'V3', 'V4'].includes(options.version),
+      options.version && ['V1', 'V2', 'V3', 'V4'].includes(options.version),
       `Paseto doesn't support ${options.version}`,
     );
 

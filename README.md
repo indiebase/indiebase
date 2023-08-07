@@ -14,7 +14,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 1. 什么是 Indiebase ?  
    indiebase 全称为let's collaborate, 分为Community和Pro版本。
    indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit)等。
-2. 什么是 indiebase community？  
+2. 什么是 indiebase community ?
    indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
 3. 什么是 indiebase pro ?  
    而indiebase pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
@@ -23,7 +23,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 
 ## 收益
 
-1. 独立开发者/工作室: 通过 indiebase community 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。通过 indiebase pro 降低成本。
+1. 独立开发者工作室: 通过 indiebase community 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。通过 indiebase pro 降低成本。
 2. 开源开发者：避免 core-js类似事件。[whats-next.md](https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md)
 3. 编程爱好者: 通过在 indiebase 中发现自己喜爱的项目, 贡献代码并从中获取报酬。
 4. 企业: 通过 indiebase 公布开源或其他项目, 让拥有空余时间的开发者参与进来完善产品并支付给开发者报酬。

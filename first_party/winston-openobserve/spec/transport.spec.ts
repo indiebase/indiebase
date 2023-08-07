@@ -1,6 +1,6 @@
 import { OpenObserveTransport, OpenObserveTransportOptions } from '../src';
 import { type Logger, createLogger } from 'winston';
-import { describe, it, afterEach, expect } from 'vitest';
+import { describe, it, afterEach, expect, vi } from 'vitest';
 import { logs } from './fixtures.json';
 
 describe('OpenObserve Transport', function () {
@@ -22,43 +22,46 @@ describe('OpenObserve Transport', function () {
     function eventEmitted() {
       expect(spy).toHaveBeenCalled();
     }
-    const spy = jest.fn(eventEmitted);
+
+    const spy = vi.fn(eventEmitted);
     transport.on('logged', spy);
     transport.log({}, () => {});
   });
 
-  it('Send log immediately', () => {
-    logger = createLogger({
-      transports: [
-        new OpenObserveTransport({
-          ...options,
-          bulk: false,
-        }),
-      ],
-    });
-    logger.info(logs[0]);
-    logger.error(logs[1]);
-    logger.warn(logs[2]);
-    expect.anything();
-  });
+  it('Send log immediately', () =>
+    new Promise((done) => {
+      logger = createLogger({
+        transports: [
+          new OpenObserveTransport({
+            ...options,
+            bulk: false,
+          }),
+        ],
+      });
+      logger.info(logs[0]);
+      logger.error(logs[1]);
+      logger.warn(logs[2]);
+      done(null);
+    }));
 
-  it('Send batch logs', (ctx) => {
-    bulkLogger = createLogger({
-      transports: [
-        new OpenObserveTransport({
-          ...options,
-          bulk: true,
-          interval: 1000,
-        }),
-      ],
-    });
-    bulkLogger.info('test2');
-    setTimeout(() => {
-      bulkLogger.error(logs[0]);
-      bulkLogger.warn(logs[1]);
-      expect.anything();
-    }, 500);
-  });
+  it('Send batch logs', () =>
+    new Promise((done) => {
+      bulkLogger = createLogger({
+        transports: [
+          new OpenObserveTransport({
+            ...options,
+            bulk: true,
+            interval: 1000,
+          }),
+        ],
+      });
+      bulkLogger.info('test2');
+      setTimeout(() => {
+        bulkLogger.error(logs[0]);
+        bulkLogger.warn(logs[1]);
+        done(null);
+      }, 500);
+    }));
 
   afterEach(() => {
     logger?.close();

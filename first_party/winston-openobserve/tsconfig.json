@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
     "esModuleInterop": true,
     "composite": true,
     "baseUrl": ".",

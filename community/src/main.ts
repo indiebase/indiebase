@@ -108,12 +108,12 @@ async function bootstrap() {
     logger.error(error);
   }
 
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(async () => {
-      await app.close();
-    });
-  }
+  // if (module.hot) {
+  //   module.hot.accept();
+  //   module.hot.dispose(async () => {
+  //     await app.close();
+  //   });
+  // }
 }
 
 bootstrap();

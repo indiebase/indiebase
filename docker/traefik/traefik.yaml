@@ -8,7 +8,7 @@ providers:
     endpoint: 'unix:///var/run/docker.sock'
     network: traefik_default
   file:
-    directory: /etc/traefik/dynamic/conf.d
+    filename: /etc/traefik/dynamic/conf.d/dynamic.yaml
     watch: true
 api:
   dashboard: true

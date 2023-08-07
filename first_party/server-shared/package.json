@@ -46,7 +46,6 @@
     "@nestjs/testing": "10.1.2",
     "@types/connect-redis": "0.0.20",
     "@types/fs-extra": "9.0.13",
-    "@types/jest": "29.5.3",
     "@types/node": "20.4.5",
     "@types/node-forge": "1.0.2",
     "@types/supertest": "2.0.11",

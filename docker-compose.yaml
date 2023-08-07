@@ -37,7 +37,8 @@ services:
   #     - 443:443
   #   volumes:
   #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #     - ./config/traefik/dynamic.yaml:/etc/traefik/dynamic.yaml:ro
+  #     - ./config/traefik/dynamic.yaml:/etc/traefik/dynamic/conf.d/dynamic.yaml:ro
+  #     - ./config/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
   #     - ./config/traefik/letsencrypt:/letsencrypt:rw,mode=0600
   #   labels:
   #     - traefik.enable=true
@@ -55,43 +56,6 @@ services:
   #     - traefik.http.routers.dashboard.middlewares=auth
   #   networks:
   #     - traefik
-
-  # portainer:
-  #   container_name: portainer
-  #   image: portainer/portainer-ce:2.18.3
-  #   <<: *x-logging
-  #   command: -H unix:///var/run/docker.sock --tlsskipverify
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - portainer_data:/data
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.routers.portainer.rule=Host(`portainer.localhost`)
-  #     - traefik.http.routers.portainer.entrypoints=websecure
-  #     - traefik.http.routers.portainer.tls=true
-  #     - traefik.http.routers.portainer.tls.certresolver=leresolver
-  #     - traefik.http.services.portainer.loadbalancer.server.port=9443
-  #     - traefik.http.services.portainer.loadbalancer.server.scheme=https
-  #     # - traefik.docker.network=traefik_default
-  #   deploy:
-  #     mode: replicated
-  #     replicas: 1
-  #   networks:
-  #     - traefik
-
-  # mysql:
-  #   container_name: mysql
-  #   image: mysql:8.0.32
-  #   <<: *x-logging
-  #   restart: unless-stopped
-  #   env_file:
-  #     - ${CONFIG_DIR:-.}/.env
-  #   volumes:
-  #     - mysql_data:/var/lib/mysql
-  #   ports:
-  #     - 3306:3306
 
   postgres:
     image: postgres:15.3-alpine3.18
@@ -135,7 +99,8 @@ networks:
     driver: overlay
     attachable: true
   traefik:
-  
+
+
 volumes:
   pg_data:
   portainer_data:
