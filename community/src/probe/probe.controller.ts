@@ -33,11 +33,11 @@ export class ProbeController {
   })
   @HealthCheck()
   async livenessProbe() {
-    await this.knex.schema.createTable('users', function (table) {
-      table.increments();
-      table.string('name').unique().notNullable();
-      table.timestamps();
-    });
+    // await this.knex.schema.createTable('users', function (table) {
+    //   table.increments();
+    //   table.string('name').unique().notNullable();
+    //   table.timestamps();
+    // });
 
     return this.health.check([
       () => this.http.pingCheck('ping_apple', 'time.apple.com'),
@@ -57,16 +57,7 @@ export class ProbeController {
   })
   @HealthCheck()
   async demo() {
+    console.log('--------------');
     await this.knex('users').insert({});
-    return this.health.check([
-      () => this.http.pingCheck('ping_apple', 'time.apple.com'),
-      () =>
-        this.disk.checkStorage('storage', {
-          path: path.resolve('/'),
-          thresholdPercent: 0.9,
-        }),
-      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
-      () => this.db.pingCheck('postgres'),
-    ]);
   }
 }

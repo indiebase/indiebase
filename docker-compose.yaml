@@ -9,53 +9,63 @@ x-logging: &x-logging
       max-size: '10m'
 
 services:
-  # traefik:
-  #   container_name: traefik
-  #   image: traefik:v2.10.3
-  #   <<: *x-logging
-  #   command:
-  #     - --log.level=DEBUG
-  #     - --api.insecure=true
-  #     - --api.dashboard=true
-  #     - --entrypoints.web.address=:80
-  #     - --entrypoints.websecure.address=:443
-  #     - --entrypoints.websecure.http.tls.certResolver=leresolver
-  #     - --entrypoints.web.http.redirections.entryPoint.to=websecure
-  #     - --entrypoints.web.http.redirections.entryPoint.scheme=https
-  #     - --providers.file.watch=true
-  #     - --providers.file.directory=/etc/traefik/dynamic/conf.d/
-  #     - --providers.docker=true
-  #     - --providers.docker.exposedbydefault=false
-  #     - --providers.docker.endpoint=unix:///var/run/docker.sock
-  #     - --certificatesresolvers.leresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
-  #     - --certificatesresolvers.leresolver.acme.httpchallenge=true
-  #     - --certificatesresolvers.leresolver.acme.email=dev@indiebase.com
-  #     - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
-  #     - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #     - ./config/traefik/dynamic.yaml:/etc/traefik/dynamic/conf.d/dynamic.yaml:ro
-  #     - ./config/traefik/traefik.yaml:/etc/traefik/traefik.yaml:ro
-  #     - ./config/traefik/letsencrypt:/letsencrypt:rw,mode=0600
-  #   labels:
-  #     - traefik.enable=true
-  #     - traefik.http.middlewares.auth.basicauth.removeheader=true
-  #     # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
-  #     - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$6c8xlpqg$$QknGn6j7PDysqCyDfOvUO1
-  #     - traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)
-  #     - traefik.http.routers.router1.tls.domains[0].main=traefik.localhost
-  #     - traefik.http.routers.router1.tls.domains[0].sans=*.localhost
-  #     - traefik.http.routers.dashboard.entrypoints=websecure
-  #     - traefik.http.routers.dashboard.service=api@internal
-  #     - traefik.http.routers.dashboard.tls=true
-  #     - traefik.http.routers.dashboard.tls.certresolver=leresolver
-  #     - traefik.http.services.dashboard.loadbalancer.server.scheme=https
-  #     - traefik.http.routers.dashboard.middlewares=auth
-  #   networks:
-  #     - traefik
+  traefik:
+    image: traefik:v2.10.3
+    <<: *x-logging
+    command:
+      - --log.level=DEBUG
+      - --api.insecure=true
+      - --ping=true
+      - --ping.entryPoint=ping
+      - --api.dashboard=true
+      - --entryPoints.ping.address=:18884
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --entrypoints.https.http.tls.certresolver=leresolver
+      - --entrypoints.https.http.tls.domains[0].main=indiebase.deskbtm.com
+      - --entrypoints.https.http.tls.domains[0].sans=*.indiebase.deskbtm.com
+      - --entrypoints.http.http.redirections.entryPoint.to=https
+      - --entrypoints.http.http.redirections.entryPoint.scheme=https
+      - --providers.file.watch=true
+      - --providers.docker=true
+      - --providers.docker.swarmMode=true
+      - --providers.docker.network=traefik_proxy
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=15
+      - --certificatesresolvers.leresolver.acme.tlschallenge=true
+      - --certificatesresolvers.leresolver.acme.email=deskbtm@outlook.com
+      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
+    ports:
+      - 80:80
+      - 443:443
+      - 20801:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CONFIG_DIR:-./docker}/traefik/letsencrypt:/letsencrypt:rw,mode=0600
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.middlewares.auth.basicauth.removeheader=true
+      # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
+      - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$$HhHWUKGm$$lPgc034oLvQJcyyTs1Hlt.
+      - traefik.http.routers.dashboard.middlewares=auth
+      - traefik.http.routers.dashboard.rule=Host(`traefik.indiebase.deskbtm.com`)
+      - traefik.http.routers.dashboard.entrypoints=https
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.tls.certresolver=leresolver
+      - traefik.http.services.dashboard.loadbalancer.server.scheme=https
+    healthcheck:
+      retries: 3
+      test: 
+        - CMD
+        - wget
+        - "-c"
+        - "http://localhost:18884/ping"
+      timeout: 3s
+    networks:
+      - traefik_proxy
 
   postgres:
     image: postgres:15.3-alpine3.18
@@ -65,7 +75,7 @@ services:
       - ${CONFIG_DIR:-.}/.env
     volumes:
       - pg_data:/var/lib/postgresql/data/pgdata
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${CONFIG_DIR:-./docker}/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
 
@@ -98,10 +108,13 @@ networks:
   default:
     driver: overlay
     attachable: true
-  traefik:
-
+  traefik_proxy:
 
 volumes:
   pg_data:
   portainer_data:
   redis_data:
+
+secrets:
+  indiebase_secrets:
+    file: ./secrets/indiebase.txt

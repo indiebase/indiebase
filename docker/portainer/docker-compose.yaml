@@ -17,9 +17,9 @@ services:
     image: portainer/portainer-ce:2.18.4
     command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify
     ports:
-      - 9443:9443
-      - 9000:9000
-      - 8000:8000
+      - 19443:9443
+      - 19000:9000
+      - 18000:8000
     volumes:
       - portainer_data:/data
     networks:

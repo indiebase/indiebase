@@ -27,7 +27,7 @@ export const setupApiDoc = (app: INestApplication) =>
       const doc = SwaggerModule.createDocument(app, options, {
         include: [
           // AuthModule,
-          // // UserModule,
+          // UserModule,
           // OrgModule,
           // ProjectModule,
           // InvitationModule,

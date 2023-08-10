@@ -65,7 +65,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new RunScriptWebpackPlugin({
       name: 'main.js',
-      autoRestart: false,
+      autoRestart: true,
       nodeArgs: ['--trace-warnings'],
     }),
   ],

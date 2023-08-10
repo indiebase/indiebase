@@ -183,7 +183,7 @@ export const createCommunityModule = function (
           return {
             optionsFactory(req) {
               return {
-                auth: req.session?.user?.githubAccessToken,
+                auth: '',
               };
             },
           };

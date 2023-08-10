@@ -1,8 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -11,13 +7,13 @@ export class AppService {
     {
       id: '1',
       username: 'test1',
-      password: 'test'
+      password: 'test',
     },
     {
       id: '2',
       username: 'nottest1',
-      password: 'secret'
-    }
+      password: 'secret',
+    },
   ];
   constructor(private readonly jwtService: JwtService) {}
   getHello() {
@@ -37,7 +33,7 @@ export class AppService {
   findUser({ username, password }: { username: string; password: string }): {
     id: string;
     username: string;
-  } {
+  } | null {
     const user = this.users.find((u) => u.username === username);
     if (!user || user.password !== password) {
       return null;

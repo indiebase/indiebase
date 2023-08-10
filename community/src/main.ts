@@ -21,7 +21,6 @@ import fastifyPassport from '@fastify/passport';
 import FastifySession from '@fastify/session';
 import FastifyCookie from '@fastify/cookie';
 import { setupApiDoc } from './swagger.setup';
-declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -80,6 +79,7 @@ async function bootstrap() {
       defaultVersion: '1',
       type: VersioningType.URI,
     });
+
     app.enableCors({
       origin: config.get('app.corsOrigin'),
       credentials: true,
