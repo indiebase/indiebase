@@ -33,12 +33,6 @@ export class ProbeController {
   })
   @HealthCheck()
   async livenessProbe() {
-    // await this.knex.schema.createTable('users', function (table) {
-    //   table.increments();
-    //   table.string('name').unique().notNullable();
-    //   table.timestamps();
-    // });
-
     return this.health.check([
       () => this.http.pingCheck('ping_apple', 'time.apple.com'),
       () =>
@@ -55,9 +49,7 @@ export class ProbeController {
   @ApiOperation({
     summary: 'Liveness probe, including http, storage, memory, database',
   })
-  @HealthCheck()
   async demo() {
-    console.log('--------------');
-    await this.knex('users').insert({});
+    await this.knex('users').insert({ name: 'demo', age: 1000 });
   }
 }

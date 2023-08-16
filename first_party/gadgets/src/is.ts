@@ -1,7 +1,24 @@
+export interface IsFalsyOptions {
+  /**
+   * Check the whitespace and return false for `is.truthy`, true for `is.falsy`,
+   * default false.
+   */
+  whitespace?: boolean;
+}
+
 /**
  * Javascript type checking
  *
  * @returns {boolean}
+ *
+ * @example
+ *
+ * ```ts
+ * is.type({}, 'Object') === true
+ * is.asyncFunction(async ()=>{})
+ * is.null(null)
+ *
+ * ```
  */
 export const is = {
   /**
@@ -45,5 +62,20 @@ export const is = {
   },
   symbol(obj: unknown): obj is Symbol {
     return this.type(obj, 'Symbol');
+  },
+  boolean(obj: unknown): obj is Boolean {
+    return this.type(obj, 'Boolean');
+  },
+  truthy(obj: unknown, options?: IsFalsyOptions): boolean {
+    return !this.falsy(obj, options);
+  },
+  falsy(obj: unknown, options?: IsFalsyOptions): boolean {
+    options = Object.assign({}, { whitespace: false }, options);
+
+    if (options.whitespace && !!obj && this.string(obj)) {
+      return !!!(obj as string).trim();
+    }
+
+    return !!!obj;
   },
 };

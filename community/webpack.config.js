@@ -3,9 +3,9 @@ const path = require('path');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const swcDefaultConfig =
-  require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
-    .swcOptions;
+// const swcDefaultConfig =
+//   require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
+//     .swcOptions;
 
 /**
  * @type {import('webpack').Configuration}

@@ -75,7 +75,7 @@ services:
       - ${CONFIG_DIR:-.}/.env
     volumes:
       - pg_data:/var/lib/postgresql/data/pgdata
-      - ${CONFIG_DIR:-./docker}/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
 
@@ -110,10 +110,12 @@ networks:
     attachable: true
   traefik_proxy:
 
+
 volumes:
   pg_data:
   portainer_data:
   redis_data:
+
 
 secrets:
   indiebase_secrets:

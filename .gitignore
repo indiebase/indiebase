@@ -46,3 +46,4 @@ lerna-debug.log*
 
 assets/sandbox/*
 package-lock.json
+self_hosted
