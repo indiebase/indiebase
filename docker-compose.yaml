@@ -22,8 +22,8 @@ services:
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --entrypoints.https.http.tls.certresolver=leresolver
-      - --entrypoints.https.http.tls.domains[0].main=indiebase.deskbtm.com
-      - --entrypoints.https.http.tls.domains[0].sans=*.indiebase.deskbtm.com
+      - --entrypoints.https.http.tls.domains[0].main=${DOMAIN}
+      - --entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN}
       - --entrypoints.http.http.redirections.entryPoint.to=https
       - --entrypoints.http.http.redirections.entryPoint.scheme=https
       - --providers.file.watch=true
@@ -58,7 +58,7 @@ services:
       - traefik.http.services.dashboard.loadbalancer.server.scheme=https
     healthcheck:
       retries: 3
-      test: 
+      test:
         - CMD
         - wget
         - "-c"
@@ -116,7 +116,6 @@ volumes:
   portainer_data:
   redis_data:
 
-
 secrets:
-  indiebase_secrets:
-    file: ./secrets/indiebase.txt
+  pg_password:
+    file: ./docker/postgres/password.txt

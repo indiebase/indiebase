@@ -11,10 +11,11 @@ import { PasetoModule } from 'nestjs-paseto';
   imports: [
     PassportModule.register({ session: true }),
     PasetoModule.registerAsync({
+      imports: [],
       useFactory() {
         return {
           version: 'V4',
-          publicKey: '',
+          publicKey: 'k4.public.KqMxZ1Ou5lH3XGNkhi9HWwJmSNPLvor9DyQ8vdzKCA0',
           produceOptions: {
             expiresIn: '60s',
           },

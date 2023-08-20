@@ -5,7 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import fastifyHelmet, { FastifyHelmetOptions } from '@fastify/helmet';
+import fastifyHelmet from '@fastify/helmet';
 import {
   HttpExceptionFilter,
   kDevMode,
@@ -17,9 +17,6 @@ import { resolve } from 'path';
 import { useContainer } from 'class-validator';
 import FastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
-import fastifyPassport from '@fastify/passport';
-import FastifySession from '@fastify/session';
-import FastifyCookie from '@fastify/cookie';
 import { setupApiDoc } from './swagger.setup';
 
 async function bootstrap() {
@@ -53,7 +50,7 @@ async function bootstrap() {
       fallbackOnErrors: true,
     });
 
-    await app.register<FastifyHelmetOptions>(fastifyHelmet as any, {
+    await app.register(fastifyHelmet, {
       global: true,
       crossOriginOpenerPolicy: false,
       crossOriginResourcePolicy: kReleaseMode,
@@ -63,16 +60,16 @@ async function bootstrap() {
       },
     });
 
-    await app.register(FastifyCookie as any, {
-      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
-    });
+    // await app.register(FastifyCookie, {
+    //   secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+    // });
 
-    await app.register(FastifySession as any, {
-      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
-    });
+    // await app.register(FastifySession, {
+    //   secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+    // });
 
-    await app.register(fastifyPassport.initialize() as any);
-    await app.register(fastifyPassport.secureSession() as any);
+    // await app.register(fastifyPassport.initialize());
+    // await app.register(fastifyPassport.secureSession());
 
     // Should be front of setupApiDoc.
     app.enableVersioning({
@@ -87,7 +84,7 @@ async function bootstrap() {
 
     // Setup swagger api doc with  .
     await setupApiDoc(app);
-    await app.register(FastifyMultipart as any, {
+    await app.register(FastifyMultipart, {
       // limits: {
       //   fileSize: sizeParser(config.get('storage.file.limit')),
       // },

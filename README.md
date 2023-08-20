@@ -11,15 +11,15 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 
 ## FAQ
 
-1. 什么是 Indiebase ?  
-   indiebase 全称为let's collaborate, 分为Community和Pro版本。
-   indiebase 初始目的是作为[deksbtm](https://deskbtm.com)的辅助产品, 用于管理[Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit)等。
-2. 什么是 indiebase community ?
-   indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
-3. 什么是 indiebase pro ?  
-   而indiebase pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
-4. indiebase 提供线上服务吗 ?  
-   不提供，indiebase 是一个完全self hosted的平台。在保证功能的前提下，尽可能使其能够在低配置服务器环境运行。
+1.  What's Indiebase ?  
+     Indiebase is a self-hosted platform explicitly designed for indie developers or teams. Providing financial services and BaaS. The initial purpose of IndieBase was to serve for
+    [deksbtm](https://deskbtm.com), used for managing [Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit), etc.
+2.  什么是 indiebase community ?
+    indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
+3.  什么是 indiebase pro ?  
+    而indiebase pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
+4.  indiebase 提供线上服务吗 ?  
+    不提供，indiebase 是一个完全self hosted的平台。在保证功能的前提下，尽可能使其能够在低配置服务器环境运行。
 
 ## 收益
 
@@ -30,45 +30,50 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 
 ## Note Bene
 
-1. indiebase community 高度依赖 github, 并将其作为默认的项目管理工具。
-2. indiebase pro 服务将不开源, 使用需要购买商业 license. indiebase community 基于 AGPL-3.0 开源协议。
+1. Indiebase highly depends on Github, and considers it as the default code management.
+2. `Indiebase Pro` is not free, To use it, you need to purchase a commercial license.
+3. `Indiebase Community` is available under the [AGPL-3.0](https://github.com/indiebase/indiebase/blob/main/LICENSE) license。
 
-## Join
+## Join Indiebase
 
-`indiebase community` PR welcome，如果有意愿加入私有部分的开发，请认真阅读 [indiebase 保密协议](https://github.com/indiebase/indiebase/blob/dev/docs/zh-CN/non-disclosure-agreement-zh_cn.md)
-<br />
-同样 indiebase 所获取的收益，会分配给项目参与成员。
-
+`Indiebase Community` is PR welcome.
+If you are interested in the development of `Indiebase Pro`, please read the [Indiebase disclosure agreement](https://github.com/indiebase/indiebase/blob/main/docs/zh-CN/non-disclosure-agreement-zh_cn.md) carefully.  
+Of course, the obtained profits will be distributed among all project participants according to a specified algorithm.  
 Email: deskbtm@outlook.com
 
-## Sub-Projects
-
-- [PITM](https://github.com/indiebase/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for indiebase pro.
-- [Delag](https://github.com/nawbc/delag)
+<!-- - [Delag](https://github.com/nawbc/delag) -->
 
 ## First Party
 
-Indiebase open-source libraries.
+#### FOSS libraries.
 
 - [passport-paesto](https://github.com/nawbc/passport-paseto)
-- [nestjs-paesto](https://github.com/nawbc/nestjs-paesto)
+- [nestjs-paesto](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-s3](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-stoplight-elements](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-knex](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-octokit](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-nacos](https://github.com/indiebase/indiebase)
 
+#### Sub-Projects
+
+- [PITM](https://github.com/indiebase/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for indiebase pro.
+
 ## Architecture
 
 - [Nestjs](https://github.com/nestjs/nest) Nest is a framework for building efficient, scalable Node.js server-side applications.
-- [Nacos](https://github.com/alibaba/nacos) One-stop solution for dynamic service discovery, configuration management and dynamic DNS service
-- [Seaweedfs](https://github.com/seaweedfs/seaweedfs) SeaweedFS is a simple and highly scalable distributed file system.
-- [Apisix](https://github.com/apache/apisix) Apache APISIX is a dynamic, real-time, high-performance API Gateway.
-- [Grafana](https://github.com/grafana/grafana) The open and composable observability and data visualization platform.
+- [Ceph](https://ceph.io/) Ceph is an open-source, distributed storage system.)
+- [Traefik](https://github.com/traefik/traefik/) Traefik is an open-source Edge Router that makes publishing your services a fun and easy experience.
+
+## Discussion Etiquette
+
+In order to keep the conversation clear and transparent, please limit discussion to English and keep things on topic with the issue. Non-compliant issues may be closed directly. Be considerate to others and try to be courteous and professional at all times.
 
 ## Credits
 
 See [Credits.md](https://github.com/indiebase/indiebase/blob/main/docs/CREDITS.md)
+
+## Contribution
 
 ## License
 

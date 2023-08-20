@@ -48,7 +48,6 @@ export const createCommunityModule = function (
           };
         },
       }),
-
       WinstonModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (config: ConfigService) => {
@@ -90,47 +89,6 @@ export const createCommunityModule = function (
           };
         },
       }),
-      // CasbinModule.forRootAsync({
-      //   inject: [ConfigService],
-      //   async useFactory(config: ConfigService) {
-      //     const database = config.get('auth.database');
-      //     const { username, password, host, port } =
-      //       config.get<MysqlConnectionCredentialsOptions>('mysql');
-      //     return {
-      //       model: resolve(
-      //         __dirname,
-      //         `../model/auth.${process.env.NODE_ENV}.conf`,
-      //       ),
-      //       adapter: TypeOrmAdapter.newAdapter({
-      //         type: 'mysql',
-      //         username,
-      //         password,
-      //         database,
-      //         host,
-      //         port,
-      //       }),
-      //     };
-      //   },
-      // }),
-      // TypeOrmModule.forRootAsync({
-      //   inject: [ConfigService],
-      //   async useFactory(configService: ConfigService) {
-      //     const { host, port, username, password, database } =
-      //       configService.get('mysql');
-
-      //     return {
-      //       type: 'mysql',
-      //       synchronize: kDevMode,
-      //       host,
-      //       port,
-      //       username,
-      //       password,
-      //       database,
-      //       autoLoadEntities: true,
-      //       charset: 'utf8mb4_0900_ai_ci',
-      //     };
-      //   },
-      // }),
       KnexModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (config: ConfigService) => {
