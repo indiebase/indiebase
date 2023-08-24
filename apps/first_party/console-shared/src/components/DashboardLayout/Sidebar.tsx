@@ -1,7 +1,6 @@
 import {
   Text,
   Group,
-  Navbar,
   ScrollArea,
   ThemeIcon,
   UnstyledButton,
@@ -12,7 +11,7 @@ import {
 import { useMediaQuery } from '@mantine/hooks';
 import { useAtomValue } from 'jotai';
 import React, { FC, useEffect, useState } from 'react';
-import { useNavigate, NavLink, useParams, useLocation } from 'react-router-dom';
+import { NavLink, useParams, useLocation } from 'react-router-dom';
 import { navbarSwitchAtom } from '../../atoms';
 
 export interface SidebarTileNode {
@@ -41,23 +40,23 @@ function SidebarTile({ label, active, onClick }: MenuItemProps) {
   return (
     <UnstyledButton
       onClick={onClick}
-      sx={(theme) => ({
-        display: 'block',
-        width: '100%',
-        padding: theme.spacing.xs,
-        paddingLeft: 20,
-        borderRadius: theme.radius.sm,
-        color: active ? theme.colors.blue[6] : theme.colors.gray[7],
-        fontSize: 13,
-        backgroundColor: active ? theme.colors.gray[0] : 'none',
-        fontWeight: active ? 'bolder' : 'unset',
-        '&:hover': {
-          backgroundColor:
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[6]
-              : theme.colors.gray[0],
-        },
-      })}
+      // sx={(theme) => ({
+      //   display: 'block',
+      //   width: '100%',
+      //   padding: theme.spacing.xs,
+      //   paddingLeft: 20,
+      //   borderRadius: theme.radius.sm,
+      //   color: active ? theme.colors.blue[6] : theme.colors.gray[7],
+      //   fontSize: 13,
+      //   backgroundColor: active ? theme.colors.gray[0] : 'none',
+      //   fontWeight: active ? 'bolder' : 'unset',
+      //   '&:hover': {
+      //     backgroundColor:
+      //       theme.colorScheme === 'dark'
+      //         ? theme.colors.dark[6]
+      //         : theme.colors.gray[0],
+      //   },
+      // })}
     >
       <Group>
         <Text size="sm">{label}</Text>
@@ -145,16 +144,16 @@ export const Sidebar: FC<SidebarProps> = function (props) {
                     </ThemeIcon>
                   }
                 >
-                  <Text weight={500}>{node.label}</Text>
+                  {/* <Text weight={500}>{node.label}</Text> */}
                 </Accordion.Control>
                 {children ? (
                   <Accordion.Panel>
                     {children?.map((sub) => {
                       return (
                         <NavLink key={sub.label} to={sub.to}>
-                          {({ isActive }) => (
+                          {/* {({ isActive }) => (
                             <SidebarTile active={isActive} label={sub.label} />
-                          )}
+                          )} */}
                         </NavLink>
                       );
                     })}

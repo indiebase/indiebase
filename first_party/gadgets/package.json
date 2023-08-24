@@ -4,15 +4,26 @@
   "description": "Deskbtm javascript gadgets",
   "author": "Han",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc",
+    "build": "tsc -p ./tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",

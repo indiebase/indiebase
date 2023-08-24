@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
 import { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export const Guard: FC<PropsWithChildren> = function (props) {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   // const [data] = useAtom(userProfileQuery);
 

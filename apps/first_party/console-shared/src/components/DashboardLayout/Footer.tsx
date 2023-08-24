@@ -4,7 +4,7 @@ export const Footer = function () {
   return (
     <Box p="md">
       <Stack align="center">
-        <Group spacing={2}>
+        <Group>
           <Button>One</Button>
           <Button variant="white">Two</Button>
           <Button variant="white">Three</Button>

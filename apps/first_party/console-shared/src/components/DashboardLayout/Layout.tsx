@@ -1,8 +1,7 @@
 import { FC, ReactElement, Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
 import { AppShell, Box, useMantineTheme } from '@mantine/core';
 import { Header, NavHeaderProps } from './Header';
-import { ErrorBoundary } from 'react-error-boundary';
+// import { ErrorBoundary } from 'react-error-boundary';
 import { Footer } from './Footer';
 
 export interface DashboardLayoutProps {
@@ -19,37 +18,12 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
 
   return (
     <AppShell
-      fixed
+      // fixed
       styles={{
-        main: {
-          background:
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[6]
-              : theme.colors.white,
-        },
+        main: {},
       }}
-      navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
-      navbar={
-        <ErrorBoundary fallbackRender={() => <div />}>{sidebar}</ErrorBoundary>
-      }
-      footer={<Footer />}
-      header={
-        <ErrorBoundary
-          onError={(err) => {
-            console.log(err);
-          }}
-          fallbackRender={() => <div style={{ height: 65 }} />}
-        >
-          <Suspense fallback={<div style={{ height: 65 }} />}>
-            {header}
-          </Suspense>
-        </ErrorBoundary>
-      }
     >
-      <Box mt={30}>
-        <Outlet />
-      </Box>
+      <Box mt={30}>{/* <Outlet /> */}</Box>
     </AppShell>
   );
 };
