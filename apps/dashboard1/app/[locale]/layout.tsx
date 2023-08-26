@@ -3,40 +3,50 @@
 import {
   AppShell,
   Burger,
+  Button,
   Group,
   MantineProvider,
   Skeleton,
 } from '@mantine/core';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { useDisclosure } from '@mantine/hooks';
-import { Notifications } from '@mantine/notifications';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Provider, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { kDevMode } from '@deskbtm/gadgets/env';
 import { Compose, ComposeProps } from 'reactgets';
 import { DevTools as JotaiDevTools } from 'jotai-devtools';
 import '@mantine/core/styles.css';
-import './globals.css';
+import '@/app/i18n/client';
+import { supportedLngs } from '@/app/i18n/settings';
+import { useTranslation } from '@/app/i18n/use-translation';
+import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+interface RootLayoutProps extends PropsWithChildren {
+  params: { locale: string };
+}
+
+export async function generateStaticParams() {
+  return supportedLngs.map((locale) => ({ locale }));
+}
+
+export default function RootLayout(props: RootLayoutProps) {
   const [opened, { toggle }] = useDisclosure();
   const [queryClient] = useState(() => new QueryClient());
+  const { children, params } = props;
 
   const providers: ComposeProps['providers'] = [
     [MantineProvider],
     [QueryClientProvider, { client: queryClient }],
   ];
+  console.log(params.locale);
+
+  const { i18n, t } = useTranslation(params.locale, 'translation');
 
   return (
-    <html lang="en">
+    <html lang={params.locale ?? 'en'}>
       <body className={inter.className}>
         <Compose providers={providers}>
           <JotaiDevTools />
@@ -67,6 +77,16 @@ export default function RootLayout({
                   hiddenFrom="sm"
                   size="sm"
                 />
+                <Button
+                  onClick={async () => {
+                    console.log(i18n.language, '----');
+                    await i18n.changeLanguage(
+                      i18n.language === 'en' ? 'zh' : 'en',
+                    );
+                  }}
+                >
+                  {t('name')}
+                </Button>
                 {/* <MantineLogo size={30} /> */}
               </Group>
             </AppShell.Header>

@@ -6,11 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import fastifyHelmet from '@fastify/helmet';
-import {
-  HttpExceptionFilter,
-  kDevMode,
-  kReleaseMode,
-} from '@indiebase/server-shared';
+import { HttpExceptionFilter, kReleaseMode } from '@indiebase/server-shared';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';
@@ -18,6 +14,7 @@ import { useContainer } from 'class-validator';
 import FastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { setupApiDoc } from './swagger.setup';
+import { kDevMode } from '@deskbtm/gadgets';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(

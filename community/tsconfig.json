@@ -3,13 +3,11 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "baseUrl": ".",
+    "moduleResolution": "NodeNext",
     "outDir": "./dist",
     "rootDir": "src"
   },
   "references": [
-    {
-      "path": "../first_party/gadgets"
-    },
     {
       "path": "../first_party/nest-stoplight-elements"
     },
