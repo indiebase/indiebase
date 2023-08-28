@@ -19,11 +19,17 @@ module.exports = {
   target: 'node',
   externals: [
     nodeExternals({
-      // Fix ky require esm error.
-      allowlist: ['webpack/hot/poll?100', 'winston-openobserve', 'ky'],
-      modulesDir: path.resolve(__dirname, '../node_modules'),
+      allowlist: [
+        'webpack/hot/poll?100',
+        /^@indiebase\/server-shared/,
+        /^@deskbtm\/gadgets/,
+      ],
+      additionalModuleDirs: [path.resolve(__dirname, '../node_modules')],
     }),
   ],
+  externalsPresets: {
+    node: true,
+  },
   devtool: 'eval-source-map',
   module: {
     rules: [

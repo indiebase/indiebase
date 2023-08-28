@@ -1,47 +1,11 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    "noEmit": true,
     "esModuleInterop": true,
     "baseUrl": ".",
-    "moduleResolution": "NodeNext",
-    "outDir": "./dist",
-    "rootDir": "src"
+    "outDir": "./dist"
   },
-  "references": [
-    {
-      "path": "../first_party/nest-stoplight-elements"
-    },
-    {
-      "path": "../first_party/nest-casbin"
-    },
-    {
-      "path": "../first_party/nest-octokit"
-    },
-    {
-      "path": "../first_party/nest-fastify-file"
-    },
-    {
-      "path": "../first_party/nest-fastify-passport"
-    },
-    {
-      "path": "../first_party/nest-s3"
-    },
-    {
-      "path": "../first_party/server-shared"
-    },
-    {
-      "path": "../first_party/nest-casl"
-    },
-    {
-      "path": "../first_party/nest-knex"
-    },
-    {
-      "path": "../first_party/winston-openobserve"
-    },
-    {
-      "path": "../first_party/nestjs-paseto"
-    }
-  ],
   "include": [
     "src/**/*"
   ],

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { kDevMode, communityDefaultConfigs } from '@indiebase/server-shared';
+import { communityDefaultConfigs } from '@indiebase/server-shared';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'path';
 import {

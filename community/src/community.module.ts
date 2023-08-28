@@ -1,18 +1,18 @@
+import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Logger, Module, ModuleMetadata } from '@nestjs/common';
-import { resolve } from 'path';
-import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
+import { resolve } from 'path';
 // import { kDevMode } from '@indiebase/server-shared';
+import { kDevMode } from '@deskbtm/gadgets/env';
+import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { WinstonModule, utilities } from 'nest-winston';
 import * as winston from 'winston';
-import { KnexModule } from '@indiebase/nest-knex';
-import { ProbeModule } from './probe';
 import { OpenObserveTransport } from 'winston-openobserve';
 import { AuthModule } from './auth';
-import { kDevMode } from '@deskbtm/gadgets/env';
+import { ProbeModule } from './probe';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Lets Community:
@@ -52,8 +52,8 @@ export const createCommunityModule = function (
       WinstonModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (config: ConfigService) => {
-          const { host, defaultOrg, defaultStream, username, password } =
-            config.get('open_observe');
+          // const { host, defaultOrg, defaultStream, username, password } =
+          //   config.get('open_observe');
 
           // const openObserveTransport = new OpenObserveTransport({
           //   bulk: true,
@@ -109,45 +109,45 @@ export const createCommunityModule = function (
       //     };
       //   },
       // }),
-      MailerModule.forRootAsync({
-        inject: [ConfigService],
-        useFactory: async (config: ConfigService) => {
-          const { host, username, password, from } = config.get('smtp');
-          return {
-            transport: {
-              host,
-              ignoreTLS: false,
-              secure: true,
-              auth: {
-                user: username,
-                pass: password,
-              },
-            },
-            defaults: {
-              from: `${from} <${username}>`,
-            },
-            preview: true,
-            template: {
-              dir: resolve(process.cwd(), 'public/tpl/'),
-              adapter: new HandlebarsAdapter(),
-              options: {
-                strict: true,
-              },
-            },
-          };
-        },
-      }),
-      OctokitModule.forRootAsync({
-        async useFactory() {
-          return {
-            optionsFactory(req) {
-              return {
-                auth: '',
-              };
-            },
-          };
-        },
-      }),
+      // MailerModule.forRootAsync({
+      //   inject: [ConfigService],
+      //   useFactory: async (config: ConfigService) => {
+      //     const { host, username, password, from } = config.get('smtp');
+      //     return {
+      //       transport: {
+      //         host,
+      //         ignoreTLS: false,
+      //         secure: true,
+      //         auth: {
+      //           user: username,
+      //           pass: password,
+      //         },
+      //       },
+      //       defaults: {
+      //         from: `${from} <${username}>`,
+      //       },
+      //       preview: true,
+      //       template: {
+      //         dir: resolve(process.cwd(), 'public/tpl/'),
+      //         adapter: new HandlebarsAdapter(),
+      //         options: {
+      //           strict: true,
+      //         },
+      //       },
+      //     };
+      //   },
+      // }),
+      // OctokitModule.forRootAsync({
+      //   async useFactory() {
+      //     return {
+      //       optionsFactory(req) {
+      //         return {
+      //           auth: '',
+      //         };
+      //       },
+      //     };
+      //   },
+      // }),
     ],
     providers: [
       Logger,

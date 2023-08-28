@@ -1,20 +1,20 @@
+import fastifyHelmet from '@fastify/helmet';
+import { HttpExceptionFilter, kProdMode } from '@indiebase/server-shared';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { AppModule } from './app.module';
-import fastifyHelmet from '@fastify/helmet';
-import { HttpExceptionFilter, kReleaseMode } from '@indiebase/server-shared';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { resolve } from 'path';
-import { useContainer } from 'class-validator';
+import { AppModule } from './app.module';
+// import { useContainer } from 'class-validator';
 import FastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
-import { setupApiDoc } from './swagger.setup';
-import { kDevMode } from '@deskbtm/gadgets';
+// import { setupApiDoc } from './swagger.setup';
+import '@deskbtm/gadgets/env';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -29,13 +29,13 @@ async function bootstrap() {
   const logger = app.get(Logger);
 
   try {
-    const config = app.get<ConfigService>(ConfigService);
+    // const config = app.get<ConfigService>(ConfigService);
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
     app.useGlobalPipes(
       new ValidationPipe({
         transform: true,
-        enableDebugMessages: kDevMode,
+        // enableDebugMessages: kDevMode,
         whitelist: true,
         forbidNonWhitelisted: true,
         exceptionFactory: i18nValidationErrorFactory,
@@ -43,14 +43,14 @@ async function bootstrap() {
     );
 
     // Inject service to ValidatorConstraintInterface
-    useContainer(app.select(AppModule), {
-      fallbackOnErrors: true,
-    });
+    // useContainer(app.select(AppModule), {
+    //   fallbackOnErrors: true,
+    // });
 
     await app.register(fastifyHelmet, {
       global: true,
       crossOriginOpenerPolicy: false,
-      crossOriginResourcePolicy: kReleaseMode,
+      crossOriginResourcePolicy: kProdMode,
       contentSecurityPolicy: false,
       referrerPolicy: {
         policy: 'origin',
@@ -74,13 +74,13 @@ async function bootstrap() {
       type: VersioningType.URI,
     });
 
-    app.enableCors({
-      origin: config.get('app.corsOrigin'),
-      credentials: true,
-    });
+    // app.enableCors({
+    //   origin: config.get('app.corsOrigin'),
+    //   credentials: true,
+    // });
 
     // Setup swagger api doc with  .
-    await setupApiDoc(app);
+    // await setupApiDoc(app);
     await app.register(FastifyMultipart, {
       // limits: {
       //   fileSize: sizeParser(config.get('storage.file.limit')),
@@ -93,11 +93,11 @@ async function bootstrap() {
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
-    const port = config.get('app.port'),
-      hostname = config.get('app.hostname');
+    // const port = config.get('app.port'),
+    //   hostname = config.get('app.hostname');
 
-    await app.listen(port, hostname);
-    Logger.log(`🚀 Application is running on: http://${hostname}:${port}`);
+    await app.listen(3000, '127.0.0.1');
+    // Logger.log(`🚀 Application is running on: http://${hostname}:${port}`);
   } catch (error) {
     logger.error(error);
   }
