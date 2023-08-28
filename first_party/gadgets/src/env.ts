@@ -1,21 +1,30 @@
 // Preset env modes.
+/// <reference path="./env.d.ts" />
 
 import assert from 'assert';
 
+const NODE_ENV = globalThis.process.env.NODE_ENV;
+
 /**
- * Development env.
+ * Determine if it is a development environment..
  */
-export const kDevMode =
-  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'dev';
+export const kDevMode = NODE_ENV === 'development' || NODE_ENV === 'dev';
+//@ts-ignore
+globalThis.kDevMode = kDevMode;
+
 /**
- * Test env.
+ * Determine if it is a test environment.
  */
-export const kTestMode = process.env.NODE_ENV === 'test';
+export const kTestMode = NODE_ENV === 'test';
+//@ts-ignore
+globalThis.kTestMode = kTestMode;
+
 /**
- * Release env.
+ * Determine if it is a production environment..
  */
-export const kReleaseMode =
-  process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'prod';
+export const kProdMode = NODE_ENV === 'production' || NODE_ENV === 'prod';
+//@ts-ignore
+globalThis.kProdMode = kProdMode;
 
 /**
  * This function should be initialized at the beginning of program.

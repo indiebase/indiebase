@@ -6,7 +6,7 @@ import {
   Avatar,
   Text,
   Divider,
-  AppShell
+  AppShell,
 } from '@mantine/core';
 import { FC, forwardRef } from 'react';
 import { Link } from 'react-router-dom';

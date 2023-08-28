@@ -1,15 +1,18 @@
-import React from 'react';
+// Init the kDevMode env etc
+import '@deskbtm/gadgets/env';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import '@mantine/core/styles.css';
 import App from './App.tsx';
 import './index.css';
-// import { kReleaseMode } from '@deskbtm/gadgets/env';
 import { reportWebVitals } from './reportWebVitals.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <Suspense>
+      <App />
+    </Suspense>
   </React.StrictMode>,
 );
 
-// reportWebVitals(!kReleaseMode ? console.debug : undefined);
+reportWebVitals(!kProdMode ? console.debug : undefined);

@@ -4,7 +4,7 @@
     "allowJs": true,
     "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -21,13 +21,10 @@
     "strictBindCallApply": false,
     "noImplicitReturns": false,
     "lib": [
-      "ESNext",
-      "dom",
-      "dom.iterable"
+      "ESNext"
     ]
   },
   "exclude": [
-    "tmp",
     "dist",
     "node_modules",
     "test",

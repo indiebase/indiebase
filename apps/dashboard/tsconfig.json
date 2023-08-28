@@ -24,7 +24,7 @@
     "noImplicitOverride": true,
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     }
   },
@@ -34,9 +34,6 @@
   "references": [
     {
       "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "../../first_party/gadgets"
     }
   ]
 }
