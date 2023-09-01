@@ -2,7 +2,7 @@
   "name": "@deskbtm/gadgets",
   "version": "0.0.1",
   "description": "Deskbtm javascript gadgets",
-  "author": "Han",
+  "author": "Han <wanghan9423@outlook.com>",
   "private": true,
   "main": "./src/index.ts",
   "exports": {
@@ -19,14 +19,14 @@
     "module": "./dist/index.mjs",
     "exports": {
       ".": {
-        "import": "./dist/index.mjs",
-        "require": "./dist/index.cjs",
-        "types": "./dist/index.d.ts"
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/cjs/index.cjs",
+        "types": "./dist/types/index.d.ts"
       },
       "./*": {
-        "import": "./dist/*.js",
-        "require": "./dist/*.js",
-        "types": "./dist/*.d.ts"
+        "import": "./dist/esm/*.mjs",
+        "require": "./dist/cjs/*.cjs",
+        "types": "./dist/types/*.d.ts"
       }
     }
   },

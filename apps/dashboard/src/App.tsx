@@ -1,3 +1,8 @@
+import '@mantine/nprogress/styles.css';
+import '@mantine/notifications/styles.css';
+import '@mantine/core/styles.css';
+import './index.css';
+
 import { FC, useState } from 'react';
 import { Compose, ComposeProps } from 'reactgets';
 import { MantineProvider } from '@mantine/core';
@@ -6,9 +11,9 @@ import { DevTools as JotaiDevTools } from 'jotai-devtools';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
-import '@deskbtm/gadgets/env';
-import '@mantine/nprogress/styles.css';
 import { NavigationProgress } from '@mantine/nprogress';
+import { Notifications } from '@mantine/notifications';
+import { theme } from './theme';
 
 const DevTools: FC = function () {
   return kDevMode ? (
@@ -21,17 +26,17 @@ const DevTools: FC = function () {
 
 function App() {
   const [queryClient] = useState(() => new QueryClient());
-  console.log(import.meta);
 
   const providers: ComposeProps['providers'] = [
-    [MantineProvider],
-    [QueryClientProvider, { client: queryClient }],
+    <MantineProvider theme={theme} defaultColorScheme="light" />,
+    <QueryClientProvider client={queryClient} />,
   ];
 
   return (
     <Compose providers={providers}>
-      <NavigationProgress />
       <DevTools />
+      <NavigationProgress />
+      <Notifications />
       <RouterProvider
         // fallbackElement={<WorkspaceFallback key="RouterFallback" />}
         router={router}

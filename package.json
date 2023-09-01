@@ -16,7 +16,9 @@
     "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
     "stack:dev": "docker stack deploy -c ./docker-compose.yaml indiebase",
     "release": "standard-version",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "syncpack": "syncpack",
+    "mismatches": "syncpack list-mismatches"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.59.11",
@@ -31,6 +33,7 @@
     "husky": "8.0.1",
     "prettier": "3.0.0",
     "standard-version": "9.3.1",
+    "syncpack": "^11.2.1",
     "typescript": "5.1.6"
   },
   "workspaces": {
@@ -38,6 +41,7 @@
       "first_party/*",
       "apps/*",
       "apps/first_party/*",
+      "apps/packages/*",
       "community"
     ],
     "nohoist": [

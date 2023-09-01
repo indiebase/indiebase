@@ -1,27 +1,7 @@
-import {
-  createElement,
-  type FC,
-  type PropsWithChildren,
-  type ReactHTML,
-  type ReactSVG,
-  type FunctionComponent,
-  type ClassicComponent,
-  type ClassType,
-  type ComponentClass,
-} from 'react';
-
-type CreateElementType =
-  | 'input'
-  | keyof ReactHTML
-  | keyof ReactSVG
-  | string
-  | FunctionComponent<any>
-  | ClassicComponent<any>
-  | ClassType<any, any, any>
-  | ComponentClass<any>;
+import { type FC, type PropsWithChildren, cloneElement } from 'react';
 
 export interface ComposeProps extends PropsWithChildren {
-  providers: ([CreateElementType, Record<string, any>] | [CreateElementType])[];
+  providers: Array<React.ReactElement>;
 }
 
 /**
@@ -29,8 +9,8 @@ export interface ComposeProps extends PropsWithChildren {
  * @example
  * ```tsx
  *  const providers: ComposeProps['providers'] = [
- *    [MantineProvider],
- *    [QueryClientProvider, { client: queryClient }],
+ *    <MantineProvider />,
+ *    <QueryClientProvide  client={queryClient} />,
  *  ]
  *
  *  <Compose providers={providers}>
@@ -42,7 +22,7 @@ export const Compose: FC<ComposeProps> = function (props) {
   const { providers, children } = props;
 
   return providers.reduceRight(
-    (acc, [Provider, props]) => createElement(Provider, props, acc),
+    (acc, Provider) => cloneElement(Provider, null, acc),
     children,
   );
 };

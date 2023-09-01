@@ -1,17 +1,17 @@
 import {
   Text,
   Group,
-  ScrollArea,
-  ThemeIcon,
   UnstyledButton,
-  Accordion,
   MantineThemeColors,
-  useMantineTheme,
+  AppShell,
+  Burger,
+  Skeleton,
+  Combobox,
 } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
-import { useAtomValue } from 'jotai';
-import React, { FC, useEffect, useState } from 'react';
-import { NavLink, useParams, useLocation } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import React, { FC, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { navbarCollapseAtom } from './navbar.atom';
 // import { navbarSwitchAtom } from '../../atoms';
 
 export interface SidebarTileNode {
@@ -26,7 +26,7 @@ export interface SidebarTileNode {
   onClick?: () => Promise<void> | void;
 }
 export interface SidebarProps {
-  menu: SidebarTileNode[];
+  // menu: SidebarTileNode[];
   semver?: string;
 }
 
@@ -84,12 +84,28 @@ const useAccordionControl = function (menu: SidebarTileNode[]) {
   return [value, setValue];
 };
 
-export const Sidebar: FC<SidebarProps> = function (props) {
+export const AppShellDrawer: FC<SidebarProps> = function (props) {
   // const navigate = useNavigate();
   // const opened = useAtomValue(navbarSwitchAtom);
   // const [value, setValue] = useAccordionControl(props.menu);
   // const theme = useMantineTheme();
   // const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  const [opened, toggle] = useAtom(navbarCollapseAtom);
 
-  return <div></div>;
+  return (
+    <AppShell.Navbar p="md">
+      <Burger
+        opened={opened.mobile}
+        onClick={() => toggle({ ...opened, desktop: !opened.mobile })}
+        hiddenFrom="sm"
+        size="xs"
+      />
+      <Combobox radius="lg" />
+      {Array(15)
+        .fill(0)
+        .map((_, index) => (
+          <Skeleton key={index} h={28} mt="sm" animate={false} />
+        ))}
+    </AppShell.Navbar>
+  );
 };

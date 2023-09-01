@@ -19,9 +19,6 @@
     "stegcloak": "1.1.1"
   },
   "peerDependencies": {
-    "@mantine/core": "5.10.5",
-    "@mantine/hooks": "5.10.5",
-    "@mantine/notifications": "5.10.5",
     "jotai": "1.7.3",
     "react-router-dom": "6.3.0",
     "typescript": "5.1.6"
