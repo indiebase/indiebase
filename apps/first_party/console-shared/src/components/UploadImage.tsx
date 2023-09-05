@@ -8,7 +8,7 @@ import {
   Button,
   ActionIcon,
 } from '@mantine/core';
-import { IconBuildingCommunity, IconX } from '@tabler/icons';
+import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
 import { FC, useCallback, useState, ReactElement } from 'react';
 import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
