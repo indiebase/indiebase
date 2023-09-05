@@ -4,6 +4,12 @@ const routes = [
   {
     path: '/',
     lazy: () => import('./components/DashboardLayout'),
+    children: [
+      {
+        path: '2fa',
+        lazy: () => import('./pages/MY/2FA'),
+      },
+    ],
   },
 ] satisfies RouteObject[];
 
