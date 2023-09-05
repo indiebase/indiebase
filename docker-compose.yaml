@@ -75,9 +75,11 @@ services:
       - ${CONFIG_DIR:-.}/.env
     volumes:
       - pg_data:/var/lib/postgresql/data/pgdata
-      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
+    secrets:
+      - pg_password
 
   # postgrest:
   #   image: postgrest/postgrest
