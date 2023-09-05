@@ -104,7 +104,7 @@ services:
     volumes:
       - redis_data:/data:rw
       - ${CONFIG_DIR:-./docker}/redis:/usr/local/etc/redis:ro
-    command: redis-server /usr/local/etc/redis/redis.conf
+    command: redis-server --requirepass ${REDIS_PASSWORD}
 
 networks:
   default:

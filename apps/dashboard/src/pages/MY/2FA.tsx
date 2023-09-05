@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 import { IconAlertCircle, IconDiscountCheck } from '@tabler/icons-react';
 import { FC, ReactElement, Suspense, useCallback, useState } from 'react';
+import { UploadImageZone } from '@/components/UploadImageZone';
 
 interface SetAuthnAppProps {
   onNext(code: string[]): void;
@@ -323,6 +324,7 @@ const TwoFactorAuth = function () {
     <Box style={{ maxWidth: 800 }}>
       <Title order={4}>Configure Two-factor authentication (2FA)</Title>
       <CreateOptStep />
+
       {/* {profile.d.enabled2FA ? <TwoFactorPreferences /> : <CreateOptStep />} */}
     </Box>
   );

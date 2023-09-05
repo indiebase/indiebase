@@ -18,17 +18,20 @@ import { useColorScheme } from '@mantine/hooks';
 interface UploadImageProps {
   size?: number;
   src?: string;
-  onChange(url: string): void;
+  onChange?: (url: string) => void;
   /**
    * Unit KB
    */
   limit?: number;
   croppable?: boolean;
   clearable?: boolean;
-  cropTitle?: string;
+  cropProps?: {
+    title?: string;
+  };
   label?: string;
   bucket?: string;
   icon?: (size: number) => ReactElement;
+  onUpload?: () => void;
 }
 
 const createImage = (url: string) =>
@@ -77,14 +80,14 @@ async function getCroppedImg(imageSrc: string, pixelCrop: any): Promise<Blob> {
   });
 }
 
-export const UploadImage: FC<UploadImageProps> = function ({
+export const UploadImageZone: FC<UploadImageProps> = function ({
   size,
   src,
   limit,
   label,
   croppable,
   clearable,
-  cropTitle,
+  cropProps,
   onChange,
   icon,
   bucket,
@@ -96,7 +99,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
   const theme = useMantineTheme();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [originalImage, setOriginalImage] = useState<{
+  const [originalImg, setOriginalImage] = useState<{
     file: File | null;
     url: string | null;
   }>({
@@ -136,12 +139,12 @@ export const UploadImage: FC<UploadImageProps> = function ({
   };
 
   const onCropComplete = async (_: any, croppedAreaPixels: any) => {
-    const u = await getCroppedImg(originalImage.url!, croppedAreaPixels);
+    const u = await getCroppedImg(originalImg.url!, croppedAreaPixels);
     setCropped(u);
   };
 
   const handleCrop = useCallback(async () => {
-    await upload(originalImage.file!, cropped);
+    await upload(originalImg.file!, cropped);
     setOpened(false);
   }, [cropped, opened]);
 
@@ -201,9 +204,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
           }}
           opened={opened}
           onClose={() => setOpened(false)}
-          title={cropTitle}
-          // overlayOpacity={0.5}
-          // overlayBlur={3}
+          title={cropProps?.title}
         >
           <Box style={{ position: 'relative', width: 400, height: 400 }}>
             <Cropper
@@ -216,7 +217,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
               minZoom={0.3}
               restrictPosition={false}
               cropSize={{ width: 200, height: 200 }}
-              image={originalImage.url!}
+              image={originalImg.url!}
               crop={crop}
               zoom={zoom}
               aspect={1}
@@ -249,11 +250,13 @@ export const UploadImage: FC<UploadImageProps> = function ({
   );
 };
 
-UploadImage.defaultProps = {
+UploadImageZone.defaultProps = {
   size: 60,
   limit: 2048,
   croppable: false,
-  cropTitle: 'Crop Image',
+  cropProps: {
+    title: 'Crop Image',
+  },
   icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
   bucket: 'indiebase-community',
 };

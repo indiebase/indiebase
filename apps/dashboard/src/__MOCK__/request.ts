@@ -1,16 +1,11 @@
 import axios, { type AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { nanoid } from 'nanoid';
 
 console.debug('API: ', process.env.VITE_API);
 
 export const protectApiInterceptor = async function (
   config: AxiosRequestConfig,
 ) {
-  const a = [];
-  a.push(Date.now());
-  a.push(nanoid(6));
-
   try {
     // const s = stegcloak.reveal(
     //   process.env.REACT_APP_PROTECT_MSG,
@@ -56,7 +51,6 @@ req.interceptors.response.use(
     console.log('[Response Error].....', error);
     if (response) {
       const data = response.data;
-      console.log(data, '=======================');
 
       const message = Array.isArray(data?.message)
         ? data.message.join(';\n')
