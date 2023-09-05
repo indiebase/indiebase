@@ -12,7 +12,6 @@ import { useAtom } from 'jotai';
 import React, { FC, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { navbarCollapseAtom } from './navbar.atom';
-// import { navbarSwitchAtom } from '../../atoms';
 
 export interface SidebarTileNode {
   label: string;

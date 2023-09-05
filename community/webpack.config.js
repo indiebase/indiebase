@@ -7,6 +7,15 @@ const nodeExternals = require('webpack-node-externals');
 //   require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
 //     .swcOptions;
 
+const getYarnWorkspaceDeps = function () {
+  const pkg = require('./package.json');
+  return Object.entries(pkg.dependencies)
+    .map((k) => (k[1].includes('workspace') ? new RegExp(k[0]) : null))
+    .filter(Boolean);
+};
+
+const wsExternals = getYarnWorkspaceDeps();
+
 /**
  * @type {import('webpack').Configuration}
  * @todo swc-loader doesn't support project references.
@@ -19,11 +28,8 @@ module.exports = {
   target: 'node',
   externals: [
     nodeExternals({
-      allowlist: [
-        'webpack/hot/poll?100',
-        /^@indiebase\/server-shared/,
-        /^@deskbtm\/gadgets/,
-      ],
+      modulesFromFile: true,
+      allowlist: ['webpack/hot/poll?100'].concat(wsExternals),
       additionalModuleDirs: [path.resolve(__dirname, '../node_modules')],
     }),
   ],

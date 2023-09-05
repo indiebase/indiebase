@@ -1,7 +1,57 @@
-import { Burger, Group, AppShell, Divider } from '@mantine/core';
+import {
+  Burger,
+  Group,
+  AppShell,
+  Divider,
+  Menu,
+  Avatar,
+  rem,
+} from '@mantine/core';
 import { FC } from 'react';
 import { useAtom } from 'jotai';
 import { navbarCollapseAtom } from './navbar.atom';
+import {
+  IconUser,
+  IconSettings,
+  IconFileDescription,
+  IconLogout,
+  IconPlus,
+} from '@tabler/icons-react';
+
+const PreferencesMenu = function () {
+  return (
+    <Menu width={200} position="bottom-end" withArrow>
+      <Menu.Target>
+        <Avatar mr={10} src={''} radius="xl" size={rem(33)}>
+          <IconUser size={20} />
+        </Avatar>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item
+          // onClick={() => {
+          //   navigate(`/users/${profile.username}/settings/profile`);
+          // }}
+          leftSection={<IconSettings size={16} />}
+        >
+          Settings
+        </Menu.Item>
+        <Menu.Item leftSection={<IconFileDescription size={16} />}>
+          Docs
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconPlus size={16} />}
+          onClick={() => {
+            // navigate('/create/org');
+          }}
+        >
+          Create Organization
+        </Menu.Item>
+        <Divider my="xs" variant="dashed" labelPosition="center" />
+        <Menu.Item leftSection={<IconLogout size={16} />}>Sign Out</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+};
 
 export interface AppShellHeaderProps {
   logo: React.ReactNode;
@@ -35,7 +85,8 @@ export const AppShellHeader: FC<AppShellHeaderProps> = function (props) {
         </Group>
 
         <Group h="100%" justify="flex-end">
-          <Divider mr={10} my={15} orientation="vertical" />
+          <Divider mr={5} my={15} orientation="vertical" />
+          <PreferencesMenu />
         </Group>
       </Group>
     </AppShell.Header>

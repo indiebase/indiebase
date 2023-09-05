@@ -10,9 +10,10 @@ import {
 } from '@mantine/core';
 import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
 import { FC, useCallback, useState, ReactElement } from 'react';
-import { uploadFile } from '../api/utils';
+// import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import Cropper from 'react-easy-crop';
+import { useColorScheme } from '@mantine/hooks';
 
 interface UploadImageProps {
   size?: number;
@@ -27,10 +28,10 @@ interface UploadImageProps {
   cropTitle?: string;
   label?: string;
   bucket?: string;
-  icon?: (size) => ReactElement;
+  icon?: (size: number) => ReactElement;
 }
 
-const createImage = (url) =>
+const createImage = (url: string) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image));
@@ -44,12 +45,12 @@ const createImage = (url) =>
  * @param {File} image - Image File url
  * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
  */
-async function getCroppedImg(imageSrc, pixelCrop): Promise<Blob> {
+async function getCroppedImg(imageSrc: string, pixelCrop: any): Promise<Blob> {
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d')!;
 
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -69,9 +70,9 @@ async function getCroppedImg(imageSrc, pixelCrop): Promise<Blob> {
   // return canvas.toDataURL('image/png');
 
   // As a blob
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, _) => {
     canvas.toBlob((file) => {
-      resolve(file);
+      resolve(file!);
     }, 'image/png');
   });
 }
@@ -89,15 +90,15 @@ export const UploadImage: FC<UploadImageProps> = function ({
   bucket,
 }) {
   const [cropped, setCropped] = useState<Blob>();
-  const [url, setUrl] = useState<string>();
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [url, setUrl] = useState<string | null>();
+  const [errorMsg, setErrorMsg] = useState<string | null>();
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [originalImage, setOriginalImage] = useState<{
-    file: File;
-    url: string;
+    file: File | null;
+    url: string | null;
   }>({
     file: null,
     url: null,
@@ -106,17 +107,19 @@ export const UploadImage: FC<UploadImageProps> = function ({
   const upload = async function (file: File, blob?: Blob) {
     const formData = new FormData();
     formData.append('files', blob ?? file, file.name);
-    const result = await uploadFile(formData, bucket);
-    if (result.code > 0) {
-      setUrl(result.d);
-      onChange?.(result.d);
-    }
+    // const result = await uploadFile(formData, bucket);
+    // if (result.code > 0) {
+    //   setUrl(result.d);
+    //   onChange?.(result.d);
+    // }
   };
+
+  const colorScheme = useColorScheme();
 
   const handleChange = async function (files: File[]) {
     const file = files[0];
     setErrorMsg(null);
-    if (file.size >= limit * 1024) {
+    if (file.size >= limit! * 1024) {
       setErrorMsg('Image size out of size');
       return;
     }
@@ -132,13 +135,13 @@ export const UploadImage: FC<UploadImageProps> = function ({
     setOpened(true);
   };
 
-  const onCropComplete = async (_croppedArea, croppedAreaPixels) => {
-    const u = await getCroppedImg(originalImage.url, croppedAreaPixels);
+  const onCropComplete = async (_: any, croppedAreaPixels: any) => {
+    const u = await getCroppedImg(originalImage.url!, croppedAreaPixels);
     setCropped(u);
   };
 
   const handleCrop = useCallback(async () => {
-    await upload(originalImage.file, cropped);
+    await upload(originalImage.file!, cropped);
     setOpened(false);
   }, [cropped, opened]);
 
@@ -177,25 +180,30 @@ export const UploadImage: FC<UploadImageProps> = function ({
           accept={IMAGE_MIME_TYPE}
         >
           <Avatar src={url ?? src} size={size}>
-            {icon(size)}
+            {icon?.(size!)}
           </Avatar>
         </Dropzone>
       </div>
       {croppable && (
         <Modal
-          overlayColor={
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[9]
-              : theme.colors.gray[2]
-          }
-          transition="pop"
-          transitionDuration={200}
-          transitionTimingFunction="ease"
+          transitionProps={{
+            transition: 'pop',
+            duration: 200,
+            timingFunction: 'ease',
+          }}
+          overlayProps={{
+            opacity: 0.5,
+            blur: 3,
+            color:
+              colorScheme === 'dark'
+                ? theme.colors.dark[9]
+                : theme.colors.gray[2],
+          }}
           opened={opened}
           onClose={() => setOpened(false)}
           title={cropTitle}
-          overlayOpacity={0.5}
-          overlayBlur={3}
+          // overlayOpacity={0.5}
+          // overlayBlur={3}
         >
           <Box style={{ position: 'relative', width: 400, height: 400 }}>
             <Cropper
@@ -208,7 +216,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
               minZoom={0.3}
               restrictPosition={false}
               cropSize={{ width: 200, height: 200 }}
-              image={originalImage.url}
+              image={originalImage.url!}
               crop={crop}
               zoom={zoom}
               aspect={1}
@@ -217,7 +225,7 @@ export const UploadImage: FC<UploadImageProps> = function ({
               onZoomChange={setZoom}
             />
           </Box>
-          <Group position="center">
+          <Group justify="center">
             <Button
               onClick={handleCrop}
               mt={40}

@@ -1,16 +1,17 @@
 import { FC } from 'react';
-import { AppShell, Burger, Skeleton, rem } from '@mantine/core';
+import { AppShell, rem } from '@mantine/core';
 import { AppShellHeader } from './Header';
 // import { ErrorBoundary } from 'react-error-boundary';
 import { InidebaseTextLogo } from '@/components/Icons';
 import { useAtom } from 'jotai';
 import { navbarCollapseAtom } from './navbar.atom';
 import { AppShellDrawer } from './Drawer';
+import { Outlet } from 'react-router-dom';
 
 export interface DashboardLayoutProps {}
 
 const DashboardLayout: FC<DashboardLayoutProps> = () => {
-  const [opened, toggle] = useAtom(navbarCollapseAtom);
+  const [opened] = useAtom(navbarCollapseAtom);
   console.debug(
     '%c------------------------DashboardLayout re-render------------------------------',
     'color:green',
@@ -29,7 +30,9 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
     >
       <AppShellHeader logo={<InidebaseTextLogo size={160} />} />
       <AppShellDrawer />
-      <AppShell.Main></AppShell.Main>
+      <AppShell.Main>
+        <Outlet />
+      </AppShell.Main>
     </AppShell>
   );
 };

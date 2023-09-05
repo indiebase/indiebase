@@ -1,6 +1,7 @@
 import '@mantine/nprogress/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/core/styles.css';
+import '@fontsource/inter';
 import './index.css';
 
 import { FC, useState } from 'react';
