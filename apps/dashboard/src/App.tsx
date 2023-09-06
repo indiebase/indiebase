@@ -17,6 +17,7 @@ import { Notifications } from '@mantine/notifications';
 import { theme } from './theme';
 
 const DevTools: FC = function () {
+  console.debug(import.meta.env);
   return kDevMode ? (
     <>
       <JotaiDevTools />

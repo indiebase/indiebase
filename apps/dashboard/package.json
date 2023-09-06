@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
+    "start:mock": "cross-env VITE_MOCK=true vite",
     "build": "tsc && vite build",
     "lint": "eslint src/**/*.{tsx,ts} --report-unused-disable-directives --fix --max-warnings 0",
     "preview": "vite preview"
@@ -41,6 +42,7 @@
     "web-vitals": "3.4.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

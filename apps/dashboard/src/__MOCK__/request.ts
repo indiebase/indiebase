@@ -1,8 +1,6 @@
 import axios, { type AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-console.debug('API: ', process.env.VITE_API);
-
 export const protectApiInterceptor = async function (
   config: AxiosRequestConfig,
 ) {
@@ -28,10 +26,10 @@ export const protectApiInterceptor = async function (
 
 export const req = axios.create({
   timeout: 8000,
-  baseURL: process.env.VITE_API,
+  baseURL: import.meta.env.VITE_API,
   withCredentials: true,
   headers: {
-    Domain: process.env.REACT_APP_PACKAGENAME,
+    Domain: import.meta.env.VITE_PACKAGENAME,
   },
 });
 
@@ -67,4 +65,4 @@ req.interceptors.response.use(
 
 export const mock = new MockAdapter(req);
 
-process.env.REACT_APP_IS_MOCK !== 'true' && mock.restore();
+import.meta.env.VITE_MOCK !== 'true' && mock.restore();
