@@ -90,25 +90,25 @@ export const createCommunityModule = function (
           };
         },
       }),
-      // KnexModule.forRootAsync({
-      //   inject: [ConfigService],
-      //   useFactory: (config: ConfigService) => {
-      //     const { host, port, password, user, database } = config.get('pg');
+      KnexModule.forRootAsync({
+        inject: [ConfigService],
+        useFactory: (config: ConfigService) => {
+          const { host, port, password, user, database } = config.get('pg');
 
-      //     return {
-      //       config: {
-      //         client: 'pg',
-      //         connection: {
-      //           host,
-      //           port,
-      //           user,
-      //           password,
-      //           database,
-      //         },
-      //       },
-      //     };
-      //   },
-      // }),
+          return {
+            config: {
+              client: 'pg',
+              connection: {
+                host,
+                port,
+                user,
+                password,
+                database,
+              },
+            },
+          };
+        },
+      }),
       // MailerModule.forRootAsync({
       //   inject: [ConfigService],
       //   useFactory: async (config: ConfigService) => {
