@@ -2,7 +2,24 @@
   "name": "winston-openobserve",
   "version": "0.0.0-alpha.1",
   "description": "Winston OpenObserve transport",
-  "main": "./dist/index.js",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
   "scripts": {
     "build": "rimraf dist && tsc",
     "test": "jest",
@@ -33,7 +50,7 @@
   "homepage": "https://github.com/indiebase/winston-openobserve#readme",
   "dependencies": {
     "async-exit-hook": "^2.0.1",
-    "ky": "0.33.3",
+    "ky": "1.0.1",
     "triple-beam": "1.4.1",
     "winston-transport": "4.5.0"
   },

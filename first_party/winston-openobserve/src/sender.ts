@@ -1,10 +1,10 @@
+//@ts-ignore:ts(1479)
 import ky from 'ky';
 import { LogEntity, OpenObserveTransportOptions } from './interface';
-import { KyInstance } from 'ky/distribution/types/ky';
 
 export class Sender {
   #options: OpenObserveTransportOptions;
-  #req: KyInstance;
+  #req: typeof ky;
   #data: Record<string, any>;
   #tmpData: Record<string, any>;
   #timer: NodeJS.Timer;
@@ -93,7 +93,7 @@ export class Sender {
       })
       .catch((err) => {
         console.error(err);
-        if (err?.cause.code === 'ECONNREFUSED') {
+        if (err?.cause?.code === 'ECONNREFUSED') {
           this.#options.onConnectionError?.(err, this.close.bind(this));
         }
         this.#options.cleanOnRequestError && this.clean();

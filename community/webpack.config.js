@@ -3,9 +3,9 @@ const path = require('path');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-// const swcDefaultConfig =
-//   require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
-//     .swcOptions;
+const swcDefaultConfig =
+  require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
+    .swcOptions;
 
 const getYarnWorkspaceDeps = function () {
   const pkg = require('./package.json');
@@ -17,10 +17,10 @@ const getYarnWorkspaceDeps = function () {
 const wsExternals = getYarnWorkspaceDeps();
 
 /**
- * @type {import('webpack').Configuration}
  * @todo swc-loader doesn't support project references.
  * https://github.com/swc-project/swc/discussions/2156
  *
+ * @type {import('webpack').Configuration}
  */
 module.exports = {
   context: __dirname,
@@ -29,7 +29,7 @@ module.exports = {
   externals: [
     nodeExternals({
       modulesFromFile: true,
-      allowlist: ['webpack/hot/poll?100'].concat(wsExternals),
+      allowlist: ['webpack/hot/poll?100', /^ky/].concat(wsExternals),
       additionalModuleDirs: [path.resolve(__dirname, '../node_modules')],
     }),
   ],
@@ -39,29 +39,29 @@ module.exports = {
   devtool: 'eval-source-map',
   module: {
     rules: [
-      // {
-      //   test: /.([jt])sx?$/,
-      //   exclude: /node_modules/,
-      //   use: {
-      //     loader: 'swc-loader',
-      //     options: {
-      //       ...swcDefaultConfig,
-      //     },
-      //   },
-      // },
       {
         test: /.([jt])sx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'ts-loader',
+          loader: 'swc-loader',
           options: {
-            configFile: 'tsconfig.json',
-            projectReferences: true,
-            experimentalWatchApi: true,
-            transpileOnly: true,
+            ...swcDefaultConfig,
           },
         },
       },
+      // {
+      //   test: /.([jt])sx?$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: 'ts-loader',
+      //     options: {
+      //       configFile: 'tsconfig.json',
+      //       projectReferences: true,
+      //       experimentalWatchApi: true,
+      //       transpileOnly: true,
+      //     },
+      //   },
+      // },
     ],
   },
   mode: process.env.NODE_ENV || 'development',

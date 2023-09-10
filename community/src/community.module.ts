@@ -35,41 +35,41 @@ export const createCommunityModule = function (
       // AuthModule,
       // ProbeModule,
       ...options.imports,
-      // RedisModule.forRootAsync({
-      //   inject: [ConfigService],
-      //   async useFactory(config: ConfigService) {
-      //     const { host, password, port } =
-      //       config.get<RedisClientOptions>('redis');
-      //     return {
-      //       config: {
-      //         host,
-      //         port,
-      //         password,
-      //       },
-      //     };
-      //   },
-      // }),
+      RedisModule.forRootAsync({
+        inject: [ConfigService],
+        async useFactory(config: ConfigService) {
+          const { host, password, port } =
+            config.get<RedisClientOptions>('redis');
+          return {
+            config: {
+              host,
+              port,
+              password,
+            },
+          };
+        },
+      }),
       WinstonModule.forRootAsync({
         inject: [ConfigService],
         useFactory: (config: ConfigService) => {
-          // const { host, defaultOrg, defaultStream, username, password } =
-          //   config.get('open_observe');
+          const { host, defaultOrg, defaultStream, username, password } =
+            config.get('open_observe');
 
-          // const openObserveTransport = new OpenObserveTransport({
-          //   bulk: true,
-          //   host,
-          //   defaultOrg,
-          //   defaultStream,
-          //   interval: 2000,
-          //   cleanOnRequestError: true,
-          //   onConnectionError(_error, close) {
-          //     close();
-          //   },
-          //   basicAuth: {
-          //     username,
-          //     password,
-          //   },
-          // });
+          const openObserveTransport = new OpenObserveTransport({
+            bulk: true,
+            host,
+            defaultOrg,
+            defaultStream,
+            interval: 2000,
+            cleanOnRequestError: true,
+            onConnectionError(_error, close) {
+              close();
+            },
+            basicAuth: {
+              username,
+              password,
+            },
+          });
 
           const transports = [
             new winston.transports.Console({
@@ -78,14 +78,14 @@ export const createCommunityModule = function (
                 utilities.format.nestLike(),
               ),
             }),
-            // openObserveTransport,
+            openObserveTransport,
           ];
           return {
             level: kDevMode ? 'debug' : 'warn',
             format: winston.format.json(),
             exitOnError: false,
             handleRejections: true,
-            // rejectionHandlers: [openObserveTransport],
+            rejectionHandlers: [openObserveTransport],
             transports,
           };
         },
