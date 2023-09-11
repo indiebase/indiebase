@@ -5,7 +5,6 @@
       "vitest/globals"
     ],
     "esModuleInterop": true,
-    "composite": true,
     "baseUrl": ".",
     "outDir": "./dist",
     "rootDir": "src"

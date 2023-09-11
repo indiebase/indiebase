@@ -31,14 +31,17 @@ const redis = registerAs('redis', () => {
   };
 });
 
+// Get postgresql connection config.
+export const _getPGConnectionConfig = () => ({
+  host: process.env.DB_PG_HOST || '0.0.0.0',
+  port: parseInt(process.env.DB_PG_PORT) || 5432,
+  user: process.env.DB_PG_USER,
+  password: process.env.DB_PG_PWD,
+  database: process.env.DB_PG_DB,
+});
+
 const pg = registerAs('pg', () => {
-  return {
-    host: process.env.DB_PG_HOST || '0.0.0.0',
-    port: parseInt(process.env.DB_PG_PORT) || 5432,
-    user: process.env.DB_PG_USER,
-    password: process.env.DB_PG_PWD,
-    database: process.env.DB_PG_DB,
-  };
+  return _getPGConnectionConfig();
 });
 
 const smtp = registerAs('smtp', () => {

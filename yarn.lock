@@ -5788,6 +5788,9 @@ __metadata:
     "@fastify/passport": 2.3.0
     "@fastify/session": 9.0.0
     "@fastify/swagger": 8.9.0
+    "@indiebase/nest-knex": "workspace:^"
+    "@indiebase/nest-octokit": "workspace:^"
+    "@indiebase/nest-stoplight-elements": "workspace:^"
     "@indiebase/server-shared": "workspace:^"
     "@liaoliaots/nestjs-redis": 9.0.5
     "@nestjs-modules/mailer": 1.7.1
@@ -6074,7 +6077,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-knex@workspace:first_party/nest-knex":
+"@indiebase/nest-knex@workspace:^, @indiebase/nest-knex@workspace:first_party/nest-knex":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-knex@workspace:first_party/nest-knex"
   dependencies:
@@ -6130,7 +6133,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-octokit@workspace:first_party/nest-octokit":
+"@indiebase/nest-octokit@workspace:^, @indiebase/nest-octokit@workspace:first_party/nest-octokit":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-octokit@workspace:first_party/nest-octokit"
   dependencies:
@@ -6185,7 +6188,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-stoplight-elements@workspace:first_party/nest-stoplight-elements":
+"@indiebase/nest-stoplight-elements@workspace:^, @indiebase/nest-stoplight-elements@workspace:first_party/nest-stoplight-elements":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-stoplight-elements@workspace:first_party/nest-stoplight-elements"
   dependencies:

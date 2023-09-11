@@ -1,4 +1,4 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   HealthCheck,
@@ -43,13 +43,5 @@ export class ProbeController {
       () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
       () => this.db.pingCheck('postgres'),
     ]);
-  }
-
-  @Get('demo')
-  @ApiOperation({
-    summary: 'Liveness probe, including http, storage, memory, database',
-  })
-  async demo() {
-    await this.knex('users').insert({ name: 'demo', age: 1000 });
   }
 }

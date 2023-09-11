@@ -7,9 +7,7 @@ export class FilesSizeValidationPipe implements PipeTransform {
     this.maxSize = maxSize;
   }
 
-  transform(value: any, metadata: ArgumentMetadata) {
-    console.log(value, this.maxSize);
-
+  transform(value: any, _metadata: ArgumentMetadata) {
     if (Array.isArray(value)) {
       for (const val of value) {
         console.log(val.size);

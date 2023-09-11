@@ -13,7 +13,7 @@ import {
   KnexOptionsFactory,
 } from './knex.interfaces';
 import { getConnectionToken, handleRetry } from './knex.utils';
-import { KNEX_MODULE_OPTIONS } from './knex.constants';
+import { KNEX_MODULE_OPTIONS, KNEX_SYNC } from './knex.constants';
 import { knex, Knex } from 'knex';
 import { ModuleRef } from '@nestjs/core';
 import { defer, lastValueFrom } from 'rxjs';
@@ -118,7 +118,11 @@ export class KnexCoreModule implements OnApplicationShutdown {
   ): Promise<Knex> {
     return lastValueFrom(
       defer(async () => {
-        return knex(options.config);
+        globalThis[KNEX_SYNC] = options.synchronize ?? false;
+
+        const k = knex(options.config);
+
+        return options.extend ? options.extend(k) : k;
       }).pipe(handleRetry(options.retryAttempts, options.retryDelay)),
     );
   }

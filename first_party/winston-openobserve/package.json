@@ -2,6 +2,13 @@
   "name": "winston-openobserve",
   "version": "0.0.0-alpha.1",
   "description": "Winston OpenObserve transport",
+  "private": true,
+  "author": "Han",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/indiebase/winston-openobserve/issues"
+  },
+  "homepage": "https://github.com/indiebase/winston-openobserve#readme",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "exports": {
@@ -42,12 +49,6 @@
     "openobserve",
     "winston"
   ],
-  "author": "Han",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/indiebase/winston-openobserve/issues"
-  },
-  "homepage": "https://github.com/indiebase/winston-openobserve#readme",
   "dependencies": {
     "async-exit-hook": "^2.0.1",
     "ky": "1.0.1",

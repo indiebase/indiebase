@@ -10,7 +10,6 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 /**
  * This clz will catch all exceptions and send formatted payload.
- *
  */
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {

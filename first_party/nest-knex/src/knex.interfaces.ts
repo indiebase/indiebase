@@ -23,4 +23,22 @@ export interface KnexOptions {
   config: Knex.Config;
   retryAttempts?: number;
   retryDelay?: number;
+  /**
+   * Indicates if database schema should be auto created on every application launch.
+   * Be careful with this option and don't use this in production
+   *
+   * If set to true, it will provide a global environment variable `globalThis[Symbol.for('__KNEX_SYNCHRONIZE__')] = true`,
+   * which can be used for extending.
+   *
+   * @example
+   * ```ts
+   * import {KNEX_SYNC} from '@indiebase/nest-knex'
+   *
+   * if(globalThis[KNEX_SYNC]){}
+   * ```
+   *
+   */
+  synchronize?: boolean;
+
+  extend?: (knex: Knex) => any;
 }

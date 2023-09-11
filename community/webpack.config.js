@@ -88,6 +88,11 @@ module.exports = {
   optimization: {
     concatenateModules: true,
   },
+  watchOptions: {
+    poll: 2000,
+    aggregateTimeout: 2000,
+    ignored: ['**/dist/**/*.js', '**/node_modules'],
+  },
   node: false,
   stats: {
     hash: true,

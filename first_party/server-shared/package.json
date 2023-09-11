@@ -4,13 +4,11 @@
   "description": "Common utils for indiebase backend",
   "author": "Han",
   "private": true,
-  "main": "./src/index.js",
+  "license": "Apache-2.0",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./*": {
-      "import": "./src/*.ts",
-      "require": "./src/*.ts"
-    }
+    ".": "./src/index.ts"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

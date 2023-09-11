@@ -1,5 +1,3 @@
-## This library is not free, it needs your star.
-
 <img width="800" src="https://user-images.githubusercontent.com/45007226/226185397-b8be4abb-18e9-450d-94cf-31f443091f0a.png"/>
 
 ## Note Bene

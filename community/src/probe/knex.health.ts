@@ -32,7 +32,7 @@ export class KnexHealthIndicator extends HealthIndicator {
    */
   constructor(private moduleRef: ModuleRef) {
     super();
-    this.checkDependantPackages();
+    // this.checkDependantPackages();
   }
 
   /**
@@ -80,7 +80,7 @@ export class KnexHealthIndicator extends HealthIndicator {
     options: KnexPingCheckSettings = {},
   ): Promise<HealthIndicatorResult> {
     let isHealthy = false;
-    this.checkDependantPackages();
+    // this.checkDependantPackages();
 
     const connection = options.connection || this.getContextConnection();
     const timeout = options.timeout || 1000;

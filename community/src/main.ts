@@ -1,5 +1,6 @@
+import '@deskbtm/gadgets/env';
 import fastifyHelmet from '@fastify/helmet';
-import { HttpExceptionFilter, kProdMode } from '@indiebase/server-shared';
+import { HttpExceptionFilter, sizeParser } from '@indiebase/server-shared';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -10,11 +11,11 @@ import {
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { resolve } from 'path';
 import { AppModule } from './app.module';
-// import { useContainer } from 'class-validator';
 import FastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
-// import { setupApiDoc } from './swagger.setup';
-import '@deskbtm/gadgets/env';
+import { useContainer } from 'class-validator';
+import { setupApiDoc } from './swagger.setup';
+declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -29,7 +30,7 @@ async function bootstrap() {
   const logger = app.get(Logger);
 
   try {
-    // const config = app.get<ConfigService>(ConfigService);
+    const config = app.get<ConfigService>(ConfigService);
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
     app.useGlobalPipes(
@@ -43,9 +44,9 @@ async function bootstrap() {
     );
 
     // Inject service to ValidatorConstraintInterface
-    // useContainer(app.select(AppModule), {
-    //   fallbackOnErrors: true,
-    // });
+    useContainer(app.select(AppModule), {
+      fallbackOnErrors: true,
+    });
 
     await app.register(fastifyHelmet, {
       global: true,
@@ -80,11 +81,11 @@ async function bootstrap() {
     // });
 
     // Setup swagger api doc with  .
-    // await setupApiDoc(app);
+    await setupApiDoc(app);
     await app.register(FastifyMultipart, {
-      // limits: {
-      //   fileSize: sizeParser(config.get('storage.file.limit')),
-      // },
+      limits: {
+        fileSize: sizeParser(config.get('storage.file.limit')),
+      },
     });
 
     app.useStaticAssets({
@@ -93,21 +94,21 @@ async function bootstrap() {
     app.useLogger(nestWinston);
     app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
-    // const port = config.get('app.port'),
-    //   hostname = config.get('app.hostname');
+    const port = config.get('app.port'),
+      hostname = config.get('app.hostname');
 
-    await app.listen(3000, '127.0.0.1');
+    await app.listen(port, hostname);
     // Logger.log(`🚀 Application is running on: http://${hostname}:${port}`);
   } catch (error) {
     logger.error(error);
   }
 
-  // if (module.hot) {
-  //   module.hot.accept();
-  //   module.hot.dispose(async () => {
-  //     await app.close();
-  //   });
-  // }
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(async () => {
+      await app.close();
+    });
+  }
 }
 
 bootstrap();
