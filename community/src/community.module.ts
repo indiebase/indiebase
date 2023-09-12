@@ -4,7 +4,7 @@ import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, ModuleMetadata } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WinstonModule, utilities } from 'nest-winston';
 import path from 'node:path';
@@ -22,13 +22,6 @@ export const createCommunityModule = function (
 ) {
   @Module({
     imports: [
-      // UserModule,
-      // StorageModule,
-      // OrgModule,
-      // ProjectModule,
-      // InvitationModule,
-      // MailModule,
-      // AuthModule,
       ProbeModule,
       ...options.imports,
       RedisModule.forRootAsync({
@@ -156,13 +149,17 @@ export const createCommunityModule = function (
       ...(options.providers ?? []),
     ],
   })
-  class CommunityModule implements OnModuleInit {
+  class CommunityModule {
     constructor(
       @InjectConnection()
       private readonly ex: KnexEx,
-    ) {}
+    ) {
+      ex.knex.schema.createTable('users', (table) => {
+        table.increments();
 
-    async onModuleInit() {}
+        console.log(table);
+      });
+    }
   }
 
   return CommunityModule as any;

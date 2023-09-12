@@ -34,7 +34,7 @@
     "prettier": "3.0.0",
     "standard-version": "9.3.1",
     "syncpack": "^11.2.1",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   },
   "workspaces": {
     "packages": [

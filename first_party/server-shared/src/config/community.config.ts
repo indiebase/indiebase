@@ -1,9 +1,8 @@
 import { registerAs } from '@nestjs/config';
 
-function handleOrigin(origin: string, originReg: string) {
+function handleOrigin(originRegex: string) {
   return [
-    ...origin.split(',').filter(Boolean),
-    ...originReg
+    ...originRegex
       .split(',')
       .filter(Boolean)
       .map((v) => new RegExp(v)),
@@ -14,10 +13,7 @@ const app = registerAs('app', () => {
   return {
     hostname: process.env.HTTP_HOSTNAME || '0.0.0.0',
     port: process.env.HTTP_PORT || 23331,
-    corsOrigin: handleOrigin(
-      process.env.CORS_ORIGINS_STRING,
-      process.env.CORS_ORIGINS_REG,
-    ),
+    corsOrigin: handleOrigin(process.env.CORS_ORIGINS_REGEX),
     packageName: process.env.PACKAGE_NAME,
     sessionSecret: process.env.SESSION_SECRET,
   };

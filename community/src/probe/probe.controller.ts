@@ -16,7 +16,7 @@ import * as path from 'path';
   path: 'probe',
   version: '1',
 })
-@ApiTags('ProbeV1')
+@ApiTags('Probe v1')
 export class ProbeController {
   constructor(
     private readonly health: HealthCheckService,

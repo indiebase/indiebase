@@ -3,8 +3,24 @@
   "version": "1.6.6",
   "description": "Access control for Nestjs with CASL",
   "author": "Denis Grankin @ Jerry",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
   "bugs": {
     "url": "https://github.com/getjerry/nest-casl/issues"
   },
@@ -83,6 +99,6 @@
     "semantic-release": "20.0.2",
     "supertest": "6.3.3",
     "ts-node": "10.9.1",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   }
 }

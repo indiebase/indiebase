@@ -4,14 +4,26 @@
   "description": "Stoplight elements for Nestjs",
   "author": "Han",
   "license": "Apache-2.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "repository": {
-    "url": "https://github.com/indiebase/indiebase"
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
   },
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/indiebase/indiebase"
   },
   "files": [
     "dist",
@@ -66,7 +78,7 @@
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   },
   "jest": {
     "moduleFileExtensions": [

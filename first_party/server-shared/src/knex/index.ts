@@ -1,6 +1,5 @@
 /// <reference path="./knex.d.ts" />
 
-import './table.ex';
 import './schema.ex';
 import { Knex } from 'knex';
 import { KnexSchemaEx } from './schema.ex';

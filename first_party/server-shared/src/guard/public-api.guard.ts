@@ -18,7 +18,7 @@ import * as forge from 'node-forge';
  * @param salt Recommend to use steganography to hide the salt in front-end
  * @example
  * ```
- *  X-Lets-Api-Credential: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
+ *  X-Indiebase-Api-Credential: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
  * ```
  *
  */

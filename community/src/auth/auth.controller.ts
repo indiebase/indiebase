@@ -11,11 +11,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  PublicApiHeader,
-  MyInfo,
-  PublicApiGuard,
-} from '@indiebase/server-shared';
+import { PublicApiHeader, PublicApiGuard } from '@indiebase/server-shared';
 import { LocalSignInDto, OptVerifyDto } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
 import { AuthService } from './auth.service';

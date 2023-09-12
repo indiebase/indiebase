@@ -1,15 +1,17 @@
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
-import { apiDocDefaultContact } from '@indiebase/server-shared';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-const { name, url, email } = apiDocDefaultContact;
 
 export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
+    const name = process.env.API_DOC_CONTACT_NAME ?? 'deskbtm/indiebase',
+      url = process.env.API_DOC_CONTACT_URL ?? '',
+      email = process.env.API_DOC_CONTACT_EMAIL ?? 'deskbtm@outlook.com';
+
     try {
       const options = new DocumentBuilder()
-        .setTitle('indiebase API')
-        .setDescription('indiebase community REST API ')
+        .setTitle('Indiebase API')
+        .setDescription('Indiebase REST API.')
         .setVersion('1.0.0')
         .addBearerAuth(
           {
@@ -25,21 +27,12 @@ export const setupApiDoc = (app: INestApplication) =>
         .build();
 
       const doc = SwaggerModule.createDocument(app, options, {
-        include: [
-          // AuthModule,
-          // UserModule,
-          // OrgModule,
-          // ProjectModule,
-          // InvitationModule,
-          // MailModule,
-          // StorageModule,
-        ],
         deepScanRoutes: true,
       });
 
       await StoplightElementsModule.setup('/docs/api', app, doc, {
         favicon: '/favicon.ico',
-        logo: '/logo.png',
+        logo: '/logo.svg',
       });
     } catch (e) {
       console.error(e);
