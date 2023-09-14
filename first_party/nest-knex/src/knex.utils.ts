@@ -1,58 +1,28 @@
 import { KnexOptions } from './knex.interfaces';
-import { DEFAULT_CONNECTION_NAME } from './knex.constants';
+import {
+  DEFAULT_CONNECTION_EX_NAME,
+  DEFAULT_CONNECTION_NAME,
+} from './knex.constants';
 import { Observable } from 'rxjs';
 import { delay, retryWhen, scan } from 'rxjs/operators';
-import { randomUUID } from 'node:crypto';
 import { Logger } from '@nestjs/common';
-import { CircularDependencyException } from './circular-dependency.exception';
 
 const logger = new Logger('KnexModule');
 
-/**
- * This function generates an injection token for an Model
- * @param {Function} This parameter can either be a Model
- * @param {string} [connection='default'] Connection name
- * @returns {string} The Entity injection token
- */
-export function getModelToken(
-  model: Function,
-  connection: KnexOptions | string = DEFAULT_CONNECTION_NAME,
-) {
-  if (model === null || model === undefined) {
-    throw new CircularDependencyException('@InjectModel()');
-  }
-  const connectionPrefix = getConnectionPrefix(connection);
-  return `${connectionPrefix}${model.name}`;
-}
-
 export function getConnectionToken(
-  connection: KnexOptions | string = DEFAULT_CONNECTION_NAME,
+  connection?: null | KnexOptions | string,
+  // Inject extended knex.
+  ex: boolean = false,
 ): string | Function {
   if (typeof connection === 'string') {
-    return connection;
+    return ex ? connection + 'Ex' : connection;
   }
-  return `${connection.name || DEFAULT_CONNECTION_NAME}`;
-}
 
-/**
- * This function returns a Connection prefix based on the connection name
- * @param {KnexOptions | string} [connection='default'] This optional parameter is either
- * a KnexOptions or a string.
- * @returns {string | Function} The Connection injection token.
- */
-export function getConnectionPrefix(
-  connection: KnexOptions | string = DEFAULT_CONNECTION_NAME,
-): string {
-  if (connection === DEFAULT_CONNECTION_NAME) {
-    return '';
-  }
-  if (typeof connection === 'string') {
-    return connection + '_';
-  }
-  if (connection.name === DEFAULT_CONNECTION_NAME || !connection.name) {
-    return '';
-  }
-  return connection.name + '_';
+  return ex
+    ? `${
+        connection?.name ? connection.name + 'Ex' : DEFAULT_CONNECTION_EX_NAME
+      }`
+    : `${connection?.name ?? DEFAULT_CONNECTION_NAME}`;
 }
 
 export function handleRetry(
@@ -80,9 +50,3 @@ export function handleRetry(
       ),
     );
 }
-
-export function getConnectionName(options: KnexOptions) {
-  return options && options.name ? options.name : DEFAULT_CONNECTION_NAME;
-}
-
-export const generateString = () => randomUUID();

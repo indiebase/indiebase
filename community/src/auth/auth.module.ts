@@ -9,7 +9,7 @@ import { PasetoModule } from 'nestjs-paseto';
 
 @Module({
   imports: [
-    PassportModule.register({ session: true }),
+    PassportModule.register({}),
     PasetoModule.registerAsync({
       imports: [],
       useFactory() {

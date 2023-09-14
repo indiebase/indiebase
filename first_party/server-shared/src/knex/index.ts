@@ -1,13 +1,11 @@
-/// <reference path="./knex.d.ts" />
-
 import './schema.ex';
 import { Knex } from 'knex';
 import { KnexSchemaEx } from './schema.ex';
 
 export class KnexEx {
-  schema: KnexSchemaEx;
+  public schema: KnexSchemaEx;
 
-  constructor(public readonly knex: Knex) {
-    this.schema = new KnexSchemaEx(knex);
+  constructor(private readonly proto: Knex) {
+    this.schema = new KnexSchemaEx(proto);
   }
 }

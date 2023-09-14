@@ -1,16 +1,17 @@
-import { InjectConnection, KnexModule } from '@indiebase/nest-knex';
+import { InjectKnex, InjectKnexEx, KnexModule } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { Logger, Module, ModuleMetadata } from '@nestjs/common';
+import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WinstonModule, utilities } from 'nest-winston';
 import path from 'node:path';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
 import { ProbeModule } from './probe';
+import { Knex } from 'knex';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Community:
@@ -149,17 +150,14 @@ export const createCommunityModule = function (
       ...(options.providers ?? []),
     ],
   })
-  class CommunityModule {
+  class CommunityModule implements OnModuleInit {
     constructor(
-      @InjectConnection()
-      private readonly ex: KnexEx,
-    ) {
-      ex.knex.schema.createTable('users', (table) => {
-        table.increments();
-
-        console.log(table);
-      });
-    }
+      @InjectKnexEx()
+      private readonly knexEx: KnexEx,
+      @InjectKnex()
+      private readonly knex: Knex,
+    ) {}
+    async onModuleInit() {}
   }
 
   return CommunityModule as any;

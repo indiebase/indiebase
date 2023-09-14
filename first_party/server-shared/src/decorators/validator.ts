@@ -33,12 +33,12 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     const { throwExistedMsg } = args
       .constraints[2] satisfies ExtendedValidationOptions;
 
-    return this.ex
-      .knex(entity)
-      .select(key)
-      .then((e) => {
-        return throwExistedMsg ? !e : !!e;
-      });
+    // return this.ex
+    //   .knex(entity)
+    //   .select(key)
+    //   .then((e) => {
+    //     return throwExistedMsg ? !e : !!e;
+    //   });
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {

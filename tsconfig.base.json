@@ -10,7 +10,7 @@
     "importHelpers": true,
     "target": "es2015",
     "removeComments": true,
-    "module": "CommonJS",
+    "module": "NodeNext",
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
     "pretty": true,

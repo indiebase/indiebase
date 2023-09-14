@@ -9,7 +9,7 @@ import {
 } from '@nestjs/terminus';
 import { KnexHealthIndicator } from './knex.health';
 import { Knex } from 'knex';
-import { InjectConnection } from '@indiebase/nest-knex';
+import { InjectKnex } from '@indiebase/nest-knex';
 import * as path from 'path';
 
 @Controller({
@@ -24,7 +24,7 @@ export class ProbeController {
     private readonly memory: MemoryHealthIndicator,
     private readonly disk: DiskHealthIndicator,
     private readonly db: KnexHealthIndicator,
-    @InjectConnection() private readonly knex: Knex,
+    @InjectKnex() private readonly knex: Knex,
   ) {}
 
   @Get('liveness')

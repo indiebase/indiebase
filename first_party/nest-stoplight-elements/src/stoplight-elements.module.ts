@@ -6,8 +6,10 @@ import {
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import type { OpenAPIObject } from '@nestjs/swagger';
 import Handlebars from 'handlebars';
-import { posix, resolve } from 'path';
+import * as path from 'path';
 import * as fsPromises from 'fs/promises';
+
+const { readFile } = fsPromises;
 
 /**
  * @see {@link https://docs.stoplight.io/docs/elements/b074dc47b2826-elements-configuration-options}
@@ -15,6 +17,9 @@ import * as fsPromises from 'fs/promises';
 export interface StoplightElementsOptions {
   apiDescriptionDocument?: string;
   apiDescriptionUrl?: string;
+  /**
+   * Stoplight elements base path.
+   */
   basePath?: string;
   hideInternal?: boolean;
   hideTryIt?: boolean;
@@ -32,6 +37,10 @@ export interface StoplightElementsModuleOptions
   stoplightJSUrl?: string;
   stoplightCSSUrl?: string;
   favicon?: string;
+  /**
+   * Views root path.
+   */
+  assetsPath?: string;
   auth?: (req: any) => boolean;
 }
 
@@ -75,11 +84,15 @@ export class StoplightElementsModule {
     );
   }
 
-  private static startStatic(path: string, app: INestApplication) {
+  private static startStatic(
+    root: string,
+    prefix: string,
+    app: INestApplication,
+  ) {
     if (this.isFastify(app.getHttpAdapter())) {
       (app as NestFastifyApplication).useStaticAssets({
-        root: resolve(__dirname, '../views'),
-        prefix: path,
+        root,
+        prefix,
         decorateReply: false,
       });
     }
@@ -89,17 +102,17 @@ export class StoplightElementsModule {
     return app.config?.getGlobalPrefix() ?? '';
   }
 
-  private static prefixSlug(path: string) {
-    return path?.[0] !== '/' ? `/${path}` : path;
+  private static prefixSlug(p: string) {
+    return p?.[0] !== '/' ? `/${p}` : p;
   }
 
   public static async setupFastify(
-    path: string,
+    p: string,
     app: NestFastifyApplication,
     document: OpenAPIObject,
     options?: StoplightElementsModuleOptions,
   ) {
-    const formatPath = this.prefixSlug(posix.normalize(path)),
+    const formatPath = this.prefixSlug(path.posix.normalize(p)),
       globalPrefix = this.getGlobalPrefix(app);
 
     const finalPath = globalPrefix
@@ -111,8 +124,10 @@ export class StoplightElementsModule {
     options.apiDescriptionDocument = jsonDocument;
     options.basePath = finalPath;
 
-    const templatePath = resolve(__dirname, '../views/stoplight-elements.hbs');
-    const content = await fsPromises.readFile(templatePath, 'utf-8');
+    const assetsPath = options.assetsPath ?? path.join(__dirname, 'views');
+
+    const templatePath = path.join(assetsPath, 'stoplight-elements.hbs');
+    const content = await readFile(templatePath, 'utf-8');
     const template = Handlebars.compile(content),
       HTML = template(options);
     const httpAdapter = app.getHttpAdapter();
@@ -136,6 +151,6 @@ export class StoplightElementsModule {
       });
     } catch (error) {}
 
-    this.startStatic(finalPath, app);
+    this.startStatic(assetsPath, finalPath, app);
   }
 }

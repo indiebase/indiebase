@@ -28,7 +28,6 @@ module.exports = {
   target: 'node',
   externals: [
     nodeExternals({
-      modulesFromFile: true,
       allowlist: ['webpack/hot/poll?100', /^ky/].concat(wsExternals),
       additionalModuleDirs: [path.resolve(__dirname, '../node_modules')],
     }),

@@ -38,10 +38,15 @@ export class KnexCoreModule implements OnApplicationShutdown {
       useFactory: async () => await this.createConnectionFactory(options),
     };
 
+    const connectionProviderEx: Provider = {
+      provide: getConnectionToken(connection, true),
+      useFactory: async () => await this.createConnectionFactory(options, true),
+    };
+
     return {
       module: KnexCoreModule,
-      providers: [connectionProvider, KnexOptions],
-      exports: [connectionProvider],
+      providers: [connectionProvider, connectionProviderEx, KnexOptions],
+      exports: [connectionProvider, connectionProviderEx],
     };
   }
 
@@ -57,11 +62,23 @@ export class KnexCoreModule implements OnApplicationShutdown {
       inject: [KNEX_MODULE_OPTIONS],
     };
 
+    const connectionProviderEx: Provider = {
+      provide: getConnectionToken(connection, true),
+      useFactory: async (options: KnexOptions) => {
+        return await this.createConnectionFactory(options, true);
+      },
+      inject: [KNEX_MODULE_OPTIONS],
+    };
+
     return {
       module: KnexCoreModule,
       imports: options.imports,
-      providers: [...this.createAsyncProviders(options), connectionProvider],
-      exports: [connectionProvider],
+      providers: [
+        ...this.createAsyncProviders(options),
+        connectionProvider,
+        connectionProviderEx,
+      ],
+      exports: [connectionProvider, connectionProviderEx],
     };
   }
 
@@ -115,14 +132,14 @@ export class KnexCoreModule implements OnApplicationShutdown {
 
   private static async createConnectionFactory(
     options: KnexOptions,
+    ex: boolean = false,
   ): Promise<Knex> {
     return lastValueFrom(
       defer(async () => {
         globalThis[KNEX_SYNC] = options.synchronize ?? false;
-
         const k = knex(options.config);
 
-        return options.extend ? options.extend(k) : k;
+        return ex && options.extend ? options.extend(k) : k;
       }).pipe(handleRetry(options.retryAttempts, options.retryDelay)),
     );
   }
