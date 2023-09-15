@@ -157,7 +157,12 @@ export const createCommunityModule = function (
       @InjectKnex()
       private readonly knex: Knex,
     ) {}
-    async onModuleInit() {}
+    async onModuleInit() {
+      await this.knex.schema.createTable('user1', (table) => {
+        table.increments();
+        console.log(table);
+      });
+    }
   }
 
   return CommunityModule as any;

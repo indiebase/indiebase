@@ -1,13 +1,13 @@
-import React, {type ComponentProps} from 'react';
+import React, { type ComponentProps } from 'react';
 import clsx from 'clsx';
-import {useThemeConfig} from '@docusaurus/theme-common';
+import { useThemeConfig } from '@docusaurus/theme-common';
 import {
   useHideableNavbar,
   useNavbarMobileSidebar,
 } from '@docusaurus/theme-common/internal';
-import {translate} from '@docusaurus/Translate';
+import { translate } from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
-import type {Props} from '@theme/Navbar/Layout';
+import type { Props } from '@theme/Navbar/Layout';
 
 import styles from './styles.module.css';
 
@@ -21,12 +21,12 @@ function NavbarBackdrop(props: ComponentProps<'div'>) {
   );
 }
 
-export default function NavbarLayout({children}: Props): JSX.Element {
+export default function NavbarLayout({ children }: Props): JSX.Element {
   const {
-    navbar: {hideOnScroll, style},
+    navbar: { hideOnScroll, style },
   } = useThemeConfig();
   const mobileSidebar = useNavbarMobileSidebar();
-  const {navbarRef, isNavbarVisible} = useHideableNavbar(hideOnScroll);
+  const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll);
   return (
     <nav
       ref={navbarRef}
@@ -47,7 +47,9 @@ export default function NavbarLayout({children}: Props): JSX.Element {
           'navbar--primary': style === 'primary',
           'navbar-sidebar--show': mobileSidebar.shown,
         },
-      )}>
+        styles.navbarOverride,
+      )}
+    >
       {children}
       <NavbarBackdrop onClick={mobileSidebar.toggle} />
       <NavbarMobileSidebar />

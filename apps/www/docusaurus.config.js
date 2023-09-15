@@ -52,7 +52,11 @@ const config = {
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            require.resolve('@mantine/core/styles.css'),
+            require.resolve('@fontsource/inter'),
+          ],
         },
       }),
     ],
@@ -73,7 +77,19 @@ const config = {
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
-            position: 'left',
+            position: 'right',
+            label: 'Tutorial',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'tutorialSidebar',
+            position: 'right',
+            label: 'Tutorial',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'tutorialSidebar',
+            position: 'right',
             label: 'Tutorial',
           },
           // { to: '/blog', label: 'Blog', position: 'left' },
@@ -128,13 +144,51 @@ const config = {
           },
         ],
         // Copyright© {new Date().getFullYear()} Han
-        copyright: `Copyright © ${new Date().getFullYear()}`,
+        copyright: `Copyright © ${new Date().getFullYear()} Han`,
       },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
     }),
+  plugins: [
+    'docusaurus-plugin-vanilla-extract',
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        debug: true,
+        offlineModeActivationStrategies: [
+          'appInstalled',
+          'standalone',
+          'queryString',
+        ],
+        pwaHead: [
+          {
+            tagName: 'link',
+            type: 'image/x-icon',
+            href: '/favicon.ico',
+          },
+          {
+            tagName: 'link',
+            rel: 'manifest',
+            href: '/manifest.json', // your PWA manifest
+          },
+          {
+            tagName: 'meta',
+            name: 'theme-color',
+            media: '(prefers-color-scheme: light)',
+            content: '#FFFFFF',
+          },
+          {
+            tagName: 'meta',
+            name: 'theme-color',
+            media: '(prefers-color-scheme: light)',
+            content: '#242424',
+          },
+        ],
+      },
+    ],
+  ],
 };
 
 module.exports = config;

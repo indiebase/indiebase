@@ -6,15 +6,16 @@ import {
   SkipToContentFallbackId,
   ThemeClassNames,
 } from '@docusaurus/theme-common';
-import {useKeyboardNavigation} from '@docusaurus/theme-common/internal';
+import { useKeyboardNavigation } from '@docusaurus/theme-common/internal';
 import SkipToContent from '@theme/SkipToContent';
 import AnnouncementBar from '@theme/AnnouncementBar';
 import Navbar from '@theme/Navbar';
 import Footer from '@theme/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import ErrorPageContent from '@theme/ErrorPageContent';
-import type {Props} from '@theme/Layout';
+import type { Props } from '@theme/Layout';
 import styles from './styles.module.css';
+import { MantineProvider } from '@mantine/core';
 
 export default function Layout(props: Props): JSX.Element {
   const {
@@ -29,28 +30,33 @@ export default function Layout(props: Props): JSX.Element {
   useKeyboardNavigation();
 
   return (
-    <LayoutProvider>
-      <PageMetadata title={title} description={description} />
+    <MantineProvider defaultColorScheme="light">
+      <LayoutProvider>
+        <PageMetadata title={title} description={description} />
 
-      <SkipToContent />
+        <SkipToContent />
 
-      <AnnouncementBar />
+        <AnnouncementBar />
 
-      <Navbar />
+        <Navbar />
 
-      <div
-        id={SkipToContentFallbackId}
-        className={clsx(
-          ThemeClassNames.wrapper.main,
-          styles.mainWrapper,
-          wrapperClassName,
-        )}>
-        <ErrorBoundary fallback={(params) => <ErrorPageContent {...params} />}>
-          {children}
-        </ErrorBoundary>
-      </div>
+        <div
+          id={SkipToContentFallbackId}
+          className={clsx(
+            ThemeClassNames.wrapper.main,
+            styles.mainWrapper,
+            wrapperClassName,
+          )}
+        >
+          <ErrorBoundary
+            fallback={(params) => <ErrorPageContent {...params} />}
+          >
+            {children}
+          </ErrorBoundary>
+        </div>
 
-      {!noFooter && <Footer />}
-    </LayoutProvider>
+        {!noFooter && <Footer />}
+      </LayoutProvider>
+    </MantineProvider>
   );
 }

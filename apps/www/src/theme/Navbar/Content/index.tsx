@@ -12,6 +12,7 @@ import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
 
 import styles from './styles.module.css';
+import { Divider } from '@mantine/core';
 
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
@@ -85,6 +86,7 @@ export default function NavbarContent(): JSX.Element {
               <SearchBar />
             </NavbarSearch>
           )}
+          <Divider mr={5} my={15} orientation="vertical" />
         </>
       }
     />
