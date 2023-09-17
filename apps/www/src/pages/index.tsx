@@ -22,7 +22,7 @@ export default function Home(): JSX.Element {
       title={'Home'}
       description="Description will go into a meta tag in <head />"
     >
-      <HomepageHeader />
+      {/* <HomepageHeader /> */}
       <main>{/* <HomepageFeatures /> */}</main>
     </Layout>
   );

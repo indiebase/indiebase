@@ -2,7 +2,11 @@
   // This file is not used in compilation. It is here just for a nice editor experience.
   "extends": "@tsconfig/docusaurus/tsconfig.json",
   "compilerOptions": {
+    "module": "Node16",
     "baseUrl": ".",
     "allowImportingTsExtensions": true
-  }
+  },
+  "exclude": [
+    "./postcss.config.js"
+  ]
 }

@@ -9,8 +9,9 @@
 .navbarOverride {
   display: flex;
   align-items: center;
-  background-color: #fff;
   -webkit-backdrop-filter: saturate(180%) blur(10px);
   backdrop-filter: saturate(180%) blur(10px);
   background-color: #ffffffba;
+  box-shadow: unset;
+  --ifm-navbar-height: rem(70px);
 }

@@ -1,5 +1,6 @@
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
+
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 import {
   PageMetadata,
@@ -7,16 +8,18 @@ import {
   ThemeClassNames,
 } from '@docusaurus/theme-common';
 import { useKeyboardNavigation } from '@docusaurus/theme-common/internal';
-import SkipToContent from '@theme/SkipToContent';
+import { MantineProvider } from '@mantine/core';
 import AnnouncementBar from '@theme/AnnouncementBar';
-import Navbar from '@theme/Navbar';
+import ErrorPageContent from '@theme/ErrorPageContent';
 import Footer from '@theme/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
-import ErrorPageContent from '@theme/ErrorPageContent';
-import type { Props } from '@theme/Layout';
-import styles from './styles.module.css';
-import { MantineProvider } from '@mantine/core';
+import Navbar from '@theme/Navbar';
+import SkipToContent from '@theme/SkipToContent';
 
+import styles from './styles.module.css';
+
+import type { Props } from '@theme/Layout';
+import { mantineTheme } from './maintine-theme';
 export default function Layout(props: Props): JSX.Element {
   const {
     children,
@@ -30,7 +33,7 @@ export default function Layout(props: Props): JSX.Element {
   useKeyboardNavigation();
 
   return (
-    <MantineProvider defaultColorScheme="light">
+    <MantineProvider theme={mantineTheme} defaultColorScheme="light">
       <LayoutProvider>
         <PageMetadata title={title} description={description} />
 

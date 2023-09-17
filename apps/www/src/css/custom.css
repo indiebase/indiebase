@@ -39,3 +39,7 @@
   --ifm-color-primary-lightest: #f5779e;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+.footer {
+  --ifm-footer-background-color: var(--mantine-color-white);
+}

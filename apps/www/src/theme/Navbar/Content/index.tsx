@@ -11,8 +11,9 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
 
-import styles from './styles.module.css';
+import * as styles from './styles.css.ts';
 import { Divider } from '@mantine/core';
+import clsx from 'clsx';
 
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
@@ -35,7 +36,7 @@ ${JSON.stringify(item, null, 2)}`,
             )
           }
         >
-          <NavbarItem {...item} />
+          <NavbarItem className={styles.navbarItemExt} {...item} />
         </ErrorCauseBoundary>
       ))}
     </>
@@ -52,7 +53,16 @@ function NavbarContentLayout({
   return (
     <div className="navbar__inner">
       <div className="navbar__items">{left}</div>
-      <div className="navbar__items navbar__items--right">{right}</div>
+      <NavbarLogo />
+      <div
+        className={clsx(
+          'navbar__items',
+          'navbar__items--right',
+          styles.navbarItemsExt,
+        )}
+      >
+        {right}
+      </div>
     </div>
   );
 }
@@ -70,8 +80,13 @@ export default function NavbarContent(): JSX.Element {
       left={
         // TODO stop hardcoding items?
         <>
+          {!searchBarItem && (
+            <NavbarSearch>
+              <SearchBar />
+            </NavbarSearch>
+          )}
           {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
-          <NavbarLogo />
+          <NavbarColorModeToggle className={styles.colorModeToggle} />
           <NavbarItems items={leftItems} />
         </>
       }
@@ -80,12 +95,6 @@ export default function NavbarContent(): JSX.Element {
         // Ask the user to add the respective navbar items => more flexible
         <>
           <NavbarItems items={rightItems} />
-          <NavbarColorModeToggle className={styles.colorModeToggle} />
-          {!searchBarItem && (
-            <NavbarSearch>
-              <SearchBar />
-            </NavbarSearch>
-          )}
           <Divider mr={5} my={15} orientation="vertical" />
         </>
       }
