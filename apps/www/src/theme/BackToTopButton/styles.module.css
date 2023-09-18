@@ -2,10 +2,10 @@
   position: fixed;
   right: 1.3rem;
   bottom: 1.3rem;
-  border-radius: 50%;
+  border-radius: 1rem;
   background-color: var(--ifm-color-emphasis-200);
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   z-index: calc(var(--ifm-z-index-fixed) - 1);
   box-shadow: var(--ifm-global-shadow-lw);
   transition: all var(--ifm-transition-fast)
@@ -22,6 +22,7 @@
   background-color: var(--ifm-color-emphasis-1000);
   width: 100%;
   height: 100%;
+  transform: scale(0.6);
 }
 
 @media (hover: hover) {
