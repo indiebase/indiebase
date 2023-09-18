@@ -41,6 +41,9 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+          remarkPlugins: [
+            [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+          ],
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
@@ -69,6 +72,7 @@ const config = {
       image: 'img/docusaurus-social-card.jpg',
       hideOnScroll: true,
       navbar: {
+        hideOnScroll: true,
         logo: {
           alt: 'Indiebase',
           src: 'img/logo.svg',
@@ -76,9 +80,9 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'documentation',
             position: 'right',
-            label: 'Tutorial',
+            label: 'Documentation',
           },
           {
             type: 'docSidebar',
@@ -88,9 +92,15 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'tutorialSidebar1',
             position: 'right',
             label: 'Tutorial',
+          },
+          {
+            href: 'https://github.com/indiebase/indiebase',
+            position: 'left',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
           // { to: '/blog', label: 'Blog', position: 'left' },
           // {
@@ -101,7 +111,7 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
         links: [
           {
             title: 'Docs',
@@ -144,7 +154,7 @@ const config = {
           },
         ],
         // Copyright© {new Date().getFullYear()} Han
-        copyright: `Copyright © ${new Date().getFullYear()} Han`,
+        copyright: `Copyright © ${new Date().getFullYear()} Deskbtm (Han)`,
       },
       prism: {
         theme: lightCodeTheme,

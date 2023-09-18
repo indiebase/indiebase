@@ -49,6 +49,7 @@ export default function NavbarColorModeToggle({
       aria-label={title}
       aria-live="polite"
       onClick={() => {
+        return;
         setColorMode(colorMode === 'dark' ? 'light' : 'dark');
       }}
     >
