@@ -38,6 +38,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "peerDependencies": {
+    "@deskbtm/gadgets": "workspace:^",
     "@fastify/session": "9.0.0",
     "@indiebase/nest-knex": "workspace:^",
     "@liaoliaots/nestjs-redis": "9.0.5",
@@ -60,6 +61,7 @@
     "@types/fs-extra": "9.0.13",
     "@types/node": "20.4.5",
     "@types/node-forge": "1.0.2",
+    "@types/object-assign-deep": "^0",
     "@types/supertest": "2.0.11",
     "@types/validator": "13.7.10",
     "cross-env": "7.0.3",
