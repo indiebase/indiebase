@@ -37,6 +37,7 @@
     "@indiebase/nest-octokit": "workspace:^",
     "@indiebase/nest-stoplight-elements": "workspace:^",
     "@indiebase/server-shared": "workspace:^",
+    "@indiebase/trait": "workspace:^",
     "@liaoliaots/nestjs-redis": "9.0.5",
     "@nestjs-modules/mailer": "1.7.1",
     "@nestjs/axios": "^3.0.0",
@@ -99,11 +100,11 @@
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.2.0",
-    "tsx": "^3.12.7",
+    "tsx": "3.12.7",
     "typescript": "5.2.2",
-    "vitest": "^0.33.0",
+    "vitest": "0.33.0",
     "webpack": "5.88.2",
     "webpack-cli": "5.1.4",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "3.0.0"
   }
 }

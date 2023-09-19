@@ -21,6 +21,11 @@ export class KnexSchemaEx {
   private dropOldForeignKeys() {}
 
   /**
+   * Only occurs when the column name changes.
+   */
+  private renameColumn() {}
+
+  /**
    *
    *
    * Steps of synchronize works:
@@ -75,8 +80,10 @@ export class KnexSchemaEx {
         null,
         callback,
       );
-      const statements = callback.call(this, t);
-      const currentColumns = await this.knex(tableName).columnInfo();
+      const r = callback.call(this, t);
+      const newCols = r?.__statements;
+      if (!newCols) return;
+      const oldCols = await this.knex(tableName).columnInfo();
 
       if (global[KNEX_SYNC]) {
         // return this.schema.createTable(tableName, (table) => {

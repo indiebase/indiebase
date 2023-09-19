@@ -5803,6 +5803,7 @@ __metadata:
     "@indiebase/nest-octokit": "workspace:^"
     "@indiebase/nest-stoplight-elements": "workspace:^"
     "@indiebase/server-shared": "workspace:^"
+    "@indiebase/trait": "workspace:^"
     "@liaoliaots/nestjs-redis": 9.0.5
     "@nestjs-modules/mailer": 1.7.1
     "@nestjs/axios": ^3.0.0
@@ -5861,12 +5862,12 @@ __metadata:
     ts-loader: 9.4.4
     ts-node: 10.9.1
     tsconfig-paths: 4.2.0
-    tsx: ^3.12.7
+    tsx: 3.12.7
     typescript: 5.2.2
-    vitest: ^0.33.0
+    vitest: 0.33.0
     webpack: 5.88.2
     webpack-cli: 5.1.4
-    webpack-node-externals: ^3.0.0
+    webpack-node-externals: 3.0.0
     winston: 3.10.0
     winston-openobserve: "workspace:^"
   languageName: unknown
@@ -32206,7 +32207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:^3.12.7":
+"tsx@npm:3.12.7":
   version: 3.12.7
   resolution: "tsx@npm:3.12.7"
   dependencies:
@@ -33301,7 +33302,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:^0.33.0":
+"vitest@npm:0.33.0, vitest@npm:^0.33.0":
   version: 0.33.0
   resolution: "vitest@npm:0.33.0"
   dependencies:
@@ -33612,7 +33613,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-node-externals@npm:3.0.0, webpack-node-externals@npm:^3.0.0":
+"webpack-node-externals@npm:3.0.0":
   version: 3.0.0
   resolution: "webpack-node-externals@npm:3.0.0"
   checksum: 355080c35c821115b97dda8c93d9d0565a90a6012a532324eb0d6a64f8f0d609431fd29504fc7ce414755841ac14f601f3eef99472c2c5dc00233b504ebe73f2
