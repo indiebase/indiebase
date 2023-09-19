@@ -74,18 +74,18 @@ export class KnexSchemaEx {
     }
 
     if (hasTable) {
-      let t = this.knex.client.tableBuilder(
-        'create',
-        tableName,
-        null,
-        callback,
-      );
-      const r = callback.call(this, t);
-      const newCols = r?.__statements;
-      if (!newCols) return;
-      const oldCols = await this.knex(tableName).columnInfo();
+      if (globalThis[KNEX_SYNC]) {
+        let t = this.knex.client.tableBuilder(
+          'create',
+          tableName,
+          null,
+          callback,
+        );
+        const r = callback.call(this, t);
+        const newCols = r?.__statements;
+        if (!newCols) return;
+        const oldCols = await this.knex(tableName).columnInfo();
 
-      if (global[KNEX_SYNC]) {
         // return this.schema.createTable(tableName, (table) => {
         //   Object.assign(table, r);
         // });

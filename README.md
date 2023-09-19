@@ -11,27 +11,24 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 
 ## FAQ
 
-- What's Indiebase ?  
-   Indiebase is a self-hosted platform explicitly designed for indie developers or teams. Providing financial services and BaaS. The initial purpose of IndieBase was to serve for
-  [deksbtm](https://deskbtm.com), used for managing [Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit), etc.
-- 什么是 indiebase community ?
-  indiebase community 类似于 OpenCollective, 不过其是用于管理私有独立项目的财政与合作者。
+- What's Indiebase?  
+  Indiebase is a self-hosted platform explicitly designed for indie developers or teams. Providing financial services and BaaS. It is similar to a private OpenCollective + Firebase. The initial purpose of Indiebase was to serve [deskbtm](https://deskbtm.com), used for managing [Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit), etc.
+- What's Indiebase Community?  
+  Indiebase Community is the FOSS version of Indiebase. It provides basic functions like financial services and basic BaaS.
+- What's Indiebase Pro?  
+  Indiebase Pro is the paid version of Indiebase. It provides more functions.
+- Does Indiebase provide an online service?  
+  Nope, Indiebase only provides the self-hosted service. Ensure the functionality while making it capable of running on low-configured server environments as much as possible.
 
-- 什么是 indiebase pro ?  
-   而indiebase pro则更接近于一个专为独立开发者打造的轻量Firebase，提供针对独立项目的基本业务管理, 用户管理，文件存储，内购支付, invitation等一些常见应用业务。
-- indiebase 提供线上服务吗 ?  
-   不提供，indiebase 是一个完全self hosted的平台。在保证功能的前提下，尽可能使其能够在低配置服务器环境运行。
+## Profits
 
-## 收益
-
-- 独立开发者工作室: 通过 indiebase community 可以让那些拥有激情的开发者利用空余时间合作起来开发可盈利的独立项目。通过 indiebase pro 降低成本。
-- 开源开发者：避免 core-js类似事件。[whats-next.md](https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md)
-- 编程爱好者: 通过在 indiebase 中发现自己喜爱的项目, 贡献代码并从中获取报酬。
-- 企业: 通过 indiebase 公布开源或其他项目, 让拥有空余时间的开发者参与进来完善产品并支付给开发者报酬。
+- For indie developers/small teams: Let passionate developers collaborate on profitable independent projects during their spare time. Reducing development costs through BaaS。
+- For programming geeks: By discovering projects you love in Indiebase, contributing code, and earning rewards from it.
+- For companies: Allow developers with spare time to participate in improving open-source projects and provide compensation to the developers.
 
 ## Note Bene
 
-- Indiebase highly depends on Github, and considers it as the default code management.
+- Indiebase highly depends on Github and considers it as the default code management.
 - `Indiebase Pro` is not free. To use it, you need to purchase a commercial license.
 - `Indiebase Community` is available under the [AGPL-3.0](https://github.com/indiebase/indiebase/blob/main/LICENSE) license。
 
@@ -40,9 +37,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 `Indiebase Community` is PR welcome.
 If you are interested in the development of `Indiebase Pro`, please read the [Indiebase disclosure agreement](https://github.com/indiebase/indiebase/blob/main/docs/zh-CN/non-disclosure-agreement-zh_cn.md) carefully. Of course, the obtained profits will be distributed among all project participants according to a specified algorithm.  
 <br />
-Email: deskbtm@outlook.com
-
-<!-- - [Delag](https://github.com/nawbc/delag) -->
+Email: [indiebase@deskbtm.com](mailto://indiebase@deskbtm.com)
 
 ## First Party
 
@@ -60,7 +55,7 @@ Email: deskbtm@outlook.com
 
 #### Sub-Projects
 
-- [PITM](https://github.com/indiebase/PTIM) It's a watcher client that makes you don't need to register a company to access payments. Support WeChat Pay, Alipay, PayPal. Serving for indiebase pro.
+- [PITM](https://github.com/indiebase/PTIM) It's a watcher client which means you don't need to register a company to access payments. Support WeChat Pay, Alipay, and PayPal. Serving for indiebase pro.
 
 ## Architecture
 
@@ -70,7 +65,7 @@ Email: deskbtm@outlook.com
 
 ## Discussion Etiquette
 
-In order to keep the conversation clear and transparent, please limit discussion to English and keep things on topic with the issue. Non-compliant issues may be closed directly. Be considerate to others and try to be courteous and professional at all times.
+In order to keep the conversation clear and transparent, please limit the discussion to English and keep things on topic with the issue. Non-compliant issues may be closed directly. Be considerate to others and try to be courteous and professional at all times.
 
 ## Credits
 

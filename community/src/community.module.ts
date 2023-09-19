@@ -159,7 +159,7 @@ export const createCommunityModule = function (
     ) {}
     async onModuleInit() {
       // console.log(this.knex.client.tableBuilder(type, tableName, null, fn));
-      await this.knexEx.schema.createTableEx('user1', (table) => {
+      await this.knexEx.schema.createTableEx('user', (table) => {
         table.increments();
         table.string('name').unique().notNullable().defaultTo('test');
         table.integer('age');
