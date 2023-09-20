@@ -13,5 +13,4 @@
   backdrop-filter: saturate(180%) blur(10px);
   background-color: #ffffffba;
   box-shadow: unset;
-  --ifm-navbar-height: rem(70px);
 }

@@ -30,6 +30,8 @@
   --ifm-menu-link-padding-horizontal: 0.8rem;
   --ifm-breadcrumb-border-radius: 0.3rem;
   --ifm-breadcrumb-padding-vertical: 0.2rem;
+
+  --ifm-navbar-height: rem(70px);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */

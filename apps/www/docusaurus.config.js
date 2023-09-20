@@ -42,6 +42,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           remarkPlugins: [
+            // @ts-ignore
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
           ],
           editUrl:
@@ -75,7 +76,7 @@ const config = {
         hideOnScroll: true,
         logo: {
           alt: 'Indiebase',
-          src: 'img/logo.svg',
+          src: 'img/text-logo.svg',
         },
         items: [
           {
