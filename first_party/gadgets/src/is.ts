@@ -39,8 +39,14 @@ export const is = {
   object(obj: unknown): obj is object {
     return this.type(obj, 'Object');
   },
-  function(obj: unknown): obj is Function {
+  exactFunction(obj: unknown): obj is Function {
     return this.type(obj, 'Function');
+  },
+  /**
+   *  typeof obj === 'function'
+   */
+  function(obj: unknown): obj is Function {
+    return typeof obj === 'function';
   },
   asyncFunction(obj: unknown): obj is Function {
     return this.type(obj, 'AsyncFunction');

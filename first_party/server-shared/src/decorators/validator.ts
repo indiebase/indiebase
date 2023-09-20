@@ -1,3 +1,4 @@
+import { is } from '@deskbtm/gadgets/is';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import {
@@ -7,8 +8,8 @@ import {
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
+import { Knex } from 'knex';
 import validator from 'validator';
-import { KnexEx } from '../knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**
@@ -17,36 +18,56 @@ type ExtendedValidationOptions = ValidationOptions & {
   throwExistedMsg?: boolean;
 
   entityAliasForMsg?: string;
+  /**
+   * Custom response message.
+   */
+  message?: ((value: any) => string) | string;
 };
+
+interface Entity {
+  schema?: string;
+  table: string;
+  column: string;
+}
 
 @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
 @Injectable()
 export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly ex: KnexEx) {}
+  constructor(private readonly knex: Knex) {}
 
   validate(value: any, args: ValidationArguments) {
     if (!value || value === '') {
       return true;
     }
-    const entity: string = args.constraints[0];
-    const key: string = args.constraints[1];
+    const entity: Entity = args.constraints[0];
     const { throwExistedMsg } = args
-      .constraints[2] satisfies ExtendedValidationOptions;
+      .constraints[1] satisfies ExtendedValidationOptions;
 
-    // return this.ex
-    //   .knex(entity)
-    //   .select(key)
-    //   .then((e) => {
-    //     return throwExistedMsg ? !e : !!e;
-    //   });
+    return this.knex
+      .withSchema(entity.schema ?? 'public')
+      .select('*')
+      .from(entity.table)
+      .where(entity.column, value)
+      .then((v) => {
+        return Array.isArray(v) && v.length > 0
+          ? !throwExistedMsg
+          : throwExistedMsg;
+      });
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {
-    const opt = validationArguments.constraints?.[2];
+    const opt = validationArguments
+      .constraints?.[1] as ExtendedValidationOptions;
 
-    return `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟ ${
-      validationArguments.constraints?.[2] ? 'has existed.' : "doesn't exist."
-    }`;
+    const msg = is.function(opt.message)
+      ? opt.message(validationArguments.value)
+      : opt.message;
+
+    return opt.message
+      ? msg
+      : `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟ ${
+          opt.throwExistedMsg?.[2] ? 'has existed.' : "doesn't exist."
+        }`;
   }
 }
 
@@ -58,8 +79,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
 
 // TODO: fix https://github.com/nestjs/nest/issues/528
 export function IsEntityExisted(
-  entity: string,
-  key: string,
+  entity: Entity,
   validationOptions?: ExtendedValidationOptions,
 ) {
   const opt = Object.assign(
@@ -73,7 +93,7 @@ export function IsEntityExisted(
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      constraints: [entity, key, opt],
+      constraints: [entity, opt],
       validator: IsEntityExistedConstraint,
     });
   };

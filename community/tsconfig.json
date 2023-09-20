@@ -4,7 +4,12 @@
     "noEmit": true,
     "esModuleInterop": true,
     "baseUrl": ".",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*"
