@@ -22,7 +22,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 
 ## Profits
 
-- For indie developers/small teams: Let passionate developers collaborate on profitable independent projects during their spare time. Reducing development costs through BaaS。
+- For indie developers/small teams: Let passionate developers collaborate on profitable independent projects during their spare time. Reducing development costs through BaaS.
 - For programming geeks: By discovering projects you love in Indiebase, contributing code, and earning rewards from it.
 - For companies: Allow developers with spare time to participate in improving open-source projects and provide compensation to the developers.
 
@@ -30,7 +30,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 
 - Indiebase highly depends on Github and considers it as the default code management.
 - `Indiebase Pro` is not free. To use it, you need to purchase a commercial license.
-- `Indiebase Community` is available under the [AGPL-3.0](https://github.com/indiebase/indiebase/blob/main/LICENSE) license。
+- `Indiebase Community` is available under the [AGPL-3.0](https://github.com/indiebase/indiebase/blob/main/LICENSE) license.
 
 ## Join Indiebase
 

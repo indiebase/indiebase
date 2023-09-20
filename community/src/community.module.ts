@@ -158,6 +158,9 @@ export const createCommunityModule = function (
       private readonly knex: Knex,
     ) {}
     async onModuleInit() {
+      this.knex.migrate.latest({
+        migrationSource: 
+      })
       // console.log(this.knex.client.tableBuilder(type, tableName, null, fn));
       await this.knexEx.schema.createTableEx('user', (table) => {
         table.increments();
