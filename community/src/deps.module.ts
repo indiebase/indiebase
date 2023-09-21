@@ -133,7 +133,5 @@ import { OpenObserveTransport } from 'winston-openobserve';
       },
     }),
   ],
-  providers: [IsEntityExistedConstraint],
-  exports: [],
 })
 export class InitializeDepsModule {}

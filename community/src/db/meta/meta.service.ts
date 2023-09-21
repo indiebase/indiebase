@@ -1,7 +1,7 @@
 import { InjectKnex } from '@indiebase/nest-knex';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
-import { IndiebaseMigrationSource } from '~/migrations/IndiebaseMigrationSource';
+import { IndiebaseMigrationSource } from '~/migrations/MgrMigrationSource';
 
 @Injectable()
 export class MetaService {
@@ -10,7 +10,8 @@ export class MetaService {
   public async init() {
     await this.knex.migrate.latest({
       migrationSource: new IndiebaseMigrationSource(),
-      tableName: 'xc_knex_migrationsv2',
+      tableName: 'knex_indiebase_migration',
+      schemaName: 'mgr',
     });
   }
 }

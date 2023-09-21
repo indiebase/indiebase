@@ -2,10 +2,10 @@ import { Controller, Get, Logger } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller({
-  path: '/db/meta',
+  path: 'meta',
   version: '1',
 })
-@ApiTags('dbMetaV1')
+@ApiTags('v1/Metadata')
 export class ProbeController {
   constructor(private readonly logger: Logger) {}
 

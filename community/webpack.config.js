@@ -66,6 +66,9 @@ module.exports = {
   mode: process.env.NODE_ENV || 'development',
   resolve: {
     extensions: ['.ts', '.tsx', '.mjs', '.js', '.jsx'],
+    alias: {
+      '~': path.resolve(__dirname, 'src'),
+    },
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({

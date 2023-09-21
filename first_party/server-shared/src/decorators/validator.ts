@@ -1,5 +1,5 @@
 import { is } from '@deskbtm/gadgets/is';
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { InjectKnex } from '@indiebase/nest-knex';
 import { Injectable } from '@nestjs/common';
 import {
   ValidatorConstraint,
@@ -33,7 +33,10 @@ interface Entity {
 @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
 @Injectable()
 export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly knex: Knex) {}
+  constructor(
+    @InjectKnex()
+    private readonly knex: Knex,
+  ) {}
 
   validate(value: any, args: ValidationArguments) {
     if (!value || value === '') {

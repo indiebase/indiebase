@@ -6,7 +6,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('title');
     table.string('status');
     table.text('description');
-    table.text('config');
+    table.text('config_v2');
     table.text('meta');
     table.timestamps();
   });

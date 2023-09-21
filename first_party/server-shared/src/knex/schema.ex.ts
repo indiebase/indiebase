@@ -13,6 +13,16 @@ export class KnexSchemaEx {
     return this.knex.select(select).from('information_schema.schemata');
   }
 
+  public hasSchema(select: string = '*') {
+    // const schemas = this.knex
+    //   .select('*')
+    //   .from('information_schema.schemata')
+    //   .where('schema_name', 'demo');
+    // return (
+    //   ?.length > 0
+    // );
+  }
+
   public withSchema(schema: string) {
     this.schema = this.knex.schema.withSchema(schema);
     return this;
