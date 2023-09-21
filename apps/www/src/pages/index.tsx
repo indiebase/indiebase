@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import LogoSVG from '@site/static/img/logo.svg';
 
 import * as styles from './styles.css.ts';
-import { Box, Title, rem } from '@mantine/core';
+import { Box, Title } from '@mantine/core';
 import { IndiebaseSVG } from '@site/src/components/IndiebaseSVG.tsx';
 
 const Background: FC = function () {
