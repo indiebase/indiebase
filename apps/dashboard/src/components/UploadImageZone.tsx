@@ -195,7 +195,7 @@ export const UploadImageZone: FC<UploadImageProps> = function ({
             timingFunction: 'ease',
           }}
           overlayProps={{
-            opacity: 0.5,
+            backgroundOpacity: 0.55,
             blur: 3,
             color:
               colorScheme === 'dark'

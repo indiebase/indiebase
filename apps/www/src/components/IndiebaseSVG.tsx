@@ -15,7 +15,7 @@ export const IndiebaseSVG = (props: IndiebaseSVGProps) => {
     props,
   );
 
-  const { itemsColor } = p;
+  const { itemsColor, ...rest } = p;
 
   return (
     <svg
@@ -24,7 +24,7 @@ export const IndiebaseSVG = (props: IndiebaseSVGProps) => {
       height={380}
       fill="none"
       viewBox="0 0 380 380"
-      {...props}
+      {...rest}
     >
       <rect
         width={91.266}

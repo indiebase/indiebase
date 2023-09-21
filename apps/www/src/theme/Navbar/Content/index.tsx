@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import { useThemeConfig, ErrorCauseBoundary } from '@docusaurus/theme-common';
 import {
   splitNavbarItems,
@@ -12,8 +12,10 @@ import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
 
 import * as styles from './styles.css.ts';
-import { Divider } from '@mantine/core';
+import { ActionIcon, Anchor, Box, Divider, Group, Text } from '@mantine/core';
 import clsx from 'clsx';
+import { SignInAndUpModal } from '@site/src/components/Modals/SignInAndUp.tsx';
+import { IconBrandGithub } from '@tabler/icons-react';
 
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
@@ -72,8 +74,13 @@ export default function NavbarContent(): JSX.Element {
 
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
-
   const searchBarItem = items.find((item) => item.type === 'search');
+  const [modalMeta, setModalMeta] = useState<{
+    initialNo?: string;
+    opened: boolean;
+  }>({
+    opened: false,
+  });
 
   return (
     <NavbarContentLayout
@@ -87,16 +94,47 @@ export default function NavbarContent(): JSX.Element {
           )}
           {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
           <NavbarColorModeToggle className={styles.colorModeToggle} />
+          <ActionIcon
+            component="a"
+            href="https://github.com/indiebase/indiebase"
+            ml={15}
+            target="_blank"
+            variant="transparent"
+            color="rgba(0, 0, 0, 1)"
+            aria-label="github"
+            onClick={() => {}}
+          >
+            <IconBrandGithub style={{ width: '75%', height: '75%' }} />
+          </ActionIcon>
           <NavbarItems items={leftItems} />
         </>
       }
       right={
-        // TODO stop hardcoding items?
-        // Ask the user to add the respective navbar items => more flexible
-        <>
+        <Group
+          wrap="nowrap"
+          visibleFrom="md"
+          mx={20}
+          style={{ height: '100%' }}
+        >
           <NavbarItems items={rightItems} />
-          <Divider mr={5} my={15} orientation="vertical" />
-        </>
+          <Divider mr={10} orientation="vertical" />
+          <Anchor
+            size="sm"
+            style={{
+              color: 'var(--ifm-navbar-link-color)',
+              whiteSpace: 'nowrap',
+            }}
+            // onClick={(e) => {
+            //   setModalMeta({ opened: true });
+            // }}
+          >
+            Sign in & Sign up
+          </Anchor>
+          <SignInAndUpModal
+            opened={modalMeta.opened}
+            onClose={() => setModalMeta({ opened: false })}
+          />
+        </Group>
       }
     />
   );

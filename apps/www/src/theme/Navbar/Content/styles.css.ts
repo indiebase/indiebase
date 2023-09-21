@@ -1,7 +1,3 @@
-/*
-Hide color mode toggle in small viewports
- */
-
 import { style } from '@vanilla-extract/css';
 
 export const colorModeToggle = style({
@@ -15,7 +11,7 @@ export const colorModeToggle = style({
 export const navbarItemsExt = style({
   flex: 1,
   vars: {
-    '--ifm-navbar-item-padding-horizontal': '24px',
+    '--ifm-navbar-item-padding-horizontal': '14px',
   },
 });
 
