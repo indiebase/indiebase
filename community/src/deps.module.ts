@@ -1,6 +1,6 @@
 import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import { KnexEx } from '@indiebase/server-shared';
+import { IsEntityExistedConstraint, KnexEx } from '@indiebase/server-shared';
 import { RedisModule, RedisClientOptions } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -133,7 +133,7 @@ import { OpenObserveTransport } from 'winston-openobserve';
       },
     }),
   ],
-  providers: [],
+  providers: [IsEntityExistedConstraint],
   exports: [],
 })
 export class InitializeDepsModule {}

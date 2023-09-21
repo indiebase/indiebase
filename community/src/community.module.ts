@@ -1,3 +1,4 @@
+import { MetaService } from '~/db/meta/meta.service';
 import { Logger, Module, ModuleMetadata } from '@nestjs/common';
 import { ProbeModule } from './probe';
 import { InitializeDepsModule } from './deps.module';
@@ -15,7 +16,7 @@ export const createCommunityModule = function (
     providers: [
       Logger,
       // IsEntityExistedConstraint,
-      ...(options.providers ?? []),
+      ...(options.providers ?? [MetaService]),
     ],
   })
   class CommunityModule {}
