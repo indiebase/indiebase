@@ -9,18 +9,16 @@ export class KnexSchemaEx {
     this.schema = knex.schema;
   }
 
-  public list(select: string = '*') {
+  public listSchemas(select: string = '*') {
     return this.knex.select(select).from('information_schema.schemata');
   }
 
-  public hasSchema(select: string = '*') {
-    // const schemas = this.knex
-    //   .select('*')
-    //   .from('information_schema.schemata')
-    //   .where('schema_name', 'demo');
-    // return (
-    //   ?.length > 0
-    // );
+  public async hasSchema(schema: string = '*') {
+    const schemas = await this.knex
+      .select('*')
+      .from('information_schema.schemata')
+      .where('schema_name', schema);
+    return schemas.length > 0;
   }
 
   public withSchema(schema: string) {
@@ -28,16 +26,13 @@ export class KnexSchemaEx {
     return this;
   }
 
-  private dropOldForeignKeys() {}
-
   /**
    * Only occurs when the column name changes.
    */
   private renameColumn() {}
 
   /**
-   *
-   *
+   * @todo
    * Steps of synchronize works:
    * 1. load list of all tables with complete column and keys information from the db
    * 2. drop all (old) foreign keys that exist in the table, but does not exist in the metadata
@@ -49,7 +44,6 @@ export class KnexSchemaEx {
    * 8. create foreign keys which does not exist in the table yet
    * 9. create indices which are missing in db yet, and drops indices which exist in the db, but does not exist in the metadata anymore
    */
-
   // {
   //   grouping: 'columns',
   //   builder: ColumnBuilder {
@@ -59,16 +53,6 @@ export class KnexSchemaEx {
   //     _statements: [],
   //     _type: 'increments',
   //     _args: [],
-  //     _tableBuilder: TableBuilder {
-  //       client: [Client_PG],
-  //       _fn: [Function (anonymous)],
-  //       _method: 'create',
-  //       _schemaName: undefined,
-  //       _tableName: 'user1',
-  //       _tableNameLike: null,
-  //       _statements: [Circular *1],
-  //       _single: {}
-  //     }
   //   }
   // },
   public async createTableEx(
@@ -96,9 +80,9 @@ export class KnexSchemaEx {
         if (!newCols) return;
         const oldCols = await this.knex(tableName).columnInfo();
 
-        // return this.schema.createTable(tableName, (table) => {
-        //   Object.assign(table, r);
-        // });
+        return this.schema.createTable(tableName, (table) => {
+          Object.assign(table, r);
+        });
       }
     } else {
       return this.schema.createTable(tableName, callback);

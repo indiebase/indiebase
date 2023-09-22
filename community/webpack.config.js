@@ -92,7 +92,7 @@ module.exports = {
   },
   watchOptions: {
     poll: 2000,
-    aggregateTimeout: 2000,
+    aggregateTimeout: 500,
     ignored: ['**/dist/**/*.js', '**/node_modules'],
   },
   node: false,
