@@ -6329,27 +6329,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/ui-shared@workspace:apps/first_party/ui-shared":
+"@indiebase/ui-shared@workspace:^, @indiebase/ui-shared@workspace:apps/first_party/ui-shared":
   version: 0.0.0-use.local
   resolution: "@indiebase/ui-shared@workspace:apps/first_party/ui-shared"
   dependencies:
-    "@indiebase/trait": "workspace:^"
-    "@tanstack/query-core": 4.26.1
     "@types/node": 20.4.5
-    "@types/node-forge": 1.0.2
     "@types/react": 18.2.15
     "@types/react-dom": 18.2.7
-    "@types/stegcloak": 1.0.0
-    jotai-tanstack-query: 0.4.0
-    nanoid: 4.0.2
-    node-forge: 1.3.1
+    typescript: 5.1.6
+  peerDependencies:
+    "@mantine/core": 7.0.0
+    "@mantine/hooks": 7.0.0
     react: 18.2.0
     react-dom: 18.2.0
-    stegcloak: 1.1.1
-  peerDependencies:
-    jotai: 1.7.3
-    react-router-dom: 6.3.0
-    typescript: 5.1.6
   languageName: unknown
   linkType: soft
 
@@ -6364,6 +6356,7 @@ __metadata:
     "@docusaurus/preset-classic": 2.4.3
     "@docusaurus/remark-plugin-npm2yarn": 2.4.3
     "@fontsource/inter": ^5.0.8
+    "@indiebase/ui-shared": "workspace:^"
     "@mantine/core": 7.0.0
     "@mantine/dates": 7.0.0
     "@mantine/dropzone": 7.0.0
@@ -9865,13 +9858,6 @@ __metadata:
   dependencies:
     remove-accents: 0.4.2
   checksum: d005f500754f52ef94966cbbe4217f26e7e3c07291faa2578b06bca9a5abe01689569994c37a1d01c6e783addf5ffbb28fa82eba7961d36eabf43ec43d1e496b
-  languageName: node
-  linkType: hard
-
-"@tanstack/query-core@npm:4.26.1":
-  version: 4.26.1
-  resolution: "@tanstack/query-core@npm:4.26.1"
-  checksum: c7bc751d7d08ce27dd7262aa75a263808b128902b8f3a5dd1ff9b1dfda6511af965388bcdb7d8130bdf10756c1d583f527ead274b1d3e4f4db29c83260b416b0
   languageName: node
   linkType: hard
 
@@ -22010,16 +21996,6 @@ __metadata:
     "@emotion/react": ">=11.0.0"
     react: ">=17.0.0"
   checksum: 49821b58caa5ce758e3143540696998e484f48d200e3d2a2f135888a25d916971fea019edbe61c738361e8f20de2d9e3e5808a9ea418364fd9d506aec3575f5b
-  languageName: node
-  linkType: hard
-
-"jotai-tanstack-query@npm:0.4.0":
-  version: 0.4.0
-  resolution: "jotai-tanstack-query@npm:0.4.0"
-  peerDependencies:
-    "@tanstack/query-core": "*"
-    jotai: "*"
-  checksum: aed859e6fe02815460117fdc9e3d7e82f1d3d508ebd37c5424cfe07798e74868bce16381542f2b589b881579e1f44c39265b445ee3c4ce33d59b136c0fd047ab
   languageName: node
   linkType: hard
 

@@ -13,7 +13,6 @@ const antiRotate = keyframes({
 
 export const main = style({
   position: 'relative',
-  overflow: 'hidden',
 });
 
 export const background = style({
@@ -43,4 +42,17 @@ export const gearXS = style({
   right: rem(-150),
   top: `calc(100dvh - ${rem(520)} - var(--ifm-navbar-height))`,
   animation: `${antiRotate} 8s linear infinite`,
+});
+
+export const header = style({
+  position: 'relative',
+});
+
+export const gearHeader = style({
+  position: 'absolute',
+  width: rem(300),
+  height: rem(300),
+  left: rem(-150),
+  top: rem(-150),
+  animation: `${rotate} 12s linear infinite`,
 });

@@ -21,6 +21,7 @@
     "@docusaurus/preset-classic": "2.4.3",
     "@docusaurus/remark-plugin-npm2yarn": "2.4.3",
     "@fontsource/inter": "^5.0.8",
+    "@indiebase/ui-shared": "workspace:^",
     "@mantine/core": "7.0.0",
     "@mantine/dates": "7.0.0",
     "@mantine/dropzone": "7.0.0",
