@@ -19,10 +19,11 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "files.watcherExclude": {
-    "**/.git/*/**": true,
-    "**/node_modules/*/**": true,
-    "**/build/*/**": true,
-    "**/dist/*/**": true,
-    "**/.yarn/*/**": true
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/.yarn": true,
+    "**/.docusaurus": true
   }
 }

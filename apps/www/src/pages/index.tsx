@@ -16,6 +16,7 @@ import {
   Center,
   em,
   useMantineTheme,
+  Title,
 } from '@mantine/core';
 import { IndiebaseSVG, NawbSVG, PlugKitSVG } from '@site/src/components/Icons';
 import { useMediaQuery } from '@mantine/hooks';
@@ -61,7 +62,8 @@ const DeskbtmProductsCard: FC<DeskbtmProductsCardProps> = function (props) {
 const Screen2 = function () {
   return (
     <Stack align="center" mt={rem(100)}>
-      <Group justify="center" mb={rem(40)} gap={rem(30)}>
+      <Title order={2}>The Deskbtm products under Indiebase</Title>
+      <Group justify="center" mb={rem(40)} mt={rem(20)} gap={rem(30)}>
         <DeskbtmProductsCard
           color="pink"
           productName={'Indiebase'}
@@ -83,7 +85,7 @@ const Screen2 = function () {
           icon={<PlugKitSVG style={{ width: rem(50), height: rem(50) }} />}
         />
       </Group>
-      <Text size={rem(30)}>
+      <Text size={rem(24)}>
         Join&nbsp;
         <Text
           component="a"
@@ -91,7 +93,7 @@ const Screen2 = function () {
           href="https://deskbtm.com"
           fw={600}
           td="underline"
-          size={rem(45)}
+          size={rem(36)}
         >
           Deskbtm
         </Text>
@@ -111,7 +113,7 @@ const Screen1 = function () {
   return (
     <Flex
       className={styles.header}
-      my={rem(180)}
+      my={rem(160)}
       gap="md"
       justify="center"
       align="center"
