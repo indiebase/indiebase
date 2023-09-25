@@ -6,3 +6,4 @@ export * from './decorators';
 export * from './knex';
 export * from './config';
 export * from './pipe';
+export * from './access';

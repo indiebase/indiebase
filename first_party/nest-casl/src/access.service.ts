@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Ability, AnyAbility, subject } from '@casl/ability';
 import { AnyObject, Subject } from '@casl/ability/dist/types/types';
 
@@ -15,16 +19,15 @@ import { ConditionsProxy } from './proxies/conditions.proxy';
 export class AccessService {
   constructor(private abilityFactory: AbilityFactory) {}
 
-  public getAbility<User extends AuthorizableUser<string, unknown> = AuthorizableUser>(user: User): AnyAbility {
+  public getAbility<
+    User extends AuthorizableUser<string, unknown> = AuthorizableUser,
+  >(user: User): AnyAbility {
     return this.abilityFactory.createForUser(user);
   }
 
-  public hasAbility<User extends AuthorizableUser<string, unknown> = AuthorizableUser>(
-    user: User,
-    action: string,
-    subject: Subject,
-    field?: string,
-  ): boolean {
+  public hasAbility<
+    User extends AuthorizableUser<string, unknown> = AuthorizableUser,
+  >(user: User, action: string, subject: Subject, field?: string): boolean {
     // No user - no access
     if (!user) {
       return false;
@@ -46,15 +49,15 @@ export class AccessService {
     return userAbilities.can(action, subject, field);
   }
 
-  public assertAbility<User extends AuthorizableUser<string, unknown> = AuthorizableUser>(
-    user: User,
-    action: string,
-    subject: Subject,
-    field?: string,
-  ): void {
+  public assertAbility<
+    User extends AuthorizableUser<string, unknown> = AuthorizableUser,
+  >(user: User, action: string, subject: Subject, field?: string): void {
     if (!this.hasAbility(user, action, subject, field)) {
       const userAbilities = this.abilityFactory.createForUser(user, Ability);
-      const relatedRules = userAbilities.rulesFor(action, typeof subject === 'object' ? subject.constructor : subject);
+      const relatedRules = userAbilities.rulesFor(
+        action,
+        typeof subject === 'object' ? subject.constructor : subject,
+      );
       if (relatedRules.some((rule) => rule.conditions)) {
         throw new NotFoundException();
       }
@@ -90,12 +93,20 @@ export class AccessService {
     }
 
     let userAbilities = this.abilityFactory.createForUser(user, Ability);
-    const relevantRules = userAbilities.rulesFor(ability.action, ability.subject);
+    const relevantRules = userAbilities.rulesFor(
+      ability.action,
+      ability.subject,
+    );
 
-    req.setConditions(new ConditionsProxy(userAbilities, ability.action, ability.subject));
+    req.setConditions(
+      new ConditionsProxy(userAbilities, ability.action, ability.subject),
+    );
 
     // If no relevant rules with conditions or no subject hook exists check against subject class
-    if (!relevantRules.every((rule) => rule.conditions) || !ability.subjectHook) {
+    if (
+      !relevantRules.every((rule) => rule.conditions) ||
+      !ability.subjectHook
+    ) {
       return userAbilities.can(ability.action, ability.subject);
     }
 
@@ -114,6 +125,9 @@ export class AccessService {
 
     // and match agains subject instance
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return userAbilities.can(ability.action, subject(ability.subject as any, subjectInstance));
+    return userAbilities.can(
+      ability.action,
+      subject(ability.subject as any, subjectInstance),
+    );
   }
 }

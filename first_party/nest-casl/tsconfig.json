@@ -4,7 +4,9 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "module": "CommonJS",
+    "moduleResolution": "Node"
   },
   "include": [
     "src/**/*",

@@ -14,7 +14,11 @@ function convertToMongoQuery(rule: AnyMongoAbility['rules'][number]) {
 }
 
 export class ConditionsProxy {
-  constructor(private abilities: AnyAbility, private action: string, private subject: Subject) {}
+  constructor(
+    private abilities: AnyAbility,
+    private action: string,
+    private subject: Subject,
+  ) {}
 
   public toAst(): Condition | null {
     return rulesToAST(this.abilities, this.action, this.subject);
@@ -37,7 +41,14 @@ export class ConditionsProxy {
 
   public toMongo(): MongoQuery | undefined {
     if (!this.getRules()) return undefined;
-    return rulesToQuery(this.abilities, this.action, this.subject, convertToMongoQuery) || undefined;
+    return (
+      rulesToQuery(
+        this.abilities,
+        this.action,
+        this.subject,
+        convertToMongoQuery,
+      ) || undefined
+    );
   }
 
   public get(): MongoQuery[] {

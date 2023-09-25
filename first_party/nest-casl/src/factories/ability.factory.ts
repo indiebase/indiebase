@@ -14,20 +14,32 @@ export class AbilityFactory<
   Roles extends string = string,
   Subjects extends Subject = Subject,
   Actions extends string = DefaultActions,
-  User extends AuthorizableUser<Roles, unknown> = AuthorizableUser<Roles, unknown>,
+  User extends AuthorizableUser<Roles, unknown> = AuthorizableUser<
+    Roles,
+    unknown
+  >,
 > {
   constructor(
     @Inject(CASL_FEATURE_OPTIONS)
-    private readonly featureOptions: OptionsForFeature<Roles, Subjects, Actions, User>,
+    private readonly featureOptions: OptionsForFeature<
+      Roles,
+      Subjects,
+      Actions,
+      User
+    >,
   ) {}
 
   createForUser(user: User, abilityClass = Ability): AnyAbility {
     const { permissions } = this.featureOptions;
-    const ability = new UserAbilityBuilder<Subjects, Actions, User>(user, permissions, abilityClass);
-    const everyone = permissions['everyone'] || permissions['every'];
+    const ability = new UserAbilityBuilder<Subjects, Actions, User>(
+      user,
+      permissions,
+      abilityClass,
+    );
+    const anonymous = permissions['anonymous'] || permissions['anon'];
 
-    if (everyone) {
-      everyone(ability);
+    if (anonymous) {
+      anonymous(ability);
     }
 
     user.roles?.forEach((role) => {

@@ -5799,6 +5799,7 @@ __metadata:
     "@fastify/passport": 2.3.0
     "@fastify/session": 9.0.0
     "@fastify/swagger": 8.9.0
+    "@indiebase/nest-casl": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
     "@indiebase/nest-octokit": "workspace:^"
     "@indiebase/nest-stoplight-elements": "workspace:^"
@@ -5978,7 +5979,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-casl@workspace:first_party/nest-casl":
+"@indiebase/nest-casl@workspace:^, @indiebase/nest-casl@workspace:first_party/nest-casl":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-casl@workspace:first_party/nest-casl"
   dependencies:
@@ -6370,7 +6371,6 @@ __metadata:
     "@tsconfig/docusaurus": ^1.0.5
     "@types/validator": ^13
     "@vanilla-extract/css": ^1.13.0
-    assert: ^2.1.0
     clsx: ^1.2.1
     docusaurus-plugin-vanilla-extract: ^1.0.2
     postcss-preset-mantine: ^1.7.0
@@ -12471,19 +12471,6 @@ __metadata:
   version: 1.2.1
   resolution: "assert-never@npm:1.2.1"
   checksum: ea4f1756d90f55254c4dc7a20d6c5d5bc169160562aefe3d8756b598c10e695daf568f21b6d6b12245d7f3782d3ff83ef6a01ab75d487adfc6909470a813bf8c
-  languageName: node
-  linkType: hard
-
-"assert@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "assert@npm:2.1.0"
-  dependencies:
-    call-bind: ^1.0.2
-    is-nan: ^1.3.2
-    object-is: ^1.1.5
-    object.assign: ^4.1.4
-    util: ^0.12.5
-  checksum: 1ed1cabba9abe55f4109b3f7292b4e4f3cf2953aad8dc148c0b3c3bd676675c31b1abb32ef563b7d5a19d1715bf90d1e5f09fad2a4ee655199468902da80f7c2
   languageName: node
   linkType: hard
 
@@ -20955,16 +20942,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-nan@npm:^1.3.2":
-  version: 1.3.2
-  resolution: "is-nan@npm:1.3.2"
-  dependencies:
-    call-bind: ^1.0.0
-    define-properties: ^1.1.3
-  checksum: 5dfadcef6ad12d3029d43643d9800adbba21cf3ce2ec849f734b0e14ee8da4070d82b15fdb35138716d02587c6578225b9a22779cab34888a139cc43e4e3610a
-  languageName: node
-  linkType: hard
-
 "is-negative-zero@npm:^2.0.2":
   version: 2.0.2
   resolution: "is-negative-zero@npm:2.0.2"
@@ -25521,16 +25498,6 @@ __metadata:
   version: 1.12.3
   resolution: "object-inspect@npm:1.12.3"
   checksum: dabfd824d97a5f407e6d5d24810d888859f6be394d8b733a77442b277e0808860555176719c5905e765e3743a7cada6b8b0a3b85e5331c530fd418cc8ae991db
-  languageName: node
-  linkType: hard
-
-"object-is@npm:^1.1.5":
-  version: 1.1.5
-  resolution: "object-is@npm:1.1.5"
-  dependencies:
-    call-bind: ^1.0.2
-    define-properties: ^1.1.3
-  checksum: 989b18c4cba258a6b74dc1d74a41805c1a1425bce29f6cabb50dcb1a6a651ea9104a1b07046739a49a5bb1bc49727bcb00efd5c55f932f6ea04ec8927a7901fe
   languageName: node
   linkType: hard
 
@@ -32993,7 +32960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.4, util@npm:^0.12.5":
+"util@npm:^0.12.4":
   version: 0.12.5
   resolution: "util@npm:0.12.5"
   dependencies:

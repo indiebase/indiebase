@@ -5,10 +5,9 @@ import {
   AbilityBuilder,
   Subject,
 } from '@casl/ability';
+import { AnyClass } from '@casl/ability/dist/types/types';
 import { DefaultActions } from '../actions.enum';
 import { AuthorizableUser } from './authorizable-user.interface';
-
-export type AnyClass<ReturnType = any> = new (...args: any[]) => ReturnType;
 
 export class UserAbilityBuilder<
   Subjects extends Subject = Subject,
@@ -48,7 +47,7 @@ export type Permissions<
   User extends AuthorizableUser<unknown, unknown> = AuthorizableUser<Roles>,
 > = Partial<
   Record<
-    Roles | 'every' | 'everyone',
+    Roles | 'anon' | 'anonymous',
     DefinePermissions<Subjects, Actions, User>
   >
 >;

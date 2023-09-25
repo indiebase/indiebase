@@ -1,6 +1,7 @@
+import { CaslModule } from '@indiebase/nest-casl';
 import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import { KnexEx } from '@indiebase/server-shared';
+import { BuiltinMgrRoles, KnexEx } from '@indiebase/server-shared';
 import { RedisModule, RedisClientOptions } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -128,6 +129,16 @@ import { OpenObserveTransport } from 'winston-openobserve';
             return {
               auth: '',
             };
+          },
+        };
+      },
+    }),
+    CaslModule.forRootAsync({
+      async useFactory() {
+        return {
+          superuserRole: BuiltinMgrRoles.OAA,
+          getUserFromRequest(request) {
+            return undefined;
           },
         };
       },

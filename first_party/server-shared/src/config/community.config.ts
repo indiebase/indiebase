@@ -63,7 +63,8 @@ const open_observe = registerAs('open_observe', () => {
 
 const auth = registerAs('auth', () => {
   return {
-    database: process.env.AUTH_CASBIN_DATABASE,
+    pasetoSecret: process.env.PASETO_SECRET,
+    pasetoPublicKey: process.env.PASETO_PUBLIC,
   };
 });
 

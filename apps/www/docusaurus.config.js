@@ -93,7 +93,7 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar1',
+            sidebarId: 'tutorialSidebar2',
             position: 'right',
             label: 'Sponsor',
           },

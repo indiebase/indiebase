@@ -15,10 +15,6 @@ export class LocalStrategy
     super();
   }
 
-  useStrategyOptions() {
-    return {};
-  }
-
   async validate(username: string, password: string): Promise<any> {
     const user = await this.authService.validateLocal(username, password);
 

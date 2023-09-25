@@ -8,7 +8,7 @@ import { Post } from '../__specs__/app/post/dtos/post.dto';
 import { CASL_FEATURE_OPTIONS } from '../casl.constants';
 
 const permissions: Permissions<Roles> = {
-  everyone({ can }) {
+  anonymous({ can }) {
     can(Actions.read, Post);
   },
 
@@ -26,7 +26,7 @@ const permissions: Permissions<Roles> = {
 };
 
 const permissionsEveryAlias: Permissions<Roles> = {
-  every({ can }) {
+  anon({ can }) {
     can(Actions.read, Post);
   },
 
@@ -36,16 +36,21 @@ const permissionsEveryAlias: Permissions<Roles> = {
   },
 };
 
-const permissionsNoEveryone: Permissions<Roles> = {
+const permissionsNoanonymous: Permissions<Roles> = {
   customer({ can }) {
     can(Actions.create, Post);
     can(Actions.delete, Post);
   },
 };
 
-const getAbilityFactory = async (permissions: Permissions<Roles>): Promise<AbilityFactory> => {
+const getAbilityFactory = async (
+  permissions: Permissions<Roles>,
+): Promise<AbilityFactory> => {
   const moduleRef = await Test.createTestingModule({
-    providers: [AbilityFactory, { provide: CASL_FEATURE_OPTIONS, useValue: { permissions } }],
+    providers: [
+      AbilityFactory,
+      { provide: CASL_FEATURE_OPTIONS, useValue: { permissions } },
+    ],
   }).compile();
 
   return moduleRef.get<AbilityFactory>(AbilityFactory);
@@ -58,21 +63,21 @@ describe('AbilityFactory', () => {
     abilityFactory = await getAbilityFactory(permissions);
   });
 
-  it("everyone's rules applied to customer", async () => {
+  it("anonymous's rules applied to customer", async () => {
     const user = { id: 'userId', roles: [Roles.customer] };
     const ability = abilityFactory.createForUser(user);
     expect(ability.can(Actions.read, Post)).toBe(true);
   });
 
-  it('every is an alias for everyone', async () => {
+  it('anon is an alias for anonymous', async () => {
     abilityFactory = await getAbilityFactory(permissionsEveryAlias);
     const user = { id: 'userId', roles: [Roles.customer] };
     const ability = abilityFactory.createForUser(user);
     expect(ability.can(Actions.read, Post)).toBe(true);
   });
 
-  it('works without everyone role', async () => {
-    abilityFactory = await getAbilityFactory(permissionsNoEveryone);
+  it('works without anonymous role', async () => {
+    abilityFactory = await getAbilityFactory(permissionsNoanonymous);
     const user = { id: 'userId', roles: [Roles.customer] };
     const ability = abilityFactory.createForUser(user);
     expect(ability.can(Actions.read, Post)).toBe(false);

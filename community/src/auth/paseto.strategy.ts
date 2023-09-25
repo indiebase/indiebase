@@ -4,6 +4,7 @@ import {
   PassportStrategyFactory,
 } from '@indiebase/nest-fastify-passport';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import {
   PublicPasetoStrategy,
   fromAuthBearer,
@@ -15,19 +16,21 @@ export class PasetoStrategy
   extends PassportStrategy(PublicPasetoStrategy, 'paseto')
   implements PassportStrategyFactory
 {
-  constructor(private readonly authService: AuthService) {
+  constructor(
+    private readonly config: ConfigService,
+    private readonly authService: AuthService,
+  ) {
     super();
   }
 
   useStrategyOptions(): PublicPasetoStrategyOptions {
-    return { getToken: fromAuthBearer() };
+    const publicKey = this.config.get('auth.pasetoPublicKey');
+
+    return { getToken: fromAuthBearer(), publicKey };
   }
 
   async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateLocal(username, password);
-
-    // delete user.password;
-
-    return user;
+    // const user = await this.authService.validateLocal(username, password);
+    // return user;
   }
 }

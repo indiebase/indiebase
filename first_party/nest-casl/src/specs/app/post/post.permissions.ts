@@ -6,7 +6,7 @@ import { Post } from './dtos/post.dto';
 type Subjects = InferSubjects<typeof Post>;
 
 export const permissions: Permissions<Roles, Subjects, Actions> = {
-  everyone({ can }) {
+  anonymous({ can }) {
     can(Actions.read, Post);
   },
   customer({ user, can }) {

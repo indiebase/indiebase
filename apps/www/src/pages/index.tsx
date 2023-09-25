@@ -43,9 +43,7 @@ const DeskbtmProductsCard: FC<DeskbtmProductsCardProps> = function (props) {
       <Group justify="flex-start" align="center" gap="xs">
         {props.icon}
 
-        <Text fw="bold" size={rem(24)}>
-          {props.productName}
-        </Text>
+        <Text size={rem(24)}>{props.productName}</Text>
       </Group>
 
       <Text mt={rem(13)} size="sm" c="dark" lineClamp={3}>
@@ -150,7 +148,7 @@ export default function Home(): JSX.Element {
 
   return (
     <Layout title="Home" description="Indiebase homepage">
-      <main className={styles.main}>
+      {/* <main className={styles.main}>
         <IndiebaseSVG className={styles.gearHeader} />
         <Background />
 
@@ -186,7 +184,7 @@ export default function Home(): JSX.Element {
         <br />
         <br />
         <br />
-      </main>
+      </main> */}
     </Layout>
   );
 }

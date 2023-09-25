@@ -1,12 +1,10 @@
-import { forwardRef, Logger, Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { PassportModule } from '@indiebase/nest-fastify-passport';
 import { AuthController } from './auth.controller';
 import { LocalStrategy } from './local.strategy';
 import { AuthService } from './auth.service';
-import { GithubStrategy, GoogleStrategy } from './social';
 import { PasetoModule } from 'nestjs-paseto';
 import { ConfigService } from '@nestjs/config';
-// import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -14,9 +12,11 @@ import { ConfigService } from '@nestjs/config';
     PasetoModule.registerAsync({
       imports: [ConfigService],
       useFactory(config: ConfigService) {
+        const privateKey = config.get('auth.pasetoSecret');
+
         return {
           version: 'V4',
-          publicKey: 'k4.public.KqMxZ1Ou5lH3XGNkhi9HWwJmSNPLvor9DyQ8vdzKCA0',
+          privateKey,
           produceOptions: {
             expiresIn: '60s',
           },
