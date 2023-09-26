@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 
-import * as styles from './styles.css.ts';
+import * as styles from '@site/src/css/home.css.ts';
 import {
   Box,
   Button,
@@ -148,7 +148,7 @@ export default function Home(): JSX.Element {
 
   return (
     <Layout title="Home" description="Indiebase homepage">
-      {/* <main className={styles.main}>
+      <main className={styles.main}>
         <IndiebaseSVG className={styles.gearHeader} />
         <Background />
 
@@ -184,7 +184,7 @@ export default function Home(): JSX.Element {
         <br />
         <br />
         <br />
-      </main> */}
+      </main>
     </Layout>
   );
 }
