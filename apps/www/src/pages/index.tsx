@@ -73,13 +73,13 @@ const Screen2 = function () {
           color="grape"
           productName={'Nawb'}
           desc={`Indiebase is a self-hosted platform explicitly designed for indie
-            developers or teams. Providing BaaS and financial services.`}
+            hackers or teams. Providing BaaS and financial services.`}
           icon={<NawbSVG style={{ width: rem(50), height: rem(50) }} />}
         />
         <DeskbtmProductsCard
           productName={'PlugKit'}
           desc={`Indiebase is a self-hosted platform explicitly designed for indie
-            developers or teams. Providing BaaS and financial services.`}
+            hackers or teams. Providing BaaS and financial services.`}
           icon={<PlugKitSVG style={{ width: rem(50), height: rem(50) }} />}
         />
       </Group>
@@ -137,7 +137,7 @@ const Screen1 = function () {
         gradient={{ from: 'dark', to: 'gray', deg: 90 }}
       >
         Indiebase is a self-hosted platform explicitly designed for indie
-        developers or teams. Providing BaaS and financial services.
+        hackerss or teams. Providing BaaS and financial services.
       </Text>
     </Flex>
   );
