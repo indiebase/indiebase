@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Ability, AnyAbility, subject } from '@casl/ability';
-import { AnyObject, Subject } from '@casl/ability/dist/types/types';
+import { AnyObject, Subject } from './interfaces/common';
 
 import { AuthorizableRequest } from './interfaces/request.interface';
 import { AbilityFactory } from './factories/ability.factory';

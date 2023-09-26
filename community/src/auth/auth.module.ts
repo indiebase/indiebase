@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
   imports: [
     PassportModule.register({}),
     PasetoModule.registerAsync({
-      imports: [ConfigService],
+      inject: [ConfigService],
       useFactory(config: ConfigService) {
         const privateKey = config.get('auth.pasetoSecret');
 

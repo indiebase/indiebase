@@ -16,7 +16,7 @@ import * as path from 'path';
   path: 'probe',
   version: '1',
 })
-@ApiTags('Probe v1')
+@ApiTags('Probe/v1')
 export class ProbeController {
   constructor(
     private readonly health: HealthCheckService,
@@ -29,7 +29,7 @@ export class ProbeController {
 
   @Get('liveness')
   @ApiOperation({
-    summary: 'Liveness probe, including http, storage, memory, database',
+    summary: 'Liveness probe includes http, storage, memory, database',
   })
   @HealthCheck()
   async livenessProbe() {

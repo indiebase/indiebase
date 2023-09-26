@@ -1,4 +1,4 @@
-import { AnyClass, AnyObject } from '@casl/ability/dist/types/types';
+import { AnyClass, AnyObject } from '../interfaces/common';
 
 import { AuthorizableRequest } from './request.interface';
 import { AuthorizableUser } from './authorizable-user.interface';
@@ -10,7 +10,10 @@ export interface SubjectBeforeFilterHook<
   run: (request: Request) => Promise<Subject | undefined>;
 }
 
-export type SubjectBeforeFilterTuple<Subject = AnyObject, Request = AuthorizableRequest> = [
+export type SubjectBeforeFilterTuple<
+  Subject = AnyObject,
+  Request = AuthorizableRequest,
+> = [
   AnyClass,
   (service: InstanceType<AnyClass>, request: Request) => Promise<Subject>,
 ];
@@ -25,4 +28,7 @@ export interface UserBeforeFilterHook<
 export type UserBeforeFilterTuple<
   User extends AuthorizableUser<unknown, unknown> = AuthorizableUser,
   RequestUser = User,
-> = [AnyClass, (service: InstanceType<AnyClass>, user: RequestUser) => Promise<User>];
+> = [
+  AnyClass,
+  (service: InstanceType<AnyClass>, user: RequestUser) => Promise<User>,
+];
