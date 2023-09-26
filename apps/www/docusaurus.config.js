@@ -158,7 +158,7 @@ const config = {
       },
     }),
   plugins: [
-    'docusaurus-plugin-vanilla-extract',
+    require.resolve('./plugins/docusaurus-plugin-vanilla-extract'),
     [
       '@docusaurus/plugin-pwa',
       {
