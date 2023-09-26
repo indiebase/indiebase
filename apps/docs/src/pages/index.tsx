@@ -13,8 +13,6 @@ import {
   MantineColor,
   Flex,
   Stack,
-  Center,
-  em,
   useMantineTheme,
   Title,
 } from '@mantine/core';
@@ -88,7 +86,7 @@ const Screen2 = function () {
         <Text
           component="a"
           target="_blank"
-          href="https://deskbtm.com"
+          href="https://deskbtm.com/en"
           fw={600}
           td="underline"
           size={rem(36)}

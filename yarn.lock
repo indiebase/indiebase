@@ -5865,6 +5865,7 @@ __metadata:
     "@fastify/session": 9.0.0
     "@fastify/swagger": 8.9.0
     "@indiebase/nest-casl": "workspace:^"
+    "@indiebase/nest-fastify-passport": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
     "@indiebase/nest-octokit": "workspace:^"
     "@indiebase/nest-stoplight-elements": "workspace:^"
@@ -6152,7 +6153,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport":
+"@indiebase/nest-fastify-passport@workspace:^, @indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport"
   dependencies:

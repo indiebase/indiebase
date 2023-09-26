@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { PasetoService } from 'nestjs-paseto';
+import { PasetoAuthGuard } from '~/auth/paseto.guard';
+import { LocalAuthGuard } from '..';
 
 @Controller({
   path: 'user',
@@ -12,6 +13,7 @@ export class UserController {
   // constructor(private readonly pasetoService: PasetoService) {}
 
   @Get('demo')
+  @UseGuards(LocalAuthGuard, PasetoAuthGuard)
   async demo() {
     // return this.pasetoService.sign({ demo: 11 });
   }
