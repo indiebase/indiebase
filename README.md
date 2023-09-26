@@ -3,7 +3,7 @@
 </a>
 <br />
 
-## Note Bene 🚧🚧🚧
+## Nota Bene 🚧🚧🚧
 
 At the beginning of the project, there is currently no version control in place.
 
@@ -26,7 +26,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 - For programming geeks: By discovering projects you love in Indiebase, contributing code, and earning rewards from it.
 - For companies: Allow developers with spare time to participate in improving open-source projects and provide compensation to the developers.
 
-## Note Bene
+## NB
 
 - Indiebase highly depends on Github and considers it as the default code management.
 - `Indiebase Pro` is not free. To use it, you need to purchase a commercial license.
