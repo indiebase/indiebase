@@ -6,7 +6,7 @@ import { PasetoService } from 'nestjs-paseto';
   path: 'user',
   version: '1',
 })
-@ApiTags('v1/User')
+@ApiTags('User/v1')
 // @ApiBearerAuth('paseto-token')
 export class UserController {
   // constructor(private readonly pasetoService: PasetoService) {}

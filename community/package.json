@@ -35,6 +35,7 @@
     "@fastify/session": "9.0.0",
     "@fastify/swagger": "8.9.0",
     "@indiebase/nest-casl": "workspace:^",
+    "@indiebase/nest-fastify-passport": "workspace:^",
     "@indiebase/nest-knex": "workspace:^",
     "@indiebase/nest-octokit": "workspace:^",
     "@indiebase/nest-stoplight-elements": "workspace:^",

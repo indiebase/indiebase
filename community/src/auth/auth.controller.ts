@@ -20,11 +20,16 @@ import { GithubGuard, GoogleGuard } from './social';
 import { PasetoService } from 'nestjs-paseto';
 
 @Controller({ path: 'auth', version: '1' })
-@ApiTags('v1/Auth')
+@ApiTags('Auth/v1')
 export class AuthController {
   // constructor(private readonly authService: AuthService,) {}
 
   constructor(private readonly pasetoService: PasetoService) {}
+
+  @Get('demo')
+  async demo() {
+    return this.pasetoService.sign({ demo: 11 });
+  }
   // /**
   //  * Give up indiebase's register
   //  */

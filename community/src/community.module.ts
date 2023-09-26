@@ -4,9 +4,10 @@ import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { Knex } from 'knex';
 import { MetaService } from '~/db/meta/meta.service';
 import { UserModule } from '~/user/user.module';
-import { InitializeDepsModule } from './deps.module';
-import { MigrationSource } from './migrations/MigrationSource';
-import { ProbeModule } from './probe';
+import { InitializeDepsModule } from '~/deps.module';
+import { MigrationSource } from '~/migrations/MigrationSource';
+import { ProbeModule } from '~/probe';
+import { AuthModule } from '~/auth';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Community:
@@ -20,6 +21,7 @@ export const createCommunityModule = function (
     imports: [
       ProbeModule,
       UserModule,
+      AuthModule,
       ...options.imports,
       InitializeDepsModule,
     ],
