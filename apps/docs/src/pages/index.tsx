@@ -137,7 +137,7 @@ const Screen1 = function () {
         gradient={{ from: 'dark', to: 'gray', deg: 90 }}
       >
         Indiebase is a self-hosted platform explicitly designed for indie
-        hackerss or teams. Providing BaaS and financial services.
+        hackers or teams. Providing BaaS and financial services.
       </Text>
     </Flex>
   );
