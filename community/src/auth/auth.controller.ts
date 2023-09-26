@@ -17,12 +17,14 @@ import { LocalAuthGuard } from './local.guard';
 import { AuthService } from './auth.service';
 import { ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
+import { PasetoService } from 'nestjs-paseto';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('v1/Auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  // constructor(private readonly authService: AuthService,) {}
 
+  constructor(private readonly pasetoService: PasetoService) {}
   // /**
   //  * Give up indiebase's register
   //  */

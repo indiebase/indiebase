@@ -1,6 +1,9 @@
-import { AnyObject } from '@casl/ability/dist/types/types';
+import { AnyObject } from '../interfaces/common';
 
-import { SubjectBeforeFilterHook, UserBeforeFilterHook } from './hooks.interface';
+import {
+  SubjectBeforeFilterHook,
+  UserBeforeFilterHook,
+} from './hooks.interface';
 import { AuthorizableUser } from './authorizable-user.interface';
 import { ConditionsProxy } from '../proxies/conditions.proxy';
 

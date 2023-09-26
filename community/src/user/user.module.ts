@@ -1,9 +1,10 @@
 import { Logger, Module } from '@nestjs/common';
+import { UserController } from './user.controller';
 
 @Module({
   imports: [],
   controllers: [UserController],
-  providers: [Logger, UserService],
-  exports: [UserService],
+  providers: [Logger],
+  exports: [],
 })
 export class UserModule {}

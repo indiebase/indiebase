@@ -5,7 +5,7 @@ import {
   AbilityBuilder,
   Subject,
 } from '@casl/ability';
-import { AnyClass } from '@casl/ability/dist/types/types';
+import { AnyClass } from '../interfaces/common';
 import { DefaultActions } from '../actions.enum';
 import { AuthorizableUser } from './authorizable-user.interface';
 

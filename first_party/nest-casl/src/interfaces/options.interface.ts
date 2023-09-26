@@ -1,4 +1,4 @@
-import { AnyClass, Subject } from '@casl/ability/dist/types/types';
+import { AnyClass, Subject } from '../interfaces/common';
 import { DefaultActions } from '../actions.enum';
 import { FactoryProvider, ModuleMetadata } from '@nestjs/common';
 
@@ -14,7 +14,9 @@ export interface OptionsForRoot<
 > {
   superuserRole?: Roles;
   getUserFromRequest?: (request: Request) => User | undefined;
-  getUserHook?: AnyClass<UserBeforeFilterHook<User>> | UserBeforeFilterTuple<User>;
+  getUserHook?:
+    | AnyClass<UserBeforeFilterHook<User>>
+    | UserBeforeFilterTuple<User>;
 }
 
 export interface OptionsForFeature<
@@ -32,7 +34,8 @@ export interface OptionsForRootAsync<
   Request = AuthorizableRequest<User>,
 > extends Pick<ModuleMetadata, 'imports'> {
   useFactory: FactoryProvider<
-    Promise<OptionsForRoot<Roles, User, Request>> | OptionsForRoot<Roles, User, Request>
+    | Promise<OptionsForRoot<Roles, User, Request>>
+    | OptionsForRoot<Roles, User, Request>
   >['useFactory'];
   inject?: FactoryProvider['inject'];
 }

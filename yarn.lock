@@ -5909,6 +5909,7 @@ __metadata:
     knex: ^2.5.1
     nest-winston: 1.6.2
     nestjs-i18n: 10.2.6
+    nestjs-paseto: "workspace:^"
     otplib: 12.0.1
     p-retry: 5.1.2
     passport-github2: 0.1.12
@@ -6013,6 +6014,45 @@ __metadata:
     vite: 4.4.9
     vite-plugin-pwa: ^0.16.4
     web-vitals: 3.4.0
+  languageName: unknown
+  linkType: soft
+
+"@indiebase/docs@workspace:apps/docs":
+  version: 0.0.0-use.local
+  resolution: "@indiebase/docs@workspace:apps/docs"
+  dependencies:
+    "@deskbtm/gadgets": "workspace:^"
+    "@docusaurus/core": 2.4.3
+    "@docusaurus/module-type-aliases": 2.4.3
+    "@docusaurus/plugin-pwa": 2.4.3
+    "@docusaurus/preset-classic": 2.4.3
+    "@docusaurus/remark-plugin-npm2yarn": 2.4.3
+    "@fontsource/inter": ^5.0.8
+    "@indiebase/ui-shared": "workspace:^"
+    "@mantine/core": 7.0.0
+    "@mantine/dates": 7.0.0
+    "@mantine/dropzone": 7.0.0
+    "@mantine/form": 7.0.0
+    "@mantine/hooks": 7.0.0
+    "@mantine/notifications": 7.0.0
+    "@mantine/nprogress": 7.0.0
+    "@mantine/vanilla-extract": ^7.0.0
+    "@mdx-js/react": ^1.6.22
+    "@tabler/icons-react": ^2.32.0
+    "@tsconfig/docusaurus": ^1.0.5
+    "@types/validator": ^13
+    "@vanilla-extract/css": ^1.13.0
+    "@vanilla-extract/webpack-plugin": 2.3.1
+    clsx: ^1.2.1
+    postcss-preset-mantine: ^1.7.0
+    postcss-simple-vars: ^7.0.1
+    prism-react-renderer: ^1.3.5
+    react: 18.2.0
+    react-dom: 18.2.0
+    sass: ^1.67.0
+    typescript: 5.2.2
+    validator: ^13.11.0
+    wrangler: ^3.9.1
   languageName: unknown
   linkType: soft
 
@@ -6408,45 +6448,6 @@ __metadata:
     "@mantine/hooks": 7.0.0
     react: 18.2.0
     react-dom: 18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@indiebase/www@workspace:apps/www":
-  version: 0.0.0-use.local
-  resolution: "@indiebase/www@workspace:apps/www"
-  dependencies:
-    "@deskbtm/gadgets": "workspace:^"
-    "@docusaurus/core": 2.4.3
-    "@docusaurus/module-type-aliases": 2.4.3
-    "@docusaurus/plugin-pwa": 2.4.3
-    "@docusaurus/preset-classic": 2.4.3
-    "@docusaurus/remark-plugin-npm2yarn": 2.4.3
-    "@fontsource/inter": ^5.0.8
-    "@indiebase/ui-shared": "workspace:^"
-    "@mantine/core": 7.0.0
-    "@mantine/dates": 7.0.0
-    "@mantine/dropzone": 7.0.0
-    "@mantine/form": 7.0.0
-    "@mantine/hooks": 7.0.0
-    "@mantine/notifications": 7.0.0
-    "@mantine/nprogress": 7.0.0
-    "@mantine/vanilla-extract": ^7.0.0
-    "@mdx-js/react": ^1.6.22
-    "@tabler/icons-react": ^2.32.0
-    "@tsconfig/docusaurus": ^1.0.5
-    "@types/validator": ^13
-    "@vanilla-extract/css": ^1.13.0
-    "@vanilla-extract/webpack-plugin": 2.3.1
-    clsx: ^1.2.1
-    postcss-preset-mantine: ^1.7.0
-    postcss-simple-vars: ^7.0.1
-    prism-react-renderer: ^1.3.5
-    react: 18.2.0
-    react-dom: 18.2.0
-    sass: ^1.67.0
-    typescript: 5.2.2
-    validator: ^13.11.0
-    wrangler: ^3.9.1
   languageName: unknown
   linkType: soft
 
@@ -24927,7 +24928,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nestjs-paseto@workspace:first_party/nestjs-paseto":
+"nestjs-paseto@workspace:^, nestjs-paseto@workspace:first_party/nestjs-paseto":
   version: 0.0.0-use.local
   resolution: "nestjs-paseto@workspace:first_party/nestjs-paseto"
   dependencies:

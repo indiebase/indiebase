@@ -1,11 +1,12 @@
-import { MetaService } from '~/db/meta/meta.service';
-import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
-import { ProbeModule } from './probe';
-import { InitializeDepsModule } from './deps.module';
-import { IsEntityExistedConstraint, KnexEx } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import { IsEntityExistedConstraint, KnexEx } from '@indiebase/server-shared';
+import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { Knex } from 'knex';
+import { MetaService } from '~/db/meta/meta.service';
+import { UserModule } from '~/user/user.module';
+import { InitializeDepsModule } from './deps.module';
 import { MigrationSource } from './migrations/MigrationSource';
+import { ProbeModule } from './probe';
 
 /**
  * This module is the basic module of Lets, which contains the basic function of Community:
@@ -16,7 +17,12 @@ export const createCommunityModule = function (
   options: NonNullable<ModuleMetadata> = {},
 ) {
   @Module({
-    imports: [ProbeModule, ...options.imports, InitializeDepsModule],
+    imports: [
+      ProbeModule,
+      UserModule,
+      ...options.imports,
+      InitializeDepsModule,
+    ],
     providers: [
       Logger,
       IsEntityExistedConstraint,
