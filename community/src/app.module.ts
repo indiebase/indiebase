@@ -10,7 +10,7 @@ import {
   AcceptLanguageResolver,
 } from 'nestjs-i18n';
 import { createCommunityModule } from './community.module';
- 
+
 @Module({
   imports: [
     createCommunityModule({

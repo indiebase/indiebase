@@ -39,8 +39,10 @@ export const createCommunityModule = function (
       private readonly knexEx: KnexEx,
       @InjectKnex()
       private readonly knex: Knex,
+      private readonly logger: Logger,
     ) {}
     async onModuleInit() {
+      this.logger.error(null);
       // const s = await this.knexEx.schema.hasSchema();
       // console.log(s);
       // if (!(await this.knexEx.schema.hasSchema('demo'))) {

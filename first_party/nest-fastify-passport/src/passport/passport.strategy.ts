@@ -3,7 +3,7 @@ import passport from '@fastify/passport';
 import { Type } from '../interfaces';
 type UseStrategyHook = (
   strategy: (options) => Type<any>,
-  fn: (p) => void
+  fn: (p) => void,
 ) => Promise<void> | void;
 
 /**
@@ -46,7 +46,7 @@ export interface PassportStrategyFactory {
 
 export function PassportStrategy<T extends Type<any> = any>(
   Strategy: T,
-  name?: string | undefined
+  name?: string | undefined,
 ) {
   abstract class MixinStrategy implements OnModuleInit {
     abstract validate(...args: any[]): any;

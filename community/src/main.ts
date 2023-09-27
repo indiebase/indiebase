@@ -15,6 +15,9 @@ import FastifyMultipart from '@fastify/multipart';
 import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { useContainer } from 'class-validator';
 import { setupApiDoc } from './swagger.setup';
+import fastifyPassport from '@fastify/passport';
+import fastifySession from '@fastify/session';
+import fastifyCookie from '@fastify/cookie';
 declare const module: any;
 
 async function bootstrap() {
@@ -58,16 +61,14 @@ async function bootstrap() {
       },
     });
 
-    // await app.register(FastifyCookie, {
-    //   secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
-    // });
-
-    // await app.register(FastifySession, {
-    //   secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
-    // });
-
-    // await app.register(fastifyPassport.initialize());
-    // await app.register(fastifyPassport.secureSession());
+    await app.register(fastifyCookie, {
+      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+    });
+    await app.register(fastifySession, {
+      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+    });
+    await app.register(fastifyPassport.initialize());
+    await app.register(fastifyPassport.secureSession());
 
     // Should be front of setupApiDoc.
     app.enableVersioning({

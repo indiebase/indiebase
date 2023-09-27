@@ -97,6 +97,8 @@ export class OpenObserveTransport extends Transport {
           rest && Object.keys(rest).length > 0 ? JSON.stringify(rest) : ''
         }`;
 
+    console.log(message, '111111--------------');
+
     this.#sender
       .push(
         {

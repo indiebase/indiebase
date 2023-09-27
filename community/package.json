@@ -66,7 +66,7 @@
     "passport-github2": "0.1.12",
     "passport-google-oauth20": "2.0.0",
     "passport-local": "1.0.0",
-    "passport-paseto": "0.0.0-alpha.3",
+    "passport-paseto": "0.0.1-alpha.1",
     "pg": "8.11.3",
     "qrcode": "1.5.3",
     "reflect-metadata": "0.1.13",

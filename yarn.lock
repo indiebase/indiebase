@@ -5865,6 +5865,7 @@ __metadata:
     "@fastify/session": 9.0.0
     "@fastify/swagger": 8.9.0
     "@indiebase/nest-casl": "workspace:^"
+    "@indiebase/nest-fastify-passport": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
     "@indiebase/nest-octokit": "workspace:^"
     "@indiebase/nest-stoplight-elements": "workspace:^"
@@ -5915,7 +5916,7 @@ __metadata:
     passport-github2: 0.1.12
     passport-google-oauth20: 2.0.0
     passport-local: 1.0.0
-    passport-paseto: 0.0.0-alpha.3
+    passport-paseto: 0.0.1-alpha.1
     pg: 8.11.3
     prettier: 3.0.0
     qrcode: 1.5.3
@@ -6152,7 +6153,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport":
+"@indiebase/nest-fastify-passport@workspace:^, @indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-fastify-passport@workspace:first_party/nest-fastify-passport"
   dependencies:
@@ -26538,13 +26539,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport-paseto@npm:0.0.0-alpha.3":
-  version: 0.0.0-alpha.3
-  resolution: "passport-paseto@npm:0.0.0-alpha.3"
+"passport-paseto@npm:0.0.1-alpha.1":
+  version: 0.0.1-alpha.1
+  resolution: "passport-paseto@npm:0.0.1-alpha.1"
   dependencies:
     paseto: ^3.1.2
     passport-strategy: ^1.0.0
-  checksum: f9712ee16c7cf605bbd09a147e29ec4793f90537e69551b6ebd5bfa367cf0f35b5074cc69d9b1f8ed10bca1f98b4052e59dcd022abe7c00921c4ad4641db6c56
+  checksum: b069b1478e0c44aec74b38bc75fd8defcecf2a188b2d0b15f56b7af57adf1f23af066e3a26b3c149303782c1489e664c9bdf82a7b6964298cb3820c329bc3e97
   languageName: node
   linkType: hard
 

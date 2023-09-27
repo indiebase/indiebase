@@ -7,13 +7,13 @@ import {
   Logger,
   mixin,
   Optional,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
 import passport from '@fastify/passport';
 import { Type } from './interfaces';
 import {
   AuthModuleOptions,
-  IAuthModuleOptions
+  IAuthModuleOptions,
 } from './interfaces/auth-module.options';
 import { defaultOptions } from './options';
 import { memoize } from './utils/memoize.util';
@@ -21,7 +21,7 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 
 export type IAuthGuard = CanActivate & {
   logIn<TRequest extends { logIn: Function } = any>(
-    request: TRequest
+    request: TRequest,
   ): Promise<void>;
   handleRequest<TUser = any>(err, user, info, context, status): TUser;
   getRequest<T = any>(context: ExecutionContext): T;
@@ -49,18 +49,18 @@ function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
       const options = {
         ...defaultOptions,
         ...this.options,
-        ...(await this.useAuthenticateOptions(context))
+        ...(await this.useAuthenticateOptions(context)),
       };
       const [request, response] = [
         this.getRequest(context),
-        this.getResponse(context)
+        this.getResponse(context),
       ];
       const passportFn = createPassportContext(request, response);
       const user = await passportFn(
         type || this.options.defaultStrategy,
         options,
         (err, user, info, status) =>
-          this.handleRequest(err, user, info, context, status)
+          this.handleRequest(err, user, info, context, status),
       );
       request[options.property || defaultOptions.property] = user;
       return true;
@@ -75,11 +75,11 @@ function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
     }
 
     async logIn<TRequest extends { logIn: Function } = any>(
-      request: TRequest
+      request: TRequest,
     ): Promise<void> {
       const user = request[this.options.property || defaultOptions.property];
       await new Promise<void>((resolve, reject) =>
-        request.logIn(user, (err) => (err ? reject(err) : resolve()))
+        request.logIn(user, (err) => (err ? reject(err) : resolve())),
       );
     }
 
@@ -91,7 +91,7 @@ function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
     }
 
     useAuthenticateOptions(
-      context: ExecutionContext
+      context: ExecutionContext,
     ): Promise<IAuthModuleOptions> | IAuthModuleOptions | undefined {
       return undefined;
     }
@@ -114,7 +114,7 @@ const createPassportContext =
           } catch (err) {
             reject(err);
           }
-        }
+        },
       ) as any;
       return handler(request, response);
     });

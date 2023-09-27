@@ -5,6 +5,7 @@ import { LocalStrategy } from './local.strategy';
 import { AuthService } from './auth.service';
 import { PasetoModule } from 'nestjs-paseto';
 import { ConfigService } from '@nestjs/config';
+import { PasetoStrategy } from './paseto.strategy';
 
 @Module({
   imports: [
@@ -30,15 +31,10 @@ import { ConfigService } from '@nestjs/config';
     Logger,
     // GithubStrategy,
     // GoogleStrategy,
-    LocalStrategy,
+    PasetoStrategy,
+    // LocalStrategy,
     AuthService,
   ],
-  exports: [
-    PassportModule,
-    // GithubStrategy,
-    // GoogleStrategy,
-    LocalStrategy,
-    AuthService,
-  ],
+  exports: [PassportModule, AuthService],
 })
 export class AuthModule {}
