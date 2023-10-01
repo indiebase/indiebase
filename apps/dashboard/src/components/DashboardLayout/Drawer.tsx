@@ -88,7 +88,7 @@ export const AppShellDrawer: FC<SidebarProps> = function (props) {
   // const opened = useAtomValue(navbarSwitchAtom);
   // const [value, setValue] = useAccordionControl(props.menu);
   // const theme = useMantineTheme();
-  // const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  // const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [opened, toggle] = useAtom(navbarCollapseAtom);
 
   return (

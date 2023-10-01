@@ -10,6 +10,7 @@ import {
   AcceptLanguageResolver,
 } from 'nestjs-i18n';
 import { createCommunityModule } from './community.module';
+import { X_Indiebase_Lang } from '@indiebase/sdk';
 
 @Module({
   imports: [
@@ -24,14 +25,14 @@ import { createCommunityModule } from './community.module';
           load: [...communityDefaultConfigs],
         }),
         I18nModule.forRoot({
-          fallbackLanguage: 'zh-CN',
+          fallbackLanguage: 'en',
           loaderOptions: {
             path: path.resolve(__dirname, '../../i18n/'),
             watch: kDevMode,
           },
           resolvers: [
             new QueryResolver(),
-            new HeaderResolver(['X-Custom-Lang']),
+            new HeaderResolver([X_Indiebase_Lang]),
             new CookieResolver(),
             new AcceptLanguageResolver(),
           ],

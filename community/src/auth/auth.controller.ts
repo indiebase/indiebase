@@ -26,10 +26,6 @@ export class AuthController {
 
   constructor(private readonly pasetoService: PasetoService) {}
 
-  @Get('demo')
-  async demo() {
-    return this.pasetoService.sign({ demo: 11 });
-  }
   // /**
   //  * Give up indiebase's register
   //  */

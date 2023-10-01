@@ -26,11 +26,11 @@ export class PasetoStrategy
   useStrategyOptions(): PublicPasetoStrategyOptions {
     const publicKey = this.config.get('auth.pasetoPublicKey');
 
-    return { getToken: fromAuthBearer(), publicKey };
+    return { getToken: fromAuthBearer(), publicKey, version: 'V4' };
   }
 
-  async validate(username: string, password: string): Promise<any> {
+  async validate(payload): Promise<any> {
     // const user = await this.authService.validateLocal(username, password);
-    return;
+    return payload;
   }
 }

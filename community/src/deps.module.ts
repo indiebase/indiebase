@@ -35,21 +35,21 @@ import { OpenObserveTransport } from 'winston-openobserve';
         const { host, defaultOrg, defaultStream, username, password } =
           config.get('open_observe');
 
-        // const openObserveTransport = new OpenObserveTransport({
-        //   bulk: true,
-        //   host,
-        //   defaultOrg,
-        //   defaultStream,
-        //   interval: 2000,
-        //   cleanOnRequestError: true,
-        //   onConnectionError(_error, close) {
-        //     close();
-        //   },
-        //   basicAuth: {
-        //     username,
-        //     password,
-        //   },
-        // });
+        const openObserveTransport = new OpenObserveTransport({
+          bulk: true,
+          host,
+          defaultOrg,
+          defaultStream,
+          interval: 2000,
+          cleanOnRequestError: true,
+          onConnectionError(_error, close) {
+            close();
+          },
+          basicAuth: {
+            username,
+            password,
+          },
+        });
 
         const transports = [
           new winston.transports.Console({
@@ -58,14 +58,14 @@ import { OpenObserveTransport } from 'winston-openobserve';
               utilities.format.nestLike(),
             ),
           }),
-          // openObserveTransport,
+          openObserveTransport,
         ];
         return {
           level: kDevMode ? 'debug' : 'warn',
           format: winston.format.json(),
           exitOnError: false,
           handleRejections: true,
-          // rejectionHandlers: [openObserveTransport],
+          rejectionHandlers: [openObserveTransport],
           transports,
         };
       },

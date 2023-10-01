@@ -94,7 +94,10 @@ const Screen2 = function () {
           Deskbtm
         </Text>
         &nbsp;now&nbsp;
-        <Box style={{ transform: 'rotate(15deg)', display: 'inline-block' }}>
+        <Box
+          component="span"
+          style={{ transform: 'rotate(15deg)', display: 'inline-block' }}
+        >
           !!!
         </Box>
       </Text>

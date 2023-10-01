@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 import * as forge from 'node-forge';
+import { X_Indiebase_AC } from '@indiebase/sdk';
 
 /**
  *  Inspect token from header
@@ -18,7 +19,7 @@ import * as forge from 'node-forge';
  * @param salt Recommend to use steganography to hide the salt in front-end
  * @example
  * ```
- *  X-Indiebase-Api-Credential: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
+ *  X-Indiebase-AC: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
  * ```
  *
  */
@@ -40,8 +41,8 @@ const apiTokenInspect = function (
 
 /**
  *
- * Protect public Api, avoid web crawler etc.
- * Default header: X-Lets-Api-Credential , custom in dotenv.
+ * Protect public api, avoid web crawler etc.
+ * Default header: X-Indiebase-AC, custom in dotenv.
  */
 @Injectable()
 export class PublicApiGuard implements CanActivate {
@@ -64,7 +65,7 @@ export class PublicApiGuard implements CanActivate {
         return true;
       }
 
-      const apiToken = request.headers['X-Lets-Api-Credential'] as string;
+      const apiToken = request.headers[X_Indiebase_AC] as string;
 
       if (!apiToken) {
         throw new BadRequestException();

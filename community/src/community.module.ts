@@ -2,15 +2,16 @@ import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { IsEntityExistedConstraint, KnexEx } from '@indiebase/server-shared';
 import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { Knex } from 'knex';
+import { AuthModule } from '~/auth';
 import { MetaService } from '~/db/meta/meta.service';
-import { UserModule } from '~/user/user.module';
 import { InitializeDepsModule } from '~/deps.module';
+import { OrgsModule, ProjectsModule } from '~/manager';
 import { MigrationSource } from '~/migrations/MigrationSource';
 import { ProbeModule } from '~/probe';
-import { AuthModule } from '~/auth';
+import { UsersModule } from '~/users/users.module';
 
 /**
- * This module is the basic module of Lets, which contains the basic function of Community:
+ * This module is the basic module of Lets, which contains the basic functions of community:
  *
  * @param {NonNullable<ModuleMetadata>} options
  */
@@ -20,8 +21,10 @@ export const createCommunityModule = function (
   @Module({
     imports: [
       ProbeModule,
-      UserModule,
+      UsersModule,
       AuthModule,
+      OrgsModule,
+      ProjectsModule,
       ...options.imports,
       InitializeDepsModule,
     ],

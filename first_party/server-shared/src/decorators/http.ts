@@ -1,3 +1,4 @@
+import { X_Indiebase_AC } from '@indiebase/sdk';
 import {
   BadRequestException,
   ExecutionContext,
@@ -20,8 +21,8 @@ export const DevApiHeader = function () {
 
 export const PublicApiHeader = () =>
   ApiHeader({
-    name: 'X-Indiebase-Api-Credential',
-    description: 'Protect Public Api',
+    name: X_Indiebase_AC,
+    description: 'Protect public api',
   });
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {

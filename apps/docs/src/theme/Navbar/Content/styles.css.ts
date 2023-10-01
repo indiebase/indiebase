@@ -1,8 +1,9 @@
 import { style } from '@vanilla-extract/css';
+import { cssVars } from '@site/src/theme/Layout/maintine-theme';
 
 export const colorModeToggle = style({
   '@media': {
-    '(max-width: 996px)': {
+    [`(max-width: ${cssVars.breakpoints.lg})`]: {
       display: 'none',
     },
   },

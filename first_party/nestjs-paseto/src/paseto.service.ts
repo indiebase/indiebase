@@ -12,12 +12,12 @@ export class PasetoService {
     @Inject(PASETO_MODULE_OPTIONS)
     private readonly options?: PasetoModuleOptions,
   ) {
-    assert.ok(
-      options.version && ['V1', 'V2', 'V3', 'V4'].includes(options.version),
-      `Paseto doesn't support ${options.version}`,
-    );
-
     this.options = Object.assign({}, { version: 'V3' }, options);
+    const ver = this.options.version;
+    assert.ok(
+      ['V1', 'V2', 'V3', 'V4'].includes(ver),
+      `Paseto doesn't support ${ver}`,
+    );
   }
 
   public sign(

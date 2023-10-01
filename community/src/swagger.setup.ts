@@ -26,10 +26,10 @@ export const setupApiDoc = (app: INestApplication) =>
             type: 'http',
             scheme: 'bearer',
             bearerFormat: 'paseto',
-            description: 'Enter paseto token',
+            description: 'Default paseto token Authorization',
             in: 'header',
           },
-          'p-token',
+          'paseto',
         )
         .setContact(name, url, email)
         .build();

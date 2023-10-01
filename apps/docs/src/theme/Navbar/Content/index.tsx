@@ -95,6 +95,7 @@ export default function NavbarContent(): JSX.Element {
           {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
           <NavbarColorModeToggle className={styles.colorModeToggle} />
           <ActionIcon
+            visibleFrom="lg"
             component="a"
             href="https://github.com/indiebase/indiebase"
             ml={15}

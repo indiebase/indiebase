@@ -93,7 +93,7 @@ async function bootstrap() {
       root: resolve(__dirname, '../public'),
     });
     app.useLogger(nestWinston);
-    app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
+    // app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
     const port = config.get('app.port'),
       hostname = config.get('app.hostname');

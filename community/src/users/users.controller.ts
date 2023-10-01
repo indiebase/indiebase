@@ -8,12 +8,12 @@ import { LocalAuthGuard } from '..';
   version: '1',
 })
 @ApiTags('User/v1')
-// @ApiBearerAuth('paseto-token')
-export class UserController {
+export class UsersController {
   // constructor(private readonly pasetoService: PasetoService) {}
 
   @Get('demo')
-  @UseGuards(LocalAuthGuard, PasetoAuthGuard)
+  @ApiBearerAuth('paseto')
+  @UseGuards(PasetoAuthGuard)
   async demo() {
     return 1;
     // return this.pasetoService.sign({ demo: 11 });
