@@ -42,7 +42,8 @@
       "apps/*",
       "apps/first_party/*",
       "apps/packages/*",
-      "community"
+      "community",
+      "pro"
     ],
     "nohoist": [
       "**/ky/**"

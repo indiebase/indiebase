@@ -140,6 +140,11 @@ const Screen1 = function () {
         Indiebase is a self-hosted platform explicitly designed for indie
         hackers or teams. Providing BaaS and financial services.
       </Text>
+
+      <Text>
+        Make revenue generation easier for indie hackers and teams with software
+        projects. Private Open Collective + Firebase Successor
+      </Text>
     </Flex>
   );
 };
