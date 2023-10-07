@@ -39,9 +39,9 @@ export const optVerifyApi = async (params: any) => {
 };
 
 const SetAuthnApp: FC = function (props) {
-  const { data } = useQuery(['2fa-gen'], generateOptApi, {
-    suspense: true,
-  });
+  // const { data } = useQuery(['2fa-gen'], generateOptApi, {
+  //   suspense: true,
+  // });
   const theme = useMantineTheme();
   const [code, setCode] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>();
@@ -234,7 +234,7 @@ const PreferenceTile: FC<PreferenceTileProps> = function ({
     >
       <div>
         <Text>{title}</Text>
-        <Text size="xs" color="dimmed">
+        <Text size="xs" c="dimmed">
           {subtitle}
         </Text>
       </div>

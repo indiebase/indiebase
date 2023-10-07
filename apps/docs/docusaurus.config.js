@@ -86,9 +86,8 @@ const config = {
             label: 'Docs',
           },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
             position: 'right',
+            to: '/pricing',
             label: 'Pricing',
           },
           {

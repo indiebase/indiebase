@@ -18,13 +18,26 @@ import {
 } from '@mantine/core';
 import { IndiebaseSVG, NawbSVG, PlugKitSVG } from '@site/src/components/Icons';
 import { useMediaQuery } from '@mantine/hooks';
+import {
+  Animator,
+  Fade,
+  ScrollContainer,
+  ScrollPage,
+  Sticky,
+  batch,
+  type Animation,
+  StickyIn,
+} from 'react-scroll-motion';
 
 const Background: FC = function () {
   return (
-    <Box className={styles.background}>
-      <IndiebaseSVG className={styles.gearXS} itemsColor={'#B0B0B0'} />
-      <IndiebaseSVG className={styles.gearMD} />
-    </Box>
+    <>
+      <IndiebaseSVG className={styles.gearHeader} />
+      <Box className={styles.background}>
+        <IndiebaseSVG className={styles.gearXS} itemsColor={'#B0B0B0'} />
+        <IndiebaseSVG className={styles.gearMD} />
+      </Box>
+    </>
   );
 };
 
@@ -56,6 +69,20 @@ const DeskbtmProductsCard: FC<DeskbtmProductsCardProps> = function (props) {
 };
 
 const Screen2 = function () {
+  const Spin = (cycle: number) =>
+    ({
+      in: {
+        style: {
+          transform: (p) => `rotate(${p * 360 * cycle}deg)`,
+        },
+      },
+      out: {
+        style: {
+          transform: (p) => `rotate(${p * 360 * cycle}deg)`,
+        },
+      },
+    }) as Animation;
+
   return (
     <Stack align="center" mt={rem(100)}>
       <Title order={2}>The Deskbtm products under Indiebase</Title>
@@ -83,16 +110,21 @@ const Screen2 = function () {
       </Group>
       <Text size={rem(24)}>
         Join&nbsp;
-        <Text
-          component="a"
-          target="_blank"
-          href="https://deskbtm.com/en"
-          fw={600}
-          td="underline"
-          size={rem(36)}
+        <Animator
+          style={{ display: 'inline-block' }}
+          animation={batch(Spin(2))}
         >
-          Deskbtm
-        </Text>
+          <Text
+            component="a"
+            target="_blank"
+            href="https://deskbtm.com/en"
+            fw={600}
+            td="underline"
+            size={rem(36)}
+          >
+            Deskbtm
+          </Text>
+        </Animator>
         &nbsp;now&nbsp;
         <Box
           component="span"
@@ -112,7 +144,8 @@ const Screen1 = function () {
   return (
     <Flex
       className={styles.header}
-      my={rem(160)}
+      mt={rem(160)}
+      mb={rem(110)}
       gap="md"
       justify="center"
       align="center"
@@ -129,6 +162,7 @@ const Screen1 = function () {
       >
         Indiebase
       </Text>
+
       <Text
         maw={isMobile ? null : '50%'}
         size="xl"
@@ -140,11 +174,9 @@ const Screen1 = function () {
         Indiebase is a self-hosted platform explicitly designed for indie
         hackers or teams. Providing BaaS and financial services.
       </Text>
-
-      <Text>
-        Make revenue generation easier for indie hackers and teams with software
-        projects. Private Open Collective + Firebase Successor
-      </Text>
+      <Button variant="light" size="lg" radius="xl">
+        Getting started
+      </Button>
     </Flex>
   );
 };
@@ -155,41 +187,74 @@ export default function Home(): JSX.Element {
   return (
     <Layout title="Home" description="Indiebase homepage">
       <main className={styles.main}>
-        <IndiebaseSVG className={styles.gearHeader} />
         <Background />
+        <ScrollContainer>
+          <ScrollPage style={{ overflow: 'visible' }}>
+            <Screen1 />
+            <Screen2 />
+          </ScrollPage>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
 
-        <Screen1 />
-        <Screen2 />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+          <Text>
+            Make revenue generation easier for indie hackers and teams with
+            software projects. Private Open Collective + Firebase Successor
+          </Text>
+        </ScrollContainer>
       </main>
     </Layout>
   );
