@@ -14,7 +14,7 @@ export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
     const name = process.env.API_DOC_CONTACT_NAME ?? 'deskbtm/indiebase',
       url = process.env.API_DOC_CONTACT_URL ?? '',
-      email = process.env.API_DOC_CONTACT_EMAIL ?? 'deskbtm@outlook.com';
+      email = process.env.API_DOC_CONTACT_EMAIL ?? 'dev@indiebase.com';
 
     try {
       const options = new DocumentBuilder()

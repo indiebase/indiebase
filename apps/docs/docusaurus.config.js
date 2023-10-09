@@ -31,7 +31,9 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
+  customFields: {
+    deskbtmURL: 'https://deskbtm.com/en',
+  },
   presets: [
     [
       'classic',
@@ -87,7 +89,9 @@ const config = {
           },
           {
             position: 'right',
-            to: '/pricing',
+            type: 'docSidebar',
+            // to: '/pricing',
+            sidebarId: 'tutorialSidebar2',
             label: 'Pricing',
           },
           {

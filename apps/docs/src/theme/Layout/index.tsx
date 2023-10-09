@@ -19,7 +19,7 @@ import SkipToContent from '@theme/SkipToContent';
 import styles from './styles.module.css';
 
 import type { Props } from '@theme/Layout';
-import { mantineTheme } from './maintine-theme';
+import { mantineTheme } from './mantine-theme';
 export default function Layout(props: Props): JSX.Element {
   const {
     children,

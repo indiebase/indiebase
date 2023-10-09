@@ -1,44 +1,30 @@
-import { IsEntityExisted } from '@indiebase/server-shared';
+import { IsEntityExisted, ResSchema } from '@indiebase/server-shared';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
+import { MetaTables } from '~/migrations/tables';
 
 export class CreateOrgDto {
   @ApiProperty({
-    description: 'Org name',
+    description: 'Organization name',
     default: 'indiebase',
   })
   @IsEntityExisted({
     schema: 'mgr',
-    table: 'org',
+    table: MetaTables.orgs,
     column: 'name',
   })
   @IsString()
   name: string;
+}
 
-  // @ApiProperty({
-  //   description: 'Github organization name',
-  //   default: 'indiebase',
-  // })
-  // @IsEntityExisted(OrgEntity, 'githubOrgName', 'Github Organization')
-  // @IsString()
-  // githubOrgName: string;
-
-  // @ApiProperty({
-  //   description:
-  //     'Organization domain is the unique id for indiebase. if the package name is not specific, the project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.indiebase.xxxx.',
-  //   default: 'indiebase.deskbtm.com',
-  // })
-  // @IsEntityExisted(OrgEntity, 'domain', 'Organization domain')
-  // @IsString()
-  // domain: string;
-
+export class UpdateOrgDto extends CreateOrgDto {
   @ApiPropertyOptional({
-    default: 'deskbtm@outlook.com',
+    default: 'dev@indiebase.com',
   })
   @IsEmail(
     {},
     {
-      message: 'Email incorrect',
+      message: 'Contact email format error',
     },
   )
   @IsOptional()
@@ -53,8 +39,11 @@ export class CreateOrgDto {
 
   @ApiPropertyOptional({
     description: 'Organization icon url',
+    default: 'https://indiebase-dev.deskbtm.com/favicon.ico',
   })
   @IsOptional()
-  @IsUrl()
+  @IsUrl({}, { message: 'Avatar url format error' })
   avatarUrl?: string;
 }
+
+export class CreateOrgResDto extends ResSchema {}

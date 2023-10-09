@@ -21,9 +21,8 @@ import {
   IconDiscountCheck,
   IconUserCheck,
 } from '@tabler/icons-react';
-import { FC, ReactElement, Suspense, useCallback, useState } from 'react';
-import { UploadImageZone } from '@/components/UploadImageZone';
-import { req } from '@/__MOCK__';
+import { FC, ReactElement, Suspense, useState } from 'react';
+import { req } from '~/__MOCK__';
 
 const _optStepperAtom = atom(0);
 const _optRecoveryCodeAtom = atom([]);

@@ -11,19 +11,30 @@ const antiRotate = keyframes({
   to: { transform: 'rotate(0deg)' },
 });
 
+export const deskbtmRotate = style({
+  animation: `${rotate} .8s ease-out`,
+  display: 'inline-block',
+});
+
 export const main = style({
   position: 'relative',
 });
 
 export const background = style({
   position: 'absolute',
-  overflow: 'hidden',
   top: 0,
   left: 0,
   right: 0,
   width: '100%',
   height: '100%',
   zIndex: -1,
+});
+
+export const background1 = style({
+  position: 'relative',
+  overflow: 'hidden',
+  width: '100%',
+  height: '100%',
 });
 
 export const gearMD = style({

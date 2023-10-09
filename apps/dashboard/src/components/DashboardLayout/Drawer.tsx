@@ -7,11 +7,19 @@ import {
   Burger,
   Skeleton,
   Combobox,
+  Input,
+  InputBase,
+  useCombobox,
+  Avatar,
+  rem,
+  Button,
 } from '@mantine/core';
 import { useAtom } from 'jotai';
-import React, { FC, useState } from 'react';
+import React, { FC, forwardRef, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { navbarCollapseAtom } from './navbar.atom';
+import { IconBuildingCommunity, IconChevronDown } from '@tabler/icons-react';
+import { is } from '@deskbtm/gadgets';
 
 export interface SidebarTileNode {
   label: string;
@@ -83,6 +91,131 @@ const useAccordionControl = function (menu: SidebarTileNode[]) {
   return [value, setValue];
 };
 
+const groceries = [
+  '🍎 Apples',
+  '🍌 Bananas',
+  '🥦 Broccoli',
+  '🥕 Carrots',
+  '🍫 Chocolate',
+];
+
+interface SelectWithIconItem {
+  icon: string | React.ReactNode;
+  label: string;
+  value: string;
+}
+
+interface SelectWithIconProps {
+  items: SelectWithIconItem[];
+  placeholder: string | React.ReactNode;
+  onOptionSubmit?: (val: SelectWithIconItem) => void;
+}
+
+const SelectWithIcon: FC<SelectWithIconProps> = function (props) {
+  const { items, placeholder } = props;
+  const [value, setValue] = useState<SelectWithIconItem | null>(null);
+  const combobox = useCombobox({
+    onDropdownClose: () => {
+      combobox.resetSelectedOption();
+      combobox.focusTarget();
+      setSearch('');
+    },
+    onDropdownOpen: () => {
+      combobox.focusSearchInput();
+    },
+  });
+  const [search, setSearch] = useState('');
+  const shouldFilterOptions = items.every((item) => item.label !== search);
+  const filteredOptions = shouldFilterOptions
+    ? items.filter((item) =>
+        item.label.toLowerCase().includes(search.toLowerCase().trim()),
+      )
+    : items;
+
+  const options = useMemo(
+    () =>
+      filteredOptions.map(({ value, icon, label }) => (
+        <Combobox.Option value={value} key={value}>
+          <Group wrap="nowrap" gap={'xs'}>
+            {icon &&
+              (is.string(icon) ? (
+                <Avatar src={icon} radius="xl" size="sm">
+                  <IconBuildingCommunity size={14} />
+                </Avatar>
+              ) : (
+                icon
+              ))}
+            <Text lineClamp={1} size="sm">
+              {label}
+            </Text>
+          </Group>
+        </Combobox.Option>
+      )),
+    [filteredOptions],
+  );
+
+  return (
+    <Combobox
+      store={combobox}
+      onOptionSubmit={(val) => {
+        setSearch(val);
+        const i = items.find((v) => v.value === val);
+        if (i) setValue(i);
+        combobox.closeDropdown();
+      }}
+    >
+      <Combobox.Target>
+        <Group gap="xs">
+          <Avatar src={value?.icon as string} radius="xl" size={34}>
+            <IconBuildingCommunity size={14} />
+          </Avatar>
+          <Button
+            p={0}
+            c="dark"
+            fz="sm"
+            rightSection={<IconChevronDown size={12} style={{ margin: -5 }} />}
+            variant="transparent"
+            onClick={() => combobox.toggleDropdown()}
+          >
+            {value?.label ?? placeholder}
+          </Button>
+        </Group>
+      </Combobox.Target>
+
+      <Combobox.Dropdown miw={rem(220)} ml={rem(38)}>
+        <Combobox.Search
+          value={search}
+          onChange={(event) => setSearch(event.currentTarget.value)}
+          placeholder="Search ..."
+        />
+        {options.length > 0 ? (
+          options
+        ) : (
+          <Combobox.Empty>Nothing found</Combobox.Empty>
+        )}
+      </Combobox.Dropdown>
+    </Combobox>
+  );
+};
+
+const OrgSelect = function () {
+  return (
+    <SelectWithIcon
+      onOptionSubmit={(val) => {
+        console.log(val);
+      }}
+      placeholder={'Pick organization'}
+      items={[
+        {
+          icon: 'https://images.unsplash.com/photo-1688920556232-321bd176d0b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2370&q=80',
+          value: 'indiebase',
+          label: 'indiebase',
+        },
+      ]}
+    />
+  );
+};
+
 export const AppShellDrawer: FC<SidebarProps> = function (props) {
   // const navigate = useNavigate();
   // const opened = useAtomValue(navbarSwitchAtom);
@@ -99,7 +232,7 @@ export const AppShellDrawer: FC<SidebarProps> = function (props) {
         hiddenFrom="sm"
         size="xs"
       />
-      <Combobox radius="lg" />
+      <OrgSelect />
       {Array(15)
         .fill(0)
         .map((_, index) => (

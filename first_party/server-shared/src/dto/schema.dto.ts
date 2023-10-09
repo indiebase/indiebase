@@ -3,7 +3,7 @@ import { IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ResultCode } from '@indiebase/trait';
 
-export class PaginationReqDto {
+export class PaginationReqSchema {
   @ApiProperty({
     default: 1,
   })
@@ -19,7 +19,7 @@ export class PaginationReqDto {
   pageSize: number = 20;
 }
 
-export class BaseResSchemaDto {
+export class ResSchema {
   @ApiProperty({
     description: 'Response logical code',
     default: ResultCode.SUCCESS,
@@ -32,7 +32,7 @@ export class BaseResSchemaDto {
   message?: string | string[];
 }
 
-export class PaginationResSchemaDto extends BaseResSchemaDto {
+export class PaginationResSchema extends ResSchema {
   @ApiProperty({
     description: 'Total items',
   })

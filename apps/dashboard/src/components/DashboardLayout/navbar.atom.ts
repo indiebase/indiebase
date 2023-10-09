@@ -2,5 +2,7 @@ import { atom } from 'jotai';
 
 export const navbarCollapseAtom = atom({
   mobile: false,
-  desktop: true
+  desktop: true,
 });
+
+// export const

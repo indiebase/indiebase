@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class GetCaptchaDto {
   @ApiProperty({
-    default: 'deskbtm@outlook.com',
+    default: 'dev@indiebase.com',
   })
   // @IsNotEmpty()
   username: string;

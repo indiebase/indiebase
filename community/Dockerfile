@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-LABEL org.opencontainers.image.authors="deskbtm@outlook.com"
+LABEL org.opencontainers.image.authors="dev@indiebase.com"
 
 ARG RUNTIME_ENV
 

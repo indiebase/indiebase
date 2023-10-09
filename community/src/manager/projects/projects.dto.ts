@@ -34,7 +34,7 @@
 //   domain: string;
 
 //   @ApiPropertyOptional({
-//     default: 'deskbtm@outlook.com',
+//     default: 'dev@indiebase.com',
 //   })
 //   @IsEmail(
 //     {},

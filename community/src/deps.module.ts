@@ -11,6 +11,7 @@ import { WinstonModule, utilities } from 'nest-winston';
 import path from 'node:path';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
+import { knexSnakeCaseMappers } from 'objection';
 
 @Global()
 @Module({
@@ -58,14 +59,14 @@ import { OpenObserveTransport } from 'winston-openobserve';
               utilities.format.nestLike(),
             ),
           }),
-          openObserveTransport,
+          // openObserveTransport,
         ];
         return {
           level: kDevMode ? 'debug' : 'warn',
           format: winston.format.json(),
           exitOnError: false,
           handleRejections: true,
-          rejectionHandlers: [openObserveTransport],
+          // rejectionHandlers: [openObserveTransport],
           transports,
         };
       },
@@ -92,6 +93,7 @@ import { OpenObserveTransport } from 'winston-openobserve';
               password,
               database,
             },
+            ...knexSnakeCaseMappers(),
           },
         };
       },

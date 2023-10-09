@@ -69,7 +69,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     return opt.message
       ? msg
       : `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟ ${
-          opt.throwExistedMsg?.[2] ? 'has existed.' : "doesn't exist."
+          opt.throwExistedMsg ? 'has existed.' : "doesn't exist."
         }`;
   }
 }

@@ -39,10 +39,10 @@ async function bootstrap() {
     app.useGlobalPipes(
       new ValidationPipe({
         transform: true,
-        // enableDebugMessages: kDevMode,
+        enableDebugMessages: kDevMode,
         whitelist: true,
         forbidNonWhitelisted: true,
-        exceptionFactory: i18nValidationErrorFactory,
+        // exceptionFactory: i18nValidationErrorFactory,
       }),
     );
 
@@ -93,7 +93,7 @@ async function bootstrap() {
       root: resolve(__dirname, '../public'),
     });
     app.useLogger(nestWinston);
-    // app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
+    app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
 
     const port = config.get('app.port'),
       hostname = config.get('app.hostname');

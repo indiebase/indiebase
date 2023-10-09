@@ -45,17 +45,15 @@ export const createCommunityModule = function (
       private readonly logger: Logger,
     ) {}
     async onModuleInit() {
-      this.logger.error(null);
-      // const s = await this.knexEx.schema.hasSchema();
-      // console.log(s);
-      // if (!(await this.knexEx.schema.hasSchema('demo'))) {
-      //   await this.knex.schema.createSchema('demo');
-      // }
+      if (!(await this.knexEx.schema.hasSchema('mgr'))) {
+        await this.knex.schema.createSchema('mgr');
+      }
       // await this.metaService.init();
+
       await this.knex.migrate.up({
-        migrationSource: new MigrationSource('demo'),
+        migrationSource: new MigrationSource('mgr'),
         tableName: 'knex_demo_migration',
-        schemaName: 'demo',
+        schemaName: 'mgr',
       });
     }
   }

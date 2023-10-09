@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 
-import * as styles from '@site/src/css/home.css.ts';
 import {
   Box,
   Button,
@@ -17,27 +16,19 @@ import {
   Title,
 } from '@mantine/core';
 import { IndiebaseSVG, NawbSVG, PlugKitSVG } from '@site/src/components/Icons';
-import { useMediaQuery } from '@mantine/hooks';
-import {
-  Animator,
-  Fade,
-  ScrollContainer,
-  ScrollPage,
-  Sticky,
-  batch,
-  type Animation,
-  StickyIn,
-} from 'react-scroll-motion';
+import { useIntersection, useMediaQuery } from '@mantine/hooks';
+
+import * as styles from '@site/src/css/home.css.ts';
 
 const Background: FC = function () {
   return (
-    <>
+    <Box className={styles.background}>
       <IndiebaseSVG className={styles.gearHeader} />
-      <Box className={styles.background}>
+      <Box className={styles.background1}>
         <IndiebaseSVG className={styles.gearXS} itemsColor={'#B0B0B0'} />
         <IndiebaseSVG className={styles.gearMD} />
       </Box>
-    </>
+    </Box>
   );
 };
 
@@ -57,9 +48,11 @@ const DeskbtmProductsCard: FC<DeskbtmProductsCardProps> = function (props) {
         <Text size={rem(24)}>{props.productName}</Text>
       </Group>
 
-      <Text mt={rem(13)} size="sm" c="dark" lineClamp={3}>
-        {props.desc}
-      </Text>
+      <Box h={rem(74)}>
+        <Text mt={rem(13)} size="sm" c="dark" lineClamp={3}>
+          {props.desc}
+        </Text>
+      </Box>
 
       <Button variant="light" color={props.color ?? 'cyan'} fullWidth mt={14}>
         Go
@@ -69,23 +62,22 @@ const DeskbtmProductsCard: FC<DeskbtmProductsCardProps> = function (props) {
 };
 
 const Screen2 = function () {
-  const Spin = (cycle: number) =>
-    ({
-      in: {
-        style: {
-          transform: (p) => `rotate(${p * 360 * cycle}deg)`,
-        },
-      },
-      out: {
-        style: {
-          transform: (p) => `rotate(${p * 360 * cycle}deg)`,
-        },
-      },
-    }) as Animation;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { ref, entry } = useIntersection({
+    root: containerRef.current,
+    rootMargin: '50px',
+    threshold: 0.5,
+  });
+
+  const {
+    siteConfig: { customFields },
+  } = useDocusaurusContext();
 
   return (
-    <Stack align="center" mt={rem(100)}>
-      <Title order={2}>The Deskbtm products under Indiebase</Title>
+    <Stack align="center" mt={rem(80)}>
+      <Title order={2} px={rem(20)}>
+        The Deskbtm products under Indiebase
+      </Title>
       <Group justify="center" mb={rem(40)} mt={rem(20)} gap={rem(30)}>
         <DeskbtmProductsCard
           color="pink"
@@ -103,28 +95,24 @@ const Screen2 = function () {
         />
         <DeskbtmProductsCard
           productName={'PlugKit'}
-          desc={`Indiebase is a self-hosted platform explicitly designed for indie
-            hackers or teams. Providing BaaS and financial services.`}
+          desc={`Indiebase is a self-hosted platform explicitly.`}
           icon={<PlugKitSVG style={{ width: rem(50), height: rem(50) }} />}
         />
       </Group>
       <Text size={rem(24)}>
         Join&nbsp;
-        <Animator
-          style={{ display: 'inline-block' }}
-          animation={batch(Spin(2))}
+        <Text
+          ref={ref}
+          className={entry?.isIntersecting ? styles.deskbtmRotate : null}
+          component="a"
+          target="_blank"
+          href={customFields.deskbtmURL as string}
+          fw={600}
+          td="underline"
+          size={rem(36)}
         >
-          <Text
-            component="a"
-            target="_blank"
-            href="https://deskbtm.com/en"
-            fw={600}
-            td="underline"
-            size={rem(36)}
-          >
-            Deskbtm
-          </Text>
-        </Animator>
+          Deskbtm
+        </Text>
         &nbsp;now&nbsp;
         <Box
           component="span"
@@ -174,9 +162,14 @@ const Screen1 = function () {
         Indiebase is a self-hosted platform explicitly designed for indie
         hackers or teams. Providing BaaS and financial services.
       </Text>
-      <Button variant="light" size="lg" radius="xl">
-        Getting started
-      </Button>
+      <Group mt={rem(20)} maw={isMobile ? '50%' : 'null'}>
+        <Button variant="light" size="lg" radius="xl">
+          Getting started
+        </Button>
+        <Button variant="transparent" size="lg" radius="xl">
+          Documentation
+        </Button>
+      </Group>
     </Flex>
   );
 };
@@ -188,73 +181,86 @@ export default function Home(): JSX.Element {
     <Layout title="Home" description="Indiebase homepage">
       <main className={styles.main}>
         <Background />
-        <ScrollContainer>
-          <ScrollPage style={{ overflow: 'visible' }}>
-            <Screen1 />
-            <Screen2 />
-          </ScrollPage>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+        <Screen1 />
+        <Screen2 />
+        {/* <ScrollPage>
+            <Box>Start self hosted</Box>
 
-          <Text>
-            Make revenue generation easier for indie hackers and teams with
-            software projects. Private Open Collective + Firebase Successor
-          </Text>
-        </ScrollContainer>
+            <Box style={{ width: '100%' }}>
+              <Box
+                style={{
+                  width: 200,
+                  height: 400,
+                  border: '1px solid #000',
+                  borderRadius: '20px',
+                  backdropFilter: 'blur(6.25rem)',
+                  background:
+                    'linear-gradient(136deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.04) 30.91%,rgba(255,255,255,0) 100%,rgba(255,255,255,.01) 100%)',
+                }}
+              ></Box>
+            </Box>
+          </ScrollPage> */}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <Text>
+          Make revenue generation easier for indie hackers and teams with
+          software projects. Private Open Collective + Firebase Successor
+        </Text>
       </main>
     </Layout>
   );
