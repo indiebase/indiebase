@@ -1,7 +1,11 @@
-import { IsEntityExisted, ResSchema } from '@indiebase/server-shared';
+import {
+  IsCommonLegalString,
+  IsEntityExisted,
+  MgrMetaTables,
+  ResSchema,
+} from '@indiebase/server-shared';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
-import { MetaTables } from '~/migrations/tables';
 
 export class CreateOrgDto {
   @ApiProperty({
@@ -10,10 +14,10 @@ export class CreateOrgDto {
   })
   @IsEntityExisted({
     schema: 'mgr',
-    table: MetaTables.orgs,
+    table: MgrMetaTables.orgs,
     column: 'name',
   })
-  @IsString()
+  @IsCommonLegalString()
   name: string;
 }
 

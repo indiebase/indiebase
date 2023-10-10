@@ -1,12 +1,14 @@
 import { is } from '@deskbtm/gadgets/is';
 import { InjectKnex } from '@indiebase/nest-knex';
-import { Injectable } from '@nestjs/common';
+import { Injectable, applyDecorators } from '@nestjs/common';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
   ValidationArguments,
   ValidationOptions,
   registerDecorator,
+  Matches,
+  IsString,
 } from 'class-validator';
 import { Knex } from 'knex';
 import validator from 'validator';
@@ -108,4 +110,20 @@ export class IsEmailsConstraint implements ValidatorConstraintInterface {
   validate(emails: string[], _args: ValidationArguments) {
     return !!emails.find((e) => validator.isEmail(e));
   }
+}
+
+export function IsCommonLegalString(options?: ValidationOptions) {
+  options = Object.assign(
+    {},
+    {
+      message:
+        '$value is illegal, only allow ASCII letters, digits, and the characters - and _',
+    },
+    options,
+  );
+
+  return applyDecorators(
+    IsString(options),
+    Matches(/^[a-zA-Z0-9_-]+$/gi, options),
+  );
 }

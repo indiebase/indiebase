@@ -6,9 +6,8 @@ import {
 } from '@nestjs/common';
 import { CreateOrgDto } from './orgs.dto';
 import { Knex } from 'knex';
-import { KnexEx } from '@indiebase/server-shared';
+import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { MetaTables } from '~/migrations/tables';
 
 @Injectable()
 export class OrgsService {
@@ -22,8 +21,13 @@ export class OrgsService {
 
   public async createOrg() {
     // await this.knex.schema.createSchema(org.name);
-    // await this.knex(MetaTables.orgs).withSchema('mgr').insert({
+    // await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
     //   name: org.name,
+    // });
+    // await this.knex.migrate.up({
+    //   migrationSource: new MigrationSource('mgr'),
+    //   tableName: 'knex_demo_migration',
+    //   schemaName: 'mgr',
     // });
   }
 
@@ -32,7 +36,7 @@ export class OrgsService {
    * enabling data isolation.
    */
   public async restCreate(org: CreateOrgDto) {
-    await this.knex(MetaTables.orgs).withSchema('mgr').insert({
+    await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
       name: org.name,
     });
   }

@@ -45,7 +45,7 @@ export const createCommunityModule = function (
       private readonly logger: Logger,
     ) {}
     async onModuleInit() {
-      if (!(await this.knexEx.schema.hasSchema('mgr'))) {
+      if (!(await this.knexEx.hasSchema('mgr'))) {
         await this.knex.schema.createSchema('mgr');
       }
       // await this.metaService.init();

@@ -1,61 +1,53 @@
-// import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-// import {
-//   IsEmail,
-//   IsString,
-//   IsOptional,
-//   IsNumber,
-//   IsUrl,
-// } from 'class-validator';
+import {
+  IsCommonLegalString,
+  IsEntityExisted,
+  MgrMetaTables,
+  ResSchema,
+} from '@indiebase/server-shared';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
 
-// export class CreateOrgDto {
-//   @ApiProperty({
-//     description: 'Org name',
-//     default: 'indiebase',
-//   })
-//   @IsEntityExisted(OrgEntity, 'name', 'Organization name')
-//   @IsString()
-//   name: string;
+export class CreatePrjDto {
+  @ApiProperty({
+    description: 'Project name',
+    default: 'indiebase',
+  })
+  @IsEntityExisted({
+    schema: 'mgr',
+    table: MgrMetaTables.projects,
+    column: 'name',
+  })
+  @IsCommonLegalString()
+  name: string;
+}
 
-//   @ApiProperty({
-//     description: 'Github organization name',
-//     default: 'indiebase',
-//   })
-//   @IsEntityExisted(OrgEntity, 'githubOrgName', 'Github Organization')
-//   @IsString()
-//   githubOrgName: string;
+export class UpdatePrjDto extends CreatePrjDto {
+  @ApiPropertyOptional({
+    default: 'dev@indiebase.com',
+  })
+  @IsEmail(
+    {},
+    {
+      message: 'Contact email format error',
+    },
+  )
+  @IsOptional()
+  contactEmail?: string;
 
-//   @ApiProperty({
-//     description:
-//       'Organization domain is the unique id for indiebase. if the package name is not specific, the project will use reverse words that project name + organization domain as package name. e.g com.deskbtm.indiebase.xxxx.',
-//     default: 'indiebase.deskbtm.com',
-//   })
-//   @IsEntityExisted(OrgEntity, 'domain', 'Organization domain')
-//   @IsString()
-//   domain: string;
+  @ApiPropertyOptional({
+    default: 'xxxxxx',
+  })
+  @IsOptional()
+  @IsString()
+  description?: string;
 
-//   @ApiPropertyOptional({
-//     default: 'dev@indiebase.com',
-//   })
-//   @IsEmail(
-//     {},
-//     {
-//       message: 'Email incorrect',
-//     },
-//   )
-//   @IsOptional()
-//   contactEmail?: string;
+  @ApiPropertyOptional({
+    description: 'Project icon url',
+    default: 'https://indiebase-dev.deskbtm.com/favicon.ico',
+  })
+  @IsOptional()
+  @IsUrl({}, { message: 'Avatar url format error' })
+  avatarUrl?: string;
+}
 
-//   @ApiPropertyOptional({
-//     default: 'xxxxxx',
-//   })
-//   @IsOptional()
-//   @IsString()
-//   description?: string;
-
-//   @ApiPropertyOptional({
-//     description: 'Organization icon url',
-//   })
-//   @IsOptional()
-//   @IsUrl()
-//   avatarUrl?: string;
-// }
+export class CreateOrgResDto extends ResSchema {}

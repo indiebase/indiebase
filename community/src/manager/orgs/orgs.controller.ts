@@ -25,7 +25,6 @@ export class OrgsController {
   })
   @ApiOperation({
     summary: 'Create an organization',
-    description: 'Creating an organization will create a postgresql schema',
   })
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')

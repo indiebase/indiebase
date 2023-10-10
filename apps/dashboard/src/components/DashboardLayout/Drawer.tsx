@@ -7,15 +7,13 @@ import {
   Burger,
   Skeleton,
   Combobox,
-  Input,
-  InputBase,
   useCombobox,
   Avatar,
   rem,
   Button,
 } from '@mantine/core';
 import { useAtom } from 'jotai';
-import React, { FC, forwardRef, useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { navbarCollapseAtom } from './navbar.atom';
 import { IconBuildingCommunity, IconChevronDown } from '@tabler/icons-react';
@@ -107,12 +105,13 @@ interface SelectWithIconItem {
 
 interface SelectWithIconProps {
   items: SelectWithIconItem[];
-  placeholder: string | React.ReactNode;
+  placeholder?: string | React.ReactNode;
+  searchPlaceholder?: string;
   onOptionSubmit?: (val: SelectWithIconItem) => void;
 }
 
 const SelectWithIcon: FC<SelectWithIconProps> = function (props) {
-  const { items, placeholder } = props;
+  const { items, placeholder, searchPlaceholder } = props;
   const [value, setValue] = useState<SelectWithIconItem | null>(null);
   const combobox = useCombobox({
     onDropdownClose: () => {
@@ -186,7 +185,7 @@ const SelectWithIcon: FC<SelectWithIconProps> = function (props) {
         <Combobox.Search
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
-          placeholder="Search ..."
+          placeholder={searchPlaceholder}
         />
         {options.length > 0 ? (
           options
@@ -198,16 +197,21 @@ const SelectWithIcon: FC<SelectWithIconProps> = function (props) {
   );
 };
 
+SelectWithIcon.defaultProps = {
+  searchPlaceholder: 'Search...',
+};
+
 const OrgSelect = function () {
   return (
     <SelectWithIcon
       onOptionSubmit={(val) => {
         console.log(val);
       }}
-      placeholder={'Pick organization'}
+      searchPlaceholder="Search organization"
+      placeholder="Pick organization"
       items={[
         {
-          icon: 'https://images.unsplash.com/photo-1688920556232-321bd176d0b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2370&q=80',
+          icon: 'https://randomuser.me/api/portraits/med/women/88.jpg',
           value: 'indiebase',
           label: 'indiebase',
         },
@@ -217,11 +221,6 @@ const OrgSelect = function () {
 };
 
 export const AppShellDrawer: FC<SidebarProps> = function (props) {
-  // const navigate = useNavigate();
-  // const opened = useAtomValue(navbarSwitchAtom);
-  // const [value, setValue] = useAccordionControl(props.menu);
-  // const theme = useMantineTheme();
-  // const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [opened, toggle] = useAtom(navbarCollapseAtom);
 
   return (

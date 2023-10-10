@@ -1,7 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { PasetoAuthGuard } from '~/auth/paseto.guard';
-import { LocalAuthGuard } from '..';
 
 @Controller({
   path: 'user',
@@ -10,7 +9,7 @@ import { LocalAuthGuard } from '..';
 @ApiTags('User/v1')
 export class UsersController {
   // constructor(private readonly pasetoService: PasetoService) {}
-
+  
   @Get('demo')
   @ApiBearerAuth('paseto')
   @UseGuards(PasetoAuthGuard)

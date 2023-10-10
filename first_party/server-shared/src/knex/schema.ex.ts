@@ -4,25 +4,50 @@ import { Knex } from 'knex';
 
 export class KnexSchemaEx {
   private schema: Knex.SchemaBuilder;
+  private schemaName: string;
 
   constructor(private readonly knex: Knex) {
     this.schema = knex.schema;
   }
 
-  public listSchemas(select: string = '*') {
-    return this.knex.select(select).from('information_schema.schemata');
+  private ON_UPDATE_TIMESTAMP_FUNCTION() {
+    return `
+  CREATE OR REPLACE FUNCTION ${this.schemaName}.on_update_timestamp()
+    RETURNS TRIGGER AS $$
+    BEGIN
+      NEW.updated_at = now();
+      RETURN NEW;
+    END;
+  $$ language 'plpgsql'`;
   }
 
-  public async hasSchema(schema: string = '*') {
-    const schemas = await this.knex
-      .select('*')
-      .from('information_schema.schemata')
-      .where('schema_name', schema);
-    return schemas.length > 0;
+  private DROP_ON_UPDATE_TIMESTAMP_FUNCTION() {
+    return `DROP FUNCTION ${this.schemaName}.on_update_timestamp`;
   }
+
+  /**
+   * Init some preset functions;
+   * @returns
+   */
+  public async initBuiltinFuncs() {
+    await this.knex.raw(this.ON_UPDATE_TIMESTAMP_FUNCTION());
+
+    return this;
+  }
+
+  public createUpdatedAtTrigger = (tableName: string) =>
+    this.knex.raw(
+      `
+      CREATE TRIGGER ${this.schemaName}_${tableName}_updated_at
+      BEFORE UPDATE ON ${this.schemaName}.${tableName}
+      FOR EACH ROW
+      EXECUTE PROCEDURE ${this.schemaName}.on_update_timestamp();
+    `,
+    );
 
   public withSchema(schema: string) {
     this.schema = this.knex.schema.withSchema(schema);
+    this.schemaName = schema;
     return this;
   }
 
@@ -63,9 +88,7 @@ export class KnexSchemaEx {
   ) {
     let [err, hasTable] = await did(this.schema.hasTable(tableName));
 
-    if (err) {
-      throw err;
-    }
+    if (err) throw err;
 
     if (hasTable) {
       if (globalThis[KNEX_SYNC]) {
