@@ -9,6 +9,7 @@ import { ProjectsService } from './projects.service';
 import { ResSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreatePrjDto } from './projects.dto';
+import { did } from '@deskbtm/gadgets';
 
 @Controller({
   path: 'mgr/orgs',

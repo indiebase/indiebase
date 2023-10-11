@@ -1,6 +1,11 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { Knex } from 'knex';
 import { CreatePrjDto } from './projects.dto';
 import { TmplMigrationSource } from '~/migrations/TmplMigrationSource';
@@ -25,20 +30,30 @@ export class ProjectsService {
     if (!(await this.knexEx.hasOrg(org))) {
       //T
       throw new BadRequestException({
-        message: `Organization ⌜${org}⌟ does't exist.`,
+        message: `Organization ⌜${org}⌟ doesn't exist.`,
       });
     }
 
-    this.knex.withSchema('mgr').select('');
-
-    await this.knex(MgrMetaTables.projects).withSchema('mgr').insert({
-      name: prj.name,
-    });
-    await this.knex.schema.createSchema(namespace);
-    await this.knex.migrate.up({
-      migrationSource: new TmplMigrationSource(namespace),
-      tableName: `${namespace}_migration`,
-      schemaName: namespace,
-    });
+    return this.knex
+      .transaction(async (trx) => {
+        await trx
+          .withSchema('mgr')
+          .insert({
+            name: prj.name,
+          })
+          .into(MgrMetaTables.projects);
+        await trx.schema.createSchema(namespace);
+        await trx.migrate.up({
+          migrationSource: new TmplMigrationSource(namespace),
+          tableName: `knex_${namespace}_migration`,
+          schemaName: namespace,
+        });
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          message: 'An error occurred while creating the project',
+        });
+      });
   }
 }

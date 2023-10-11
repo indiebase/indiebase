@@ -131,7 +131,7 @@ const Screen1 = function () {
 
   return (
     <Flex
-      className={styles.header}
+      // className={styles.header}
       mt={rem(160)}
       mb={rem(110)}
       gap="md"

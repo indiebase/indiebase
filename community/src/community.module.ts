@@ -6,9 +6,9 @@ import { AuthModule } from '~/auth';
 import { MetaService } from '~/db/meta/meta.service';
 import { InitializeDepsModule } from '~/deps.module';
 import { OrgsModule, ProjectsModule } from '~/manager';
-import { MigrationSource } from '~/migrations/MigrationSource';
 import { ProbeModule } from '~/probe';
 import { UsersModule } from '~/users/users.module';
+import { MetaModule } from './db/meta/meta.module';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
@@ -25,6 +25,7 @@ export const createCommunityModule = function (
       AuthModule,
       OrgsModule,
       ProjectsModule,
+      MetaModule,
       ...options.imports,
       InitializeDepsModule,
     ],
@@ -45,16 +46,20 @@ export const createCommunityModule = function (
       private readonly logger: Logger,
     ) {}
     async onModuleInit() {
-      if (!(await this.knexEx.hasSchema('mgr'))) {
-        await this.knex.schema.createSchema('mgr');
-      }
+      let s = await this.knex('ib_orgs')
+        .withSchema('mgr')
+        .select(
+          'ib_orgs.id',
+          'ib_orgs.name',
+          'ib_projects.name as project_name',
+        )
+        .from('ib_orgs')
+        .join('ib_projects', function () {
+          this.on('ib_orgs.id', '=', 'ib_projects.org_id');
+        })
+        .where('ib_orgs.id', 1);
       // await this.metaService.init();
-
-      await this.knex.migrate.up({
-        migrationSource: new MigrationSource('mgr'),
-        tableName: 'knex_demo_migration',
-        schemaName: 'mgr',
-      });
+      console.log(s);
     }
   }
 

@@ -6,8 +6,8 @@ export const v001_mgr = async function (
 ): Promise<Knex.Migration> {
   return {
     async up(knex: Knex): Promise<void> {
-      let knexEx = new KnexEx(knex);
-      let knexExSchema = await knexEx.schema
+      const knexEx = new KnexEx(knex);
+      const knexExSchema = await knexEx.schema
         .withSchema(schema)
         .initBuiltinFuncs();
 
@@ -32,33 +32,38 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.projects, (table) => {
           table.increments('id').primary();
+          table
+            .integer('org_id')
+            .unsigned()
+            .index()
+            .notNullable()
+            .references('id')
+            .inTable(`mgr.${MgrMetaTables.orgs}`);
+
           table.string('name');
           table.timestamps(true, true);
-          // table.foreign('id').references('ib_user.id');
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.projects);
         });
 
-      // .then(function () {
-      //   console.log(this);
-      // });
-      // .createUpdateTrigger();
+      // /**
+      //  * ib_users
+      //  */
+      // await knex.schema
+      //   .withSchema(schema)
+      //   .createTable(MgrMetaTables.users, (table) => {
+      //     table.increments('id').primary();
+      //   });
 
-      /**
-       * ib_users
-       */
-      await knex.schema
-        .withSchema(schema)
-        .createTable(MgrMetaTables.users, (table) => {
-          table.increments('id').primary();
-        });
-
-      /**
-       * ib_roles
-       */
-      await knex.schema
-        .withSchema(schema)
-        .createTable(MgrMetaTables.roles, (table) => {
-          table.increments('id').primary();
-        });
+      // /**
+      //  * ib_roles
+      //  */
+      // await knex.schema
+      //   .withSchema(schema)
+      //   .createTable(MgrMetaTables.roles, (table) => {
+      //     table.increments('id').primary();
+      //   });
     },
     async down(knex: Knex) {},
   };

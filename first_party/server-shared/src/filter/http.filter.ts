@@ -34,7 +34,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       ...resExceptionObj,
       statusCode,
       code: ResultCode.ERROR,
-      timestamp: new Date().toLocaleString(),
+      timestamp: new Date().toUTCString(),
       path: request.url,
     });
   }

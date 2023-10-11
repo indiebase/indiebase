@@ -68,10 +68,11 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       ? opt.message(validationArguments.value)
       : opt.message;
 
+    //T
     return opt.message
       ? msg
       : `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟ ${
-          opt.throwExistedMsg ? 'has existed.' : "doesn't exist."
+          opt.throwExistedMsg ? 'already existed.' : "doesn't exist."
         }`;
   }
 }
@@ -115,6 +116,7 @@ export class IsEmailsConstraint implements ValidatorConstraintInterface {
 export function IsCommonLegalString(options?: ValidationOptions) {
   options = Object.assign(
     {},
+    //T
     {
       message:
         '$value is illegal, only allow ASCII letters, digits, and the characters - and _',
