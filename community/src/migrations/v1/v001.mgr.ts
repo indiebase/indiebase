@@ -18,7 +18,11 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.orgs, (table) => {
           table.increments('id').primary();
-          table.string('name');
+          table.string('name').unique().index().notNullable();
+          table.string('description');
+          table.string('contact_email').comment('Organization contact email');
+          table.string('avatar_url').comment('Organization avatar url');
+
           table.timestamps(true, true);
         })
         .then(async () => {
@@ -32,6 +36,9 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.projects, (table) => {
           table.increments('id').primary();
+          table.string('name').unique().index().notNullable();
+          table.string('contact_email').comment('Project contact email');
+          table.string('avatar_url').comment('Project avatar url');
           table
             .integer('org_id')
             .unsigned()
@@ -39,7 +46,6 @@ export const v001_mgr = async function (
             .notNullable()
             .references('id')
             .inTable(`mgr.${MgrMetaTables.orgs}`);
-
           table.string('name');
           table.timestamps(true, true);
         })

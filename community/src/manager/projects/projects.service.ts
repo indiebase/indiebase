@@ -42,6 +42,7 @@ export class ProjectsService {
             name: prj.name,
           })
           .into(MgrMetaTables.projects);
+
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({
           migrationSource: new TmplMigrationSource(namespace),

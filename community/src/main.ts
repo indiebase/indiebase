@@ -12,7 +12,6 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { resolve } from 'path';
 import { AppModule } from './app.module';
 import FastifyMultipart from '@fastify/multipart';
-import { i18nValidationErrorFactory } from 'nestjs-i18n';
 import { useContainer } from 'class-validator';
 import { setupApiDoc } from './swagger.setup';
 import fastifyPassport from '@fastify/passport';

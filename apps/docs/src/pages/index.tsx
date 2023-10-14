@@ -131,7 +131,6 @@ const Screen1 = function () {
 
   return (
     <Flex
-      // className={styles.header}
       mt={rem(160)}
       mb={rem(110)}
       gap="md"
@@ -256,7 +255,8 @@ export default function Home(): JSX.Element {
         <br />
         <br />
         <br />
-
+        筹集资金 + 合规审查 + 资金管理 undraising + legal status + money
+        management
         <Text>
           Make revenue generation easier for indie hackers and teams with
           software projects. Private Open Collective + Firebase Successor

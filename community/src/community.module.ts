@@ -9,6 +9,7 @@ import { OrgsModule, ProjectsModule } from '~/manager';
 import { ProbeModule } from '~/probe';
 import { UsersModule } from '~/users/users.module';
 import { MetaModule } from './db/meta/meta.module';
+import { DataSource } from 'typeorm';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
@@ -46,20 +47,19 @@ export const createCommunityModule = function (
       private readonly logger: Logger,
     ) {}
     async onModuleInit() {
-      let s = await this.knex('ib_orgs')
-        .withSchema('mgr')
-        .select(
-          'ib_orgs.id',
-          'ib_orgs.name',
-          'ib_projects.name as project_name',
-        )
-        .from('ib_orgs')
-        .join('ib_projects', function () {
-          this.on('ib_orgs.id', '=', 'ib_projects.org_id');
-        })
-        .where('ib_orgs.id', 1);
-      // await this.metaService.init();
-      console.log(s);
+      // console.log(a);
+      // let s = await this.knex('ib_orgs')
+      //   .withSchema('mgr')
+      //   .select(
+      //     'ib_orgs.id',
+      //     'ib_orgs.name',
+      //     'ib_projects.name as project_name',
+      //   )
+      //   .from('ib_orgs')
+      //   .join('ib_projects', function () {
+      //     this.on('ib_orgs.id', '=', 'ib_projects.org_id');
+      //   })
+      //   .where('ib_orgs.id', 1);
     }
   }
 

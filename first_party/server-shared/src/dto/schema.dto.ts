@@ -19,7 +19,7 @@ export class PaginationReqSchema {
   pageSize: number = 20;
 }
 
-export class ResSchema {
+export class OkResSchema {
   @ApiProperty({
     description: 'Response logical code',
     default: ResultCode.SUCCESS,
@@ -32,7 +32,7 @@ export class ResSchema {
   message?: string | string[];
 }
 
-export class PaginationResSchema extends ResSchema {
+export class PaginationResSchema extends OkResSchema {
   @ApiProperty({
     description: 'Total items',
   })
@@ -47,4 +47,33 @@ export class PaginationResSchema extends ResSchema {
     description: 'Page size',
   })
   pageSize: number;
+}
+
+export class ErrorResSchema {
+  @ApiProperty({
+    description: 'Response logical code',
+    default: ResultCode.ERROR,
+  })
+  code: number;
+
+  @ApiProperty({
+    description: 'Response http code',
+  })
+  statusCode: number;
+
+  @ApiPropertyOptional({
+    description: 'Error responses message',
+  })
+  message?: string | string[];
+
+  @ApiProperty({
+    type: Date,
+    description: 'Error responses timestamp',
+  })
+  timestamp: Date;
+
+  @ApiProperty({
+    description: 'Error responses api path',
+  })
+  path: string;
 }

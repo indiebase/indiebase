@@ -1,26 +1,61 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
-import { ResSchema } from '@indiebase/server-shared';
+import { OkResSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreatePrjDto } from './projects.dto';
-import { did } from '@deskbtm/gadgets';
+import { AccessGuard } from '@indiebase/nest-casl';
+import { PasetoAuthGuard } from '~/auth/paseto.guard';
 
 @Controller({
-  path: 'mgr/orgs',
+  path: 'mgr',
   version: '1',
 })
 @ApiTags('Projects/v1')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
+  @ApiOperation({
+    summary: 'List projects',
+    description: 'List all public projects',
+  })
   @ApiOkResponse({
-    type: ResSchema,
+    type: OkResSchema,
+  })
+  @UseGuards(PasetoAuthGuard, AccessGuard)
+  @ApiBearerAuth('paseto')
+  @Get('orgs/:org/projects')
+  async list() {}
+
+  @ApiOkResponse({
+    type: OkResSchema,
+  })
+  @ApiOperation({
+    summary: 'List projects for the authenticated user',
+    description:
+      'Lists repositories that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
+  })
+  @UseGuards(PasetoAuthGuard, AccessGuard)
+  @ApiBearerAuth('paseto')
+  @Get('user/projects')
+  async listForUser() {}
+
+  @ApiOkResponse({
+    type: OkResSchema,
   })
   @ApiOperation({
     summary: 'Create a project',
@@ -29,10 +64,23 @@ export class ProjectsController {
   })
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
-  @Post(':org/projects')
+  @Post('orgs/:org/projects')
   async create(@Body() body: CreatePrjDto, @Param('org') org: string) {
     await this.projectsService.create(org, body);
 
+    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
+  }
+
+  @ApiParam({
+    name: 'project',
+    type: 'string',
+    schema: {
+      default: 'indiebase',
+    },
+  })
+  @ApiBearerAuth('paseto')
+  @Delete('projects/:project')
+  async delete(@Param('project') project: string) {
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }
 }

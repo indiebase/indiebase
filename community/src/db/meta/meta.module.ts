@@ -12,10 +12,10 @@ export class MetaModule implements OnModuleInit {
   constructor(private readonly metaService: MetaService) {}
 
   async onModuleInit() {
-    try {
-      await this.metaService.initMgr();
-    } catch (error) {
-      this.logger.error('Init:failed ' + error);
-    }
+    // try {
+    //   await this.metaService.initMgr();
+    // } catch (error) {
+    //   this.logger.error('Init:failed ' + error);
+    // }
   }
 }
