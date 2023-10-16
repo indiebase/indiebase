@@ -12,8 +12,6 @@ import path from 'node:path';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
 import { knexSnakeCaseMappers } from 'objection';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Global()
 @Module({

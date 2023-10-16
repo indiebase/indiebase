@@ -14,7 +14,6 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
   sidebar,
 }) => {
   const theme = useMantineTheme();
-  console.log('------------------------------------------------------');
 
   return (
     <AppShell

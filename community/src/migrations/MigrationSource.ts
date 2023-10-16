@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import kysely from 'kysely';
 import { v001_mgr } from '~/migrations/v1/v001.mgr';
 
 export class MigrationSource implements Knex.MigrationSource<any> {
@@ -25,5 +26,11 @@ export class MigrationSource implements Knex.MigrationSource<any> {
       case 'v001_mgr':
         return v001_mgr(this.#schema);
     }
+  }
+}
+
+export class MigratorProvider implements kysely.MigrationProvider {
+  async getMigrations(): Promise<Record<string, kysely.Migration>> {
+    throw new Error('Method not implemented.');
   }
 }

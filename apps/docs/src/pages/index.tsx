@@ -125,6 +125,70 @@ const Screen2 = function () {
   );
 };
 
+const Screen3 = function () {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { ref, entry } = useIntersection({
+    root: containerRef.current,
+    rootMargin: '50px',
+    threshold: 0.5,
+  });
+
+  const {
+    siteConfig: { customFields },
+  } = useDocusaurusContext();
+
+  return (
+    <Stack align="center" mt={rem(80)}>
+      <Title order={2} px={rem(20)}>
+        The Deskbtm products under Indiebase
+      </Title>
+      <Group justify="center" mb={rem(40)} mt={rem(20)} gap={rem(30)}>
+        <DeskbtmProductsCard
+          color="pink"
+          productName={'Indiebase'}
+          desc={`Indiebase is a self-hosted platform explicitly designed for indie
+          developers or teams. Providing BaaS and financial services.`}
+          icon={<IndiebaseSVG style={{ width: rem(50), height: rem(50) }} />}
+        />
+        <DeskbtmProductsCard
+          color="grape"
+          productName={'Nawb'}
+          desc={`Indiebase is a self-hosted platform explicitly designed for indie
+            hackers or teams. Providing BaaS and financial services.`}
+          icon={<NawbSVG style={{ width: rem(50), height: rem(50) }} />}
+        />
+        <DeskbtmProductsCard
+          productName={'PlugKit'}
+          desc={`Indiebase is a self-hosted platform explicitly.`}
+          icon={<PlugKitSVG style={{ width: rem(50), height: rem(50) }} />}
+        />
+      </Group>
+      <Text size={rem(24)}>
+        Join&nbsp;
+        <Text
+          ref={ref}
+          className={entry?.isIntersecting ? styles.deskbtmRotate : null}
+          component="a"
+          target="_blank"
+          href={customFields.deskbtmURL as string}
+          fw={600}
+          td="underline"
+          size={rem(36)}
+        >
+          Deskbtm
+        </Text>
+        &nbsp;now&nbsp;
+        <Box
+          component="span"
+          style={{ transform: 'rotate(15deg)', display: 'inline-block' }}
+        >
+          !!!
+        </Box>
+      </Text>
+    </Stack>
+  );
+};
+
 const Screen1 = function () {
   const theme = useMantineTheme();
   const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
@@ -182,6 +246,7 @@ export default function Home(): JSX.Element {
         <Background />
         <Screen1 />
         <Screen2 />
+        <Title order={1}>Collective</Title>
         {/* <ScrollPage>
             <Box>Start self hosted</Box>
 

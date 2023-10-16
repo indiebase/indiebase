@@ -9,7 +9,6 @@ import { OrgsModule, ProjectsModule } from '~/manager';
 import { ProbeModule } from '~/probe';
 import { UsersModule } from '~/users/users.module';
 import { MetaModule } from './db/meta/meta.module';
-import { DataSource } from 'typeorm';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
@@ -47,6 +46,8 @@ export const createCommunityModule = function (
       private readonly logger: Logger,
     ) {}
     async onModuleInit() {
+      // this.ky.
+      // console.log(this.ky.connection());
       // console.log(a);
       // let s = await this.knex('ib_orgs')
       //   .withSchema('mgr')
