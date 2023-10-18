@@ -2,7 +2,7 @@ import {
   IsCommonLegalString,
   IsEntityExisted,
   MgrMetaTables,
-  OkResSchema,
+  OkResponseSchema,
 } from '@indiebase/server-shared';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
@@ -50,4 +50,4 @@ export class UpdatePrjDto extends CreatePrjDto {
   avatarUrl?: string;
 }
 
-export class CreateOrgResDto extends OkResSchema {}
+export class CreateOrgResDto extends OkResponseSchema {}

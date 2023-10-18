@@ -13,7 +13,7 @@ export enum OrgStatus {
 export interface Org {
   id: number;
   name: string;
-  githubOrgName: string;
+  githubOrg: string;
   avatarUrl?: string;
   domain: string;
   contactEmail: string;

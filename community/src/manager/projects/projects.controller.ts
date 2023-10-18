@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
-import { OkResSchema } from '@indiebase/server-shared';
+import { OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreatePrjDto } from './projects.dto';
 import { AccessGuard } from '@indiebase/nest-casl';
@@ -34,7 +34,7 @@ export class ProjectsController {
     description: 'List all public projects',
   })
   @ApiOkResponse({
-    type: OkResSchema,
+    type: OkResponseSchema,
   })
   @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
@@ -42,7 +42,7 @@ export class ProjectsController {
   async list() {}
 
   @ApiOkResponse({
-    type: OkResSchema,
+    type: OkResponseSchema,
   })
   @ApiOperation({
     summary: 'List projects for the authenticated user',
@@ -55,7 +55,7 @@ export class ProjectsController {
   async listForUser() {}
 
   @ApiOkResponse({
-    type: OkResSchema,
+    type: OkResponseSchema,
   })
   @ApiOperation({
     summary: 'Create a project',

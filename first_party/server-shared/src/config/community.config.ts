@@ -72,7 +72,7 @@ const security = registerAs('security', () => {
   return {
     publicApiGuardEnabled: process.env.PUBLIC_API_GUARD_ENABLED === 'true',
     publicApiGuardSalt: process.env.PUBLIC_API_GUARD_SALT,
-    publicApiGuardExpiresIn: parseInt(process.env.PUBLIC_API_GUARD_EXPIRES_IN),
+    publicApiGuardExpiresIn: process.env.PUBLIC_API_GUARD_EXPIRES_IN,
   };
 });
 

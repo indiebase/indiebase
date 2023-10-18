@@ -18,11 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { OrgsService } from './orgs.service';
-import {
-  PublicApiGuard,
-  OkResSchema,
-  ApiExceptionResponse,
-} from '@indiebase/server-shared';
+import { PublicApiGuard, OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreateOrgDto, UpdateOrgDto } from './orgs.dto';
 import { AccessGuard } from '@indiebase/nest-casl';
@@ -42,9 +38,8 @@ export class OrgsController {
     description: 'List all organizations',
   })
   @ApiOkResponse({
-    type: OkResSchema,
+    type: OkResponseSchema,
   })
-  @ApiExceptionResponse()
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Get('orgs')
@@ -60,11 +55,11 @@ export class OrgsController {
     summary: 'Create an organization',
   })
   @ApiOkResponse({
-    type: OkResSchema,
+    type: OkResponseSchema,
   })
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
-  @Post()
+  @Post('orgs')
   async create(@Body() body: CreateOrgDto) {
     await this.orgsService.create(body);
 
@@ -75,11 +70,11 @@ export class OrgsController {
     summary: 'Update an organization',
   })
   @ApiOkResponse({
-    type: OkResSchema,
+    type: OkResponseSchema,
   })
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
-  @Patch()
+  @Patch('orgs/:org')
   async update(@Body() body: UpdateOrgDto) {
     await this.orgsService.update(body);
 
@@ -97,7 +92,7 @@ export class OrgsController {
     },
   })
   @ApiBearerAuth('paseto')
-  @Delete(':org')
+  @Delete('orgs/:org')
   async delete(@Param('org') org: string) {
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
   }

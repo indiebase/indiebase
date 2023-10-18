@@ -19,7 +19,7 @@ export class PaginationReqSchema {
   pageSize: number = 20;
 }
 
-export class OkResSchema {
+export class OkResponseSchema {
   @ApiProperty({
     description: 'Response logical code',
     default: ResultCode.SUCCESS,
@@ -32,7 +32,7 @@ export class OkResSchema {
   message?: string | string[];
 }
 
-export class PaginationResSchema extends OkResSchema {
+export class PaginationResSchema extends OkResponseSchema {
   @ApiProperty({
     description: 'Total items',
   })

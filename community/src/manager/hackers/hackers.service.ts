@@ -5,14 +5,14 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { CreateOrgDto, UpdateOrgDto } from './orgs.dto';
+import { CreateHackersDto, UpdateHackersDto } from './hackers.dto';
 import { Knex } from 'knex';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 
 @Injectable()
-export class OrgsService {
-  private readonly logger = new Logger('OrgsService');
+export class HackersService {
+  private readonly logger = new Logger('HackersService');
 
   constructor(
     @InjectKnex()
@@ -28,17 +28,17 @@ export class OrgsService {
     return this.knex(`mgr.${MgrMetaTables.orgs}`).select();
   }
 
-  public async update(body: UpdateOrgDto) {
-    const { name, contactEmail, description, avatarUrl } = body;
+  public async update(body: UpdateHackersDto) {
+    const { email, contactEmail, description, avatarUrl } = body;
 
-    try {
-      await this.knex
-        .update({ name, contactEmail, description, avatarUrl })
-        .into(`mgr.${MgrMetaTables.orgs}`);
-    } catch (error) {
-      this.logger.error(error);
-      throw new InternalServerErrorException();
-    }
+    // try {
+    //   await this.knex
+    //     .update({ name, contactEmail, description, avatarUrl })
+    //     .into(`mgr.${MgrMetaTables.orgs}`);
+    // } catch (error) {
+    //   this.logger.error(error);
+    //   throw new InternalServerErrorException();
+    // }
 
     // this.knex.update().updateFrom
     // await this.knex.schema.createSchema(org.name);
@@ -56,9 +56,9 @@ export class OrgsService {
    * This function will create an organizational namespace by using schema,
    * enabling data isolation.
    */
-  public async create(org: CreateOrgDto) {
+  public async create(org: CreateHackersDto) {
     await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
-      name: org.name,
+      name: org.email,
     });
   }
 }

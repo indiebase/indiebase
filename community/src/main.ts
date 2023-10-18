@@ -34,6 +34,7 @@ async function bootstrap() {
   try {
     const config = app.get<ConfigService>(ConfigService);
     const nestWinston = app.get(WINSTON_MODULE_NEST_PROVIDER);
+    const sessionSecret = config.get('app.sessionSecret');
 
     app.useGlobalPipes(
       new ValidationPipe({
@@ -61,10 +62,10 @@ async function bootstrap() {
     });
 
     await app.register(fastifyCookie, {
-      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+      secret: sessionSecret,
     });
     await app.register(fastifySession, {
-      secret: 'UVISaKja95xQLQaGoOBiL9mH2Pm9ZgvgdyutRf9tigo=',
+      secret: sessionSecret,
     });
     await app.register(fastifyPassport.initialize());
     await app.register(fastifyPassport.secureSession());
@@ -75,10 +76,10 @@ async function bootstrap() {
       type: VersioningType.URI,
     });
 
-    // app.enableCors({
-    //   origin: config.get('app.corsOrigin'),
-    //   credentials: true,
-    // });
+    app.enableCors({
+      origin: config.get('app.corsOrigin'),
+      credentials: true,
+    });
 
     // Setup swagger api doc with  .
     await setupApiDoc(app);

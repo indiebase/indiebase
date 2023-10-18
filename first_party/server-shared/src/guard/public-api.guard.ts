@@ -3,12 +3,14 @@ import {
   BadRequestException,
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   Logger,
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 import * as forge from 'node-forge';
 import { X_Indiebase_AC } from '@indiebase/sdk';
+import ms from 'ms';
 
 /**
  *  Inspect token from header
@@ -35,7 +37,8 @@ const apiTokenInspect = function (
   md.update(salt);
 
   return (
-    md.digest().toHex() === hash && Date.now() + expire < parseInt(timestamp)
+    md.digest().toHex() === hash &&
+    Math.abs(Date.now() - ms(timestamp)) < ms(expire)
   );
 };
 
@@ -53,32 +56,32 @@ export class PublicApiGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
-    try {
-      const {
-        publicApiGuardEnabled,
-        publicApiGuardSalt,
-        publicApiGuardExpiresIn,
-      } = this.config.get('security');
+    const {
+      publicApiGuardEnabled,
+      publicApiGuardSalt,
+      publicApiGuardExpiresIn,
+    } = this.config.get('security');
 
-      // If remote config is disabled, return true.
-      if (!publicApiGuardEnabled) {
-        return true;
-      }
+    // If remote config is disabled, return true.
+    if (!publicApiGuardEnabled) {
+      return true;
+    }
 
-      const apiToken = request.headers[X_Indiebase_AC] as string;
-
-      if (!apiToken) {
-        throw new BadRequestException();
-      }
-
-      return apiTokenInspect(
-        apiToken,
-        publicApiGuardSalt,
-        publicApiGuardExpiresIn,
-      );
-    } catch (error) {
-      this.logger.error(error);
+    const apiToken = request.headers[X_Indiebase_AC] as string;
+    if (!apiToken) {
       throw new BadRequestException();
     }
+
+    const r = apiTokenInspect(
+      apiToken,
+      publicApiGuardSalt,
+      publicApiGuardExpiresIn,
+    );
+
+    if (!r) {
+      throw new ForbiddenException();
+    }
+
+    return r;
   }
 }

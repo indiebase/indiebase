@@ -1,14 +1,20 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { IsEntityExistedConstraint, KnexEx } from '@indiebase/server-shared';
+import {
+  IsEntityExistedConstraint,
+  KnexEx,
+  genDevPublicApiKey,
+} from '@indiebase/server-shared';
 import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { Knex } from 'knex';
 import { AuthModule } from '~/auth';
 import { MetaService } from '~/db/meta/meta.service';
 import { InitializeDepsModule } from '~/deps.module';
-import { OrgsModule, ProjectsModule } from '~/manager';
 import { ProbeModule } from '~/probe';
 import { UsersModule } from '~/users/users.module';
-import { MetaModule } from './db/meta/meta.module';
+import { MetaModule } from '~/db';
+import { MgrModule } from '~/manager/mgr.module';
+import { StorageModule } from './storage';
+import { ConfigService } from '@nestjs/config';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
@@ -21,11 +27,11 @@ export const createCommunityModule = function (
   @Module({
     imports: [
       ProbeModule,
-      UsersModule,
+      MgrModule,
       AuthModule,
-      OrgsModule,
-      ProjectsModule,
+      UsersModule,
       MetaModule,
+      StorageModule,
       ...options.imports,
       InitializeDepsModule,
     ],
@@ -44,8 +50,14 @@ export const createCommunityModule = function (
       @InjectKnex()
       private readonly knex: Knex,
       private readonly logger: Logger,
+      private readonly config: ConfigService,
     ) {}
     async onModuleInit() {
+      if (kDevMode) {
+        const salt = this.config.get('security.publicApiGuardSalt');
+        this.logger.debug('Public API Key: ' + genDevPublicApiKey(salt));
+      }
+
       // this.ky.
       // console.log(this.ky.connection());
       // console.log(a);

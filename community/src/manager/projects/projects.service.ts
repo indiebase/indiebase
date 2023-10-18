@@ -12,12 +12,13 @@ import { TmplMigrationSource } from '~/migrations/TmplMigrationSource';
 
 @Injectable()
 export class ProjectsService {
+  private readonly logger = new Logger('MgrProjectsService');
+
   constructor(
     @InjectKnex()
     private readonly knex: Knex,
     @InjectKnexEx()
     private readonly knexEx: KnexEx,
-    private readonly logger: Logger,
   ) {}
 
   /**

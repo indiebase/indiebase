@@ -29,6 +29,7 @@ export class ProbeController {
 
   @Get('liveness')
   @ApiOperation({
+    operationId: 'liveness',
     summary: 'Liveness probe includes http, storage, memory, database',
   })
   @HealthCheck()

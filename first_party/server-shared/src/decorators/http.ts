@@ -19,10 +19,14 @@ export const DevApiHeader = function () {
   );
 };
 
-export const PublicApiHeader = () =>
+export const SecurityApiHeader = () =>
   ApiHeader({
     name: X_Indiebase_AC,
-    description: 'Protect public api',
+    description: 'Protect public APIs',
+    required: true,
+    schema: {
+      default: '0000000000;dev;2cb919284dc284f4994fcd064ef0542b',
+    },
   });
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {

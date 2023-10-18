@@ -7,21 +7,21 @@ import {
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
 
-export class CreateOrgDto {
+export class CreateHackersDto {
   @ApiProperty({
-    description: 'Organization name',
-    default: 'indiebase',
+    description: 'Hacker account',
+    default: 'dev@deskbtm.com',
   })
   @IsEntityExisted({
     schema: 'mgr',
-    table: MgrMetaTables.orgs,
-    column: 'name',
+    table: MgrMetaTables.hackers,
+    column: 'email',
   })
-  @IsCommonLegalString()
-  name: string;
+  @IsEmail()
+  email: string;
 }
 
-export class UpdateOrgDto extends CreateOrgDto {
+export class UpdateHackersDto extends CreateHackersDto {
   @ApiPropertyOptional({
     default: 'dev@indiebase.com',
   })
@@ -42,7 +42,7 @@ export class UpdateOrgDto extends CreateOrgDto {
   description?: string;
 
   @ApiPropertyOptional({
-    description: 'Organization icon url',
+    description: 'Project icon url',
     default: 'https://indiebase-dev.deskbtm.com/favicon.ico',
   })
   @IsOptional()
@@ -50,6 +50,4 @@ export class UpdateOrgDto extends CreateOrgDto {
   avatarUrl?: string;
 }
 
-export class CreateOrgResDto extends OkResponseSchema {}
-
-export class ListOrgResDto {}
+export class CreateHackersResDto extends OkResponseSchema {}

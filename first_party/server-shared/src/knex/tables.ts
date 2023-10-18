@@ -1,7 +1,7 @@
 export enum MgrMetaTables {
   projects = 'ib_projects',
   orgs = 'ib_orgs',
-  users = 'ib_users',
+  hackers = 'ib_hackers',
   roles = 'ib_roles',
   migrations = 'knex_mgr_migration',
 }

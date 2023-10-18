@@ -1,5 +1,11 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { OkResponseSchema } from '@indiebase/server-shared';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { PasetoAuthGuard } from '~/auth/paseto.guard';
 
 @Controller({
@@ -9,10 +15,16 @@ import { PasetoAuthGuard } from '~/auth/paseto.guard';
 @ApiTags('User/v1')
 export class UsersController {
   // constructor(private readonly pasetoService: PasetoService) {}
-  
-  @Get('demo')
+
+  @ApiOperation({
+    summary: 'Sign up a user',
+  })
+  @ApiOkResponse({
+    type: OkResponseSchema,
+  })
   @ApiBearerAuth('paseto')
-  @UseGuards(PasetoAuthGuard)
+  @UseGuards()
+  @Post('signup')
   async demo() {
     return 1;
     // return this.pasetoService.sign({ demo: 11 });

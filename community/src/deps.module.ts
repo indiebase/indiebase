@@ -1,7 +1,7 @@
 import { CaslModule } from '@indiebase/nest-casl';
 import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import { BuiltinMgrRoles, KnexEx } from '@indiebase/server-shared';
+import { BuiltinMgrRoles, KnexEx, KyselyEx } from '@indiebase/server-shared';
 import { RedisModule, RedisClientOptions } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -12,6 +12,9 @@ import path from 'node:path';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
 import { knexSnakeCaseMappers } from 'objection';
+import { KyselyModule } from '@indiebase/nest-kysely';
+import { Pool } from 'pg';
+import { CamelCasePlugin, PostgresDialect, Kysely } from 'kysely';
 
 @Global()
 @Module({
@@ -98,6 +101,36 @@ import { knexSnakeCaseMappers } from 'objection';
         };
       },
     }),
+    // KyselyModule.forRootAsync({
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => {
+    //     const { host, port, password, user, database } = config.get('pg');
+    //     const dialect = new PostgresDialect({
+    //       pool: new Pool({
+    //         database,
+    //         password,
+    //         host,
+    //         user,
+    //         port,
+    //         max: 10,
+    //       }),
+    //     });
+
+    //     return {
+    //       extend(ky) {
+    //         return new KyselyEx(ky);
+    //       },
+    //       /**
+    //        * @todo
+    //        */
+    //       synchronize: kDevMode,
+    //       config: {
+    //         dialect,
+    //         plugins: [new CamelCasePlugin()],
+    //       },
+    //     };
+    //   },
+    // }),
     // TypeOrmModule.forRootAsync({
     //   inject: [ConfigService],
     //   async useFactory(config: ConfigService) {

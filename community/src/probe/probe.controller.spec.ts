@@ -3,6 +3,7 @@ import { ProbeController } from './probe.controller';
 import { TerminusModule } from '@nestjs/terminus';
 import { KnexHealthIndicator } from './knex.health';
 import { HttpModule } from '@nestjs/axios';
+import { describe, beforeEach, it, expect } from 'vitest';
 // import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('ProbeController', () => {

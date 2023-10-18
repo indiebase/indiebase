@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as forge from 'node-forge';
 
 export const getSubdomain = function (
   domain: string,
@@ -117,4 +118,11 @@ export const sizeParser = function (
   }
 
   throw unit + " doesn't appear to be a valid unit";
+};
+
+export const genDevPublicApiKey = function (salt) {
+  const md = forge.md.md5.create();
+  md.update(salt);
+
+  return `${Date.now()};dev;${md.digest().toHex()}`;
 };
