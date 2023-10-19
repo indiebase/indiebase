@@ -72,6 +72,11 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       hideOnScroll: true,
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+        },
+      },
       navbar: {
         hideOnScroll: true,
         logo: {
@@ -80,9 +85,8 @@ const config = {
         },
         items: [
           {
-            // type: 'docSidebar',
-            // sidebarId: 'documentation',
-            to: '/docs',
+            type: 'doc',
+            docId: 'overview',
             position: 'right',
             label: 'Docs',
           },

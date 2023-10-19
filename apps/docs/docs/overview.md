@@ -1,6 +1,6 @@
 ---
-id: welcome
-title: 👋 Welcome
+id: overview
+title: Overview
 description: Welcome to the Indiebase documentation!
 keywords: [docs]
 sidebar_position: 0
