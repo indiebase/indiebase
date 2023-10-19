@@ -1,6 +1,15 @@
 import * as path from 'path';
 import * as forge from 'node-forge';
+import * as bcrypt from 'bcrypt';
 
+/**
+ *
+ * @param domain
+ * @param index
+ * @param prefix
+ * @returns
+ * @deprecated
+ */
 export const getSubdomain = function (
   domain: string,
   index: number = 2,
@@ -125,4 +134,9 @@ export const genDevPublicApiKey = function (salt) {
   md.update(salt);
 
   return `${Date.now()};dev;${md.digest().toHex()}`;
+};
+
+export const hashSecret = async function (content: string, rounds = 10) {
+  const s = await bcrypt.genSalt(rounds);
+  return bcrypt.hash(content, s);
 };

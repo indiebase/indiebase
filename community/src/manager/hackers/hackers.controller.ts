@@ -3,7 +3,7 @@ import {
   PublicApiGuard,
   SecurityApiHeader,
 } from '@indiebase/server-shared';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import {
   ApiTags,
   ApiBearerAuth,
@@ -11,6 +11,9 @@ import {
   ApiOperation,
 } from '@nestjs/swagger';
 import { CreateHackersDto } from './hackers.dto';
+import { HackersService } from './hackers.service';
+import { did } from '@deskbtm/gadgets';
+import { ResultCode } from '@indiebase/trait';
 
 @Controller({
   path: 'mgr/hackers',
@@ -18,7 +21,7 @@ import { CreateHackersDto } from './hackers.dto';
 })
 @ApiTags('Hackers/v1')
 export class HackersController {
-  // constructor(private readonly pasetoService: PasetoService) {}
+  constructor(private readonly hackers: HackersService) {}
 
   @ApiOperation({
     summary: 'List hackers',
@@ -43,7 +46,11 @@ export class HackersController {
   @UseGuards(PublicApiGuard)
   @Post('signup')
   async signup(@Body() body: CreateHackersDto) {
-    console.log(body);
-    return 1;
+    await this.hackers.create(body);
+
+    return {
+      code: ResultCode.SUCCESS,
+      message: 'Sign up successfully.',
+    };
   }
 }

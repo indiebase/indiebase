@@ -3,13 +3,14 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const i18n = require('./i18n');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Indiebase',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
-
+  i18n,
   // Set the production url of your site here
   url: 'https://your-docusaurus-test-site.com',
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -27,10 +28,7 @@ const config = {
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
-  },
+
   customFields: {
     deskbtmURL: 'https://deskbtm.com/en',
   },
@@ -82,31 +80,36 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'documentation',
+            // type: 'docSidebar',
+            // sidebarId: 'documentation',
+            to: '/docs',
             position: 'right',
             label: 'Docs',
           },
+          // {
+          //   position: 'right',
+          //   // type: 'docSidebar',
+          //   to: '/pricing',
+          //   sidebarId: 'tutorialSidebar2',
+          //   label: 'Pricing',
+          // },
           {
-            position: 'right',
-            type: 'docSidebar',
-            // to: '/pricing',
-            sidebarId: 'tutorialSidebar2',
-            label: 'Pricing',
+            type: 'localeDropdown',
+            position: 'left',
           },
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar2',
-            position: 'right',
-            label: 'Sponsor',
-          },
-          { to: '/blog', label: 'Blog', position: 'right' },
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar1',
-            position: 'right',
-            label: 'Abort',
-          },
+          // {
+          //   type: 'docSidebar',
+          //   // sidebarId: 'tutorialSidebar2',
+          //   position: 'right',
+          //   label: 'Sponsor',
+          // },
+          // { to: '/blog', label: 'Blog', position: 'right' },
+          // {
+          //   type: 'docSidebar',
+          //   sidebarId: 'tutorialSidebar1',
+          //   position: 'right',
+          //   label: 'Abort',
+          // },
         ],
       },
       footer: {

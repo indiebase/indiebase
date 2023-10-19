@@ -5,7 +5,7 @@ import {
   OkResponseSchema,
 } from '@indiebase/server-shared';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
+import { IsEmail, IsString, IsOptional, IsUrl, IsHash } from 'class-validator';
 
 export class CreateHackersDto {
   @ApiProperty({
@@ -19,6 +19,15 @@ export class CreateHackersDto {
   })
   @IsEmail()
   email: string;
+
+  @ApiProperty({
+    description: 'Hacker account',
+    default: '7cc0dc81e477b2b24aca4cf86f61cc913daa47edae72027b900543f8686772b0',
+  })
+  @IsHash('sha256', {
+    message: 'Password is illegal',
+  })
+  password: string;
 }
 
 export class UpdateHackersDto extends CreateHackersDto {

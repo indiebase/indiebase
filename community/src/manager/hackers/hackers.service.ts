@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateHackersDto, UpdateHackersDto } from './hackers.dto';
 import { Knex } from 'knex';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import { KnexEx, MgrMetaTables, hashSecret } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 
 @Injectable()
@@ -57,8 +57,17 @@ export class HackersService {
    * enabling data isolation.
    */
   public async create(org: CreateHackersDto) {
-    await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
-      name: org.email,
-    });
+    let { email, password } = org;
+    password = await hashSecret(password);
+    await this.knex<CreateHackersDto>(MgrMetaTables.hackers)
+      .withSchema('mgr')
+      .insert({
+        email,
+        password,
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException();
+      });
   }
 }

@@ -57,7 +57,6 @@ export const v001_mgr = async function (
           table.string('name').unique().index().notNullable();
           table.string('contact_email').comment('Project contact email');
           table.string('avatar_url').comment('Project avatar url');
-
           table.integer('pinned_order').comment('Project card pinned order');
           table.boolean('pinned').comment('Pin the project');
           table
@@ -94,7 +93,7 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.roles, (table) => {
           table.increments('id').primary();
-          table.string('name').notNullable();
+          table.string('name').unique().notNullable();
           table.json('permissions').notNullable();
           table.timestamps(true, true);
         })
@@ -110,7 +109,7 @@ export const v001_mgr = async function (
         .createTable(MgrMetaTables.hackers, (table) => {
           table.increments('id').primary();
           // table.string('username').index().notNullable();
-          table.string('email').index().notNullable();
+          table.string('email').unique().index().notNullable();
           table.string('nickname').comment('Nickname');
           table.string('avatar_url').comment('User avatar url');
           table.string('bio').comment('User biography');

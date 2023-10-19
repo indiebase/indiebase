@@ -1,21 +1,20 @@
-import React, { useState, type ReactNode } from 'react';
-import { useThemeConfig, ErrorCauseBoundary } from '@docusaurus/theme-common';
+import { ErrorCauseBoundary, useThemeConfig } from '@docusaurus/theme-common';
 import {
   splitNavbarItems,
   useNavbarMobileSidebar,
 } from '@docusaurus/theme-common/internal';
-import NavbarItem, { type Props as NavbarItemConfig } from '@theme/NavbarItem';
-import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
-import SearchBar from '@theme/SearchBar';
-import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
-import NavbarLogo from '@theme/Navbar/Logo';
-import NavbarSearch from '@theme/Navbar/Search';
-
-import * as styles from './styles.css.ts';
 import { ActionIcon, Anchor, Box, Divider, Group, Text } from '@mantine/core';
-import clsx from 'clsx';
 import { SignInAndUpModal } from '@site/src/components/Modals/SignInAndUp.tsx';
 import { IconBrandGithub } from '@tabler/icons-react';
+import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
+import NavbarLogo from '@theme/Navbar/Logo';
+import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
+import NavbarSearch from '@theme/Navbar/Search';
+import NavbarItem, { type Props as NavbarItemConfig } from '@theme/NavbarItem';
+import SearchBar from '@theme/SearchBar';
+import clsx from 'clsx';
+import React, { useState, type ReactNode } from 'react';
+import * as styles from './styles.css.ts';
 
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
