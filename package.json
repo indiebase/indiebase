@@ -21,8 +21,8 @@
     "mismatches": "syncpack list-mismatches"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.59.11",
-    "@typescript-eslint/parser": "5.59.11",
+    "@typescript-eslint/eslint-plugin": "6.8.0",
+    "@typescript-eslint/parser": "6.8.0",
     "@vitest/ui": "^0.33.0",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
