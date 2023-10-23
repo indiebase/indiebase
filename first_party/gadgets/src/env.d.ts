@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2023 Han
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 declare module globalThis {
   /**
    * Determine if it is a development environment..

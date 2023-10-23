@@ -1,27 +1,42 @@
+import { X_Indiebase_Project_ID } from '@indiebase/sdk';
+import {
+  IsEntityExisted,
+  MgrMetaTables,
+  TmplMetaTables,
+} from '@indiebase/server-shared';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsHash } from 'class-validator';
 // import { IsNotEmpty, MinLength, MaxLength, IsString } from 'class-validator';
 
 export class LocalSignInDto {
-  // @ApiProperty({
-  //   default: 'Nawbc',
-  // })
-  // @IsNotEmpty({
-  //   message: "Username shouldn't empty",
-  // })
-  // username: string;
-  // @ApiProperty({
-  //   default: 'indiebase',
-  // })
-  // @IsNotEmpty({
-  //   message: "Password shouldn't be empty",
-  // })
-  // @MinLength(8, {
-  //   message: 'Password length less than 8',
-  // })
-  // @MaxLength(64, {
-  //   message: 'Password length more than 8',
-  // })
-  // password: string;
+  @ApiProperty({
+    description: 'Hacker account',
+    default: 'dev@deskbtm.com',
+  })
+  @IsEntityExisted({
+    type: 'specificProjectFromHeader',
+    header: X_Indiebase_Project_ID,
+    table: TmplMetaTables.users,
+    column: 'email',
+    $ifEq: {
+      mgr: {
+        schema: 'mgr',
+        table: MgrMetaTables.hackers,
+        column: 'email',
+      },
+    },
+  })
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({
+    description: 'Hacker account password',
+    default: '7cc0dc81e477b2b24aca4cf86f61cc913daa47edae72027b900543f8686772b0',
+  })
+  @IsHash('sha256', {
+    message: 'Password is illegal',
+  })
+  password: string;
 }
 
 export class OptVerifyDto {

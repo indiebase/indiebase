@@ -1,9 +1,9 @@
 import {
   OkResponseSchema,
   PublicApiGuard,
-  SecurityApiHeader,
+  ProtectApiHeader,
 } from '@indiebase/server-shared';
-import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import {
   ApiTags,
   ApiBearerAuth,
@@ -12,7 +12,6 @@ import {
 } from '@nestjs/swagger';
 import { CreateHackersDto } from './hackers.dto';
 import { HackersService } from './hackers.service';
-import { did } from '@deskbtm/gadgets';
 import { ResultCode } from '@indiebase/trait';
 
 @Controller({
@@ -42,7 +41,7 @@ export class HackersController {
   @ApiOkResponse({
     type: OkResponseSchema,
   })
-  @SecurityApiHeader()
+  @ProtectApiHeader()
   @UseGuards(PublicApiGuard)
   @Post('signup')
   async signup(@Body() body: CreateHackersDto) {

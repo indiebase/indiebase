@@ -1,8 +1,9 @@
 /**
  * Copyright (C)  svtslv (https://github.com/svtslv)
- * License-Identifier: MIT
- *
  * Copyright (C) 2022 Han
+ *
+ * SPDX-License-Identifier: MIT
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 export const S3_MODULE_CONNECTION = 'default';

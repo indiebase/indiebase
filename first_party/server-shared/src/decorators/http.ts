@@ -1,4 +1,4 @@
-import { X_Indiebase_AC } from '@indiebase/sdk';
+import { X_Indiebase_AC, X_Indiebase_Project_ID } from '@indiebase/sdk';
 import {
   BadRequestException,
   ExecutionContext,
@@ -6,6 +6,9 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
+import { plainToClass, plainToInstance } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
+import { type ClzType } from '../utils';
 
 export const DevApiHeader = function () {
   return applyDecorators(
@@ -19,7 +22,7 @@ export const DevApiHeader = function () {
   );
 };
 
-export const SecurityApiHeader = () =>
+export const ProtectApiHeader = () =>
   ApiHeader({
     name: X_Indiebase_AC,
     description: 'Protect public APIs',
@@ -28,6 +31,19 @@ export const SecurityApiHeader = () =>
       default: '0000000000;dev;2cb919284dc284f4994fcd064ef0542b',
     },
   });
+
+export const ProjectApiHeader = () =>
+  ApiHeader({
+    name: X_Indiebase_Project_ID,
+    description: 'Indiebase Project ID',
+    required: true,
+    schema: {
+      default: 'indiebase',
+    },
+  });
+
+export const CommonApiHeader = () =>
+  applyDecorators(ProjectApiHeader(), ProtectApiHeader());
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   return createParamDecorator((_, ctx: ExecutionContext) => {
@@ -52,17 +68,17 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
 };
 
 export const User = createParamDecorator(
-  (data: string, ctx: ExecutionContext) => {
+  (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    const session = request.session ?? {};
-    return data ? session.user[data] : session.user;
+
+    return property ? request[property] : request.user;
   },
 );
 
 export const UserRoles = createParamDecorator(
-  (data: string, ctx: ExecutionContext) => {
+  (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return data ? request.user[data] : request.user.roles;
+    return property ? request.user[property] : request.user.roles;
   },
 );
 

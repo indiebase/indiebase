@@ -8,14 +8,21 @@ import {
   Session,
   Post,
   Body,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { PublicApiGuard, SecurityApiHeader } from '@indiebase/server-shared';
+import {
+  PublicApiGuard,
+  CommonApiHeader,
+  EntityExistedPipe,
+  XHeadersPipe,
+} from '@indiebase/server-shared';
 import { LocalSignInDto } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
 import { ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
 import { PasetoService } from 'nestjs-paseto';
+import { X_Indiebase_Project_ID } from '@indiebase/sdk';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
@@ -23,17 +30,19 @@ export class AuthController {
   constructor(private readonly pasetoService: PasetoService) {}
 
   @Post('signin')
-  @SecurityApiHeader()
+  @CommonApiHeader()
   @ApiOperation({
-    summary: 'SignIn with password',
+    summary: 'Sign in with password',
   })
   @UseGuards(PublicApiGuard, LocalAuthGuard)
   async signIn(
-    @Body() _: LocalSignInDto,
+    @Body()
+    _: LocalSignInDto,
     @Req() req: FastifyRequest,
-    @Session() session: any,
   ) {
     // await this.authService.handleSingIn(req, session);
+
+    console.log(req.user);
 
     return {
       code: ResultCode.SUCCESS,
@@ -59,12 +68,6 @@ export class AuthController {
     @Res() res: FastifyReply,
   ) {
     // await this.authService.handleGithubCallback(req, session);
-
-    return res
-      .type('text/html')
-      .send(
-        '<html><body><h3 style="text-align:center">Success</h3><script>setTimeout(()=>{window.close()}, 1000)</script></body>',
-      );
   }
 
   @Get('oauth/google')
@@ -86,12 +89,6 @@ export class AuthController {
     @Res() res: FastifyReply,
   ) {
     // await this.authService.handleGithubCallback(req, session);
-
-    return res
-      .type('text/html')
-      .send(
-        '<html><body><h3 style="text-align:center">Success</h3><script>setTimeout(()=>{window.close()}, 1000)</script></body>',
-      );
   }
 
   @Post('signout')

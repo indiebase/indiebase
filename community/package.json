@@ -65,6 +65,7 @@
     "nest-winston": "1.9.4",
     "nestjs-i18n": "10.2.6",
     "nestjs-paseto": "workspace:^",
+    "nestjs-request-context": "^3.0.0",
     "objection": "^3.1.2",
     "otplib": "12.0.1",
     "passport-github2": "0.1.12",

@@ -6078,6 +6078,7 @@ __metadata:
     nest-winston: 1.9.4
     nestjs-i18n: 10.2.6
     nestjs-paseto: "workspace:^"
+    nestjs-request-context: ^3.0.0
     objection: ^3.1.2
     otplib: 12.0.1
     passport-github2: 0.1.12
@@ -6629,6 +6630,7 @@ __metadata:
     knex: "*"
     kysely: "*"
     ms: "*"
+    nestjs-request-context: "*"
     node-forge: 1.3.1
     reflect-metadata: 0.1.13
     rxjs: 7.8.1
@@ -25540,6 +25542,15 @@ __metadata:
     vitest: 0.34.6
   languageName: unknown
   linkType: soft
+
+"nestjs-request-context@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "nestjs-request-context@npm:3.0.0"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0
+  checksum: f3ea8aced62de7a14081852ec2b11f70fdf2f8d9742ea516da0c5dc82a0a2026841c5073e8fe427a25b73d597e38cfb09524f30af3857db44210140afa7ac439
+  languageName: node
+  linkType: hard
 
 "netmask@npm:^2.0.2":
   version: 2.0.2

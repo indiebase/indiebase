@@ -13,6 +13,7 @@ export class CreatePrjDto {
     default: 'indiebase',
   })
   @IsEntityExisted({
+    type: 'specificProject',
     schema: 'mgr',
     table: MgrMetaTables.projects,
     column: 'name',

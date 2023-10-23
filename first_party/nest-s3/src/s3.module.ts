@@ -1,8 +1,9 @@
 /**
- * Copyright (C)  svtslv (https://github.com/svtslv)
- * License-Identifier: MIT
- *
  * Copyright (C) 2022 Han
+ * Copyright (C)  svtslv (https://github.com/svtslv)
+ *
+ * SPDX-License-Identifier: MIT
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import { DynamicModule, Module } from '@nestjs/common';

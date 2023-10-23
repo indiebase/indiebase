@@ -1,6 +1,17 @@
 import { is } from '@deskbtm/gadgets/is';
 import { InjectKnex } from '@indiebase/nest-knex';
-import { Injectable, applyDecorators } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+  PipeTransform,
+  UseInterceptors,
+  UsePipes,
+  applyDecorators,
+  createParamDecorator,
+} from '@nestjs/common';
+import { HttpAdapterHost } from '@nestjs/core';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
@@ -11,7 +22,9 @@ import {
   IsString,
 } from 'class-validator';
 import { Knex } from 'knex';
+import { Observable } from 'rxjs';
 import validator from 'validator';
+import { RequestContext } from 'nestjs-request-context';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**
@@ -26,10 +39,29 @@ type ExtendedValidationOptions = ValidationOptions & {
   message?: ((value: any) => string) | string;
 };
 
-interface Entity {
+interface SpecificProject {
+  type: 'specificProject';
   schema?: string;
   table: string;
   column: string;
+}
+
+interface SpecificProjectFromHeader {
+  type: 'specificProjectFromHeader';
+  header: string;
+  table: string;
+  column: string;
+  $ifEq?: Record<string, Omit<SpecificProject, 'type'>>;
+}
+
+type Entity = SpecificProject | SpecificProjectFromHeader;
+
+export const REQUEST_CONTEXT = '_requestContext';
+
+export interface ExtendedValidationArguments extends ValidationArguments {
+  object: {
+    [REQUEST_CONTEXT]: {};
+  };
 }
 
 @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
@@ -40,24 +72,41 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     private readonly knex: Knex,
   ) {}
 
-  validate(value: any, args: ValidationArguments) {
-    if (!value || value === '') {
-      return true;
-    }
-    const entity: Entity = args.constraints[0];
-    const { throwExistedMsg } = args
-      .constraints[1] satisfies ExtendedValidationOptions;
+  validate(value: any, args: ExtendedValidationArguments) {
+    // const instance = this.httpAdapterHost;
+    // console.log(instance);
 
-    return this.knex
-      .withSchema(entity.schema ?? 'public')
-      .select('*')
-      .from(entity.table)
-      .where(entity.column, value)
-      .then((v) => {
-        return Array.isArray(v) && v.length > 0
-          ? !throwExistedMsg
-          : throwExistedMsg;
-      });
+    console.log(RequestContext.currentContext.req);
+
+    console.log('===============', args);
+    return true;
+    // if (!value || value === '') {
+    //   return true;
+    // }
+    // const entity: Entity = args.constraints[0];
+    // const { throwExistedMsg } = args
+    //   .constraints[1] satisfies ExtendedValidationOptions;
+
+    // switch (entity?.type) {
+    //   case 'specificProjectFromHeader': {
+    //     const e = entity as SpecificProjectFromHeader;
+    //     // return this.knex
+    //   }
+    //   case 'specificProject':
+    //   default: {
+    //     const e = entity as SpecificProject;
+    //     return this.knex
+    //       .withSchema(e.schema ?? 'public')
+    //       .select('*')
+    //       .from(e.table)
+    //       .where(e.column, value)
+    //       .then((v) => {
+    //         return Array.isArray(v) && v.length > 0
+    //           ? !throwExistedMsg
+    //           : throwExistedMsg;
+    //       });
+    //   }
+    // }
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {
@@ -96,6 +145,7 @@ export function IsEntityExisted(
 
   return function (object: Object, propertyName: string) {
     registerDecorator({
+      name: 'IsEntityExisted',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
@@ -104,6 +154,48 @@ export function IsEntityExisted(
     });
   };
 }
+
+@Injectable()
+export class InjectUserInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const request = context.switchToHttp().getRequest();
+
+    console.log('@@@@', request);
+
+    return next.handle();
+  }
+}
+
+@Injectable()
+export class StripRequestContextPipe implements PipeTransform {
+  transform(value: any) {
+    console.log('@#####', value);
+    return value;
+  }
+}
+
+export function EntityExistedPipe() {
+  return applyDecorators(
+    UseInterceptors(InjectUserInterceptor),
+    UsePipes(StripRequestContextPipe),
+  );
+}
+
+export const XHeadersPipe = createParamDecorator(
+  async (property: string | number | symbol, ctx: ExecutionContext) => {
+    const headers = ctx.switchToHttp().getRequest().headers;
+
+    if (
+      typeof property === 'string' ||
+      typeof property === 'number' ||
+      typeof property === 'symbol'
+    ) {
+      return headers[property];
+    }
+
+    return headers;
+  },
+);
 
 @ValidatorConstraint({ name: 'IsEmailsConstraint', async: true })
 @Injectable()

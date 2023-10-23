@@ -14,27 +14,12 @@ export class MicrosoftStrategy
     super();
   }
 
-  // Support
-  async useStrategy(appStrategy, use) {
-    // const subscriptions = [
-    //   {
-    //     dataId: 'mutable.json',
-    //     group: 'DEFAULT_GROUP',
-    //     getProperty(options: Record<string, any>) {
-    //       const {
-    //         github: { clientID, clientSecret, callbackURL },
-    //       } = options;
-    //       return { clientID, clientSecret, callbackURL };
-    //     },
-    //   },
-    // ];
-    // for await (const sub of subscriptions) {
-    //   const { getProperty, ...rest } = sub;
-    //   await this.nacosConfig.subscribe(rest, (config) => {
-    //     const options = getProperty(config);
-    //     use(appStrategy(options));
-    //   });
-    // }
+  async useStrategyOptions() {
+    return {
+      clientID: '1111',
+      clientSecret: '1111',
+      callbackURL: 'http://indiebase.deskbtm.com:23331/v1/auth/github/callback',
+    };
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any) {

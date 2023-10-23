@@ -17,8 +17,8 @@ export class GoogleStrategy
 
   async useStrategyOptions() {
     return {
-      clientID: '',
-      clientSecret: '',
+      clientID: 'xxx',
+      clientSecret: 'xxxxx',
       callbackURL:
         'http://indiebase.deskbtm.com:23331/v1/auth/google/callback/',
     };

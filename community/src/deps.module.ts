@@ -15,10 +15,12 @@ import { knexSnakeCaseMappers } from 'objection';
 import { KyselyModule } from '@indiebase/nest-kysely';
 import { Pool } from 'pg';
 import { CamelCasePlugin, PostgresDialect, Kysely } from 'kysely';
+import { RequestContextModule } from 'nestjs-request-context';
 
 @Global()
 @Module({
   imports: [
+    RequestContextModule,
     RedisModule.forRootAsync({
       inject: [ConfigService],
       async useFactory(config: ConfigService) {

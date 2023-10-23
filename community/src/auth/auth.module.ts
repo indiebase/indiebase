@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { PasetoModule } from 'nestjs-paseto';
 import { ConfigService } from '@nestjs/config';
 import { PasetoStrategy } from './paseto.strategy';
+import { GithubStrategy, GoogleStrategy, MicrosoftStrategy } from './social';
 
 @Module({
   imports: [
@@ -29,10 +30,11 @@ import { PasetoStrategy } from './paseto.strategy';
   controllers: [AuthController],
   providers: [
     Logger,
-    // GithubStrategy,
-    // GoogleStrategy,
+    GithubStrategy,
+    GoogleStrategy,
+    MicrosoftStrategy,
     PasetoStrategy,
-    // LocalStrategy,
+    LocalStrategy,
     AuthService,
   ],
   exports: [PassportModule, AuthService],

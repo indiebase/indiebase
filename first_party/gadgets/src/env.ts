@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2023 Han
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // Preset env modes.
 /// <reference path="./env.d.ts" />
 

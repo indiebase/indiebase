@@ -1,4 +1,8 @@
 // Inspired by await-to-js
+/**
+ * Copyright (C) 2023 Han
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /**
  * Get the await result with tuple.

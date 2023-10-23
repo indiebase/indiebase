@@ -40,6 +40,7 @@ async function bootstrap() {
       new ValidationPipe({
         transform: true,
         enableDebugMessages: kDevMode,
+        // validateCustomDecorators: true,
         whitelist: true,
         forbidNonWhitelisted: true,
         // exceptionFactory: i18nValidationErrorFactory,

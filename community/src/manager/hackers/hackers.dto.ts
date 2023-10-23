@@ -1,5 +1,4 @@
 import {
-  IsCommonLegalString,
   IsEntityExisted,
   MgrMetaTables,
   OkResponseSchema,
@@ -13,6 +12,7 @@ export class CreateHackersDto {
     default: 'dev@deskbtm.com',
   })
   @IsEntityExisted({
+    type: 'specificProject',
     schema: 'mgr',
     table: MgrMetaTables.hackers,
     column: 'email',
@@ -21,7 +21,7 @@ export class CreateHackersDto {
   email: string;
 
   @ApiProperty({
-    description: 'Hacker account',
+    description: 'Hacker account password',
     default: '7cc0dc81e477b2b24aca4cf86f61cc913daa47edae72027b900543f8686772b0',
   })
   @IsHash('sha256', {

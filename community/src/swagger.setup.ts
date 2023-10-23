@@ -16,21 +16,28 @@ const assetsPath = kDevMode
     )
   : null;
 
+const contactName = 'deskbtm/indiebase',
+  contactUrl = '',
+  contactEmail = 'indiebase@deskbtm',
+  license = 'Apache-2.0',
+  licenseUrl = 'https://github.com/indiebase/indiebase/blob/main/LICENSE',
+  termsUrl = 'https://indiebase.deskbtm.com/terms',
+  desc = `
+  Indiebase Management REST API.
+  Click "Export" button, you can use swagger-typescript-api to generate TypeScript API from OpenAPI.
+  Send Email to Indiebase (indiebase@deskbtm.com)
+`;
+
 export const setupApiDoc = (app: INestApplication) =>
   new Promise(async (resolve) => {
-    const name = process.env.API_DOC_CONTACT_NAME ?? 'deskbtm/indiebase',
-      url = process.env.API_DOC_CONTACT_URL ?? '',
-      email = process.env.API_DOC_CONTACT_EMAIL ?? 'dev@indiebase.com';
+    // const name = process.env.API_DOC_CONTACT_NAME ?? 'deskbtm/indiebase',
+    //   url = process.env.API_DOC_CONTACT_URL ?? '',
+    //    = process.env.API_DOC_CONTACT_EMAIL ?? 'dev@indiebase.com';
 
     try {
       const mgrOptions = new DocumentBuilder()
         .setTitle('Indiebase Management REST API')
-        .setDescription(
-          `
-          Indiebase Management REST API.
-          Click "Export" button, you can use swagger-typescript-api to generate TypeScript API from OpenAPI.
-        `,
-        )
+        .setDescription(desc)
         .setVersion('1.0.0')
         .addBearerAuth(
           {
@@ -42,16 +49,14 @@ export const setupApiDoc = (app: INestApplication) =>
           },
           'paseto',
         )
-        .setContact(name, url, email)
+        .setContact(contactName, contactUrl, contactEmail)
+        .setLicense(license, licenseUrl)
+        .setTermsOfService(termsUrl)
         .build();
 
       const options = new DocumentBuilder()
         .setTitle('Indiebase REST API')
-        .setDescription(
-          `
-          Indiebase REST API.
-        `,
-        )
+        .setDescription(desc)
         .setVersion('1.0.0')
         .addBearerAuth(
           {
@@ -63,7 +68,9 @@ export const setupApiDoc = (app: INestApplication) =>
           },
           'paseto',
         )
-        .setContact(name, url, email)
+        .setContact(contactName, contactUrl, contactEmail)
+        .setLicense(license, licenseUrl)
+        .setTermsOfService(termsUrl)
         .build();
 
       const mgrApiDoc = SwaggerModule.createDocument(app, mgrOptions, {

@@ -4,7 +4,13 @@ import {
   KnexEx,
   genDevPublicApiKey,
 } from '@indiebase/server-shared';
-import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Logger,
+  Module,
+  ModuleMetadata,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Knex } from 'knex';
 import { AuthModule } from '~/auth';
 import { MetaService } from '~/db/meta/meta.service';
@@ -15,6 +21,8 @@ import { MetaModule } from '~/db';
 import { MgrModule } from '~/manager/mgr.module';
 import { StorageModule } from './storage';
 import { ConfigService } from '@nestjs/config';
+import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
+import { RequestContextModule } from 'nestjs-request-context';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:

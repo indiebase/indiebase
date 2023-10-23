@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { Strategy } from 'passport-local';
+import { type IStrategyOptions, Strategy } from 'passport-local';
 import {
   PassportStrategy,
   PassportStrategyFactory,
@@ -15,10 +15,22 @@ export class LocalStrategy
     super();
   }
 
-  async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateLocal(username, password);
+  useStrategyOptions(): IStrategyOptions {
+    return {
+      usernameField: 'email',
+      passwordField: 'password',
+    };
+  }
+
+  async validate(username: string, password: string, ...rest): Promise<any> {
+    // console.log(rest);
+    // const user = await this.authService.validateLocal(username, password);
 
     // delete user.password;
+
+    const user = {
+      email: 'hanhan',
+    };
 
     return user;
   }

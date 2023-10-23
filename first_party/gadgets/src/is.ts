@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2023 Han
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 export interface IsFalsyOptions {
   /**
    * Check the whitespace and return false for `is.truthy`, true for `is.falsy`,

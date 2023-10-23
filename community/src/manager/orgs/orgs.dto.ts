@@ -13,6 +13,7 @@ export class CreateOrgDto {
     default: 'indiebase',
   })
   @IsEntityExisted({
+    type: 'specificProject',
     schema: 'mgr',
     table: MgrMetaTables.orgs,
     column: 'name',
