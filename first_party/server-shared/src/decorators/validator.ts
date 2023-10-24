@@ -11,7 +11,6 @@ import {
   applyDecorators,
   createParamDecorator,
 } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
@@ -24,7 +23,9 @@ import {
 import { Knex } from 'knex';
 import { Observable } from 'rxjs';
 import validator from 'validator';
-import { RequestContext } from 'nestjs-request-context';
+import { AsyncContext } from '@indiebase/nest-async-context';
+import { type FastifyRequest } from 'fastify';
+import { X_Indiebase_Project_ID } from '@indiebase/sdk';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**
@@ -72,41 +73,51 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     private readonly knex: Knex,
   ) {}
 
+  #resultHandler(throwExistedMsg: boolean) {
+    return function (value: any[]) {
+      return Array.isArray(value) && value.length > 0
+        ? !throwExistedMsg
+        : throwExistedMsg;
+    };
+  }
+
   validate(value: any, args: ExtendedValidationArguments) {
-    // const instance = this.httpAdapterHost;
-    // console.log(instance);
+    if (!value || value === '') {
+      return true;
+    }
 
-    console.log(RequestContext.currentContext.req);
-
-    console.log('===============', args);
+    console.log('validate');
     return true;
-    // if (!value || value === '') {
-    //   return true;
-    // }
-    // const entity: Entity = args.constraints[0];
-    // const { throwExistedMsg } = args
-    //   .constraints[1] satisfies ExtendedValidationOptions;
+    const entity: Entity = args.constraints[0];
+    const { throwExistedMsg } = args
+      .constraints[1] satisfies ExtendedValidationOptions;
 
-    // switch (entity?.type) {
-    //   case 'specificProjectFromHeader': {
-    //     const e = entity as SpecificProjectFromHeader;
-    //     // return this.knex
-    //   }
-    //   case 'specificProject':
-    //   default: {
-    //     const e = entity as SpecificProject;
-    //     return this.knex
-    //       .withSchema(e.schema ?? 'public')
-    //       .select('*')
-    //       .from(e.table)
-    //       .where(e.column, value)
-    //       .then((v) => {
-    //         return Array.isArray(v) && v.length > 0
-    //           ? !throwExistedMsg
-    //           : throwExistedMsg;
-    //       });
-    //   }
-    // }
+    switch (entity?.type) {
+      case 'specificProjectFromHeader': {
+        const e = entity as SpecificProjectFromHeader;
+        const req = AsyncContext.current<FastifyRequest, any>().request;
+        req.headers[X_Indiebase_Project_ID];
+
+        // this.knex
+        //   .withSchema(e.schema ?? 'public')
+        //   .select('*')
+        //   .from(e.table)
+        //   .where(e.column, value)
+        //   .then(this.#resultHandler(throwExistedMsg));
+
+        // return this.knex
+      }
+      case 'specificProject':
+      default: {
+        const e = entity as SpecificProject;
+        return this.knex
+          .withSchema(e.schema ?? 'public')
+          .select('*')
+          .from(e.table)
+          .where(e.column, value)
+          .then(this.#resultHandler(throwExistedMsg));
+      }
+    }
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {

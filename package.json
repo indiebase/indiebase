@@ -44,9 +44,6 @@
       "apps/packages/*",
       "community",
       "pro"
-    ],
-    "nohoist": [
-      "**/ky/**"
     ]
   },
   "config": {
@@ -54,7 +51,7 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@4.0.0",
   "resolutions": {
     "webpack@5.73.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
     "webpack@5.79.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",

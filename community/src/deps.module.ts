@@ -1,26 +1,23 @@
+import { AsyncContextModule } from '@indiebase/nest-async-context';
 import { CaslModule } from '@indiebase/nest-casl';
 import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import { BuiltinMgrRoles, KnexEx, KyselyEx } from '@indiebase/server-shared';
-import { RedisModule, RedisClientOptions } from '@liaoliaots/nestjs-redis';
+import { BuiltinMgrRoles, KnexEx } from '@indiebase/server-shared';
+import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WinstonModule, utilities } from 'nest-winston';
 import path from 'node:path';
+import { knexSnakeCaseMappers } from 'objection';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
-import { knexSnakeCaseMappers } from 'objection';
-import { KyselyModule } from '@indiebase/nest-kysely';
-import { Pool } from 'pg';
-import { CamelCasePlugin, PostgresDialect, Kysely } from 'kysely';
-import { RequestContextModule } from 'nestjs-request-context';
 
 @Global()
 @Module({
   imports: [
-    RequestContextModule,
+    AsyncContextModule,
     RedisModule.forRootAsync({
       inject: [ConfigService],
       async useFactory(config: ConfigService) {
