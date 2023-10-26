@@ -6,7 +6,7 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
-import { PasetoAuthGuard } from '~/auth/paseto.guard';
+import { PasetoAuthGuard } from '../auth/paseto.guard';
 
 @Controller({
   path: 'user',

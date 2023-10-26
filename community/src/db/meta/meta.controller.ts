@@ -5,7 +5,7 @@ import { ApiTags } from '@nestjs/swagger';
   path: 'meta',
   version: '1',
 })
-@ApiTags('v1/Metadata')
+@ApiTags('Metadata/v1')
 export class ProbeController {
   constructor(private readonly logger: Logger) {}
 

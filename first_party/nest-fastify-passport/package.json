@@ -87,6 +87,6 @@
     "url": "https://github.com/nestjs/passport"
   },
   "dependencies": {
-    "@fastify/passport": "2.3.0"
+    "@fastify/passport": "2.4.0"
   }
 }

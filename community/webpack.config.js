@@ -9,8 +9,10 @@ const swcDefaultConfig =
 
 const getYarnWorkspaceDeps = function () {
   const pkg = require('./package.json');
-  return Object.entries(pkg.dependencies)
-    .map((k) => (k[1].includes('workspace') ? new RegExp(k[0]) : null))
+  return Object.entries(
+    Object.assign({}, pkg.dependencies, pkg.optionalDependencies),
+  )
+    .map((k) => (k[1].match(/workspace|link|file/g) ? new RegExp(k[0]) : null))
     .filter(Boolean);
 };
 

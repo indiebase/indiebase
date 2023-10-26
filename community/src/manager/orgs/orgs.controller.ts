@@ -22,7 +22,7 @@ import { PublicApiGuard, OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreateOrgDto, UpdateOrgDto } from './orgs.dto';
 import { AccessGuard } from '@indiebase/nest-casl';
-import { PasetoAuthGuard } from '~/auth/paseto.guard';
+import { PasetoAuthGuard } from '../../auth/paseto.guard';
 import { did } from '@deskbtm/gadgets';
 
 @Controller({

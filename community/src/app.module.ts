@@ -27,7 +27,7 @@ import { X_Indiebase_Lang } from '@indiebase/sdk';
         I18nModule.forRoot({
           fallbackLanguage: 'en',
           loaderOptions: {
-            path: path.resolve(__dirname, '../../i18n/'),
+            path: path.resolve(__dirname, '../../i18n'),
             watch: kDevMode,
           },
           resolvers: [

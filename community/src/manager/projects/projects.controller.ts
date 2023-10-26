@@ -19,7 +19,7 @@ import { OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreatePrjDto } from './projects.dto';
 import { AccessGuard } from '@indiebase/nest-casl';
-import { PasetoAuthGuard } from '~/auth/paseto.guard';
+import { PasetoAuthGuard } from '../../auth/paseto.guard';
 
 @Controller({
   path: 'mgr',

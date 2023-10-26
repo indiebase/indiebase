@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { v001_tmpl } from '~/migrations/v1/v001.tmpl';
+import { v001_tmpl } from '../migrations/v1/v001.tmpl';
 
 export class TmplMigrationSource implements Knex.MigrationSource<any> {
   #schema: string;

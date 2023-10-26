@@ -1,33 +1,54 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    // JavaScript Support
     "allowJs": true,
-    "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "NodeNext",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "removeComments": true,
-    "module": "NodeNext",
+    "checkJs": true,
+    // Type Checking
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strictBindCallApply": false,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
-    "pretty": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": false,
-    "skipDefaultLibCheck": true,
     "noImplicitOverride": true,
-    "strictBindCallApply": false,
     "noImplicitReturns": false,
+    // Output Formatting
+    "pretty": true,
+    // Interop
+    "forceConsistentCasingInFileNames": false,
+    // Emit
+    "importHelpers": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
+    // Language and Environment
+    "target": "es2015",
     "lib": [
-      "ESNext"
-    ]
+      "ESNext",
+      "DOM"
+    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    // Modules
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "paths": {
+      "@indiebase/community": [
+        "./community/src/index.ts"
+      ],
+      "@indiebase/pro": [
+        "./pro/server/src/index.ts"
+      ],
+      "@deskbtm/gadgets/*": [
+        "./first_party/gadgets/src/*"
+      ],
+    }
   },
   "exclude": [
     "dist",
+    "tmp",
     "node_modules",
-    "test",
-    "**/*spec.ts"
   ]
 }

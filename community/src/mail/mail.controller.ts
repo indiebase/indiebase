@@ -7,7 +7,7 @@ import { MailService } from './mail.service';
   path: 'mail',
   version: '1',
 })
-@ApiTags('v1/Mail')
+@ApiTags('Mail/v1')
 export class MailController {
   constructor(private readonly mailService: MailService) {}
 

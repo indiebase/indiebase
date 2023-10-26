@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Knex } from 'knex';
 import { CreatePrjDto } from './projects.dto';
-import { TmplMigrationSource } from '~/migrations/TmplMigrationSource';
+import { TmplMigrationSource } from '../../migrations/TmplMigrationSource';
 
 @Injectable()
 export class ProjectsService {

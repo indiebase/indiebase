@@ -18,7 +18,8 @@
     "release": "standard-version",
     "prepare": "husky install",
     "syncpack": "syncpack",
-    "mismatches": "syncpack list-mismatches"
+    "mismatches": "syncpack list-mismatches",
+    "paseto:key": "node ./scripts/paseto.mjs"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "6.8.0",
@@ -43,7 +44,7 @@
       "apps/first_party/*",
       "apps/packages/*",
       "community",
-      "pro"
+      "pro/*"
     ]
   },
   "config": {
@@ -57,9 +58,5 @@
     "webpack@5.79.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
     "webpack@^5": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
     "webpack@5.64.4": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch"
-  },
-  "dependencies": {
-    "hyperid": "^3.1.1",
-    "ms": "^2.1.3"
   }
 }
