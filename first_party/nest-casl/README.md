@@ -37,7 +37,7 @@ Configure application:
 // app.module.ts
 
 import { Module } from '@nestjs/common';
-import { CaslModule } from 'nest-casl';
+import { CaslModule } from '@indiebase/nest-casl';
 import { Roles } from './app.roles';
 
 @Module({
@@ -79,7 +79,7 @@ Permissions are defined per module. `everyone` permissions are applied to every 
 ```typescript
 // post.permissions.ts
 
-import { Permissions, Actions } from 'nest-casl';
+import { Permissions, Actions } from '@indiebase/nest-casl';
 import { InferSubjects } from '@casl/ability';
 
 import { Roles } from '../app.roles';
@@ -131,7 +131,7 @@ Assuming authentication handled by AuthGuard. AccessGuard expects user to at lea
 
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AccessGuard, UseAbility, Actions } from 'nest-casl';
+import { AccessGuard, UseAbility, Actions } from '@indiebase/nest-casl';
 
 import { CreatePostInput } from './dtos/create-post-input.dto';
 import { UpdatePostInput } from './dtos/update-post-input.dto';
@@ -180,7 +180,7 @@ For permissions with conditions we need to provide subject hook in UseAbility de
 ```typescript
 // post.hook.ts
 import { Injectable } from '@nestjs/common';
-import { Request, SubjectBeforeFilterHook } from 'nest-casl';
+import { Request, SubjectBeforeFilterHook } from '@indiebase/nest-casl';
 
 import { PostService } from './post.service';
 import { Post } from './dtos/post.dto';
@@ -275,7 +275,7 @@ Use AccessService to check permissions without AccessGuard and UseAbility decora
 
 ```typescript
 // ...
-import { AccessService, Actions, CaslUser } from 'nest-casl';
+import { AccessService, Actions, CaslUser } from '@indiebase/nest-casl';
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -320,7 +320,7 @@ Despite UserHook is configured on application level, it is executed in context o
 
 import { Injectable } from '@nestjs/common';
 
-import { UserBeforeFilterHook } from 'nest-casl';
+import { UserBeforeFilterHook } from '@indiebase/nest-casl';
 import { UserService } from './user.service';
 import { User } from './dtos/user.dto';
 
@@ -341,7 +341,7 @@ export class UserHook implements UserBeforeFilterHook<User> {
 //app.module.ts
 
 import { Module } from '@nestjs/common';
-import { CaslModule } from 'nest-casl';
+import { CaslModule } from '@indiebase/nest-casl';
 
 @Module({
   imports: [
@@ -360,7 +360,7 @@ or with dynamic module initialization
 //app.module.ts
 
 import { Module } from '@nestjs/common';
-import { CaslModule } from 'nest-casl';
+import { CaslModule } from '@indiebase/nest-casl';
 
 @Module({
   imports: [
@@ -389,7 +389,7 @@ or with tuple hook
 //app.module.ts
 
 import { Module } from '@nestjs/common';
-import { CaslModule } from 'nest-casl';
+import { CaslModule } from '@indiebase/nest-casl';
 
 @Module({
   imports: [

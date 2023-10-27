@@ -38,21 +38,21 @@ import { OpenObserveTransport } from 'winston-openobserve';
         const { host, defaultOrg, defaultStream, username, password } =
           config.get('open_observe');
 
-        const openObserveTransport = new OpenObserveTransport({
-          bulk: true,
-          host,
-          defaultOrg,
-          defaultStream,
-          interval: 2000,
-          cleanOnRequestError: true,
-          onConnectionError(_error, close) {
-            close();
-          },
-          basicAuth: {
-            username,
-            password,
-          },
-        });
+        // const openObserveTransport = new OpenObserveTransport({
+        //   bulk: true,
+        //   host,
+        //   defaultOrg,
+        //   defaultStream,
+        //   interval: 2000,
+        //   cleanOnRequestError: true,
+        //   onConnectionError(_error, close) {
+        //     close();
+        //   },
+        //   basicAuth: {
+        //     username,
+        //     password,
+        //   },
+        // });
 
         const transports = [
           new winston.transports.Console({
@@ -77,6 +77,8 @@ import { OpenObserveTransport } from 'winston-openobserve';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         const { host, port, password, user, database } = config.get('pg');
+
+        // console.log(config.get('pg'));
 
         return {
           /**
@@ -130,24 +132,7 @@ import { OpenObserveTransport } from 'winston-openobserve';
     //     };
     //   },
     // }),
-    // TypeOrmModule.forRootAsync({
-    //   inject: [ConfigService],
-    //   async useFactory(config: ConfigService) {
-    //     const { host, port, password, user, database } = config.get('pg');
 
-    //     return {
-    //       type: 'postgres',
-    //       synchronize: kDevMode,
-    //       host,
-    //       port,
-    //       username: user,
-    //       password,
-    //       database,
-    //       autoLoadEntities: true,
-    //       namingStrategy: new SnakeNamingStrategy(),
-    //     };
-    //   },
-    // }),
     MailerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => {

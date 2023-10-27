@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Request, SubjectBeforeFilterHook } from 'nest-casl';
+import { Request, SubjectBeforeFilterHook } from '@indiebase/nest-casl';
 
 import { PostService } from './post.service';
 import { Post } from './dtos/post.dto';

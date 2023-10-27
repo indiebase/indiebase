@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Roles } from '../../app.roles';
-import { AuthorizableUser } from 'nest-casl';
+import { AuthorizableUser } from '@indiebase/nest-casl';
 
 @ObjectType()
 export class User implements AuthorizableUser<Roles> {

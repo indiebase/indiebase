@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "@types/lodash.debounce": "4",
-    "@types/node": "20.4.5",
-    "@types/react": "18.2.15",
-    "@types/react-dom": "18.2.7"
+    "@types/node": "20.8.9",
+    "@types/react": "18.2.33",
+    "@types/react-dom": "18.2.14"
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",

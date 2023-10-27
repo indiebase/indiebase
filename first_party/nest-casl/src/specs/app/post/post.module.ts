@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CaslModule } from 'nest-casl';
+import { CaslModule } from '@indiebase/nest-casl';
 
 import { PostResolver } from './post.resolver';
 import { PostController } from './post.controller';

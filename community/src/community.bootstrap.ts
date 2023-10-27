@@ -14,7 +14,6 @@ import {
 import { FastifyStaticOptions } from '@nestjs/platform-fastify/interfaces/external';
 import { useContainer } from 'class-validator';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
-import { AppModule } from './app.module';
 import { setupApiDoc } from './swagger.setup';
 
 declare const module: any;
@@ -29,9 +28,14 @@ export class CommunityBootstrap {
 
   constructor(private readonly options?: BootstrapOptions) {}
 
-  async create(module: any) {
+  /**
+   * @param EntryModule - Indiebase pro app or community app module class
+   * @returns
+   */
+  async create(EntryModule: any) {
+    console.log(this.options.staticAssets, '===========');
     this.app = await NestFactory.create<NestFastifyApplication>(
-      module,
+      EntryModule,
       new FastifyAdapter(),
       {
         bodyParser: true,
@@ -43,7 +47,7 @@ export class CommunityBootstrap {
     const nestWinston = this.app.get(WINSTON_MODULE_NEST_PROVIDER);
 
     // Inject service to ValidatorConstraintInterface
-    useContainer(this.app.select(AppModule), {
+    useContainer(this.app.select(EntryModule), {
       fallbackOnErrors: true,
     });
 
@@ -73,7 +77,6 @@ export class CommunityBootstrap {
 
     // Setup swagger api doc with  .
     // await setupApiDoc(this.app);
-
     this.app.useStaticAssets(this.options?.staticAssets);
     this.app.useLogger(nestWinston);
     this.app.useGlobalFilters(new HttpExceptionFilter(nestWinston));

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { CaslModule } from 'nest-casl';
+import { CaslModule } from '@indiebase/nest-casl';
 
 import { PostModule } from './post/post.module';
 import { UserModule } from './user/user.module';

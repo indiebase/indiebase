@@ -11,7 +11,7 @@ import {
   UseAbility,
   UserProxy,
   SubjectProxy,
-} from 'nest-casl';
+} from '@indiebase/nest-casl';
 
 import { User } from '../user/dtos/user.dto';
 import { Post } from './dtos/post.dto';
@@ -22,7 +22,10 @@ import { UpdatePostInput } from './dtos/update-post-input.dto';
 
 @Resolver(() => Post)
 export class PostResolver {
-  constructor(private postService: PostService, private accessService: AccessService) {}
+  constructor(
+    private postService: PostService,
+    private accessService: AccessService,
+  ) {}
 
   @Query(() => Post)
   @UseGuards(AccessGuard)
@@ -79,13 +82,19 @@ export class PostResolver {
   @Mutation(() => Post)
   @UseGuards(AccessGuard)
   @UseAbility(Actions.update, Post, PostHook)
-  async updatePostUserParam(@Args('input') input: UpdatePostInput, @CaslUser() user: UserProxy<User>) {
+  async updatePostUserParam(
+    @Args('input') input: UpdatePostInput,
+    @CaslUser() user: UserProxy<User>,
+  ) {
     this.postService.addUser(await user.get());
     return this.postService.update(input);
   }
 
   @Mutation(() => Post)
-  async updatePostUserParamNoAbility(@Args('input') input: UpdatePostInput, @CaslUser() user: UserProxy<User>) {
+  async updatePostUserParamNoAbility(
+    @Args('input') input: UpdatePostInput,
+    @CaslUser() user: UserProxy<User>,
+  ) {
     this.postService.addUser(await user.get());
     return this.postService.update(input);
   }
@@ -93,7 +102,10 @@ export class PostResolver {
   @Mutation(() => Post)
   @UseGuards(AccessGuard)
   @UseAbility(Actions.update, Post, PostHook)
-  async updatePostSubjectParam(@Args('input') input: UpdatePostInput, @CaslSubject() subjectProxy: SubjectProxy<Post>) {
+  async updatePostSubjectParam(
+    @Args('input') input: UpdatePostInput,
+    @CaslSubject() subjectProxy: SubjectProxy<Post>,
+  ) {
     const post = await subjectProxy.get();
     if (!post) {
       throw new NotFoundException('Post not found');
@@ -121,7 +133,10 @@ export class PostResolver {
   @Mutation(() => Post)
   @UseGuards(AccessGuard)
   @UseAbility(Actions.update, Post, PostHook)
-  async updatePostConditionParam(@Args('input') input: UpdatePostInput, @CaslConditions() conditions: ConditionsProxy) {
+  async updatePostConditionParam(
+    @Args('input') input: UpdatePostInput,
+    @CaslConditions() conditions: ConditionsProxy,
+  ) {
     return this.postService.update(input, conditions.toSql());
   }
 

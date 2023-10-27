@@ -1,4 +1,4 @@
-import { Actions, Permissions, InferSubjects } from 'nest-casl';
+import { Actions, Permissions, InferSubjects } from '@indiebase/nest-casl';
 
 import { Roles } from '../app.roles';
 import { Post } from './dtos/post.dto';

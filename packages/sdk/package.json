@@ -48,7 +48,7 @@
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
   },
   "devDependencies": {
-    "@types/node": "20.4.5",
+    "@types/node": "20.8.9",
     "swagger-typescript-api": "^13.0.3",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.2.2",
