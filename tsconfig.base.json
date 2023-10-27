@@ -33,18 +33,7 @@
     // Modules
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "resolveJsonModule": true,
-    "paths": {
-      "@indiebase/community": [
-        "./community/src/index.ts"
-      ],
-      "@indiebase/pro": [
-        "./pro/server/src/index.ts"
-      ],
-      "@deskbtm/gadgets/*": [
-        "./first_party/gadgets/src/*"
-      ],
-    }
+    "resolveJsonModule": true
   },
   "exclude": [
     "dist",

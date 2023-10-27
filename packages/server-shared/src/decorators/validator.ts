@@ -25,7 +25,7 @@ import { Observable } from 'rxjs';
 import validator from 'validator';
 import { AsyncContext } from '@indiebase/nest-async-context';
 import { type FastifyRequest } from 'fastify';
-import { X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { X_Indiebase_Project_ID } from '../../../sdk/src';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**

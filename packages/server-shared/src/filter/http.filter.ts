@@ -1,4 +1,4 @@
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '../../../trait/src';
 import {
   ExceptionFilter,
   Catch,

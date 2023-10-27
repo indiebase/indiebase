@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 import * as forge from 'node-forge';
-import { X_Indiebase_AC } from '@indiebase/sdk';
+import { X_Indiebase_AC } from '../../../sdk/src';
 import ms from 'ms';
 
 /**

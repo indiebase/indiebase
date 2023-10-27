@@ -1,4 +1,4 @@
-import { X_Indiebase_AC, X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { X_Indiebase_AC, X_Indiebase_Project_ID } from '../../../sdk/src';
 import {
   BadRequestException,
   ExecutionContext,

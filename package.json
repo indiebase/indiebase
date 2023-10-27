@@ -44,7 +44,8 @@
       "apps/first_party/*",
       "apps/packages/*",
       "community",
-      "pro/*"
+      "pro/*",
+      "packages/*"
     ]
   },
   "config": {
