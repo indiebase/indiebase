@@ -4,12 +4,12 @@
   "description": "Indiebase server dev tools",
   "author": "Han <wanghan9423@outlook.com>",
   "private": true,
-  "main": "./index.cjs",
+  "main": "./*.js",
   "exports": {
-    ".": "./index.cjs",
+    ".": "./*.js",
     "./*": {
-      "import": "./*.cjs",
-      "require": "./*.cjs"
+      "import": "./*.js",
+      "require": "./*.js"
     }
   },
   "scripts": {
@@ -23,12 +23,19 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.62",
+    "@swc/core": "^1.3.95",
     "@types/node": "20.4.5",
-    "workspace-tools": "^0.36.3",
+    "cross-env": "7.0.3",
+    "fork-ts-checker-webpack-plugin": "8.0.0",
+    "run-script-webpack-plugin": "0.2.0",
+    "swc-loader": "^0.2.3",
+    "ts-loader": "9.4.4",
     "webpack": "5.88.2",
     "webpack-node-externals": "3.0.0",
-    "run-script-webpack-plugin": "0.2.0",
-    "fork-ts-checker-webpack-plugin": "8.0.0",
-    "cross-env": "7.0.3",
+    "workspace-tools": "^0.36.3"
+  },
+  "peerDependencies": {
+    "webpack": "5.88.2"
   }
 }

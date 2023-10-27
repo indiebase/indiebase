@@ -4,7 +4,7 @@ const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const workspaceTools = require('workspace-tools');
-const { cwd } = require('node:process');
+const process = require('node:process');
 const swcDefaultConfig =
   require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
     .swcOptions;
@@ -28,6 +28,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
  * @param {boolean|string} options.sourceMap - default true
  * @param {string=} options.tsconfig - default tsconfig.json
  * @param {import('webpack').ResolveOptions} options.resolve
+ * @param {Object} options.output
  * @param {Array=} options.additionalPlugins
  * @param {Array=} options.additionalRules
  * @param {Array=} options.externalsAllowList
@@ -35,7 +36,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
  * @return {import('webpack').Configuration}
  */
 exports.createWebpackConfig = async (options) => {
-  const cwd = cwd();
+  const cwd = process.cwd();
 
   options = Object.assign(
     {},
@@ -53,6 +54,10 @@ exports.createWebpackConfig = async (options) => {
       additionalRules: [],
       additionalExternals: [path.resolve(cwd, 'node_modules')],
       externalsAllowList: [],
+      output: {
+        path: path.resolve(cwd, 'dist'),
+        filename: 'main.js',
+      },
       startOptions: {
         name: 'main.js',
         autoRestart: true,
@@ -115,7 +120,7 @@ exports.createWebpackConfig = async (options) => {
     module: {
       rules: [...rules, ...options.additionalRules],
     },
-    mode: options.cwd,
+    mode: options.mode,
     resolve: options.resolve,
     plugins: [
       new ForkTsCheckerWebpackPlugin({
@@ -127,10 +132,7 @@ exports.createWebpackConfig = async (options) => {
       new RunScriptWebpackPlugin(options.startOptions),
       ...options.additionalPlugins,
     ],
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: 'main.js',
-    },
+    output: options.output,
     optimization: {
       concatenateModules: true,
     },
