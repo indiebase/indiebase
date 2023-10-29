@@ -27,8 +27,6 @@ import { LocalAuthGuard } from './local.guard';
 import { ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
 import { PasetoService } from 'nestjs-paseto';
-import { X_Indiebase_Project_ID } from '@indiebase/sdk';
-import { Observable, tap } from 'rxjs';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')

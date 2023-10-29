@@ -6372,9 +6372,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/react-authz@workspace:apps/first_party/react-authz":
+"@indiebase/react-authz@workspace:apps/first_party/authz":
   version: 0.0.0-use.local
-  resolution: "@indiebase/react-authz@workspace:apps/first_party/react-authz"
+  resolution: "@indiebase/react-authz@workspace:apps/first_party/authz"
   dependencies:
     "@types/node": "npm:20.8.9"
     "@types/react": "npm:18.2.33"
@@ -6387,9 +6387,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/react-table@workspace:apps/first_party/react-table":
+"@indiebase/react-table@workspace:apps/first_party/table":
   version: 0.0.0-use.local
-  resolution: "@indiebase/react-table@workspace:apps/first_party/react-table"
+  resolution: "@indiebase/react-table@workspace:apps/first_party/table"
   dependencies:
     "@deskbtm/gadgets": "workspace:^"
     "@types/lodash.debounce": "npm:4"

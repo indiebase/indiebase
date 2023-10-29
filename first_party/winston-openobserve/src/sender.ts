@@ -7,7 +7,7 @@ export class Sender {
   #req: typeof ky;
   #data: Record<string, any>;
   #tmpData: Record<string, any>;
-  #timer: NodeJS.Timer;
+  #timer: NodeJS.Timeout;
   #isSending: boolean;
 
   constructor(options: OpenObserveTransportOptions) {

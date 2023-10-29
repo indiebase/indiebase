@@ -27,6 +27,6 @@ export const X_Indiebase_Package_Name = 'x-indiebase-package-name';
 export const X_Indiebase_Project_ID = 'x-indiebase-project-id';
 
 /**
- * Project api key
+ * Project API key
  */
 export const X_Indiebase_Api_Key = 'x-indiebase-api-key';

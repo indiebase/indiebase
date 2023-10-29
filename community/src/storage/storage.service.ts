@@ -16,8 +16,6 @@ import {
 } from '@nestjs/common';
 import * as path from 'path';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { did } from '@deskbtm/gadgets';
 
 interface SaveBucketOptions {
