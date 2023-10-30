@@ -1,11 +1,12 @@
 import {
   IsEntityExistedConstraint,
+  PresetMiddlewareModule,
   genDevPublicApiKey,
 } from '@indiebase/server-shared';
 import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { AuthModule } from './auth';
 import { MetaService } from './db/meta/meta.service';
-import { InitializeDepsModule } from './deps.module';
+import { InitializeLibsModule } from './deps.module';
 import { ProbeModule } from './probe';
 import { UsersModule } from './users/users.module';
 import { MetaModule } from './db';
@@ -30,7 +31,8 @@ export const createCommunityModule = function (
       MetaModule,
       StorageModule,
       ...options.imports,
-      InitializeDepsModule,
+      PresetMiddlewareModule,
+      InitializeLibsModule,
     ],
     providers: [
       Logger,

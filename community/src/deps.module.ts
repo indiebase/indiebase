@@ -184,4 +184,4 @@ import { OpenObserveTransport } from 'winston-openobserve';
     }),
   ],
 })
-export class InitializeDepsModule {}
+export class InitializeLibsModule {}

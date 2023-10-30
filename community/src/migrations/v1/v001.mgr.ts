@@ -76,6 +76,13 @@ export const v001_mgr = async function (
             .comment('Project github repository');
 
           table
+            .string('project_id')
+            .unique()
+            .index()
+            .notNullable()
+            .comment('X-Indiebase-Project-Id');
+
+          table
             .integer('org_id')
             .unsigned()
             .index()

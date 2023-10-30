@@ -111,7 +111,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       default: {
         const e = entity as SpecificProject;
         return this.knex
-          .withSchema(e.schema ?? 'public')
+          .withSchema(e.schema)
           .select('*')
           .from(e.table)
           .where(e.column, value)

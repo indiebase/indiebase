@@ -5,5 +5,6 @@ export * from './utils';
 export * from './decorators';
 export * from './knex';
 export * from './config';
-export * from './pipe';
+export * from './pipes';
 export * from './access';
+export * from './middlewares';
