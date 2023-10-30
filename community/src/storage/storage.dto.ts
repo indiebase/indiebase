@@ -2,7 +2,7 @@ import { IsBoolean, IsOptional, IsString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 // Upload multiple files
-export class FilesUploadDto {
+export class FilesUploadDTO {
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
   files: any[];
 
@@ -16,7 +16,7 @@ export class FilesUploadDto {
 }
 
 // Upload single file
-export class FileUploadDto {
+export class FileUploadDTO {
   @ApiProperty({ type: 'string', format: 'binary' })
   file: any;
 
@@ -29,7 +29,7 @@ export class FileUploadDto {
   temp?: boolean;
 }
 
-export class CreateBucketDto {
+export class CreateBucketDTO {
   @ApiProperty({ type: 'string', default: 'indiebase-dev' })
   @IsString()
   // @IsEntityExisted(BucketsEntity, 'name', 'Bucket name')

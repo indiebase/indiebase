@@ -22,7 +22,7 @@ import {
   EntityExistedPipe,
   XHeadersPipe,
 } from '@indiebase/server-shared';
-import { LocalSignInDto } from './auth.dto';
+import { LocalSignInDTO } from './auth.dto';
 import { LocalAuthGuard } from './local.guard';
 import { ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
@@ -41,7 +41,7 @@ export class AuthController {
   @UseGuards(PublicApiGuard, LocalAuthGuard)
   async signIn(
     @Body()
-    _: LocalSignInDto,
+    _: LocalSignInDTO,
     @Req() req: FastifyRequest,
   ) {
     // await this.authService.handleSingIn(req, session);
@@ -132,7 +132,7 @@ export class AuthController {
   // })
   // async verifyOtp(
   //   @MyInfo('username') username: string,
-  //   @Body() body: OptVerifyDto,
+  //   @Body() body: OptVerifyDTO,
   // ) {
   //   return this.authService.otpVerify(username, body.secret, body.token);
   // }

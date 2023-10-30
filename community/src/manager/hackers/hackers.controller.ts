@@ -10,7 +10,7 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
-import { CreateHackersDto } from './hackers.dto';
+import { CreateHackersDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
 import { ResultCode } from '@indiebase/trait';
 
@@ -44,7 +44,7 @@ export class HackersController {
   @ProtectApiHeader()
   @UseGuards(PublicApiGuard)
   @Post('signup')
-  async signup(@Body() body: CreateHackersDto) {
+  async signup(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);
 
     return {

@@ -7,7 +7,7 @@ import {
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
 
-export class CreateOrgDto {
+export class CreateOrgDTO {
   @ApiProperty({
     description: 'Organization name',
     default: 'indiebase',
@@ -22,7 +22,7 @@ export class CreateOrgDto {
   name: string;
 }
 
-export class UpdateOrgDto extends CreateOrgDto {
+export class UpdateOrgDTO extends CreateOrgDTO {
   @ApiPropertyOptional({
     default: 'dev@indiebase.com',
   })
@@ -51,6 +51,6 @@ export class UpdateOrgDto extends CreateOrgDto {
   avatarUrl?: string;
 }
 
-export class CreateOrgResDto extends OkResponseSchema {}
+export class CreateOrgResDTO extends OkResponseSchema {}
 
-export class ListOrgResDto {}
+export class ListOrgResDTO {}

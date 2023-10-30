@@ -17,7 +17,7 @@ import {
 import { ProjectsService } from './projects.service';
 import { OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
-import { CreatePrjDto } from './projects.dto';
+import { CreatePrjDTO } from './projects.dto';
 import { AccessGuard } from '@indiebase/nest-casl';
 import { PasetoAuthGuard } from '../../auth/paseto.guard';
 
@@ -65,7 +65,7 @@ export class ProjectsController {
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Post('orgs/:org/projects')
-  async create(@Body() body: CreatePrjDto, @Param('org') org: string) {
+  async create(@Body() body: CreatePrjDTO, @Param('org') org: string) {
     await this.projectsService.create(org, body);
 
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };

@@ -35,10 +35,11 @@ export const ProtectApiHeader = () =>
 export const ProjectApiHeader = () =>
   ApiHeader({
     name: X_Indiebase_Project_ID,
-    description: 'Indiebase Project ID',
+    description:
+      'Indiebase Project ID. Dev environment, please modify the database to default value "',
     required: true,
     schema: {
-      default: 'indiebase',
+      default: '4b3643f67affc66d',
     },
   });
 

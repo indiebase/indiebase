@@ -1,4 +1,7 @@
+/// <reference types="@indiebase/server-shared/extend" />
+
 import '@deskbtm/gadgets/env';
+
 import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { CommunityBootstrap } from './community.bootstrap';

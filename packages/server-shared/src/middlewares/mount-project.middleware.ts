@@ -17,7 +17,7 @@ export class MountProjectMiddleware<
     private readonly knex: Knex,
   ) {}
 
-  async use(req: Request, res: Response, next: () => void) {
+  async use(req: Request, _: Response, next: () => void) {
     const prjId = req.headers[X_Indiebase_Project_ID];
 
     if (prjId) {
@@ -26,10 +26,11 @@ export class MountProjectMiddleware<
           .withSchema('mgr')
           .select('*')
           .from(MgrMetaTables.projects)
-          .where('project_id', prjId),
+          .where('project_id', prjId)
+          .first(),
       );
 
-      console.log(prj);
+      (req as any).project = prj;
     }
     next();
   }

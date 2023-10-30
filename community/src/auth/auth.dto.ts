@@ -8,7 +8,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsHash } from 'class-validator';
 // import { IsNotEmpty, MinLength, MaxLength, IsString } from 'class-validator';
 
-export class LocalSignInDto {
+export class LocalSignInDTO {
   @ApiProperty({
     description: 'Hacker account',
     default: 'dev@deskbtm.com',
@@ -39,7 +39,7 @@ export class LocalSignInDto {
   password: string;
 }
 
-export class OptVerifyDto {
+export class OptVerifyDTO {
   // @ApiProperty({
   //   description: 'Otp secret from /2fa/gen',
   // })

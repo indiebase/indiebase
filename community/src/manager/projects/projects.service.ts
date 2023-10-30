@@ -7,7 +7,8 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Knex } from 'knex';
-import { CreatePrjDto } from './projects.dto';
+import { CreatePrjDTO } from './projects.dto';
+import crypto from 'node:crypto';
 import { TmplMigrationSource } from '../../migrations/TmplMigrationSource';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class ProjectsService {
    * This function will create an organizational namespace by using schema,
    * enabling data isolation.
    */
-  public async create(org: string, prj: CreatePrjDto) {
+  public async create(org: string, prj: CreatePrjDTO) {
     const namespace = org + '_' + prj.name;
 
     if (!(await this.knexEx.hasOrg(org))) {
@@ -41,6 +42,7 @@ export class ProjectsService {
           .withSchema('mgr')
           .insert({
             name: prj.name,
+            projectId: crypto.randomBytes(8).toString('hex'),
           })
           .into(MgrMetaTables.projects);
 

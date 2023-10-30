@@ -20,7 +20,7 @@ import {
 import { OrgsService } from './orgs.service';
 import { PublicApiGuard, OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
-import { CreateOrgDto, UpdateOrgDto } from './orgs.dto';
+import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
 import { AccessGuard } from '@indiebase/nest-casl';
 import { PasetoAuthGuard } from '../../auth/paseto.guard';
 import { did } from '@deskbtm/gadgets';
@@ -60,7 +60,7 @@ export class OrgsController {
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Post('orgs')
-  async create(@Body() body: CreateOrgDto) {
+  async create(@Body() body: CreateOrgDTO) {
     await this.orgsService.create(body);
 
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };
@@ -75,7 +75,7 @@ export class OrgsController {
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Patch('orgs/:org')
-  async update(@Body() body: UpdateOrgDto) {
+  async update(@Body() body: UpdateOrgDTO) {
     await this.orgsService.update(body);
 
     return { code: ResultCode.SUCCESS, message: 'Created successfully' };

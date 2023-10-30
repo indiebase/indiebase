@@ -24,7 +24,7 @@ import {
   MemoryStorageFile,
   UploadedFiles,
 } from '@indiebase/nest-fastify-file';
-import { CreateBucketDto, FilesUploadDto } from './storage.dto';
+import { CreateBucketDTO, FilesUploadDTO } from './storage.dto';
 import { BaseResponseSchema, ResultCode } from '@indiebase/trait';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -41,7 +41,7 @@ export class StorageController {
 
   // @Put(':bucket/upload/file')
   // @ApiConsumes('multipart/form-data')
-  // @ApiBody({ type: FileUploadDto })
+  // @ApiBody({ type: FileUploadDTO })
   // @UseInterceptors(FileInterceptor('file'))
   // @ApiOperation({
   //   summary: 'Upload single file',
@@ -70,7 +70,7 @@ export class StorageController {
 
   @Put(':bucket/upload/files')
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: FilesUploadDto })
+  @ApiBody({ type: FilesUploadDTO })
   @UseInterceptors(FilesInterceptor('files', Infinity))
   @ApiOperation({
     summary: 'Upload multiple files',
@@ -99,7 +99,7 @@ export class StorageController {
 
   // @Put(':bucket/upload/file/')
   // @ApiConsumes('multipart/form-data')
-  // @ApiBody({ type: FilesUploadDto })
+  // @ApiBody({ type: FilesUploadDTO })
   // @ApiOperation({
   //   summary: 'Upload file and return the signed url',
   // })
@@ -125,7 +125,7 @@ export class StorageController {
   })
   @UseGuards(PublicApiGuard)
   async createBucket(
-    @Body() bucket: CreateBucketDto,
+    @Body() bucket: CreateBucketDTO,
   ): Promise<BaseResponseSchema> {
     await this.storage.createBucket(bucket.bucket, bucket.description);
 

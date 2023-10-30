@@ -6,7 +6,7 @@ import {
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl, IsHash } from 'class-validator';
 
-export class CreateHackersDto {
+export class CreateHackersDTO {
   @ApiProperty({
     description: 'Hacker account',
     default: 'dev@deskbtm.com',
@@ -30,7 +30,7 @@ export class CreateHackersDto {
   password: string;
 }
 
-export class UpdateHackersDto extends CreateHackersDto {
+export class UpdateHackersDTO extends CreateHackersDTO {
   @ApiPropertyOptional({
     default: 'dev@indiebase.com',
   })
@@ -59,4 +59,4 @@ export class UpdateHackersDto extends CreateHackersDto {
   avatarUrl?: string;
 }
 
-export class CreateHackersResDto extends OkResponseSchema {}
+export class CreateHackersResDTO extends OkResponseSchema {}

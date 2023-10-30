@@ -7,7 +7,7 @@ import {
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
 
-export class CreatePrjDto {
+export class CreatePrjDTO {
   @ApiProperty({
     description: 'Project name',
     default: 'indiebase',
@@ -22,7 +22,7 @@ export class CreatePrjDto {
   name: string;
 }
 
-export class UpdatePrjDto extends CreatePrjDto {
+export class UpdatePrjDTO extends CreatePrjDTO {
   @ApiPropertyOptional({
     default: 'dev@indiebase.com',
   })
@@ -51,4 +51,4 @@ export class UpdatePrjDto extends CreatePrjDto {
   avatarUrl?: string;
 }
 
-export class CreateOrgResDto extends OkResponseSchema {}
+export class CreateOrgResDTO extends OkResponseSchema {}

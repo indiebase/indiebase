@@ -5,7 +5,7 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { CreateHackersDto, UpdateHackersDto } from './hackers.dto';
+import { CreateHackersDTO, UpdateHackersDTO } from './hackers.dto';
 import { Knex } from 'knex';
 import { KnexEx, MgrMetaTables, hashSecret } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
@@ -28,7 +28,7 @@ export class HackersService {
     return this.knex(`mgr.${MgrMetaTables.orgs}`).select();
   }
 
-  public async update(body: UpdateHackersDto) {
+  public async update(body: UpdateHackersDTO) {
     const { email, contactEmail, description, avatarUrl } = body;
 
     // try {
@@ -56,10 +56,10 @@ export class HackersService {
    * This function will create an organizational namespace by using schema,
    * enabling data isolation.
    */
-  public async create(org: CreateHackersDto) {
+  public async create(org: CreateHackersDTO) {
     let { email, password } = org;
     password = await hashSecret(password);
-    await this.knex<CreateHackersDto>(MgrMetaTables.hackers)
+    await this.knex<CreateHackersDTO>(MgrMetaTables.hackers)
       .withSchema('mgr')
       .insert({
         email,

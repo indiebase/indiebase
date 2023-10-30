@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 // import { IsNotEmpty } from 'class-validator';
 
-export class GetCaptchaDto {
+export class GetCaptchaDTO {
   @ApiProperty({
     default: 'dev@indiebase.com',
   })

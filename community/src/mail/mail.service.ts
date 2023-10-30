@@ -1,4 +1,4 @@
-import { GetCaptchaDto } from './mail.dto';
+import { GetCaptchaDTO } from './mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CaptchaUtils } from '@indiebase/server-shared';
@@ -15,7 +15,7 @@ export class MailService {
     private readonly redis: Redis,
   ) {}
 
-  public async sendCaptchaEmail(body: GetCaptchaDto) {
+  public async sendCaptchaEmail(body: GetCaptchaDTO) {
     const captcha = Math.random().toString().slice(2, 7);
     const subject = 'Captcha';
 

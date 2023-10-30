@@ -86,7 +86,6 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       return true;
     }
 
-    console.log('validate');
     return true;
     const entity: Entity = args.constraints[0];
     const { throwExistedMsg } = args

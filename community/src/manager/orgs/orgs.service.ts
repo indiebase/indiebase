@@ -3,7 +3,7 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { CreateOrgDto, UpdateOrgDto } from './orgs.dto';
+import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
 import { Knex } from 'knex';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
@@ -26,7 +26,7 @@ export class OrgsService {
     return this.knex(`mgr.${MgrMetaTables.orgs}`).select();
   }
 
-  public async update(body: UpdateOrgDto) {
+  public async update(body: UpdateOrgDTO) {
     const { name, contactEmail, description, avatarUrl } = body;
 
     try {
@@ -54,7 +54,7 @@ export class OrgsService {
    * This function will create an organizational namespace by using schema,
    * enabling data isolation.
    */
-  public async create(org: CreateOrgDto) {
+  public async create(org: CreateOrgDTO) {
     await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
       name: org.name,
     });
