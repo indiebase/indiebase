@@ -1,10 +1,11 @@
 import { is } from '@deskbtm/gadgets/is';
-import { InjectKnex } from '@indiebase/nest-knex';
+import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import {
   CallHandler,
   ExecutionContext,
   Injectable,
   NestInterceptor,
+  NotFoundException,
   PipeTransform,
   UseInterceptors,
   UsePipes,
@@ -25,7 +26,8 @@ import { Observable } from 'rxjs';
 import validator from 'validator';
 import { AsyncContext } from '@indiebase/nest-async-context';
 import { type FastifyRequest } from 'fastify';
-import { X_Indiebase_Project_ID } from '../../../sdk/src';
+import { X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { type KnexEx } from '../knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**
@@ -71,6 +73,8 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
   constructor(
     @InjectKnex()
     private readonly knex: Knex,
+    @InjectKnexEx()
+    private readonly knexEx: KnexEx,
   ) {}
 
   #resultHandler(throwExistedMsg: boolean) {
@@ -81,12 +85,11 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     };
   }
 
-  validate(value: any, args: ExtendedValidationArguments) {
+  async validate(value: any, args: ExtendedValidationArguments) {
     if (!value || value === '') {
       return true;
     }
 
-    return true;
     const entity: Entity = args.constraints[0];
     const { throwExistedMsg } = args
       .constraints[1] satisfies ExtendedValidationOptions;
@@ -95,16 +98,27 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       case 'specificProjectFromHeader': {
         const e = entity as SpecificProjectFromHeader;
         const req = AsyncContext.current<FastifyRequest, any>().request;
-        req.headers[X_Indiebase_Project_ID];
+        const project = req.project;
 
-        // this.knex
-        //   .withSchema(e.schema ?? 'public')
-        //   .select('*')
-        //   .from(e.table)
-        //   .where(e.column, value)
-        //   .then(this.#resultHandler(throwExistedMsg));
+        if (!project) {
+          throw new NotFoundException(
+            `Project ${req.headers[X_Indiebase_Project_ID]} not found`,
+          );
+        }
 
-        // return this.knex
+        if (e.$ifEq) { 
+          
+        }
+
+
+
+
+        this.knex
+          .withSchema('public')
+          .select('*')
+          .from(e.table)
+          .where(e.column, value)
+          .then(this.#resultHandler(throwExistedMsg));
       }
       case 'specificProject':
       default: {

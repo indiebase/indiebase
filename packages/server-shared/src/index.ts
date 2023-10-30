@@ -1,3 +1,5 @@
+/// <reference path="./extend.d.ts" />
+
 export * from './dto';
 export * from './filter';
 export * from './guard';

@@ -1,10 +1,10 @@
 import { did } from '@deskbtm/gadgets';
-import { InjectKnex } from '@indiebase/nest-knex';
+import { InjectKnexEx } from '@indiebase/nest-knex';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { type FastifyRequest } from 'fastify';
-import { Knex } from 'knex';
 import { MgrMetaTables } from '../knex/tables';
+import { type KnexEx } from '../knex/knex.ex';
 
 @Injectable()
 export class MountProjectMiddleware<
@@ -13,23 +13,15 @@ export class MountProjectMiddleware<
 > implements NestMiddleware<Request, Response>
 {
   constructor(
-    @InjectKnex()
-    private readonly knex: Knex,
+    @InjectKnexEx()
+    private readonly knexEx: KnexEx,
   ) {}
 
   async use(req: Request, _: Response, next: () => void) {
-    const prjId = req.headers[X_Indiebase_Project_ID];
+    const prjId = req.headers[X_Indiebase_Project_ID] as string;
 
     if (prjId) {
-      const [_, prj] = await did(
-        this.knex
-          .withSchema('mgr')
-          .select('*')
-          .from(MgrMetaTables.projects)
-          .where('project_id', prjId)
-          .first(),
-      );
-
+      const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));
       (req as any).project = prj;
     }
     next();

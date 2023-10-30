@@ -76,6 +76,11 @@ export const v001_mgr = async function (
             .comment('Project github repository');
 
           table
+            .string('namespace')
+            .unique()
+            .comment('Projects namespace, postgres schema name');
+
+          table
             .string('project_id')
             .unique()
             .index()
