@@ -1,7 +1,7 @@
-import { X_Indiebase_Project_ID } from '@indiebase/sdk';
 import {
   IsEntityExisted,
   MgrMetaTables,
+  SpecificProjectType,
   TmplMetaTables,
 } from '@indiebase/server-shared';
 import { ApiProperty } from '@nestjs/swagger';
@@ -12,17 +12,22 @@ export class LocalSignInDTO {
     description: 'Hacker account',
     default: 'dev@deskbtm.com',
   })
-  @IsEntityExisted({
-    type: 'specificProjectFromHeader',
-    table: TmplMetaTables.users,
-    column: 'email',
-    $ifEq: {
-      mgr: {
-        table: MgrMetaTables.hackers,
-        column: 'email',
+  @IsEntityExisted(
+    {
+      type: SpecificProjectType.fromHeader,
+      table: TmplMetaTables.users,
+      column: 'email',
+      $ifEq: {
+        mgr: {
+          table: MgrMetaTables.hackers,
+          column: 'email',
+        },
       },
     },
-  })
+    {
+      throwExistedMsg: false,
+    },
+  )
   @IsEmail()
   email: string;
 

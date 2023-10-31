@@ -12,7 +12,6 @@ export class CreateHackersDTO {
     default: 'dev@deskbtm.com',
   })
   @IsEntityExisted({
-    type: 'specificProject',
     schema: 'mgr',
     table: MgrMetaTables.hackers,
     column: 'email',

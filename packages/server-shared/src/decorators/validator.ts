@@ -28,15 +28,20 @@ type ExtendedValidationOptions = ValidationOptions & {
   message?: ((value: any) => string) | string;
 };
 
+export enum SpecificProjectType {
+  hardCode = 'hardCode',
+  fromHeader = 'fromHeader',
+}
+
 interface SpecificProject {
-  type: 'specificProject';
+  type?: SpecificProjectType.hardCode;
   schema?: string;
   table: string;
   column: string;
 }
 
 interface SpecificProjectFromHeader {
-  type: 'specificProjectFromHeader';
+  type: SpecificProjectType.fromHeader;
   table: string;
   column: string;
   $ifEq?: Record<string, Omit<SpecificProject, 'type'>>;
@@ -85,7 +90,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       .constraints[1] satisfies ExtendedValidationOptions;
 
     switch (entity?.type) {
-      case 'specificProjectFromHeader': {
+      case SpecificProjectType.fromHeader: {
         const e = entity as SpecificProjectFromHeader;
         const req = AsyncContext.current<FastifyRequest, any>().request;
         const project = req.project;
@@ -118,7 +123,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
           this.resultHandler(throwExistedMsg),
         );
       }
-      case 'specificProject':
+      case SpecificProjectType.hardCode:
       default: {
         const e = entity as SpecificProject;
         return this.entityExist(
@@ -150,11 +155,14 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
 }
 
 /**
- *  Check if the target entity is existed.
- * @param {string} key The database field.
+ * Check if the target entity is existed.
+ *
+ * 1. Check entity from by hardcode database schema.
+ * 2. Check entity through x-indiebase-project-id header to get database schema.
+ *
+ * @param {Entity} entity.
  * @param {ValidationOptions} validationOptions
  */
-
 // TODO: fix https://github.com/nestjs/nest/issues/528
 export function IsEntityExisted(
   entity: Entity,

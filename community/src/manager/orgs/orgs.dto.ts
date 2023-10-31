@@ -3,6 +3,7 @@ import {
   IsEntityExisted,
   MgrMetaTables,
   OkResponseSchema,
+  SpecificProjectType,
 } from '@indiebase/server-shared';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
@@ -13,7 +14,6 @@ export class CreateOrgDTO {
     default: 'indiebase',
   })
   @IsEntityExisted({
-    type: 'specificProject',
     schema: 'mgr',
     table: MgrMetaTables.orgs,
     column: 'name',
