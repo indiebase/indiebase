@@ -81,6 +81,7 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@indiebase/sdk": "workspace:^"
+    "@indiebase/sdk": "workspace:^",
+    "@indiebase/trait": "workspace:^"
   }
 }

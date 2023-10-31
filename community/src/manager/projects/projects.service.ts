@@ -42,7 +42,7 @@ export class ProjectsService {
           .withSchema('mgr')
           .insert({
             name: prj.name,
-            schemaName: namespace,
+            namespace,
             projectId: crypto.randomBytes(8).toString('hex'),
           })
           .into(MgrMetaTables.projects);

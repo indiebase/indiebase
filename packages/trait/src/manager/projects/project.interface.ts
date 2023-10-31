@@ -1,4 +1,3 @@
-import { UserProfile } from '../user';
 /**
  * Project Status Enum
  */
@@ -18,17 +17,17 @@ export enum ProjectStatus {
 export interface Project {
   id: number;
   name: string;
-  contactEmail: string;
-  status?: ProjectStatus;
   description?: string;
-  createTime: Date;
-  updateTime: Date;
-  members?: UserProfile[];
-  githubRepoUrl?: string;
-  cover?: string;
-}
-
-export interface QueryOwnedProjects {
-  orgName: string;
-  name?: string;
+  contactEmail?: string;
+  avatarUrl?: string;
+  pinnedOrder?: number;
+  pinned?: boolean;
+  projectStatus?: ProjectStatus;
+  packageName?: string;
+  createAt: Date;
+  updateAt: Date;
+  coverUrl?: string;
+  githubRepo?: string;
+  namespace: string;
+  projectId: string;
 }

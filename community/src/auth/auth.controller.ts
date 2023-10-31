@@ -8,29 +8,21 @@ import {
   Session,
   Post,
   Body,
-  ValidationPipe,
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-  UseInterceptors,
+  Logger,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  PublicApiGuard,
-  CommonApiHeader,
-  EntityExistedPipe,
-  XHeadersPipe,
-} from '@indiebase/server-shared';
+import { CommonApiHeader, PublicApiGuard } from '@indiebase/server-shared';
 import { LocalSignInDTO } from './auth.dto';
-import { LocalAuthGuard } from './local.guard';
 import { ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
 import { PasetoService } from 'nestjs-paseto';
+import { LocalAuthGuard } from './local.guard';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
 export class AuthController {
+  private readonly logger = new Logger('AuthController');
+
   constructor(private readonly pasetoService: PasetoService) {}
 
   @Post('signin')
@@ -45,8 +37,6 @@ export class AuthController {
     @Req() req: FastifyRequest,
   ) {
     // await this.authService.handleSingIn(req, session);
-
-    console.log(req.user);
 
     return {
       code: ResultCode.SUCCESS,

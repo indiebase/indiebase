@@ -1,10 +1,9 @@
-import {
-  BaseResSchema,
-  PaginationReqSchema,
-  Project,
-  QueryOwnedProjects,
-} from '@indiebase/trait';
+import { BaseResSchema, PaginationReqSchema, Project } from '@indiebase/trait';
 import { req } from './request';
+export interface QueryOwnedProjects {
+  orgName: string;
+  name?: string;
+}
 
 export const searchGithubProjectApi = async function (
   params,

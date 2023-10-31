@@ -1,17 +1,6 @@
 import { is } from '@deskbtm/gadgets/is';
-import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-  NotFoundException,
-  PipeTransform,
-  UseInterceptors,
-  UsePipes,
-  applyDecorators,
-  createParamDecorator,
-} from '@nestjs/common';
+import { InjectKnex } from '@indiebase/nest-knex';
+import { Injectable, NotFoundException, applyDecorators } from '@nestjs/common';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
@@ -22,12 +11,9 @@ import {
   IsString,
 } from 'class-validator';
 import { Knex } from 'knex';
-import { Observable } from 'rxjs';
-import validator from 'validator';
 import { AsyncContext } from '@indiebase/nest-async-context';
 import { type FastifyRequest } from 'fastify';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
-import { type KnexEx } from '../knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**
@@ -51,7 +37,6 @@ interface SpecificProject {
 
 interface SpecificProjectFromHeader {
   type: 'specificProjectFromHeader';
-  header: string;
   table: string;
   column: string;
   $ifEq?: Record<string, Omit<SpecificProject, 'type'>>;
@@ -59,25 +44,15 @@ interface SpecificProjectFromHeader {
 
 type Entity = SpecificProject | SpecificProjectFromHeader;
 
-export const REQUEST_CONTEXT = '_requestContext';
-
-export interface ExtendedValidationArguments extends ValidationArguments {
-  object: {
-    [REQUEST_CONTEXT]: {};
-  };
-}
-
 @ValidatorConstraint({ name: 'IsEntityExistedConstraint', async: true })
 @Injectable()
 export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
   constructor(
     @InjectKnex()
     private readonly knex: Knex,
-    @InjectKnexEx()
-    private readonly knexEx: KnexEx,
   ) {}
 
-  #resultHandler(throwExistedMsg: boolean) {
+  private resultHandler(throwExistedMsg: boolean) {
     return function (value: any[]) {
       return Array.isArray(value) && value.length > 0
         ? !throwExistedMsg
@@ -85,7 +60,22 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     };
   }
 
-  async validate(value: any, args: ExtendedValidationArguments) {
+  private async entityExist(
+    schema: string,
+    table: string,
+    column: string,
+    value: any,
+    handler: any,
+  ): Promise<boolean> {
+    return this.knex
+      .withSchema(schema)
+      .select('*')
+      .from(table)
+      .where(column, value)
+      .then(handler);
+  }
+
+  async validate(value: any, args: ValidationArguments) {
     if (!value || value === '') {
       return true;
     }
@@ -99,36 +89,45 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
         const e = entity as SpecificProjectFromHeader;
         const req = AsyncContext.current<FastifyRequest, any>().request;
         const project = req.project;
+        const projectId = req.headers[X_Indiebase_Project_ID];
 
         if (!project) {
-          throw new NotFoundException(
-            `Project ${req.headers[X_Indiebase_Project_ID]} not found`,
-          );
+          throw new NotFoundException(`Project ${projectId} not found`);
         }
 
-        if (e.$ifEq) { 
-          
+        if (e.$ifEq) {
+          const conditions = Object.entries(e.$ifEq);
+          for (const [name, cond] of conditions) {
+            if (project.name === name) {
+              return this.entityExist(
+                name,
+                cond.table,
+                cond.column,
+                value,
+                this.resultHandler(throwExistedMsg),
+              );
+            }
+          }
         }
 
-
-
-
-        this.knex
-          .withSchema('public')
-          .select('*')
-          .from(e.table)
-          .where(e.column, value)
-          .then(this.#resultHandler(throwExistedMsg));
+        return this.entityExist(
+          project.namespace,
+          e.table,
+          e.column,
+          value,
+          this.resultHandler(throwExistedMsg),
+        );
       }
       case 'specificProject':
       default: {
         const e = entity as SpecificProject;
-        return this.knex
-          .withSchema(e.schema)
-          .select('*')
-          .from(e.table)
-          .where(e.column, value)
-          .then(this.#resultHandler(throwExistedMsg));
+        return this.entityExist(
+          e.schema,
+          e.table,
+          e.column,
+          value,
+          this.resultHandler(throwExistedMsg),
+        );
       }
     }
   }
@@ -179,56 +178,12 @@ export function IsEntityExisted(
   };
 }
 
-@Injectable()
-export class InjectUserInterceptor implements NestInterceptor {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request = context.switchToHttp().getRequest();
-
-    console.log('@@@@', request);
-
-    return next.handle();
-  }
-}
-
-@Injectable()
-export class StripRequestContextPipe implements PipeTransform {
-  transform(value: any) {
-    console.log('@#####', value);
-    return value;
-  }
-}
-
-export function EntityExistedPipe() {
-  return applyDecorators(
-    UseInterceptors(InjectUserInterceptor),
-    UsePipes(StripRequestContextPipe),
-  );
-}
-
-export const XHeadersPipe = createParamDecorator(
-  async (property: string | number | symbol, ctx: ExecutionContext) => {
-    const headers = ctx.switchToHttp().getRequest().headers;
-
-    if (
-      typeof property === 'string' ||
-      typeof property === 'number' ||
-      typeof property === 'symbol'
-    ) {
-      return headers[property];
-    }
-
-    return headers;
-  },
-);
-
-@ValidatorConstraint({ name: 'IsEmailsConstraint', async: true })
-@Injectable()
-export class IsEmailsConstraint implements ValidatorConstraintInterface {
-  validate(emails: string[], _args: ValidationArguments) {
-    return !!emails.find((e) => validator.isEmail(e));
-  }
-}
-
+/**
+ * Check illegal strings
+ *
+ * @param {ValidationOptions} options
+ * @returns
+ */
 export function IsCommonLegalString(options?: ValidationOptions) {
   options = Object.assign(
     {},

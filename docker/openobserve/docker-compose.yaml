@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   openobserve:
-    image: public.ecr.aws/zinclabs/openobserve:v0.5.2
+    image: public.ecr.aws/zinclabs/openobserve:v0.6.4
     ports:
       - 5080:5080
     environment:

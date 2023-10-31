@@ -55,6 +55,7 @@ export const v001_mgr = async function (
         .createTable(MgrMetaTables.projects, (table) => {
           table.increments('id').primary();
           table.string('name').unique().index().notNullable();
+          table.string('description');
           table.string('contact_email').comment('Project contact email');
           table.string('avatar_url').comment('Project avatar url');
           table.integer('pinned_order').comment('Project card pinned order');
@@ -105,6 +106,7 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.roles, (table) => {
           table.increments('id').primary();
+          table.string('description');
           table.string('name').unique().notNullable();
           table.json('permissions').notNullable();
           table.timestamps(true, true);

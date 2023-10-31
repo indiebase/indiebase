@@ -2,10 +2,10 @@ import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
-import { MigrationSource } from '../../migrations/MigrationSource';
+import { MigrationSource } from './MigrationSource';
 
 @Injectable()
-export class MetaService {
+export class MigrationService {
   constructor(
     @InjectKnexEx() private readonly knexEx: KnexEx,
     @InjectKnex() private readonly knex: Knex,

@@ -21,8 +21,14 @@ export class MountProjectMiddleware<
     const prjId = req.headers[X_Indiebase_Project_ID] as string;
 
     if (prjId) {
-      const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));
-      (req as any).project = prj;
+      if (prjId === 'mgr') {
+        req.project = {
+          name: 'mgr',
+        } as any;
+      } else {
+        const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));
+        req.project = prj;
+      }
     }
     next();
   }

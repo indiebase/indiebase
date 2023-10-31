@@ -6,7 +6,6 @@ import {
 } from '@indiebase/server-shared';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsHash } from 'class-validator';
-// import { IsNotEmpty, MinLength, MaxLength, IsString } from 'class-validator';
 
 export class LocalSignInDTO {
   @ApiProperty({
@@ -15,12 +14,10 @@ export class LocalSignInDTO {
   })
   @IsEntityExisted({
     type: 'specificProjectFromHeader',
-    header: X_Indiebase_Project_ID,
     table: TmplMetaTables.users,
     column: 'email',
     $ifEq: {
       mgr: {
-        schema: 'mgr',
         table: MgrMetaTables.hackers,
         column: 'email',
       },

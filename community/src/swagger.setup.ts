@@ -5,7 +5,6 @@ import { UsersModule } from './users/users.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
 import { StorageModule } from './storage';
-import { MetaModule } from './db';
 import { AuthModule } from './auth';
 import { ProbeModule } from './probe';
 
@@ -78,7 +77,7 @@ export const setupApiDoc = (app: INestApplication) =>
       const apiDoc = SwaggerModule.createDocument(app, options, {
         deepScanRoutes: true,
         operationIdFactory: (_, m) => m + '',
-        include: [UsersModule, MetaModule, StorageModule, AuthModule],
+        include: [UsersModule, StorageModule, AuthModule],
       });
 
       await StoplightElementsModule.setup('/docs/mgr/api', app, mgrApiDoc, {

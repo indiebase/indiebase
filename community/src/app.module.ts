@@ -2,19 +2,14 @@ import { Module } from '@nestjs/common';
 import { communityDefaultConfigs } from '@indiebase/server-shared';
 import { ConfigModule } from '@nestjs/config';
 import path from 'node:path';
-import {
-  I18nModule,
-  QueryResolver,
-  HeaderResolver,
-  CookieResolver,
-  AcceptLanguageResolver,
-} from 'nestjs-i18n';
 import { createCommunityModule } from './community.module';
-import { X_Indiebase_Lang } from '@indiebase/sdk';
 
 @Module({
   imports: [
     createCommunityModule({
+      i18n: {
+        path: path.resolve(__dirname, '../../i18n/'),
+      },
       imports: [
         ConfigModule.forRoot({
           envFilePath: path.resolve(
@@ -23,20 +18,6 @@ import { X_Indiebase_Lang } from '@indiebase/sdk';
           ),
           isGlobal: true,
           load: [...communityDefaultConfigs],
-        }),
-        I18nModule.forRoot({
-          fallbackLanguage: 'en',
-          loaderOptions: {
-            path: path.resolve(__dirname, '../../i18n'),
-            watch: kDevMode,
-          },
-          resolvers: [
-            new QueryResolver(),
-            new HeaderResolver([X_Indiebase_Lang]),
-            new CookieResolver(),
-            new AcceptLanguageResolver(),
-          ],
-          logging: kDevMode,
         }),
       ],
     }),

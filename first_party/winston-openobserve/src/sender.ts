@@ -8,13 +8,13 @@ export class Sender {
   #data: Record<string, any>;
   #tmpData: Record<string, any>;
   #timer: NodeJS.Timeout;
-  #isSending: boolean;
+  #sending: boolean;
 
   constructor(options: OpenObserveTransportOptions) {
     this.#options = options;
     this.#data = {};
     this.#tmpData = {};
-    this.#isSending = false;
+    this.#sending = false;
     const { basicAuth } = options;
     let authVal;
 
@@ -44,7 +44,7 @@ export class Sender {
   }
 
   #pushBatch(data: Record<string, any>, slug: string, entity: LogEntity) {
-    if (Array.isArray(this.#data[slug])) {
+    if (Array.isArray(data[slug])) {
       data[slug].push(entity);
     } else {
       data[slug] = [entity];
@@ -56,11 +56,7 @@ export class Sender {
     let slug = `${orgId}/${streamName}`;
 
     if (bulk) {
-      this.#pushBatch(
-        this.#isSending ? this.#tmpData : this.#data,
-        slug,
-        entity,
-      );
+      this.#pushBatch(this.#sending ? this.#tmpData : this.#data, slug, entity);
     } else {
       await this.#send(orgId, streamName, [entity]);
     }
@@ -78,19 +74,12 @@ export class Sender {
   }
 
   async #send(orgId: string, streamName: string, body: unknown) {
-    this.#isSending = true;
+    this.#sending = true;
     return this.#req
       .post(`api/${orgId}/${streamName}/_json`, {
         json: body,
       })
-      .then(() => {
-        const v = Object.values(this.#tmpData);
-        if (Array.isArray(v) && v.length > 0) {
-          this.#data = this.#tmpData;
-          this.#tmpData = {};
-        }
-        this.clean();
-      })
+      .then(this.#swapData)
       .catch((err) => {
         console.error(err);
         if (err?.cause?.code === 'ECONNREFUSED') {
@@ -100,8 +89,23 @@ export class Sender {
         this.#options.onRequestError?.(err);
       })
       .finally(() => {
-        this.#isSending = false;
+        this.#sending = false;
       });
+  }
+
+  #swapData = () => {
+    const tmpData = Object.values(this.#tmpData);
+    if (Array.isArray(tmpData) && tmpData.length > 0) {
+      this.#data = this.#tmpData;
+      this.#cleanTmpData();
+    } else {
+      this.clean();
+    }
+  };
+
+  #cleanTmpData() {
+    this.#tmpData = null;
+    this.#tmpData = {};
   }
 
   public clean() {
@@ -110,7 +114,7 @@ export class Sender {
   }
 
   public close() {
-    console.debug('OpenObserve closed');
+    console.debug('winston-openobserve closed');
     this.clean();
     clearInterval(this.#timer);
   }

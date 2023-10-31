@@ -17,6 +17,7 @@ export const v001_tmpl = async function (
         .createTable(TmplMetaTables.users, (table) => {
           table.increments('id').primary();
           table.string('name');
+          table.string('email').unique().index().notNullable();
           table.timestamps(true, true);
         });
 

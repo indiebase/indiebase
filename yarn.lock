@@ -6424,6 +6424,7 @@ __metadata:
   resolution: "@indiebase/server-shared@workspace:packages/server-shared"
   dependencies:
     "@indiebase/sdk": "workspace:^"
+    "@indiebase/trait": "workspace:^"
     "@nestjs/cli": "npm:10.1.12"
     "@nestjs/schematics": "npm:10.0.2"
     "@nestjs/testing": "npm:10.1.3"
