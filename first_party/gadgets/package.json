@@ -44,7 +44,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "devDependencies": {
-    "@types/node": "20.8.9",
+    "@types/node": "20.8.10",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.2.2"

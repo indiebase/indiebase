@@ -146,12 +146,12 @@ export const UploadImageZone: FC<UploadImageProps> = function ({
   const handleCrop = useCallback(async () => {
     await upload(originalImg.file!, cropped);
     setOpened(false);
-  }, [cropped, opened]);
+  }, [cropped, originalImg.file]);
 
   return (
     <Box ml={30} style={{ position: 'relative', top: 20, height: 100 }}>
       {label ? (
-        <Text size="sm" color="#212529">
+        <Text size="sm" c="#212529">
           {label}
         </Text>
       ) : null}

@@ -140,7 +140,6 @@ export const v001_mgr = async function (
           table
             .string('opt_recovery_codes')
             .comment('simple-array OPT recovery codes');
-          table.timestamps(true, true);
           table
             .integer('org_id')
             .unsigned()
@@ -160,6 +159,9 @@ export const v001_mgr = async function (
             .index()
             .references('id')
             .inTable(`mgr.${MgrMetaTables.roles}`);
+
+          table.datetime('email_confirmed_at').comment('Email confirmed at');
+          table.timestamps(true, true);
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.hackers);

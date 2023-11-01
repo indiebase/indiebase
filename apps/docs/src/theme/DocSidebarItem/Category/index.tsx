@@ -20,7 +20,7 @@ import DocSidebarItems from '@theme/DocSidebarItems';
 import type { Props } from '@theme/DocSidebarItem/Category';
 import { ActionIcon, rem } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
-import { collapseBtn } from './styles.css';
+import { collapseBtn } from './Category.css';
 
 // If we navigate to a category and it becomes active, it should automatically
 // expand itself

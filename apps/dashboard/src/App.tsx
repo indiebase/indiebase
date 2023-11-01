@@ -20,7 +20,7 @@ const DevTools: FC = function () {
   return kDevMode ? (
     <>
       <JotaiDevTools />
-      <ReactQueryDevtools initialIsOpen={kDevMode} position="bottom-right" />
+      <ReactQueryDevtools initialIsOpen={kDevMode} position="bottom" />
     </>
   ) : null;
 };
@@ -29,8 +29,12 @@ function App() {
   const [queryClient] = useState(() => new QueryClient());
 
   const providers: ComposeProps['providers'] = [
-    <MantineProvider theme={theme} defaultColorScheme="light" />,
-    <QueryClientProvider client={queryClient} />,
+    <MantineProvider
+      key={crypto.randomUUID()}
+      theme={theme}
+      defaultColorScheme="light"
+    />,
+    <QueryClientProvider key={crypto.randomUUID()} client={queryClient} />,
   ];
 
   return (

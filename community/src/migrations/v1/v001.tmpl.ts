@@ -19,6 +19,7 @@ export const v001_tmpl = async function (
           table.string('name');
           table.string('email').unique().index().notNullable();
           table.timestamps(true, true);
+          table.datetime('email_confirmed_at').comment('Email confirmed at');
         });
 
       await knex.schema

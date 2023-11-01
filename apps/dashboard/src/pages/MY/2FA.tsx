@@ -21,7 +21,7 @@ import {
   IconDiscountCheck,
   IconUserCheck,
 } from '@tabler/icons-react';
-import { FC, ReactElement, Suspense, useState } from 'react';
+import React, { FC, ReactElement, Suspense, useState } from 'react';
 import { req } from '~/__MOCK__';
 
 const _optStepperAtom = atom(0);
@@ -146,9 +146,9 @@ const SaveRecoveryCode: FC<{ recoveryCode: string[] }> = function ({
   return (
     <Box mt={15}>
       <Title order={6}>Save your recovery codes</Title>
-      <Text size="sm" mt={5} color="gray">
-        Recovery codes are used to access your account in case you can't access
-        it with your authenticator app (e.g. lost your phone).
+      <Text size="sm" mt={5} c="gray">
+        Recovery codes are used to access your account in case you can&apos;t
+        access it with your authenticator app (e.g. lost your phone).
       </Text>
       <Alert mt={10} icon={<IconAlertCircle size={18} />} color="red">
         <Title order={6}>
