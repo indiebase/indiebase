@@ -32,11 +32,12 @@
     "jotai-devtools": "0.7.0",
     "localforage": "1.10.0",
     "react": "18.2.0",
+    "react-cropper": "2.3.3",
     "react-dom": "18.2.0",
-    "react-easy-crop": "5.0.2",
     "react-i18next": "13.3.1",
     "react-router-dom": "6.17.0",
     "reactgets": "workspace:",
+    "validator": "13.11.0",
     "web-vitals": "3.4.0"
   },
   "devDependencies": {

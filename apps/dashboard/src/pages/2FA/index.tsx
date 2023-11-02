@@ -341,7 +341,7 @@ const TwoFactorAuth = function () {
   // const [profile] = useAtom(userProfileQueryAtom[0]);
 
   return (
-    <Box style={{ maxWidth: 800 }}>
+    <Box maw={800}>
       <Title order={4}>Configure Two-factor authentication (2FA)</Title>
       <CreateOptStep />
 
@@ -354,7 +354,7 @@ export const Component = function () {
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
-        <Box m={40}>
+        <Box mt={40} ml={40}>
           <TwoFactorAuth />
         </Box>
       </Suspense>

@@ -37,13 +37,13 @@ export const AppShellDrawer: FC<AppShellDrawerProps> = function (props) {
     <AppShell.Navbar p="md">
       <Burger
         opened={opened.mobile}
-        onClick={() => toggle({ ...opened, desktop: !opened.mobile })}
+        onClick={() => toggle({ ...opened, mobile: !opened.mobile })}
         hiddenFrom="sm"
         size="xs"
       />
       <OrgSelect />
-      <SkeletonList />
-      <NavMenu />
+      {/* <SkeletonList /> */}
+      <NavMenu mt={20} />
     </AppShell.Navbar>
   );
 };

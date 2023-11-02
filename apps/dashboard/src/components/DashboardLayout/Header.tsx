@@ -71,7 +71,7 @@ export const AppShellHeader: FC<AppShellHeaderProps> = function (props) {
         <Group h="100%">
           <Burger
             opened={opened.mobile}
-            onClick={() => toggle({ ...opened, desktop: !opened.mobile })}
+            onClick={() => toggle({ ...opened, mobile: !opened.mobile })}
             hiddenFrom="sm"
             size="xs"
           />

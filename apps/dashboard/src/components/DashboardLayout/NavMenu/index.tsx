@@ -1,15 +1,15 @@
 import {
   Accordion,
-  Group,
   MantineThemeColors,
   ThemeIcon,
   UnstyledButton,
   Text,
+  MantineStyleProps,
 } from '@mantine/core';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { navMenuTile } from './NavMenu.css';
-import { useMenu } from '~/use-menu';
+import { useMenus } from '~/use-menus';
 
 export interface NavMenuTile {
   label: string;
@@ -23,9 +23,11 @@ export interface NavMenuTile {
   onClick?: () => Promise<void> | void;
 }
 
-const useAccordionControl = function (menu: NavMenuTile[]) {
+const useActiveAccordion = function (menu: NavMenuTile[]) {
   const [value, setValue] = useState<string[]>([]);
   const location = useLocation();
+
+  console.log(value);
 
   useEffect(() => {
     for (const item of menu) {
@@ -37,7 +39,7 @@ const useAccordionControl = function (menu: NavMenuTile[]) {
         }
       }
     }
-  }, [location.pathname, menu, value]);
+  }, [location.pathname]);
 
   return [value, setValue];
 };
@@ -47,49 +49,21 @@ interface NavMenuTileProps {
   active: boolean;
 }
 
-function SidebarTile({ label, active, onClick }: any) {
-  return (
-    <UnstyledButton
-      onClick={onClick}
-      // sx={(theme) => ({
-      //   display: 'block',
-      //   width: '100%',
-      //   padding: theme.spacing.xs,
-      //   paddingLeft: 20,
-      //   borderRadius: theme.radius.sm,
-      //   color: active ? theme.colors.blue[6] : theme.colors.gray[7],
-      //   fontSize: 13,
-      //   backgroundColor: active ? theme.colors.gray[0] : 'none',
-      //   fontWeight: active ? 'bolder' : 'unset',
-      //   '&:hover': {
-      //     backgroundColor:
-      //       theme.colorScheme === 'dark'
-      //         ? theme.colors.dark[6]
-      //         : theme.colors.gray[0],
-      //   },
-      // })}
-    >
-      <Group>
-        <Text size="sm">{label}</Text>
-      </Group>
-    </UnstyledButton>
-  );
-}
-
 const NavMenuTile: FC<NavMenuTileProps> = function ({ label, active }) {
   return (
     <UnstyledButton className={navMenuTile[active ? 'active' : 'inactive']}>
-      <Group>
-        <Text size="sm">{label}</Text>
-      </Group>
+      <Text size="sm">{label}</Text>
     </UnstyledButton>
   );
 };
 
-export const NavMenu: FC<any> = function (props) {
-  // const [value, setValue] = useAccordionControl(props.menu);
+interface NavMenuProps extends MantineStyleProps {}
 
-  const menu = useMenu();
+export const NavMenu: FC<NavMenuProps> = function (props) {
+  const menus = useMenus();
+  console.log(menus);
+
+  const [activeList, setActiveList] = useActiveAccordion(menus);
 
   return (
     <Accordion
@@ -98,15 +72,16 @@ export const NavMenu: FC<any> = function (props) {
       chevronPosition="right"
       variant="contained"
       multiple
-      // value={value as string[]}
-      // onChange={setValue as any}
+      value={activeList as string[]}
+      onChange={setActiveList as any}
       styles={(theme) => ({
         item: { borderBottom: 0 },
         contentInner: { padding: 0 },
         itemTitle: { borderRadius: theme.radius.sm, overflow: 'hidden' },
       })}
+      {...props}
     >
-      {menu.map((node: any) => {
+      {menus.map((node: any) => {
         const children = node?.children;
 
         return (
@@ -131,13 +106,17 @@ export const NavMenu: FC<any> = function (props) {
                 </ThemeIcon>
               }
             >
-              {/* <Text weight={500}>{node.label}</Text> */}
+              <Text w={500}>{node.label}</Text>
             </Accordion.Control>
             {children ? (
               <Accordion.Panel>
                 {children?.map((sub) => {
                   return (
-                    <NavLink key={sub.label} to={sub.to}>
+                    <NavLink
+                      style={{ textDecoration: 'none' }}
+                      key={sub.label}
+                      to={sub.to}
+                    >
                       {({ isActive }) => (
                         <NavMenuTile active={isActive} label={sub.label} />
                       )}
