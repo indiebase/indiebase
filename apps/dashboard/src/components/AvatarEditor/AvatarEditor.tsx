@@ -102,7 +102,7 @@ export const AvatarEditor: FC<AvatarEditorProps> = function ({
   return (
     <Box ml={30} style={{ position: 'relative', top: 20, height: 100 }}>
       {label ? (
-        <Text size="sm" c="#212529">
+        <Text size="sm" c="dark" fw={500}>
           {label}
         </Text>
       ) : null}

@@ -97,13 +97,13 @@ const config = {
           //   sidebarId: 'tutorialSidebar2',
           //   label: 'Pricing',
           // },
-          {
-            type: 'localeDropdown',
-            position: 'left',
-          },
+          // {
+          //   type: 'localeDropdown',
+          //   position: 'left',
+          // },
           // {
           //   type: 'docSidebar',
-          //   // sidebarId: 'tutorialSidebar2',
+          //   sidebarId: 'tutorialSidebar2',
           //   position: 'right',
           //   label: 'Sponsor',
           // },
@@ -112,7 +112,7 @@ const config = {
           //   type: 'docSidebar',
           //   sidebarId: 'tutorialSidebar1',
           //   position: 'right',
-          //   label: 'Abort',
+          //   label: 'About',
           // },
         ],
       },
