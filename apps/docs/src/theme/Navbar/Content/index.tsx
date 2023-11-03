@@ -3,7 +3,7 @@ import {
   splitNavbarItems,
   useNavbarMobileSidebar,
 } from '@docusaurus/theme-common/internal';
-import { ActionIcon, Anchor, Box, Divider, Group, Text } from '@mantine/core';
+import { ActionIcon, Anchor, Divider, Group } from '@mantine/core';
 import { SignInAndUpModal } from '@site/src/components/Modals/SignInAndUp.tsx';
 import { IconBrandGithub } from '@tabler/icons-react';
 import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
