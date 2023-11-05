@@ -97,10 +97,10 @@ const config = {
           //   sidebarId: 'tutorialSidebar2',
           //   label: 'Pricing',
           // },
-          // {
-          //   type: 'localeDropdown',
-          //   position: 'left',
-          // },
+          {
+            type: 'localeDropdown',
+            position: 'left',
+          },
           // {
           //   type: 'docSidebar',
           //   sidebarId: 'tutorialSidebar2',
