@@ -77,4 +77,4 @@ See [Credits.md](https://github.com/indiebase/indiebase/blob/main/docs/CREDITS.m
 
 If a directory has a LICENSE file, the project is governed by that LICENSE file. The rest of the parts are licensed under the GNU AFFERO GENERAL PUBLIC LICENSE (AGPL-3.0) license.
 
-Copyright (C) 2021 Han <deskbtm@outlook.com>
+Copyright (C) 2021 Han <indiebase@deskbtm.com>
