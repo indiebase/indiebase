@@ -7,10 +7,11 @@ import {
   Injectable,
   Logger,
 } from '@nestjs/common';
+
 import { FastifyRequest } from 'fastify';
 import * as forge from 'node-forge';
-import { X_Indiebase_AC } from '../../../sdk/src';
 import ms from 'ms';
+import { X_Indiebase_AC } from '@indiebase/sdk';
 
 /**
  *  Inspect token from header
@@ -28,7 +29,7 @@ import ms from 'ms';
 const apiTokenInspect = function (
   token: string,
   salt: string,
-  expire: number = 0,
+  expire: string,
 ): boolean {
   const slugs = token.split(';');
   const [timestamp, _, hash] = slugs;
