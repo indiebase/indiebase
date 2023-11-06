@@ -1,3 +1,4 @@
+import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
 // import { UserService } from '../user/user.service';
 import {
   Injectable,
@@ -9,38 +10,46 @@ import {
 import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
-import { getSubdomain } from '@indiebase/server-shared';
+import { MgrMetaTables, getSubdomain } from '@indiebase/server-shared';
 import { FastifyRequest } from 'fastify';
 import { ResultCode } from '@indiebase/trait';
+import { Knex } from 'knex';
+import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import { did } from '@deskbtm/gadgets';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger('AuthService');
+
   constructor(
     // private readonly userService: UserService,
-    private readonly logger: Logger,
+    @InjectKnexEx()
+    private readonly knexEx: KnexEx,
   ) {}
 
-  public async validateLocal(username: string, password: string) {
-    // let user = await this.userService.getUser(
-    //   { username },
-    //   {
-    //     full: true,
-    //   },
-    // );
-    // if (!!user) {
-    //   if (!user.password) {
-    //     throw new UnauthorizedException('Please set your password first');
-    //   }
-    //   if (await bcrypt.compare(password, user.password)) {
-    //     return user;
-    //   } else {
-    //     throw new UnauthorizedException('Wrong password');
-    //   }
-    // } else {
-    //   throw new NotFoundException(
-    //     `User ${username} not existed,  register first plz`,
-    //   );
-    // }
+  public async validateLocal(
+    namespace: string,
+    email: string,
+    password: string,
+  ) {
+    const [err, user] = await did(this.knexEx.getUserByEmail(email, namespace));
+
+    if (err) {
+      this.logger.error(err);
+      throw new NotFoundException(`Not found ${email}`);
+    }
+
+    if (!user.password) {
+      throw new UnauthorizedException('Please set password first');
+    }
+
+    const result = await bcrypt.compare(password, user.password);
+
+    if (!result) {
+      throw new UnauthorizedException('Password incorrect');
+    }
+
+    return user;
   }
 
   public async handleGithubCallback(req: FastifyRequest, session: any) {

@@ -1,4 +1,9 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {
   AuthGuard,
   IAuthModuleOptions,
@@ -6,7 +11,7 @@ import {
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
-  constructor(private readonly logger: Logger) {
+  constructor() {
     super();
   }
 
@@ -17,9 +22,12 @@ export class LocalAuthGuard extends AuthGuard('local') {
   }
 
   override handleRequest(err: any, user: any, _info: any, _context: any) {
-    if (err || !user) {
-      this.logger.error(err);
-      throw new UnauthorizedException();
+    if (err) {
+      if (err instanceof HttpException) {
+        throw err;
+      } else {
+        throw new UnauthorizedException();
+      }
     }
 
     return user;

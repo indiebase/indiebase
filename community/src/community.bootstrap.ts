@@ -104,6 +104,11 @@ export class CommunityBootstrap {
     await this.app.register(fastifyPassport.initialize());
     await this.app.register(fastifyPassport.secureSession());
 
+    fastifyPassport.registerUserSerializer(async (user, request) => {
+      console.log(',===', user, request);
+      return {};
+    });
+
     await this.app.register(fastifyMultipart, {
       limits: {
         fileSize: sizeParser(this.config.get('storage.file.limit')),

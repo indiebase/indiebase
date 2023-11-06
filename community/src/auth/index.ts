@@ -5,3 +5,5 @@ export * from './auth.service';
 export * from './local.guard';
 export * from './local.strategy';
 export * from './social';
+export * from './paseto.strategy';
+export * from './paseto.guard';
