@@ -22,20 +22,29 @@ describe('UserProxy', () => {
 
   describe('get()', () => {
     it('gets user from hook', async () => {
-      const userProxy = new UserProxy({ casl: defaultCaslCache }, () => undefined);
+      const userProxy = new UserProxy(
+        { casl: defaultCaslCache },
+        () => undefined,
+      );
       userProxy.getFromHook = async () => expectedUser;
       expect(await userProxy.get()).toEqual(expectedUser);
     });
 
     it('gets user from request if no user returned from hook', async () => {
-      const userProxy = new UserProxy({ casl: defaultCaslCache }, () => undefined);
+      const userProxy = new UserProxy(
+        { casl: defaultCaslCache },
+        () => undefined,
+      );
       userProxy.getFromHook = async () => undefined;
       userProxy.getFromRequest = () => expectedUser;
       expect(await userProxy.get()).toEqual(expectedUser);
     });
 
     it('returns undefined if no user returned from hook and request', async () => {
-      const userProxy = new UserProxy({ casl: defaultCaslCache }, () => undefined);
+      const userProxy = new UserProxy(
+        { casl: defaultCaslCache },
+        () => undefined,
+      );
       userProxy.getFromHook = async () => undefined;
       userProxy.getFromRequest = () => undefined;
       expect(await userProxy.get()).toEqual(undefined);
@@ -44,26 +53,38 @@ describe('UserProxy', () => {
 
   describe('getFromRequest()', () => {
     it('gets user from getUserFromRequest function', async () => {
-      const userProxy = new UserProxy({ casl: defaultCaslCache }, () => expectedUser);
+      const userProxy = new UserProxy(
+        { casl: defaultCaslCache },
+        () => expectedUser,
+      );
       expect(userProxy.getFromRequest()).toEqual(expectedUser);
     });
   });
 
   describe('getFromHook()', () => {
     it('gets cached user', async () => {
-      const userProxy = new UserProxy({ casl: { ...defaultCaslCache, user: expectedUser } }, () => undefined);
+      const userProxy = new UserProxy(
+        { casl: { ...defaultCaslCache, user: expectedUser } },
+        () => undefined,
+      );
       expect(await userProxy.get()).toEqual(expectedUser);
     });
 
     it('if no user on request return undefined', async () => {
-      const userProxy = new UserProxy({ casl: defaultCaslCache }, () => undefined);
+      const userProxy = new UserProxy(
+        { casl: defaultCaslCache },
+        () => undefined,
+      );
       expect(await userProxy.get()).toEqual(undefined);
     });
 
     it('gets user from hook', async () => {
       const requestUser = { id: 'requestUserId', roles: [] };
       defaultCaslCache.hooks.user = new UserHook();
-      const userProxy = new UserProxy({ casl: defaultCaslCache }, () => requestUser);
+      const userProxy = new UserProxy(
+        { casl: defaultCaslCache },
+        () => requestUser,
+      );
       expect(await userProxy.getFromHook()).toEqual(expectedUser);
     });
   });

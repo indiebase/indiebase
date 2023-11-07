@@ -17,7 +17,7 @@ export class LocalSignInDTO {
       type: SpecificProjectType.fromHeader,
       table: TmplMetaTables.users,
       column: 'email',
-      $ifEq: {
+      $eq: {
         mgr: {
           table: MgrMetaTables.hackers,
           column: 'email',

@@ -21,10 +21,4 @@ async function main() {
   }
 }
 
-// import { is } from '@deskbtm/gadgets/is';
-
-// function main() {
-//   console.log(is.array([]));
-// }
-
 main();

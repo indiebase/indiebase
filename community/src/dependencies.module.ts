@@ -206,6 +206,7 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
           return {
             superuserRole: BuiltinMgrRoles.OAA,
             getUserFromRequest(request) {
+              console.log(request);
               return undefined;
             },
           };

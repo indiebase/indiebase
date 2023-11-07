@@ -19,13 +19,18 @@ export class AccessGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const ability = this.reflector.get<AbilityMetadata | undefined>(CASL_META_ABILITY, context.getHandler());
+    const ability = this.reflector.get<AbilityMetadata | undefined>(
+      CASL_META_ABILITY,
+      context.getHandler(),
+    );
     const request = await ContextProxy.create(context).getRequest();
     const { getUserHook } = CaslConfig.getRootOptions();
     const req = new RequestProxy(request);
 
     req.setUserHook(await userHookFactory(this.moduleRef, getUserHook));
-    req.setSubjectHook(await subjectHookFactory(this.moduleRef, ability?.subjectHook));
+    req.setSubjectHook(
+      await subjectHookFactory(this.moduleRef, ability?.subjectHook),
+    );
 
     return await this.accessService.canActivateAbility(request, ability);
   }

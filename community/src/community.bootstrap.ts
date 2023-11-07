@@ -56,7 +56,7 @@ export class CommunityBootstrap {
         enableDebugMessages: kDevMode,
         whitelist: true,
         forbidNonWhitelisted: true,
-        // validateCustomDecorators: true,
+        validateCustomDecorators: true,
         // exceptionFactory: i18nValidationErrorFactory,
       }),
     );
@@ -74,8 +74,9 @@ export class CommunityBootstrap {
       credentials: true,
     });
 
-    // Setup swagger api doc with  .
+    // Setup swagger api doc with.
     await setupApiDoc(this.app);
+
     this.app.useStaticAssets(this.options?.staticAssets);
     this.app.useLogger(nestWinston);
     this.app.useGlobalFilters(new HttpExceptionFilter(nestWinston));

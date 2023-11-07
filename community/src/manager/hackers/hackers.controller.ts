@@ -1,3 +1,4 @@
+import { PasetoAuthGuard } from '../../auth';
 import {
   OkResponseSchema,
   PublicApiGuard,
@@ -45,6 +46,26 @@ export class HackersController {
   @UseGuards(PublicApiGuard)
   @Post('signup')
   async signup(@Body() body: CreateHackersDTO) {
+    await this.hackers.create(body);
+
+    return {
+      code: ResultCode.SUCCESS,
+      message: 'Sign up successfully.',
+    };
+  }
+
+  @ApiOperation({
+    summary: 'Create a hacker',
+    description: 'Must have the create hacker permission',
+  })
+  @ApiOkResponse({
+    type: OkResponseSchema,
+  })
+  @ApiBearerAuth('paseto')
+  @ProtectApiHeader()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Post('hacker')
+  async hacker(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);
 
     return {

@@ -1,4 +1,3 @@
-import { UserProfile } from '../user/user.interface';
 export interface OrgSelect {
   logo: string;
   label: string;
@@ -24,5 +23,5 @@ export interface Org {
   updateTime: Date;
   creatorId: number;
   ownerId: number;
-  members?: UserProfile[];
+  // members?: UserProfile[];
 }

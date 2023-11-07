@@ -12,10 +12,11 @@ import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 import { MgrMetaTables, getSubdomain } from '@indiebase/server-shared';
 import { FastifyRequest } from 'fastify';
-import { ResultCode } from '@indiebase/trait';
+import { BasicUser, Project, ResultCode } from '@indiebase/trait';
 import { Knex } from 'knex';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { did } from '@deskbtm/gadgets';
+import { PasetoService } from 'nestjs-paseto';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +26,7 @@ export class AuthService {
     // private readonly userService: UserService,
     @InjectKnexEx()
     private readonly knexEx: KnexEx,
+    private readonly pasetoService: PasetoService,
   ) {}
 
   public async validateLocal(
@@ -49,13 +51,14 @@ export class AuthService {
       throw new UnauthorizedException('Password incorrect');
     }
 
+    delete user.password;
+
     return user;
   }
 
   public async handleGithubCallback(req: FastifyRequest, session: any) {
-    const { user } = req as any;
-    const { profile, accessToken } = user as any;
-    const { _json: json, username, profileUrl, id, displayName } = profile;
+    const { user } = req;
+    // const { _json: json, username, profileUrl, id, displayName } = profile;
 
     // const r = await this.userService.signIn({
     //   username: username,
@@ -85,23 +88,13 @@ export class AuthService {
     // );
   }
 
-  public async handleSingIn(req: FastifyRequest, session: any) {
-    const { user } = req as any;
-    session.set('user', {
-      loggedIn: true,
+  public async singIn(user: BasicUser, project: Project) {
+    return this.pasetoService.sign({
       id: user.id,
-      username: user.username,
-      accessToken: user.githubAccessToken,
+      email: user.email,
+      project: project.name,
+      namespace: project.namespace,
     });
-
-    session.cookie.expires = new Date(
-      Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
-    );
-
-    session.cookie.domain = getSubdomain(
-      new URL(`${req.protocol}://${req.hostname}`).hostname,
-      2,
-    );
   }
 
   public async generateOtp(username: string) {

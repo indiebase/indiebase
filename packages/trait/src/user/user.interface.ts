@@ -3,20 +3,15 @@ export enum AccountStatus {
   active = 'active',
 }
 
-export interface UserProfile {
+export interface BasicUser {
   id: number;
-  githubId?: string;
-  githubAccessToken?: string;
-  profileUrl?: string;
-  avatar?: string;
-  company?: string;
-  username: string;
   email: string;
-  bio?: string;
   nickname?: string;
-  status: AccountStatus;
-  createTime: Date;
-  updateTime: Date;
-  organizations?: any[];
-  enabled2FA?: boolean;
+  avatarUrl?: string;
+  bio?: string;
+  enabledOtp: boolean;
+  createAt: Date;
+  updateAt: Date;
 }
+
+export interface User extends BasicUser {}

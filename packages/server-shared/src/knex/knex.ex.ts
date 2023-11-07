@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 
 import { KnexSchemaEx } from './schema.ex';
-import { MgrMetaTables } from './tables';
+import { MgrMetaTables, TmplMetaTables } from './tables';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
@@ -35,7 +35,7 @@ export class KnexEx {
 
   /**
    * Get get project by project_id(header:x-indiebase-project-id), not the primary key.
-   * 
+   *
    * @param {String} projectId
    * @returns
    */
@@ -45,6 +45,15 @@ export class KnexEx {
       .select('*')
       .from(MgrMetaTables.projects)
       .where('project_id', projectId)
+      .first();
+  }
+
+  public async getUserByEmail(email: string, namespace: string = 'mgr') {
+    return this.knex
+      .withSchema(namespace)
+      .select('*')
+      .from(namespace === 'mgr' ? MgrMetaTables.hackers : TmplMetaTables.users)
+      .where('email', email)
       .first();
   }
 }

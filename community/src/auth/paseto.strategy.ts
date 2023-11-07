@@ -30,6 +30,7 @@ export class PasetoStrategy
   }
 
   async validate(payload): Promise<any> {
+    console.log(payload);
     // const user = await this.authService.validateLocal(username, password);
     return payload;
   }

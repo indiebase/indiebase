@@ -12,8 +12,8 @@ import {
 } from 'class-validator';
 import { Knex } from 'knex';
 import { AsyncContext } from '@indiebase/nest-async-context';
-import { type FastifyRequest } from 'fastify';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { IncomingMessage } from 'http';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**
@@ -44,7 +44,7 @@ interface SpecificProjectFromHeader {
   type: SpecificProjectType.fromHeader;
   table: string;
   column: string;
-  $ifEq?: Record<string, Omit<SpecificProject, 'type'>>;
+  $eq?: Record<string, Omit<SpecificProject, 'type'>>;
 }
 
 type Entity = SpecificProject | SpecificProjectFromHeader;
@@ -92,7 +92,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     switch (entity?.type) {
       case SpecificProjectType.fromHeader: {
         const e = entity as SpecificProjectFromHeader;
-        const req = AsyncContext.current<FastifyRequest, any>().request;
+        const req = AsyncContext.current().request;
         const project = req.project;
         const projectId = req.headers[X_Indiebase_Project_ID];
 
@@ -100,8 +100,8 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
           throw new NotFoundException(`Project ${projectId} not found`);
         }
 
-        if (e.$ifEq) {
-          const conditions = Object.entries(e.$ifEq);
+        if (e.$eq) {
+          const conditions = Object.entries(e.$eq);
           for (const [name, cond] of conditions) {
             if (project.name === name) {
               return this.entityExist(

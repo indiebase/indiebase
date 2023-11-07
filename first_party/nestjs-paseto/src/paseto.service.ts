@@ -3,7 +3,7 @@ import { PasetoModuleOptions } from './paseto.interface';
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import assert from 'assert';
 import * as paseto from 'paseto';
-import { ConsumeOptions, ProduceOptions } from 'paseto';
+import { ConsumeOptions, ConsumeOptionsBuffer, ProduceOptions } from 'paseto';
 
 @Injectable()
 export class PasetoService {
@@ -25,14 +25,18 @@ export class PasetoService {
     options?: ProduceOptions,
   ) {
     const version = this.options.version;
+    options = Object.assign(this.options.produceOptions, options);
+
     return paseto[version].sign(payload, this.options.privateKey, options);
   }
 
   public verify<T extends boolean = any>(
     token: string,
-    options?: ConsumeOptions<T>,
+    options?: ConsumeOptions<T> | ConsumeOptionsBuffer<T>,
   ) {
     const version = this.options.version;
+    options = Object.assign({}, this.options.consumeOptions, options);
+
     return paseto[version].verify(
       token,
       this.options.publicKey,
@@ -50,6 +54,8 @@ export class PasetoService {
       throw new Error(`Paseto ${version} doesn't support encrypt`);
     }
 
+    options = Object.assign({}, this.options.produceOptions, options);
+
     return (paseto[version] as any).encrypt(
       payload,
       this.options.localKey,
@@ -66,6 +72,8 @@ export class PasetoService {
     if (['V2', 'V4'].includes(version)) {
       throw new Error(`Paseto ${version} doesn't support decrypt`);
     }
+
+    options = Object.assign({}, this.options.consumeOptions, options);
 
     return (paseto[version] as any).decrypt(
       token,

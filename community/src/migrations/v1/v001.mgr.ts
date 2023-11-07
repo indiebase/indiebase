@@ -12,7 +12,7 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .initBuiltinFuncs();
 
-      /**
+      /*  *
        * ib_orgs
        */
       await knex.schema

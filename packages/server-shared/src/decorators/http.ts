@@ -1,4 +1,4 @@
-import { X_Indiebase_AC, X_Indiebase_Project_ID } from '../../../sdk/src';
+import { X_Indiebase_AC, X_Indiebase_Project_ID } from '@indiebase/sdk';
 import {
   BadRequestException,
   ExecutionContext,
@@ -6,21 +6,6 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 import { ApiHeader } from '@nestjs/swagger';
-import { plainToClass, plainToInstance } from 'class-transformer';
-import { validateOrReject } from 'class-validator';
-import { type ClzType } from '../utils';
-
-export const DevApiHeader = function () {
-  return applyDecorators(
-    ApiHeader({
-      name: 'Domain',
-      description: 'The product package name, same as domain',
-      schema: {
-        default: 'com.deskbtm.indiebase',
-      },
-    }),
-  );
-};
 
 export const ProtectApiHeader = () =>
   ApiHeader({
@@ -36,10 +21,10 @@ export const ProjectApiHeader = () =>
   ApiHeader({
     name: X_Indiebase_Project_ID,
     description:
-      'Indiebase Project ID. Dev environment, please modify the database to default value "',
+      'Indiebase Project ID. e.g. 4b3643f67affc66d.`mgr` is a specific value for manager API',
     required: true,
     schema: {
-      default: '4b3643f67affc66d',
+      default: 'mgr',
     },
   });
 

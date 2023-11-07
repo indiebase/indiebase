@@ -27,7 +27,9 @@ describe('CaslConfig', () => {
     expect(
       CaslConfig.getRootOptions().getUserFromRequest({
         user,
-        casl: { hooks: { user: new NullUserHook(), subject: new NullSubjectHook() } },
+        casl: {
+          hooks: { user: new NullUserHook(), subject: new NullSubjectHook() },
+        },
       }),
     ).toEqual(user);
   });

@@ -15,15 +15,15 @@ import { CommonApiHeader, PublicApiGuard } from '@indiebase/server-shared';
 import { LocalSignInDTO } from './auth.dto';
 import { ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
-import { PasetoService } from 'nestjs-paseto';
 import { LocalAuthGuard } from './local.guard';
+import { AuthService } from './auth.service';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
 export class AuthController {
   private readonly logger = new Logger('AuthController');
 
-  constructor(private readonly pasetoService: PasetoService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
   @CommonApiHeader()
@@ -36,11 +36,15 @@ export class AuthController {
     _: LocalSignInDTO,
     @Req() req: FastifyRequest,
   ) {
-    // await this.authService.handleSingIn(req, session);
+    const accessToken = await this.authService.singIn(
+      req.user,
+      req.raw.project,
+    );
 
     return {
       code: ResultCode.SUCCESS,
       message: 'Login Successfully',
+      accessToken,
     };
   }
 

@@ -20,7 +20,7 @@ import { GithubStrategy, GoogleStrategy, MicrosoftStrategy } from './social';
           version: 'V4',
           privateKey,
           produceOptions: {
-            expiresIn: '60s',
+            expiresIn: '365d',
           },
         };
       },

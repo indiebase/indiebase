@@ -33,20 +33,11 @@ export class LocalStrategy
     email: string,
     password: string,
   ): Promise<any> {
-    const user = await this.authService.validateLocal(
+    const user = this.authService.validateLocal(
       request.raw.project.namespace,
       email,
       password,
     );
-
-    console.log(user);
-
-    // console.log(this.request);
-    // delete user.password;
-
-    // const user = {
-    //   email: 'hanhan',
-    // };
 
     return user;
   }
