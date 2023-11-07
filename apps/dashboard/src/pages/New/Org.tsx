@@ -1,14 +1,15 @@
-import { FC, Suspense, useMemo, useState } from 'react';
+import { FC, Suspense, forwardRef, useMemo, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   Avatar,
   Box,
   Button,
   Center,
+  Combobox,
   Flex,
-  Select,
   TextInput,
   Title,
+  rem,
   useMantineTheme,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -32,6 +33,7 @@ import isEmail from 'validator/lib/isEmail';
 import { useNavigate } from 'react-router-dom';
 import { AvatarEditor } from '~/components/AvatarEditor';
 import { isCommonLegalString } from '~/utils/validator';
+import { Select } from '~/components/Select';
 
 export interface NewOrgProps {
   onSuccess(org: string): void;
@@ -42,6 +44,14 @@ export interface OrgSelectProps extends React.ComponentPropsWithoutRef<'div'> {
   label: string;
   value: string;
 }
+
+export const SelectItem = forwardRef<HTMLDivElement, any>(
+  function SelectItem(props, ref) {
+    console.log(props);
+
+    return <div ref={ref}>dmeo</div>;
+  },
+);
 
 const NewOrg: FC<NewOrgProps> = function ({ onSuccess }) {
   const [github, setGithub] = useState<OrgSelectProps>();
@@ -105,22 +115,47 @@ const NewOrg: FC<NewOrgProps> = function ({ onSuccess }) {
         >
           <Flex align="flex-end">
             <Select
-              // icon={
-              //   <Avatar src={github?.logo} size={14}>
-              //     <IconBrandGithub size={17} />
-              //   </Avatar>
-              // }
+              leftSection={
+                <Avatar src={github?.logo} variant="transparent" size={20}>
+                  <IconBrandGithub size={17} />
+                </Avatar>
+              }
               mt={16}
               label="Pick github organization"
-              // itemComponent={SelectItem}
-              // data={githubOrgs}
+              data={
+                [
+                  {
+                    icon: 'demo',
+                    value: 'github',
+                    label: 'Github',
+                  },
+                ] as any
+              }
+              onChange={() => {}}
+              itemComponent={SelectItem}
               searchable
               style={{ width: 250 }}
               maxDropdownHeight={400}
               clearable
-              // nothingFound={isLoading ? 'Loading...' : 'Empty'}
+              nothingFoundMessage={true ? 'Loading...' : 'Empty'}
               // onChange={handleChange}
             />
+            {/* <Select
+              leftSection={
+                <Avatar src={github?.logo} variant="transparent" size={20}>
+                  <IconBrandGithub size={17} />
+                </Avatar>
+              }
+              label="Pick github organization"
+              data={[
+                {
+                  icon: 'github',
+                  value: 'github',
+                  label: 'Github',
+                },
+              ]}
+              nothingFoundMessage={true ? 'Loading...' : 'Empty'}
+            /> */}
 
             <AvatarEditor
               src={github?.logo}
@@ -142,6 +177,7 @@ const NewOrg: FC<NewOrgProps> = function ({ onSuccess }) {
           <TextInput
             style={{ width: 500 }}
             mt="md"
+            withAsterisk
             label="Contact email"
             {...form.getInputProps('contactEmail')}
           />
@@ -150,6 +186,7 @@ const NewOrg: FC<NewOrgProps> = function ({ onSuccess }) {
             mt="md"
             label="Domain"
             placeholder="e.g. indiebase.com"
+            description="By default, each project will use the organization's domain as a prefix for the package name."
             {...form.getInputProps('domain')}
           />
 
@@ -171,12 +208,11 @@ const NewOrg: FC<NewOrgProps> = function ({ onSuccess }) {
 
 export const Component = function () {
   const navigate = useNavigate();
-  // useRemoveAppShellLeftPadding();
 
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
-        <Box mt={40} ml={40}>
+        <Center mt={40}>
           <NewOrg
             onSuccess={(org) => {
               navigate(org, {
@@ -186,9 +222,7 @@ export const Component = function () {
               });
             }}
           />
-        </Box>
-        {/* <Center m={20} mt={20}>
-        </Center> */}
+        </Center>
       </Suspense>
     </ErrorBoundary>
   );
