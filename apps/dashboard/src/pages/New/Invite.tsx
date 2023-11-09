@@ -1,12 +1,17 @@
-import { useDebouncedState, useViewportSize } from '@mantine/hooks';
+import {
+  useDebouncedState,
+  useMediaQuery,
+  useViewportSize,
+} from '@mantine/hooks';
 import { FC, forwardRef, Suspense, useRef, useState } from 'react';
 import {
   Anchor,
   Avatar,
   Box,
   Button,
+  Center,
+  Combobox,
   Group,
-  MultiSelect,
   Stack,
   Text,
   rem,
@@ -21,6 +26,8 @@ import debounce from 'lodash.debounce';
 import { IconBuildingCommunity } from '@tabler/icons-react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import { InvitationInput } from '~/components/InvitationInput';
+import { MultiSelect } from '~/components/MultiSelect';
 
 export const SelectItem = forwardRef<HTMLDivElement, any>(function SelectItem(
   { avatar, label, username, ...rest },
@@ -45,70 +52,118 @@ export const SelectItem = forwardRef<HTMLDivElement, any>(function SelectItem(
   );
 });
 
-interface InviteUserProps {
+interface UserInvitationInputProps {
   onChange(items: string[]): void;
 }
 
-export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
-  const [members, setMembers] = useDebouncedState<any[]>([], 100);
-  const [value, setValue] = useState([]);
+async function searchUsersApi(params: any) {
+  // await new Promise((r) => setTimeout(r, 500));
+
+  return [
+    {
+      avatar: 'https://randomuser.me/api/portraits/men/67.jpg',
+      username: 'wanghan',
+      email: 'wanghan@outlook.com',
+    },
+    {
+      avatar: 'https://randomuser.me/api/portraits/men/67.jpg',
+      username: 'deskbtm',
+      email: 'deskbtm@outlook.com',
+    },
+  ];
+}
+
+export const UserInvitationInput: FC<UserInvitationInputProps> = function ({
+  onChange,
+}) {
+  const [members, setMembers] = useDebouncedState<any[]>([], 0);
+  const [value, setValue] = useState<any[]>([]);
   const ref = useRef<any>();
   const theme = useMantineTheme();
   const { createdName } = useParams();
 
   const handleSearch = debounce((query) => {
-    // searchUsersApi({ email: query }).then(({ d }) => {
-    //   if (d.length < 1) return;
-    //   const items = d.map((val) => ({
-    //     avatar: val.avatar,
-    //     username: val.username,
-    //     value: val.email,
-    //     label: val.email,
-    //   }));
-    //   const result = [];
-    //   for (const item of items) {
-    //     if (members.length > 0) {
-    //       const m = members.find((m) => item.value === m.value);
-    //       if (!m) {
-    //         result.push(item);
-    //       }
-    //     } else {
-    //       result.push(item);
-    //     }
-    //   }
-    //   setMembers([...result, ...members]);
-    // });
-  }, 500);
+    searchUsersApi({ email: query }).then((d) => {
+      if (d.length < 1) return;
+      const items = d.map((val) => ({
+        avatar: val.avatar,
+        username: val.username,
+        value: val.email,
+        label: val.email,
+      }));
+      const result: any[] = [];
+      for (const item of items) {
+        if (members.length > 0) {
+          const m = members.find((m) => item.value === m.value);
+          if (!m) {
+            result.push(item);
+          }
+        } else {
+          result.push(item);
+        }
+      }
+      setMembers([...result, ...members]);
+    });
+  }, 0);
+
+  const isMobile = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`);
+
+  const multiSelectStyles = isMobile
+    ? { width: 600 }
+    : { flex: 1, width: '100dvw' };
 
   return (
     <>
       <Stack align="flex-end" gap="sm">
         <Group align="center" gap="sm" mt={50}>
+          {/* <InvitationInput
+            data={[
+              { label: 'wanghan@outlook.com', value: 'wanghan@outlook.com' },
+              { label: 'demodem@gmail.com', value: 'wangha1n@outlook.com' },
+              { label: 'Github2', value: 'github2' },
+              { label: 'Github3', value: 'github3' },
+            ]}
+          /> */}
           <MultiSelect
+            style={multiSelectStyles}
             ref={ref}
+            // hidePickedOptions
             // filter={{}}
             // creatable
             value={value}
             onChange={(value) => {
-              // setValue(value);
-              onChange(value);
+              setValue(value);
+              console.log(value);
             }}
+            // onClickCreateLabel={(event) => {}}
             limit={20}
-            // getCreateLabel={(query) => `+ Invite unregister: ${query}`}
-            // itemComponent={SelectItem}
-            style={{
-              width: 600,
+            creatable
+            getCreateLabel={(query) => {
+              return <a>+ create</a>;
             }}
-            placeholder="Enter the email. Unregistered users will be sent an invitation to register."
+            // itemComponent={SelectItem}
+            // style={{
+            //   width: 600,
+            // }}
+            placeholder="Enter the email."
             searchable
             clearable
+            // dropdownOpened
+            nothingFoundMessage="Nothing found..."
             onSearchChange={handleSearch}
             // onCreate={(query) => {
             //   const item = { value: query, label: query };
             //   setMembers([...members, item]);
             //   return item;
             // }}
-            data={members}
+            // withCheckIcon={false}
+            // data={members}
+            data={[
+              { label: 'wanghan@outlook.com', value: 'wanghan@outlook.com' },
+              { label: 'demodem@gmail.com', value: 'wangha1n@outlook.com' },
+              { label: 'Github2', value: 'github2' },
+              { label: 'Github3', value: 'github3' },
+            ]}
           />
           <Button
             variant="gradient"
@@ -119,7 +174,7 @@ export const InviteUser: FC<InviteUserProps> = function ({ onChange }) {
               height: 36,
               alignSelf: 'flex-start',
             }}
-            gradient={theme.other.buttonGradient}
+            gradient={theme.other.peachGradient}
           >
             Invite
           </Button>
@@ -158,7 +213,7 @@ export const InviteMembers = function () {
   // const { state } = useLocation();
 
   return (
-    <Stack>
+    <Stack align="center">
       {/* <ReactConfetti
         width={width - 16}
         height={height}
@@ -188,7 +243,7 @@ export const InviteMembers = function () {
         Now, invite some members.
       </Text>
 
-      {/* <InviteUser onChange={(items) => {}} /> */}
+      <UserInvitationInput onChange={(items) => {}} />
     </Stack>
   );
 };
@@ -198,13 +253,12 @@ InviteMembers.defaultProps = {
 };
 
 export const Component = function () {
-  // useRemoveAppShellLeftPadding();
   return (
     <ErrorBoundary fallbackRender={() => <div>Error</div>}>
       <Suspense>
-        <Box mt={40} ml={40}>
+        <Center mt={40}>
           <InviteMembers />
-        </Box>
+        </Center>
       </Suspense>
     </ErrorBoundary>
   );

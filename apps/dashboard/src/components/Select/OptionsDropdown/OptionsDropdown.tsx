@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import cx from 'clsx';
 
 import {
@@ -8,15 +8,17 @@ import {
 import { isEmptyComboboxData } from './is-empty-combobox-data';
 import { isOptionsGroup } from './is-options-group';
 import { validateOptions } from './validate-options';
-import classes from '../Combobox.module.css';
-
 import {
+  Box,
   CheckIcon,
   Combobox,
   ComboboxItem,
   ComboboxParsedItem,
   ScrollArea,
 } from '@mantine/core';
+// import classes from '../Combobox.module.css';
+
+const classes = Combobox.Option.classes;
 
 export type OptionsFilter = (input: FilterOptionsInput) => ComboboxParsedItem[];
 
@@ -54,17 +56,17 @@ function Option({
   itemComponent,
 }: OptionProps) {
   if (!isOptionsGroup(data)) {
-    const check = itemComponent &&
-      withCheckIcon &&
-      isValueChecked(value, data.value) && (
-        <CheckIcon className={classes.optionsDropdownCheckIcon} />
-      );
+    const check = withCheckIcon && isValueChecked(value, data.value) && (
+      <CheckIcon className={classes.optionsDropdownCheckIcon} />
+    );
 
     return (
       <Combobox.Option
         value={data.value}
         disabled={data.disabled}
-        className={cx({ [classes.optionsDropdownOption]: !unstyled })}
+        className={cx({
+          [classes.optionsDropdownOption]: !unstyled,
+        })}
         data-reverse={checkIconPosition === 'right' || undefined}
         data-checked={isValueChecked(value, data.value) || undefined}
         aria-selected={isValueChecked(value, data.value)}
@@ -113,6 +115,9 @@ export interface OptionsDropdownProps {
   unstyled: boolean | undefined;
   labelId: string;
   itemComponent?: FC<any>;
+  creatable?: boolean;
+  getCreateLabel?(query: string): React.ReactNode;
+  onCreate?(query: string): OptionsData | string | null | undefined;
 }
 
 export function OptionsDropdown({
@@ -132,6 +137,8 @@ export function OptionsDropdown({
   unstyled,
   labelId,
   itemComponent,
+  creatable = false,
+  getCreateLabel,
 }: OptionsDropdownProps) {
   validateOptions(data);
 
@@ -173,8 +180,14 @@ export function OptionsDropdown({
         ) : (
           options
         )}
+
         {isEmpty && nothingFoundMessage && (
           <Combobox.Empty>{nothingFoundMessage}</Combobox.Empty>
+        )}
+        {creatable && filteredData.length < 1 && (
+          <Box className={classes.option}>
+            {typeof getCreateLabel === 'function' && getCreateLabel(search!)}
+          </Box>
         )}
       </Combobox.Options>
     </Combobox.Dropdown>
