@@ -41,6 +41,7 @@
   "peerDependencies": {
     "@deskbtm/gadgets": "workspace:^",
     "@fastify/session": "9.0.0",
+    "@indiebase/nest-ac": "workspace:^",
     "@indiebase/nest-async-context": "workspace:^",
     "@indiebase/nest-knex": "workspace:^",
     "@indiebase/server-shared": "*",

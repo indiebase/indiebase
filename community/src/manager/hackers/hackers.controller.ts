@@ -14,6 +14,8 @@ import {
 import { CreateHackersDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
 import { ResultCode } from '@indiebase/trait';
+import { AccessGuard } from '@indiebase/nest-casl';
+import { AccessActions, UseAccess } from '@indiebase/nest-ac';
 
 @Controller({
   path: 'mgr/hackers',
@@ -63,7 +65,10 @@ export class HackersController {
   })
   @ApiBearerAuth('paseto')
   @ProtectApiHeader()
-  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
+  @UseAccess({
+    hacker: [AccessActions.deleteOwn],
+  })
   @Post('hacker')
   async hacker(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);

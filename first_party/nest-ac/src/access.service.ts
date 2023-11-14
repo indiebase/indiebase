@@ -32,4 +32,12 @@ export class AccessService implements OnModuleInit, OnModuleDestroy {
   public getNamespace(name: string) {
     return this.#accessMap.get(name);
   }
+
+  public get instance() {
+    return this.#accessMap;
+  }
+
+  public getNamespaceList() {
+    return this.#accessMap.entries();
+  }
 }

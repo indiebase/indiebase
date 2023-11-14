@@ -1,4 +1,4 @@
-import { DefaultActions } from '@indiebase/nest-ac';
+import { AccessActions } from '@indiebase/nest-ac';
 import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
 import knex, { Knex } from 'knex';
 
@@ -18,6 +18,7 @@ export const v001_tmpl = async function (
         .withSchema(schema)
         .initBuiltinFuncs();
 
+      /** ib_users */
       await knex.schema
         .withSchema(schema)
         .createTable(TmplMetaTables.users, (table) => {
@@ -29,8 +30,9 @@ export const v001_tmpl = async function (
           table.string('password');
           table.boolean('enabled_otp').defaultTo(false).comment('Enable 2FA');
           table.string('opt_secret').comment('One time password secret');
-          table.timestamps(true, true);
+          table.timestamp('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
+          table.timestamps(true, true);
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.users);
@@ -43,7 +45,7 @@ export const v001_tmpl = async function (
           table.increments('id').primary();
           table.string('name').notNullable();
           table.string('resources').notNullable();
-          table.enum('action', Object.values(DefaultActions)).notNullable();
+          table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.string('description');
           table.timestamps(true, true);

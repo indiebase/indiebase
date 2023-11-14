@@ -1,4 +1,4 @@
-export enum DefaultActions {
+export enum AccessActions {
   createOwn = 'create:own',
   readOwn = 'read:own',
   updateOwn = 'update:own',

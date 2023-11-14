@@ -1,9 +1,11 @@
 import { Type, DynamicModule, ForwardReference } from '@nestjs/common';
 
 export interface AccessOptions {
-  model?: any;
-
   getUserFromRequest?<Req = any>(request: Req): any;
+
+  namespaceFrom?: 'httpHeader';
+
+  headerField?: string;
 
   imports?: Array<
     Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference

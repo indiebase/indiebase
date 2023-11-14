@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { AccountStatus, OrgStatus, ProjectStatus } from '@indiebase/trait';
-import { DefaultActions } from '@indiebase/nest-ac';
+import { AccessActions } from '@indiebase/nest-ac';
 
 export const v001_mgr = async function (
   schema: string,
@@ -109,7 +109,7 @@ export const v001_mgr = async function (
           table.increments('id').primary();
           table.string('name').notNullable();
           table.string('resources').notNullable();
-          table.enum('action', Object.values(DefaultActions)).notNullable();
+          table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.string('description');
           table.timestamps(true, true);
@@ -155,14 +155,13 @@ export const v001_mgr = async function (
             .index()
             .references('id')
             .inTable(`mgr.${MgrMetaTables.projects}`);
-
           table
             .integer('role_id')
             .unsigned()
             .index()
             .references('id')
             .inTable(`mgr.${MgrMetaTables.roles}`);
-
+          table.datetime('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamps(true, true);
         })
