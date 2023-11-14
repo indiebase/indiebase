@@ -1,12 +1,12 @@
 import { Knex } from 'knex';
 import kysely from 'kysely';
-import { v001_mgr } from '../migrations/v1/v001.mgr';
+import { v001_mgr } from './v1/v001.mgr';
 
 export class MigrationSource implements Knex.MigrationSource<any> {
   #schema: string;
 
   constructor(schema?: string) {
-    this.#schema = schema ?? 'public';
+    this.#schema = schema ?? 'mgr';
   }
 
   // Must return a Promise containing a list of migrations.

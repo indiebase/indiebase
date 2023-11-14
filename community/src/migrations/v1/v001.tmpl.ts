@@ -1,3 +1,4 @@
+import { DefaultActions } from '@indiebase/nest-ac';
 import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
 import knex, { Knex } from 'knex';
 
@@ -35,13 +36,16 @@ export const v001_tmpl = async function (
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.users);
         });
 
+      /** ib_roles */
       await knex.schema
         .withSchema(schema)
         .createTable(TmplMetaTables.roles, (table) => {
           table.increments('id').primary();
+          table.string('name').notNullable();
+          table.string('resources').notNullable();
+          table.enum('action', Object.values(DefaultActions)).notNullable();
+          table.string('attributes').notNullable();
           table.string('description');
-          table.string('name');
-          table.json('permissions').notNullable();
           table.timestamps(true, true);
         })
         .then(async () => {

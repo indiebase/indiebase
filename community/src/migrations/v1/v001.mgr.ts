@@ -1,6 +1,7 @@
 import { Knex } from 'knex';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { AccountStatus, OrgStatus, ProjectStatus } from '@indiebase/trait';
+import { DefaultActions } from '@indiebase/nest-ac';
 
 export const v001_mgr = async function (
   schema: string,
@@ -35,7 +36,7 @@ export const v001_mgr = async function (
             .nullable()
             .comment('Organization homepage');
           table
-            .enum('status', Object.keys(OrgStatus), {
+            .enum('status', Object.values(OrgStatus), {
               useNative: true,
               enumName: 'status',
             })
@@ -61,7 +62,7 @@ export const v001_mgr = async function (
           table.integer('pinned_order').comment('Project card pinned order');
           table.boolean('pinned').comment('Pin the project');
           table
-            .enum('project_status', Object.keys(ProjectStatus))
+            .enum('project_status', Object.values(ProjectStatus))
             .defaultTo(ProjectStatus.wip)
             .comment('Project status');
           table
@@ -106,9 +107,11 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.roles, (table) => {
           table.increments('id').primary();
+          table.string('name').notNullable();
+          table.string('resources').notNullable();
+          table.enum('action', Object.values(DefaultActions)).notNullable();
+          table.string('attributes').notNullable();
           table.string('description');
-          table.string('name').unique().notNullable();
-          table.json('permissions').notNullable();
           table.timestamps(true, true);
         })
         .then(async () => {
@@ -131,7 +134,7 @@ export const v001_mgr = async function (
           table.boolean('enabled_otp').comment('Enable 2FA');
           table.string('opt_secret').comment('One time password secret');
           table
-            .enum('account_status', Object.keys(AccountStatus))
+            .enum('account_status', Object.values(AccountStatus))
             .defaultTo(AccountStatus.active);
           table
             .string('github_username')

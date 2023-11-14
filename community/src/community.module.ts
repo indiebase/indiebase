@@ -1,6 +1,8 @@
 import {
   IsEntityExistedConstraint,
+  KnexEx,
   PresetMiddlewareModule,
+  TmplMetaTables,
   genDevPublicApiKey,
 } from '@indiebase/server-shared';
 import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
@@ -15,6 +17,9 @@ import { MigrationModule } from './migrations';
 import { ProbeModule } from './probe';
 import { StorageModule } from './storage';
 import { UsersModule } from './users/users.module';
+import { AccessService } from '@indiebase/nest-ac';
+import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import { Knex } from 'knex';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
@@ -48,8 +53,25 @@ export const createCommunityModule = function (
     constructor(
       private readonly logger: Logger,
       private readonly config: ConfigService,
+      private readonly ac: AccessService,
+      @InjectKnex()
+      private readonly knex: Knex,
+      @InjectKnexEx()
+      private readonly knexEx: KnexEx,
     ) {}
     async onModuleInit() {
+      const projects = await this.knexEx.listProjects();
+
+      // projects.push({ namespace: 'mgr' });
+
+      for (const prj of projects) {
+        this.knex
+          .withSchema(prj.namespace)
+          .select('*')
+          .from(TmplMetaTables.roles);
+        // this.ac.setNamespace(ns).setGrants()
+      }
+
       if (kDevMode) {
         const salt = this.config.get('security.publicApiGuardSalt');
         this.logger.debug('Public API Key: ' + genDevPublicApiKey(salt));

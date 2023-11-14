@@ -191,7 +191,7 @@ const Screen3 = function () {
 
 const Screen1 = function () {
   const theme = useMantineTheme();
-  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const isMobile = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`);
 
   return (
     <Flex
@@ -215,7 +215,7 @@ const Screen1 = function () {
       </Text>
 
       <Text
-        maw={isMobile ? null : '50%'}
+        maw={isMobile ? '50%' : null}
         size="xl"
         mt={rem(30)}
         ta="center"

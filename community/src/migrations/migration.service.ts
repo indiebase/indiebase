@@ -24,5 +24,9 @@ export class MigrationService {
       tableName: MgrMetaTables.migrations,
       schemaName: 'mgr',
     });
+
+    // await this.knex.seed.run({
+    //   seedSource: new SeedSource('mgr'),
+    // });
   }
 }

@@ -6529,8 +6529,8 @@ __metadata:
     "@fastify/session": "npm:10.5.0"
     "@fastify/swagger": "npm:8.12.0"
     "@indiebase/dev": "workspace:^"
+    "@indiebase/nest-ac": "workspace:^"
     "@indiebase/nest-async-context": "workspace:^"
-    "@indiebase/nest-casl": "workspace:^"
     "@indiebase/nest-fastify-file": "workspace:^"
     "@indiebase/nest-fastify-passport": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
@@ -6669,6 +6669,9 @@ __metadata:
     jotai: "npm:2.5.0"
     jotai-devtools: "npm:0.7.0"
     localforage: "npm:1.10.0"
+    postcss-flexbugs-fixes: "npm:^5.0.2"
+    postcss-preset-mantine: "npm:^1.9.1"
+    postcss-simple-vars: "npm:^7.0.1"
     react: "npm:18.2.0"
     react-cropper: "npm:2.3.3"
     react-dom: "npm:18.2.0"
@@ -6746,6 +6749,31 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@indiebase/nest-ac@workspace:^, @indiebase/nest-ac@workspace:first_party/nest-ac":
+  version: 0.0.0-use.local
+  resolution: "@indiebase/nest-ac@workspace:first_party/nest-ac"
+  dependencies:
+    "@nestjs/cli": "npm:10.1.12"
+    "@nestjs/common": "npm:10.1.3"
+    "@nestjs/core": "npm:10.1.3"
+    "@nestjs/schematics": "npm:10.0.2"
+    "@nestjs/testing": "npm:10.1.3"
+    "@types/node": "npm:20.8.10"
+    "@types/supertest": "npm:2.0.11"
+    accesscontrol: "npm:^2.2.1"
+    jest: "npm:29.6.1"
+    reflect-metadata: "npm:0.1.13"
+    rimraf: "npm:5.0.1"
+    rxjs: "npm:7.8.1"
+    supertest: "npm:6.3.3"
+    ts-jest: "npm:29.1.1"
+    ts-loader: "npm:9.4.4"
+    ts-node: "npm:10.9.1"
+    tsconfig-paths: "npm:4.2.0"
+    typescript: "npm:5.2.2"
+  languageName: unknown
+  linkType: soft
+
 "@indiebase/nest-async-context@workspace:^, @indiebase/nest-async-context@workspace:first_party/nest-async-context":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-async-context@workspace:first_party/nest-async-context"
@@ -6801,7 +6829,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-casl@workspace:^, @indiebase/nest-casl@workspace:first_party/nest-casl":
+"@indiebase/nest-casl@workspace:first_party/nest-casl":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-casl@workspace:first_party/nest-casl"
   dependencies:
@@ -12574,6 +12602,15 @@ __metadata:
     mime-types: "npm:~2.1.34"
     negotiator: "npm:0.6.3"
   checksum: 67eaaa90e2917c58418e7a9b89392002d2b1ccd69bcca4799135d0c632f3b082f23f4ae4ddeedbced5aa59bcc7bdf4699c69ebed4593696c922462b7bc5744d6
+  languageName: node
+  linkType: hard
+
+"accesscontrol@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "accesscontrol@npm:2.2.1"
+  dependencies:
+    notation: "npm:^1.3.6"
+  checksum: e7b12f1a0d1742507e8dbb4a1689439c0b958ee3b8e1139f7de1a37005ed14ea225938464ed8f89df4dbbde3e470fa5193256595837b49c8f2f8e3536f4f6d7f
   languageName: node
   linkType: hard
 
@@ -27390,6 +27427,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"notation@npm:^1.3.6":
+  version: 1.3.6
+  resolution: "notation@npm:1.3.6"
+  checksum: 621cc29f7a9acbfb3c380b1e362d5820fb7106df7a85e44d23a73f8e0239757f2e573d44ef659bd324fba037dbf0dd91db632cbef41e64688ea78d8f3932cfa4
+  languageName: node
+  linkType: hard
+
 "npm-audit-report@npm:^3.0.0":
   version: 3.0.0
   resolution: "npm-audit-report@npm:3.0.0"
@@ -29345,6 +29389,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-flexbugs-fixes@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "postcss-flexbugs-fixes@npm:5.0.2"
+  peerDependencies:
+    postcss: ^8.1.4
+  checksum: 022ddbcca8987303b9be75ff259e9de81b98643adac87a5fc6b52a0fcbbf95e1ac9fd508c4ed67cad76ac5d039b7123de8a0832329481b3c626f5d63f7a28f47
+  languageName: node
+  linkType: hard
+
 "postcss-js@npm:^4.0.0":
   version: 4.0.1
   resolution: "postcss-js@npm:4.0.1"
@@ -29663,6 +29716,18 @@ __metadata:
   peerDependencies:
     postcss: ">=8.0.0"
   checksum: 78687c62c9a0bd1e111b2dbb23bc59ca6bab57929fa8bbd680caf5c4a23d1a5ba45038afd3d56f36482e1c6438320a336c8d81b7e9087928dd1d779ef8b9a28e
+  languageName: node
+  linkType: hard
+
+"postcss-preset-mantine@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "postcss-preset-mantine@npm:1.9.1"
+  dependencies:
+    postcss-mixins: "npm:^9.0.4"
+    postcss-nested: "npm:^6.0.1"
+  peerDependencies:
+    postcss: ">=8.0.0"
+  checksum: 338aca70d6627574755fb7461ce61f32d6fd4866b6f838bfd5174b358fb1562dca91c4b20e898f03431bd82357288d6f60d08b3a19fda80a312e417a3808d137
   languageName: node
   linkType: hard
 

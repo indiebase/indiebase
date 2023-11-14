@@ -2,6 +2,7 @@ import { Knex } from 'knex';
 
 import { KnexSchemaEx } from './schema.ex';
 import { MgrMetaTables, TmplMetaTables } from './tables';
+import { Project } from '@indiebase/trait';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
@@ -31,6 +32,10 @@ export class KnexEx {
       .then((v) => {
         return Array.isArray(v) && v.length > 0;
       });
+  }
+
+  public async listProjects(): Promise<Project[]> {
+    return this.knex.withSchema('mgr').select('*').from(MgrMetaTables.projects);
   }
 
   /**
