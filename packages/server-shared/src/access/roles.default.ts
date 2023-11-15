@@ -1,11 +1,14 @@
-export enum BuiltinMgrRoles {
+export enum MgrRoles {
   /**
    * The ONE-ABOVE-ALL
    */
   OAA = 'OAA',
+
+  anonymous = 'anonymous',
 }
 
-export enum BuiltinPrjRoles {
+export enum PrjRoles {
   owner = 'owner',
   member = 'member',
+  anonymous = 'anonymous',
 }

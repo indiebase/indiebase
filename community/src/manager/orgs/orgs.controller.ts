@@ -18,10 +18,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { OrgsService } from './orgs.service';
-import { PublicApiGuard, OkResponseSchema } from '@indiebase/server-shared';
+import {
+  PublicApiGuard,
+  OkResponseSchema,
+  AccessGuard,
+} from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
-import { AccessGuard } from '@indiebase/nest-casl';
 import { PasetoAuthGuard } from '../../auth/paseto.guard';
 import { did } from '@deskbtm/gadgets';
 

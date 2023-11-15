@@ -6,6 +6,7 @@ export enum AccountStatus {
 export interface BasicUser {
   id: number;
   email: string;
+  role: string;
   nickname?: string;
   avatarUrl?: string;
   bio?: string;

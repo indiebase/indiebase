@@ -1,18 +1,20 @@
-import {
-  ExecutionContext,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
 import { PrimitiveAccessGuard } from '@indiebase/nest-ac';
+import { type FastifyRequest } from 'fastify';
 
 @Injectable()
 export class AccessGuard extends PrimitiveAccessGuard {
-  protected override useRole(context: ExecutionContext): Promise<string> {
-    throw new Error('Method not implemented.');
+  protected override async useRole(context: ExecutionContext): Promise<string> {
+    const request = context.switchToHttp().getRequest<FastifyRequest>();
+
+    return request.user?.role;
   }
 
-  protected override useNamespace(context: ExecutionContext): Promise<string> {
-    throw new Error('Method not implemented.');
+  protected override async useNamespace(
+    context: ExecutionContext,
+  ): Promise<string> {
+    const request = context.switchToHttp().getRequest<FastifyRequest>();
+
+    return request.raw.project?.namespace;
   }
 }

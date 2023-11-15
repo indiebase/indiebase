@@ -8,6 +8,8 @@ export class PasetoAuthGuard extends AuthGuard('paseto') {
   }
 
   override handleRequest(err: any, user: any, _info: any, _context: any) {
+    console.log(user, '@@@@@');
+
     if (err || !user) {
       if (err) this.logger.error(err);
       throw new UnauthorizedException();

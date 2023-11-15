@@ -3,8 +3,10 @@ import {
   OkResponseSchema,
   PublicApiGuard,
   ProtectApiHeader,
+  AccessGuard,
+  CommonApiHeader,
 } from '@indiebase/server-shared';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import {
   ApiTags,
   ApiBearerAuth,
@@ -14,7 +16,6 @@ import {
 import { CreateHackersDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
 import { ResultCode } from '@indiebase/trait';
-import { AccessGuard } from '@indiebase/nest-casl';
 import { AccessActions, UseAccess } from '@indiebase/nest-ac';
 
 @Controller({
@@ -64,13 +65,15 @@ export class HackersController {
     type: OkResponseSchema,
   })
   @ApiBearerAuth('paseto')
+  @CommonApiHeader()
   @ProtectApiHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
     hacker: [AccessActions.deleteOwn],
   })
   @Post('hacker')
-  async hacker(@Body() body: CreateHackersDTO) {
+  async hacker(@Body() body: CreateHackersDTO, @Req() req) {
+    console.log(req.user);
     await this.hackers.create(body);
 
     return {

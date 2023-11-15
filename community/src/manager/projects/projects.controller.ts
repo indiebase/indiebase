@@ -15,10 +15,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
-import { OkResponseSchema } from '@indiebase/server-shared';
+import { AccessGuard, OkResponseSchema } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import { CreatePrjDTO } from './projects.dto';
-import { AccessGuard } from '@indiebase/nest-casl';
 import { PasetoAuthGuard } from '../../auth';
 
 @Controller({

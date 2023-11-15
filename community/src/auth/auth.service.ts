@@ -1,5 +1,4 @@
-import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
-// import { UserService } from '../user/user.service';
+import { KnexEx } from '@indiebase/server-shared';
 import {
   Injectable,
   NotFoundException,
@@ -10,11 +9,9 @@ import {
 import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
-import { MgrMetaTables, getSubdomain } from '@indiebase/server-shared';
 import { FastifyRequest } from 'fastify';
 import { BasicUser, Project, ResultCode } from '@indiebase/trait';
-import { Knex } from 'knex';
-import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import { InjectKnexEx } from '@indiebase/nest-knex';
 import { did } from '@deskbtm/gadgets';
 import { PasetoService } from 'nestjs-paseto';
 
@@ -92,6 +89,7 @@ export class AuthService {
     return this.pasetoService.sign({
       id: user.id,
       email: user.email,
+      role: user.role,
       project: project.name,
       namespace: project.namespace,
     });

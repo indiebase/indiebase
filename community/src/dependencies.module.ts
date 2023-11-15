@@ -1,10 +1,9 @@
 import { AccessControlModule } from '@indiebase/nest-ac';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
-import { CaslModule } from '@indiebase/nest-casl';
 import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { X_Indiebase_Lang } from '@indiebase/sdk';
-import { BuiltinMgrRoles, KnexEx } from '@indiebase/server-shared';
+import { KnexEx } from '@indiebase/server-shared';
 import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -133,57 +132,56 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
         },
       }),
       AccessControlModule.forRoot({
-        model: [
-          {
-            role: 'admin',
-            resource: 'video',
-            action: 'create:any',
-            attributes: '*, !views',
-          },
-          {
-            role: 'admin',
-            resource: 'video',
-            action: 'read:any',
-            attributes: '*',
-          },
-          {
-            role: 'admin',
-            resource: 'video',
-            action: 'update:any',
-            attributes: '*, !views',
-          },
-          {
-            role: 'admin',
-            resource: 'video',
-            action: 'delete:any',
-            attributes: '*',
-          },
-
-          {
-            role: 'user',
-            resource: 'video',
-            action: 'create:own',
-            attributes: '*, !rating, !views',
-          },
-          {
-            role: 'user',
-            resource: 'video',
-            action: 'read:any',
-            attributes: '*',
-          },
-          {
-            role: 'user',
-            resource: 'video',
-            action: 'update:own',
-            attributes: '*, !rating, !views',
-          },
-          {
-            role: 'user',
-            resource: 'video',
-            action: 'delete:own',
-            attributes: '*',
-          },
-        ],
+        // model: [
+        //   {
+        //     role: 'admin',
+        //     resource: 'video',
+        //     action: 'create:any',
+        //     attributes: '*, !views',
+        //   },
+        //   {
+        //     role: 'admin',
+        //     resource: 'video',
+        //     action: 'read:any',
+        //     attributes: '*',
+        //   },
+        //   {
+        //     role: 'admin',
+        //     resource: 'video',
+        //     action: 'update:any',
+        //     attributes: '*, !views',
+        //   },
+        //   {
+        //     role: 'admin',
+        //     resource: 'video',
+        //     action: 'delete:any',
+        //     attributes: '*',
+        //   },
+        //   {
+        //     role: 'user',
+        //     resource: 'video',
+        //     action: 'create:own',
+        //     attributes: '*, !rating, !views',
+        //   },
+        //   {
+        //     role: 'user',
+        //     resource: 'video',
+        //     action: 'read:any',
+        //     attributes: '*',
+        //   },
+        //   {
+        //     role: 'user',
+        //     resource: 'video',
+        //     action: 'update:own',
+        //     attributes: '*, !rating, !views',
+        //   },
+        //   {
+        //     role: 'user',
+        //     resource: 'video',
+        //     action: 'delete:own',
+        //     attributes: '*',
+        //   },
+        // ],
       }),
       // KyselyModule.forRootAsync({
       //   inject: [ConfigService],
@@ -255,17 +253,17 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
           };
         },
       }),
-      CaslModule.forRootAsync({
-        async useFactory() {
-          return {
-            superuserRole: BuiltinMgrRoles.OAA,
-            getUserFromRequest(request) {
-              console.log(request);
-              return undefined;
-            },
-          };
-        },
-      }),
+      // CaslModule.forRootAsync({
+      //   async useFactory() {
+      //     return {
+      //       superuserRole: BuiltinMgrRoles.OAA,
+      //       getUserFromRequest(request) {
+      //         console.log(request);
+      //         return undefined;
+      //       },
+      //     };
+      //   },
+      // }),
     ],
   })
   class DepsModule {}

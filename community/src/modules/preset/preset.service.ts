@@ -1,6 +1,10 @@
 import { AccessService } from '@indiebase/nest-ac';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
+import {
+  KnexEx,
+  MgrMetaTables,
+  TmplMetaTables,
+} from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 
@@ -13,11 +17,13 @@ export class PresetService {
   ) {}
 
   private async setGrants(namespace: string) {
-    const roles = await this.knex
-      .withSchema(namespace)
-      .select('*')
-      .from(TmplMetaTables.roles);
-    this.ac.setNamespace(namespace).setGrants(roles);
+    const table =
+      namespace === 'mgr' ? MgrMetaTables.roles : TmplMetaTables.roles;
+    const roles = await this.knex.withSchema(namespace).select('*').from(table);
+
+    if (Array.isArray(roles) && roles.length > 0) {
+      this.ac.setNamespace(namespace).setGrants(roles);
+    }
   }
 
   public async initAcl() {

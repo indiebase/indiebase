@@ -53,12 +53,22 @@ export class KnexEx {
       .first();
   }
 
-  public async getUserByEmail(email: string, namespace: string = 'mgr') {
-    return this.knex
+  public async getUserByEmail(
+    email: string,
+    namespace: string = 'mgr',
+    excludePassword = true,
+  ) {
+    const result = await this.knex
       .withSchema(namespace)
       .select('*')
       .from(namespace === 'mgr' ? MgrMetaTables.hackers : TmplMetaTables.users)
       .where('email', email)
       .first();
+
+    if (excludePassword) {
+      delete result.password;
+    }
+
+    return result;
   }
 }

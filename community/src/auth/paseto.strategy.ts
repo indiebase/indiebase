@@ -1,3 +1,4 @@
+import { KnexEx } from '@indiebase/server-shared';
 import { AuthService } from './auth.service';
 import {
   PassportStrategy,
@@ -10,6 +11,7 @@ import {
   fromAuthBearer,
   type PublicPasetoStrategyOptions,
 } from 'passport-paseto';
+import { InjectKnexEx } from '@indiebase/nest-knex';
 
 @Injectable()
 export class PasetoStrategy
@@ -18,7 +20,8 @@ export class PasetoStrategy
 {
   constructor(
     private readonly config: ConfigService,
-    private readonly authService: AuthService,
+    @InjectKnexEx()
+    private readonly knexEx: KnexEx,
   ) {
     super();
   }
@@ -30,8 +33,11 @@ export class PasetoStrategy
   }
 
   async validate(payload): Promise<any> {
-    console.log(payload);
-    // const user = await this.authService.validateLocal(username, password);
-    return payload;
+    const user = await this.knexEx.getUserByEmail(
+      payload.email,
+      payload.namespace,
+    );
+
+    return user;
   }
 }
