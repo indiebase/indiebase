@@ -21,8 +21,12 @@ import { AccessControl } from '@indiebase/accesscontrol';
 
 const ac = new AccessControl();
 
+// ac.grant('admin').createAny('*').deleteOwn('video');
+// ac.grant('user').createAny('video');
 ac.grant('admin').createAny('video');
-ac.deny('admin').createAny('video');
+const a = ac.can('admin').createAny('video');
+
+console.log(a.granted);
 
 console.log(ac.getGrants(), '--------------');
 

@@ -1,6 +1,6 @@
 import { AccessControl } from '../';
 import { IAccessInfo, AccessControlError } from '../core';
-import { Action, Possession, actions, possessions } from '../enums';
+import { Action, Possession } from '../enums';
 import { utils } from '../utils';
 
 /**
