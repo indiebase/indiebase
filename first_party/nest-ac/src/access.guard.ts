@@ -8,7 +8,6 @@ import { Reflector } from '@nestjs/core';
 import { IAccessOptions } from './decorators';
 import { ACCESS_META } from './access.constants';
 import { AccessService } from './access.service';
-import { AccessActions } from './actions';
 
 @Injectable()
 export abstract class PrimitiveAccessGuard implements CanActivate {

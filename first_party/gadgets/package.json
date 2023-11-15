@@ -31,6 +31,7 @@
     }
   },
   "repository": {
+    "url": "https://github.com/indiebase/indiebase",
     "directory": "first_party/gadgets",
     "type": "git"
   },

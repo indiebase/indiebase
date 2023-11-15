@@ -73,7 +73,6 @@ export class HackersController {
   })
   @Post('hacker')
   async hacker(@Body() body: CreateHackersDTO, @Req() req) {
-    console.log(req.user);
     await this.hackers.create(body);
 
     return {
