@@ -17,19 +17,6 @@ import { StorageModule } from './storage';
 import { UsersModule } from './users/users.module';
 import { PresetModule } from './modules';
 
-import { AccessControl } from '@indiebase/accesscontrol';
-
-const ac = new AccessControl();
-
-// ac.grant('admin').createAny('*').deleteOwn('video');
-// ac.grant('user').createAny('video');
-ac.grant('admin').createAny('video');
-const a = ac.can('admin').createAny('video');
-
-console.log(a.granted);
-
-console.log(ac.getGrants(), '--------------');
-
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
  *

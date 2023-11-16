@@ -4,12 +4,14 @@ import Notation from 'notation';
 import { AccessControl } from './';
 import { actions, Possession, possessions } from './enums';
 import { IAccessInfo, IQueryInfo, AccessControlError } from './core';
+import structuredClone from 'core-js-pure/actual/structured-clone';
 
 /**
  *  List of reserved keywords.
  *  i.e. Roles, resources with these names are not allowed.
  */
-const RESERVED_KEYWORDS = ['*', '!', '$', '$extend'];
+// Indiebase
+const RESERVED_KEYWORDS = ['!', '$', '$extend'];
 
 /**
  *  Error message to be thrown after AccessControl instance is locked.
@@ -109,7 +111,7 @@ const utils = {
   },
 
   /**
-   *  Concats the given two arrays and ensures all items are unique.
+   *  Concat the given two arrays and ensures all items are unique.
    *  @param {Array} arrA
    *  @param {Array} arrB
    *  @returns {Array} - Concat'ed array.
@@ -213,7 +215,7 @@ const utils = {
   // ----------------------
 
   /**
-   *  Checks whether the given access info can be commited to grants model.
+   *  Checks whether the given access info can be committed to grants model.
    *  @param {IAccessInfo|IQueryInfo} info
    *  @returns {Boolean}
    */
@@ -536,7 +538,7 @@ const utils = {
         : utils.toStringArray(access.attributes);
     }
 
-    // this part is not necessary if this is invoked from a comitter method
+    // this part is not necessary if this is invoked from a committer method
     // such as `createAny()`. So we'll check if we need to validate all
     // properties such as `action` and `possession`.
     if (all) access = utils.normalizeActionPossession(access) as IAccessInfo;
@@ -574,14 +576,21 @@ const utils = {
     rootRole?: string,
   ): string[] {
     // `rootRole` is for memory storage. Do NOT set it when using;
-    // and do NOT document this paramter.
+    // and do NOT document this parameter.
     // rootRole = rootRole || roleName;
-
+    // Indiebase
+    const roleHasWildcard = Object.prototype.hasOwnProperty.call(grants, '*');
     const role: any = grants[roleName];
-    if (!role) throw new AccessControlError(`Role not found: "${roleName}"`);
+    if (!role && !roleHasWildcard)
+      throw new AccessControlError(`Role not found: "${roleName}"`);
 
     let arr: string[] = [roleName];
-    if (!Array.isArray(role.$extend) || role.$extend.length === 0) return arr;
+    if (
+      roleHasWildcard ||
+      !Array.isArray(role.$extend) ||
+      role.$extend.length === 0
+    )
+      return arr;
 
     role.$extend.forEach((exRoleName: string) => {
       if (!grants[exRoleName]) {
@@ -838,30 +847,46 @@ const utils = {
     query = utils.normalizeQueryInfo(query);
 
     let role;
-    let resource: string;
+    let resource: Record<string, any>;
     let attrsList: Array<string[]> = [];
     // get roles and extended roles in a flat array
     const roles: string[] = utils.getFlatRoles(grants, query.role);
     // iterate through roles and add permission attributes (array) of
     // each role to attrsList (array).
     roles.forEach((roleName: string, _index: number) => {
-      role = grants[roleName];
+      role = structuredClone(grants[roleName]) ?? {};
       // no need to check role existence #getFlatRoles() does that.
+      const roleHasWildcard = Object.prototype.hasOwnProperty.call(grants, '*');
 
-      resource = role[query.resource];
-      if (resource) {
-        // e.g. resource['create:own']
-        // If action has possession "any", it will also return
-        // `granted=true` for "own", if "own" is not defined.
-        attrsList.push(
-          (
-            resource[query.action + ':' + query.possession] ||
-            resource[query.action + ':any'] ||
-            []
-          ).concat(),
-        );
-        // console.log(resource, 'for:', action + '.' + possession);
+      if (roleHasWildcard) {
+        const wildcardRole = grants['*'];
+
+        for (const key in wildcardRole) {
+          if (Object.prototype.hasOwnProperty.call(wildcardRole, key)) {
+            role[key] = wildcardRole[key];
+          }
+        }
       }
+
+      const resHasWildcard = Object.prototype.hasOwnProperty.call(role, '*');
+      resource = role[query.resource] ?? {};
+
+      if (resHasWildcard) {
+        const wildcardResource = role['*'];
+        for (const key in wildcardResource) {
+          if (Object.prototype.hasOwnProperty.call(wildcardResource, key)) {
+            resource[key] = wildcardResource[key];
+          }
+        }
+      }
+
+      attrsList.push(
+        (
+          resource[query.action + ':' + query.possession] ||
+          resource[query.action + ':any'] ||
+          []
+        ).concat(),
+      );
     });
 
     // union all arrays of (permitted resource) attributes (for each role)
