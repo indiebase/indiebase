@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
-import { v001_mgr } from './v1/v001.mgr';
+import { v001_mgr_seed } from './v1/v001.mgr_seed';
 
-export class MigrationSource implements Knex.MigrationSource<any> {
+export class SeedMigrationSource implements Knex.MigrationSource<any> {
   #schema: string;
 
   constructor(schema?: string) {
@@ -13,7 +13,7 @@ export class MigrationSource implements Knex.MigrationSource<any> {
   // arguments to getMigrationName and getMigration
   getMigrations() {
     // In this run we are just returning migration names
-    return Promise.resolve(['v001_mgr']);
+    return Promise.resolve(['v001_mgr_seed']);
   }
 
   getMigrationName(migration: any) {
@@ -22,8 +22,8 @@ export class MigrationSource implements Knex.MigrationSource<any> {
 
   async getMigration(migration: any) {
     switch (migration) {
-      case 'v001_mgr':
-        return v001_mgr(this.#schema);
+      case 'v001_mgr_seed':
+        return v001_mgr_seed(this.#schema);
     }
   }
 }

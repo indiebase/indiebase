@@ -5,3 +5,4 @@ export * from './access.interface';
 export * from './access.constants';
 export * from './decorators';
 export * from './actions';
+export * from './utils';

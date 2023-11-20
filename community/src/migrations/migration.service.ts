@@ -3,6 +3,7 @@ import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 import { MigrationSource } from './MigrationSource';
+import { SeedMigrationSource } from './SeedMigrationSource';
 
 @Injectable()
 export class MigrationService {
@@ -25,8 +26,10 @@ export class MigrationService {
       schemaName: 'mgr',
     });
 
-    // await this.knex.seed.run({
-    //   seedSource: new SeedSource('mgr'),
-    // });
+    await this.knex.migrate.up({
+      migrationSource: new SeedMigrationSource('mgr'),
+      tableName: MgrMetaTables.seedMigrations,
+      schemaName: 'mgr',
+    });
   }
 }

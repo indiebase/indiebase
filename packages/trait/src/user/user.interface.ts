@@ -3,7 +3,7 @@ export enum AccountStatus {
   active = 'active',
 }
 
-export interface BasicUser {
+export interface PrimitiveUser {
   id: number;
   email: string;
   role: string;
@@ -15,4 +15,4 @@ export interface BasicUser {
   updateAt: Date;
 }
 
-export interface User extends BasicUser {}
+export interface User extends PrimitiveUser {}

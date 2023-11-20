@@ -32,27 +32,27 @@ export type BuiltinResources = RoleResource | UserResource;
 export const getResources: (i18n: I18nContext) => Resource[] = (i18n) => [
   {
     name: ResourceGroup.user,
-    displayName: i18n.t('res.User'),
-    description: i18n.t('res.User'),
+    displayName: 'User',
+    description: 'User',
     group: true,
     children: [
       {
         name: UserResource.list,
-        displayName: i18n.t('res.user_list'),
-        description: i18n.t('res.user_list'),
+        displayName: 'User list',
+        description: 'User list',
       },
     ],
   },
   {
     name: ResourceGroup.role,
-    displayName: i18n.t('res.Role'),
-    description: i18n.t('res.Role'),
+    displayName: 'Role',
+    description: 'Role',
     group: true,
     children: [
       {
         name: RoleResource.list,
-        displayName: i18n.t('res.role_list'),
-        description: i18n.t('res.role_list'),
+        displayName: 'Role list',
+        description: 'Role list',
       },
     ],
   },

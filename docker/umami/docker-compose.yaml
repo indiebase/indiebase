@@ -1,12 +1,16 @@
-version: '3.7'
+version: '3.9'
+
 services:
   umami:
-    image: docker.umami.dev/umami-software/umami:mysql-latest
-    network_mode: overlay
+    image: ghcr.io/umami-software/umami:postgresql-latest
     ports:
-      - w:3000
-    restart: always
+      - 13000:3000
     environment:
-      DATABASE_URL: mysql://root:indiebase@mysql:3306/indiebase-analytics
-      DATABASE_TYPE: mysql
-      HASH_SALT: ZuC7tNxKDodpApDaQFTJxVeiTBYzbBixE44Wg33GiDI
+      - DATABASE_URL=postgresql://postgres:indiebase@postgres:5432/indiebase-analytics
+      - DATABASE_TYPE=postgresql
+      - HASH_SALT=ZuC7tNxKDodpApDaQFTJxVeiTBYzbBixE44Wg33GiDI
+
+networks:
+  default:
+    driver: overlay
+    attachable: true

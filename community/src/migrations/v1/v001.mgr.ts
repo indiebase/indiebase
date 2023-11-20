@@ -107,8 +107,8 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.roles, (table) => {
           table.increments('id').primary();
-          table.string('name').notNullable();
-          table.string('resources').notNullable();
+          table.string('role').index().notNullable();
+          table.string('resource').notNullable();
           table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.string('description');

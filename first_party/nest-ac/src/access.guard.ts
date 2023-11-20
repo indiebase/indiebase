@@ -36,6 +36,16 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
     const role = await this.useRole?.(context);
     const namespace = await this.useNamespace?.(context);
 
+    console.log(role);
+
+    const grants = this.ac.getNamespace(namespace).getGrants();
+
+    console.log(
+      namespace,
+      '=============',
+      this.ac.getNamespace(namespace).getGrants(),
+    );
+
     // let input = await this.transfer(context);
     // input = { access, ...input };
 

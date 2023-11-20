@@ -1,5 +1,5 @@
 import 'fastify';
-import type { Project, BasicUser } from '@indiebase/trait/mgr';
+import type { Project, PrimitiveUser } from '@indiebase/trait/mgr';
 
 declare module 'node:http' {
   interface IncomingMessage {
@@ -9,6 +9,6 @@ declare module 'node:http' {
 
 declare module 'fastify' {
   interface FastifyRequest {
-    user: BasicUser;
+    user: PrimitiveUser;
   }
 }

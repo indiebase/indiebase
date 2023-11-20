@@ -43,8 +43,8 @@ export const v001_tmpl = async function (
         .withSchema(schema)
         .createTable(TmplMetaTables.roles, (table) => {
           table.increments('id').primary();
-          table.string('name').notNullable();
-          table.string('resources').notNullable();
+          table.string('role').notNullable();
+          table.string('resource').notNullable();
           table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.string('description');

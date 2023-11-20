@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 import { FastifyRequest } from 'fastify';
-import { BasicUser, Project, ResultCode } from '@indiebase/trait';
+import { PrimitiveUser, Project, ResultCode } from '@indiebase/trait';
 import { InjectKnexEx } from '@indiebase/nest-knex';
 import { did } from '@deskbtm/gadgets';
 import { PasetoService } from 'nestjs-paseto';
@@ -85,7 +85,7 @@ export class AuthService {
     // );
   }
 
-  public async singIn(user: BasicUser, project: Project) {
+  public async singIn(user: PrimitiveUser, project: Project) {
     return this.pasetoService.sign({
       id: user.id,
       email: user.email,

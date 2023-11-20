@@ -104,7 +104,7 @@ describe('Test Suite: AccessControl', () => {
     },
   ];
 
-  let grantsResWildcardObject: any = {
+  let resourceWildcardObject: any = {
     admin: {
       '*': {
         'create:any': ['*'],
@@ -115,7 +115,7 @@ describe('Test Suite: AccessControl', () => {
     },
   };
 
-  let grantsRoleWildcardObject: any = {
+  let roleWildcardObject: any = {
     '*': {
       video: {
         'create:any': ['*'],
