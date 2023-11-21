@@ -6,7 +6,7 @@ import { type FastifyRequest } from 'fastify';
 export class AccessGuard extends PrimitiveAccessGuard {
   protected override async useRole(context: ExecutionContext): Promise<string> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
-
+    console.log(request.user);
     return request.user?.role;
   }
 

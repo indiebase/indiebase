@@ -40,3 +40,9 @@ export const grantsRecord2Array = function (o: Record<string, any>) {
   }
   return grants;
 };
+
+export const action2CamelCase = function (action: string) {
+  let [prefix, suffix] = action.split(':');
+  suffix = suffix.replace(/^./, (v) => v.toUpperCase());
+  return prefix + suffix;
+};

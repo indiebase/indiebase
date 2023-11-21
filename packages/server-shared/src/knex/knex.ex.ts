@@ -66,7 +66,7 @@ export class KnexEx {
       .first();
 
     if (excludePassword) {
-      delete result.password;
+      delete result?.password;
     }
 
     return result;

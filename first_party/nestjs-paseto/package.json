@@ -47,7 +47,7 @@
   ],
   "scripts": {
     "build": "nest build",
-    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

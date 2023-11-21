@@ -18,8 +18,8 @@ const openObserveTransport = new OpenObserveTransport({
     close();
   },
   basicAuth: {
-    username,
-    password,
+    username: 'username',
+    password: 'password',
   },
 });
 

@@ -11,4 +11,5 @@ export enum MgrMetaTables {
 export enum TmplMetaTables {
   users = 'ib_users',
   roles = 'ib_roles',
+  grants = 'ib_grants',
 }

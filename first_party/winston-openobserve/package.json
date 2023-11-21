@@ -2,7 +2,6 @@
   "name": "winston-openobserve",
   "version": "0.0.0-alpha.1",
   "description": "Winston OpenObserve transport",
-  "private": true,
   "author": {
     "email": "wanghan9423@outlook.com",
     "name": "Han"
@@ -11,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/indiebase/indiebase/issues"
   },
-  "homepage": "https://github.com/indiebase/winston-openobserve#readme",
+  "homepage": "https://github.com/indiebase/indiebase",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
   "exports": {
@@ -29,11 +28,6 @@
         "types": "./dist/index.d.ts"
       }
     }
-  },
-  "scripts": {
-    "build": "rimraf dist && tsc",
-    "test": "jest",
-    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist",
@@ -53,6 +47,11 @@
     "openobserve",
     "winston"
   ],
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "test": "jest",
+    "prepack": "npm run build"
+  },
   "dependencies": {
     "async-exit-hook": "^2.0.1",
     "ky": "1.1.1",

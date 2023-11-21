@@ -6600,7 +6600,7 @@ __metadata:
     passport-github2: "npm:0.1.12"
     passport-google-oauth20: "npm:2.0.0"
     passport-local: "npm:1.0.0"
-    passport-paseto: "npm:0.0.1-alpha.2"
+    passport-paseto: "npm:0.1.0-alpha.2"
     pg: "npm:8.11.3"
     prettier: "npm:3.0.0"
     qrcode: "npm:1.5.3"
@@ -31665,13 +31665,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"passport-paseto@npm:0.0.1-alpha.2":
-  version: 0.0.1-alpha.2
-  resolution: "passport-paseto@npm:0.0.1-alpha.2"
+"passport-paseto@npm:0.1.0-alpha.2":
+  version: 0.1.0-alpha.2
+  resolution: "passport-paseto@npm:0.1.0-alpha.2"
   dependencies:
     paseto: "npm:^3.1.2"
     passport-strategy: "npm:^1.0.0"
-  checksum: b51cde150961f54947d36f36268b073f9d20cc6912d8614bfe75a18e06659ca59651c274004087a1cdfb114090a219874de3e21dcbc28cff0c2bc85c1788c76f
+  checksum: 490464215db74b58f94c2bb082d7785406fbf5219218102a891409f82419c50430430b521e16cb86d2dca27a81e7c0f24c1b7b3530a7778994578b640598baa2
   languageName: node
   linkType: hard
 
