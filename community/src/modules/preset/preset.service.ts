@@ -18,7 +18,7 @@ export class PresetService {
 
   private async setGrants(namespace: string) {
     const table =
-      namespace === 'mgr' ? MgrMetaTables.roles : TmplMetaTables.roles;
+      namespace === 'mgr' ? MgrMetaTables.grants : TmplMetaTables.grants;
     const roles = await this.knex.withSchema(namespace).select('*').from(table);
 
     if (Array.isArray(roles) && roles.length > 0) {

@@ -9,7 +9,7 @@
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/indiebase/winston-openobserve/issues"
+    "url": "https://github.com/indiebase/indiebase/issues"
   },
   "homepage": "https://github.com/indiebase/winston-openobserve#readme",
   "main": "./src/index.ts",
@@ -44,8 +44,9 @@
     "node": ">= 16.0.0"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/indiebase/winston-openobserve.git"
+    "url": "git+https://github.com/indiebase/indiebase.git",
+    "directory": "first_party/winston-openobserve",
+    "type": "git"
   },
   "keywords": [
     "log",

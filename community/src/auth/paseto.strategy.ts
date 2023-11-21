@@ -1,5 +1,4 @@
 import { KnexEx } from '@indiebase/server-shared';
-import { AuthService } from './auth.service';
 import {
   PassportStrategy,
   PassportStrategyFactory,

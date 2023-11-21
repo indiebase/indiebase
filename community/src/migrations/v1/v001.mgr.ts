@@ -107,15 +107,29 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.roles, (table) => {
           table.increments('id').primary();
-          table.string('role').index().notNullable();
-          table.string('resource').notNullable();
-          table.enum('action', Object.values(AccessActions)).notNullable();
-          table.string('attributes').notNullable();
+          table.string('role').unique().index().notNullable();
           table.string('description');
           table.timestamps(true, true);
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.roles);
+        });
+
+      /**
+       * ib_grants
+       */
+      await knex.schema
+        .withSchema(schema)
+        .createTable(MgrMetaTables.grants, (table) => {
+          table.increments('id').primary();
+          table.string('role').index().notNullable();
+          table.string('resource').notNullable();
+          table.enum('action', Object.values(AccessActions)).notNullable();
+          table.string('attributes').notNullable();
+          table.timestamps(true, true);
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.grants);
         });
 
       /**
@@ -156,10 +170,8 @@ export const v001_mgr = async function (
             .references('id')
             .inTable(`mgr.${MgrMetaTables.projects}`);
           table
-            .integer('role_id')
-            .unsigned()
-            .index()
-            .references('id')
+            .string('role')
+            .references('role')
             .inTable(`mgr.${MgrMetaTables.roles}`);
           table.datetime('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');

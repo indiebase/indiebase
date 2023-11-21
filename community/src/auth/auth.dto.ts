@@ -10,7 +10,7 @@ import { IsEmail, IsHash } from 'class-validator';
 export class LocalSignInDTO {
   @ApiProperty({
     description: 'Hacker account',
-    default: 'dev@deskbtm.com',
+    default: 'dev@indiebase.com',
   })
   @IsEntityExisted(
     {
@@ -32,11 +32,12 @@ export class LocalSignInDTO {
   email: string;
 
   @ApiProperty({
-    description: 'Hacker account password',
-    default: '7cc0dc81e477b2b24aca4cf86f61cc913daa47edae72027b900543f8686772b0',
+    description:
+      'Hacker account password, the password needs to be converted to SHA256 for transfer',
+    default: '1999569bbac0ab43f31808866fcd15a0b20d309ccd64410d470455076e582a6c',
   })
   @IsHash('sha256', {
-    message: 'Password is illegal',
+    message: 'Password needs to be converted to SHA256',
   })
   password: string;
 }

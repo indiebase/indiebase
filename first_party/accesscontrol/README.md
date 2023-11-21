@@ -43,6 +43,8 @@ With the idea of merging the best features of the two (see this [NIST paper][nis
 
 ## Indiebase new features
 
+### Role and resource wildcard.
+
 ```js
 let grantWildcardList: any[] = [
   { role: 'admin', resource: '*', action: 'create:any', attributes: ['*'] },

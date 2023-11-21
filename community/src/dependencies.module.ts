@@ -107,8 +107,6 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
         useFactory: (config: ConfigService) => {
           const { host, port, password, user, database } = config.get('pg');
 
-          // console.log(config.get('pg'));
-
           return {
             /**
              * @todo

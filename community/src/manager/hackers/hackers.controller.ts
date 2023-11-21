@@ -5,8 +5,17 @@ import {
   ProtectApiHeader,
   AccessGuard,
   CommonApiHeader,
+  User,
 } from '@indiebase/server-shared';
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiBearerAuth,
@@ -15,7 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { CreateHackersDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
-import { ResultCode } from '@indiebase/trait';
+import { PrimitiveUser, ResultCode } from '@indiebase/trait';
 import { AccessActions, UseAccess } from '@indiebase/nest-ac';
 
 @Controller({
@@ -72,7 +81,11 @@ export class HackersController {
     hacker: [AccessActions.deleteOwn],
   })
   @Post('hacker')
-  async hacker(@Body() body: CreateHackersDTO, @Req() req) {
+  async hacker(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
+    if (user) {
+      throw new BadRequestException(`${user.email} already existed.`);
+    }
+
     await this.hackers.create(body);
 
     return {
