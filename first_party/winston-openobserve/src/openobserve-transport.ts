@@ -28,8 +28,8 @@ export class OpenObserveTransport extends Transport {
     this.#options = {
       bulk: true,
       gracefulShutdown: true,
-      timeout: 10000,
-      interval: 10000,
+      timeout: 1e4,
+      interval: 1e4,
       cleanOnRequestError: false,
       useNow: false,
       ...options,

@@ -83,7 +83,7 @@ export class KnexHealthIndicator extends HealthIndicator {
     // this.checkDependantPackages();
 
     const connection = options.connection || this.getContextConnection();
-    const timeout = options.timeout || 1000;
+    const timeout = options.timeout || 1e3;
 
     if (!connection) {
       throw new ConnectionNotFoundError(

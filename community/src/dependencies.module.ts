@@ -72,7 +72,7 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
             host,
             defaultOrg,
             defaultStream,
-            interval: 2000,
+            interval: 2e3,
             cleanOnRequestError: true,
             onConnectionError(_error, close) {
               close();

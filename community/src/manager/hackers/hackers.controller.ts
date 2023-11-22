@@ -57,7 +57,11 @@ export class HackersController {
   @ProtectApiHeader()
   @UseGuards(PublicApiGuard)
   @Post('signup')
-  async signup(@Body() body: CreateHackersDTO) {
+  async signup(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
+    if (user) {
+      throw new BadRequestException(`${user.email} already existed.`);
+    }
+
     await this.hackers.create(body);
 
     return {
@@ -78,10 +82,10 @@ export class HackersController {
   @ProtectApiHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
-    hacker: [AccessActions.deleteOwn],
+    hacker: [AccessActions.deleteAny],
   })
   @Post('hacker')
-  async hacker(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
+  async create(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
     if (user) {
       throw new BadRequestException(`${user.email} already existed.`);
     }

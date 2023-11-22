@@ -10,8 +10,8 @@ const openObserveTransport = new OpenObserveTransport({
   host: 'xxxx.com',
   defaultOrg: 'xxxx',
   defaultStream: 'xxxx',
-  interval: 2000, // Batch push interval default. 10000(10s)
-  timeout: 2000, // Request timeout. default 10000(10s)
+  interval: 2e3, // Batch push interval default. 10000(10s)
+  timeout: 2e3, // Request timeout. default 10000(10s)
   cleanOnRequestError: true, // Clean batch data when error. default false
   useNow: false, // Replace any log timestamps with Date.now()
   onConnectionError(_error, close) {

@@ -33,7 +33,7 @@ export class MailService {
       .then(async () => {
         await this.redis.setex(
           CaptchaUtils.getSignupCaptchaToken(captcha, body.username),
-          3000,
+          3e3,
           captcha,
         );
 

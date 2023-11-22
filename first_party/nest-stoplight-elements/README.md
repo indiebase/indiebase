@@ -1,9 +1,9 @@
 <img width="800" src="https://user-images.githubusercontent.com/45007226/226185397-b8be4abb-18e9-450d-94cf-31f443091f0a.png"/>
 
-## Note Bene
+## Nota Bene
 
 1. Only support fastify; PR welcome.
-2. @vercel/ncc. Please add `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@indiebase/nest-stoplight-elements/views .`
+2. For @vercel/ncc. `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@indiebase/nest-stoplight-elements/views .`
 
 ## New features.
 
