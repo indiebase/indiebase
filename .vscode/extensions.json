@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "vivaxy.vscode-conventional-commits",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "redvanworkshop.explorer-exclude-vscode-extension",
+    "gruntfuggly.todo-tree",
+    "deskbtm.colorful-monorepo",
+    "foxundermoon.shell-format"
+  ]
+}

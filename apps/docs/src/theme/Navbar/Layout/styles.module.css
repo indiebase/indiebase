@@ -1,0 +1,16 @@
+.navbarHideable {
+  transition: transform var(--ifm-transition-fast) ease;
+}
+
+.navbarHidden {
+  transform: translate3d(0, calc(-100% - 2px), 0);
+}
+
+.navbarOverride {
+  display: flex;
+  align-items: center;
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  backdrop-filter: saturate(180%) blur(10px);
+  background-color: #ffffffba;
+  box-shadow: unset;
+}

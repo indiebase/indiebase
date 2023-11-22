@@ -1,0 +1,81 @@
+{
+  "name": "@indiebase/nest-knex",
+  "version": "0.0.1",
+  "description": "Nestjs knex module for Indiebase",
+  "author": "Han",
+  "private": true,
+  "license": "Apache-2.0",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "npm run prebuild && nest build --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@nestjs/common": "10.1.3",
+    "@nestjs/core": "10.1.3",
+    "reflect-metadata": "0.1.13",
+    "rimraf": "5.0.1",
+    "rxjs": "7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "10.1.12",
+    "@nestjs/schematics": "10.0.2",
+    "@nestjs/testing": "10.1.3",
+    "@types/express": "4.17.13",
+    "@types/node": "20.8.10",
+    "@types/supertest": "2.0.11",
+    "jest": "29.6.1",
+    "supertest": "6.3.3",
+    "ts-jest": "29.1.1",
+    "ts-loader": "9.4.4",
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.2.2"
+  },
+  "peerDependencies": {
+    "knex": "2.5.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "@deskbtm/gadgets",
+  "version": "0.0.1",
+  "description": "Deskbtm javascript gadgets",
+  "author": "Han <wanghan9423@outlook.com>",
+  "private": true,
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": {
+      "import": "./src/*.ts",
+      "require": "./src/*.ts"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/cjs/index.cjs",
+        "types": "./dist/types/index.d.ts"
+      },
+      "./*": {
+        "import": "./dist/esm/*.mjs",
+        "require": "./dist/cjs/*.cjs",
+        "types": "./dist/types/*.d.ts"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/indiebase/indiebase",
+    "directory": "first_party/gadgets",
+    "type": "git"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "build": "unbuild",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.10",
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.2.2"
+  }
+}

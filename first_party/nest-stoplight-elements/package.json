@@ -1,0 +1,93 @@
+{
+  "name": "@indiebase/nest-stoplight-elements",
+  "version": "0.0.1-alpha.10",
+  "description": "Stoplight elements for Nestjs",
+  "author": "Han <han@deskbtm.com> ",
+  "license": "Apache-2.0",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/indiebase/indiebase",
+    "directory": "first_party/nest-stoplight-elements",
+    "type": "git"
+  },
+  "files": [
+    "dist",
+    "src",
+    "views"
+  ],
+  "scripts": {
+    "build": "nest build",
+    "prepack": "rimraf dist && npm run build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test:bundle": "ncc build ./example/main.ts -o dist -m",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@fastify/static": "6.11.2",
+    "@nestjs/common": "10.1.3",
+    "@nestjs/core": "10.1.3",
+    "@nestjs/platform-fastify": "10.1.3",
+    "@nestjs/swagger": "7.1.8",
+    "handlebars": "4.7.8",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "10.1.12",
+    "@nestjs/schematics": "10.0.2",
+    "@nestjs/testing": "10.1.3",
+    "@types/node": "20.8.10",
+    "@types/supertest": "2.0.11",
+    "@typescript-eslint/eslint-plugin": "6.8.0",
+    "@typescript-eslint/parser": "6.8.0",
+    "@vercel/ncc": "0.38.1",
+    "eslint": "8.52.0",
+    "eslint-config-prettier": "8.10.0",
+    "eslint-plugin-prettier": "5.0.1",
+    "jest": "29.6.1",
+    "prettier": "3.0.0",
+    "rimraf": "5.0.1",
+    "supertest": "6.3.3",
+    "ts-jest": "29.1.1",
+    "ts-loader": "9.4.4",
+    "ts-node": "10.9.1",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.2.2"
+  },
+  "keywords": [
+    "swagger",
+    "stoplight",
+    "swagger-ui",
+    "openapi",
+    "api",
+    "nestjs",
+    "stoplight-elements",
+    "redoc"
+  ]
+}

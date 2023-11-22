@@ -1,0 +1,20 @@
+# Auto generate by monorepo_workflows.sh
+
+name: '{{PACKAGE}}'
+
+on:
+  push:
+    paths:
+      - 'packages/{{PACKAGE}}/**'
+      - '.github/workflows/{{PACKAGE}}.yaml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Run tests
+        run: |-
+          cd routes/{{PACKAGE}}
+          go test ./...

@@ -1,0 +1,123 @@
+# This is the development environment docker-compose.yml
+version: '3.9'
+
+x-logging: &x-logging
+  logging:
+    driver: 'json-file'
+    options:
+      max-file: '5'
+      max-size: '10m'
+
+services:
+  traefik:
+    image: traefik:v2.10.3
+    <<: *x-logging
+    command:
+      - --log.level=DEBUG
+      - --api.insecure=true
+      - --ping=true
+      - --ping.entryPoint=ping
+      - --api.dashboard=true
+      - --entryPoints.ping.address=:18884
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --entrypoints.https.http.tls.certresolver=leresolver
+      - --entrypoints.https.http.tls.domains[0].main=${DOMAIN}
+      - --entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN}
+      - --entrypoints.http.http.redirections.entryPoint.to=https
+      - --entrypoints.http.http.redirections.entryPoint.scheme=https
+      - --providers.file.watch=true
+      - --providers.docker=true
+      - --providers.docker.swarmMode=true
+      - --providers.docker.network=traefik_proxy
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=15
+      - --certificatesresolvers.leresolver.acme.tlschallenge=true
+      - --certificatesresolvers.leresolver.acme.email=deskbtm@outlook.com
+      - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
+    ports:
+      - 80:80
+      - 443:443
+      - 20801:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CONFIG_DIR:-./docker}/traefik/letsencrypt:/letsencrypt:rw,mode=0600
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.middlewares.auth.basicauth.removeheader=true
+      # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
+      - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$$HhHWUKGm$$lPgc034oLvQJcyyTs1Hlt.
+      - traefik.http.routers.dashboard.middlewares=auth
+      - traefik.http.routers.dashboard.rule=Host(`traefik.indiebase.deskbtm.com`)
+      - traefik.http.routers.dashboard.entrypoints=https
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.tls.certresolver=leresolver
+      - traefik.http.services.dashboard.loadbalancer.server.scheme=https
+    healthcheck:
+      retries: 3
+      test:
+        - CMD
+        - wget
+        - "-c"
+        - "http://localhost:18884/ping"
+      timeout: 3s
+    networks:
+      - traefik_proxy
+
+  postgres:
+    image: postgres:15.3-alpine3.18
+    <<: *x-logging
+    restart: unless-stopped
+    env_file:
+      - ${CONFIG_DIR:-.}/.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data/pgdata
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    secrets:
+      - pg_password
+
+  # postgrest:
+  #   image: postgrest/postgrest
+  #   <<: *x-logging
+  #   restart: unless-stopped
+  #   ports:
+  #     - 13000:3000
+  #   environment:
+  #     PGRST_DB_URI: postgres://postgres:indiebase@postgres:5432/postgres?sslmode=disable
+  #     PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
+  #     PGRST_DB_SCHEMAS: api
+  #     PGRST_DB_ANON_ROLE: web_anon
+  #   depends_on:
+  #     - postgres
+
+  redis:
+    image: redis:6.2.6-alpine
+    <<: *x-logging
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data:rw
+      - ${CONFIG_DIR:-./docker}/redis:/usr/local/etc/redis:ro
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+
+networks:
+  default:
+    driver: overlay
+    attachable: true
+  traefik_proxy:
+
+
+volumes:
+  pg_data:
+  portainer_data:
+  redis_data:
+
+secrets:
+  pg_password:
+    file: ./docker/postgres/password.txt

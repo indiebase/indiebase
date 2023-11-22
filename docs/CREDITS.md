@@ -1,0 +1,6 @@
+- [react](https://github.com/facebook/react) MIT
+- [ant-design/pro-components](https://github.com/ant-design/pro-components) MIT
+- [react-scroll-motion](https://github.com/1000ship/react-scroll-motion) MIT
+- [artipub](https://github.com/crawlab-team/artipub) BSD-3-Clause
+- [nest-file-fastify](https://github.com/Blazity/nest-file-fastify)
+- [nest-casl](https://github.com/getjerry/nest-casl) MIT

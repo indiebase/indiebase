@@ -1,0 +1,43 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    // JavaScript Support
+    "allowJs": true,
+    "checkJs": true,
+    // Type Checking
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strictBindCallApply": false,
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitOverride": true,
+    "noImplicitReturns": false,
+    // Output Formatting
+    "pretty": true,
+    // Interop
+    "forceConsistentCasingInFileNames": false,
+    // Emit
+    "importHelpers": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
+    // Language and Environment
+    "target": "es2015",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    // Modules
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "dist",
+    "tmp",
+    "node_modules",
+  ]
+}

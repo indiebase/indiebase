@@ -1,0 +1,106 @@
+# Deprecated
+
+version: '3.9'
+
+services:
+  mon:
+    image: quay.io/ceph/daemon:v7.0.3-stable-7.0-quincy-centos-stream8-x86_64
+    command: mon
+    restart: "no"
+    environment:
+      TZ: UTC
+      LANG: en_US.utf8
+      CEPH_PUBLIC_NETWORK: 192.168.42.0/24
+      MON_IP: 192.168.42.100
+    networks:
+      ceph_network:
+        ipv4_address: 192.168.42.100
+    volumes:
+      - /dev:/dev
+      - ceph_etc:/etc/ceph
+      - ceph_lib:/var/lib/ceph
+
+  mgr:
+    image: quay.io/ceph/daemon:v7.0.3-stable-7.0-quincy-centos-stream8-x86_64
+    command: mgr
+    restart: "no"
+    environment:
+      TZ: UTC
+      LANG: en_US.utf8
+      CEPH_DAEMON: mgr
+    depends_on:
+      - mon
+    networks:
+      ceph_network:
+        ipv4_address: 192.168.42.101
+    volumes:
+      - ceph_etc:/etc/ceph
+      - ceph_lib:/var/lib/ceph
+    ports:
+      - 18443:8443
+      - 18080:8080
+
+  osd:
+    image: quay.io/ceph/daemon:v7.0.3-stable-7.0-quincy-centos-stream8-x86_64
+    command: osd
+    restart: "no"
+    environment:
+      TZ: UTC
+      LANG: en_US.utf8
+      OSD_DEVICE: /dev/loop3
+    networks:
+      ceph_network:
+        ipv4_address: 192.168.42.102
+    depends_on:
+      - mgr
+    volumes:
+      - /dev:/dev
+      - /etc/localtime:/etc/localtime
+      - ceph_etc:/etc/ceph
+      - ceph_lib:/var/lib/ceph
+
+  rgw:
+    image: quay.io/ceph/daemon:v7.0.3-stable-7.0-quincy-centos-stream8-x86_64
+    command: rgw
+    restart: "no"
+    environment:
+      TZ: UTC
+      LANG: en_US.utf8
+    volumes:
+      - ceph_etc:/etc/ceph
+      - ceph_lib:/var/lib/ceph
+    depends_on:
+      - osd
+    networks:
+      ceph_network:
+        ipv4_address: 192.168.42.103
+    ports:
+      - 7480:7480
+
+  mds:
+    image: quay.io/ceph/daemon:v7.0.3-stable-7.0-quincy-centos-stream8-x86_64
+    command: mds
+    restart: "no"
+    environment:
+      TZ: UTC
+      LANG: en_US.utf8
+      CEPHFS_CREATE: 1
+    volumes:
+      - ceph_etc:/etc/ceph
+      - ceph_lib:/var/lib/ceph
+    depends_on:
+      - osd
+    networks:
+      ceph_network:
+        ipv4_address: 192.168.42.104
+
+networks:
+  ceph_network:
+    ipam:
+      config:
+        - subnet: 192.168.42.0/24
+
+volumes:
+  ceph_lib:
+  ceph_osd:
+  ceph_etc:

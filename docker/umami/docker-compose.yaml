@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    ports:
+      - 13000:3000
+    environment:
+      - DATABASE_URL=postgresql://postgres:indiebase@postgres:5432/indiebase-analytics
+      - DATABASE_TYPE=postgresql
+      - HASH_SALT=ZuC7tNxKDodpApDaQFTJxVeiTBYzbBixE44Wg33GiDI
+
+networks:
+  default:
+    driver: overlay
+    attachable: true

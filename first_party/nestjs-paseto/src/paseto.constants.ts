@@ -1,0 +1,1 @@
+export const PASETO_MODULE_OPTIONS = Symbol('PASETO_MODULE_OPTIONS');

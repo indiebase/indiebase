@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/**/*",
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "test",
+    "**/*.spec.ts",
+    "**/__specs__"
+  ]
+}
