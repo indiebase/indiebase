@@ -1,0 +1,26 @@
+{
+  "logo.alt": {
+    "message": "Indiebase",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Docs": {
+    "message": "Docs",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Pricing": {
+    "message": "Pricing",
+    "description": "Navbar item with label Pricing"
+  },
+  "item.label.Sponsor": {
+    "message": "Sponsor",
+    "description": "Navbar item with label Sponsor"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Abort": {
+    "message": "Abort",
+    "description": "Navbar item with label Abort"
+  }
+}

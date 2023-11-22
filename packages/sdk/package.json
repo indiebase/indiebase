@@ -1,0 +1,58 @@
+{
+  "name": "@indiebase/sdk",
+  "version": "0.0.1-alpha.1",
+  "description": "Indiebase javascript SDK",
+  "author": "Han",
+  "license": "Apache-2.0",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "exports": {
+      ".": {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/cjs/index.cjs",
+        "types": "./dist/types/index.d.ts"
+      }
+    }
+  },
+  "engines": {
+    "node": ">= 16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indiebase/indiebase.git"
+  },
+  "bugs": {
+    "url": "https://github.com/indiebase/indiebase/issues"
+  },
+  "homepage": "https://github.com/indiebase/indiebase",
+  "scripts": {
+    "build": "nest build",
+    "prepack": "npm run build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
+  },
+  "devDependencies": {
+    "@types/node": "20.8.10",
+    "swagger-typescript-api": "^13.0.3",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.2.2",
+    "vitest": "0.34.6"
+  }
+}

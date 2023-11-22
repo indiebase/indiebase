@@ -1,0 +1,10 @@
+[submodule "self_hosted"]
+  path = self_hosted
+  url = https://github.com/indiebase/self_hosted.git
+[submodule "apps/pitm"]
+  path = apps/pitm
+  url = https://github.com/indiebase/PITM.git
+  branch = dev
+[submodule "pro"]
+  path = pro
+  url = https://github.com/indiebase/pro.git

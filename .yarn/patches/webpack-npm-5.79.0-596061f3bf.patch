@@ -1,0 +1,49 @@
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..6649301f60fa02ed8f2be951e0d5424f4f37ed56
+--- /dev/null
++++ b/.vscode/settings.json
+@@ -0,0 +1,3 @@
++{
++  "workbench.colorCustomizations": {}
++}
+\ No newline at end of file
+diff --git a/hot/only-dev-server.js b/hot/only-dev-server.js
+index 7312beb82d66f887e8f7d1c72a12a43819050f05..16f1c49c862ee1a02db3683159b244930c725621 100644
+--- a/hot/only-dev-server.js
++++ b/hot/only-dev-server.js
+@@ -13,7 +13,7 @@ if (module.hot) {
+ 		module.hot
+ 			.check()
+ 			.then(function (updatedModules) {
+-				if (!updatedModules) {
++				if (!updatedModules || updatedModules.length === 0) {
+ 					log("warning", "[HMR] Cannot find update. Need to do a full reload!");
+ 					log(
+ 						"warning",
+diff --git a/hot/poll.js b/hot/poll.js
+index 9635447ee7c8add466a28730adf920229a07edfb..5277c99331e0d1ffc1240d29061a62065a5a7123 100644
+--- a/hot/poll.js
++++ b/hot/poll.js
+@@ -12,7 +12,7 @@ if (module.hot) {
+ 			module.hot
+ 				.check(true)
+ 				.then(function (updatedModules) {
+-					if (!updatedModules) {
++					if (!updatedModules || updatedModules.length === 0) {
+ 						if (fromUpdate) log("info", "[HMR] Update applied.");
+ 						return;
+ 					}
+diff --git a/hot/signal.js b/hot/signal.js
+index f1d59c8f116c2225a8e063a377599306e1d8a22a..857c30a3f1fe9815db59eb909d968da618a6487e 100644
+--- a/hot/signal.js
++++ b/hot/signal.js
+@@ -9,7 +9,7 @@ if (module.hot) {
+ 		module.hot
+ 			.check()
+ 			.then(function (updatedModules) {
+-				if (!updatedModules) {
++				if (!updatedModules || updatedModules.length === 0) {
+ 					if (fromUpdate) log("info", "[HMR] Update applied.");
+ 					else log("warning", "[HMR] Cannot find update.");
+ 					return;

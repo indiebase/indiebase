@@ -1,0 +1,2 @@
+export const ACCESS_CONTROL_OPTIONS = Symbol('ACCESS_CONTROL_OPTIONS');
+export const ACCESS_META = Symbol('ACCESS_META');

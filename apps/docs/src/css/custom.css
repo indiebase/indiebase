@@ -1,0 +1,87 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #f02866;
+  --ifm-color-primary-dark: #ec1054;
+  --ifm-color-primary-darker: #de1050;
+  --ifm-color-primary-darkest: #b70d42;
+  --ifm-color-primary-light: #f24279;
+  --ifm-color-primary-lighter: #f34f82;
+  --ifm-color-primary-lightest: #f5779e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  --ifm-navbar-padding-horizontal: 16px;
+  --ifm-navbar-padding-vertical: 16px;
+
+  --ifm-font-family-base: 'Inter', sans-serif, -apple-system, Segoe UI, Roboto,
+    Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
+  --ifm-font-family-monospace: 'Inter', -apple-system, Roboto, Ubuntu, Cantarell,
+    Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+  --ifm-menu-link-padding-horizontal: 0.8rem;
+  --ifm-breadcrumb-border-radius: 0.3rem;
+  --ifm-breadcrumb-padding-vertical: 0.2rem;
+
+  --ifm-navbar-height: rem(70px);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #f02866;
+  --ifm-color-primary-dark: #ec1054;
+  --ifm-color-primary-darker: #de1050;
+  --ifm-color-primary-darkest: #b70d42;
+  --ifm-color-primary-light: #f24279;
+  --ifm-color-primary-lighter: #f34f82;
+  --ifm-color-primary-lightest: #f5779e;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.footer {
+  --ifm-footer-background-color: var(--mantine-color-white);
+}
+
+.menu__link {
+  font-size: var(--mantine-font-size-sm);
+  --ifm-menu-link-padding-vertical: 0.575rem;
+  display: flex;
+}
+
+.menu__list-item-collapsible {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-nav__link {
+  border: none;
+}
+
+.pagination-nav__sublabel {
+  font-size: var(--ifm-h6-font-size);
+  font-weight: var(--ifm-font-weight-light);
+}
+
+.pagination-nav__label {
+  color: #343434;
+}
+
+.pagination-nav__link--next .pagination-nav__label::after {
+  content: '';
+}
+
+.pagination-nav__link--prev .pagination-nav__label::before {
+  content: '';
+}
+
+.pagination-nav__label:hover {
+  color: var(--ifm-color-primary);
+}

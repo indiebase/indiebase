@@ -1,0 +1,22 @@
+undecided:
+  - indiebase
+  - "@indiebase/collab-console"
+  - "@indiebase/www"
+  - "@indiebase/collab"
+  - "@indiebase/console-shared"
+  - "@deskbtm/gadgets"
+  - "@indiebase/nest-casbin"
+  - "@indiebase/nest-nacos"
+  - "@indiebase/nest-octokit"
+  - "@indiebase/nest-fastify-passport"
+  - "@indiebase/nest-s3"
+  - "@indiebase/nest-typeorm-sharding"
+  - "@indiebase/react-authz"
+  - "@indiebase/react-table"
+  - "@indiebase/server-shared"
+  - "@indiebase/trait"
+  - typeorm-sharding
+  - "@indiebase/ui-shared"
+  - "@indiebase/community"
+  - "@indiebase/nest-fastify-file"
+  - "@indiebase/nextra-theme-docs"

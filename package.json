@@ -1,0 +1,64 @@
+{
+  "name": "indiebase",
+  "version": "0.0.2-alpha.0",
+  "description": "",
+  "author": "Han",
+  "private": true,
+  "license": "AGPL-3.0",
+  "engines": {
+    "yarn": ">2.0.0",
+    "node": ">=20.0.0",
+    "npm": "please-use-yarn",
+    "pnpm": "please-use-yarn"
+  },
+  "scripts": {
+    "lint": "yarn workspaces foreach run lint",
+    "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
+    "stack:dev": "docker stack deploy -c ./docker-compose.yaml indiebase",
+    "release": "standard-version",
+    "prepare": "husky install",
+    "syncpack": "syncpack",
+    "mismatches": "syncpack list-mismatches",
+    "paseto:key": "node ./scripts/paseto.mjs"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "6.8.0",
+    "@typescript-eslint/parser": "6.8.0",
+    "@vitest/ui": "^0.33.0",
+    "cross-env": "7.0.3",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "8.52.0",
+    "eslint-config-prettier": "8.10.0",
+    "eslint-plugin-import": "2.29.0",
+    "eslint-plugin-prettier": "5.0.1",
+    "husky": "8.0.1",
+    "prettier": "3.0.0",
+    "standard-version": "9.3.1",
+    "syncpack": "^11.2.1",
+    "typescript": "5.2.2"
+  },
+  "workspaces": {
+    "packages": [
+      "first_party/*",
+      "apps/*",
+      "apps/first_party/*",
+      "apps/packages/*",
+      "apps/packages/*",
+      "community",
+      "pro/*",
+      "packages/*"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "packageManager": "yarn@4.0.2",
+  "resolutions": {
+    "webpack@5.73.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
+    "webpack@5.79.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
+    "webpack@^5": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
+    "webpack@5.64.4": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch"
+  }
+}

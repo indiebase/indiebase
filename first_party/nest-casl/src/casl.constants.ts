@@ -1,0 +1,5 @@
+export const CASL_META_ABILITY = Symbol('CASL_META_ABILITY');
+
+export const CASL_ROOT_OPTIONS = Symbol('CASL_ROOT_OPTIONS');
+
+export const CASL_FEATURE_OPTIONS = Symbol('CASL_FEATURE_OPTIONS');

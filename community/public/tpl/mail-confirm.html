@@ -1,0 +1,41 @@
+<div
+  style='max-width:550px; min-width:320px;  background-color: white; border: 1px solid #DDDDDD; margin-right: auto; margin-left: auto;'>
+  <div style='margin-left:30px;margin-right:30px'>
+    <p>&nbsp;</p>
+    <p>
+      <a href='https://indiebase.deskbtm.com'
+        style='text-decoration:none;font-family:Verdana, Geneva, sans-serif;font-weight: bold; color: #0099FF;font-size: 15px'>indiebase.deskbtm.com</a>
+    </p>
+    <a href='https://indiebase.deskbtm.com'>
+      <img style='width:100%' src='https://s2.loli.net/2022/04/13/sAOj7PkLYdS43Ha.png' alt='' />
+    </a>
+    <hr style='margin-top:10px;margin-bottom:65px;border:none;border-bottom:1px solid black' />
+    <h3 style='font-family:Palatino Linotype, Book Antiqua, Palatino, serif;font-style:italic;font-weight:500'>
+      <span id='captcha' style='word-break: break-all;'>{{desc}}</span>
+    </h3>
+    <br>
+    <br>
+    <a href="{{link}}"
+      style='text-decoration: unset;border-bottom: 1px solid #6f00ff;word-break: break-all;font-family: Tahoma, Geneva, sans-serif; font-weight: normal; color: #2A2A2A; text-align: center; margin-bottom: 65px;font-size: 14px; letter-spacing: 6px;font-weight: normal;'>
+      {{link}}</a>
+    <div style='height: 5px;'></div>
+    <p style='height: 20px;'></p>
+    <hr style='margin-top:30px' />
+    <p style='text-align:center;margin-bottom:15px'>
+      Made with
+      <span style='color:red'>&hearts;</span>
+      indiebase
+      </small>
+    </p>
+    <p>&nbsp;</p>
+  </div>
+</div>
+
+<script>
+  const copy = document.getElementById('copy')
+  copy.onclick = async function (e) {
+    await navigator.clipboard.writeText(document.getElementById('captcha').innerText);
+    window.alert('复制成功')
+  }
+
+</script>

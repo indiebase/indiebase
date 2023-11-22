@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  openobserve:
+    image: public.ecr.aws/zinclabs/openobserve:v0.6.4
+    ports:
+      - 5080:5080
+    environment:
+      - ZO_ROOT_USER_EMAIL=dev@indiebase.com
+      - ZO_DATA_DIR=/data
+      - ZO_ROOT_USER_PASSWORD=indiebase
+    volumes:
+      - openobserve_data:/data
+
+networks:
+  default:
+    driver: overlay
+    attachable: true
+
+volumes:
+  openobserve_data:
