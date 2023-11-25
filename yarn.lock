@@ -6553,10 +6553,10 @@ __metadata:
     "@indiebase/nest-kysely": "workspace:^"
     "@indiebase/nest-octokit": "workspace:^"
     "@indiebase/nest-stoplight-elements": "workspace:^"
+    "@indiebase/nestjs-redis": "npm:10.0.0"
     "@indiebase/sdk": "workspace:^"
     "@indiebase/server-shared": "workspace:^"
     "@indiebase/trait": "workspace:^"
-    "@liaoliaots/nestjs-redis": "npm:9.0.5"
     "@nestjs-modules/mailer": "npm:1.7.1"
     "@nestjs/axios": "npm:3.0.0"
     "@nestjs/common": "npm:10.1.3"
@@ -7109,7 +7109,7 @@ __metadata:
     eslint: "npm:8.52.0"
     eslint-config-prettier: "npm:8.10.0"
     eslint-plugin-prettier: "npm:5.0.1"
-    handlebars: "npm:4.7.7"
+    handlebars: "npm:4.7.8"
     jest: "npm:29.6.1"
     prettier: "npm:3.0.0"
     reflect-metadata: "npm:0.1.13"
@@ -7123,6 +7123,19 @@ __metadata:
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
+
+"@indiebase/nestjs-redis@npm:10.0.0":
+  version: 10.0.0
+  resolution: "@indiebase/nestjs-redis@npm:10.0.0"
+  dependencies:
+    tslib: "npm:2.4.1"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0
+    "@nestjs/core": ^10.0.0
+    ioredis: ^5.0.0
+  checksum: 828e37d282dfc5530d7078d3d5fb5d94c84af32efd306b354ea95bf0d0a5cbf8a80febbee170321723de30b29412ecb2f8786dc12be58d129a2d0ef1a3a1df32
+  languageName: node
+  linkType: hard
 
 "@indiebase/pro@workspace:pro/server":
   version: 0.0.0-use.local
@@ -7245,8 +7258,8 @@ __metadata:
     "@indiebase/nest-ac": "workspace:^"
     "@indiebase/nest-async-context": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
+    "@indiebase/nestjs-redis": 9.0.5
     "@indiebase/server-shared": "*"
-    "@liaoliaots/nestjs-redis": 9.0.5
     "@nestjs/common": 10.1.3
     "@nestjs/core": 10.1.3
     "@nestjs/platform-fastify": 10.1.3
@@ -7714,19 +7727,6 @@ __metadata:
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
   checksum: 3c7ffb0afb86c731a02813aa4370da27eac037abf8a15fce211226c11b644610382c8eca7efadace9471ee1959afe72fc1d43a62227d974b9fca8eae8b8d2124
-  languageName: node
-  linkType: hard
-
-"@liaoliaots/nestjs-redis@npm:9.0.5":
-  version: 9.0.5
-  resolution: "@liaoliaots/nestjs-redis@npm:9.0.5"
-  dependencies:
-    tslib: "npm:2.4.1"
-  peerDependencies:
-    "@nestjs/common": ^9.0.0
-    "@nestjs/core": ^9.0.0
-    ioredis: ^5.0.0
-  checksum: b1e39204c0522edaccc8d6bad0b75f873492dc5b2c585f70e07adc035b81864892ab6514ffed8b9c72bac20a783736c474bb0d5ea7bab3df85549427bc898a06
   languageName: node
   linkType: hard
 
@@ -22124,25 +22124,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"handlebars@npm:4.7.7, handlebars@npm:^4.7.6, handlebars@npm:^4.7.7":
-  version: 4.7.7
-  resolution: "handlebars@npm:4.7.7"
-  dependencies:
-    minimist: "npm:^1.2.5"
-    neo-async: "npm:^2.6.0"
-    source-map: "npm:^0.6.1"
-    uglify-js: "npm:^3.1.4"
-    wordwrap: "npm:^1.0.0"
-  dependenciesMeta:
-    uglify-js:
-      optional: true
-  bin:
-    handlebars: bin/handlebars
-  checksum: 617b1e689b7577734abc74564bdb8cdaddf8fd48ce72afdb489f426e9c60a7d6ee2a2707c023720c4059070128243c948bded8f2716e4543378033e3971b85ea
-  languageName: node
-  linkType: hard
-
-"handlebars@npm:^4.0.3":
+"handlebars@npm:4.7.8, handlebars@npm:^4.0.3":
   version: 4.7.8
   resolution: "handlebars@npm:4.7.8"
   dependencies:
@@ -22157,6 +22139,24 @@ __metadata:
   bin:
     handlebars: bin/handlebars
   checksum: bd528f4dd150adf67f3f857118ef0fa43ff79a153b1d943fa0a770f2599e38b25a7a0dbac1a3611a4ec86970fd2325a81310fb788b5c892308c9f8743bd02e11
+  languageName: node
+  linkType: hard
+
+"handlebars@npm:^4.7.6, handlebars@npm:^4.7.7":
+  version: 4.7.7
+  resolution: "handlebars@npm:4.7.7"
+  dependencies:
+    minimist: "npm:^1.2.5"
+    neo-async: "npm:^2.6.0"
+    source-map: "npm:^0.6.1"
+    uglify-js: "npm:^3.1.4"
+    wordwrap: "npm:^1.0.0"
+  dependenciesMeta:
+    uglify-js:
+      optional: true
+  bin:
+    handlebars: bin/handlebars
+  checksum: 617b1e689b7577734abc74564bdb8cdaddf8fd48ce72afdb489f426e9c60a7d6ee2a2707c023720c4059070128243c948bded8f2716e4543378033e3971b85ea
   languageName: node
   linkType: hard
 

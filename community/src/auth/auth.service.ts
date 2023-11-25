@@ -1,4 +1,4 @@
-import { KnexEx } from '@indiebase/server-shared';
+import { BusinessTags, KnexEx, RedisUtils } from '@indiebase/server-shared';
 import {
   Injectable,
   NotFoundException,
@@ -10,20 +10,27 @@ import * as bcrypt from 'bcrypt';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
 import { FastifyRequest } from 'fastify';
-import { PrimitiveUser, Project, ResultCode } from '@indiebase/trait';
+import {
+  type PrimitiveUser,
+  type PrimitiveProject,
+  ResultCode,
+} from '@indiebase/trait';
 import { InjectKnexEx } from '@indiebase/nest-knex';
 import { did } from '@deskbtm/gadgets';
 import { PasetoService } from 'nestjs-paseto';
+import { InjectRedis } from '@indiebase/nestjs-redis';
+import Redis from 'ioredis';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger('AuthService');
 
   constructor(
-    // private readonly userService: UserService,
     @InjectKnexEx()
     private readonly knexEx: KnexEx,
     private readonly pasetoService: PasetoService,
+    @InjectRedis()
+    private readonly redis: Redis,
   ) {}
 
   public async validateLocal(
@@ -31,12 +38,16 @@ export class AuthService {
     email: string,
     password: string,
   ) {
-    const [err, user] = await did(this.knexEx.getUserByEmail(email, namespace));
+    const [err, user] = await did(
+      this.knexEx.getUserByEmail(email, namespace, { exclude: false }),
+    );
 
     if (err) {
       this.logger.error(err);
       throw new NotFoundException(`Not found ${email}`);
     }
+
+    console.log(user);
 
     if (!user.password) {
       throw new UnauthorizedException('Please set password first');
@@ -85,14 +96,23 @@ export class AuthService {
     // );
   }
 
-  public async singIn(user: PrimitiveUser, project: Project) {
-    return this.pasetoService.sign({
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      project: project.name,
-      namespace: project.namespace,
+  public async signIn(user: PrimitiveUser, project: PrimitiveProject) {
+    const { namespace, name } = project;
+    const { email, id, role } = user;
+    const token = await this.pasetoService.sign({
+      id,
+      email,
+      role,
+      project: name,
+      namespace,
     });
+
+    await this.redis.set(
+      RedisUtils.formatNamespaceKey(BusinessTags.accessToken, namespace, id),
+      token,
+    );
+
+    return token;
   }
 
   public async generateOtp(username: string) {
@@ -111,7 +131,7 @@ export class AuthService {
     return Array.from({ length }).map(() => authenticator.generateSecret(16));
   }
 
-  public async getRecoveryCodes(username: string) {
+  public async getOtpRecoveryCodes(username: string) {
     // const user = await this.userService.getUser({ username });
     // return user.optRecoveryCode;
   }

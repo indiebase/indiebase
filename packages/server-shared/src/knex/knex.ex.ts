@@ -2,7 +2,7 @@ import { Knex } from 'knex';
 
 import { KnexSchemaEx } from './schema.ex';
 import { MgrMetaTables, TmplMetaTables } from './tables';
-import { Project } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait/mgr';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
@@ -34,7 +34,7 @@ export class KnexEx {
       });
   }
 
-  public async listProjects(): Promise<Project[]> {
+  public async listProjects(): Promise<PrimitiveProject[]> {
     return this.knex.withSchema('mgr').select('*').from(MgrMetaTables.projects);
   }
 
@@ -53,11 +53,25 @@ export class KnexEx {
       .first();
   }
 
+  /**
+   *
+   * @param email
+   * @param namespace
+   * @param {Object} options
+   * @param {Array<string>|boolean} options.exclude - if set to false will include all, default ['password']
+   * @returns
+   */
   public async getUserByEmail(
     email: string,
     namespace: string = 'mgr',
-    excludePassword = true,
+    options?: { exclude: string[] | boolean },
   ) {
+    options = Object.assign(
+      {},
+      {
+        exclude: ['password'],
+      },
+    );
     const result = await this.knex
       .withSchema(namespace)
       .select('*')
@@ -65,8 +79,17 @@ export class KnexEx {
       .where('email', email)
       .first();
 
-    if (excludePassword) {
-      delete result?.password;
+    if (!options.exclude) {
+      return result;
+    } else if (Array.isArray(options.exclude)) {
+      for (const key in result) {
+        if (
+          Object.prototype.hasOwnProperty.call(result, key) &&
+          options.exclude.includes(key)
+        ) {
+          Reflect.deleteProperty(options, key);
+        }
+      }
     }
 
     return result;

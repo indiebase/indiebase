@@ -10,3 +10,4 @@ export * from './config';
 export * from './pipes';
 export * from './access';
 export * from './middlewares';
+export * from './constants';
