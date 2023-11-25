@@ -2,7 +2,7 @@ import { GetCaptchaDTO } from './mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CaptchaUtils } from '@indiebase/server-shared';
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
+import { InjectRedis } from '@indiebase/nestjs-redis';
 import { Logger } from '@nestjs/common';
 import type { Redis } from 'ioredis';
 import { ResultCode } from '@indiebase/trait';

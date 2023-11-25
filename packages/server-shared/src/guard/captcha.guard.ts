@@ -5,7 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import type { Redis } from 'ioredis';
-import { InjectRedis } from '@liaoliaots/nestjs-redis';
+import { InjectRedis } from '@indiebase/nestjs-redis';
 import { FastifyRequest } from 'fastify';
 import { CaptchaUtils } from '../utils';
 

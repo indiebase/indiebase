@@ -4,7 +4,7 @@ import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { X_Indiebase_Lang } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
-import { RedisClientOptions, RedisModule } from '@liaoliaots/nestjs-redis';
+import { RedisClientOptions, RedisModule } from '@indiebase/nestjs-redis';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Global, Module } from '@nestjs/common';

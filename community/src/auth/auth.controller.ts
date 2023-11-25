@@ -9,14 +9,21 @@ import {
   Post,
   Body,
   Logger,
+  Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CommonApiHeader, PublicApiGuard } from '@indiebase/server-shared';
-import { LocalSignInDTO } from './auth.dto';
-import { ResultCode } from '@indiebase/trait';
+import {
+  CommonApiHeader,
+  Project,
+  PublicApiGuard,
+  User,
+} from '@indiebase/server-shared';
+import { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
+import { PrimitiveUser, ResultCode } from '@indiebase/trait';
 import { GithubGuard, GoogleGuard } from './social';
 import { LocalAuthGuard } from './local.guard';
 import { AuthService } from './auth.service';
+import type { PrimitiveProject } from '@indiebase/trait/mgr';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
@@ -34,12 +41,10 @@ export class AuthController {
   async signIn(
     @Body()
     _: LocalSignInDTO,
-    @Req() req: FastifyRequest,
+    @User() user: PrimitiveUser,
+    @Project() project: PrimitiveProject,
   ) {
-    const accessToken = await this.authService.singIn(
-      req.user,
-      req.raw.project,
-    );
+    const accessToken = await this.authService.signIn(user, project);
 
     return {
       code: ResultCode.SUCCESS,
@@ -105,53 +110,50 @@ export class AuthController {
     return { code: ResultCode.SUCCESS };
   }
 
-  // @Post('2fa')
-  // @ApiOperation({
-  //   summary: 'Create one time password, qrcode',
-  // })
-  // @UseGuards(PublicApiGuard)
-  // async generateOtp(@MyInfo('username') username: string) {
-  //   const d = await this.authService.generateOtp(username);
+  @Post('otp')
+  @ApiOperation({
+    summary: 'Create one time password, qrcode',
+  })
+  @UseGuards(PublicApiGuard)
+  async generateOtp(@User('username') username: string) {
+    const d = await this.authService.generateOtp(username);
 
-  //   return {
-  //     code: ResultCode.SUCCESS,
-  //     d,
-  //   };
-  // }
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
+  }
 
-  // @Post('2fa/verify')
-  // @UseGuards(PublicApiGuard)
-  // @ApiOperation({
-  //   summary: 'Verify one time password, token',
-  // })
-  // async verifyOtp(
-  //   @MyInfo('username') username: string,
-  //   @Body() body: OptVerifyDTO,
-  // ) {
-  //   return this.authService.otpVerify(username, body.secret, body.token);
-  // }
+  @Post('otp/verify')
+  @UseGuards(PublicApiGuard)
+  @ApiOperation({
+    summary: 'Verify one time password, token',
+  })
+  async verifyOtp(@User('email') email: string, @Body() body: OptVerifyDTO) {
+    // return this.authService.otpVerify(username, body.secret, body.token);
+  }
 
-  // @Delete('2fa')
-  // @UseGuards(PublicApiGuard)
-  // @ApiOperation({
-  //   summary: 'Remove 2FA',
-  // })
-  // async deleteOtp(@MyInfo('username') username: string) {
-  //   await this.authService.removeOtp(username);
+  @Delete('otp')
+  @UseGuards(PublicApiGuard)
+  @ApiOperation({
+    summary: 'Remove 2FA',
+  })
+  async deleteOtp(@User('email') email: string) {
+    await this.authService.removeOtp(email);
 
-  //   return { code: ResultCode.SUCCESS };
-  // }
+    return { code: ResultCode.SUCCESS };
+  }
 
-  // @Get('2fa/recovery-codes')
-  // @ApiOperation({
-  //   summary: 'Get recovery codes',
-  // })
-  // @UseGuards(PublicApiGuard)
-  // async getRecoveryCodes(@MyInfo('username') username: string) {
-  //   const d = await this.authService.getRecoveryCodes(username);
-  //   return {
-  //     code: ResultCode.SUCCESS,
-  //     d,
-  //   };
-  // }
+  @Get('otp/recovery-codes')
+  @ApiOperation({
+    summary: 'Get recovery codes',
+  })
+  @UseGuards(PublicApiGuard)
+  async getRecoveryCodes(@User('email') email: string) {
+    const d = await this.authService.getOtpRecoveryCodes(email);
+    return {
+      code: ResultCode.SUCCESS,
+      d,
+    };
+  }
 }

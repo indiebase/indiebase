@@ -14,7 +14,7 @@ export enum ProjectStatus {
   closed = 'closed',
 }
 
-export interface Project {
+export interface PrimitiveProject {
   id: number;
   name: string;
   description?: string;
