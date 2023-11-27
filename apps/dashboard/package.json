@@ -31,6 +31,7 @@
     "jotai": "2.5.0",
     "jotai-devtools": "0.7.0",
     "localforage": "1.10.0",
+    "million": "^2.6.4",
     "react": "18.2.0",
     "react-cropper": "2.3.3",
     "react-dom": "18.2.0",
