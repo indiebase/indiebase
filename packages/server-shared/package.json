@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "shx rm dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && nest build --watch",

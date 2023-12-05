@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@deskbtm/gadgets": "workspace:",
+    "@deskbtm/gadgets": "workspace:^",
     "@emotion/react": "11.11.1",
     "@fontsource/inter": "5.0.15",
     "@mantine/core": "7.2.2",

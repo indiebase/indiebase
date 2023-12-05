@@ -4,7 +4,7 @@
  */
 
 // Preset env modes.
-/// <reference path="./env.d.ts" />
+import './global-env.d';
 
 import assert from 'assert';
 
