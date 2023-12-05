@@ -15,6 +15,9 @@
   "include": [
     "src/**/*"
   ],
+  "files": [
+    "./src/global-env.d.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",
