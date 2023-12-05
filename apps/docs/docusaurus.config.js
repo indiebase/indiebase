@@ -90,6 +90,24 @@ const config = {
             position: 'right',
             label: 'Docs',
           },
+          {
+            type: 'doc',
+            docId: 'overview1',
+            position: 'right',
+            label: 'Pricing',
+          },
+          {
+            type: 'doc',
+            docId: 'overview2',
+            position: 'right',
+            label: 'Blog',
+          },
+          {
+            type: 'doc',
+            docId: 'overview3',
+            position: 'right',
+            label: 'Abort',
+          },
           // {
           //   position: 'right',
           //   // type: 'docSidebar',
