@@ -246,7 +246,7 @@ export default function Home(): JSX.Element {
         <Background />
         <Screen1 />
         <Screen2 />
-        <Title order={1}>Collective</Title>
+        {/* <Title order={1}>Collective</Title> */}
         {/* <ScrollPage>
             <Box>Start self hosted</Box>
 

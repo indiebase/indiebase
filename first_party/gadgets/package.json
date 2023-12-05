@@ -1,32 +1,31 @@
 {
   "name": "@deskbtm/gadgets",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.2",
   "description": "Deskbtm javascript gadgets",
   "author": "Han <wanghan9423@outlook.com>",
-  "private": true,
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
     "./*": {
-      "import": "./src/*.ts",
-      "require": "./src/*.ts"
+      "default": "./src/*.ts"
     }
   },
+  "files": [
+    "dist/**/*"
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
-    "main": "./dist/index.cjs",
-    "module": "./dist/index.mjs",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
     "exports": {
       ".": {
-        "import": "./dist/esm/index.mjs",
-        "require": "./dist/cjs/index.cjs",
-        "types": "./dist/types/index.d.ts"
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
       },
       "./*": {
-        "import": "./dist/esm/*.mjs",
-        "require": "./dist/cjs/*.cjs",
-        "types": "./dist/types/*.d.ts"
+        "default": "./dist/*.js",
+        "types": "./dist/*.d.ts"
       }
     }
   },
@@ -39,14 +38,10 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "build": "unbuild",
+    "build": "rimraf dist && tsc",
+    "prepack": "npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "devDependencies": {
     "@types/node": "20.8.10",
