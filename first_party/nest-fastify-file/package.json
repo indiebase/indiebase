@@ -32,7 +32,7 @@
     "blazity"
   ],
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "shx rm dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && nest build --watch",
@@ -52,8 +52,8 @@
     "@types/node": "20.8.10",
     "fastify": "4.21.0",
     "reflect-metadata": "0.1.13",
-    "rimraf": "5.0.1",
     "rxjs": "7.8.1",
+    "shx": "0.3.4",
     "typescript": "5.2.2"
   },
   "peerDependencies": {

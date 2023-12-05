@@ -24,7 +24,7 @@
     }
   },
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "shx rm dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && nest build --watch",
@@ -43,8 +43,8 @@
     "@nestjs/core": "10.1.3",
     "aws-sdk": "2.1278.0",
     "reflect-metadata": "0.1.13",
-    "rimraf": "5.0.1",
-    "rxjs": "7.8.1"
+    "rxjs": "7.8.1",
+    "shx": "0.3.4"
   },
   "devDependencies": {
     "@nestjs/cli": "10.1.12",
