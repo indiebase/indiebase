@@ -3,6 +3,7 @@
   "compilerOptions": {
     "noEmit": true,
     "esModuleInterop": true,
+    "removeComments": true,
     "baseUrl": ".",
     "outDir": "./dist"
   },

@@ -21,7 +21,7 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "removeComments": true,
+    "removeComments": false,
     // Language and Environment
     "target": "es2015",
     "lib": [
