@@ -11,8 +11,7 @@
     }
   },
   "files": [
-    "dist/**/*",
-    "types/**/*"
+    "dist/**/*"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",

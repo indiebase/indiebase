@@ -15,6 +15,7 @@ import { router } from './router';
 import { NavigationProgress } from '@mantine/nprogress';
 import { Notifications } from '@mantine/notifications';
 import { theme } from './theme';
+import uuid from 'uuid';
 
 const DevTools: FC = function () {
   return kDevMode ? (
@@ -30,11 +31,11 @@ function App() {
 
   const providers: ComposeProps['providers'] = [
     <MantineProvider
-      key={crypto.randomUUID()}
+      key={uuid.v4()}
       theme={theme}
       defaultColorScheme="light"
     />,
-    <QueryClientProvider key={crypto.randomUUID()} client={queryClient} />,
+    <QueryClientProvider key={uuid.v4()} client={queryClient} />,
   ];
 
   return (
