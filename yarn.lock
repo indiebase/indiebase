@@ -5708,25 +5708,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/module-type-aliases@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@docusaurus/module-type-aliases@npm:3.0.0"
-  dependencies:
-    "@docusaurus/react-loadable": "npm:5.5.2"
-    "@docusaurus/types": "npm:3.0.0"
-    "@types/history": "npm:^4.7.11"
-    "@types/react": "npm:*"
-    "@types/react-router-config": "npm:*"
-    "@types/react-router-dom": "npm:*"
-    react-helmet-async: "npm:*"
-    react-loadable: "npm:@docusaurus/react-loadable@5.5.2"
-  peerDependencies:
-    react: "*"
-    react-dom: "*"
-  checksum: 965013e23450aaf7068b4a7406d0e28ec6220e8b36fb2f4eba918426dd6aa1cbdedae6ad053a73a80b41753af4f7a50c641adebe467b7987fbfce93a55b8ee8e
-  languageName: node
-  linkType: hard
-
 "@docusaurus/module-type-aliases@npm:3.0.1":
   version: 3.0.1
   resolution: "@docusaurus/module-type-aliases@npm:3.0.1"
@@ -6080,29 +6061,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/tsconfig@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@docusaurus/tsconfig@npm:3.0.0"
-  checksum: 06a9b33b438c482057a1e4f1654cc350dd1a838a81510e7564f7b1eab6615c63465d39859592a89394e7070d8d523421a80dee6ffb625bb71c158c3c9f4c8098
-  languageName: node
-  linkType: hard
-
-"@docusaurus/types@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@docusaurus/types@npm:3.0.0"
-  dependencies:
-    "@types/history": "npm:^4.7.11"
-    "@types/react": "npm:*"
-    commander: "npm:^5.1.0"
-    joi: "npm:^17.9.2"
-    react-helmet-async: "npm:^1.3.0"
-    utility-types: "npm:^3.10.0"
-    webpack: "npm:^5.88.1"
-    webpack-merge: "npm:^5.9.0"
-  peerDependencies:
-    react: ^18.0.0
-    react-dom: ^18.0.0
-  checksum: c3ad9426ac41708847eacf663234ce67f2a3d2d870271df5142f8112a10eca821b92f3e77da7702b18311276c7837c2d7669c04768db018f87381d1a69fcb56f
+"@docusaurus/tsconfig@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@docusaurus/tsconfig@npm:3.0.1"
+  checksum: a191e527740ea09cc4783ab45f106989f692d100e83768a4398fc08d3d41f0645afdce83aa89a1b251d5899544105af09e795af4d0db54247403a180f3c43098
   languageName: node
   linkType: hard
 
@@ -7771,12 +7733,12 @@ __metadata:
   dependencies:
     "@deskbtm/gadgets": "workspace:^"
     "@docusaurus/core": "npm:3.0.1"
-    "@docusaurus/module-type-aliases": "npm:3.0.0"
+    "@docusaurus/module-type-aliases": "npm:3.0.1"
     "@docusaurus/plugin-pwa": "npm:3.0.1"
     "@docusaurus/preset-classic": "npm:3.0.1"
     "@docusaurus/remark-plugin-npm2yarn": "npm:3.0.1"
-    "@docusaurus/tsconfig": "npm:3.0.0"
-    "@docusaurus/types": "npm:3.0.0"
+    "@docusaurus/tsconfig": "npm:3.0.1"
+    "@docusaurus/types": "npm:3.0.1"
     "@fontsource/inter": "npm:^5.0.15"
     "@indiebase/ui-shared": "workspace:^"
     "@mantine/core": "npm:7.3.0"
@@ -7789,19 +7751,19 @@ __metadata:
     "@mantine/vanilla-extract": "npm:7.3.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@tabler/icons-react": "npm:2.42.0"
-    "@tsconfig/docusaurus": "npm:^1.0.5"
-    "@types/react": "npm:^18.2.29"
-    "@types/validator": "npm:13.11.5"
+    "@tsconfig/docusaurus": "npm:2.0.2"
+    "@types/react": "npm:18.2.42"
+    "@types/validator": "npm:13.11.7"
     "@vanilla-extract/css": "npm:1.14.0"
     "@vanilla-extract/webpack-plugin": "npm:2.3.1"
     clsx: "npm:^1.2.1"
-    postcss-preset-mantine: "npm:^1.7.0"
-    postcss-simple-vars: "npm:^7.0.1"
+    postcss-preset-mantine: "npm:1.11.1"
+    postcss-simple-vars: "npm:7.0.1"
     prism-react-renderer: "npm:^2.1.0"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     react-scroll-motion: "npm:^0.3.2"
-    sass: "npm:^1.67.0"
+    sass: "npm:1.69.5"
     typescript: "npm:5.2.2"
     validator: "npm:^13.11.0"
     wrangler: "npm:3.19.0"
@@ -11895,10 +11857,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/docusaurus@npm:^1.0.5":
-  version: 1.0.7
-  resolution: "@tsconfig/docusaurus@npm:1.0.7"
-  checksum: 8f5b14005d90b2008f10daf03a5edec86d2a7603e5641c579ea936a5c2d165a8c3007a72254fc4c2adb0554d73062f52bb97b30ff818f01c9215957822f3c4db
+"@tsconfig/docusaurus@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@tsconfig/docusaurus@npm:2.0.2"
+  checksum: 129f2532172496c108f53a15082e410b418e664c1761902664558059541a6cf7faff2b3d2953e2d507a7e3688afacf2479e17adcb35b89cae04ddb0415d0397a
   languageName: node
   linkType: hard
 
@@ -12750,14 +12712,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.29":
-  version: 18.2.34
-  resolution: "@types/react@npm:18.2.34"
+"@types/react@npm:18.2.42":
+  version: 18.2.42
+  resolution: "@types/react@npm:18.2.42"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 6d16f86b384e829edc3710b1dd9ec4eb1d6b26bc079c5cf605bd0cbf77ae6224f15c76949afadb7f53df4544cfe4025c1111fbe36732cd7f660a320fbc2e5866
+  checksum: b6ee1873ba551ca7bf87cefff00a615aa4322cd68d425858a2e09be260d8037d7fc68865739d2b05cc88cefa7acd009afdaea43e9856fc6302b322cc8c19464e
   languageName: node
   linkType: hard
 
@@ -12955,6 +12917,13 @@ __metadata:
   version: 13.11.5
   resolution: "@types/validator@npm:13.11.5"
   checksum: 5d0def292cf04b8ecc2e499bdaa66a411f835a389f350136a13c5b25a1859c5158b2a9f20839f8e8b8ea61b348566887abf126735e797decaadfab0eb192b4cb
+  languageName: node
+  linkType: hard
+
+"@types/validator@npm:13.11.7":
+  version: 13.11.7
+  resolution: "@types/validator@npm:13.11.7"
+  checksum: 5935d363a9a6099ee6a2100ae3be46d9d1f113dbea16e03b627b48b2f746f01100535febc564d215a7054dd9a632ec0cda10ecd6a75d088e3e38834290fb76f6
   languageName: node
   linkType: hard
 
@@ -33595,15 +33564,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-preset-mantine@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "postcss-preset-mantine@npm:1.7.0"
+"postcss-preset-mantine@npm:1.11.1":
+  version: 1.11.1
+  resolution: "postcss-preset-mantine@npm:1.11.1"
   dependencies:
     postcss-mixins: "npm:^9.0.4"
     postcss-nested: "npm:^6.0.1"
   peerDependencies:
     postcss: ">=8.0.0"
-  checksum: 78687c62c9a0bd1e111b2dbb23bc59ca6bab57929fa8bbd680caf5c4a23d1a5ba45038afd3d56f36482e1c6438320a336c8d81b7e9087928dd1d779ef8b9a28e
+  checksum: bcd1bfbe96a080054118bda1337510380c60dee44d70fb1f3d97c09c2c3ff3f26e7ff5c92c53c5eb99c2d602c291749cea46a7402ea3020faba34f78d96e849e
   languageName: node
   linkType: hard
 
@@ -33663,7 +33632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-simple-vars@npm:^7.0.0, postcss-simple-vars@npm:^7.0.1":
+"postcss-simple-vars@npm:7.0.1, postcss-simple-vars@npm:^7.0.0, postcss-simple-vars@npm:^7.0.1":
   version: 7.0.1
   resolution: "postcss-simple-vars@npm:7.0.1"
   peerDependencies:
@@ -36528,16 +36497,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.67.0":
-  version: 1.67.0
-  resolution: "sass@npm:1.67.0"
+"sass@npm:1.69.5":
+  version: 1.69.5
+  resolution: "sass@npm:1.69.5"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: b855d4d8c42deba59fd567add01aaed2bf20466afd7766d9cb6bc97f569c5d0289eef558a247bfcc3dfecd3667011107692a0cf2cf8c7e832c477ebb9369af6c
+  checksum: b320ab22061b3c7fe8cee43b13329b281dd7d86691b8b7c55dec3e47d3ede988989dac56db4dff57ee847d10252a26b611be1b0a5f7c3a0f6a6405ef37a6d018
   languageName: node
   linkType: hard
 
