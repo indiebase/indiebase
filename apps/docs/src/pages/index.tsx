@@ -17,7 +17,6 @@ import {
 } from '@mantine/core';
 import { IndiebaseSVG, NawbSVG, PlugKitSVG } from '@site/src/components/Icons';
 import { useIntersection, useMediaQuery } from '@mantine/hooks';
-
 import * as styles from '@site/src/css/home.css.ts';
 
 const Background: FC = function () {
@@ -125,73 +124,9 @@ const Screen2 = function () {
   );
 };
 
-const Screen3 = function () {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { ref, entry } = useIntersection({
-    root: containerRef.current,
-    rootMargin: '50px',
-    threshold: 0.5,
-  });
-
-  const {
-    siteConfig: { customFields },
-  } = useDocusaurusContext();
-
-  return (
-    <Stack align="center" mt={rem(80)}>
-      <Title order={2} px={rem(20)}>
-        The Deskbtm products under Indiebase
-      </Title>
-      <Group justify="center" mb={rem(40)} mt={rem(20)} gap={rem(30)}>
-        <DeskbtmProductsCard
-          color="pink"
-          productName={'Indiebase'}
-          desc={`Indiebase is a self-hosted platform explicitly designed for indie
-          developers or teams. Providing BaaS and financial services.`}
-          icon={<IndiebaseSVG style={{ width: rem(50), height: rem(50) }} />}
-        />
-        <DeskbtmProductsCard
-          color="grape"
-          productName={'Nawb'}
-          desc={`Indiebase is a self-hosted platform explicitly designed for indie
-            hackers or teams. Providing BaaS and financial services.`}
-          icon={<NawbSVG style={{ width: rem(50), height: rem(50) }} />}
-        />
-        <DeskbtmProductsCard
-          productName={'PlugKit'}
-          desc={`Indiebase is a self-hosted platform explicitly.`}
-          icon={<PlugKitSVG style={{ width: rem(50), height: rem(50) }} />}
-        />
-      </Group>
-      <Text size={rem(24)}>
-        Join&nbsp;
-        <Text
-          ref={ref}
-          className={entry?.isIntersecting ? styles.deskbtmRotate : null}
-          component="a"
-          target="_blank"
-          href={customFields.deskbtmURL as string}
-          fw={600}
-          td="underline"
-          size={rem(36)}
-        >
-          Deskbtm
-        </Text>
-        &nbsp;now&nbsp;
-        <Box
-          component="span"
-          style={{ transform: 'rotate(15deg)', display: 'inline-block' }}
-        >
-          !!!
-        </Box>
-      </Text>
-    </Stack>
-  );
-};
-
 const Screen1 = function () {
   const theme = useMantineTheme();
-  const isMobile = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`);
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   return (
     <Flex
@@ -215,7 +150,7 @@ const Screen1 = function () {
       </Text>
 
       <Text
-        maw={isMobile ? '50%' : null}
+        maw={!isMobile ? '50%' : null}
         size="xl"
         mt={rem(30)}
         ta="center"
@@ -225,7 +160,7 @@ const Screen1 = function () {
         Indiebase is a self-hosted platform explicitly designed for indie
         hackers or teams. Providing BaaS and financial services.
       </Text>
-      <Group mt={rem(20)} maw={isMobile ? '50%' : 'null'}>
+      <Group mt={rem(20)} maw={isMobile ? '50%' : 'null'} justify="center">
         <Button variant="light" size="lg" radius="xl">
           Getting started
         </Button>
@@ -238,7 +173,7 @@ const Screen1 = function () {
 };
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext();
+  // const { siteConfig } = useDocusaurusContext();
 
   return (
     <Layout title="Home" description="Indiebase homepage">
@@ -246,24 +181,6 @@ export default function Home(): JSX.Element {
         <Background />
         <Screen1 />
         <Screen2 />
-        {/* <Title order={1}>Collective</Title> */}
-        {/* <ScrollPage>
-            <Box>Start self hosted</Box>
-
-            <Box style={{ width: '100%' }}>
-              <Box
-                style={{
-                  width: 200,
-                  height: 400,
-                  border: '1px solid #000',
-                  borderRadius: '20px',
-                  backdropFilter: 'blur(6.25rem)',
-                  background:
-                    'linear-gradient(136deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.04) 30.91%,rgba(255,255,255,0) 100%,rgba(255,255,255,.01) 100%)',
-                }}
-              ></Box>
-            </Box>
-          </ScrollPage> */}
         <br />
         <br />
         <br />
@@ -303,25 +220,6 @@ export default function Home(): JSX.Element {
         <br />
         <br />
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        筹集资金 + 合规审查 + 资金管理 undraising + legal status + money
-        management
         <Text>
           Make revenue generation easier for indie hackers and teams with
           software projects. Private Open Collective + Firebase Successor
