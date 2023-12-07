@@ -8,11 +8,11 @@ const i18n = require('./i18n');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Indiebase',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Indiebase',
   favicon: 'img/favicon.ico',
   i18n,
   // Set the production url of your site here
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://indiebase.deskbtm.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -22,7 +22,8 @@ const config = {
   organizationName: 'Indiebase', // Usually your GitHub org/user name.
   projectName: 'indiebase', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  //todo
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -34,7 +35,7 @@ const config = {
   },
   presets: [
     [
-      'classic',
+      '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
@@ -69,8 +70,6 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
       hideOnScroll: true,
       docs: {
         sidebar: {
@@ -91,22 +90,24 @@ const config = {
             label: 'Docs',
           },
           {
-            type: 'doc',
-            docId: 'overview1',
-            position: 'right',
+            to: 'https://google.com',
             label: 'Pricing',
-          },
-          {
-            type: 'doc',
-            docId: 'overview2',
             position: 'right',
+            target: '_blank',
+          },
+
+          {
+            to: 'https://google.com',
             label: 'Blog',
-          },
-          {
-            type: 'doc',
-            docId: 'overview3',
             position: 'right',
+            target: '_blank',
+          },
+
+          {
+            to: 'https://google.com',
             label: 'Abort',
+            position: 'right',
+            target: '_blank',
           },
           // {
           //   position: 'right',
@@ -202,11 +203,11 @@ const config = {
             type: 'image/x-icon',
             href: '/favicon.ico',
           },
-          {
-            tagName: 'link',
-            rel: 'manifest',
-            href: '/manifest.json', // your PWA manifest
-          },
+          // {
+          //   tagName: 'link',
+          //   rel: 'manifest',
+          //   href: '/manifest.json', // your PWA manifest
+          // },
           {
             tagName: 'meta',
             name: 'theme-color',
