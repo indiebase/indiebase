@@ -8,13 +8,7 @@ module.exports = {
     'simple-import-sort',
     'prettier',
   ],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   root: true,
   env: {
     node: true,
