@@ -1,21 +1,21 @@
 import {
+  genDevPublicApiKey,
   IsEntityExistedConstraint,
   PresetMiddlewareModule,
-  genDevPublicApiKey,
 } from '@indiebase/server-shared';
-import { Logger, Module, ModuleMetadata, OnModuleInit } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import type { ModuleMetadata, OnModuleInit } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
+import type { ConfigService } from '@nestjs/config';
+
 import { AuthModule } from './auth';
-import {
-  DepsDynamicOptions,
-  createDependenciesModule,
-} from './dependencies.module';
+import type { DepsDynamicOptions } from './dependencies.module';
+import { createDependenciesModule } from './dependencies.module';
 import { MgrModule } from './manager/mgr.module';
 import { MigrationModule } from './migrations';
+import { PresetModule } from './modules';
 import { ProbeModule } from './probe';
 import { StorageModule } from './storage';
 import { UsersModule } from './users/users.module';
-import { PresetModule } from './modules';
 
 /**
  * This module is the basic module of Lets, which contains the basic functions of community:
