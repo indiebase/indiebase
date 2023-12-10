@@ -10,7 +10,7 @@ import structuredClone from 'core-js-pure/actual/structured-clone';
  *  List of reserved keywords.
  *  i.e. Roles, resources with these names are not allowed.
  */
-// Indiebase
+//@Indiebase
 const RESERVED_KEYWORDS = ['!', '$', '$extend'];
 
 /**
@@ -578,7 +578,7 @@ const utils = {
     // `rootRole` is for memory storage. Do NOT set it when using;
     // and do NOT document this parameter.
     // rootRole = rootRole || roleName;
-    // Indiebase
+    //@Indiebase
     const roleHasWildcard = Object.prototype.hasOwnProperty.call(grants, '*');
     const role: any = grants[roleName];
     if (!role && !roleHasWildcard)

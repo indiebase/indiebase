@@ -7690,7 +7690,6 @@ __metadata:
     jotai: "npm:2.6.0"
     jotai-devtools: "npm:0.7.1"
     million: "npm:2.6.4"
-    postcss-flexbugs-fixes: "npm:^5.0.2"
     postcss-preset-mantine: "npm:^1.9.1"
     postcss-simple-vars: "npm:^7.0.1"
     react: "npm:18.2.0"
@@ -33243,15 +33242,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.2.15
   checksum: 5c09403a342a065033f5f22cefe6b402c76c2dc0aac31a736a2062d82c2a09f0ff2525b3df3a0c6f4e0ffc7a0392efd44bfe7f9d018e4cae30d15b818b216622
-  languageName: node
-  linkType: hard
-
-"postcss-flexbugs-fixes@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "postcss-flexbugs-fixes@npm:5.0.2"
-  peerDependencies:
-    postcss: ^8.1.4
-  checksum: 022ddbcca8987303b9be75ff259e9de81b98643adac87a5fc6b52a0fcbbf95e1ac9fd508c4ed67cad76ac5d039b7123de8a0832329481b3c626f5d63f7a28f47
   languageName: node
   linkType: hard
 
