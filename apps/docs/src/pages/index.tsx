@@ -160,6 +160,10 @@ const Screen1 = function () {
         Indiebase is a self-hosted platform explicitly designed for indie
         hackers or teams. Providing BaaS and financial services.
       </Text>
+      <Text c="gray" size="sm" ta="center">
+        Private Open Collective + Firebase Successor. Make revenue generation
+        easier for indie hackers and teams with software projects.
+      </Text>
       <Group mt={rem(20)} maw={isMobile ? '50%' : 'null'} justify="center">
         <Button variant="light" size="lg" radius="xl">
           Getting started
@@ -220,10 +224,6 @@ export default function Home(): JSX.Element {
         <br />
         <br />
         <br />
-        <Text>
-          Make revenue generation easier for indie hackers and teams with
-          software projects. Private Open Collective + Firebase Successor
-        </Text>
       </main>
     </Layout>
   );
