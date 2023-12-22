@@ -2,8 +2,6 @@
 **/node_modules/*
 **/dist/*
 **/build/*
-src/migration
-temp
 # Logs
 logs
 *.log
@@ -35,5 +33,4 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-assets/sandbox/*
 package-lock.json

@@ -11,7 +11,6 @@
 **/dist/*
 **/build/*
 /**/*.tsbuildinfo
-src/migration
 temp
 # Logs
 logs
@@ -44,7 +43,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-assets/sandbox/*
 package-lock.json
 self_hosted
 

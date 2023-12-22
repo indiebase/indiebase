@@ -23,12 +23,12 @@ module.exports = {
     'simple-import-sort/exports': 'error',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/ban-types': 'error',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
-      'warn',
+      'error',
       {
         vars: 'all',
         varsIgnorePattern: '^_',

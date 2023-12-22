@@ -61,5 +61,8 @@
     "webpack@5.79.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
     "webpack@^5": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
     "webpack@5.64.4": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch"
+  },
+  "dependencies": {
+    "@deskbtm/gadgets": "workspace:^"
   }
 }
