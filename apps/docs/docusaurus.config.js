@@ -43,7 +43,6 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           remarkPlugins: [
-            // @ts-ignore
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
           ],
           editUrl:
@@ -185,6 +184,44 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      metadata: [
+        {
+          name: 'description',
+          content:
+            'A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
+        },
+        { name: 'keywords', content: '' },
+        { name: 'content-type', content: 'text/html; charset=UTF-8' },
+        // Open Graph
+        {
+          property: 'og:title',
+          content:
+            'A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
+        },
+        {
+          property: 'og:description',
+          content:
+            'Private Open Collective + Firebase Successor. Make revenue generation easier for indie hackers and teams with software projects.',
+        },
+        { property: 'og:image', content: '' },
+        { property: 'og:site_name', content: 'Indiebase' },
+        { property: 'og:url', content: 'https://indiebase.deskbtm.com' },
+        // X
+        {
+          name: 'twitter:title',
+          content:
+            'A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
+        },
+        {
+          name: 'twitter:description',
+          content:
+            'Private Open Collective + Firebase Successor. Make revenue generation easier for indie hackers and teams with software projects.',
+        },
+        { name: 'twitter:image', content: 'https://indiebase.deskbtm.com' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:creator', content: '@deskbtm' },
+        { name: 'twitter:site', content: '@deskbtm' },
+      ],
     }),
   plugins: [
     require.resolve('./plugins/docusaurus-plugin-vanilla-extract'),

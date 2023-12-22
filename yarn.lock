@@ -7542,7 +7542,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@indiebase/community@workspace:community"
   dependencies:
-    "@deskbtm/gadgets": "workspace:^"
     "@fastify/cookie": "npm:9.1.0"
     "@fastify/helmet": "npm:11.0.0"
     "@fastify/multipart": "npm:8.0.0"
@@ -24181,6 +24180,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "indiebase@workspace:."
   dependencies:
+    "@deskbtm/gadgets": "workspace:^"
     "@typescript-eslint/eslint-plugin": "npm:6.8.0"
     "@typescript-eslint/parser": "npm:6.8.0"
     "@vitest/ui": "npm:^0.33.0"

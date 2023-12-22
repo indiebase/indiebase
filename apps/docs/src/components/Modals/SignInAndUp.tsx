@@ -1,26 +1,26 @@
-import React, { FC, useState } from 'react';
+import type { ModalProps } from '@mantine/core';
 import {
-  Modal,
-  Stack,
   Button,
-  Image,
-  useMantineTheme,
   Container,
   Divider,
+  Modal,
   PasswordInput,
-  TextInput,
+  Stack,
   Text,
-  ModalProps,
+  TextInput,
+  useMantineTheme,
 } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { useColorScheme } from '@mantine/hooks';
 import { showNotification } from '@mantine/notifications';
 import {
-  IconX,
-  IconMail,
-  IconKey,
   IconBrandGithubFilled,
+  IconKey,
+  IconMail,
+  IconX,
 } from '@tabler/icons-react';
-import { useForm } from '@mantine/form';
+import type { FC } from 'react';
+import React, { useState } from 'react';
 import isEmail from 'validator/lib/isEmail';
 
 export const SignInAndUpModal: FC<ModalProps> = function (props) {

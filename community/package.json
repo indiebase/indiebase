@@ -29,8 +29,6 @@
     "docker:prod": "npm run bundle && docker build --build-arg RUNTIME_ENV=production -t indiebase/community.",
     "docker:local": "npm run bundle && docker build --build-arg RUNTIME_ENV=local --no-cache -t indiebase/community-local .",
     "build": "rimraf build && tsc -b --clean && tsc -b -p ./tsconfig.build.json",
-    "start:ts-node": "cross-env NODE_ENV=development DEBUG=\"ioredis:*\" nodemon -e ts,js --exec ts-node ./src/main.ts",
-    "start:tsx": "cross-env NODE_ENV=development DEBUG=\"ioredis:*\" tsx watch ./src/main.ts",
     "start": "cross-env NODE_ENV=development DEBUG=\"ioredis:*\" webpack --config webpack.config.js --watch",
     "preview:dev": "cross-env NODE_ENV=development node ./build/index.js",
     "bundle": "rimraf dist && ncc build ./src/main.ts -o dist -m",
@@ -45,7 +43,6 @@
     "paseto:key": "node ./scripts/paseto.mjs"
   },
   "dependencies": {
-    "@deskbtm/gadgets": "workspace:^",
     "@fastify/cookie": "9.1.0",
     "@fastify/helmet": "11.0.0",
     "@fastify/multipart": "8.0.0",

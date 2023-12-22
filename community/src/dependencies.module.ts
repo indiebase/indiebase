@@ -1,23 +1,25 @@
+import path from 'node:path';
+
 import { AccessControlModule } from '@indiebase/nest-ac';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
 import { KnexModule } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
+import type { RedisClientOptions } from '@indiebase/nestjs-redis';
+import { RedisModule } from '@indiebase/nestjs-redis';
 import { X_Indiebase_Lang } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
-import { RedisClientOptions, RedisModule } from '@indiebase/nestjs-redis';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { WinstonModule, utilities } from 'nest-winston';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { utilities, WinstonModule } from 'nest-winston';
 import {
+  AcceptLanguageResolver,
+  CookieResolver,
+  HeaderResolver,
   I18nModule,
   QueryResolver,
-  HeaderResolver,
-  CookieResolver,
-  AcceptLanguageResolver,
 } from 'nestjs-i18n';
-import path from 'node:path';
 import { knexSnakeCaseMappers } from 'objection';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
