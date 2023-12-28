@@ -18,7 +18,7 @@
  */
 export const did = function <T, U = Error>(
   promise: Promise<T>,
-  defaultErr?: Record<any, any>,
+  defaultErr?: Record<string, unknown>,
 ): Promise<[U, undefined] | [null, T]> {
   return promise
     .then<[null, T]>((data: T) => [null, data])

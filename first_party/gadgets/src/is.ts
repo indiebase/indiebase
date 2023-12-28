@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /**
  * Copyright (C) 2023 Han
  * SPDX-License-Identifier: Apache-2.0
@@ -71,10 +72,10 @@ export const is = {
   arrayBuffer(obj: unknown): obj is ArrayBuffer {
     return this.type(obj, 'ArrayBuffer');
   },
-  symbol(obj: unknown): obj is Symbol {
+  symbol(obj: unknown): obj is symbol {
     return this.type(obj, 'Symbol');
   },
-  boolean(obj: unknown): obj is Boolean {
+  boolean(obj: unknown): obj is boolean {
     return this.type(obj, 'Boolean');
   },
   truthy(obj: unknown, options?: IsFalsyOptions): boolean {
@@ -82,11 +83,24 @@ export const is = {
   },
   falsy(obj: unknown, options?: IsFalsyOptions): boolean {
     options = Object.assign({}, { whitespace: false }, options);
-
     if (options.whitespace && !!obj && this.string(obj)) {
+      // eslint-disable-next-line no-extra-boolean-cast
       return !!!(obj as string).trim();
     }
-
+    // eslint-disable-next-line no-extra-boolean-cast
     return !!!obj;
+  },
+  plainObject(obj: unknown): obj is object {
+    if (!this.object(obj)) {
+      return false;
+    }
+    if (Object.getPrototypeOf(obj) === null) {
+      return true;
+    }
+    let proto = obj;
+    while (Object.getPrototypeOf(proto) !== null) {
+      proto = Object.getPrototypeOf(proto);
+    }
+    return Object.getPrototypeOf(obj) === proto;
   },
 };
