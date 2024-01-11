@@ -31,8 +31,8 @@ services:
       - --providers.docker.swarmMode=true
       - --providers.docker.network=traefik_proxy
       - --providers.docker.exposedbydefault=false
-      - --providers.docker.endpoint=unix:///var/run/docker.sock
-      - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=15
+      - --providers.docker.endpoint=unix:///var/run/docker.sockacme
+      - --certificatesresolvers.leresolver..dnsChallenge.delayBeforeCheck=15
       - --certificatesresolvers.leresolver.acme.tlschallenge=true
       - --certificatesresolvers.leresolver.acme.email=deskbtm@outlook.com
       - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json

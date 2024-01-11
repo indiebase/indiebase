@@ -1,25 +1,26 @@
-import React, { type ComponentProps, useEffect, useMemo } from 'react';
-import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 import {
-  ThemeClassNames,
-  useThemeConfig,
-  usePrevious,
   Collapsible,
+  ThemeClassNames,
   useCollapsible,
+  usePrevious,
+  useThemeConfig,
 } from '@docusaurus/theme-common';
 import {
-  isActiveSidebarItem,
   findFirstSidebarItemLink,
-  useDocSidebarItemsExpandedState,
+  isActiveSidebarItem,
   isSamePath,
+  useDocSidebarItemsExpandedState,
 } from '@docusaurus/theme-common/internal';
-import Link from '@docusaurus/Link';
 import { translate } from '@docusaurus/Translate';
 import useIsBrowser from '@docusaurus/useIsBrowser';
-import DocSidebarItems from '@theme/DocSidebarItems';
-import type { Props } from '@theme/DocSidebarItem/Category';
 import { ActionIcon, rem } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
+import type { Props } from '@theme/DocSidebarItem/Category';
+import DocSidebarItems from '@theme/DocSidebarItems';
+import clsx from 'clsx';
+import React, { type ComponentProps, useEffect, useMemo } from 'react';
+
 import { collapseBtn } from './Category.css';
 
 // If we navigate to a category and it becomes active, it should automatically

@@ -3,7 +3,6 @@ import { useAtom } from 'jotai';
 import { navbarCollapseAtom } from './navbar.atom';
 import { FC } from 'react';
 import { SelectMenu } from '~/components/SelectMenu';
-import { SkeletonList } from '~/components/Skeletons';
 import { NavMenu } from './NavMenu';
 
 export interface AppShellDrawerProps {

@@ -1,15 +1,15 @@
-import React from 'react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { useLocation } from '@docusaurus/router';
 import { useAlternatePageUtils } from '@docusaurus/theme-common/internal';
 import { translate } from '@docusaurus/Translate';
-import { useLocation } from '@docusaurus/router';
-import DropdownNavbarItem from '@theme/NavbarItem/DropdownNavbarItem';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { Box } from '@mantine/core';
 import IconLanguage from '@theme/Icon/Language';
 import type { LinkLikeNavbarItemProps } from '@theme/NavbarItem';
+import DropdownNavbarItem from '@theme/NavbarItem/DropdownNavbarItem';
 import type { Props } from '@theme/NavbarItem/LocaleDropdownNavbarItem';
+import React from 'react';
 
 import styles from './styles.module.css';
-import { Box } from '@mantine/core';
 
 export default function LocaleDropdownNavbarItem({
   mobile,

@@ -1,9 +1,11 @@
-import Transport from 'winston-transport';
-import { OpenObserveTransportOptions } from './interface';
-import { Sender } from './sender';
-import { MESSAGE } from 'triple-beam';
+/* eslint-disable prefer-const */
 import * as assert from 'assert';
 import exitHook from 'async-exit-hook';
+import { MESSAGE } from 'triple-beam';
+import Transport from 'winston-transport';
+
+import type { OpenObserveTransportOptions } from './interface';
+import { Sender } from './sender';
 
 function isURL(url: string) {
   try {
@@ -76,7 +78,7 @@ export class OpenObserveTransport extends Transport {
     } = info;
     timestamp = this.#getTimestamp(timestamp);
 
-    let openObserveLabels: Record<string, any> = {
+    const openObserveLabels: Record<string, any> = {
       level,
     };
 
@@ -91,7 +93,7 @@ export class OpenObserveTransport extends Transport {
       }
     }
 
-    message = !!this.#options.format
+    message = this.#options.format
       ? info[MESSAGE]
       : `${message} ${
           rest && Object.keys(rest).length > 0 ? JSON.stringify(rest) : ''
