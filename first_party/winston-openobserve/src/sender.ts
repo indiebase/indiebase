@@ -1,6 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore:ts(1479)
 import ky from 'ky';
-import { LogEntity, OpenObserveTransportOptions } from './interface';
+
+import type { LogEntity, OpenObserveTransportOptions } from './interface';
 
 export class Sender {
   #options: OpenObserveTransportOptions;
@@ -52,8 +54,8 @@ export class Sender {
   }
 
   public async push(entity: LogEntity, bulk?: boolean) {
-    let { orgId, streamName } = entity;
-    let slug = `${orgId}/${streamName}`;
+    const { orgId, streamName } = entity;
+    const slug = `${orgId}/${streamName}`;
 
     if (bulk) {
       this.#pushBatch(this.#sending ? this.#tmpData : this.#data, slug, entity);

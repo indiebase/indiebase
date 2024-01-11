@@ -1,16 +1,11 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Inject,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { catchError, timeout, lastValueFrom } from 'rxjs';
-import { ClientProxy } from '@nestjs/microservices';
-import { Reflector } from '@nestjs/core';
+import type { CanActivate, ExecutionContext, Logger } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import type { Reflector } from '@nestjs/core';
+import type { ClientProxy } from '@nestjs/microservices';
+import { catchError, lastValueFrom, timeout } from 'rxjs';
+
+import type { IAccessOptions } from './access.decorator';
 import { ACCESS_META } from './casbin.constants';
-import { IAccessOptions } from './access.decorator';
 
 abstract class AbstractAuthGuard {
   abstract transfer(context: ExecutionContext): Promise<Record<string, any>>;

@@ -14,7 +14,7 @@
     "noImplicitReturns": false,
     // Output Formatting
     "pretty": true,
-    // Interop
+    // Intero
     "forceConsistentCasingInFileNames": false,
     // Emit
     "importHelpers": true,
