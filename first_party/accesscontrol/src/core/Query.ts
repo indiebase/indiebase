@@ -1,4 +1,5 @@
-import { IQueryInfo, Permission, AccessControlError } from '../core';
+import type { IQueryInfo } from '../core';
+import { AccessControlError, Permission } from '../core';
 import { Action, Possession } from '../enums';
 import { utils } from '../utils';
 

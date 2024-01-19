@@ -1,13 +1,7 @@
-import {
-  Access,
-  IAccessInfo,
-  Query,
-  IQueryInfo,
-  Permission,
-  AccessControlError,
-} from './core';
-import { Action, Possession, actions, possessions } from './enums';
-import { utils, ERR_LOCK } from './utils';
+import type { IAccessInfo, IQueryInfo } from './core';
+import { Access, AccessControlError, Permission, Query } from './core';
+import { Action, Possession } from './enums';
+import { ERR_LOCK, utils } from './utils';
 
 /**
  *  @classdesc
@@ -302,7 +296,7 @@ class AccessControl {
   removeRoles(roles: string | string[]): AccessControl {
     if (this.isLocked) throw new AccessControlError(ERR_LOCK);
 
-    let rolesToRemove: string[] = utils.toStringArray(roles);
+    const rolesToRemove: string[] = utils.toStringArray(roles);
     if (
       rolesToRemove.length === 0 ||
       !utils.isFilledStringArray(rolesToRemove)
@@ -378,7 +372,7 @@ class AccessControl {
    *  @returns {Array<String>}
    */
   getInheritedRolesOf(role: string): string[] {
-    let roles: string[] = utils.getRoleHierarchyOf(this._grants, role);
+    const roles: string[] = utils.getRoleHierarchyOf(this._grants, role);
     roles.shift();
     return roles;
   }
@@ -425,7 +419,7 @@ class AccessControl {
    *  @returns {Boolean}
    */
   hasResource(resource: string | string[]): boolean {
-    let resources = this.getResources();
+    const resources = this.getResources();
     if (Array.isArray(resource)) {
       return resource.every((item: string) => resources.indexOf(item) >= 0);
     }

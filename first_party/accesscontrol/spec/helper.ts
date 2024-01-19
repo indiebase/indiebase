@@ -1,11 +1,11 @@
 'use strict';
 
 import { expect } from 'vitest';
+
 /**
  *  Test Helper
  *  @author   Onur Yıldırım <onur@cutepilot.com>
  */
-
 import { AccessControl } from '../src';
 import { AccessControlError } from '../src/core';
 

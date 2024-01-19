@@ -1,21 +1,21 @@
 'use strict';
 
 import { describe, expect, test } from 'vitest';
+
 /**
  *  Test Suite: AccessControl
  *  @author   Onur Yıldırım <onur@cutepilot.com>
  */
-
 import { AccessControl } from '../src';
-import { IQueryInfo, AccessControlError } from '../src/core';
-import { utils, RESERVED_KEYWORDS } from '../src/utils';
-
+import type { IQueryInfo } from '../src/core';
+import { AccessControlError } from '../src/core';
+import { RESERVED_KEYWORDS, utils } from '../src/utils';
 // test helper
 import { helper } from './helper';
 
 describe('Test Suite: AccessControl', () => {
   // grant list fetched from DB (to be converted to a valid grants object)
-  let grantList: any[] = [
+  const grantList: any[] = [
     {
       role: 'admin',
       resource: 'video',
@@ -63,7 +63,7 @@ describe('Test Suite: AccessControl', () => {
   ];
 
   // valid grants object
-  let grantsObject: any = {
+  const grantsObject: any = {
     admin: {
       video: {
         'create:any': ['*'],
@@ -82,7 +82,7 @@ describe('Test Suite: AccessControl', () => {
     },
   };
 
-  let grantWildcardList: any[] = [
+  const grantWildcardList: any[] = [
     {
       role: 'admin',
       resource: '*',
@@ -104,7 +104,7 @@ describe('Test Suite: AccessControl', () => {
     },
   ];
 
-  let resourceWildcardObject: any = {
+  const resourceWildcardObject: any = {
     admin: {
       '*': {
         'create:any': ['*'],
@@ -115,7 +115,7 @@ describe('Test Suite: AccessControl', () => {
     },
   };
 
-  let roleWildcardObject: any = {
+  const roleWildcardObject: any = {
     '*': {
       video: {
         'create:any': ['*'],
@@ -277,7 +277,7 @@ describe('Test Suite: AccessControl', () => {
   });
 
   test('reset grants with #reset() only', () => {
-    let ac = new AccessControl(grantsObject);
+    const ac = new AccessControl(grantsObject);
     expect(ac.getRoles().length).toBeGreaterThan(0); // make sure not empty
     helper.expectACError(() => (ac as any).setGrants());
     helper.expectACError(() => ac.setGrants(null));
@@ -305,9 +305,9 @@ describe('Test Suite: AccessControl', () => {
     // console.log('roles', ac.getRoles());
 
     // comma/semi-colon separated should be turned into string arrays
-    let attrs1 = ac.can('user').createOwn('video').attributes;
-    let attrs2 = ac.can('user').readAny('video').attributes;
-    let attrs3 = ac.query('user').updateOwn('video').attributes; // `query` » alias of `can`
+    const attrs1 = ac.can('user').createOwn('video').attributes;
+    const attrs2 = ac.can('user').readAny('video').attributes;
+    const attrs3 = ac.query('user').updateOwn('video').attributes; // `query` » alias of `can`
     // console.log(attrs1);
     expect(attrs1.length).toEqual(2);
     expect(attrs2.length).toEqual(2);
@@ -458,7 +458,7 @@ describe('Test Suite: AccessControl', () => {
     const ac = new AccessControl(grantsObject);
     expect(ac.can('admin').createAny('video').granted).toBe(true);
 
-    let queryInfo: IQueryInfo = {
+    const queryInfo: IQueryInfo = {
       role: 'admin',
       resource: 'video',
       action: 'create:any',
@@ -490,20 +490,20 @@ describe('Test Suite: AccessControl', () => {
     const ac = new AccessControl(),
       attrs = ['*'];
 
-    let o1 = {
+    const o1 = {
       role: 'moderator',
       resource: 'post',
       action: 'create:any', // action:possession
       attributes: ['*'], // grant only
     };
-    let o2 = {
+    const o2 = {
       role: 'moderator',
       resource: 'news',
       action: 'read', // separate action
       possession: 'own', // separate possession
       attributes: ['*'], // grant only
     };
-    let o3 = {
+    const o3 = {
       role: 'moderator',
       resource: 'book',
       // no action/possession set
@@ -727,7 +727,7 @@ describe('Test Suite: AccessControl', () => {
   });
 
   test('extend multi-level (deep) roles', () => {
-    let ac = new AccessControl();
+    const ac = new AccessControl();
     ac.grant('viewer').readAny('devices');
     ac.grant('ops').extend('viewer').updateAny('devices', ['*', '!id']);
     ac.grant('admin').extend('ops').deleteAny('devices');
@@ -818,7 +818,7 @@ describe('Test Suite: AccessControl', () => {
     };
     // tslint:enable
     expect(() => new AccessControl(grants)).not.toThrow();
-    let ac = new AccessControl();
+    const ac = new AccessControl();
     expect(() => ac.setGrants(grants)).not.toThrow();
     // store grants (1) to a constant.
     const grants1 = ac.getGrants();
@@ -1142,7 +1142,7 @@ describe('Test Suite: AccessControl', () => {
   });
 
   test('AccessControl.filter()', () => {
-    let o = {
+    const o = {
       name: 'John',
       age: 30,
       account: {
@@ -1150,7 +1150,7 @@ describe('Test Suite: AccessControl', () => {
         country: 'US',
       },
     };
-    let x = AccessControl.filter(o, ['*', '!account.id', '!age']);
+    const x = AccessControl.filter(o, ['*', '!account.id', '!age']);
     expect(x.name).toEqual('John');
     expect(x.account.id).toBeUndefined();
     expect(x.account.country).toEqual('US');
