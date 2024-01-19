@@ -1,5 +1,5 @@
 // own modules
-import { IQueryInfo } from '../core';
+import type { IQueryInfo } from '../core';
 import { utils } from '../utils';
 
 /**

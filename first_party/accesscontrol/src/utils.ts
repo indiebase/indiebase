@@ -1,10 +1,12 @@
 // dep modules
-import Notation from 'notation';
-// own modules
-import { AccessControl } from './';
-import { actions, Possession, possessions } from './enums';
-import { IAccessInfo, IQueryInfo, AccessControlError } from './core';
 import structuredClone from 'core-js-pure/actual/structured-clone';
+import Notation from 'notation';
+
+// own modules
+import type { AccessControl } from './';
+import type { IAccessInfo, IQueryInfo } from './core';
+import { AccessControlError } from './core';
+import { actions, Possession, possessions } from './enums';
 
 /**
  *  List of reserved keywords.
@@ -84,7 +86,7 @@ const utils = {
    */
   isFilledStringArray(arr: any[]): boolean {
     if (!arr || !Array.isArray(arr)) return false;
-    for (let s of arr) {
+    for (const s of arr) {
       if (typeof s !== 'string' || s.trim() === '') return false;
     }
     return true;
@@ -146,7 +148,7 @@ const utils = {
     const props = Object.getOwnPropertyNames(o);
     // freeze deeper before self
     props.forEach((key: string) => {
-      let sub = o[key];
+      const sub = o[key];
       if (Array.isArray(sub)) Object.freeze(sub);
       if (utils.type(sub) === 'object') {
         utils.deepFreeze(sub);
@@ -292,14 +294,14 @@ const utils = {
     }
 
     utils.eachKey(o, (action) => {
-      let s: string[] = action.split(':');
+      const s: string[] = action.split(':');
       if (actions.indexOf(s[0]) === -1) {
         throw new AccessControlError(`Invalid action: "${action}"`);
       }
       if (s[1] && possessions.indexOf(s[1]) === -1) {
         throw new AccessControlError(`Invalid action possession: "${action}"`);
       }
-      let perms = o[action];
+      const perms = o[action];
       if (!utils.isEmptyArray(perms) && !utils.isFilledStringArray(perms)) {
         throw new AccessControlError(
           `Invalid resource attributes for action "${action}".`,
@@ -321,7 +323,7 @@ const utils = {
    *  is invalid.
    */
   validRoleObject(grants: any, roleName: string): boolean {
-    let role = grants[roleName];
+    const role = grants[roleName];
     if (!role || utils.type(role) !== 'object') {
       throw new AccessControlError(`Invalid role definition.`);
     }
@@ -329,7 +331,7 @@ const utils = {
     utils.eachKey(role, (resourceName: string) => {
       if (!utils.validName(resourceName, false)) {
         if (resourceName === '$extend') {
-          let extRoles: string[] = role[resourceName]; // semantics
+          const extRoles: string[] = role[resourceName]; // semantics
           if (!utils.isFilledStringArray(extRoles)) {
             throw new AccessControlError(
               `Invalid extend value for role "${roleName}": ${JSON.stringify(
@@ -403,7 +405,7 @@ const utils = {
    */
   getResources(grants: any): string[] {
     // using an object for unique list
-    let resources: any = {};
+    const resources: any = {};
     utils.eachRoleResource(
       grants,
       (role: string, resource: string, permissions: any) => {
@@ -608,7 +610,7 @@ const utils = {
           `Cross inheritance is not allowed. Role "${exRoleName}" already extends "${rootRole}".`,
         );
       }
-      let ext: string[] = utils.getRoleHierarchyOf(
+      const ext: string[] = utils.getRoleHierarchyOf(
         grants,
         exRoleName,
         rootRole || roleName,
@@ -643,9 +645,9 @@ const utils = {
    *  all exist.
    */
   getNonExistentRoles(grants: any, roles: string[]) {
-    let non: string[] = [];
+    const non: string[] = [];
     if (utils.isEmptyArray(roles)) return non;
-    for (let role of roles) {
+    for (const role of roles) {
       if (!grants.hasOwnProperty(role)) non.push(role);
     }
     return non;
@@ -752,7 +754,7 @@ const utils = {
 
       // getCrossExtendingRole() returns false or the first
       // cross-inherited role, if found.
-      let crossInherited: string = utils.getCrossExtendingRole(
+      const crossInherited: string = utils.getCrossExtendingRole(
         grants,
         roleName,
         arrExtRoles,
@@ -764,7 +766,7 @@ const utils = {
       }
 
       utils.validName(roleName); // throws if false
-      let r = grants[roleName];
+      const r = grants[roleName];
       if (Array.isArray(r.$extend)) {
         r.$extend = utils.uniqConcat(r.$extend, arrExtRoles);
       } else {
@@ -817,8 +819,8 @@ const utils = {
         grants[role] = {};
       }
 
-      let grantItem: any = grants[role];
-      let ap: string = access.action + ':' + access.possession;
+      const grantItem: any = grants[role];
+      const ap: string = access.action + ':' + access.possession;
       (access.resource as string[]).forEach((res: string) => {
         if (utils.validName(res) && !grantItem.hasOwnProperty(res)) {
           grantItem[res] = {};
@@ -848,7 +850,7 @@ const utils = {
 
     let role;
     let resource: Record<string, any>;
-    let attrsList: Array<string[]> = [];
+    const attrsList: Array<string[]> = [];
     // get roles and extended roles in a flat array
     const roles: string[] = utils.getFlatRoles(grants, query.role);
     // iterate through roles and add permission attributes (array) of
@@ -974,4 +976,4 @@ const utils = {
   },
 };
 
-export { utils, RESERVED_KEYWORDS, ERR_LOCK };
+export { ERR_LOCK, RESERVED_KEYWORDS, utils };

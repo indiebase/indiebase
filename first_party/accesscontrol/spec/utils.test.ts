@@ -1,6 +1,7 @@
 'use strict';
 
-import { describe, test, expect } from 'vitest';
+import { describe, expect, test } from 'vitest';
+
 /**
  *  Test Suite: AccessControl
  *
@@ -9,10 +10,9 @@ import { describe, test, expect } from 'vitest';
  *
  *  @author   Onur Yıldırım <onur@cutepilot.com>
  */
-
 import { AccessControl } from '../src';
-import { IQueryInfo } from '../src/core';
-import { utils, RESERVED_KEYWORDS } from '../src/utils';
+import type { IQueryInfo } from '../src/core';
+import { RESERVED_KEYWORDS, utils } from '../src/utils';
 // test helper
 import { helper } from './helper';
 
@@ -129,7 +129,7 @@ describe('Test Suite: utils (generic)', () => {
 
     utils.each(
       [1],
-      function (item: number) {
+      function (_item: number) {
         expect(this.ok).toBe(true);
       },
       new Context(),
@@ -137,7 +137,7 @@ describe('Test Suite: utils (generic)', () => {
 
     utils.eachKey(
       { key: 1 },
-      function (key: string) {
+      function (_key: string) {
         expect(this.ok).toBe(true);
       },
       new Context(),
@@ -215,7 +215,7 @@ describe('Test Suite: utils (core)', () => {
   });
 
   test('#validRoleObject()', () => {
-    let grants: any = { admin: { account: { 'read:any': ['*'] } } };
+    const grants: any = { admin: { account: { 'read:any': ['*'] } } };
     expect(utils.validRoleObject(grants, 'admin')).toBe(true);
     grants.admin = { account: ['*'] };
     helper.expectACError(() => utils.validRoleObject(grants, 'admin'));
@@ -276,7 +276,7 @@ describe('Test Suite: utils (core)', () => {
   });
 
   test('#getRoleHierarchyOf()', () => {
-    let grants: any = {
+    const grants: any = {
       admin: {
         $extend: ['user'],
         // 'account': { 'read:any': ['*'] }
@@ -297,7 +297,7 @@ describe('Test Suite: utils (core)', () => {
   });
 
   test('#getNonExistentRoles()', () => {
-    let grants: any = {
+    const grants: any = {
       admin: {
         account: { 'read:any': ['*'] },
       },
@@ -307,7 +307,7 @@ describe('Test Suite: utils (core)', () => {
   });
 
   test('#getCrossExtendingRole()', () => {
-    let grants: any = {
+    const grants: any = {
       user: {},
       admin: {
         $extend: ['user', 'editor'],
@@ -328,7 +328,7 @@ describe('Test Suite: utils (core)', () => {
   });
 
   test('#extendRole()', () => {
-    let grants: any = {
+    const grants: any = {
       user: {},
       admin: {
         $extend: ['user', 'editor'],
@@ -352,7 +352,7 @@ describe('Test Suite: utils (core)', () => {
   });
 
   test('#getUnionAttrsOfRoles()', () => {
-    let grants: any = {
+    const grants: any = {
       user: {
         account: {
           'read:own': ['*'],
@@ -362,7 +362,7 @@ describe('Test Suite: utils (core)', () => {
         $extend: ['user'],
       },
     };
-    let query: IQueryInfo = {
+    const query: IQueryInfo = {
       role: 'admin',
       resource: 'account',
       action: 'read',
@@ -374,7 +374,7 @@ describe('Test Suite: utils (core)', () => {
 
   test('#lockAC()', () => {
     expect(() => utils.lockAC(null as any)).toThrow();
-    let ac = new AccessControl();
+    const ac = new AccessControl();
     helper.expectACError(() => utils.lockAC(ac));
     (ac as any)._grants = null;
     helper.expectACError(() => utils.lockAC(ac));
