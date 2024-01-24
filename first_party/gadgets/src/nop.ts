@@ -1,4 +1,4 @@
 /**
  * No Operation Performed
  */
-export const NOP = function () {};
+export const NOP = Function.prototype;
