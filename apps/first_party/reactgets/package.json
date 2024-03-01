@@ -1,6 +1,6 @@
 {
   "name": "reactgets",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "Deskbtm React gadgets",
   "author": "Han <wanghan9423@outlook.com>",
   "main": "./src/index.ts",
@@ -11,7 +11,8 @@
     }
   },
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "src"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -20,12 +21,12 @@
     "module": "./dist/index.js",
     "exports": {
       ".": {
-        "default": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       },
       "./*": {
-        "default": "./dist/*.js",
-        "types": "./dist/*.d.ts"
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
       }
     }
   },
