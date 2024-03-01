@@ -1,23 +1,23 @@
-import React, { FC, useRef } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-
+import type { MantineColor } from '@mantine/core';
 import {
   Box,
   Button,
   Card,
-  Text,
-  rem,
-  Group,
-  MantineColor,
   Flex,
+  Group,
+  rem,
   Stack,
-  useMantineTheme,
+  Text,
   Title,
+  useMantineTheme,
 } from '@mantine/core';
-import { IndiebaseSVG, NawbSVG, PlugKitSVG } from '@site/src/components/Icons';
 import { useIntersection, useMediaQuery } from '@mantine/hooks';
+import { IndiebaseSVG, NawbSVG, PlugKitSVG } from '@site/src/components/Icons';
 import * as styles from '@site/src/css/home.css.ts';
+import Layout from '@theme/Layout';
+import type { FC } from 'react';
+import React, { useRef } from 'react';
 
 const Background: FC = function () {
   return (
