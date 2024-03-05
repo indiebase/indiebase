@@ -1,12 +1,29 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 /**
  * Copyright (C) 2023 Han
  * SPDX-License-Identifier: Apache-2.0
  */
 
 // Preset env modes.
-import './global-env.d';
+// import './global-env.d';
 
 import assert from 'assert';
+
+declare global {
+  /**
+   * Determine if it is a development environment..
+   */
+  const kDevMode: boolean;
+  /**
+   * Determine if it is a production environment..
+   */
+  const kProdMode: boolean;
+
+  /**
+   * Determine if it is a test environment.
+   */
+  const kTestMode: boolean;
+}
 
 const NODE_ENV = globalThis.process.env.NODE_ENV;
 
@@ -48,7 +65,6 @@ globalThis.kProdMode = kProdMode;
  */
 export const initCustomMode = (name: string, env: string, value: string) => {
   assert.ok(name);
-  assert.ok(env);
 
   const key = name[0].toUpperCase() + name.slice(1);
   globalThis[`k${key}Mode`] = value === env;

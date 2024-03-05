@@ -1,12 +1,14 @@
 import path from 'node:path';
-import { MgrModule } from './manager/mgr.module';
-import { INestApplication } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
-import { StorageModule } from './storage';
+import type { INestApplication } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { AuthModule } from './auth';
+import { MgrModule } from './manager/mgr.module';
 import { ProbeModule } from './probe';
+import { StorageModule } from './storage';
+import { UsersModule } from './users/users.module';
 
 const assetsPath = kDevMode
   ? path.resolve(
