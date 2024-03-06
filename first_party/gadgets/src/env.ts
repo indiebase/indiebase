@@ -5,9 +5,6 @@
  */
 
 // Preset env modes.
-// import './global-env.d';
-
-import assert from 'assert';
 
 declare global {
   /**
@@ -55,7 +52,7 @@ globalThis.kProdMode = kProdMode;
  * ```ts
  *  declare const kCustomMode: boolean;
  *
- *  initCustomMode('custom', process.env.NODE_ENV, 'custom_env')
+ *  kMode('custom', process.env.NODE_ENV, 'custom_env')
  *  assert.ok(kCustomMode);
  * ```
  *
@@ -63,8 +60,10 @@ globalThis.kProdMode = kProdMode;
  * @param env
  * @param value
  */
-export const initCustomMode = (name: string, env: string, value: string) => {
-  assert.ok(name);
+export const kMode = (name: string, env: string, value: string) => {
+  if (!name || typeof name !== 'string') {
+    throw new Error('Illegal arguments: the first parameter should be string');
+  }
 
   const key = name[0].toUpperCase() + name.slice(1);
   globalThis[`k${key}Mode`] = value === env;
