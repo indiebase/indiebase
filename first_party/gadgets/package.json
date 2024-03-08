@@ -1,6 +1,6 @@
 {
   "name": "@deskbtm/gadgets",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "description": "Deskbtm javascript gadgets",
   "author": "Han <wanghan9423@outlook.com>",
   "main": "./src/index.ts",

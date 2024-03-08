@@ -103,4 +103,7 @@ export const is = {
     }
     return Object.getPrototypeOf(obj) === proto;
   },
+  nullish(obj: unknown) {
+    return obj === undefined || obj === null;
+  },
 };
