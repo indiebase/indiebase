@@ -1,10 +1,11 @@
-import { Logger, Module } from '@nestjs/common';
 import { PassportModule } from '@indiebase/nest-fastify-passport';
-import { AuthController } from './auth.controller';
-import { LocalStrategy } from './local.strategy';
-import { AuthService } from './auth.service';
-import { PasetoModule } from 'nestjs-paseto';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { PasetoModule } from 'nestjs-paseto';
+
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { LocalStrategy } from './local.strategy';
 import { PasetoStrategy } from './paseto.strategy';
 import { GithubStrategy, GoogleStrategy, MicrosoftStrategy } from './social';
 

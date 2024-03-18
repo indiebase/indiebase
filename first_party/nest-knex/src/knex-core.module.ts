@@ -1,22 +1,24 @@
+import type {
+  DynamicModule,
+  OnApplicationShutdown,  Provider,
+  Type} from '@nestjs/common';
 import {
   Global,
-  Module,
-  DynamicModule,
-  Provider,
-  Type,
-  OnApplicationShutdown,
   Inject,
+  Module,
 } from '@nestjs/common';
-import {
+import type { ModuleRef } from '@nestjs/core';
+import type { Knex } from 'knex';
+import { knex } from 'knex';
+import { defer, lastValueFrom } from 'rxjs';
+
+import { KNEX_MODULE_OPTIONS, KNEX_SYNC } from './knex.constants';
+import type {
   KnexAsyncOptions,
   KnexOptions,
   KnexOptionsFactory,
 } from './knex.interfaces';
 import { getConnectionToken, handleRetry } from './knex.utils';
-import { KNEX_MODULE_OPTIONS, KNEX_SYNC } from './knex.constants';
-import { knex, Knex } from 'knex';
-import { ModuleRef } from '@nestjs/core';
-import { defer, lastValueFrom } from 'rxjs';
 
 @Global()
 @Module({})

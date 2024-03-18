@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
+import type { FastifyRequest } from 'fastify';
 
-import { UploadOptions } from '../options';
-import { StorageFile } from '../../storage';
-import { getParts } from '../request';
+import type { StorageFile } from '../../storage';
 import { filterUpload } from '../filter';
+import type { UploadOptions } from '../options';
+import { getParts } from '../request';
 
 export const handleMultipartSingleFile = async (
   req: FastifyRequest,

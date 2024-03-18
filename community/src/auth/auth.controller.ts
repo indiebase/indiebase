@@ -1,29 +1,31 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import {
-  Controller,
-  UseGuards,
-  Get,
-  Req,
-  Res,
-  Session,
-  Post,
-  Body,
-  Logger,
-  Delete,
-} from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   CommonApiHeader,
   Project,
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
-import { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
-import { PrimitiveUser, ResultCode } from '@indiebase/trait';
-import { GithubGuard, GoogleGuard } from './social';
-import { LocalAuthGuard } from './local.guard';
-import { AuthService } from './auth.service';
+import type { PrimitiveUser} from '@indiebase/trait';
+import { ResultCode } from '@indiebase/trait';
 import type { PrimitiveProject } from '@indiebase/trait/mgr';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  Post,
+  Req,
+  Res,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import type { FastifyReply, FastifyRequest } from 'fastify';
+
+import type { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
+import type { AuthService } from './auth.service';
+import { LocalAuthGuard } from './local.guard';
+import { GithubGuard, GoogleGuard } from './social';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')

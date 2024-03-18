@@ -1,7 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { GetCaptchaDTO } from './mail.dto';
-import { MailService } from './mail.service';
+
+import type { GetCaptchaDTO } from './mail.dto';
+import type { MailService } from './mail.service';
 
 @Controller({
   path: 'mail',

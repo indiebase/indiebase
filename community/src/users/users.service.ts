@@ -1,7 +1,7 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Knex } from 'knex';
-import { KnexEx } from '@indiebase/server-shared';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import type { KnexEx } from '@indiebase/server-shared';
+import { Injectable, Logger } from '@nestjs/common';
+import type { Knex } from 'knex';
 
 @Injectable()
 export class UsersService {

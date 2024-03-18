@@ -1,22 +1,26 @@
 //@ts-nocheck
 
-import { Observable, tap } from 'rxjs';
-import {
+import type {
   CallHandler,
   ExecutionContext,
-  mixin,
   NestInterceptor,
-  Type,
+  Type} from '@nestjs/common';
+import {
+  mixin
 } from '@nestjs/common';
+import type { Observable} from 'rxjs';
+import { tap } from 'rxjs';
 
-import { getMultipartRequest } from '../multipart/request';
-import { transformUploadOptions, UploadOptions } from '../multipart/options';
+import type {
+  UploadField,
+  UploadFieldMapEntry} from '../multipart/handlers/file-fields';
 import {
   handleMultipartFileFields,
-  UploadField,
-  UploadFieldMapEntry,
   uploadFieldsToMap,
 } from '../multipart/handlers/file-fields';
+import type { UploadOptions } from '../multipart/options';
+import { transformUploadOptions } from '../multipart/options';
+import { getMultipartRequest } from '../multipart/request';
 
 export function FileFieldsInterceptor(
   uploadFields: UploadField[],

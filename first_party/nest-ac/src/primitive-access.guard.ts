@@ -1,15 +1,17 @@
-import {
+import { type Permission } from '@indiebase/accesscontrol';
+import type {
   CanActivate,
-  ExecutionContext,
+  ExecutionContext} from '@nestjs/common';
+import {
   Injectable,
   Logger,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { IAccessOptions } from './decorators';
+import type { Reflector } from '@nestjs/core';
+
 import { ACCESS_META } from './access.constants';
-import { AccessService } from './access.service';
+import type { AccessService } from './access.service';
+import type { IAccessOptions } from './decorators';
 import { action2CamelCase } from './utils';
-import { type Permission } from '@indiebase/accesscontrol';
 
 @Injectable()
 export abstract class PrimitiveAccessGuard implements CanActivate {

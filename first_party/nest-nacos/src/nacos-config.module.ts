@@ -1,14 +1,15 @@
-import { NacosConfigService } from './nacos-config.service';
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import type { DynamicModule} from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 
 import {
-  createNacosConfigClientProvider,
   createNacosConfigClientAsyncProvider,
+  createNacosConfigClientProvider,
 } from './nacos.provider';
-import {
+import type {
   NacosConfigClientAsyncOptions,
   NacosConfigClientOptions,
 } from './nacos-config.interface';
+import { NacosConfigService } from './nacos-config.service';
 
 @Module({})
 @Global()

@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
-import { FastifyRequest } from 'fastify';
+import type { FastifyRequest } from 'fastify';
 
-import { UploadOptions } from '../options';
-import { StorageFile } from '../../storage/storage';
-import { getParts } from '../request';
+import type { StorageFile } from '../../storage/storage';
 import { removeStorageFiles } from '../file';
 import { filterUpload } from '../filter';
+import type { UploadOptions } from '../options';
+import { getParts } from '../request';
 
 export interface UploadField {
   /**

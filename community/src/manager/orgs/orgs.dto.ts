@@ -5,8 +5,8 @@ import {
   OkResponseSchema,
   SpecificProjectType,
 } from '@indiebase/server-shared';
-import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsUrl } from 'class-validator';
+import { ApiProperty,ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateOrgDTO {
   @ApiProperty({

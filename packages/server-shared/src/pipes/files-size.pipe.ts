@@ -1,4 +1,5 @@
-import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
+import type { ArgumentMetadata, PipeTransform } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class FilesSizeValidationPipe implements PipeTransform {

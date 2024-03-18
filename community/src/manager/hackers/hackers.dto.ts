@@ -1,6 +1,6 @@
 import { OkResponseSchema } from '@indiebase/server-shared';
-import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsOptional, IsUrl, IsHash } from 'class-validator';
+import { ApiProperty,ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsHash,IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateHackersDTO {
   @ApiProperty({

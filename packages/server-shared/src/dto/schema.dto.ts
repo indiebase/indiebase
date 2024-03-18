@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IsNumber } from 'class-validator';
+
 import { ResultCode } from '../../../trait/src';
 
 export class PaginationReqSchema {

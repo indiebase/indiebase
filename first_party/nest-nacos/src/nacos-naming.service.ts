@@ -1,18 +1,20 @@
-import {
-  Injectable,
+import type {
   OnModuleDestroy,
-  OnModuleInit,
+  OnModuleInit} from '@nestjs/common';
+import {
   Inject,
+  Injectable,
 } from '@nestjs/common';
 import * as nacos from 'nacos';
+
+import { NACOS_NAMING_OPTIONS } from './nacos.constants';
+import { NacosLogger } from './nacos.logger';
 import type {
   NacosNamingClient,
   NacosNamingClientOptions,
   NacosNamingInstance,
   NacosNamingInstanceOptions,
 } from './nacos-naming.interface';
-import { NACOS_NAMING_OPTIONS } from './nacos.constants';
-import { NacosLogger } from './nacos.logger';
 
 @Injectable()
 export class NacosNamingService implements OnModuleInit, OnModuleDestroy {

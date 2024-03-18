@@ -1,4 +1,6 @@
-import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { did } from '@deskbtm/gadgets';
+import type { MemoryStorageFile } from '@indiebase/nest-fastify-file';
 // import {
 //   CreateBucketCommand,
 //   DeleteBucketCommand,
@@ -15,8 +17,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import * as path from 'path';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { did } from '@deskbtm/gadgets';
 
 interface SaveBucketOptions {
   signedUrl?: boolean;

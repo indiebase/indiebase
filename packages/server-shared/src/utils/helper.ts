@@ -1,6 +1,6 @@
-import * as path from 'path';
-import * as forge from 'node-forge';
 import * as bcrypt from 'bcrypt';
+import * as forge from 'node-forge';
+import * as path from 'path';
 
 /**
  *
@@ -104,11 +104,11 @@ export const sizeParser = function (
   input: string,
   options: { base: number } = { base: 10 },
 ) {
-  var parsed = input.toString().match(/^([0-9\.,]*)(?:\s*)?(.*)$/);
-  var amount: any = parsed[1].replace(',', '.');
-  var unit = parsed[2];
+  const parsed = input.toString().match(/^([0-9\.,]*)(?:\s*)?(.*)$/);
+  const amount: any = parsed[1].replace(',', '.');
+  const unit = parsed[2];
 
-  var validUnit = function (sourceUnit: any) {
+  const validUnit = function (sourceUnit: any) {
     return sourceUnit === unit;
   };
 
@@ -117,9 +117,9 @@ export const sizeParser = function (
   }
   if (unit === '') return Math.round(Number(amount));
 
-  var increments = incrementBases[options?.base];
-  for (var i = 0; i < increments.length; i++) {
-    var _increment = increments[i];
+  const increments = incrementBases[options?.base];
+  for (let i = 0; i < increments.length; i++) {
+    const _increment = increments[i];
 
     if (_increment[0].some(validUnit)) {
       return Math.round(amount * _increment[1]);

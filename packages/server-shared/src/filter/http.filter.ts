@@ -1,12 +1,13 @@
 import { ResultCode } from '@indiebase/trait';
-import {
-  ExceptionFilter,
-  Catch,
+import type {
   ArgumentsHost,
-  HttpException,
-  Logger,
+  ExceptionFilter,
+  Logger} from '@nestjs/common';
+import {
+  Catch,
+  HttpException
 } from '@nestjs/common';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
 /**
  * This clz will catch all exceptions and send formatted payload.

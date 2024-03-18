@@ -1,13 +1,15 @@
-import { NACOS_CONFIG_OPTIONS } from './nacos.constants';
+import type {
+  OnModuleDestroy,
+  OnModuleInit} from '@nestjs/common';
 import {
   Inject,
-  Injectable,
-  OnModuleDestroy,
-  OnModuleInit,
+  Injectable
 } from '@nestjs/common';
 import { NacosConfigClient } from 'nacos';
 import stripJsonComments from 'strip-json-comments';
-import { DataParser, NacosConfigClientOptions } from './nacos-config.interface';
+
+import { NACOS_CONFIG_OPTIONS } from './nacos.constants';
+import type { DataParser, NacosConfigClientOptions } from './nacos-config.interface';
 
 export interface SubOptions {
   dataId: string;

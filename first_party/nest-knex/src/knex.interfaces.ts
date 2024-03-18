@@ -1,5 +1,5 @@
 import type { ModuleMetadata, Type } from '@nestjs/common';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 export interface KnexAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
   name?: string;

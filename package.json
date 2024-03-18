@@ -12,7 +12,7 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
-    "lint": "yarn workspaces foreach run lint",
+    "lint": "yarn workspaces foreach -A run lint",
     "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
     "stack:dev": "docker stack deploy -c ./docker-compose.yaml indiebase",
     "release": "standard-version",
@@ -22,20 +22,20 @@
     "paseto:key": "node ./scripts/paseto.mjs"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "6.8.0",
-    "@typescript-eslint/parser": "6.8.0",
-    "@vitest/ui": "^0.33.0",
+    "@typescript-eslint/eslint-plugin": "7.2.0",
+    "@typescript-eslint/parser": "7.2.0",
+    "@vitest/ui": "1.4.0",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "8.52.0",
-    "eslint-config-prettier": "8.10.0",
-    "eslint-plugin-import": "2.29.0",
-    "eslint-plugin-prettier": "5.0.1",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "husky": "8.0.1",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-simple-import-sort": "12.0.0",
+    "husky": "8.0.3",
     "prettier": "3.0.0",
     "standard-version": "9.3.1",
-    "syncpack": "^11.2.1",
+    "syncpack": "11.2.1",
     "typescript": "5.2.2"
   },
   "workspaces": {

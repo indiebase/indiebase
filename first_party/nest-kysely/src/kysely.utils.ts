@@ -1,11 +1,12 @@
-import { KyselyOptions } from './kysely.interfaces';
+import { Logger } from '@nestjs/common';
+import type { Observable } from 'rxjs';
+import { delay, retryWhen, scan } from 'rxjs/operators';
+
 import {
   DEFAULT_CONNECTION_EX_NAME,
   DEFAULT_CONNECTION_NAME,
 } from './kysely.constants';
-import { Observable } from 'rxjs';
-import { delay, retryWhen, scan } from 'rxjs/operators';
-import { Logger } from '@nestjs/common';
+import type { KyselyOptions } from './kysely.interfaces';
 
 const logger = new Logger('KnexModule');
 

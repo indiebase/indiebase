@@ -1,10 +1,12 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
-import { CasbinService } from './casbin.service';
+import type { DynamicModule} from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
+
+import type { CasbinAsyncOptions,CasbinOptions } from './casbin.interface';
 import {
   createCasbinProvider,
   createCasbinProviderAsync,
 } from './casbin.provider';
-import { CasbinOptions, CasbinAsyncOptions } from './casbin.interface';
+import { CasbinService } from './casbin.service';
 
 @Module({})
 @Global()

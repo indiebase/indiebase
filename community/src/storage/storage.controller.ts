@@ -1,10 +1,18 @@
+import type { MemoryStorageFile } from '@indiebase/nest-fastify-file';
+import { FilesInterceptor, UploadedFiles } from '@indiebase/nest-fastify-file';
+import {
+  // FilesSizeValidationPipe,
+  PublicApiGuard,
+} from '@indiebase/server-shared';
+import type { BaseResponseSchema } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/trait';
+import type { Logger } from '@nestjs/common';
 import {
   Body,
   Controller,
   Delete,
   Get,
   InternalServerErrorException,
-  Logger,
   Param,
   Post,
   Put,
@@ -13,20 +21,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { StorageService } from './storage.service';
-import {
-  // FilesSizeValidationPipe,
-  PublicApiGuard,
-} from '@indiebase/server-shared';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  FilesInterceptor,
-  MemoryStorageFile,
-  UploadedFiles,
-} from '@indiebase/nest-fastify-file';
-import { CreateBucketDTO, FilesUploadDTO } from './storage.dto';
-import { BaseResponseSchema, ResultCode } from '@indiebase/trait';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import type { FastifyReply, FastifyRequest } from 'fastify';
+
+import type { CreateBucketDTO } from './storage.dto';
+import { FilesUploadDTO } from './storage.dto';
+import type { StorageService } from './storage.service';
 
 @Controller({
   path: 'storage',

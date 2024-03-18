@@ -1,11 +1,12 @@
 import type { Provider } from '@nestjs/common';
 import type { ClientOptions } from 'nacos';
+
+import { NACOS_CONFIG_OPTIONS, NACOS_NAMING_OPTIONS } from './nacos.constants';
 import type { NacosConfigClientAsyncOptions } from './nacos-config.interface';
 import type {
   NacosNamingClientAsyncOptions,
   NacosNamingClientOptions,
 } from './nacos-naming.interface';
-import { NACOS_CONFIG_OPTIONS, NACOS_NAMING_OPTIONS } from './nacos.constants';
 
 export const createNacosNamingClientProvider = function (
   options?: NacosNamingClientOptions,

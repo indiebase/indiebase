@@ -1,15 +1,16 @@
 import { getConnectionToken } from '@indiebase/nest-knex';
 import { Injectable, Scope } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
+import type { ModuleRef } from '@nestjs/core';
+import type {
+  HealthIndicatorResult} from '@nestjs/terminus';
 import {
-  HealthIndicator,
-  HealthIndicatorResult,
-  HealthCheckError,
   ConnectionNotFoundError,
+  HealthCheckError,
+  HealthIndicator,
   TimeoutError,
 } from '@nestjs/terminus';
 import { checkPackages, promiseTimeout } from '@nestjs/terminus/dist/utils';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 export interface KnexPingCheckSettings {
   /**
@@ -63,7 +64,7 @@ export class KnexHealthIndicator extends HealthIndicator {
    *
    */
   private async pingDb(connection: Knex, timeout: number) {
-    let check = connection.raw('SELECT 1');
+    const check = connection.raw('SELECT 1');
     return await promiseTimeout(timeout, check);
   }
   /**

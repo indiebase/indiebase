@@ -3,9 +3,10 @@
 import '@deskbtm/gadgets/env';
 
 import { Logger } from '@nestjs/common';
+import path from 'path';
+
 import { AppModule } from './app.module';
 import { CommunityBootstrap } from './community.bootstrap';
-import path from 'path';
 
 async function main() {
   try {

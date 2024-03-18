@@ -1,5 +1,5 @@
-import { DynamicModule, ForwardReference, Type } from '@nestjs/common';
-import Base from 'sdk-base';
+import type { DynamicModule, ForwardReference, Type } from '@nestjs/common';
+import type Base from 'sdk-base';
 
 export interface NacosNamingClientOptions {
   logger?: any;

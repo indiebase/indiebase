@@ -1,11 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import request from 'supertest';
-import { StorageModule } from './storage.module';
+import type {
+  NestFastifyApplication} from '@nestjs/platform-fastify';
 import {
-  FastifyAdapter,
-  NestFastifyApplication,
+  FastifyAdapter
 } from '@nestjs/platform-fastify';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
+import request from 'supertest';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
+
+import { StorageModule } from './storage.module';
 
 describe('StorageController (e2e)', () => {
   let app: NestFastifyApplication;

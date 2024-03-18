@@ -1,7 +1,9 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import type { KnexEx} from '@indiebase/server-shared';
+import { MgrMetaTables } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
+
 import { MigrationSource } from './MigrationSource';
 import { SeedMigrationSource } from './SeedMigrationSource';
 

@@ -1,15 +1,15 @@
-import { MultipartFile } from '@fastify/multipart';
-import { FastifyRequest } from 'fastify';
-import { tmpdir } from 'os';
+import type { MultipartFile } from '@fastify/multipart';
+import type { FastifyRequest } from 'fastify';
+import type { RouteGenericInterface } from 'fastify/types/route';
 import { createWriteStream } from 'fs';
 import { mkdir, unlink } from 'fs/promises';
-import { Server, IncomingMessage } from 'http';
+import type { IncomingMessage,Server } from 'http';
+import { tmpdir } from 'os';
 import { join } from 'path';
-import { RouteGenericInterface } from 'fastify/types/route';
 
-import { StorageFile, Storage } from './storage';
 import { getUniqueFilename, pathExists } from '../fs';
 import { pump } from '../stream';
+import type { Storage,StorageFile } from './storage';
 
 export interface DiskStorageFile extends StorageFile {
   dest: string;

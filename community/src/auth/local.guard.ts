@@ -1,13 +1,14 @@
+import type {
+  IAuthModuleOptions} from '@indiebase/nest-fastify-passport';
+import {
+  AuthGuard
+} from '@indiebase/nest-fastify-passport';
 import {
   HttpException,
   Injectable,
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import {
-  AuthGuard,
-  IAuthModuleOptions,
-} from '@indiebase/nest-fastify-passport';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {

@@ -1,5 +1,7 @@
-import { AccessAction } from './actions';
-import { ExecutionContext, SetMetadata } from '@nestjs/common';
+import type { ExecutionContext} from '@nestjs/common';
+import { SetMetadata } from '@nestjs/common';
+
+import type { AccessAction } from './actions';
 import { ACCESS_META } from './casbin.constants';
 
 export type IAccessOptions = {

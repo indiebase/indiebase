@@ -1,16 +1,16 @@
-import { ProduceOptions } from 'paseto';
-import {
+import type {
   DynamicModule,
   ForwardReference,
   ModuleMetadata,
   Type,
 } from '@nestjs/common';
-import {
+import type {
   JsonWebKeyInput,
   KeyObject,
   PrivateKeyInput,
   PublicKeyInput,
 } from 'crypto';
+import type { ProduceOptions } from 'paseto';
 
 export interface PasetoAsymmetricSignOptions {
   privateKey: KeyObject | Buffer | PrivateKeyInput | JsonWebKeyInput | string;

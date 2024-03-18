@@ -1,12 +1,14 @@
-import { PasetoAuthGuard } from '../../auth';
+import { AccessActions, UseAccess } from '@indiebase/nest-ac';
 import {
-  OkResponseSchema,
-  PublicApiGuard,
-  ProtectApiHeader,
   AccessGuard,
   CommonApiHeader,
+  OkResponseSchema,
+  ProtectApiHeader,
+  PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
+import type { PrimitiveUser} from '@indiebase/trait';
+import { ResultCode } from '@indiebase/trait';
 import {
   BadRequestException,
   Body,
@@ -17,15 +19,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  ApiTags,
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
-import { CreateHackersDTO } from './hackers.dto';
-import { HackersService } from './hackers.service';
-import { PrimitiveUser, ResultCode } from '@indiebase/trait';
-import { AccessActions, UseAccess } from '@indiebase/nest-ac';
+
+import { PasetoAuthGuard } from '../../auth';
+import type { CreateHackersDTO } from './hackers.dto';
+import type { HackersService } from './hackers.service';
 
 @Controller({
   path: 'mgr/hackers',
