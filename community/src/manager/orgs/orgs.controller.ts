@@ -1,3 +1,10 @@
+import { did } from '@deskbtm/gadgets';
+import {
+  AccessGuard,
+  OkResponseSchema,
+  PublicApiGuard,
+} from '@indiebase/server-shared';
+import { ResultCode } from '@indiebase/trait';
 import {
   Body,
   Controller,
@@ -17,16 +24,10 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { OrgsService } from './orgs.service';
-import {
-  PublicApiGuard,
-  OkResponseSchema,
-  AccessGuard,
-} from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/trait';
-import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
+
 import { PasetoAuthGuard } from '../../auth/paseto.guard';
-import { did } from '@deskbtm/gadgets';
+import type { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
+import type { OrgsService } from './orgs.service';
 
 @Controller({
   path: 'mgr',

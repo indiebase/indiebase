@@ -1,6 +1,7 @@
 import { AccessActions } from '@indiebase/nest-ac';
 import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
-import knex, { Knex } from 'knex';
+import type { Knex } from 'knex';
+import knex from 'knex';
 
 /**
  * Create organization template tables

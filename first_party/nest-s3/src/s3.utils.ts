@@ -1,10 +1,11 @@
-import { S3ModuleOptions } from './s3.interfaces';
 import { S3 } from '@aws-sdk/client-s3';
+
 import {
   S3_MODULE_CONNECTION,
   S3_MODULE_CONNECTION_TOKEN,
   S3_MODULE_OPTIONS_TOKEN,
 } from './s3.constants';
+import type { S3ModuleOptions } from './s3.interfaces';
 
 export function getS3OptionsToken(connection: string): string {
   return `${connection || S3_MODULE_CONNECTION}_${S3_MODULE_OPTIONS_TOKEN}`;

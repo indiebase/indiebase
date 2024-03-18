@@ -1,17 +1,20 @@
 //@ts-nocheck
 
-import { Observable, tap } from 'rxjs';
-import {
+import type {
   CallHandler,
   ExecutionContext,
-  mixin,
   NestInterceptor,
-  Type,
+  Type} from '@nestjs/common';
+import {
+  mixin
 } from '@nestjs/common';
+import type { Observable} from 'rxjs';
+import { tap } from 'rxjs';
 
-import { getMultipartRequest } from '../multipart/request';
-import { transformUploadOptions, UploadOptions } from '../multipart/options';
 import { handleMultipartAnyFiles } from '../multipart/handlers/any-files';
+import type { UploadOptions } from '../multipart/options';
+import { transformUploadOptions } from '../multipart/options';
+import { getMultipartRequest } from '../multipart/request';
 
 export function AnyFilesInterceptor(
   options?: UploadOptions,

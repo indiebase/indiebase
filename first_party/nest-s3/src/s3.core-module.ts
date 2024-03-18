@@ -1,13 +1,15 @@
-import { Global, Module, DynamicModule, Provider } from '@nestjs/common';
-import {
+import type { DynamicModule, Provider } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
+
+import type {
   S3ModuleAsyncOptions,
   S3ModuleOptions,
   S3ModuleOptionsFactory,
 } from './s3.interfaces';
 import {
   createS3Connection,
-  getS3OptionsToken,
   getS3ConnectionToken,
+  getS3OptionsToken,
 } from './s3.utils';
 
 @Global()

@@ -1,17 +1,17 @@
-import { ConfigService } from '@nestjs/config';
-import {
-  BadRequestException,
+import { X_Indiebase_AC } from '@indiebase/sdk';
+import type {
   CanActivate,
   ExecutionContext,
+  Logger} from '@nestjs/common';
+import {
+  BadRequestException,
   ForbiddenException,
-  Injectable,
-  Logger,
+  Injectable
 } from '@nestjs/common';
-
-import { FastifyRequest } from 'fastify';
-import * as forge from 'node-forge';
+import type { ConfigService } from '@nestjs/config';
+import type { FastifyRequest } from 'fastify';
 import ms from 'ms';
-import { X_Indiebase_AC } from '@indiebase/sdk';
+import * as forge from 'node-forge';
 
 /**
  *  Inspect token from header

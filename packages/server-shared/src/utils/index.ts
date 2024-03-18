@@ -1,4 +1,4 @@
-export * from './helper';
 export * from './captcha';
-export * from './types';
+export * from './helper';
 export * from './redis';
+export * from './types';

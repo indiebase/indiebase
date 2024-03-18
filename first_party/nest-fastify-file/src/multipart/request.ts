@@ -1,12 +1,12 @@
+import type { MultipartFile } from '@fastify/multipart';
 import { BadRequestException } from '@nestjs/common';
-import { HttpArgumentsHost } from '@nestjs/common/interfaces';
-import { FastifyRequest } from 'fastify';
-import { RouteGenericInterface } from 'fastify/types/route';
-import { IncomingMessage, Server } from 'http';
+import type { HttpArgumentsHost } from '@nestjs/common/interfaces';
+import type { FastifyRequest } from 'fastify';
+import type { RouteGenericInterface } from 'fastify/types/route';
+import type { IncomingMessage, Server } from 'http';
 
-import { UploadOptions } from './options';
-import { StorageFile } from '../storage';
-import { MultipartFile } from '@fastify/multipart';
+import type { StorageFile } from '../storage';
+import type { UploadOptions } from './options';
 // import { MultipartFile } from './file';
 
 export type FastifyMultipartRequest = FastifyRequest<

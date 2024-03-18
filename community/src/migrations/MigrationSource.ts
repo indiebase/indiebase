@@ -1,4 +1,5 @@
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
+
 import { v001_mgr } from './v1/v001.mgr';
 
 export class MigrationSource implements Knex.MigrationSource<any> {

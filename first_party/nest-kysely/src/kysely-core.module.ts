@@ -1,22 +1,23 @@
+import type {
+  DynamicModule,
+  OnApplicationShutdown,  Provider,
+  Type} from '@nestjs/common';
 import {
   Global,
-  Module,
-  DynamicModule,
-  Provider,
-  Type,
-  OnApplicationShutdown,
   Inject,
+  Module,
 } from '@nestjs/common';
-import {
+import type { ModuleRef } from '@nestjs/core';
+import { Kysely } from 'kysely';
+import { defer, lastValueFrom } from 'rxjs';
+
+import { KYSELY_MODULE_OPTIONS } from './kysely.constants';
+import type {
   KyselyAsyncOptions,
   KyselyOptions,
   KyselyOptionsFactory,
 } from './kysely.interfaces';
 import { getConnectionToken, handleRetry } from './kysely.utils';
-import { KYSELY_MODULE_OPTIONS } from './kysely.constants';
-import { ModuleRef } from '@nestjs/core';
-import { defer, lastValueFrom } from 'rxjs';
-import { Kysely } from 'kysely';
 
 @Global()
 @Module({})

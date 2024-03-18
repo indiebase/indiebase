@@ -1,9 +1,11 @@
-import { Strategy } from 'passport-github2';
+import type {
+  PassportStrategyFactory} from '@indiebase/nest-fastify-passport';
 import {
-  PassportStrategyFactory,
-  PassportStrategy,
+  PassportStrategy
 } from '@indiebase/nest-fastify-passport';
-import { Injectable, Logger } from '@nestjs/common';
+import type { Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { Strategy } from 'passport-github2';
 
 @Injectable()
 export class MicrosoftStrategy

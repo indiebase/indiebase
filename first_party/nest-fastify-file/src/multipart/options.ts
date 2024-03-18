@@ -1,5 +1,6 @@
-import { DiskStorage, MemoryStorage, Storage } from '../storage';
-import { UploadFilterHandler } from './filter';
+import type { Storage } from '../storage';
+import { DiskStorage, MemoryStorage } from '../storage';
+import type { UploadFilterHandler } from './filter';
 
 export type UploadOptions = busboy.BusboyConfig & {
   dest?: string;

@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import { AccessControlModule } from '@indiebase/nest-ac';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
-import { KnexModule } from '@indiebase/nest-knex';
+import { KnexModule, knexSnakeCaseMappers } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import type { RedisClientOptions } from '@indiebase/nestjs-redis';
 import { RedisModule } from '@indiebase/nestjs-redis';
@@ -20,7 +20,6 @@ import {
   I18nModule,
   QueryResolver,
 } from 'nestjs-i18n';
-import { knexSnakeCaseMappers } from 'objection';
 import * as winston from 'winston';
 import { OpenObserveTransport } from 'winston-openobserve';
 

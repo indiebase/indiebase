@@ -1,7 +1,7 @@
 // import { MultipartFile as _MultipartFile } from '@fastify/multipart';
 // import { Readable } from 'stream';
 
-import { Storage, StorageFile } from '../storage';
+import type { Storage, StorageFile } from '../storage';
 
 // export type MultipartFile = Omit<_MultipartFile, 'file'> & {
 //   value?: any;

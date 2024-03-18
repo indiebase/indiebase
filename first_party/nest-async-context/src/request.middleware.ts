@@ -1,4 +1,6 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import type { NestMiddleware } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+
 import { AsyncContext } from './async-context';
 
 @Injectable()

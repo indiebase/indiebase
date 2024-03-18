@@ -1,15 +1,18 @@
+import crypto from 'node:crypto';
+
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import type { KnexEx} from '@indiebase/server-shared';
+import { MgrMetaTables } from '@indiebase/server-shared';
 import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { Knex } from 'knex';
-import { CreatePrjDTO } from './projects.dto';
-import crypto from 'node:crypto';
+import type { Knex } from 'knex';
+
 import { TmplMigrationSource } from '../../migrations/TmplMigrationSource';
+import type { CreatePrjDTO } from './projects.dto';
 
 @Injectable()
 export class ProjectsService {

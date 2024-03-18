@@ -1,8 +1,9 @@
-import { ConsoleLogger, Module } from '@nestjs/common';
-import { ProbeController } from './probe.controller';
-import { TerminusModule } from '@nestjs/terminus';
 import { HttpModule } from '@nestjs/axios';
+import { ConsoleLogger, Module } from '@nestjs/common';
+import { TerminusModule } from '@nestjs/terminus';
+
 import { KnexHealthIndicator } from './knex.health';
+import { ProbeController } from './probe.controller';
 
 @Module({
   imports: [

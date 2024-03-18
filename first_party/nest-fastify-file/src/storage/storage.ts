@@ -1,5 +1,5 @@
-import { FastifyRequest } from 'fastify';
-import { MultipartFile } from '@fastify/multipart';
+import type { MultipartFile } from '@fastify/multipart';
+import type { FastifyRequest } from 'fastify';
 
 export type StorageFile = MultipartFile;
 

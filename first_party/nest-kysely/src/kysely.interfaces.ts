@@ -1,5 +1,5 @@
 import type { ModuleMetadata, Type } from '@nestjs/common';
-import { KyselyConfig, Kysely } from 'kysely';
+import type { Kysely,KyselyConfig } from 'kysely';
 
 export interface KyselyAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
   name?: string;

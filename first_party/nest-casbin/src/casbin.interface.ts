@@ -1,4 +1,4 @@
-import { Type, DynamicModule, ForwardReference } from '@nestjs/common';
+import type { DynamicModule, ForwardReference,Type } from '@nestjs/common';
 
 export interface CasbinOptions {
   model: string;

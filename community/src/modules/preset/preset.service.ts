@@ -1,12 +1,13 @@
-import { AccessService } from '@indiebase/nest-ac';
+import type { AccessService } from '@indiebase/nest-ac';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import type {
+  KnexEx} from '@indiebase/server-shared';
 import {
-  KnexEx,
   MgrMetaTables,
   TmplMetaTables,
 } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 @Injectable()
 export class PresetService {

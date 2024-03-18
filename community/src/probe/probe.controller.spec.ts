@@ -1,9 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ProbeController } from './probe.controller';
-import { TerminusModule } from '@nestjs/terminus';
-import { KnexHealthIndicator } from './knex.health';
 import { HttpModule } from '@nestjs/axios';
-import { describe, beforeEach, it, expect } from 'vitest';
+import { TerminusModule } from '@nestjs/terminus';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
+import { beforeEach, describe, expect,it } from 'vitest';
+
+import { KnexHealthIndicator } from './knex.health';
+import { ProbeController } from './probe.controller';
 // import { describe, beforeEach, it, expect } from 'vitest';
 
 describe('ProbeController', () => {

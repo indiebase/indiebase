@@ -1,11 +1,12 @@
-import { KnexOptions } from './knex.interfaces';
+import { Logger } from '@nestjs/common';
+import type { Observable } from 'rxjs';
+import { delay, retryWhen, scan } from 'rxjs/operators';
+
 import {
   DEFAULT_CONNECTION_EX_NAME,
   DEFAULT_CONNECTION_NAME,
 } from './knex.constants';
-import { Observable } from 'rxjs';
-import { delay, retryWhen, scan } from 'rxjs/operators';
-import { Logger } from '@nestjs/common';
+import type { KnexOptions } from './knex.interfaces';
 
 const logger = new Logger('KnexModule');
 

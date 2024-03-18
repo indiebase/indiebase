@@ -6,9 +6,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { DynamicModule, Module } from '@nestjs/common';
+import type { DynamicModule} from '@nestjs/common';
+import { Module } from '@nestjs/common';
+
 import { S3CoreModule } from './s3.core-module';
-import { S3ModuleAsyncOptions, S3ModuleOptions } from './s3.interfaces';
+import type { S3ModuleAsyncOptions, S3ModuleOptions } from './s3.interfaces';
 
 @Module({})
 export class S3Module {

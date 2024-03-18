@@ -1,6 +1,7 @@
 import { Logger, Module } from '@nestjs/common';
-import { OrgsService } from './orgs.service';
+
 import { OrgsController } from './orgs.controller';
+import { OrgsService } from './orgs.service';
 
 @Module({
   controllers: [OrgsController],

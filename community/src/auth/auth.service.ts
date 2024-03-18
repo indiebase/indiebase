@@ -1,25 +1,26 @@
-import { BusinessTags, KnexEx, RedisUtils } from '@indiebase/server-shared';
+import { did } from '@deskbtm/gadgets';
+import { InjectKnexEx } from '@indiebase/nest-knex';
+import { InjectRedis } from '@indiebase/nestjs-redis';
+import type { KnexEx} from '@indiebase/server-shared';
+import { BusinessTags, RedisUtils } from '@indiebase/server-shared';
 import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-  Logger,
-  InternalServerErrorException,
-} from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { authenticator } from 'otplib';
-import * as qrcode from 'qrcode';
-import { FastifyRequest } from 'fastify';
-import {
-  type PrimitiveUser,
   type PrimitiveProject,
+  type PrimitiveUser,
   ResultCode,
 } from '@indiebase/trait';
-import { InjectKnexEx } from '@indiebase/nest-knex';
-import { did } from '@deskbtm/gadgets';
-import { PasetoService } from 'nestjs-paseto';
-import { InjectRedis } from '@indiebase/nestjs-redis';
-import Redis from 'ioredis';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import type { FastifyRequest } from 'fastify';
+import type Redis from 'ioredis';
+import type { PasetoService } from 'nestjs-paseto';
+import { authenticator } from 'otplib';
+import * as qrcode from 'qrcode';
 
 @Injectable()
 export class AuthService {

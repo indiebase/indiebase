@@ -1,4 +1,6 @@
-import { Global, Logger, Module, OnModuleInit } from '@nestjs/common';
+import type { OnModuleInit } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
+
 import { PresetService } from './preset.service';
 
 @Module({

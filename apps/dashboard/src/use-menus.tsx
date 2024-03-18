@@ -106,7 +106,7 @@ export const useMenus = (): NavMenuTile[] => {
   //   ]);
   // }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   // }, [org, project, user, i18n.language]);
 
   return [

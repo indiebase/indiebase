@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@types/node": "20.8.10",
-    "swagger-typescript-api": "^13.0.3",
+    "swagger-typescript-api": "13.0.3",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.2.2",
     "vitest": "0.34.6"

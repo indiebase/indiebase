@@ -1,6 +1,8 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import type { DynamicModule, Provider } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+
 import { PASETO_MODULE_OPTIONS } from './paseto.constants';
-import {
+import type {
   PasetoModuleAsyncOptions,
   PasetoModuleOptions,
 } from './paseto.interface';

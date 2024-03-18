@@ -1,5 +1,5 @@
-import { Type, DynamicModule, ForwardReference } from '@nestjs/common';
-import { ClientOptions } from 'nacos';
+import type { DynamicModule, ForwardReference,Type } from '@nestjs/common';
+import type { ClientOptions } from 'nacos';
 
 export interface DataParser {
   (data: string | string[], ...args: any[]): any;

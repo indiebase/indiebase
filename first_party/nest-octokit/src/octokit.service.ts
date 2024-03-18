@@ -1,8 +1,9 @@
-import { OCTOKIT_OPTIONS } from './octokit.constants';
 import { Inject, Injectable, Scope } from '@nestjs/common';
-import { OctokitOptions } from './octokit.interface';
-import { Octokit } from 'octokit';
 import { REQUEST } from '@nestjs/core';
+import { Octokit } from 'octokit';
+
+import { OCTOKIT_OPTIONS } from './octokit.constants';
+import type { OctokitOptions } from './octokit.interface';
 
 class OctokitExtend {
   private baseUrl = 'https://github.com';
@@ -37,7 +38,7 @@ export class OctokitService {
   ) {
     let InnerOctokit = Octokit;
 
-    let config = options.optionsFactory(req);
+    const config = options.optionsFactory(req);
 
     if (options.plugins) {
       InnerOctokit = Octokit.plugin(...options.plugins);

@@ -1,15 +1,19 @@
-import { AuthService } from './auth.service';
+import type {
+  PassportStrategyFactory} from '@indiebase/nest-fastify-passport';
+import {
+  PassportStrategy
+} from '@indiebase/nest-fastify-passport';
+import { Injectable } from '@nestjs/common';
+import type {FastifyRequest } from 'fastify';
+import { FastifyReply } from 'fastify';
+import type {
+  IStrategyOptionsWithRequest} from 'passport-local';
 import {
   type IStrategyOptions,
   Strategy,
-  IStrategyOptionsWithRequest,
 } from 'passport-local';
-import {
-  PassportStrategy,
-  PassportStrategyFactory,
-} from '@indiebase/nest-fastify-passport';
-import { Injectable } from '@nestjs/common';
-import { FastifyRequest, FastifyReply } from 'fastify';
+
+import type { AuthService } from './auth.service';
 
 @Injectable()
 export class LocalStrategy

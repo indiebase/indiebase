@@ -1,4 +1,5 @@
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
+
 import { v001_tmpl } from './v1/v001.tmpl';
 
 export class TmplMigrationSource implements Knex.MigrationSource<any> {

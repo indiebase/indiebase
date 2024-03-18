@@ -1,12 +1,13 @@
+import { createHash } from 'node:crypto';
+
 import { grantsRecord2Array } from '@indiebase/nest-ac';
 import {
   BuiltinMgrRoles,
-  MgrMetaTables,
   defaultMgrGrants,
   hashSecret,
+  MgrMetaTables,
 } from '@indiebase/server-shared';
-import { Knex } from 'knex';
-import { createHash } from 'node:crypto';
+import type { Knex } from 'knex';
 
 /**
  * Create organization template tables

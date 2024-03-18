@@ -1,13 +1,15 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
-import { NacosNamingService } from './nacos-naming.service';
+import type { DynamicModule} from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
+
 import {
-  createNacosNamingClientProvider,
   createNacosNamingClientAsyncProvider,
+  createNacosNamingClientProvider,
 } from './nacos.provider';
-import {
-  NacosNamingClientOptions,
+import type {
   NacosNamingClientAsyncOptions,
+  NacosNamingClientOptions,
 } from './nacos-naming.interface';
+import { NacosNamingService } from './nacos-naming.service';
 
 @Module({})
 @Global()

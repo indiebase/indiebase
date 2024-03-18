@@ -1,3 +1,5 @@
+import { AccessGuard, OkResponseSchema } from '@indiebase/server-shared';
+import { ResultCode } from '@indiebase/trait';
 import {
   Body,
   Controller,
@@ -14,11 +16,10 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { ProjectsService } from './projects.service';
-import { AccessGuard, OkResponseSchema } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/trait';
-import { CreatePrjDTO } from './projects.dto';
+
 import { PasetoAuthGuard } from '../../auth';
+import type { CreatePrjDTO } from './projects.dto';
+import type { ProjectsService } from './projects.service';
 
 @Controller({
   path: 'mgr',

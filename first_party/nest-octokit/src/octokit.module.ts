@@ -1,6 +1,8 @@
+import type { DynamicModule} from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
+
+import type { OctokitAsyncOptions,OctokitOptions } from './octokit.interface';
 import { OctokitService } from './octokit.service';
-import { DynamicModule, Global, Module } from '@nestjs/common';
-import { OctokitOptions, OctokitAsyncOptions } from './octokit.interface';
 import { createOctokitProvider, createOctokitProviderAsync } from './provider';
 
 @Module({})

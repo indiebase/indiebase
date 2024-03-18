@@ -1,12 +1,14 @@
+import { InjectRedis } from '@indiebase/nestjs-redis';
+import type {
+  CanActivate,
+  ExecutionContext} from '@nestjs/common';
 import {
   BadRequestException,
-  CanActivate,
-  ExecutionContext,
   Injectable,
 } from '@nestjs/common';
+import type { FastifyRequest } from 'fastify';
 import type { Redis } from 'ioredis';
-import { InjectRedis } from '@indiebase/nestjs-redis';
-import { FastifyRequest } from 'fastify';
+
 import { CaptchaUtils } from '../utils';
 
 @Injectable()

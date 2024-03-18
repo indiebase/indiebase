@@ -1,12 +1,14 @@
+import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import type { KnexEx} from '@indiebase/server-shared';
+import { MgrMetaTables } from '@indiebase/server-shared';
 import {
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
-import { Knex } from 'knex';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
-import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import type { Knex } from 'knex';
+
+import type { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
 
 @Injectable()
 export class OrgsService {

@@ -1,12 +1,15 @@
+import type {
+  OnModuleDestroy,
+  OnModuleInit} from '@nestjs/common';
 import {
   Inject,
-  Injectable,
-  OnModuleDestroy,
-  OnModuleInit,
+  Injectable
 } from '@nestjs/common';
-import { Enforcer, newEnforcer } from 'casbin';
+import type { Enforcer} from 'casbin';
+import { newEnforcer } from 'casbin';
+
 import { CASBIN_OPTIONS } from './casbin.constants';
-import { CasbinOptions } from './casbin.interface';
+import type { CasbinOptions } from './casbin.interface';
 
 @Injectable()
 export class CasbinService implements OnModuleInit, OnModuleDestroy {

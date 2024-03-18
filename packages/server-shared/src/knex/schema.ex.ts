@@ -1,6 +1,6 @@
 import { did } from '@deskbtm/gadgets';
 import { KNEX_SYNC } from '@indiebase/nest-knex';
-import { Knex } from 'knex';
+import type { Knex } from 'knex';
 
 export class KnexSchemaEx {
   private schema: Knex.SchemaBuilder;
@@ -86,13 +86,13 @@ export class KnexSchemaEx {
       tableBuilder: Knex.CreateTableBuilder,
     ) => Knex.CreateTableBuilder,
   ) {
-    let [err, hasTable] = await did(this.schema.hasTable(tableName));
+    const [err, hasTable] = await did(this.schema.hasTable(tableName));
 
     if (err) throw err;
 
     if (hasTable) {
       if (globalThis[KNEX_SYNC]) {
-        let t = this.knex.client.tableBuilder(
+        const t = this.knex.client.tableBuilder(
           'create',
           tableName,
           null,

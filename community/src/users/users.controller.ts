@@ -1,11 +1,12 @@
 import { OkResponseSchema } from '@indiebase/server-shared';
 import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import {
-  ApiTags,
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
+
 import { PasetoAuthGuard } from '../auth/paseto.guard';
 
 @Controller({
