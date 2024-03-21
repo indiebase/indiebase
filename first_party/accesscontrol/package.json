@@ -69,8 +69,8 @@
     "jest-cli": "22.4.4",
     "ncp": "2.0.0",
     "snyk": "1.122.0",
-    "typescript": "5.2.2",
-    "vitest": "0.34.6"
+    "typescript": "5.4.2",
+    "vitest": "1.4.0"
   },
   "dependencies": {
     "core-js-pure": "3.33.2",

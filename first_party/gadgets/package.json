@@ -47,8 +47,8 @@
   "devDependencies": {
     "@types/node": "20.8.10",
     "shx": "0.3.4",
-    "ts-node": "10.9.1",
+    "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.2.2"
+    "typescript": "5.4.2"
   }
 }

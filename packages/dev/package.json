@@ -23,8 +23,8 @@
     "cross-env": "7.0.3",
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "run-script-webpack-plugin": "0.2.0",
-    "swc-loader": "0.2.3",
-    "ts-loader": "9.4.4",
+    "swc-loader": "0.2.6",
+    "ts-loader": "9.5.1",
     "webpack": "5.90.3",
     "webpack-node-externals": "3.0.0",
     "workspace-tools": "0.36.4"
