@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "yarn workspaces foreach -A run lint",
     "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
-    "stack:dev": "docker stack deploy -c ./docker-compose.yaml indiebase",
+    "stack:dev": "dotenv -e .env -- docker stack deploy --with-registry-auth -c ./docker-compose.yaml indiebase",
     "release": "standard-version",
     "prepare": "husky install",
     "syncpack": "syncpack",
@@ -27,6 +27,7 @@
     "@vitest/ui": "1.4.0",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
+    "dotenv-cli": "7.4.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
@@ -56,12 +57,6 @@
     }
   },
   "packageManager": "yarn@4.1.1",
-  "resolutions": {
-    "webpack@5.73.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
-    "webpack@5.79.0": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
-    "webpack@^5": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch",
-    "webpack@5.64.4": "patch:webpack@npm%3A5.79.0#./.yarn/patches/webpack-npm-5.79.0-596061f3bf.patch"
-  },
   "dependencies": {
     "@deskbtm/gadgets": "workspace:^"
   }

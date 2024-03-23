@@ -8,7 +8,7 @@ services:
     environment:
       - ZO_ROOT_USER_EMAIL=dev@indiebase.com
       - ZO_DATA_DIR=/data
-      - ZO_ROOT_USER_PASSWORD=indiebase
+      - ZO_ROOT_USER_PASSWORD=dev@indiebase.com
     volumes:
       - openobserve_data:/data
 

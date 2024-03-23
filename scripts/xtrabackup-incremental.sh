@@ -9,7 +9,7 @@ NOW=$(date "+%F_%H-%M-%S")
 NETWORK=indiebase_default
 TARGET_NAME=indiebase_mysql
 IMAGE=mysql:8.0.32
-PASSWORD=indiebase
+PASSWORD=dev@indiebase.com
 
 if [!-f "$BACKUP_DIR"]; then
   mkdir -p $BACKUP_DIR

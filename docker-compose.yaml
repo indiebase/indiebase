@@ -10,7 +10,7 @@ x-logging: &x-logging
 
 services:
   traefik:
-    image: traefik:v2.10.3
+    image: traefik:v3.0
     <<: *x-logging
     command:
       - --log.level=DEBUG
@@ -28,11 +28,11 @@ services:
       - --entrypoints.http.http.redirections.entryPoint.scheme=https
       - --providers.file.watch=true
       - --providers.docker=true
-      - --providers.docker.swarmMode=true
       - --providers.docker.network=traefik_proxy
       - --providers.docker.exposedbydefault=false
       - --providers.docker.endpoint=unix:///var/run/docker.sockacme
-      - --certificatesresolvers.leresolver..dnsChallenge.delayBeforeCheck=15
+      - --providers.swarm.endpoint=tcp://127.0.0.1:2377
+      - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=15
       - --certificatesresolvers.leresolver.acme.tlschallenge=true
       - --certificatesresolvers.leresolver.acme.email=deskbtm@outlook.com
       - --certificatesresolvers.leresolver.acme.storage=/letsencrypt/acme.json
@@ -47,10 +47,10 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik_proxy
       - traefik.http.middlewares.auth.basicauth.removeheader=true
-      # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose) 
-      - traefik.http.middlewares.auth.basicauth.users=indiebase:$$apr1$$HhHWUKGm$$lPgc034oLvQJcyyTs1Hlt.
+      # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose)
+      - traefik.http.middlewares.auth.basicauth.users=dev@indiebase.com:$$apr1$$xfe67svh$$7G6CSD45JeKHq9nxC.KZx1
       - traefik.http.routers.dashboard.middlewares=auth
-      - traefik.http.routers.dashboard.rule=Host(`traefik.indiebase.deskbtm.com`)
+      - traefik.http.routers.dashboard.rule=Host(`traefik.indiebase-dev.deskbtm.com`)
       - traefik.http.routers.dashboard.entrypoints=https
       - traefik.http.routers.dashboard.service=api@internal
       - traefik.http.routers.dashboard.tls=true
@@ -61,14 +61,14 @@ services:
       test:
         - CMD
         - wget
-        - "-c"
-        - "http://localhost:18884/ping"
+        - '-c'
+        - 'http://localhost:18884/ping'
       timeout: 3s
     networks:
       - traefik_proxy
 
   postgres:
-    image: postgres:15.3-alpine3.18
+    image: postgres:16.2-alpine3.19
     <<: *x-logging
     restart: unless-stopped
     env_file:
@@ -111,7 +111,6 @@ networks:
     driver: overlay
     attachable: true
   traefik_proxy:
-
 
 volumes:
   pg_data:
