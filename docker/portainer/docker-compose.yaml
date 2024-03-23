@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   portainer-agent:
-    image: portainer/agent:2.19.0
+    image: portainer/agent:2.19.4
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
@@ -11,10 +11,10 @@ services:
     deploy:
       mode: global
       placement:
-        constraints: [ node.platform.os == linux ]
+        constraints: [node.platform.os == linux]
 
   portainer:
-    image: portainer/portainer-ce:2.19.0
+    image: portainer/portainer-ce:2.19.4
     command: -H tcp://tasks.portainer-agent:9001 --tlsskipverify --http-enabled
     ports:
       - 19443:9443
@@ -28,7 +28,7 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [ node.role == manager ]
+        constraints: [node.role == manager]
 
 networks:
   portainer_agent:

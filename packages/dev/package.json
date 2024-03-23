@@ -30,6 +30,6 @@
     "workspace-tools": "0.36.4"
   },
   "peerDependencies": {
-    "webpack": "5.88.2"
+    "webpack": "5.90.3"
   }
 }
