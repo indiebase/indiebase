@@ -48,13 +48,13 @@
     "@nestjs/schematics": "10.1.1",
     "@nestjs/testing": "10.3.5",
     "@types/express": "4.17.21",
-    "@types/node": "20.11.28",
+    "@types/node": "20.11.30",
     "@types/supertest": "6.0.2",
     "jest": "29.6.1",
     "supertest": "6.3.3",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   },
   "peerDependencies": {
     "knex": "3.1.0"

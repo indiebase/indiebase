@@ -45,10 +45,10 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "devDependencies": {
-    "@types/node": "20.8.10",
+    "@types/node": "20.11.30",
     "shx": "0.3.4",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   }
 }
