@@ -1,3 +1,4 @@
+import type { NOP } from '@deskbtm/gadgets';
 import { Logger } from '@nestjs/common';
 import type { Observable } from 'rxjs';
 import { delay, retryWhen, scan } from 'rxjs/operators';
@@ -14,7 +15,7 @@ export function getConnectionToken(
   connection?: null | KnexOptions | string,
   // Inject extended knex.
   ex: boolean = false,
-): string | Function {
+): string | typeof NOP {
   if (typeof connection === 'string') {
     return ex ? connection + 'Ex' : connection;
   }

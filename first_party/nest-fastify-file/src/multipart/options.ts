@@ -1,3 +1,5 @@
+import type busboy from 'busboy';
+
 import type { Storage } from '../storage';
 import { DiskStorage, MemoryStorage } from '../storage';
 import type { UploadFilterHandler } from './filter';

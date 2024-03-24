@@ -1,12 +1,10 @@
 import type {
   DynamicModule,
-  OnApplicationShutdown,  Provider,
-  Type} from '@nestjs/common';
-import {
-  Global,
-  Inject,
-  Module,
+  OnApplicationShutdown,
+  Provider,
+  Type,
 } from '@nestjs/common';
+import { Global, Inject, Module } from '@nestjs/common';
 import type { ModuleRef } from '@nestjs/core';
 import type { Knex } from 'knex';
 import { knex } from 'knex';
