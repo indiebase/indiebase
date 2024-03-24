@@ -14,7 +14,7 @@
   "scripts": {
     "lint": "yarn workspaces foreach -A run lint",
     "stack:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
-    "stack:dev": "dotenv -e .env -- docker stack deploy --with-registry-auth -c ./docker-compose.yaml indiebase",
+    "stack:dev": "dotenv -e .env -- docker stack deploy -c ./docker-compose.yaml indiebase",
     "release": "standard-version",
     "prepare": "husky install",
     "syncpack": "syncpack",
