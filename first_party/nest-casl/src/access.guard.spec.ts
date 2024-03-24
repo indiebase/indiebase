@@ -1,6 +1,6 @@
-import { Test } from '@nestjs/testing';
 import { Reflector } from '@nestjs/core';
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
+import { Test } from '@nestjs/testing';
 
 import { AccessGuard } from './access.guard';
 import { AccessService } from './access.service';
@@ -18,7 +18,12 @@ describe('AccessGuard', () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         AccessGuard,
-        { provide: Reflector, useValue: { get: jest.fn().mockImplementation(() => abilityMetadata) } },
+        {
+          provide: Reflector,
+          useValue: {
+            get: jest.fn().mockImplementation(() => abilityMetadata),
+          },
+        },
         { provide: AccessService, useValue: { canActivateAbility: jest.fn() } },
       ],
     }).compile();
@@ -30,13 +35,19 @@ describe('AccessGuard', () => {
   it('passes context request and ability to AccessService.canActivateAbility method', async () => {
     const context = new ExecutionContextHost([req, undefined, { req }]);
     await accessGuard.canActivate(context);
-    expect(accessService.canActivateAbility).toBeCalledWith(req, abilityMetadata);
+    expect(accessService.canActivateAbility).toBeCalledWith(
+      req,
+      abilityMetadata,
+    );
   });
 
   it('passes context request and ability to AccessService.canActivateAbility method', async () => {
     abilityMetadata = undefined;
     const context = new ExecutionContextHost([req, undefined, { req }]);
     await accessGuard.canActivate(context);
-    expect(accessService.canActivateAbility).toBeCalledWith(req, abilityMetadata);
+    expect(accessService.canActivateAbility).toBeCalledWith(
+      req,
+      abilityMetadata,
+    );
   });
 });
