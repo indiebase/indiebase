@@ -3,11 +3,11 @@ import { Global, Logger, Module } from '@nestjs/common';
 
 import { PresetService } from './preset.service';
 
+@Global()
 @Module({
   providers: [PresetService],
   exports: [PresetService],
 })
-@Global()
 export class PresetModule implements OnModuleInit {
   private readonly logger = new Logger('PresetModule');
 
