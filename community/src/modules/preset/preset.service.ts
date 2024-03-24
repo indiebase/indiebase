@@ -14,7 +14,7 @@ export class PresetService {
   constructor(
     @InjectKnexEx() private readonly knexEx: KnexEx,
     @InjectKnex() private readonly knex: Knex,
-    private readonly ac: AccessService,
+    // private readonly accessService: AccessService,
   ) {}
 
   private async setGrants(namespace: string) {
@@ -23,7 +23,7 @@ export class PresetService {
     const roles = await this.knex.withSchema(namespace).select('*').from(table);
 
     if (Array.isArray(roles) && roles.length > 0) {
-      this.ac.setNamespace(namespace).setGrants(roles);
+      // this.accessService.setNamespace(namespace).setGrants(roles);
     }
   }
 
