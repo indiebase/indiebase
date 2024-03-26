@@ -23,8 +23,8 @@
     }
   },
   "scripts": {
-    "prebuild": "shx rm dist",
-    "build": "shx rm dist && tsc -p tsconfig.build.json",
+    "prebuild": "shx rm -r dist  ",
+    "build": "shx rm -r dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"lib/**/*.ts\"",
     "lint": "eslint 'lib/**/*.ts' --fix",
     "precommit": "lint-staged",
@@ -67,7 +67,6 @@
     "reflect-metadata": "0.2.1",
     "release-it": "17.1.1",
     "rxjs": "7.8.1",
-    "shx": "0.3.4",
     "ts-jest": "29.1.1",
     "typescript": "5.4.3"
   },

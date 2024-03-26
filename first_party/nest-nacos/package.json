@@ -24,7 +24,7 @@
     }
   },
   "scripts": {
-    "prebuild": "shx rm dist",
+    "prebuild": "shx rm -r dist  ",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && nest build --watch",
@@ -43,7 +43,6 @@
     "nacos": "2.2.1",
     "reflect-metadata": "0.2.1",
     "rxjs": "7.8.1",
-    "shx": "0.3.4",
     "strip-json-comments": "3.1.1"
   },
   "devDependencies": {

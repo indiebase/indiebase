@@ -1,7 +1,7 @@
 import { did } from '@deskbtm/gadgets';
 import { InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
-import type { KnexEx} from '@indiebase/server-shared';
+import type { KnexEx } from '@indiebase/server-shared';
 import { BusinessTags, RedisUtils } from '@indiebase/server-shared';
 import {
   type PrimitiveProject,
@@ -17,7 +17,7 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import type { FastifyRequest } from 'fastify';
-import type Redis from 'ioredis';
+import type { Redis } from 'ioredis';
 import type { PasetoService } from 'nestjs-paseto';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
