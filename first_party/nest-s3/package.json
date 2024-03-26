@@ -12,7 +12,7 @@
     "access": "public"
   },
   "scripts": {
-    "prebuild": "shx rm dist",
+    "prebuild": "shx rm -r dist  ",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "npm run prebuild && nest build --watch",
@@ -31,8 +31,7 @@
     "@nestjs/core": "10.3.5",
     "aws-sdk": "2.1584.0",
     "reflect-metadata": "0.2.1",
-    "rxjs": "7.8.1",
-    "shx": "0.3.4"
+    "rxjs": "7.8.1"
   },
   "devDependencies": {
     "@nestjs/cli": "10.3.2",

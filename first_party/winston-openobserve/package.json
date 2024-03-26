@@ -48,7 +48,7 @@
     "winston"
   ],
   "scripts": {
-    "build": "shx rm dist && tsc",
+    "build": "shx rm -r dist && tsc",
     "test": "jest",
     "prepack": "npm run build"
   },
@@ -62,7 +62,6 @@
     "@types/async-exit-hook": "2.0.2",
     "@types/node": "16",
     "@types/triple-beam": "1.3.5",
-    "shx": "0.3.4",
     "typescript": "5.4.3",
     "vitest": "1.4.0",
     "winston": "3.12.0"
