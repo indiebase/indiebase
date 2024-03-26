@@ -1,8 +1,8 @@
 import { HttpModule } from '@nestjs/axios';
 import { TerminusModule } from '@nestjs/terminus';
-import type { TestingModule } from '@nestjs/testing';
+import { TestingModule } from '@nestjs/testing';
 import { Test } from '@nestjs/testing';
-import { beforeEach, describe, expect,it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { KnexHealthIndicator } from './knex.health';
 import { ProbeController } from './probe.controller';

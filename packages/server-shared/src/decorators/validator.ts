@@ -2,19 +2,20 @@ import { is } from '@deskbtm/gadgets/is';
 import { AsyncContext } from '@indiebase/nest-async-context';
 import { InjectKnex } from '@indiebase/nest-knex';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
-import { applyDecorators,Injectable, NotFoundException } from '@nestjs/common';
-import type {
+import { applyDecorators, Injectable, NotFoundException } from '@nestjs/common';
+import {
   ValidationArguments,
   ValidationOptions,
-  ValidatorConstraintInterface} from 'class-validator';
+  ValidatorConstraintInterface,
+} from 'class-validator';
 import {
   IsString,
   Matches,
   registerDecorator,
-  ValidatorConstraint
+  ValidatorConstraint,
 } from 'class-validator';
 import { IncomingMessage } from 'http';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
   /**

@@ -1,4 +1,4 @@
-import { RouteObject, createBrowserRouter } from 'react-router-dom';
+import { type RouteObject, createBrowserRouter } from 'react-router-dom';
 
 const projectRouter = {
   path: ':project',

@@ -1,18 +1,17 @@
 //@ts-nocheck
 
-import type {
+import {
   CallHandler,
   ExecutionContext,
   NestInterceptor,
-  Type} from '@nestjs/common';
-import {
-  mixin
+  Type,
 } from '@nestjs/common';
-import type { Observable} from 'rxjs';
+import { mixin } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs';
 
 import { handleMultipartSingleFile } from '../multipart/handlers/single-file';
-import type { UploadOptions } from '../multipart/options';
+import { UploadOptions } from '../multipart/options';
 import { transformUploadOptions } from '../multipart/options';
 import { getMultipartRequest } from '../multipart/request';
 

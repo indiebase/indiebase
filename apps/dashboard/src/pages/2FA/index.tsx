@@ -21,7 +21,7 @@ import {
   IconDiscountCheck,
   IconUserCheck,
 } from '@tabler/icons-react';
-import React, { FC, ReactElement, Suspense, useState } from 'react';
+import React, { type FC, type ReactElement, Suspense, useState } from 'react';
 import { req } from '~/__MOCK__';
 
 const _optStepperAtom = atom(0);

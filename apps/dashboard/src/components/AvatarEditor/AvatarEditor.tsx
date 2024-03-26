@@ -11,11 +11,11 @@ import {
   Flex,
 } from '@mantine/core';
 import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
-import { FC, useCallback, useState, ReactElement, createRef } from 'react';
+import { type FC, useCallback, useState, type ReactElement, createRef } from 'react';
 // import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useColorScheme } from '@mantine/hooks';
-import Cropper, { ReactCropperElement } from 'react-cropper';
+import Cropper, { type ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
 interface AvatarEditorProps {

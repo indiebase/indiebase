@@ -1,9 +1,9 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
+import { IncomingMessage, ServerResponse } from 'node:http';
 
 import { did } from '@deskbtm/gadgets';
 import { InjectKnexEx } from '@indiebase/nest-knex';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
-import type { NestMiddleware} from '@nestjs/common';
+import { NestMiddleware } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { type KnexEx } from '../knex/knex.ex';

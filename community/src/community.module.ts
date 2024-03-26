@@ -3,13 +3,13 @@ import {
   IsEntityExistedConstraint,
   PresetMiddlewareModule,
 } from '@indiebase/server-shared';
-import type { ModuleMetadata, OnModuleInit } from '@nestjs/common';
+import { ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ConfigService } from '@nestjs/config';
 
 import { AuthModule } from './auth';
-import type { DepsDynamicOptions } from './dependencies.module';
+import { DepsDynamicOptions } from './dependencies.module';
 import { createDependenciesModule } from './dependencies.module';
 import { MgrModule } from './manager/mgr.module';
 import { MigrationModule } from './migrations';

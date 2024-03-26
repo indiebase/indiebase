@@ -1,12 +1,12 @@
-import type { MemoryStorageFile } from '@indiebase/nest-fastify-file';
+import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
 import { FilesInterceptor, UploadedFiles } from '@indiebase/nest-fastify-file';
 import {
   // FilesSizeValidationPipe,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import type { BaseResponseSchema } from '@indiebase/trait';
+import { BaseResponseSchema } from '@indiebase/trait';
 import { ResultCode } from '@indiebase/trait';
-import type { Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import {
   Body,
   Controller,
@@ -22,11 +22,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
-import type { CreateBucketDTO } from './storage.dto';
+import { CreateBucketDTO } from './storage.dto';
 import { FilesUploadDTO } from './storage.dto';
-import type { StorageService } from './storage.service';
+import { StorageService } from './storage.service';
 
 @Controller({
   path: 'storage',

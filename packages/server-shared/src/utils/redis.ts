@@ -1,4 +1,4 @@
-import type { BusinessTags } from '../constants';
+import { BusinessTags } from '../constants';
 
 export class RedisUtils {
   /**

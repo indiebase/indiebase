@@ -1,8 +1,7 @@
+import { ResultCode } from '@indiebase/trait';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';
-
-import { ResultCode } from '../../../trait/src';
 
 export class PaginationReqSchema {
   @ApiProperty({

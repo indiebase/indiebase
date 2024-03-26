@@ -1,9 +1,9 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { type FC, MouseEventHandler } from 'react';
 import cx from 'clsx';
 
 import {
   defaultOptionsFilter,
-  FilterOptionsInput,
+  type FilterOptionsInput,
 } from './default-options-filter';
 import { isEmptyComboboxData } from './is-empty-combobox-data';
 import { isOptionsGroup } from './is-options-group';
@@ -12,8 +12,8 @@ import {
   Box,
   CheckIcon,
   Combobox,
-  ComboboxItem,
-  ComboboxParsedItem,
+  type ComboboxItem,
+  type ComboboxParsedItem,
   ScrollArea,
 } from '@mantine/core';
 // import classes from '../Combobox.module.css';

@@ -7,9 +7,9 @@ import { HttpExceptionFilter, sizeParser } from '@indiebase/server-shared';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import type { NestFastifyApplication } from '@nestjs/platform-fastify';
+import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
-import type { FastifyStaticOptions } from '@nestjs/platform-fastify/interfaces/external';
+import { FastifyStaticOptions } from '@nestjs/platform-fastify/interfaces/external';
 import { useContainer } from 'class-validator';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 

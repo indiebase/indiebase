@@ -7,7 +7,7 @@ import {
   Avatar,
   rem,
 } from '@mantine/core';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { useAtom } from 'jotai';
 import { navbarCollapseAtom } from './navbar.atom';
 import {

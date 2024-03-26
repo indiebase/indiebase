@@ -1,4 +1,4 @@
-import type { OnModuleInit } from '@nestjs/common';
+import { OnModuleInit } from '@nestjs/common';
 import { Global, Logger, Module } from '@nestjs/common';
 
 import { MigrationService } from './migration.service';

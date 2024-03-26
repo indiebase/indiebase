@@ -1,7 +1,7 @@
-import type { DynamicModule} from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 
-import type { KyselyAsyncOptions, KyselyOptions } from './kysely.interfaces';
+import { KyselyAsyncOptions, KyselyOptions } from './kysely.interfaces';
 import { KyselyCoreModule } from './kysely-core.module';
 
 @Module({})

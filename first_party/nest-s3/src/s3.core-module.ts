@@ -1,7 +1,7 @@
-import type { DynamicModule, Provider } from '@nestjs/common';
+import { DynamicModule, Provider } from '@nestjs/common';
 import { Global, Module } from '@nestjs/common';
 
-import type {
+import {
   S3ModuleAsyncOptions,
   S3ModuleOptions,
   S3ModuleOptionsFactory,

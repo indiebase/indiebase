@@ -15,10 +15,6 @@ module.exports = {
     jest: true,
   },
   rules: {
-    '@typescript-eslint/consistent-type-imports': [
-      'error',
-      { prefer: 'type-imports', disallowTypeAnnotations: false },
-    ],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     '@typescript-eslint/interface-name-prefix': 'off',
@@ -35,6 +31,15 @@ module.exports = {
         varsIgnorePattern: '^_',
         args: 'after-used',
         argsIgnorePattern: '^_',
+      },
+    ],
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: {
+          Function: false,
+        },
+        extendDefaults: true,
       },
     ],
   },

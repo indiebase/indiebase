@@ -1,4 +1,4 @@
-import { FC, Suspense, forwardRef, useMemo, useState } from 'react';
+import { type FC, Suspense, forwardRef, useMemo, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   Avatar,

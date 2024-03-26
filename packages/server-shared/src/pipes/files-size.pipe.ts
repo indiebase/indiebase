@@ -1,4 +1,4 @@
-import type { ArgumentMetadata, PipeTransform } from '@nestjs/common';
+import { ArgumentMetadata, PipeTransform } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

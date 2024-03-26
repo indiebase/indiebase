@@ -1,15 +1,12 @@
 import { X_Indiebase_AC } from '@indiebase/sdk';
-import type {
-  CanActivate,
-  ExecutionContext,
-  Logger} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Logger } from '@nestjs/common';
 import {
   BadRequestException,
   ForbiddenException,
-  Injectable
+  Injectable,
 } from '@nestjs/common';
-import type { ConfigService } from '@nestjs/config';
-import type { FastifyRequest } from 'fastify';
+import { ConfigService } from '@nestjs/config';
+import { FastifyRequest } from 'fastify';
 import ms from 'ms';
 import * as forge from 'node-forge';
 

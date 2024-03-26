@@ -1,20 +1,22 @@
-import React, { DOMAttributes, FC, MouseEventHandler, useEffect } from 'react';
+import {type FC} from 'react';
+import type React from 'react';
+import { DOMAttributes, MouseEventHandler, useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
-  BoxProps,
+  type BoxProps,
   Combobox,
-  ComboboxLikeStylesNames,
-  ComboboxProps,
-  ElementProps,
-  Factory,
+  type ComboboxLikeStylesNames,
+  type ComboboxProps,
+  type ElementProps,
+  type Factory,
   InputBase,
-  OptionsFilter,
+  type OptionsFilter,
   Pill,
   PillsInput,
-  StylesApiProps,
-  __BaseInputProps,
-  __CloseButtonProps,
-  __InputStylesNames,
+  type StylesApiProps,
+  type __BaseInputProps,
+  type __CloseButtonProps,
+  type __InputStylesNames,
   extractStyleProps,
   factory,
   getOptionsLockup,

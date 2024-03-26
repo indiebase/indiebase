@@ -1,8 +1,7 @@
 import { getConnectionToken } from '@indiebase/nest-knex';
 import { Injectable, Scope } from '@nestjs/common';
-import type { ModuleRef } from '@nestjs/core';
-import type {
-  HealthIndicatorResult} from '@nestjs/terminus';
+import { ModuleRef } from '@nestjs/core';
+import { HealthIndicatorResult } from '@nestjs/terminus';
 import {
   ConnectionNotFoundError,
   HealthCheckError,
@@ -10,7 +9,7 @@ import {
   TimeoutError,
 } from '@nestjs/terminus';
 import { checkPackages, promiseTimeout } from '@nestjs/terminus/dist/utils';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 export interface KnexPingCheckSettings {
   /**

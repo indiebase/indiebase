@@ -1,15 +1,8 @@
-import type {
-  IAuthModuleOptions} from '@indiebase/nest-fastify-passport';
-import {
-  AuthGuard
-} from '@indiebase/nest-fastify-passport';
-import type {
-  ExecutionContext} from '@nestjs/common';
-import {
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import type { Observable } from 'rxjs';
+import { IAuthModuleOptions } from '@indiebase/nest-fastify-passport';
+import { AuthGuard } from '@indiebase/nest-fastify-passport';
+import { ExecutionContext } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class GithubGuard extends AuthGuard('github') {

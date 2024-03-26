@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import { AppShell, rem } from '@mantine/core';
 import { AppShellHeader } from './Header';
 // import { ErrorBoundary } from 'react-error-boundary';

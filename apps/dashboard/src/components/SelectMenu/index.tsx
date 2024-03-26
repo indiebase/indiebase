@@ -1,4 +1,6 @@
-import React, { FC, useMemo, useState } from 'react';
+import {type FC} from 'react';
+import type React from 'react';
+import { useMemo, useState } from 'react';
 import {
   Text,
   Group,

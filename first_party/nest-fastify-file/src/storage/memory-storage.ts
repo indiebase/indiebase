@@ -1,4 +1,4 @@
-import type { Storage,StorageFile } from './storage';
+import { Storage, StorageFile } from './storage';
 
 export interface MemoryStorageFile extends StorageFile {
   buffer: Buffer;

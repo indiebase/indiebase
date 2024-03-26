@@ -1,16 +1,11 @@
 import { type Permission } from '@indiebase/accesscontrol';
-import type {
-  CanActivate,
-  ExecutionContext} from '@nestjs/common';
-import {
-  Injectable,
-  Logger,
-} from '@nestjs/common';
-import type { Reflector } from '@nestjs/core';
+import { CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 
 import { ACCESS_META } from './access.constants';
-import type { AccessService } from './access.service';
-import type { IAccessOptions } from './decorators';
+import { AccessService } from './access.service';
+import { IAccessOptions } from './decorators';
 import { action2CamelCase } from './utils';
 
 @Injectable()

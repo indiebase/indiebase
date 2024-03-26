@@ -1,12 +1,9 @@
-import type {
-  PassportStrategyFactory} from '@indiebase/nest-fastify-passport';
-import {
-  PassportStrategy
-} from '@indiebase/nest-fastify-passport';
+import { PassportStrategyFactory } from '@indiebase/nest-fastify-passport';
+import { PassportStrategy } from '@indiebase/nest-fastify-passport';
 import { InjectKnexEx } from '@indiebase/nest-knex';
-import type { KnexEx } from '@indiebase/server-shared';
+import { KnexEx } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
-import type { ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import {
   fromAuthBearer,
   PublicPasetoStrategy,

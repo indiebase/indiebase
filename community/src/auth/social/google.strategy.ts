@@ -1,9 +1,6 @@
-import type {
-  PassportStrategyFactory} from '@indiebase/nest-fastify-passport';
-import {
-  PassportStrategy
-} from '@indiebase/nest-fastify-passport';
-import type { Logger } from '@nestjs/common';
+import { PassportStrategyFactory } from '@indiebase/nest-fastify-passport';
+import { PassportStrategy } from '@indiebase/nest-fastify-passport';
+import { Logger } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-google-oauth20';
 

@@ -3,7 +3,7 @@ import {
   useMediaQuery,
   useViewportSize,
 } from '@mantine/hooks';
-import { FC, forwardRef, Suspense, useRef, useState } from 'react';
+import { type FC, forwardRef, Suspense, useRef, useState } from 'react';
 import {
   Anchor,
   Avatar,

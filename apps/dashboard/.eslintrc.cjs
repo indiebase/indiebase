@@ -12,6 +12,14 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+        disallowTypeAnnotations: false,
+        fixStyle: 'inline-type-imports',
+      },
+    ],
     'react/react-in-jsx-scope': 'off',
     'react/self-closing-comp': [
       'error',

@@ -1,7 +1,7 @@
 import { AccessActions } from '@indiebase/nest-ac';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { AccountStatus, OrgStatus, ProjectStatus } from '@indiebase/trait';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 export const v001_mgr = async function (
   schema: string,

@@ -1,8 +1,5 @@
-import type {
-  IAuthModuleOptions} from '@indiebase/nest-fastify-passport';
-import {
-  AuthGuard
-} from '@indiebase/nest-fastify-passport';
+import { IAuthModuleOptions } from '@indiebase/nest-fastify-passport';
+import { AuthGuard } from '@indiebase/nest-fastify-passport';
 import {
   HttpException,
   Injectable,

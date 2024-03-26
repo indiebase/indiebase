@@ -1,4 +1,4 @@
-import type { MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 
 import { MountProjectMiddleware } from './mount-project.middleware';

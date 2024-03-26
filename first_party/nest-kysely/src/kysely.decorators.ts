@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import type { KyselyOptions } from './kysely.interfaces';
+import { KyselyOptions } from './kysely.interfaces';
 import { getConnectionToken } from './kysely.utils';
 
 export const InjectKysely = (connection?: string | KyselyOptions) => {
