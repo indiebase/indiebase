@@ -1,6 +1,6 @@
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { did } from '@deskbtm/gadgets';
-import type { MemoryStorageFile } from '@indiebase/nest-fastify-file';
+import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
 // import {
 //   CreateBucketCommand,
 //   DeleteBucketCommand,

@@ -1,6 +1,6 @@
 import { did } from '@deskbtm/gadgets';
 import { KNEX_SYNC } from '@indiebase/nest-knex';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 export class KnexSchemaEx {
   private schema: Knex.SchemaBuilder;

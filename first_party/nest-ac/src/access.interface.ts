@@ -1,4 +1,4 @@
-import type { DynamicModule, ForwardReference,Type } from '@nestjs/common';
+import { DynamicModule, ForwardReference, Type } from '@nestjs/common';
 
 export interface AccessOptions {
   getUserFromRequest?<Req = any>(request: Req): any;

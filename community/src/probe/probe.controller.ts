@@ -1,18 +1,17 @@
 import { InjectKnex } from '@indiebase/nest-knex';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import type {
+import {
   DiskHealthIndicator,
   HealthCheckService,
   HttpHealthIndicator,
-  MemoryHealthIndicator} from '@nestjs/terminus';
-import {
-  HealthCheck
+  MemoryHealthIndicator,
 } from '@nestjs/terminus';
-import type { Knex } from 'knex';
+import { HealthCheck } from '@nestjs/terminus';
+import { Knex } from 'knex';
 import * as path from 'path';
 
-import type { KnexHealthIndicator } from './knex.health';
+import { KnexHealthIndicator } from './knex.health';
 
 @Controller({
   path: 'probe',

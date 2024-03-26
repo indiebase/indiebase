@@ -1,8 +1,8 @@
-import type { DynamicModule} from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 import { Global, Module } from '@nestjs/common';
 
 import { ACCESS_CONTROL_OPTIONS } from './access.constants';
-import type { AccessAsyncOptions,AccessOptions } from './access.interface';
+import { AccessAsyncOptions, AccessOptions } from './access.interface';
 import { AccessService } from './access.service';
 
 @Module({})

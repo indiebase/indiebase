@@ -4,8 +4,8 @@ import '@mantine/core/styles.css';
 import '@fontsource/inter';
 import './index.css';
 
-import { FC, useState } from 'react';
-import { Compose, ComposeProps } from 'reactgets';
+import { type FC, useState } from 'react';
+import { Compose, type ComposeProps } from 'reactgets';
 import { MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { DevTools as JotaiDevTools } from 'jotai-devtools';

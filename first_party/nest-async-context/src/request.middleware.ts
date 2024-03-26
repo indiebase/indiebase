@@ -1,4 +1,4 @@
-import type { NestMiddleware } from '@nestjs/common';
+import { NestMiddleware } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 
 import { AsyncContext } from './async-context';

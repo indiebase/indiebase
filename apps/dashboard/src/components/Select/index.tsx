@@ -1,24 +1,26 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import {type FC} from 'react';
+import type React from 'react';
+import { useEffect, useMemo } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
-  BoxProps,
+  type BoxProps,
   Combobox,
-  ComboboxLikeProps,
-  ComboboxLikeStylesNames,
-  ElementProps,
+  type ComboboxLikeProps,
+  type ComboboxLikeStylesNames,
+  type ElementProps,
   InputBase,
-  InputVariant,
-  StylesApiProps,
-  __BaseInputProps,
-  __CloseButtonProps,
-  __InputStylesNames,
+  type InputVariant,
+  type StylesApiProps,
+  type __BaseInputProps,
+  type __CloseButtonProps,
+  type __InputStylesNames,
   factory,
   getOptionsLockup,
   getParsedComboboxData,
   useCombobox,
   useProps,
   useResolvedStylesApi,
-  Factory,
+  type Factory,
 } from '@mantine/core';
 import { OptionsDropdown } from './OptionsDropdown/OptionsDropdown';
 

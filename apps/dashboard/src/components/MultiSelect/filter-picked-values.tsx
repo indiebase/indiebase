@@ -1,4 +1,4 @@
-import { ComboboxParsedItem, isOptionsGroup } from "@mantine/core";
+import { type ComboboxParsedItem, isOptionsGroup } from "@mantine/core";
 
 interface FilterPickedTagsInput {
   data: ComboboxParsedItem[];

@@ -30,7 +30,7 @@ services:
       - --providers.docker=true
       - --providers.docker.network=traefik_proxy
       - --providers.docker.exposedbydefault=false
-      - --providers.docker.endpoint=unix:///var/run/docker.sockacme
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
       - --providers.swarm.endpoint=tcp://127.0.0.1:2377
       - --certificatesresolvers.leresolver.acme.dnsChallenge.delayBeforeCheck=15
       - --certificatesresolvers.leresolver.acme.tlschallenge=true

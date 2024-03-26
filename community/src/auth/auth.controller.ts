@@ -4,9 +4,9 @@ import {
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
-import type { PrimitiveUser} from '@indiebase/trait';
+import { PrimitiveUser } from '@indiebase/trait';
 import { ResultCode } from '@indiebase/trait';
-import type { PrimitiveProject } from '@indiebase/trait/mgr';
+import { PrimitiveProject } from '@indiebase/trait/mgr';
 import {
   Body,
   Controller,
@@ -20,10 +20,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
-import type { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
-import type { AuthService } from './auth.service';
+import { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
+import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
 import { GithubGuard, GoogleGuard } from './social';
 

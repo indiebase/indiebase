@@ -3,7 +3,7 @@ import { REQUEST } from '@nestjs/core';
 import { Octokit } from 'octokit';
 
 import { OCTOKIT_OPTIONS } from './octokit.constants';
-import type { OctokitOptions } from './octokit.interface';
+import { OctokitOptions } from './octokit.interface';
 
 class OctokitExtend {
   private baseUrl = 'https://github.com';

@@ -1,12 +1,7 @@
-import type {
-  CanActivate,
-  ExecutionContext,  Logger} from '@nestjs/common';
-import {
-  BadRequestException,
-  Injectable,
-} from '@nestjs/common';
-import type { HttpAdapterHost } from '@nestjs/core';
-import type { FastifyReply,FastifyRequest } from 'fastify';
+import { CanActivate, ExecutionContext, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { HttpAdapterHost } from '@nestjs/core';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
 /**
  * @deprecated

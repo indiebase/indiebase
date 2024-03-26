@@ -1,9 +1,9 @@
-import type { Provider } from '@nestjs/common';
-import type { ClientOptions } from 'nacos';
+import { Provider } from '@nestjs/common';
+import { ClientOptions } from 'nacos';
 
 import { NACOS_CONFIG_OPTIONS, NACOS_NAMING_OPTIONS } from './nacos.constants';
-import type { NacosConfigClientAsyncOptions } from './nacos-config.interface';
-import type {
+import { NacosConfigClientAsyncOptions } from './nacos-config.interface';
+import {
   NacosNamingClientAsyncOptions,
   NacosNamingClientOptions,
 } from './nacos-naming.interface';

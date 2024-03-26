@@ -26,8 +26,8 @@ import {
 } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth/paseto.guard';
-import type { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
-import type { OrgsService } from './orgs.service';
+import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
+import { OrgsService } from './orgs.service';
 
 @Controller({
   path: 'mgr',

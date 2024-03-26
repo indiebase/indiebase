@@ -1,12 +1,12 @@
 import {
   Accordion,
-  MantineThemeColors,
+  type MantineThemeColors,
   ThemeIcon,
   UnstyledButton,
   Text,
-  MantineStyleProps,
+  type MantineStyleProps,
 } from '@mantine/core';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useEffect, useMemo, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { navMenuTile } from './NavMenu.css';
 import { useMenus } from '~/use-menus';

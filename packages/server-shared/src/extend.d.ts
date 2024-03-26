@@ -1,6 +1,6 @@
 import 'fastify';
 
-import type { PrimitiveProject, PrimitiveUser } from '@indiebase/trait/mgr';
+import { PrimitiveProject, PrimitiveUser } from '@indiebase/trait/mgr';
 
 declare module 'node:http' {
   interface IncomingMessage {

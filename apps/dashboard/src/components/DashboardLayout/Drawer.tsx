@@ -1,7 +1,7 @@
 import { AppShell, Burger } from '@mantine/core';
 import { useAtom } from 'jotai';
 import { navbarCollapseAtom } from './navbar.atom';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { SelectMenu } from '~/components/SelectMenu';
 import { NavMenu } from './NavMenu';
 

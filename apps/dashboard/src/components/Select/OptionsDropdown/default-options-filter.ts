@@ -1,4 +1,4 @@
-import { ComboboxParsedItem, ComboboxItem } from '@mantine/core';
+import { type ComboboxParsedItem, type ComboboxItem } from '@mantine/core';
 import { isOptionsGroup } from './is-options-group';
 
 export interface FilterOptionsInput {

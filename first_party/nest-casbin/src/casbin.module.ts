@@ -1,7 +1,7 @@
-import type { DynamicModule} from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 import { Global, Module } from '@nestjs/common';
 
-import type { CasbinAsyncOptions,CasbinOptions } from './casbin.interface';
+import { CasbinAsyncOptions, CasbinOptions } from './casbin.interface';
 import {
   createCasbinProvider,
   createCasbinProviderAsync,

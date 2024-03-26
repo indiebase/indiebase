@@ -7,7 +7,7 @@ import {
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
-import type { PrimitiveUser} from '@indiebase/trait';
+import { PrimitiveUser } from '@indiebase/trait';
 import { ResultCode } from '@indiebase/trait';
 import {
   BadRequestException,
@@ -26,8 +26,8 @@ import {
 } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import type { CreateHackersDTO } from './hackers.dto';
-import type { HackersService } from './hackers.service';
+import { CreateHackersDTO } from './hackers.dto';
+import { HackersService } from './hackers.service';
 
 @Controller({
   path: 'mgr/hackers',

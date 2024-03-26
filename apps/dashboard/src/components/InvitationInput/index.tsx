@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 import {
   PillsInput,
   Pill,
@@ -6,11 +6,11 @@ import {
   CheckIcon,
   Group,
   useCombobox,
-  BoxProps,
-  __BaseInputProps,
-  SelectFactory,
-  StylesApiProps,
-  ElementProps,
+  type BoxProps,
+  type __BaseInputProps,
+  type SelectFactory,
+  type StylesApiProps,
+  type ElementProps,
   Flex,
 } from '@mantine/core';
 

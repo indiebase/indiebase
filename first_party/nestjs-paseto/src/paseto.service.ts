@@ -1,10 +1,10 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import assert from 'assert';
-import type { ConsumeOptions, ConsumeOptionsBuffer, ProduceOptions } from 'paseto';
+import { ConsumeOptions, ConsumeOptionsBuffer, ProduceOptions } from 'paseto';
 import * as paseto from 'paseto';
 
 import { PASETO_MODULE_OPTIONS } from './paseto.constants';
-import type { PasetoModuleOptions } from './paseto.interface';
+import { PasetoModuleOptions } from './paseto.interface';
 
 @Injectable()
 export class PasetoService {

@@ -1,5 +1,5 @@
 import { type PrimitiveProject } from '@indiebase/trait/mgr';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 import { KnexSchemaEx } from './schema.ex';
 import { MgrMetaTables, TmplMetaTables } from './tables';

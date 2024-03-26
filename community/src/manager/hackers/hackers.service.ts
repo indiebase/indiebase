@@ -1,14 +1,14 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import type {KnexEx} from '@indiebase/server-shared';
+import { KnexEx } from '@indiebase/server-shared';
 import { hashSecret, MgrMetaTables } from '@indiebase/server-shared';
 import {
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
-import type { CreateHackersDTO, UpdateHackersDTO } from './hackers.dto';
+import { CreateHackersDTO, UpdateHackersDTO } from './hackers.dto';
 
 @Injectable()
 export class HackersService {

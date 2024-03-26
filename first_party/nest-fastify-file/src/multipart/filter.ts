@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
-import type { FastifyRequest } from 'fastify';
+import { FastifyRequest } from 'fastify';
 
-import type { DiskStorageFile, MemoryStorageFile, StorageFile } from '../storage';
+import { DiskStorageFile, MemoryStorageFile, StorageFile } from '../storage';
 import { type UploadOptions } from './options';
 
 export type UploadFilterFile =

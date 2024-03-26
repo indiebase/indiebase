@@ -1,15 +1,10 @@
-import type {
-  OnModuleDestroy,
-  OnModuleInit} from '@nestjs/common';
-import {
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import * as nacos from 'nacos';
 
 import { NACOS_NAMING_OPTIONS } from './nacos.constants';
 import { NacosLogger } from './nacos.logger';
-import type {
+import {
   NacosNamingClient,
   NacosNamingClientOptions,
   NacosNamingInstance,

@@ -18,8 +18,8 @@ import {
 } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import type { CreatePrjDTO } from './projects.dto';
-import type { ProjectsService } from './projects.service';
+import { CreatePrjDTO } from './projects.dto';
+import { ProjectsService } from './projects.service';
 
 @Controller({
   path: 'mgr',

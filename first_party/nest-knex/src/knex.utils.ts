@@ -1,13 +1,13 @@
-import type { NOP } from '@deskbtm/gadgets';
+import { NOP } from '@deskbtm/gadgets';
 import { Logger } from '@nestjs/common';
-import type { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { delay, retryWhen, scan } from 'rxjs/operators';
 
 import {
   DEFAULT_CONNECTION_EX_NAME,
   DEFAULT_CONNECTION_NAME,
 } from './knex.constants';
-import type { KnexOptions } from './knex.interfaces';
+import { KnexOptions } from './knex.interfaces';
 
 const logger = new Logger('KnexModule');
 

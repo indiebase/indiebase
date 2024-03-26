@@ -1,9 +1,9 @@
 import { AccessControl } from '@indiebase/accesscontrol';
-import type { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { ACCESS_CONTROL_OPTIONS } from './access.constants';
-import type { AccessOptions } from './access.interface';
+import { AccessOptions } from './access.interface';
 
 @Injectable()
 export class AccessService implements OnModuleInit, OnModuleDestroy {

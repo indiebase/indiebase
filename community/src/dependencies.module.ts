@@ -4,7 +4,7 @@ import { AccessControlModule } from '@indiebase/nest-ac';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
 import { KnexModule, knexSnakeCaseMappers } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
-import type { RedisClientOptions } from '@indiebase/nestjs-redis';
+import { RedisClientOptions } from '@indiebase/nestjs-redis';
 import { RedisModule } from '@indiebase/nestjs-redis';
 import { X_Indiebase_Lang } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';

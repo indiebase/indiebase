@@ -1,12 +1,12 @@
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { CaptchaUtils } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
-import type { Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import type { MailerService } from '@nestjs-modules/mailer';
-import type { Redis } from 'ioredis';
+import { MailerService } from '@nestjs-modules/mailer';
+import { Redis } from 'ioredis';
 
-import type { GetCaptchaDTO } from './mail.dto';
+import { GetCaptchaDTO } from './mail.dto';
 @Injectable()
 export class MailService {
   constructor(

@@ -4,7 +4,7 @@ import {
   INestApplication,
 } from '@nestjs/common';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
-import type { OpenAPIObject } from '@nestjs/swagger';
+import { OpenAPIObject } from '@nestjs/swagger';
 import Handlebars from 'handlebars';
 import * as path from 'path';
 import * as fsPromises from 'fs/promises';

@@ -1,7 +1,7 @@
 import path from 'node:path';
 
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
-import type { INestApplication } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AuthModule } from './auth';

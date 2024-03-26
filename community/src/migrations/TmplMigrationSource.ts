@@ -1,4 +1,4 @@
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 import { v001_tmpl } from './v1/v001.tmpl';
 

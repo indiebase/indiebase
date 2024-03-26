@@ -7,7 +7,7 @@ import {
   hashSecret,
   MgrMetaTables,
 } from '@indiebase/server-shared';
-import type { Knex } from 'knex';
+import { Knex } from 'knex';
 
 /**
  * Create organization template tables

@@ -1,7 +1,7 @@
-import type { Provider } from '@nestjs/common';
+import { Provider } from '@nestjs/common';
 
 import { OCTOKIT_OPTIONS } from './octokit.constants';
-import type { OctokitAsyncOptions, OctokitOptions } from './octokit.interface';
+import { OctokitAsyncOptions, OctokitOptions } from './octokit.interface';
 
 export const createOctokitProvider = function (
   options?: OctokitOptions,

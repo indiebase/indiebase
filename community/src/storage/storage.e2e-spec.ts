@@ -1,9 +1,6 @@
-import type {
-  NestFastifyApplication} from '@nestjs/platform-fastify';
-import {
-  FastifyAdapter
-} from '@nestjs/platform-fastify';
-import type { TestingModule } from '@nestjs/testing';
+import { NestFastifyApplication } from '@nestjs/platform-fastify';
+import { FastifyAdapter } from '@nestjs/platform-fastify';
+import { TestingModule } from '@nestjs/testing';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
