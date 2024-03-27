@@ -212,7 +212,6 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       //     };
       //   },
       // }),
-
       MailerModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {
@@ -252,17 +251,6 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
           };
         },
       }),
-      // CaslModule.forRootAsync({
-      //   async useFactory() {
-      //     return {
-      //       superuserRole: BuiltinMgrRoles.OAA,
-      //       getUserFromRequest(request) {
-      //         console.log(request);
-      //         return undefined;
-      //       },
-      //     };
-      //   },
-      // }),
     ],
   })
   class DepsModule {}
