@@ -26,7 +26,6 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 - For companies: Allow developers with spare time to participate in improving open-source projects and provide compensation to the developers.
 
 > [!IMPORTANT]
-
 > - Indiebase highly depends on Github and considers it as the default code management.
 > - `Indiebase Pro` is not free. To use it, you need to purchase a commercial license.
 > - `Indiebase Community` is available under the [AGPL-3.0](https://github.com/indiebase/indiebase/blob/main/LICENSE) license.
