@@ -3,11 +3,12 @@ import {
   HttpServer,
   INestApplication,
 } from '@nestjs/common';
-import { NestFastifyApplication } from '@nestjs/platform-fastify';
+import type { NestExpressApplication } from '@nestjs/platform-express';
+import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { OpenAPIObject } from '@nestjs/swagger';
+import fsPromises from 'fs/promises';
 import Handlebars from 'handlebars';
-import * as path from 'path';
-import * as fsPromises from 'fs/promises';
+import pathLib from 'path';
 
 const { readFile } = fsPromises;
 
@@ -66,21 +67,33 @@ export class StoplightElementsModule {
     const httpAdapter = app.getHttpAdapter();
     const userOptions = Object.assign({}, defaultOptions, options);
 
-    if (this.isFastify(httpAdapter)) {
-      return this.setupFastify(
-        path,
-        app as NestFastifyApplication,
-        document,
-        userOptions,
-      );
+    const name = this.getAdapterName(httpAdapter);
+
+    switch (name) {
+      case 'FastifyAdapter':
+        return this.setupFastify(
+          path,
+          app as NestFastifyApplication,
+          document,
+          userOptions,
+        );
+      case 'ExpressAdapter':
+        return this.setupExpress(
+          path,
+          app as NestExpressApplication,
+          document,
+          userOptions,
+        );
+      default:
+        throw new Error(
+          `The ${name} adapter is not supported. Please use FastifyAdapter/ExpressAdapter instead.`,
+        );
     }
   }
 
-  private static isFastify(httpAdapter: HttpServer) {
+  private static getAdapterName(httpAdapter: HttpServer) {
     return (
-      httpAdapter &&
-      httpAdapter.constructor &&
-      httpAdapter.constructor.name === 'FastifyAdapter'
+      httpAdapter && httpAdapter.constructor && httpAdapter.constructor.name
     );
   }
 
@@ -89,12 +102,25 @@ export class StoplightElementsModule {
     prefix: string,
     app: INestApplication,
   ) {
-    if (this.isFastify(app.getHttpAdapter())) {
-      (app as NestFastifyApplication).useStaticAssets({
-        root,
-        prefix,
-        decorateReply: false,
-      });
+    const name = this.getAdapterName(app.getHttpAdapter());
+
+    switch (name) {
+      case 'FastifyAdapter':
+        (app as NestFastifyApplication).useStaticAssets({
+          root,
+          prefix,
+          decorateReply: false,
+        });
+        break;
+      case 'ExpressAdapter':
+        (app as NestExpressApplication).useStaticAssets(root, {
+          prefix,
+        });
+        break;
+      default:
+        throw new Error(
+          `The ${name} adapter is not supported. Please use FastifyAdapter/ExpressAdapter instead.`,
+        );
     }
   }
 
@@ -106,42 +132,46 @@ export class StoplightElementsModule {
     return p?.[0] !== '/' ? `/${p}` : p;
   }
 
-  public static async setupFastify(
-    p: string,
-    app: NestFastifyApplication,
+  private static async presetDocument(
+    path: string,
+    app: INestApplication,
     document: OpenAPIObject,
     options?: StoplightElementsModuleOptions,
   ) {
-    const formatPath = this.prefixSlug(path.posix.normalize(p)),
+    const formatPath = this.prefixSlug(pathLib.posix.normalize(path)),
       globalPrefix = this.getGlobalPrefix(app);
 
-    const finalPath = globalPrefix
+    const prefixPath = globalPrefix
       ? `${globalPrefix}${formatPath}`
       : formatPath;
 
     const jsonDocument = JSON.stringify(document);
 
     options.apiDescriptionDocument = jsonDocument;
-    options.basePath = finalPath;
+    options.basePath = prefixPath;
 
-    const assetsPath = options.assetsPath ?? path.join(__dirname, 'views');
+    const rootPath = options.assetsPath ?? pathLib.join(__dirname, 'views');
 
-    const templatePath = path.join(assetsPath, 'stoplight-elements.hbs');
+    const templatePath = pathLib.join(rootPath, 'stoplight-elements.hbs');
     const content = await readFile(templatePath, 'utf-8');
     const template = Handlebars.compile(content),
       HTML = template(options);
     const httpAdapter = app.getHttpAdapter();
 
-    httpAdapter.get(finalPath, (_req, res) => {
-      res.redirect(`${finalPath}/`);
-    });
-
     try {
-      httpAdapter.get(`${finalPath}/`, async (req, res) => {
+      httpAdapter.get(prefixPath, (req, res, next) => {
+        // Avoid ERR_TOO_MANY_REDIRECTS caused by express path to regexp.
+        if (!req.url.endsWith('/')) {
+          res.redirect(`${prefixPath}/`);
+        } else {
+          next?.();
+        }
+      });
+
+      httpAdapter.get(`${prefixPath}/`, async (req, res) => {
         if (options.auth && !(await options.auth(req))) {
           throw new ForbiddenException();
         }
-
         res.header(
           'Content-Security-Policy',
           "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; child-src * 'unsafe-inline' 'unsafe-eval' blob:; worker-src * 'unsafe-inline' 'unsafe-eval' blob:; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';",
@@ -149,8 +179,28 @@ export class StoplightElementsModule {
         res.type('text/html');
         res.send(HTML);
       });
-    } catch (error) {}
+    } catch (error) {
+      /* empty */
+    }
 
-    this.startStatic(assetsPath, finalPath, app);
+    this.startStatic(rootPath, prefixPath, app);
+  }
+
+  public static async setupExpress(
+    path: string,
+    app: NestExpressApplication,
+    document: OpenAPIObject,
+    options?: StoplightElementsModuleOptions,
+  ) {
+    return this.presetDocument(path, app, document, options);
+  }
+
+  public static async setupFastify(
+    path: string,
+    app: NestFastifyApplication,
+    document: OpenAPIObject,
+    options?: StoplightElementsModuleOptions,
+  ) {
+    return this.presetDocument(path, app, document, options);
   }
 }

@@ -4,11 +4,11 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "rootDir": "src"
+    "rootDir": "."
   },
   "include": [
     "src/**/*",
-    "views"
+    "example/**/*",
   ],
   "exclude": [
     "dist",

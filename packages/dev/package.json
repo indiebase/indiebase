@@ -2,7 +2,7 @@
   "name": "@indiebase/dev",
   "version": "0.0.1",
   "description": "Indiebase server dev tools",
-  "author": "Han <wanghan9423@outlook.com>",
+  "author": "Han <deskbtm@outlook.com>",
   "private": true,
   "main": "./*.js",
   "exports": {

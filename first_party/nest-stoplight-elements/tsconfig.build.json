@@ -6,6 +6,9 @@
     "dist",
     "**/*spec.ts"
   ],
+  "compilerOptions": {
+    "rootDir": "./src"
+  },
   "include": [
     "src"
   ]

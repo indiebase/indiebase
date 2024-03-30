@@ -1,11 +1,12 @@
 <img width="800" src="https://user-images.githubusercontent.com/45007226/226185397-b8be4abb-18e9-450d-94cf-31f443091f0a.png"/>
 
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/deskbtm?style=social)](https://twitter.com/intent/follow?screen_name=deskbtm)
+
 ## Nota Bene
 
-1. Only support fastify; PR welcome.
-2. For @vercel/ncc. `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@indiebase/nest-stoplight-elements/views .`
+- Bundlers e.g. @vercel/ncc. `ncc build ./src/main.ts -o dist -m && cp -r ./node_modules/@indiebase/nest-stoplight-elements/views .`
 
-## New features.
+## Features.
 
 This library depends on the forked [stoplight-elements](https://github.com/Nawbc/elements), and provides some new features.
 
@@ -65,4 +66,4 @@ auth(req) {
   - memory - keeps the history of your "URL" in memory (doesn't read or write to the address bar).
 
 <a href="https://www.zhihu.com/people/mrno-64" target="_blank" rel="noopener noreferrer">
-<img width="30" src="https://user-images.githubusercontent.com/45007226/239428136-92080c5b-7d02-4218-b264-e87c633f092a.png" alt="Han zhihu" /></a>
+<img width="20" src="https://user-images.githubusercontent.com/45007226/239428136-92080c5b-7d02-4218-b264-e87c633f092a.png" alt="Han zhihu" /></a>
