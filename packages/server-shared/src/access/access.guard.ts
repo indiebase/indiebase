@@ -1,4 +1,4 @@
-import { PrimitiveAccessGuard } from '@indiebase/nest-ac';
+import { PrimitiveAccessGuard } from '@indiebase/nest-accesscontrol';
 import { ExecutionContext } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { type FastifyRequest } from 'fastify';
@@ -7,7 +7,6 @@ import { type FastifyRequest } from 'fastify';
 export class AccessGuard extends PrimitiveAccessGuard {
   protected override async useRole(context: ExecutionContext): Promise<string> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
-    console.log(request.user);
     return request.user?.role;
   }
 

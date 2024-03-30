@@ -3,7 +3,10 @@ import fastifyHelmet from '@fastify/helmet';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyPassport from '@fastify/passport';
 import fastifySession from '@fastify/session';
-import { HttpExceptionFilter, sizeParser } from '@indiebase/server-shared';
+import {
+  GlobalExceptionFilter,
+  sizeParser,
+} from '@indiebase/server-shared';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -78,7 +81,7 @@ export class CommunityBootstrap {
 
     this.app.useStaticAssets(this.options?.staticAssets);
     this.app.useLogger(nestWinston);
-    this.app.useGlobalFilters(new HttpExceptionFilter(nestWinston));
+    this.app.useGlobalFilters(new GlobalExceptionFilter(nestWinston));
 
     return this;
   }
@@ -105,7 +108,6 @@ export class CommunityBootstrap {
     await this.app.register(fastifyPassport.secureSession());
 
     fastifyPassport.registerUserSerializer(async (user, request) => {
-      console.log(',===', user, request);
       return {};
     });
 

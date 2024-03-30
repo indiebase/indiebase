@@ -7453,7 +7453,7 @@ __metadata:
     "@fastify/session": "npm:10.7.0"
     "@fastify/swagger": "npm:8.14.0"
     "@indiebase/dev": "workspace:^"
-    "@indiebase/nest-ac": "workspace:^"
+    "@indiebase/nest-accesscontrol": "workspace:^"
     "@indiebase/nest-async-context": "workspace:^"
     "@indiebase/nest-fastify-file": "workspace:^"
     "@indiebase/nest-fastify-passport": "workspace:^"
@@ -7670,9 +7670,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-ac@workspace:^, @indiebase/nest-ac@workspace:first_party/nest-ac":
+"@indiebase/nest-accesscontrol@workspace:^, @indiebase/nest-accesscontrol@workspace:first_party/nest-accesscontrol":
   version: 0.0.0-use.local
-  resolution: "@indiebase/nest-ac@workspace:first_party/nest-ac"
+  resolution: "@indiebase/nest-accesscontrol@workspace:first_party/nest-accesscontrol"
   dependencies:
     "@indiebase/accesscontrol": "workspace:^"
     "@nestjs/cli": "npm:10.3.2"
@@ -7994,6 +7994,7 @@ __metadata:
     "@nestjs/swagger": "npm:7.3.0"
     "@nestjs/testing": "npm:10.3.5"
     "@types/node": "npm:20.11.30"
+    "@types/rimraf": "npm:4.0.5"
     "@types/supertest": "npm:6.0.2"
     "@typescript-eslint/eslint-plugin": "npm:7.3.1"
     "@typescript-eslint/parser": "npm:7.3.1"
@@ -8045,7 +8046,6 @@ __metadata:
     "@types/node": "npm:20.8.10"
     "@types/pg": "npm:8.11.2"
     "@types/qrcode": "npm:1.5.5"
-    "@types/rimraf": "npm:4.0.5"
     "@types/supertest": "npm:6.0.2"
     "@vercel/ncc": "npm:0.38.1"
     "@vitest/coverage-v8": "npm:1.4.0"
@@ -8146,7 +8146,7 @@ __metadata:
   peerDependencies:
     "@deskbtm/gadgets": "workspace:^"
     "@fastify/session": "*"
-    "@indiebase/nest-ac": "workspace:^"
+    "@indiebase/nest-accesscontrol": "workspace:^"
     "@indiebase/nest-async-context": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
     "@indiebase/nestjs-redis": 10.0.0

@@ -114,7 +114,6 @@ networks:
 
 volumes:
   pg_data:
-  portainer_data:
   redis_data:
 
 secrets:

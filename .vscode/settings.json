@@ -32,6 +32,9 @@
     "**/*.code-search": true,
     "**/build": true,
     "**/dist": true,
-    "**/.yarn": true
+    "**/.yarn": true,
+    "**/nest-casl": true,
+    "**/nest-casbin": true,
+    "*.lock": true
   }
 }

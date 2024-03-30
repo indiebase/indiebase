@@ -1,4 +1,4 @@
-import { AccessActions } from '@indiebase/nest-ac';
+import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { AccountStatus, OrgStatus, ProjectStatus } from '@indiebase/trait';
 import { Knex } from 'knex';

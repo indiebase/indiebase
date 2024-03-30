@@ -1,4 +1,4 @@
-import { X_Indiebase_AC } from '@indiebase/sdk';
+import { X_Indiebase_AP } from '@indiebase/sdk';
 import { CanActivate, ExecutionContext, Logger } from '@nestjs/common';
 import {
   BadRequestException,
@@ -19,7 +19,7 @@ import * as forge from 'node-forge';
  * @param salt Recommend to use steganography to hide the salt in front-end
  * @example
  * ```
- *  X-Indiebase-AC: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
+ *  X-Indiebase-AP: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
  * ```
  *
  */
@@ -43,7 +43,7 @@ const apiTokenInspect = function (
 /**
  *
  * Protect public api, avoid web crawler etc.
- * Default header: X-Indiebase-AC, custom in dotenv.
+ * Default header: X-Indiebase-AP, custom in dotenv.
  */
 @Injectable()
 export class PublicApiGuard implements CanActivate {
@@ -65,7 +65,7 @@ export class PublicApiGuard implements CanActivate {
       return true;
     }
 
-    const apiToken = request.headers[X_Indiebase_AC] as string;
+    const apiToken = request.headers[X_Indiebase_AP] as string;
     if (!apiToken) {
       throw new BadRequestException();
     }

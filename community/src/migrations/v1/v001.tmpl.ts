@@ -1,4 +1,4 @@
-import { AccessActions } from '@indiebase/nest-ac';
+import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { KnexEx, TmplMetaTables } from '@indiebase/server-shared';
 import { Knex } from 'knex';
 

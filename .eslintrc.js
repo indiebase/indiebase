@@ -17,6 +17,7 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
+    'prefer-const': ['error', { destructuring: 'all' }],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
@@ -42,5 +43,6 @@ module.exports = {
         extendDefaults: true,
       },
     ],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
   },
 };

@@ -1,24 +1,28 @@
-import { OkResponseSchema } from '@indiebase/server-shared';
-import { ApiProperty,ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsHash,IsOptional, IsString, IsUrl } from 'class-validator';
+import {
+  IsEntityExisted,
+  MgrMetaTables,
+  OkResponseSchema,
+} from '@indiebase/server-shared';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsHash, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateHackersDTO {
   @ApiProperty({
     description: 'Hacker account',
     default: 'dev@indiebase.com',
   })
-  // @IsEntityExisted({
-  //   schema: 'mgr',
-  //   table: MgrMetaTables.hackers,
-  //   column: 'email',
-  // })
+  @IsEntityExisted({
+    schema: 'mgr',
+    table: MgrMetaTables.hackers,
+    column: 'email',
+  })
   @IsEmail()
   email: string;
 
   @ApiProperty({
     description:
       'Hacker account password, the password needs to be converted to SHA256 for transfer',
-    default: '1999569bbac0ab43f31808866fcd15a0b20d309ccd64410d470455076e582a6c',
+    default: '9b1ddbbcf45a850c792465c816bb43423fe9dc6383b6fbc3a16d25be907e3988',
   })
   @IsHash('sha256', {
     message: 'Password needs to be converted to SHA256',

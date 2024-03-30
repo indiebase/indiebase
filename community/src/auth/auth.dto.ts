@@ -34,7 +34,7 @@ export class LocalSignInDTO {
   @ApiProperty({
     description:
       'Hacker account password, the password needs to be converted to SHA256 for transfer',
-    default: '1999569bbac0ab43f31808866fcd15a0b20d309ccd64410d470455076e582a6c',
+    default: '9b1ddbbcf45a850c792465c816bb43423fe9dc6383b6fbc3a16d25be907e3988',
   })
   @IsHash('sha256', {
     message: 'Password needs to be converted to SHA256',

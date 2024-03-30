@@ -1,11 +1,12 @@
 /**
  * Protect public api
+ * AP means Api Protection
  * @example
  * ```
- *  X-Indiebase-AC: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
+ *  X-Indiebase-AP: 1650884292;7RikC4;80d995638fcce7122ddf65bba87c9741
  * ```
  */
-export const X_Indiebase_AC = 'x-indiebase-ac';
+export const X_Indiebase_AP = 'x-indiebase-ap';
 
 /**
  * Language

@@ -1,6 +1,7 @@
 import path from 'node:path';
 
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
+import { X_Indiebase_AP } from '@indiebase/sdk';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -28,74 +29,81 @@ const contactName = 'deskbtm/indiebase',
   Click "Export" button, you can use swagger-typescript-api to generate TypeScript API from OpenAPI.
   Send Email to Indiebase (indiebase@deskbtm.com)
 `;
+const commonApiKey = [
+  {
+    type: 'apiKey',
+    in: 'header',
+    name: X_Indiebase_AP,
+  },
+  'ap',
+] as const;
+const commonBearerAuth = [
+  {
+    type: 'http',
+    scheme: 'bearer',
+    bearerFormat: 'paseto',
+    description: 'Default paseto token Authorization',
+    in: 'header',
+  },
+  'paseto',
+] as const;
 
-export const setupApiDoc = (app: INestApplication) =>
-  new Promise(async (resolve) => {
-    try {
-      const mgrOptions = new DocumentBuilder()
-        .setTitle('Indiebase Management REST API')
-        .setDescription(desc)
-        .setVersion('1.0.0')
-        .addBearerAuth(
-          {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'paseto',
-            description: 'Default paseto token Authorization',
-            in: 'header',
-          },
-          'paseto',
-        )
-        .setContact(contactName, contactUrl, contactEmail)
-        .setLicense(license, licenseUrl)
-        .setTermsOfService(termsUrl)
-        .build();
+export const setupApiDoc = async (app: INestApplication) => {
+  try {
+    const mgrOptions = new DocumentBuilder()
+      .setTitle('Indiebase Management REST API')
+      .setDescription(desc)
+      .setVersion('1.0.0')
+      .setContact(contactName, contactUrl, contactEmail)
+      .setLicense(license, licenseUrl)
+      .setTermsOfService(termsUrl)
+      .addBearerAuth(...commonBearerAuth)
+      .addServer('https://indiebase.deskbtm.com/docs/mgr/api', 'Production')
+      .addServer(
+        'https://indiebase-dev.deskbtm.com/docs/mgr/api',
+        'Development',
+      )
+      .addApiKey(...commonApiKey)
+      .build();
 
-      const options = new DocumentBuilder()
-        .setTitle('Indiebase REST API')
-        .setDescription(desc)
-        .setVersion('1.0.0')
-        .addBearerAuth(
-          {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'paseto',
-            description: 'Default paseto token Authorization',
-            in: 'header',
-          },
-          'paseto',
-        )
-        .setContact(contactName, contactUrl, contactEmail)
-        .setLicense(license, licenseUrl)
-        .setTermsOfService(termsUrl)
-        .build();
+    const options = new DocumentBuilder()
+      .setTitle('Indiebase REST API')
+      .setDescription(desc)
+      .setVersion('1.0.0')
+      .addBearerAuth(...commonBearerAuth)
+      .setContact(contactName, contactUrl, contactEmail)
+      .setLicense(license, licenseUrl)
+      .setTermsOfService(termsUrl)
+      .addServer('https://indiebase.deskbtm.com/docs/api', 'Production')
+      .addServer('https://indiebase-dev.deskbtm.com/docs/api', 'Development')
+      .addApiKey(...commonApiKey)
+      .build();
 
-      const mgrApiDoc = SwaggerModule.createDocument(app, mgrOptions, {
-        deepScanRoutes: true,
-        operationIdFactory: (_, m) => m + '',
-        include: [MgrModule, ProbeModule],
-      });
+    const mgrApiDoc = SwaggerModule.createDocument(app, mgrOptions, {
+      deepScanRoutes: true,
+      operationIdFactory: (_, m) => m + '',
+      include: [MgrModule, ProbeModule],
+    });
 
-      const apiDoc = SwaggerModule.createDocument(app, options, {
-        deepScanRoutes: true,
-        operationIdFactory: (_, m) => m + '',
-        include: [UsersModule, StorageModule, AuthModule],
-      });
+    const apiDoc = SwaggerModule.createDocument(app, options, {
+      deepScanRoutes: true,
+      operationIdFactory: (_, m) => m + '',
+      include: [UsersModule, StorageModule, AuthModule],
+    });
 
-      await StoplightElementsModule.setup('/docs/mgr/api', app, mgrApiDoc, {
+    await Promise.all([
+      StoplightElementsModule.setup('/docs/mgr/api', app, mgrApiDoc, {
         favicon: '/favicon.ico',
         logo: '/logo.svg',
         assetsPath,
-      });
-
-      await StoplightElementsModule.setup('/docs/api', app, apiDoc, {
+      }),
+      StoplightElementsModule.setup('/docs/api', app, apiDoc, {
         favicon: '/favicon.ico',
         logo: '/logo.svg',
         assetsPath,
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      resolve(null);
-    }
-  });
+      }),
+    ]);
+  } catch (e) {
+    console.error(e);
+  }
+};

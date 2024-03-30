@@ -1,6 +1,4 @@
-import path from 'node:path';
-
-import { AccessControlModule } from '@indiebase/nest-ac';
+import { AccessControlModule } from '@indiebase/nest-accesscontrol';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
 import { KnexModule, knexSnakeCaseMappers } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
@@ -10,8 +8,6 @@ import { X_Indiebase_Lang } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { utilities, WinstonModule } from 'nest-winston';
 import {
   AcceptLanguageResolver,
@@ -212,34 +208,34 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       //     };
       //   },
       // }),
-      MailerModule.forRootAsync({
-        inject: [ConfigService],
-        useFactory: async (config: ConfigService) => {
-          const { host, username, password, from } = config.get('smtp');
-          return {
-            transport: {
-              host,
-              ignoreTLS: false,
-              secure: true,
-              auth: {
-                user: username,
-                pass: password,
-              },
-            },
-            defaults: {
-              from: `${from} <${username}>`,
-            },
-            preview: true,
-            template: {
-              dir: path.resolve(process.cwd(), 'public/tpl/'),
-              adapter: new HandlebarsAdapter(),
-              options: {
-                strict: true,
-              },
-            },
-          };
-        },
-      }),
+      // MailerModule.forRootAsync({
+      //   inject: [ConfigService],
+      //   useFactory: async (config: ConfigService) => {
+      //     const { host, username, password, from } = config.get('smtp');
+      //     return {
+      //       transport: {
+      //         host,
+      //         ignoreTLS: false,
+      //         secure: true,
+      //         auth: {
+      //           user: username,
+      //           pass: password,
+      //         },
+      //       },
+      //       defaults: {
+      //         from: `${from} <${username}>`,
+      //       },
+      //       preview: true,
+      //       template: {
+      //         dir: path.resolve(process.cwd(), 'public/tpl/'),
+      //         adapter: new HandlebarsAdapter(),
+      //         options: {
+      //           strict: true,
+      //         },
+      //       },
+      //     };
+      //   },
+      // }),
       OctokitModule.forRootAsync({
         async useFactory() {
           return {

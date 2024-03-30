@@ -1,5 +1,5 @@
 {
-  "name": "@indiebase/nest-ac",
+  "name": "@indiebase/nest-accesscontrol",
   "version": "0.0.1",
   "description": "Nestjs access control module for indiebase",
   "author": {

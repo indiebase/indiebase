@@ -1,23 +1,23 @@
-import { X_Indiebase_AC, X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { X_Indiebase_AP, X_Indiebase_Project_ID } from '@indiebase/sdk';
 import { ExecutionContext } from '@nestjs/common';
 import {
   applyDecorators,
   BadRequestException,
   createParamDecorator,
 } from '@nestjs/common';
-import { ApiHeader } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiHeader, ApiSecurity } from '@nestjs/swagger';
 
-export const ProtectApiHeader = () =>
+export const ApiIndiebaseGuardHeader = () =>
   ApiHeader({
-    name: X_Indiebase_AC,
+    name: X_Indiebase_AP,
     description: 'Protect public APIs',
     required: true,
     schema: {
-      default: '0000000000;dev;2cb919284dc284f4994fcd064ef0542b',
+      default: '1711726948199;dev;057a041a310de100868068c2ab3b30dd',
     },
   });
 
-export const ProjectApiHeader = () =>
+export const ApiIndiebaseProjectHeader = () =>
   ApiHeader({
     name: X_Indiebase_Project_ID,
     description:
@@ -28,8 +28,12 @@ export const ProjectApiHeader = () =>
     },
   });
 
-export const CommonApiHeader = () =>
-  applyDecorators(ProjectApiHeader(), ProtectApiHeader());
+export const ApiIndiebaseCommonHeader = () =>
+  applyDecorators(ApiIndiebaseProjectHeader(), ApiIndiebaseGuardHeader());
+
+export const ApiIndiebaseSecurity = () =>
+  // ApiSecurity('ap') provides api protection.
+  applyDecorators(ApiBearerAuth('paseto'), ApiSecurity('ap'));
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   return createParamDecorator((_, ctx: ExecutionContext) => {
@@ -56,6 +60,7 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
 export const User = createParamDecorator(
   (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
+    //
     return property ? request.user?.[property] : request.user;
   },
 );

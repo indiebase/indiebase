@@ -1,5 +1,5 @@
 import {
-  CommonApiHeader,
+  ApiIndiebaseCommonHeader,
   Project,
   PublicApiGuard,
   User,
@@ -35,9 +35,9 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
-  @CommonApiHeader()
+  @ApiIndiebaseCommonHeader()
   @ApiOperation({
-    summary: 'Sign in with password',
+    summary: 'SignIn with password',
   })
   @UseGuards(PublicApiGuard, LocalAuthGuard)
   async signIn(
@@ -114,7 +114,7 @@ export class AuthController {
 
   @Post('otp')
   @ApiOperation({
-    summary: 'Create one time password, qrcode',
+    summary: 'Create one time password, QRCode',
   })
   @UseGuards(PublicApiGuard)
   async generateOtp(@User('username') username: string) {

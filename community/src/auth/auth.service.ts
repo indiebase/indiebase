@@ -48,11 +48,11 @@ export class AuthService {
       throw new NotFoundException(`Not found ${email}`);
     }
 
-    console.log(user);
-
     if (!user.password) {
       throw new UnauthorizedException('Please set password first');
     }
+
+    console.log(password, user.password);
 
     const result = await bcrypt.compare(password, user.password);
 

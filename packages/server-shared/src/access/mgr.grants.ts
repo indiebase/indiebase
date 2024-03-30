@@ -1,4 +1,4 @@
-import { AccessActions } from '@indiebase/nest-ac';
+import { AccessActions } from '@indiebase/nest-accesscontrol';
 
 import { BuiltinMgrRoles } from './roles.default';
 

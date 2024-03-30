@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-import { grantsRecord2Array } from '@indiebase/nest-ac';
+import { grantsRecord2Array } from '@indiebase/nest-accesscontrol';
 import {
   BuiltinMgrRoles,
   defaultMgrGrants,

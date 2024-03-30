@@ -14,7 +14,6 @@ import {
   registerDecorator,
   ValidatorConstraint,
 } from 'class-validator';
-import { IncomingMessage } from 'http';
 import { Knex } from 'knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
@@ -176,7 +175,7 @@ export function IsEntityExisted(
     validationOptions,
   );
 
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       name: 'IsEntityExisted',
       target: object.constructor,

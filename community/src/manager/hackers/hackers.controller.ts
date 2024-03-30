@@ -1,9 +1,10 @@
-import { AccessActions, UseAccess } from '@indiebase/nest-ac';
+import { AccessActions, UseAccess } from '@indiebase/nest-accesscontrol';
 import {
   AccessGuard,
-  CommonApiHeader,
+  ApiIndiebaseCommonHeader,
+  ApiIndiebaseGuardHeader,
+  ApiIndiebaseSecurity,
   OkResponseSchema,
-  ProtectApiHeader,
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
@@ -15,7 +16,6 @@ import {
   Controller,
   Get,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -56,7 +56,7 @@ export class HackersController {
   @ApiOkResponse({
     type: OkResponseSchema,
   })
-  @ProtectApiHeader()
+  @ApiIndiebaseGuardHeader()
   @UseGuards(PublicApiGuard)
   @Post('signup')
   async signup(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
@@ -79,9 +79,8 @@ export class HackersController {
   @ApiOkResponse({
     type: OkResponseSchema,
   })
-  @ApiBearerAuth('paseto')
-  @CommonApiHeader()
-  @ProtectApiHeader()
+  @ApiIndiebaseSecurity()
+  @ApiIndiebaseCommonHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
     hacker: [AccessActions.deleteAny],

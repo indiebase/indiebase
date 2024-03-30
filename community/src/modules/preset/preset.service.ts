@@ -1,4 +1,4 @@
-import { AccessService } from '@indiebase/nest-ac';
+import { AccessService } from '@indiebase/nest-accesscontrol';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
 import { MgrMetaTables, TmplMetaTables } from '@indiebase/server-shared';

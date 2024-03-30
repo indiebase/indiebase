@@ -14,7 +14,7 @@ import {
 import { useForm } from '@mantine/form';
 import { useQuery } from '@tanstack/react-query';
 import { showNotification } from '@mantine/notifications';
-import { IconX, IconMail, IconKey } from '@tabler/icons';
+import { IconX, IconMail, IconKey } from '@tabler/icons-react';
 import { projectsQuery } from '../../api';
 
 export const SignIn = function () {
