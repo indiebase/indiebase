@@ -5,11 +5,19 @@ export enum BuiltinMgrRoles {
    */
   OAA = 'OAA',
 
+  admin = 'admin',
+  /**
+   * Project owner.
+   */
+  owner = 'owner',
+  /**
+   * Project member.
+   */
+  member = 'member',
+
   anonymous = 'anonymous',
 }
 
 export enum BuiltinPrjRoles {
-  owner = 'owner',
-  member = 'member',
   anonymous = 'anonymous',
 }

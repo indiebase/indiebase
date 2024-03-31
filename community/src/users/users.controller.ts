@@ -1,13 +1,6 @@
-import { OkResponseSchema } from '@indiebase/server-shared';
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
-
-import { PasetoAuthGuard } from '../auth/paseto.guard';
+import { ApiUnionResponse } from '@indiebase/server-shared';
+import { Controller, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller({
   path: 'user',
@@ -20,9 +13,7 @@ export class UsersController {
   @ApiOperation({
     summary: 'Sign up a user',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse()
   @ApiBearerAuth('paseto')
   @UseGuards()
   @Post('signup')

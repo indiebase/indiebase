@@ -1,6 +1,6 @@
 import { I18nContext } from 'nestjs-i18n';
 
-import { Resource } from './resources';
+import { Resource } from './resource.interface';
 
 export enum ManagerResourceGroups {
   hackers = 'hackers',

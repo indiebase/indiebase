@@ -1,4 +1,5 @@
-import { AccessGuard, OkResponseSchema } from '@indiebase/server-shared';
+import { UseAccess } from '@indiebase/nest-accesscontrol';
+import { AccessGuard, ApiUnionResponse } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import {
   Body,
@@ -11,7 +12,6 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiOkResponse,
   ApiOperation,
   ApiParam,
   ApiTags,
@@ -33,17 +33,13 @@ export class ProjectsController {
     summary: 'List projects',
     description: 'List all public projects',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse()
   @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Get('orgs/:org/projects')
   async list() {}
 
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse()
   @ApiOperation({
     summary: 'List projects for the authenticated user',
     description:
@@ -54,16 +50,17 @@ export class ProjectsController {
   @Get('user/projects')
   async listForUser() {}
 
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
   @ApiOperation({
     summary: 'Create a project',
     description:
       'Creating a project will create a postgresql schema and template tables',
   })
-  // @UseGuards(PasetoAuthGuard, AccessGuard)
+  @ApiUnionResponse()
+  @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
+  @UseAccess({
+    
+  })
   @Post('orgs/:org/projects')
   async create(@Body() body: CreatePrjDTO, @Param('org') org: string) {
     await this.projectsService.create(org, body);

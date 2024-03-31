@@ -4,7 +4,7 @@ import {
   ApiIndiebaseCommonHeader,
   ApiIndiebaseSecurity,
   ApiProtectionHeader,
-  OkResponseSchema,
+  ApiUnionResponse,
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
@@ -18,7 +18,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
 import { CreateHackersDTO } from './hackers.dto';
@@ -35,9 +35,7 @@ export class HackersController {
   @ApiOperation({
     summary: 'List hackers',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse('pagination')
   @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiIndiebaseSecurity()
   @ApiProtectionHeader()
@@ -52,9 +50,7 @@ export class HackersController {
   @ApiOperation({
     summary: 'Sign up a hacker',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse()
   @ApiProtectionHeader()
   @UseGuards(PublicApiGuard)
   @Post('signup')
@@ -75,9 +71,7 @@ export class HackersController {
     summary: 'Create a hacker',
     description: 'Must have the create hacker permission',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse()
   @ApiIndiebaseSecurity()
   @ApiIndiebaseCommonHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)

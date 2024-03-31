@@ -1,7 +1,7 @@
-import { BuiltinPrjRoles } from './roles.default';
+import { BuiltinPrjRoles } from './built-in.roles';
 
 export const defaultPrjGrants = {
-  [BuiltinPrjRoles.owner]: {
+  ['']: {
     hacker: {},
   },
 };

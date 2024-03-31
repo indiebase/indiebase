@@ -1,31 +1,21 @@
-import { did } from '@deskbtm/gadgets';
-import {
-  AccessGuard,
-  OkResponseSchema,
-  PublicApiGuard,
-} from '@indiebase/server-shared';
+import { ApiUnionResponse } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import {
   Body,
   Controller,
   Delete,
   Get,
-  InternalServerErrorException,
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiOkResponse,
   ApiOperation,
   ApiParam,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
-import { PasetoAuthGuard } from '../../auth/paseto.guard';
 import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
 import { OrgsService } from './orgs.service';
 
@@ -41,9 +31,7 @@ export class OrgsController {
     summary: 'List organizations',
     description: 'List all organizations',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
+  @ApiUnionResponse()
   // @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Get('orgs')
@@ -58,11 +46,7 @@ export class OrgsController {
   @ApiOperation({
     summary: 'Create an organization',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
-  // @UseGuards(PasetoAuthGuard, AccessGuard)
-  @ApiBearerAuth('paseto')
+  @ApiUnionResponse()
   @Post('orgs')
   async create(@Body() body: CreateOrgDTO) {
     await this.orgsService.create(body);
@@ -73,11 +57,7 @@ export class OrgsController {
   @ApiOperation({
     summary: 'Update an organization',
   })
-  @ApiOkResponse({
-    type: OkResponseSchema,
-  })
-  @ApiBearerAuth('paseto')
-  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
+  @ApiUnionResponse()
   @Patch('orgs/:org')
   async update(@Body() body: UpdateOrgDTO) {
     await this.orgsService.update(body);

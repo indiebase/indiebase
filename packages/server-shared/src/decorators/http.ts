@@ -5,7 +5,17 @@ import {
   BadRequestException,
   createParamDecorator,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiHeader, ApiSecurity } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiHeader,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiSecurity,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+
+import { ErrorResSchema, OkResponseSchema, PaginationResSchema } from '../dto';
 
 export const ApiProtectionHeader = () =>
   ApiHeader({
@@ -34,6 +44,33 @@ export const ApiIndiebaseCommonHeader = () =>
 export const ApiIndiebaseSecurity = () =>
   // ApiSecurity('ap') provides api protection.
   applyDecorators(ApiBearerAuth('paseto'), ApiSecurity('ap'));
+
+export const ApiUnionResponse = (okType?: 'pagination') => {
+  let okSchema;
+  switch (okType) {
+    case 'pagination':
+      okSchema = PaginationResSchema;
+      break;
+    default:
+      okSchema = OkResponseSchema;
+      break;
+  }
+
+  return applyDecorators(
+    ApiOkResponse({
+      type: okSchema,
+    }),
+    ApiUnauthorizedResponse({
+      type: ErrorResSchema,
+    }),
+    ApiForbiddenResponse({
+      type: ErrorResSchema,
+    }),
+    ApiInternalServerErrorResponse({
+      type: ErrorResSchema,
+    }),
+  );
+};
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   return createParamDecorator((_, ctx: ExecutionContext) => {

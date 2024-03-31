@@ -1,6 +1,6 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
 
-import { BuiltinMgrRoles } from './roles.default';
+import { BuiltinMgrRoles } from './built-in.roles';
 
 export const defaultMgrGrants = {
   [BuiltinMgrRoles.OAA]: {
