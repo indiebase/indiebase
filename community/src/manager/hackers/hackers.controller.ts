@@ -2,8 +2,8 @@ import { AccessActions, UseAccess } from '@indiebase/nest-accesscontrol';
 import {
   AccessGuard,
   ApiIndiebaseCommonHeader,
-  ApiIndiebaseGuardHeader,
   ApiIndiebaseSecurity,
+  ApiProtectionHeader,
   OkResponseSchema,
   PublicApiGuard,
   User,
@@ -18,12 +18,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
 import { CreateHackersDTO } from './hackers.dto';
@@ -43,8 +38,12 @@ export class HackersController {
   @ApiOkResponse({
     type: OkResponseSchema,
   })
-  // @UseGuards(PasetoAuthGuard, AccessGuard)
-  @ApiBearerAuth('paseto')
+  @UseGuards(PasetoAuthGuard, AccessGuard)
+  @ApiIndiebaseSecurity()
+  @ApiProtectionHeader()
+  @UseAccess({
+    hacker: [AccessActions.readAny],
+  })
   @Get()
   async list() {
     return 1;
@@ -56,7 +55,7 @@ export class HackersController {
   @ApiOkResponse({
     type: OkResponseSchema,
   })
-  @ApiIndiebaseGuardHeader()
+  @ApiProtectionHeader()
   @UseGuards(PublicApiGuard)
   @Post('signup')
   async signup(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
@@ -83,7 +82,7 @@ export class HackersController {
   @ApiIndiebaseCommonHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
-    hacker: [AccessActions.deleteAny],
+    hacker: [AccessActions.createAny],
   })
   @Post('hacker')
   async create(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {

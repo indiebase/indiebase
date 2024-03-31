@@ -139,7 +139,6 @@ export const v001_mgr = async function (
         .withSchema(schema)
         .createTable(MgrMetaTables.hackers, (table) => {
           table.increments('id').primary();
-          // table.string('username').index().notNullable();
           table.string('email').unique().index().notNullable();
           table.string('nickname').comment('Nickname');
           table.string('avatar_url').comment('User avatar url');

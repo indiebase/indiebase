@@ -1,4 +1,4 @@
-import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+                                   import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
 import { MgrMetaTables } from '@indiebase/server-shared';
 import {

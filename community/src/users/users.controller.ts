@@ -26,7 +26,7 @@ export class UsersController {
   @ApiBearerAuth('paseto')
   @UseGuards()
   @Post('signup')
-  async demo() {
+  async signUp() {
     return 1;
     // return this.pasetoService.sign({ demo: 11 });
   }

@@ -58,11 +58,8 @@ export const setupApiDoc = async (app: INestApplication) => {
       .setLicense(license, licenseUrl)
       .setTermsOfService(termsUrl)
       .addBearerAuth(...commonBearerAuth)
-      .addServer('https://indiebase.deskbtm.com/docs/mgr/api', 'Production')
-      .addServer(
-        'https://indiebase-dev.deskbtm.com/docs/mgr/api',
-        'Development',
-      )
+      .addServer('https://indiebase.deskbtm.com', 'Production')
+      .addServer('http://indiebase-dev.deskbtm.com:8331', 'Development')
       .addApiKey(...commonApiKey)
       .build();
 
@@ -74,8 +71,8 @@ export const setupApiDoc = async (app: INestApplication) => {
       .setContact(contactName, contactUrl, contactEmail)
       .setLicense(license, licenseUrl)
       .setTermsOfService(termsUrl)
-      .addServer('https://indiebase.deskbtm.com/docs/api', 'Production')
-      .addServer('https://indiebase-dev.deskbtm.com/docs/api', 'Development')
+      .addServer('https://indiebase.deskbtm.com', 'Production')
+      .addServer('http://indiebase-dev.deskbtm.com:8331', 'Development')
       .addApiKey(...commonApiKey)
       .build();
 

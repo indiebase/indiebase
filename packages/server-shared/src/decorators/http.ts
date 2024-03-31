@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiHeader, ApiSecurity } from '@nestjs/swagger';
 
-export const ApiIndiebaseGuardHeader = () =>
+export const ApiProtectionHeader = () =>
   ApiHeader({
     name: X_Indiebase_AP,
     description: 'Protect public APIs',
@@ -17,7 +17,7 @@ export const ApiIndiebaseGuardHeader = () =>
     },
   });
 
-export const ApiIndiebaseProjectHeader = () =>
+export const ApiProjectHeader = () =>
   ApiHeader({
     name: X_Indiebase_Project_ID,
     description:
@@ -29,7 +29,7 @@ export const ApiIndiebaseProjectHeader = () =>
   });
 
 export const ApiIndiebaseCommonHeader = () =>
-  applyDecorators(ApiIndiebaseProjectHeader(), ApiIndiebaseGuardHeader());
+  applyDecorators(ApiProjectHeader(), ApiProtectionHeader());
 
 export const ApiIndiebaseSecurity = () =>
   // ApiSecurity('ap') provides api protection.
