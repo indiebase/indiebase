@@ -3,7 +3,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';
 
-export class PaginationReqSchema {
+export class PaginationRequestSchema {
   @ApiProperty({
     default: 1,
   })
@@ -32,7 +32,7 @@ export class OkResponseSchema {
   message?: string | string[];
 }
 
-export class PaginationResSchema extends OkResponseSchema {
+export class PaginationResponseSchema extends OkResponseSchema {
   @ApiProperty({
     description: 'Total items',
   })
@@ -49,7 +49,7 @@ export class PaginationResSchema extends OkResponseSchema {
   pageSize: number;
 }
 
-export class ErrorResSchema {
+export class ErrResponseSchema {
   @ApiProperty({
     description: 'Response logical code',
     default: ResultCode.ERROR,

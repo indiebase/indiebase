@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import passport from '@fastify/passport';
 import {
   CanActivate,
   ExecutionContext,
@@ -9,7 +10,8 @@ import {
   Optional,
   UnauthorizedException,
 } from '@nestjs/common';
-import passport from '@fastify/passport';
+import { FastifyReply, FastifyRequest } from 'fastify';
+
 import { Type } from './interfaces';
 import {
   AuthModuleOptions,
@@ -17,7 +19,6 @@ import {
 } from './interfaces/auth-module.options';
 import { defaultOptions } from './options';
 import { memoize } from './utils/memoize.util';
-import { FastifyRequest, FastifyReply } from 'fastify';
 
 export type IAuthGuard = CanActivate & {
   logIn<TRequest extends { logIn: Function } = any>(

@@ -1,5 +1,6 @@
 import {
-  ApiIndiebaseCommonHeader,
+  ApiIndiebaseSecurity,
+  ApiUnionResponse,
   Project,
   PublicApiGuard,
   User,
@@ -34,12 +35,13 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signin')
-  @ApiIndiebaseCommonHeader()
   @ApiOperation({
     summary: 'SignIn with password',
   })
+  @ApiUnionResponse()
+  @ApiIndiebaseSecurity()
   @UseGuards(PublicApiGuard, LocalAuthGuard)
+  @Post('signin')
   async signIn(
     @Body()
     _: LocalSignInDTO,

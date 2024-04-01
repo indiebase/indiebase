@@ -6,7 +6,6 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 import {
-  ApiBearerAuth,
   ApiForbiddenResponse,
   ApiHeader,
   ApiInternalServerErrorResponse,
@@ -15,7 +14,11 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import { ErrorResSchema, OkResponseSchema, PaginationResSchema } from '../dto';
+import {
+  ErrResponseSchema,
+  OkResponseSchema,
+  PaginationResponseSchema,
+} from '../dto';
 
 export const ApiProtectionHeader = () =>
   ApiHeader({
@@ -38,18 +41,19 @@ export const ApiProjectHeader = () =>
     },
   });
 
-export const ApiIndiebaseCommonHeader = () =>
-  applyDecorators(ApiProjectHeader(), ApiProtectionHeader());
-
+/**
+ * Need a paseto token to sign in and X-Indiebase-AP to protect API.
+ * @returns
+ */
 export const ApiIndiebaseSecurity = () =>
   // ApiSecurity('ap') provides api protection.
-  applyDecorators(ApiBearerAuth('paseto'), ApiSecurity('ap'));
+  applyDecorators(ApiSecurity('ap'), ApiProtectionHeader());
 
 export const ApiUnionResponse = (okType?: 'pagination') => {
   let okSchema;
   switch (okType) {
     case 'pagination':
-      okSchema = PaginationResSchema;
+      okSchema = PaginationResponseSchema;
       break;
     default:
       okSchema = OkResponseSchema;
@@ -61,13 +65,13 @@ export const ApiUnionResponse = (okType?: 'pagination') => {
       type: okSchema,
     }),
     ApiUnauthorizedResponse({
-      type: ErrorResSchema,
+      type: ErrResponseSchema,
     }),
     ApiForbiddenResponse({
-      type: ErrorResSchema,
+      type: ErrResponseSchema,
     }),
     ApiInternalServerErrorResponse({
-      type: ErrorResSchema,
+      type: ErrResponseSchema,
     }),
   );
 };

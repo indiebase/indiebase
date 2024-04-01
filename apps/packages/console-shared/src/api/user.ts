@@ -2,8 +2,8 @@ import { req } from './request';
 import type {
   BaseResSchema,
   Org,
-  PaginationReqSchema,
-  PaginationResSchema,
+  PaginationRequestSchema,
+  PaginationResponseSchema,
   Resource,
   Role,
   UserProfile,
@@ -36,8 +36,8 @@ export const searchUsersApi = async (
 };
 
 export const fetchRolesApi = async (
-  params: Partial<PaginationReqSchema<Role>>,
-): Promise<PaginationResSchema<Role[]>> => {
+  params: Partial<PaginationRequestSchema<Role>>,
+): Promise<PaginationResponseSchema<Role[]>> => {
   const { data } = await req.get('/v1/user/role/list', {
     params,
   });
@@ -45,7 +45,7 @@ export const fetchRolesApi = async (
 };
 
 export const fetchResourceApi = async (): Promise<
-  PaginationResSchema<Resource[]>
+  PaginationResponseSchema<Resource[]>
 > => {
   const { data } = await req.get('/v1/user/res');
   return data;

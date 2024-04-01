@@ -9,7 +9,8 @@ export enum ManagerResourceGroups {
 }
 
 export enum ManagerResources {
-  hackerList = 'hackerList',
+  hackers = 'hackers',
+  orgs = 'orgs',
 }
 
 export const getManagerResources: (i18n: I18nContext) => Resource[] = (
@@ -18,11 +19,11 @@ export const getManagerResources: (i18n: I18nContext) => Resource[] = (
   {
     name: ManagerResourceGroups.hackers,
     displayName: 'Hackers',
-    description: 'Project members',
+    description: 'Indiebase users, project members',
     group: true,
     children: [
       {
-        name: ManagerResources.hackerList,
+        name: ManagerResources.hackers,
         displayName: 'User list',
         description: 'User list',
       },

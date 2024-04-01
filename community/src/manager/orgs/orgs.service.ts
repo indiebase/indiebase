@@ -1,4 +1,4 @@
-                                   import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
 import { MgrMetaTables } from '@indiebase/server-shared';
 import {
@@ -53,11 +53,25 @@ export class OrgsService {
   }
 
   /**
+   * Deletes an organization by its name.
+   * @param name - The name of the organization to delete.
+   * @returns The number of rows affected by the deletion.
+   */
+  public async delete(name: string) {
+    return this.knex(MgrMetaTables.orgs)
+      .withSchema('mgr')
+      .where({
+        name,
+      })
+      .del();
+  }
+
+  /**
    * This function will create an organizational namespace by using schema,
    * enabling data isolation.
    */
   public async create(org: CreateOrgDTO) {
-    await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
+    return this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
       name: org.name,
     });
   }

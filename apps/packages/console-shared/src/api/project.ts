@@ -1,4 +1,8 @@
-import { BaseResSchema, PaginationReqSchema, Project } from '@indiebase/trait';
+import {
+  BaseResSchema,
+  PaginationRequestSchema,
+  Project,
+} from '@indiebase/trait';
 import { req } from './request';
 export interface QueryOwnedProjects {
   orgName: string;
@@ -20,7 +24,7 @@ export const createProjectApi = async function (body): Promise<BaseResSchema> {
 };
 
 export const queryOwnedProjectsApi = async function (
-  params: PaginationReqSchema<QueryOwnedProjects>,
+  params: PaginationRequestSchema<QueryOwnedProjects>,
 ): Promise<BaseResSchema<Project[]>> {
   const { data } = await req.get('/v1/project/list', {
     params,

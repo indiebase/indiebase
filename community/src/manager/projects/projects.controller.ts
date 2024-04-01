@@ -58,14 +58,12 @@ export class ProjectsController {
   @ApiUnionResponse()
   @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
-  @UseAccess({
-    
-  })
+  @UseAccess({})
   @Post('orgs/:org/projects')
   async create(@Body() body: CreatePrjDTO, @Param('org') org: string) {
     await this.projectsService.create(org, body);
 
-    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
+    return { code: ResultCode.SUCCESS, message: 'Create successfully' };
   }
 
   @ApiParam({
@@ -78,6 +76,6 @@ export class ProjectsController {
   @ApiBearerAuth('paseto')
   @Delete('projects/:project')
   async delete(@Param('project') project: string) {
-    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
+    return { code: ResultCode.SUCCESS, message: 'Create successfully' };
   }
 }

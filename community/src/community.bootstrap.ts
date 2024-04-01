@@ -3,10 +3,7 @@ import fastifyHelmet from '@fastify/helmet';
 import fastifyMultipart from '@fastify/multipart';
 import fastifyPassport from '@fastify/passport';
 import fastifySession from '@fastify/session';
-import {
-  GlobalExceptionFilter,
-  sizeParser,
-} from '@indiebase/server-shared';
+import { GlobalExceptionFilter, sizeParser } from '@indiebase/server-shared';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';

@@ -1,4 +1,11 @@
-import { ApiUnionResponse } from '@indiebase/server-shared';
+import { AccessActions, UseAccess } from '@indiebase/nest-accesscontrol';
+import {
+  AccessGuard,
+  ApiIndiebaseSecurity,
+  ApiUnionResponse,
+  ManagerResources,
+  PublicApiGuard,
+} from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/trait';
 import {
   Body,
@@ -8,6 +15,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -16,6 +24,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { PasetoAuthGuard } from '../../auth';
 import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
 import { OrgsService } from './orgs.service';
 
@@ -31,9 +40,9 @@ export class OrgsController {
     summary: 'List organizations',
     description: 'List all organizations',
   })
-  @ApiUnionResponse()
-  // @UseGuards(PasetoAuthGuard, AccessGuard)
-  @ApiBearerAuth('paseto')
+  @ApiUnionResponse('pagination')
+  @ApiIndiebaseSecurity()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Get('orgs')
   async list() {
     const result = await this.orgsService.list();
@@ -47,22 +56,27 @@ export class OrgsController {
     summary: 'Create an organization',
   })
   @ApiUnionResponse()
+  @ApiIndiebaseSecurity()
+  @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
   @Post('orgs')
   async create(@Body() body: CreateOrgDTO) {
     await this.orgsService.create(body);
 
-    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
+    return { code: ResultCode.SUCCESS, message: 'Create successfully' };
   }
 
   @ApiOperation({
     summary: 'Update an organization',
   })
   @ApiUnionResponse()
+  @ApiIndiebaseSecurity()
+  @ApiBearerAuth('paseto')
   @Patch('orgs/:org')
   async update(@Body() body: UpdateOrgDTO) {
     await this.orgsService.update(body);
 
-    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
+    return { code: ResultCode.SUCCESS, message: 'Create successfully' };
   }
 
   @ApiOperation({
@@ -75,9 +89,17 @@ export class OrgsController {
       default: 'indiebase',
     },
   })
+  @ApiUnionResponse()
+  @ApiIndiebaseSecurity()
   @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
+  @UseAccess({
+    [ManagerResources.orgs]: [AccessActions.deleteOwn, AccessActions.deleteAny],
+  })
   @Delete('orgs/:org')
   async delete(@Param('org') org: string) {
-    return { code: ResultCode.SUCCESS, message: 'Created successfully' };
+    await this.orgsService.delete(org);
+
+    return { code: ResultCode.SUCCESS, message: 'Delete successfully' };
   }
 }

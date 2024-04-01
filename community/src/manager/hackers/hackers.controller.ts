@@ -1,24 +1,15 @@
 import { AccessActions, UseAccess } from '@indiebase/nest-accesscontrol';
 import {
   AccessGuard,
-  ApiIndiebaseCommonHeader,
   ApiIndiebaseSecurity,
-  ApiProtectionHeader,
+  ApiProjectHeader,
   ApiUnionResponse,
+  ManagerResources,
   PublicApiGuard,
-  User,
 } from '@indiebase/server-shared';
-import { PrimitiveUser } from '@indiebase/trait';
 import { ResultCode } from '@indiebase/trait';
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
 import { CreateHackersDTO } from './hackers.dto';
@@ -35,30 +26,26 @@ export class HackersController {
   @ApiOperation({
     summary: 'List hackers',
   })
-  @ApiUnionResponse('pagination')
-  @UseGuards(PasetoAuthGuard, AccessGuard)
   @ApiIndiebaseSecurity()
-  @ApiProtectionHeader()
+  @ApiBearerAuth('paseto')
+  @ApiUnionResponse('pagination')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
-    hacker: [AccessActions.readAny],
+    [ManagerResources.hackers]: [AccessActions.readAny],
   })
   @Get()
   async list() {
-    return 1;
+    this.hackers.list();
   }
 
   @ApiOperation({
     summary: 'Sign up a hacker',
   })
   @ApiUnionResponse()
-  @ApiProtectionHeader()
+  @ApiIndiebaseSecurity()
   @UseGuards(PublicApiGuard)
   @Post('signup')
-  async signup(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
-    if (user) {
-      throw new BadRequestException(`${user.email} already existed.`);
-    }
-
+  async signup(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);
 
     return {
@@ -73,22 +60,19 @@ export class HackersController {
   })
   @ApiUnionResponse()
   @ApiIndiebaseSecurity()
-  @ApiIndiebaseCommonHeader()
+  @ApiBearerAuth('paseto')
+  @ApiProjectHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
-    hacker: [AccessActions.createAny],
+    [ManagerResources.hackers]: [AccessActions.createAny],
   })
   @Post('hacker')
-  async create(@Body() body: CreateHackersDTO, @User() user: PrimitiveUser) {
-    if (user) {
-      throw new BadRequestException(`${user.email} already existed.`);
-    }
-
+  async create(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);
 
     return {
       code: ResultCode.SUCCESS,
-      message: 'Sign up successfully.',
+      message: 'Create successfully.',
     };
   }
 }

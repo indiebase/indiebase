@@ -2,7 +2,7 @@ import {
   BaseResSchema,
   Project,
   Org,
-  PaginationReqSchema,
+  PaginationRequestSchema,
 } from '@indiebase/trait';
 import { req } from './request';
 

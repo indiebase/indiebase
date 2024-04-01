@@ -2,6 +2,7 @@ import {
   IsEntityExisted,
   MgrMetaTables,
   OkResponseSchema,
+  PaginationRequestSchema,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsHash, IsOptional, IsString, IsUrl } from 'class-validator';
@@ -58,5 +59,7 @@ export class UpdateHackersDTO extends CreateHackersDTO {
   @IsUrl({}, { message: 'Avatar url format error' })
   avatarUrl?: string;
 }
+
+export class ListHackersRequestDTO extends PaginationRequestSchema {}
 
 export class CreateHackersResDTO extends OkResponseSchema {}
