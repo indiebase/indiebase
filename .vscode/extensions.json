@@ -4,9 +4,11 @@
     "vivaxy.vscode-conventional-commits",
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "redvanworkshop.explorer-exclude-vscode-extension",
     "gruntfuggly.todo-tree",
     "deskbtm.colorful-monorepo",
-    "foxundermoon.shell-format"
+    "foxundermoon.shell-format",
+    "ms-azuretools.vscode-docker",
+    "esbenp.prettier-vscode",
+    "saber2pr.todolist"
   ]
 }
