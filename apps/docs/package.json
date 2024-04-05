@@ -53,8 +53,8 @@
     "@vanilla-extract/webpack-plugin": "2.3.7",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "7.0.1",
-    "sass": "1.72.0",
-    "typescript": "5.4.3",
+    "sass": "1.74.1",
+    "typescript": "5.4.4",
     "wrangler": "3.37.0"
   },
   "browserslist": {

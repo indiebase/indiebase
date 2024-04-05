@@ -27,8 +27,8 @@
     "@tanstack/react-query-devtools": "5.28.6",
     "@tanstack/react-table": "8.15.0",
     "i18next": "23.10.1",
-    "i18next-browser-languagedetector": "7.2.0",
-    "jotai": "2.7.1",
+    "i18next-browser-languagedetector": "7.2.1",
+    "jotai": "2.7.2",
     "jotai-devtools": "0.8.0",
     "million": "3.0.6",
     "react": "18.2.0",
@@ -56,8 +56,8 @@
     "eslint-plugin-react-refresh": "0.4.6",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "7.0.1",
-    "typescript": "5.4.3",
-    "vite": "5.2.6",
+    "typescript": "5.4.4",
+    "vite": "5.2.8",
     "vite-plugin-mkcert": "1.17.5",
     "vite-plugin-pwa": "0.19.7"
   }

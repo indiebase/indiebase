@@ -37,10 +37,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "10.3.5",
-    "@nestjs/core": "10.3.5",
+    "@nestjs/common": "10.3.7",
+    "@nestjs/core": "10.3.7",
     "kysely": "0.26.3",
-    "reflect-metadata": "0.2.1",
+    "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1"
   },
   "devDependencies": {
@@ -55,6 +55,6 @@
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   }
 }

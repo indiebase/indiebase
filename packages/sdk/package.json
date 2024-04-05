@@ -52,7 +52,7 @@
     "@types/node": "20.11.30",
     "swagger-typescript-api": "13.0.3",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.4.3",
+    "typescript": "5.4.4",
     "vitest": "1.4.0"
   }
 }
