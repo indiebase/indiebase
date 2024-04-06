@@ -1,9 +1,7 @@
 module.exports = {
-  root: true,
   env: { browser: true, es2020: true },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
+    '../../.eslintrc.cjs',
     'plugin:react-hooks/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react/recommended',
@@ -20,22 +18,13 @@ module.exports = {
         fixStyle: 'inline-type-imports',
       },
     ],
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/self-closing-comp': [
       'error',
       {
         component: true,
         html: true,
-      },
-    ],
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
       },
     ],
   },

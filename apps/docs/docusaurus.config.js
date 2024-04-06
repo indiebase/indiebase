@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { themes } = require('prism-react-renderer');
+const lightTheme = themes.github;
+const darkTheme = themes.dracula;
 const i18n = require('./i18n');
 
 /** @type {import('@docusaurus/types').Config} */
@@ -181,8 +182,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Deskbtm (Han)`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: lightTheme,
+        darkTheme,
       },
       metadata: [
         {
@@ -190,7 +191,7 @@ const config = {
           content:
             'A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
         },
-        { name: 'keywords', content: '' },
+        { name: 'keywords', content: 'Indiebase,Indie hacker,maker,creator,BaaS,firebase,supabase' },
         { name: 'content-type', content: 'text/html; charset=UTF-8' },
         // Open Graph
         {
@@ -203,7 +204,7 @@ const config = {
           content:
             'Private Open Collective + Firebase Successor. Make revenue generation easier for indie hackers and teams with software projects.',
         },
-        { property: 'og:image', content: '' },
+        { property: 'og:image', content: 'https://' },
         { property: 'og:site_name', content: 'Indiebase' },
         { property: 'og:url', content: 'https://indiebase.deskbtm.com' },
         // X

@@ -1,18 +1,14 @@
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    sourceType: 'module',
-  },
   plugins: [
     '@typescript-eslint/eslint-plugin',
     'simple-import-sort',
     'prettier',
   ],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-  root: true,
   env: {
     node: true,
-    jest: true,
   },
   rules: {
     'simple-import-sort/imports': 'error',
@@ -23,7 +19,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-var-requires': 'off',
-    '@typescript-eslint/ban-types': 'error',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error',

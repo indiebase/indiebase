@@ -9,6 +9,10 @@
     "foxundermoon.shell-format",
     "ms-azuretools.vscode-docker",
     "esbenp.prettier-vscode",
-    "saber2pr.todolist"
+    "saber2pr.todolist",
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    "christian-kohler.path-intellisense",
+    "tombonnike.vscode-status-bar-format-toggle"
   ]
 }
