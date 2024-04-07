@@ -2,8 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     // JavaScript Support
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
     // Type Checking
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
@@ -37,7 +36,6 @@
   },
   "exclude": [
     "dist",
-    "tmp",
-    "node_modules",
+    "node_modules"
   ]
 }

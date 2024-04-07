@@ -1,5 +1,12 @@
+//@ts-check
+import react from 'eslint-plugin-react';
+import tslint from 'typescript-eslint';
+
+import rootEslintConfig from '../../eslint.config.mjs';
+
+export default tslint.config(...rootEslintConfig);
+
 module.exports = {
-  env: { browser: true, es2020: true },
   extends: [
     '../../.eslintrc.cjs',
     'plugin:react-hooks/recommended',

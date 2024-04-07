@@ -1,0 +1,103 @@
+import eslint from '@eslint/js';
+import tslintParser from '@typescript-eslint/parser';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import react from 'eslint-plugin-react';
+import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
+import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+import tslint from 'typescript-eslint';
+
+export default tslint.config(
+  eslint.configs.recommended,
+  ...tslint.configs.recommended,
+  eslintPluginPrettierRecommended,
+  {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+    ignores: ['**/dist', '**/node_modules'],
+    languageOptions: {
+      parser: tslintParser,
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      parserOptions: {
+        project: [
+          'tsconfig.json',
+          'community/tsconfig.json',
+          'first_party/*/tsconfig.json',
+        ],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        ...globals.node,
+        myCustomGlobal: 'readonly',
+      },
+    },
+    rules: {
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'prefer-const': ['error', { destructuring: 'all' }],
+      '@typescript-eslint/interface-name-prefix': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/ban-types': [
+        'error',
+        {
+          types: {
+            Function: false,
+          },
+          extendDefaults: true,
+        },
+      ],
+      'no-console': ['error', { allow: ['warn', 'error'] }],
+    },
+  },
+  {
+    files: ['apps/**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      react,
+      'react-refresh': reactRefresh,
+    },
+    ...reactRecommended,
+    ...reactJsxRuntime,
+    languageOptions: {
+      ...reactRecommended.languageOptions,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false,
+          fixStyle: 'inline-type-imports',
+        },
+      ],
+      'react/self-closing-comp': [
+        'error',
+        {
+          component: true,
+          html: true,
+        },
+      ],
+    },
+  },
+);

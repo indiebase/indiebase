@@ -1,16 +1,10 @@
-import {
-  useDebouncedState,
-  useMediaQuery,
-  useViewportSize,
-} from '@mantine/hooks';
+import { useDebouncedState, useMediaQuery } from '@mantine/hooks';
 import { type FC, forwardRef, Suspense, useRef, useState } from 'react';
 import {
   Anchor,
   Avatar,
-  Box,
   Button,
   Center,
-  Combobox,
   Group,
   Stack,
   Text,
@@ -25,8 +19,7 @@ import {
 import debounce from 'lodash.debounce';
 import { IconBuildingCommunity } from '@tabler/icons-react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { InvitationInput } from '~/components/InvitationInput';
+import { Link, useParams } from 'react-router-dom';
 import { MultiSelect } from '~/components/MultiSelect';
 
 export const SelectItem = forwardRef<HTMLDivElement, any>(function SelectItem(
