@@ -22,7 +22,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
  * @param {string[]=} options.entry - default ['webpack/hot/poll?100', './src/main.ts']
  * @param {boolean=} options.swc - default true. If true, enable swc otherwise, use tsc.
  * @param {string[]=} options.additionalExternals
- * @param {string} options.mode - default process.env.NODE_ENV || 'development'
+ * @param {("development" | "production" | "none")} options.mode - default process.env.NODE_ENV || 'development'
  * @param {boolean=} options.bundleWorkspace - default true
  * @param {string=} options.cwd - default process.cwd()
  * @param {boolean|string} options.sourceMap - default true
@@ -33,7 +33,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
  * @param {Array=} options.additionalRules
  * @param {Array=} options.externalsAllowList
  * @param {Partial<import('run-script-webpack-plugin').RunScriptWebpackPluginOptions>=} options.startOptions
- * @return {import('webpack').Configuration}
+ * @return {Promise<import('webpack').Configuration>}
  */
 exports.createWebpackConfig = async (options) => {
   const cwd = process.cwd();
@@ -69,7 +69,7 @@ exports.createWebpackConfig = async (options) => {
 
   const workspacePkgs = await getWorkspacesPackageNameRegExps(options.cwd);
   /**
-   * @type {import('webpack').Rule}
+   * @type {import('webpack').ModuleOptions['rules']}
    */
   const rules = [];
 
@@ -108,6 +108,7 @@ exports.createWebpackConfig = async (options) => {
       nodeExternals({
         allowlist: ['webpack/hot/poll?100'].concat(
           options.externalsAllowList,
+          //@ts-ignore
           options.bundleWorkspace ? workspacePkgs : [],
         ),
         additionalModuleDirs: options.additionalExternals,

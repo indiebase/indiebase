@@ -62,7 +62,6 @@
     "rxjs": "7.8.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "10.3.2",
     "@nestjs/testing": "10.3.7",
     "@types/connect-redis": "0.0.23",
     "@types/fs-extra": "11.0.4",
