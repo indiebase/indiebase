@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
 import tslintParser from '@typescript-eslint/parser';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
@@ -18,7 +19,7 @@ export default tslint.config(
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
-    ignores: ['**/dist', '**/node_modules'],
+    ignores: ['**/dist', '**/node_modules', '**/.next'],
     languageOptions: {
       parser: tslintParser,
       ecmaVersion: 2022,
@@ -98,6 +99,18 @@ export default tslint.config(
           html: true,
         },
       ],
+    },
+  },
+  {
+    files: ['apps/app/**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': nextPlugin,
+    },
+    rules: {
+      rules: {
+        ...nextPlugin.configs.recommended.rules,
+        ...nextPlugin.configs['core-web-vitals'].rules,
+      },
     },
   },
 );
