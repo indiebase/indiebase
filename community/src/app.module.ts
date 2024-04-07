@@ -1,10 +1,9 @@
-import path from 'node:path';
-
-import { communityDefaultConfigs } from '@indiebase/server-shared';
 import { Module } from '@nestjs/common';
+import { communityDefaultConfigs } from '@indiebase/server-shared';
+import { createCommunityModule } from './community.module';
 import { ConfigModule } from '@nestjs/config';
 
-import { createCommunityModule } from './community.module';
+import path from 'node:path';
 
 @Module({
   imports: [

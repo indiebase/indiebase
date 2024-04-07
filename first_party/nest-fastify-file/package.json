@@ -49,7 +49,7 @@
     "@nestjs/core": "10.3.7",
     "@nestjs/platform-fastify": "10.3.7",
     "@types/busboy": "1.5.3",
-    "@types/node": "20.11.30",
+    "@types/node": "20.12.5",
     "fastify": "4.26.2",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",

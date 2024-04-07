@@ -17,9 +17,9 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "devDependencies": {
-    "@swc/cli": "0.3.10",
-    "@swc/core": "1.4.8",
-    "@types/node": "20.11.30",
+    "@swc/cli": "0.3.12",
+    "@swc/core": "1.4.12",
+    "@types/node": "20.12.5",
     "cross-env": "7.0.3",
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "run-script-webpack-plugin": "0.2.0",
