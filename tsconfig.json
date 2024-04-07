@@ -4,10 +4,13 @@
     // JavaScript Support
     "allowJs": false,
     // Type Checking
+    "strict": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strictBindCallApply": false,
     "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": false,
     "noImplicitOverride": true,
     "noImplicitReturns": false,
@@ -15,6 +18,7 @@
     "pretty": true,
     // Interop
     "forceConsistentCasingInFileNames": false,
+    "esModuleInterop": true,
     // Emit
     "importHelpers": true,
     "sourceMap": true,
@@ -22,10 +26,9 @@
     "declarationMap": true,
     "removeComments": false,
     // Language and Environment
-    "target": "es2015",
+    "target": "ES2020",
     "lib": [
       "ESNext",
-      "DOM"
     ],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
