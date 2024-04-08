@@ -8,6 +8,7 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "strict": true,
     // Modules
     "module": "ESNext",
     "moduleResolution": "Bundler",

@@ -5,7 +5,6 @@ import {
 } from '@indiebase/server-shared';
 import { ModuleMetadata, OnModuleInit } from '@nestjs/common';
 import { Logger, Module } from '@nestjs/common';
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { ConfigService } from '@nestjs/config';
 
 import { AuthModule } from './auth';

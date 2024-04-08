@@ -26,9 +26,9 @@ export default tslint.config(
       sourceType: 'module',
       parserOptions: {
         project: [
-          'tsconfig.json',
-          'community/tsconfig.json',
-          'first_party/*/tsconfig.json',
+          './tsconfig.json',
+          './community/tsconfig.json',
+          './first_party/*/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -107,10 +107,8 @@ export default tslint.config(
       '@next/next': nextPlugin,
     },
     rules: {
-      rules: {
-        ...nextPlugin.configs.recommended.rules,
-        ...nextPlugin.configs['core-web-vitals'].rules,
-      },
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
 );

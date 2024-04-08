@@ -26,7 +26,7 @@ export const protectApiInterceptor = async function (
     md.update(s);
     a.push(md.digest().toHex());
 
-    config.headers['X-Lets-Api-Credential'] = a.join(';');
+    config.headers['X-Indiebase-AP'] = a.join(';');
   } catch (error) {
     console.log(error);
   }

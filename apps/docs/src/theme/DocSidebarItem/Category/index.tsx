@@ -19,9 +19,9 @@ import { IconChevronRight } from '@tabler/icons-react';
 import type { Props } from '@theme/DocSidebarItem/Category';
 import DocSidebarItems from '@theme/DocSidebarItems';
 import clsx from 'clsx';
-import React, { type ComponentProps, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
-import { collapseBtn } from './Category.css';
+// import { collapseBtn } from './Category.css';
 
 // If we navigate to a category and it becomes active, it should automatically
 // expand itself
@@ -180,7 +180,7 @@ export default function DocSidebarItemCategory({
             }}
           >
             <IconChevronRight
-              className={clsx(collapseBtn[collapsed ? 'primary' : 'collapsed'])}
+              // className={clsx(collapseBtn[collapsed ? 'primary' : 'collapsed'])}
               style={{ width: '70%', height: '70%' }}
             />
           </ActionIcon>

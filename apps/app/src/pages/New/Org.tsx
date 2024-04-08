@@ -1,15 +1,13 @@
-import { type FC, Suspense, forwardRef, useMemo, useState } from 'react';
+import { type FC, Suspense, forwardRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import {
   Avatar,
   Box,
   Button,
   Center,
-  Combobox,
   Flex,
   TextInput,
   Title,
-  rem,
   useMantineTheme,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -26,9 +24,7 @@ import { useForm } from '@mantine/form';
 //   useRemoveAppShellLeftPadding,
 //   userProfileQueryAtom,
 // } from '@letscollab/console-shared';
-import { useQuery } from '@tanstack/react-query';
 import { IconBrandGithub } from '@tabler/icons-react';
-import { useAtom } from 'jotai';
 import isEmail from 'validator/lib/isEmail';
 import { useNavigate } from 'react-router-dom';
 import { AvatarEditor } from '~/components/AvatarEditor';

@@ -6,9 +6,9 @@ import {
   Text,
   type MantineStyleProps,
 } from '@mantine/core';
-import { type FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { navMenuTile } from './NavMenu.css';
+// import { navMenuTile } from './NavMenu.css';
 import { useMenus } from '~/use-menus';
 
 export interface NavMenuTile {
@@ -51,7 +51,9 @@ interface NavMenuTileProps {
 
 const NavMenuTile: FC<NavMenuTileProps> = function ({ label, active }) {
   return (
-    <UnstyledButton className={navMenuTile[active ? 'active' : 'inactive']}>
+    <UnstyledButton
+    // className={navMenuTile[active ? 'active' : 'inactive']}
+    >
       <Text size="sm">{label}</Text>
     </UnstyledButton>
   );
