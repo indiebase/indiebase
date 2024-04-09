@@ -26,15 +26,15 @@ const projectRouter = {
 const routes = [
   {
     path: '/',
-    lazy: () => import('./components/DashboardLayout'),
+    lazy: () => import('./components/DashboardLayout/index.tsx'),
     children: [
       {
         index: true,
-        lazy: () => import('./pages/MY'),
+        lazy: () => import('./pages/MY/index.tsx'),
       },
       {
         path: '2fa',
-        lazy: () => import('./pages/2FA'),
+        lazy: () => import('./pages/2FA/index.tsx'),
       },
       {
         path: 'users/:user',
@@ -45,7 +45,7 @@ const routes = [
         children: [
           {
             index: true,
-            lazy: () => import('./pages/2FA'),
+            lazy: () => import('./pages/2FA/index.tsx'),
           },
         ],
       },
@@ -57,7 +57,7 @@ const routes = [
             children: [
               {
                 index: true,
-                lazy: () => import('./pages/New/Org'),
+                lazy: () => import('./pages/New/Org.tsx'),
               },
             ],
           },
