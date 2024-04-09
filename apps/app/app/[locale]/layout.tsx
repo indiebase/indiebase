@@ -5,11 +5,11 @@ import '@mantine/notifications/styles.css';
 import type { Metadata, Viewport } from 'next';
 import { locales } from '~/i18n';
 import { fonts } from './fonts';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { openGraphMetadata, twitterSummaryLargeImageMetadata } from '~/shared';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import * as uuid from 'uuid';
-import { Compose, ComposeProps } from 'reactgets';
+import { Compose, type ComposeProps } from 'reactgets';
 import { theme } from '~/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NavigationProgress } from '@mantine/nprogress';
@@ -56,16 +56,16 @@ const DevTools: FC = function () {
 
 const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
   // const [queryClient] = useState(() => new QueryClient());
-  // const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
-  // const providers: ComposeProps['providers'] = [
-  //   <MantineProvider
-  //     key={uuid.v4()}
-  //     theme={theme}
-  //     defaultColorScheme="light"
-  //   />,
-  //   <QueryClientProvider key={uuid.v4()} client={queryClient} />,
-  // ];
+  const providers: ComposeProps['providers'] = [
+    <MantineProvider
+      key={uuid.v4()}
+      theme={theme}
+      defaultColorScheme="light"
+    />,
+    // <QueryClientProvider key={u·uid.v4()} client={queryClient} />,
+  ];
 
   return (
     <html lang={locale}>
@@ -73,12 +73,12 @@ const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
         <ColorSchemeScript />
       </head>
       <body className={fonts.className}>
-        {/* <Compose providers={providers}>
-          <DevTools />
-          <NavigationProgress />
-          <Notifications />
-        </Compose> */}
-        {children}
+        <Compose providers={providers}>
+          {/* <DevTools /> */}
+          {/* <NavigationProgress /> */}
+          {/* <Notifications /> */}
+          {children}
+        </Compose>
       </body>
     </html>
   );

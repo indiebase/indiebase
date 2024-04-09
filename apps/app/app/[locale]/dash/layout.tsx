@@ -30,8 +30,8 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
       }}
       padding={{ base: 'md', lg: 0 }}
     >
-      <AppShellHeader logo={<IndiebaseTextLogo size={160} />} />
-      <AppShellDrawer />
+      {/* <AppShellHeader logo={<IndiebaseTextLogo size={160} />} /> */}
+      {/* <AppShellDrawer /> */}
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
