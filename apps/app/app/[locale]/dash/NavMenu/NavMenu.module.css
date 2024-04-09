@@ -1,0 +1,16 @@
+.navMenuTile {
+  display: block;
+  width: 100%;
+  padding: var(--mantine-spacing-xs);
+  padding-left: rem(15);
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  text-decoration: none;
+  color: var(--_ib-navmenu-color, var(--mantine-color-gray-7));
+  background-color: var(unset, var(--_ib-navmenu-background-color));
+
+  &:where([data-active]) {
+    --_ib-navmenu-color: var(--mantine-color-blue-6);
+    --_ib-navmenu-background-color: var(--mantine-color-gray-0);
+  }
+}

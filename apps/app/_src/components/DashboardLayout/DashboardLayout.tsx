@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import { AppShell, rem } from '@mantine/core';
 import { AppShellHeader } from './Header';
 // import { ErrorBoundary } from 'react-error-boundary';
-import { InidebaseTextLogo } from '~/components/Icons';
+import { IndiebaseTextLogo } from '~/components/Icons';
 import { useAtom } from 'jotai';
 import { navbarCollapseAtom } from './navbar.atom';
 import { AppShellDrawer } from './Drawer';
@@ -28,7 +28,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = () => {
       }}
       padding={{ base: 'md', lg: 0 }}
     >
-      <AppShellHeader logo={<InidebaseTextLogo size={160} />} />
+      <AppShellHeader logo={<IndiebaseTextLogo size={160} />} />
       <AppShellDrawer />
       <AppShell.Main>
         <Outlet />

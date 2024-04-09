@@ -1,1 +1,1 @@
-export * from './InidebaseTextLogo';
+export * from './IndiebaseTextLogo';

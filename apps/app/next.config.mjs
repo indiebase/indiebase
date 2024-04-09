@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
+  transpilePackages: ['jotai-devtools'],
 };
 
 const millionConfig = {
@@ -15,4 +16,4 @@ const millionConfig = {
 
 const withMillion = million.next(nextConfig, millionConfig);
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(withMillion);
