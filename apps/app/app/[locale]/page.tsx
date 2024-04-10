@@ -1,3 +1,8 @@
 export default function Home() {
-  return <div></div>;
+  // redirect('/dash');
+  return (
+    <div>
+      <h1>Hello World!</h1>
+    </div>
+  );
 }

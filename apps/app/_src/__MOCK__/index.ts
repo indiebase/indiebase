@@ -1,4 +1,4 @@
-if (import.meta.env.VITE_MOCK === 'true') {
+if (process.env.VITE_MOCK === 'true') {
   await import('./user.mock');
 }
 

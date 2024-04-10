@@ -1,9 +1,10 @@
 import {
-  BaseResSchema,
-  Project,
-  Org,
+  type BaseResSchema,
+  type Org,
   PaginationRequestSchema,
+  type Project,
 } from '@indiebase/trait';
+
 import { req } from './request';
 
 export const fetchMyGithubOrgsApi = async function (): Promise<

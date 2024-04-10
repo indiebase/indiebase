@@ -26,10 +26,10 @@ export const protectApiInterceptor = async function (
 
 export const req = axios.create({
   timeout: 8000,
-  baseURL: import.meta.env.VITE_API,
+  baseURL: process.env.VITE_API,
   withCredentials: true,
   headers: {
-    Domain: import.meta.env.VITE_PACKAGENAME,
+    Domain: process.env.VITE_PACKAGENAME,
   },
 });
 
@@ -65,4 +65,4 @@ req.interceptors.response.use(
 
 export const mock = new MockAdapter(req);
 
-import.meta.env.VITE_MOCK !== 'true' && mock.restore();
+process.env.VITE_MOCK !== 'true' && mock.restore();

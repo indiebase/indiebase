@@ -1,14 +1,14 @@
 import { rem } from '@mantine/core';
 
-interface InidebaseTextLogoProps extends React.ComponentPropsWithoutRef<'svg'> {
+interface IndiebaseTextLogoProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number;
 }
 
-export const InidebaseTextLogo = ({
+export const IndiebaseTextLogo = ({
   size,
   style,
   ...rest
-}: InidebaseTextLogoProps) => (
+}: IndiebaseTextLogoProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={1763}

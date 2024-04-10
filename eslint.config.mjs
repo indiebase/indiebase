@@ -12,7 +12,7 @@ import tslint from 'typescript-eslint';
 
 export default tslint.config(
   eslint.configs.recommended,
-  ...tslint.configs.recommended,
+  ...tslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
@@ -27,8 +27,9 @@ export default tslint.config(
       parserOptions: {
         project: [
           './tsconfig.json',
-          './community/tsconfig.json',
           './first_party/*/tsconfig.json',
+          './packages/*/tsconfig.json',
+          './community/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -102,13 +103,18 @@ export default tslint.config(
     },
   },
   {
-    files: ['apps/app/**/*.{js,jsx,ts,tsx}'],
+    files: ['apps/app/**/*.{ts,tsx}'],
     plugins: {
       '@next/next': nextPlugin,
     },
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-duplicate-head': 'off',
     },
+  },
+  {
+    files: ['*.{js,mjs,cjs}'],
+    ...tseslint.configs.disableTypeChecked,
   },
 );
