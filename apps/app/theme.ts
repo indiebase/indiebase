@@ -1,6 +1,7 @@
-import { createTheme } from '@mantine/core';
+import { createTheme, type MantineTheme } from '@mantine/core';
+import { type PartialDeep } from 'type-fest';
 
-export const theme = createTheme({
+export const theme: PartialDeep<MantineTheme> = createTheme({
   fontFamily: `Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji`,
   other: {

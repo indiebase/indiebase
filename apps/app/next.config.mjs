@@ -7,6 +7,9 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   transpilePackages: ['jotai-devtools'],
+  experimental: {
+    swcPlugins: [['@swc-jotai/react-refresh', {}]],
+  },
 };
 
 const millionConfig = {

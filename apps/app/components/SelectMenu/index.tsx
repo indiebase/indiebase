@@ -1,17 +1,18 @@
-import {type FC} from 'react';
-import type React from 'react';
-import { useMemo, useState } from 'react';
+import { is } from '@deskbtm/gadgets';
 import {
-  Text,
-  Group,
-  Combobox,
-  useCombobox,
   Avatar,
-  rem,
   Button,
+  Combobox,
+  Group,
+  rem,
+  Text,
+  useCombobox,
 } from '@mantine/core';
 import { IconBuildingCommunity, IconChevronDown } from '@tabler/icons-react';
-import { is } from '@deskbtm/gadgets';
+import type React from 'react';
+import { type FC } from 'react';
+import { useMemo, useState } from 'react';
+import { useProps } from 'reactgets';
 
 interface SelectMenuItem {
   icon: string | React.ReactNode;
@@ -25,9 +26,17 @@ interface SelectMenuProps {
   searchPlaceholder?: string;
   onOptionSubmit?: (val: SelectMenuItem) => void;
 }
+const defaultProps = {
+  searchPlaceholder: 'Search...',
+};
 
-export const SelectMenu: FC<SelectMenuProps> = function (props) {
-  const { items, placeholder, searchPlaceholder } = props;
+export const SelectMenu: FC<SelectMenuProps> = function (_props) {
+  const a = useProps(defaultProps, _props);
+
+  const { items, placeholder, searchPlaceholder } = useProps(
+    defaultProps,
+    _props,
+  );
   const [value, setValue] = useState<SelectMenuItem | null>(null);
   const combobox = useCombobox({
     onDropdownClose: () => {
@@ -88,7 +97,7 @@ export const SelectMenu: FC<SelectMenuProps> = function (props) {
             p={0}
             c="dark"
             fz="sm"
-            rightSection={<IconChevronDown size={12} style={{ margin: -5 }} />}
+            rightSection={<IconChevronDown size={12} ·/>}
             variant="transparent"
             onClick={() => combobox.toggleDropdown()}
           >
@@ -111,8 +120,4 @@ export const SelectMenu: FC<SelectMenuProps> = function (props) {
       </Combobox.Dropdown>
     </Combobox>
   );
-};
-
-SelectMenu.defaultProps = {
-  searchPlaceholder: 'Search...',
 };

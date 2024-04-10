@@ -1,11 +1,15 @@
+'use client';
+
 import { AppShell, Burger } from '@mantine/core';
 import { useAtom } from 'jotai';
-import { navbarCollapseAtom } from './navbar.atom';
 import { type FC } from 'react';
+
 import { SelectMenu } from '~/components/SelectMenu';
+
+import { navbarCollapseAtom } from './navbar.atom';
 import { NavMenu } from './NavMenu';
 
-export interface AppShellDrawerProps {
+export interface AppShellNavbarProps {
   // menu: NavbarMenuTile[];
   semver?: string;
 }
@@ -29,7 +33,7 @@ const OrgSelect = function () {
   );
 };
 
-export const AppShellDrawer: FC<AppShellDrawerProps> = function (props) {
+export const AppShellNavbar: FC<AppShellNavbarProps> = function (props) {
   const [opened, toggle] = useAtom(navbarCollapseAtom);
 
   return (

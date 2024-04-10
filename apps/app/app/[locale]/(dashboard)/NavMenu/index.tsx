@@ -1,13 +1,12 @@
 import {
   Accordion,
+  type MantineStyleProps,
   type MantineThemeColors,
+  Text,
   ThemeIcon,
   UnstyledButton,
-  Text,
-  type MantineStyleProps,
 } from '@mantine/core';
 import { type FC, useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 // import { navMenuTile } from './NavMenu.css';
 
 export interface NavMenuTile {
@@ -24,21 +23,21 @@ export interface NavMenuTile {
 
 const useActiveAccordion = function (menu: NavMenuTile[]) {
   const [value, setValue] = useState<string[]>([]);
-  const location = useLocation();
 
   console.log(value);
 
   useEffect(() => {
     for (const item of menu) {
       if (Array.isArray(item.children)) {
-        const r = item.children.find((e) => location.pathname.includes(e.to!));
+        // const r = item.children.find((e) => location.pathname.includes(e.to!));
+        const r = 0;
         if (r) {
           setValue([...value, item.label]);
           break;
         }
       }
     }
-  }, [location.pathname]);
+  }, []);
 
   return [value, setValue];
 };
