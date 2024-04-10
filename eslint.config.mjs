@@ -12,10 +12,10 @@ import tslint from 'typescript-eslint';
 
 export default tslint.config(
   eslint.configs.recommended,
-  ...tslint.configs.recommendedTypeChecked,
+  ...tslint.configs.recommended,
   eslintPluginPrettierRecommended,
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['**/*.{ts,mts,cts,tsx}'],
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
@@ -30,6 +30,7 @@ export default tslint.config(
           './first_party/*/tsconfig.json',
           './packages/*/tsconfig.json',
           './community/tsconfig.json',
+          './apps/*/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -115,6 +116,6 @@ export default tslint.config(
   },
   {
     files: ['*.{js,mjs,cjs}'],
-    ...tseslint.configs.disableTypeChecked,
+    ...tslint.configs.disableTypeChecked,
   },
 );

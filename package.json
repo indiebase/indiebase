@@ -66,6 +66,7 @@
   },
   "packageManager": "yarn@4.1.1",
   "dependencies": {
-    "@deskbtm/gadgets": "workspace:^"
+    "@deskbtm/gadgets": "workspace:^",
+    "type-fest": "4.12.0"
   }
 }
