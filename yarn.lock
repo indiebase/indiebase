@@ -7195,7 +7195,6 @@ __metadata:
     "@deskbtm/gadgets": "workspace:^"
     "@emotion/react": "npm:11.11.4"
     "@faker-js/faker": "npm:8.4.1"
-    "@fontsource/inter": "npm:5.0.17"
     "@indiebase/sdk": "workspace:^"
     "@mantine/core": "npm:7.7.1"
     "@mantine/dates": "npm:7.7.1"
