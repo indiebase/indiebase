@@ -31,8 +31,6 @@ const defaultProps = {
 };
 
 export const SelectMenu: FC<SelectMenuProps> = function (_props) {
-  const a = useProps(defaultProps, _props);
-
   const { items, placeholder, searchPlaceholder } = useProps(
     defaultProps,
     _props,
@@ -97,7 +95,7 @@ export const SelectMenu: FC<SelectMenuProps> = function (_props) {
             p={0}
             c="dark"
             fz="sm"
-            rightSection={<IconChevronDown size={12} ·/>}
+            rightSection={<IconChevronDown size={12} />}
             variant="transparent"
             onClick={() => combobox.toggleDropdown()}
           >

@@ -1,5 +1,3 @@
-import { type FC, Suspense, forwardRef, useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import {
   Avatar,
   Box,
@@ -25,11 +23,14 @@ import { useForm } from '@mantine/form';
 //   userProfileQueryAtom,
 // } from '@letscollab/console-shared';
 import { IconBrandGithub } from '@tabler/icons-react';
-import isEmail from 'validator/lib/isEmail';
+import { type FC, forwardRef, Suspense, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useNavigate } from 'react-router-dom';
+import isEmail from 'validator/lib/isEmail';
+
 import { AvatarEditor } from '~/components/AvatarEditor';
-import { isCommonLegalString } from '~/utils/validator';
 import { Select } from '~/components/Select';
+import { isCommonLegalString } from '~/utils/validator';
 
 export interface NewOrgProps {
   onSuccess(org: string): void;
