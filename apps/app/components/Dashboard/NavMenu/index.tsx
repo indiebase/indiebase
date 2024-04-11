@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { type FC, useEffect, useState } from 'react';
 
-import * as classes from './NavMenu.module.css';
+import classes from './NavMenu.module.css';
 
 export interface NavMenuTile {
   label: string;
@@ -49,7 +49,10 @@ interface NavMenuTileProps {
 const NavMenuTile: FC<NavMenuTileProps> = function ({ label, active }) {
   return (
     <UnstyledButton
-    // className={navMenuTile[active ? 'active' : 'inactive']}
+      className={classes.navMenuTile}
+      mod={{
+        active,
+      }}
     >
       <Text size="sm">{label}</Text>
     </UnstyledButton>

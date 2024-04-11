@@ -1,6 +1,3 @@
-'use client';
-
-import { type NOP } from '@deskbtm/gadgets';
 import {
   ActionIcon,
   Code,
@@ -19,18 +16,21 @@ import {
   IconMessageReport,
   IconRefresh,
 } from '@tabler/icons-react';
+import { type FC, memo } from 'react';
 
-import type { ConfigurableError } from '~/app/Errors';
+import type { ConfigurableError } from './Errors';
 
-export const GlobalError = ({
-  error,
-  reset,
-}: {
-  error: ConfigurableError & { digest?: string };
-  reset: typeof NOP;
-}) => {
-  const t = error?.title;
-  const d = error?.description || error?.message;
+export interface ErrorDetailProps {
+  title?: string;
+  error?: ConfigurableError;
+  description?: string;
+  onRetry(): void;
+}
+
+export const ErrorDetail: FC<ErrorDetailProps> = memo((props) => {
+  const { title, description, error, onRetry } = props;
+  const t = error?.title || title;
+  const d = error?.description || description || error?.message;
   const [opened, handler] = useDisclosure(error?.showDetails);
 
   return (
@@ -46,7 +46,7 @@ export const GlobalError = ({
           {error?.retryable && (
             <Tooltip label="Retry" openDelay={500}>
               <ActionIcon
-                onClick={reset}
+                onClick={onRetry}
                 size="xs"
                 c="gray"
                 variant="transparent"
@@ -94,8 +94,6 @@ export const GlobalError = ({
       }
     </>
   );
-};
+});
 
-GlobalError.displayName = '@indiebase/app/GlobalError';
-
-export default GlobalError;
+ErrorDetail.displayName = '@publish/desktop/ErrorDetail';

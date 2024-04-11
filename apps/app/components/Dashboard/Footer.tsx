@@ -1,4 +1,4 @@
-import { Stack, Button, Text, Box, Group, Anchor } from '@mantine/core';
+import { Anchor, Box, Button, Group, Stack, Text } from '@mantine/core';
 
 export const Footer = function () {
   return (

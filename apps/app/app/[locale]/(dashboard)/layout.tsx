@@ -3,13 +3,13 @@
 import { AppShell, rem } from '@mantine/core';
 import { useAtom } from 'jotai';
 import { type FC } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
+import {
+  DashboardHeader,
+  DashboardNavbar,
+  navbarCollapseAtom,
+} from '~/components/Dashboard';
 import { IndiebaseTextLogo } from '~/components/Icons';
-
-import { AppShellHeader } from './Header';
-import { AppShellNavbar } from './Navbar';
-import { navbarCollapseAtom } from './navbar.atom';
 
 export interface DashboardLayoutProps extends React.PropsWithChildren {}
 
@@ -32,8 +32,8 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
       }}
       padding={{ base: 'md', lg: 0 }}
     >
-      <AppShellHeader logo={<IndiebaseTextLogo size={160} />} />
-      <AppShellNavbar />
+      <DashboardHeader logo={<IndiebaseTextLogo size={160} />} />
+      <DashboardNavbar />
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );

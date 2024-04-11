@@ -56,11 +56,11 @@ const PreferencesMenu = function () {
   );
 };
 
-export interface AppShellHeaderProps {
+export interface DashboardHeaderProps {
   logo: React.ReactNode;
 }
 
-export const AppShellHeader: FC<AppShellHeaderProps> = function (props) {
+export const DashboardHeader: FC<DashboardHeaderProps> = function (props) {
   const [opened, toggle] = useAtom(navbarCollapseAtom);
 
   return (

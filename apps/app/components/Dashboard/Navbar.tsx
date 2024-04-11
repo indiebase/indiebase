@@ -9,7 +9,7 @@ import { SelectMenu } from '~/components/SelectMenu';
 import { navbarCollapseAtom } from './navbar.atom';
 import { NavMenu } from './NavMenu';
 
-export interface AppShellNavbarProps {
+export interface DashboardNavbarProps {
   // menu: NavbarMenuTile[];
   semver?: string;
 }
@@ -33,7 +33,7 @@ const OrganizationSelect = function () {
   );
 };
 
-export const AppShellNavbar: FC<AppShellNavbarProps> = function () {
+export const DashboardNavbar: FC<DashboardNavbarProps> = function () {
   const [opened, toggle] = useAtom(navbarCollapseAtom);
 
   return (
