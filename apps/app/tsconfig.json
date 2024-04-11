@@ -8,6 +8,7 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "strict": false,
     // Modules
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -18,7 +19,7 @@
     "jsx": "preserve",
     "paths": {
       "~/*": [
-        "./src/*"
+        "./*"
       ]
     },
     "allowJs": true,

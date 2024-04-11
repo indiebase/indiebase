@@ -15,7 +15,7 @@ export default tslint.config(
   ...tslint.configs.recommended,
   eslintPluginPrettierRecommended,
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    files: ['**/*.{ts,mts,cts,tsx}'],
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
@@ -26,9 +26,11 @@ export default tslint.config(
       sourceType: 'module',
       parserOptions: {
         project: [
-          'tsconfig.json',
-          'community/tsconfig.json',
-          'first_party/*/tsconfig.json',
+          './tsconfig.json',
+          './first_party/*/tsconfig.json',
+          './packages/*/tsconfig.json',
+          './community/tsconfig.json',
+          './apps/*/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -102,15 +104,18 @@ export default tslint.config(
     },
   },
   {
-    files: ['apps/app/**/*.{js,jsx,ts,tsx}'],
+    files: ['apps/app/**/*.{ts,tsx}'],
     plugins: {
       '@next/next': nextPlugin,
     },
     rules: {
-      rules: {
-        ...nextPlugin.configs.recommended.rules,
-        ...nextPlugin.configs['core-web-vitals'].rules,
-      },
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-duplicate-head': 'off',
     },
+  },
+  {
+    files: ['*.{js,mjs,cjs}'],
+    ...tslint.configs.disableTypeChecked,
   },
 );

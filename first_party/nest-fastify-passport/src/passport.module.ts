@@ -3,7 +3,7 @@ import {
   AuthModuleAsyncOptions,
   AuthModuleOptions,
   AuthOptionsFactory,
-  IAuthModuleOptions
+  IAuthModuleOptions,
 } from './interfaces/auth-module.options';
 
 @Module({})
@@ -12,7 +12,7 @@ export class PassportModule {
     return {
       module: PassportModule,
       providers: [{ provide: AuthModuleOptions, useValue: options }],
-      exports: [AuthModuleOptions]
+      exports: [AuthModuleOptions],
     };
   }
 
@@ -21,12 +21,12 @@ export class PassportModule {
       module: PassportModule,
       imports: options.imports || [],
       providers: this.createAsyncProviders(options),
-      exports: [AuthModuleOptions]
+      exports: [AuthModuleOptions],
     };
   }
 
   private static createAsyncProviders(
-    options: AuthModuleAsyncOptions
+    options: AuthModuleAsyncOptions,
   ): Provider[] {
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
@@ -35,26 +35,26 @@ export class PassportModule {
       this.createAsyncOptionsProvider(options),
       {
         provide: options.useClass,
-        useClass: options.useClass
-      }
+        useClass: options.useClass,
+      },
     ];
   }
 
   private static createAsyncOptionsProvider(
-    options: AuthModuleAsyncOptions
+    options: AuthModuleAsyncOptions,
   ): Provider {
     if (options.useFactory) {
       return {
         provide: AuthModuleOptions,
         useFactory: options.useFactory,
-        inject: options.inject || []
+        inject: options.inject || [],
       };
     }
     return {
       provide: AuthModuleOptions,
       useFactory: async (optionsFactory: AuthOptionsFactory) =>
         await optionsFactory.createAuthOptions(),
-      inject: [options.useExisting || options.useClass]
+      inject: [options.useExisting || options.useClass],
     };
   }
 }

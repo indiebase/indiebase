@@ -22,7 +22,7 @@ export class AppController {
   login(@Req() req: any, @Body() body: Record<string, string>) {
     return this.appService.getToken({
       username: body.username,
-      id: req.user.id
+      id: req.user.id,
     });
   }
 }

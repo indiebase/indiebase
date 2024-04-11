@@ -22,7 +22,7 @@ declare global {
   const kTestMode: boolean;
 }
 
-const NODE_ENV = globalThis.process.env.NODE_ENV;
+const NODE_ENV = process.env.NODE_ENV;
 
 /**
  * Determine if it is a development environment..

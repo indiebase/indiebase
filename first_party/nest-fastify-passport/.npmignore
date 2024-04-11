@@ -6,7 +6,7 @@ tslint.json
 tsconfig.json
 .prettierrc
 
-# misc 
+# misc
 .commitlintrc.json
 .release-it.json
 .eslintignore
