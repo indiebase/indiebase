@@ -1,4 +1,7 @@
-import { type ComboboxParsedItem, type ComboboxParsedItemGroup } from '@mantine/core';
+import {
+  type ComboboxParsedItem,
+  type ComboboxParsedItemGroup,
+} from '@mantine/core';
 
 export function isOptionsGroup(
   item: ComboboxParsedItem,

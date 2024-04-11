@@ -14,7 +14,7 @@ export interface AppShellNavbarProps {
   semver?: string;
 }
 
-const OrgSelect = function () {
+const OrganizationSelect = function () {
   return (
     <SelectMenu
       onOptionSubmit={(val) => {
@@ -33,7 +33,7 @@ const OrgSelect = function () {
   );
 };
 
-export const AppShellNavbar: FC<AppShellNavbarProps> = function (props) {
+export const AppShellNavbar: FC<AppShellNavbarProps> = function () {
   const [opened, toggle] = useAtom(navbarCollapseAtom);
 
   return (
@@ -44,7 +44,7 @@ export const AppShellNavbar: FC<AppShellNavbarProps> = function (props) {
         hiddenFrom="sm"
         size="xs"
       />
-      <OrgSelect />
+      <OrganizationSelect />
       {/* <SkeletonList /> */}
       <NavMenu mt={20} />
     </AppShell.Navbar>

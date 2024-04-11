@@ -9,10 +9,10 @@ export abstract class PassportSerializer {
     const passportInstance = this.getPassportInstance();
 
     passportInstance.registerUserSerializer((user, req) =>
-      this.serializeUser(user, req)
+      this.serializeUser(user, req),
     );
     passportInstance.registerUserDeserializer((payload, req) =>
-      this.deserializeUser(payload, req)
+      this.deserializeUser(payload, req),
     );
   }
 

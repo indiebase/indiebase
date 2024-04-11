@@ -7,7 +7,8 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { type FC, useEffect, useState } from 'react';
-// import { navMenuTile } from './NavMenu.css';
+
+import * as classes from './NavMenu.module.css';
 
 export interface NavMenuTile {
   label: string;
@@ -23,8 +24,6 @@ export interface NavMenuTile {
 
 const useActiveAccordion = function (menu: NavMenuTile[]) {
   const [value, setValue] = useState<string[]>([]);
-
-  console.log(value);
 
   useEffect(() => {
     for (const item of menu) {

@@ -1,18 +1,17 @@
-import { type FC, useState } from 'react';
 import {
-  PillsInput,
-  Pill,
-  Combobox,
-  CheckIcon,
-  Group,
-  useCombobox,
-  type BoxProps,
   type __BaseInputProps,
+  type BoxProps,
+  CheckIcon,
+  Combobox,
+  type ElementProps,
+  Group,
+  Pill,
+  PillsInput,
   type SelectFactory,
   type StylesApiProps,
-  type ElementProps,
-  Flex,
+  useCombobox,
 } from '@mantine/core';
+import { type FC, useState } from 'react';
 
 export interface InputItem {
   value: string;

@@ -13,7 +13,7 @@ describe.each`
 
   beforeAll(async () => {
     const modRef = await Test.createTestingModule({
-      imports: [AppModule]
+      imports: [AppModule],
     }).compile();
     app = modRef.createNestApplication();
     await app.listen(0);

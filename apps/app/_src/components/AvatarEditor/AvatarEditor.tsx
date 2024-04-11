@@ -11,7 +11,13 @@ import {
   Flex,
 } from '@mantine/core';
 import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
-import { type FC, useCallback, useState, type ReactElement, createRef } from 'react';
+import {
+  type FC,
+  useCallback,
+  useState,
+  type ReactElement,
+  createRef,
+} from 'react';
 // import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useColorScheme } from '@mantine/hooks';

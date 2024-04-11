@@ -1,36 +1,34 @@
-import {type FC} from 'react';
-import type React from 'react';
-import { DOMAttributes, MouseEventHandler, useEffect } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
 import {
+  type __BaseInputProps,
+  type __CloseButtonProps,
+  type __InputStylesNames,
   type BoxProps,
   Combobox,
   type ComboboxLikeStylesNames,
   type ComboboxProps,
   type ElementProps,
+  extractStyleProps,
   type Factory,
+  factory,
+  getOptionsLockup,
+  getParsedComboboxData,
   InputBase,
   type OptionsFilter,
   Pill,
   PillsInput,
   type StylesApiProps,
-  type __BaseInputProps,
-  type __CloseButtonProps,
-  type __InputStylesNames,
-  extractStyleProps,
-  factory,
-  getOptionsLockup,
-  getParsedComboboxData,
   useCombobox,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useId, useUncontrolled } from '@mantine/hooks';
+import type React from 'react';
+import { type FC } from 'react';
+import { useEffect } from 'react';
+
+import { OptionsDropdown } from '../Select/OptionsDropdown/OptionsDropdown';
 import { filterPickedValues } from './filter-picked-values';
-import {
-  OptionsData,
-  OptionsDropdown,
-} from '../Select/OptionsDropdown/OptionsDropdown';
 
 export interface ComboboxItem {
   value: string;

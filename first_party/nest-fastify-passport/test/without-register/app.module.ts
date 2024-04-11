@@ -10,10 +10,10 @@ import { LocalStrategy } from '../common/local.strategy';
   controllers: [AppController],
   imports: [
     JwtModule.register({
-      secret: 's3cr3t'
+      secret: 's3cr3t',
     }),
-    PassportModule
+    PassportModule,
   ],
-  providers: [AppService, LocalStrategy, JwtStrategy]
+  providers: [AppService, LocalStrategy, JwtStrategy],
 })
 export class AppModule {}

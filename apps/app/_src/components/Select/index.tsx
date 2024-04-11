@@ -1,4 +1,4 @@
-import {type FC} from 'react';
+import { type FC } from 'react';
 import type React from 'react';
 import { useEffect, useMemo } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
