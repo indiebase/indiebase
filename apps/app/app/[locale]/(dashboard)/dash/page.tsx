@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { UnknownError } from '~/app/Errors';
+import { UnknownError } from '~/components/Fallback';
 
 export default function Home() {
   // redirect('/dash');

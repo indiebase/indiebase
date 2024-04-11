@@ -12,9 +12,9 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
-  IconDetails,
   IconMessageReport,
   IconRefresh,
+  IconZoomExclamation,
 } from '@tabler/icons-react';
 import { type FC, memo } from 'react';
 
@@ -65,7 +65,7 @@ export const ErrorDetail: FC<ErrorDetailProps> = memo((props) => {
                 aria-label="Show details button"
                 onClick={() => handler.toggle()}
               >
-                <IconDetails />
+                <IconZoomExclamation />
               </ActionIcon>
             </Tooltip>
           }

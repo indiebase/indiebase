@@ -17,6 +17,7 @@ export class ConfigurableError extends Error {
   showDetails?: boolean;
   description?: string;
   title?: string;
+  digest?: string;
 
   constructor(options: ConfigurableErrorOptions | string = {}) {
     super();
