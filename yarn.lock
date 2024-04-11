@@ -5225,6 +5225,7 @@ __metadata:
   resolution: "@deskbtm/gadgets@workspace:first_party/gadgets"
   dependencies:
     "@types/node": "npm:20.12.5"
+    shx: "npm:0.3.4"
     ts-node: "npm:10.9.2"
     tsconfig-paths: "npm:4.2.0"
     typescript: "npm:5.4.4"

@@ -1,3 +1,6 @@
+'use client';
+
+import { type NOP } from '@deskbtm/gadgets';
 import {
   ActionIcon,
   Code,
@@ -16,22 +19,18 @@ import {
   IconMessageReport,
   IconRefresh,
 } from '@tabler/icons-react';
-import { type FC, memo } from 'react';
 
-import type { ConfigurableError } from './Errors';
+import type { ConfigurableError } from '~/app/Errors';
 
-export interface ErrorDetailProps {
-  title?: string;
-  error?: ConfigurableError;
-  description?: string;
-  onRetry(): void;
-}
-
-export const GlobalError = () => {
-
-  
-  const t = error?.title || title;
-  const d = error?.description || description || error?.message;
+export const GlobalError = ({
+  error,
+  reset,
+}: {
+  error: ConfigurableError & { digest?: string };
+  reset: typeof NOP;
+}) => {
+  const t = error?.title;
+  const d = error?.description || error?.message;
   const [opened, handler] = useDisclosure(error?.showDetails);
 
   return (
@@ -44,19 +43,19 @@ export const GlobalError = () => {
           </Text>
         )}
         <Group>
-          (
-          <Tooltip label="Retry" openDelay={500}>
-            <ActionIcon
-              onClick={onRetry}
-              size="xs"
-              c="gray"
-              variant="transparent"
-              aria-label="Error retry button"
-            >
-              <IconRefresh />
-            </ActionIcon>
-          </Tooltip>
-          )
+          {error?.retryable && (
+            <Tooltip label="Retry" openDelay={500}>
+              <ActionIcon
+                onClick={reset}
+                size="xs"
+                c="gray"
+                variant="transparent"
+                aria-label="Error retry button"
+              >
+                <IconRefresh />
+              </ActionIcon>
+            </Tooltip>
+          )}
           {
             <Tooltip label="Show details" openDelay={500}>
               <ActionIcon

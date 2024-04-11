@@ -23,8 +23,8 @@
     }
   },
   "scripts": {
-    "prebuild": "shx rm -r dist  ",
-    "build": "shx rm -r dist && tsc -p tsconfig.build.json",
+    "prebuild": "shx rm -rf dist  ",
+    "build": "shx rm -rf dist && tsc -p tsconfig.build.json",
     "format": "prettier --write \"lib/**/*.ts\"",
     "lint": "eslint 'lib/**/*.ts' --fix",
     "precommit": "lint-staged",
