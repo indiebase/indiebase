@@ -1,14 +1,15 @@
 import {
-  Tooltip,
-  Text,
   Button,
-  Popover,
+  type ButtonProps,
+  type DefaultMantineColor,
   Group,
+  Popover,
+  Text,
+  Tooltip,
   useMantineTheme,
-  DefaultMantineColor,
-  ButtonProps,
 } from '@mantine/core';
-import { FC, PropsWithChildren, useState } from 'react';
+import { type FC, type PropsWithChildren, useState } from 'react';
+
 import { ConfirmButtonFooter } from './ConfirmButtonFooter';
 
 interface ConfirmButtonProps extends PropsWithChildren, ButtonProps {

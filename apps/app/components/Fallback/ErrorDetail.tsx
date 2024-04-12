@@ -84,7 +84,7 @@ export const ErrorDetail: FC<ErrorDetailProps> = memo((props) => {
         </Group>
       </Stack>
       {
-        <Collapse pt="lg" px="xl" in={opened} mah="50%">
+        <Collapse pt="lg" in={opened} mah="50%">
           <ScrollArea scrollbarSize={2} style={{ borderRadius: rem(6) }}>
             <Code bg="red.1" block c="red" style={{ whiteSpace: 'unset' }}>
               {String(error?.stack ?? error)}

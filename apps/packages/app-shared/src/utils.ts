@@ -9,6 +9,7 @@ export function save(filename: string, data: string) {
 }
 
 export const isEmailRegExp = (value) =>
+  // eslint-disable-next-line no-useless-escape
   /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(
     value,
   );

@@ -24,7 +24,7 @@ export class OkResponseSchema {
     description: 'Response logical code',
     default: ResultCode.SUCCESS,
   })
-  code: number;
+  code!: number;
 
   @ApiPropertyOptional({
     description: 'Response message',
@@ -36,17 +36,17 @@ export class PaginationResponseSchema extends OkResponseSchema {
   @ApiProperty({
     description: 'Total items',
   })
-  total: number;
+  total!: number;
 
   @ApiProperty({
     description: 'Current page',
   })
-  current: number;
+  current!: number;
 
   @ApiProperty({
     description: 'Page size',
   })
-  pageSize: number;
+  pageSize!: number;
 }
 
 export class ErrResponseSchema {
@@ -54,12 +54,12 @@ export class ErrResponseSchema {
     description: 'Response logical code',
     default: ResultCode.ERROR,
   })
-  code: number;
+  code!: number;
 
   @ApiProperty({
     description: 'Response http code',
   })
-  statusCode: number;
+  statusCode!: number;
 
   @ApiPropertyOptional({
     description: 'Error responses message',
@@ -70,10 +70,10 @@ export class ErrResponseSchema {
     type: Date,
     description: 'Error responses timestamp',
   })
-  timestamp: Date;
+  timestamp!: Date;
 
   @ApiProperty({
     description: 'Error responses api path',
   })
-  path: string;
+  path!: string;
 }

@@ -1,5 +1,5 @@
 import type { StyleProp } from '@mantine/core';
-import { Flex } from '@mantine/core';
+import { Box, Flex } from '@mantine/core';
 import { type FC, useMemo } from 'react';
 import type { FallbackProps } from 'react-error-boundary';
 
@@ -25,8 +25,16 @@ export const ErrorFallback: FC<ErrorFallbackProps> = function (props) {
   }, [error]);
 
   return (
-    <Flex direction="column" justify="center" h={height}>
-      <ErrorDetail error={error} onRetry={resetErrorBoundary} {...content} />
+    <Flex direction="column" justify="center" align="center" h={height}>
+      <Box
+        w={{
+          base: '100%',
+          lg: '55%',
+          sm: '100%',
+        }}
+      >
+        <ErrorDetail error={error} onRetry={resetErrorBoundary} {...content} />
+      </Box>
     </Flex>
   );
 };

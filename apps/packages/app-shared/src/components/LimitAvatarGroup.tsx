@@ -1,6 +1,6 @@
 import { Avatar } from '@mantine/core';
-import { AvatarGroupProps } from '@mantine/core/lib/Avatar/AvatarGroup/AvatarGroup';
-import React, { FC } from 'react';
+import { type AvatarGroupProps } from '@mantine/core';
+import React, { type FC } from 'react';
 
 export interface LimitAvatarGroupProps extends AvatarGroupProps {
   limit?: number;

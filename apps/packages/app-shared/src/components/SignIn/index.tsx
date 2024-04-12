@@ -1,21 +1,22 @@
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { isEmailRegExp } from '@indiebase/server-shared';
 import {
   Button,
   Container,
   Divider,
+  Image,
   PasswordInput,
   Stack,
-  TextInput,
-  Image,
   Text,
+  TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useQuery } from '@tanstack/react-query';
 import { showNotification } from '@mantine/notifications';
-import { IconX, IconMail, IconKey } from '@tabler/icons-react';
-import { projectsQuery } from '../../api';
+import { IconKey, IconMail, IconX } from '@tabler/icons-react';
+import { useQuery } from '@tanstack/react-query';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+
+import { projectsQuery } from '../../apis';
 
 export const SignIn = function () {
   const { data } = useQuery(['own-projects'], projectsQuery, {

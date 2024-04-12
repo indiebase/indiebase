@@ -5,7 +5,7 @@ import {
   OkResponseSchema,
   SpecificProjectType,
 } from '@indiebase/server-shared';
-import { ApiProperty,ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreatePrjDTO {
@@ -20,7 +20,7 @@ export class CreatePrjDTO {
     column: 'name',
   })
   @IsCommonLegalString()
-  name: string;
+  name!: string;
 }
 
 export class UpdatePrjDTO extends CreatePrjDTO {

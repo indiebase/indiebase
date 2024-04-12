@@ -1,10 +1,10 @@
 import {
-  useMantineTheme,
-  Group,
   Button,
-  MantineStyleSystemProps,
+  Group,
+  type MantineStyleSystemProps,
+  useMantineTheme,
 } from '@mantine/core';
-import { FC } from 'react';
+import { type FC } from 'react';
 
 interface ConfirmButtonFooterProps extends MantineStyleSystemProps {
   onCancel?: () => void;

@@ -1,13 +1,11 @@
-import { req } from './request';
 import type {
-  BaseResSchema,
   Org,
   PaginationRequestSchema,
   PaginationResponseSchema,
   Resource,
-  Role,
-  UserProfile,
 } from '@indiebase/trait';
+
+import { req } from './request';
 
 export const fetchUserProfile = async (): Promise<
   BaseResSchema<UserProfile>

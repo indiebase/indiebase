@@ -16,9 +16,8 @@ export interface DashboardLayoutProps extends React.PropsWithChildren {}
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
   const [opened] = useAtom(navbarCollapseAtom);
 
-  console.debug(
-    '%c------------------------DashboardLayout re-render------------------------------',
-    'color:green',
+  console.warn(
+    '------------------------DashboardLayout re-render------------------------------',
   );
 
   return (

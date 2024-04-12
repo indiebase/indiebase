@@ -1,8 +1,9 @@
 import {
-  BaseResSchema,
-  PaginationRequestSchema,
-  Project,
+  type BaseResSchema,
+  type PaginationRequestSchema,
+  type Project,
 } from '@indiebase/trait';
+
 import { req } from './request';
 export interface QueryOwnedProjects {
   orgName: string;

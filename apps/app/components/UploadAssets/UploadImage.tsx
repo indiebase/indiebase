@@ -1,3 +1,5 @@
+'use client';
+
 import {
   ActionIcon,
   Avatar,
@@ -12,8 +14,7 @@ import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
 import { type FC, type ReactElement, useCallback, useState } from 'react';
 import Cropper from 'react-easy-crop';
-
-import { uploadFile } from '../apis/utils';
+import { useProps } from 'reactgets';
 
 interface UploadImageProps {
   size?: number;
@@ -70,25 +71,36 @@ async function getCroppedImg(imageSrc, pixelCrop): Promise<Blob> {
   // return canvas.toDataURL('image/png');
 
   // As a blob
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     canvas.toBlob((file) => {
       resolve(file);
     }, 'image/png');
   });
 }
 
-export const UploadImage: FC<UploadImageProps> = function ({
-  size,
-  src,
-  limit,
-  label,
-  croppable,
-  clearable,
-  cropTitle,
-  onChange,
-  icon,
-  bucket,
-}) {
+const defaultProps = {
+  size: 60,
+  limit: 2048,
+  croppable: false,
+  cropTitle: 'Crop Image',
+  icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
+  bucket: 'indiebase-community',
+};
+
+export const UploadImage: FC<UploadImageProps> = function (_props) {
+  const {
+    size,
+    src,
+    limit,
+    label,
+    croppable,
+    clearable,
+    cropTitle,
+    onChange,
+    icon,
+    bucket,
+  } = useProps(defaultProps, _props);
+
   const [cropped, setCropped] = useState<Blob>();
   const [url, setUrl] = useState<string>();
   const [errorMsg, setErrorMsg] = useState<string>();
@@ -240,13 +252,4 @@ export const UploadImage: FC<UploadImageProps> = function ({
       ) : null}
     </Box>
   );
-};
-
-UploadImage.defaultProps = {
-  size: 60,
-  limit: 2048,
-  croppable: false,
-  cropTitle: 'Crop Image',
-  icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
-  bucket: 'indiebase-community',
 };

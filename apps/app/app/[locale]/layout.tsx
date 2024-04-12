@@ -3,6 +3,7 @@ import '@mantine/core/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@mantine/notifications/styles.css';
 
+import { SuperCowPower } from '@indiebase/app-shared';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
@@ -77,6 +78,7 @@ const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
       <body className={fonts.className}>
         <Compose providers={providers}>
           <NavigationProgress />
+          <SuperCowPower />
           <DevTools />
           <Notifications />
           {children}

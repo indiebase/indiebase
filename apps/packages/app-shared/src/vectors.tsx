@@ -1,4 +1,4 @@
-export const ProjectFallbackBg = (props) => (
+export const ProjectFallbackIcon = (props) => (
   <svg
     width={1920}
     height={551}

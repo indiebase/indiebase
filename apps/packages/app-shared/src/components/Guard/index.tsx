@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
-import { FC, useEffect } from 'react';
+import { type PropsWithChildren } from 'react';
+import { type FC, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 export const Guard: FC<PropsWithChildren> = function (props) {

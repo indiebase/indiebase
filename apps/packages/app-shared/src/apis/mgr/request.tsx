@@ -1,5 +1,5 @@
-import { IconX } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
+import { IconX } from '@tabler/icons';
 import axios, { type AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { nanoid } from 'nanoid';

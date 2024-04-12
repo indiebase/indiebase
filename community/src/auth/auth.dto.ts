@@ -29,7 +29,7 @@ export class LocalSignInDTO {
     },
   )
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     description:
@@ -39,7 +39,7 @@ export class LocalSignInDTO {
   @IsHash('sha256', {
     message: 'Password needs to be converted to SHA256',
   })
-  password: string;
+  password!: string;
 }
 
 export class OptVerifyDTO {

@@ -1,5 +1,5 @@
-import { Tooltip, Text } from '@mantine/core';
-import { FC } from 'react';
+import { Text, Tooltip } from '@mantine/core';
+import { type FC } from 'react';
 
 interface LimitTdProps {
   content: string;

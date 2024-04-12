@@ -1,19 +1,20 @@
-import { Text, type AvatarProps, Avatar, HoverCard } from '@mantine/core';
-import { FC, PropsWithChildren } from 'react';
-import { IconUser } from '@tabler/icons';
-import { PolymorphicComponentProps } from '@mantine/utils';
+import { Avatar, type AvatarProps, HoverCard, Text } from '@mantine/core';
+import { type PolymorphicComponentProps } from '@mantine/utils';
+import { IconUser } from '@tabler/icons-react';
+import { type FC, type PropsWithChildren } from 'react';
 
-interface ProfilePreviewCardProps extends PropsWithChildren {
+interface ProfilePreviewProps extends PropsWithChildren {
   src?: string;
   href?: string;
 }
+
 interface AvatarWithPreviewProps extends PropsWithChildren {
   avatar: PolymorphicComponentProps<'a', AvatarProps>;
   src?: string;
   href?: string;
 }
 
-export const ProfilePreviewCard: FC<ProfilePreviewCardProps> = function ({
+export const ProfilePreview: FC<ProfilePreviewProps> = function ({
   children,
   src,
 }) {
@@ -42,10 +43,10 @@ export const AvatarWithPreview: FC<AvatarWithPreviewProps> = function ({
   href,
 }) {
   return (
-    <ProfilePreviewCard src={src} href={href}>
+    <ProfilePreview src={src} href={href}>
       <Avatar {...avatar} src={src} href={href}>
         <IconUser size={14} />
       </Avatar>
-    </ProfilePreviewCard>
+    </ProfilePreview>
   );
 };

@@ -1,4 +1,3 @@
-import { BaseResSchema } from '@indiebase/trait';
 import { req } from './request';
 
 /**

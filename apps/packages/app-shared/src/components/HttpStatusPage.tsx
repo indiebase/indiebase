@@ -1,7 +1,6 @@
 import { Center, Text, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { FC } from 'react';
-import { useRemoveAppShellLeftPadding } from '../hooks';
+import { type FC } from 'react';
 
 export const HttpStatusPage: FC<{ label?: string }> = function (props) {
   const theme = useMantineTheme();
@@ -16,7 +15,6 @@ export const HttpStatusPage: FC<{ label?: string }> = function (props) {
       gradient = { from: '#FF00B3', to: '#EC0047', deg: 45 };
   }
 
-  useRemoveAppShellLeftPadding();
   return (
     <Center
       sx={{
