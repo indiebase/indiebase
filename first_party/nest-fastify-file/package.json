@@ -49,11 +49,11 @@
     "@nestjs/core": "10.3.7",
     "@nestjs/platform-fastify": "10.3.7",
     "@types/busboy": "1.5.3",
-    "@types/node": "20.12.5",
+    "@types/node": "20.12.7",
     "fastify": "4.26.2",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
-    "typescript": "5.4.4"
+    "typescript": "5.4.5"
   },
   "peerDependencies": {
     "@fastify/multipart": "*"

@@ -22,8 +22,8 @@ interface BootstrapOptions {
 }
 
 export class CommunityBootstrap {
-  public app: NestFastifyApplication;
-  public config: ConfigService;
+  public app!: NestFastifyApplication;
+  public config!: ConfigService;
 
   constructor(private readonly options?: BootstrapOptions) {}
 
@@ -128,6 +128,6 @@ export class CommunityBootstrap {
 
     Logger.log(`\n\n\n🚀 Indiebase is running on: http://${h}:${p}\n\n`);
 
-    return this.app.listen(p, h);
+    return this.app.listen(p!, h!);
   }
 }

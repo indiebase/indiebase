@@ -47,8 +47,10 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       RedisModule.forRootAsync({
         inject: [ConfigService],
         async useFactory(config: ConfigService) {
-          const { host, password, port } =
-            config.get<RedisClientOptions>('redis');
+          const redisConfig = config.get<RedisClientOptions>('redis');
+          if (!redisConfig) throw new Error('Redis config gets null');
+
+          const { host, password, port } = redisConfig;
           return {
             config: {
               host,

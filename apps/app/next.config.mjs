@@ -8,7 +8,7 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   transpilePackages: ['jotai-devtools'],
   experimental: {
-    swcPlugins: [['@swc-jotai/react-refresh', {}]],
+    // swcPlugins: [['@swc-jotai/react-refresh', {}]],
   },
 };
 
