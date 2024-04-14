@@ -20,52 +20,14 @@ import {
   IconDiscountCheck,
 } from '@tabler/icons-react';
 import { atom, useAtom } from 'jotai';
-import React, { type FC, type ReactElement } from 'react';
+import React, { type FC, memo, type ReactElement } from 'react';
 import { useProps } from 'reactgets';
 
-// import { req } from '~/__MOCK__';
+const stepperAtom = atom(0);
+const recoveryCodeAtom = atom([]);
 
-// const _otpStepperAtom = atom(0);
-// const _otpRecoveryCodeAtom = atom([]);
-
-const generateOptApi = async () => {
-  // const { data } = await req.post('/v1/auth/2fa');
-  return {};
-};
-
-const otpVerifyApi = async (params: any) => {
-  // const { data } = await req.post('/v1/auth/2fa/verify', params);
-  return {};
-};
-
-const SetAuthnApp: FC = function (props) {
-  // const { data } = useQuery(['2fa-gen'], generateOptApi, {
-  //   suspense: true,
-  // });
-  const theme = useMantineTheme();
-  // const [code, setCode] = useState('');
-  // const [errorMsg, setErrorMsg] = useState<string | null>();
-  // const [_, setActive] = useAtom(_otpStepperAtom);
-  // const [__, setRecoveryCode] = useAtom(_otpRecoveryCodeAtom);
-
-  // const verify = useCallback(async () => {
-  //   if (code.length < 6) {
-  //     setErrorMsg('Enter complete code please.');
-  //     return;
-  //   } else {
-  //     setErrorMsg(null);
-  //   }
-
-  //   const res = await otpVerifyApi({ token: code, secret: data.d.secret });
-  //   if (res.code < 1) {
-  //     setErrorMsg('Two-factor code verification failed. Please try again.');
-  //   } else {
-  //     onNext(res.d.otpRecoveryCode);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [code, data.d.secret]);
-
-  const Tip = () => (
+const InstallAuthenticatorWizard = memo(() => {
+  return (
     <Text size="sm" mt={10} c="gray">
       You can use 2FA apps e.g.&nbsp;
       <Anchor component="a" href="https://googleauthenticator.net/">
@@ -90,13 +52,41 @@ const SetAuthnApp: FC = function (props) {
       &nbsp;to scan the QR code.
     </Text>
   );
+});
+
+const SetAuthnApp: FC = function (props) {
+  // const { data } = useQuery(['2fa-gen'], generateOptApi, {
+  //   suspense: true,
+  // });
+  const theme = useMantineTheme();
+  // const [code, setCode] = useState('');
+  // const [errorMsg, setErrorMsg] = useState<string | null>();
+  const [_, setActive] = useAtom(stepperAtom);
+  const [__, setRecoveryCode] = useAtom(recoveryCodeAtom);
+
+  // const verify = useCallback(async () => {
+  //   if (code.length < 6) {
+  //     setErrorMsg('Enter complete code please.');
+  //     return;
+  //   } else {
+  //     setErrorMsg(null);
+  //   }
+
+  //   const res = await otpVerifyApi({ token: code, secret: data.d.secret });
+  //   if (res.code < 1) {
+  //     setErrorMsg('Two-factor code verification failed. Please try again.');
+  //   } else {
+  //     onNext(res.d.otpRecoveryCode);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [code, data.d.secret]);
 
   return (
     <Box mt={15}>
       <Title order={6} mt={20}>
         1. Scan the QR Code.
       </Title>
-      <Tip />
+      <InstallAuthenticatorWizard />
       <Image width={200} src={''} />
       <Title order={6} mt={20}>
         2. Verify the application code.
@@ -125,10 +115,9 @@ const SetAuthnApp: FC = function (props) {
       <Button
         mt={10}
         variant="gradient"
-        gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
-        // onClick={verify}
+        gradient={theme.other.peachGradient}
         onClick={() => {
-          // setActive(1);
+          setActive(1);
         }}
       >
         Verify
@@ -137,13 +126,12 @@ const SetAuthnApp: FC = function (props) {
   );
 };
 
-const SaveRecoveryCode: FC<{ recoveryCode: string[] }> = function ({
-  recoveryCode,
-}) {
+const SaveRecoveryCode: FC = function () {
   'use client';
   const theme = useMantineTheme();
   // const [downloaded, setDownload] = useState(false);
-  // const [_, setActive] = useAtom(_otpStepperAtom);
+  const [_, setActive] = useAtom(stepperAtom);
+  const [recoveryCode] = useAtom(recoveryCodeAtom);
 
   return (
     <Box mt={15}>
@@ -189,9 +177,9 @@ const SaveRecoveryCode: FC<{ recoveryCode: string[] }> = function ({
         <Button
           // disabled={!downloaded}
           variant="gradient"
-          gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
+          gradient={theme.other.peachGradient}
           onClick={() => {
-            // setActive(2);
+            setActive(2);
           }}
         >
           Next
@@ -200,12 +188,6 @@ const SaveRecoveryCode: FC<{ recoveryCode: string[] }> = function ({
     </Box>
   );
 };
-
-SaveRecoveryCode.defaultProps = {
-  recoveryCode: [],
-};
-
-interface SwitchesCardProps {}
 
 interface PreferenceTileProps {
   topBorder?: boolean;
@@ -229,13 +211,12 @@ const PreferenceTile: FC<PreferenceTileProps> = function (_props) {
   return (
     <Group
       justify="space-between"
-      // spacing="xl"
       wrap="nowrap"
       pt="sm"
       mt="sm"
-      // style={
-      //   topBorder ? { borderTop: `1.5px dashed ${theme.colors.gray[3]}` } : null
-      // }
+      style={
+        topBorder ? { borderTop: `1.5px dashed ${theme.colors.gray[3]}` } : null
+      }
     >
       <div>
         <Text>{title}</Text>
@@ -271,7 +252,7 @@ const Complete: FC = function () {
       <Group mt={20} justify="right">
         <Button
           variant="gradient"
-          gradient={theme.other.buttonGradient}
+          gradient={theme.other.successGradient}
           onClick={() => {
             // dispatch({ type: 'refetch' });
           }}
@@ -283,7 +264,7 @@ const Complete: FC = function () {
   );
 };
 
-const TwoFactorPreferences: FC<SwitchesCardProps> = function () {
+const TwoFactorPreferences: FC = function () {
   const theme = useMantineTheme();
 
   return (
@@ -304,7 +285,7 @@ const TwoFactorPreferences: FC<SwitchesCardProps> = function () {
         trailing={
           <Button
             variant="gradient"
-            gradient={theme.other.buttonGradient}
+            gradient={theme.other.peachGradient}
             onClick={() => {}}
           >
             Disable
@@ -316,7 +297,7 @@ const TwoFactorPreferences: FC<SwitchesCardProps> = function () {
 };
 
 const CreateOtpStep = function () {
-  // const [active] = useAtom(_otpStepperAtom);
+  const [active] = useAtom(stepperAtom);
 
   return (
     <Stepper
@@ -324,13 +305,13 @@ const CreateOtpStep = function () {
       size="xs"
       mt={30}
       completedIcon={<IconCheck size={20} />}
-      active={0}
+      active={active}
     >
       <Stepper.Step label="Configure auth app">
         <SetAuthnApp />
       </Stepper.Step>
       <Stepper.Step label="Save recovery codes">
-        <SaveRecoveryCode recoveryCode={['12']} />
+        <SaveRecoveryCode />
       </Stepper.Step>
       <Stepper.Step label="Complete">
         <Complete />
@@ -339,13 +320,14 @@ const CreateOtpStep = function () {
   );
 };
 
-export default function TwoFactorAuthzPage() {
+export default function TwoFactorAuthnPage() {
   // const [profile] = useAtom(userProfileQueryAtom[0]);
 
   return (
     <Box maw={800}>
       <Title order={4}>Configure Two-factor authentication (2FA)</Title>
-      <CreateOtpStep />
+      {/* <CreateOtpStep /> */}
+      <TwoFactorPreferences />
 
       {/* {profile.d.enabled2FA ? <TwoFactorPreferences /> : <CreateOtpStep />} */}
     </Box>

@@ -8,6 +8,7 @@ import {
   Group,
   Menu,
   rem,
+  useMantineTheme,
 } from '@mantine/core';
 import {
   IconFileDescription,
@@ -19,6 +20,7 @@ import {
 import { useAtom } from 'jotai';
 import { type FC } from 'react';
 
+import classes from './Dashboard.module.css';
 import { navbarCollapseAtom } from './navbar.atom';
 
 const PreferencesMenu = function () {
@@ -62,15 +64,11 @@ export interface DashboardHeaderProps {
 
 export const DashboardHeader: FC<DashboardHeaderProps> = function (props) {
   const [opened, toggle] = useAtom(navbarCollapseAtom);
+  useMantineTheme();
 
   return (
-    <AppShell.Header
-      style={{
-        backdropFilter: 'saturate(180%) blur(10px)',
-        backgroundColor: 'hsla(0,0%,100%,.6)',
-      }}
-    >
-      <Group h="100%" px="md" wrap="nowrap" grow justify="space-between">
+    <AppShell.Header className={classes.header}>
+      <Group h="100%" px="md" wrap="nowrap" justify="space-between">
         <Group h="100%">
           <Burger
             opened={opened.mobile}

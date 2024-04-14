@@ -29,7 +29,12 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         breakpoint: 'sm',
         collapsed: { mobile: !opened.mobile, desktop: !opened.desktop },
       }}
-      padding={{ base: 'md', lg: 0 }}
+      px={{
+        base: 'md',
+        lg: 'xl',
+        sm: 'md',
+      }}
+      pt="lg"
     >
       <DashboardHeader logo={<IndiebaseTextLogo size={160} />} />
       <DashboardNavbar />

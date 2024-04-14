@@ -1,0 +1,4 @@
+.header {
+  backdrop-filter: var(--indiebase-backdrop-filter);
+  background-color: var(--indiebase-backdrop-blur-color);
+}

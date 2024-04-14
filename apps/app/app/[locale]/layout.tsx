@@ -16,7 +16,7 @@ import * as uuid from 'uuid';
 import { fonts } from '~/fonts';
 import { locales } from '~/i18n';
 import { openGraphMetadata, twitterSummaryLargeImageMetadata } from '~/shared';
-import { theme } from '~/theme';
+import { cssVariablesResolver, theme } from '~/theme';
 
 import { JotaiDevtools } from './JotaiDevtools';
 import { QueryClientProvider } from './QueryClientProvider';
@@ -65,6 +65,7 @@ const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
     <MantineProvider
       key={uuid.v4()}
       theme={theme}
+      cssVariablesResolver={cssVariablesResolver}
       defaultColorScheme="light"
     />,
     <QueryClientProvider />,

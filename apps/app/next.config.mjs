@@ -8,6 +8,14 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   transpilePackages: ['jotai-devtools'],
   experimental: {
+    optimizePackageImports: [
+      '@mantine/core',
+      '@mantine/hooks',
+      '@mantine/dates',
+      '@mantine/hooks',
+      '@mantine/notifications',
+      '@mantine/dropzone',
+    ],
     // swcPlugins: [['@swc-jotai/react-refresh', {}]],
   },
 };

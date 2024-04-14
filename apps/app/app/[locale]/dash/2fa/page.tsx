@@ -1,7 +1,7 @@
-import TwoFactorAuthzPage from './TwoFactorAuthzPage';
+import TwoFactorAuthnPage from './TwoFactorAuthnPage';
 
 export default function Page() {
   // redirect('/dash');
 
-  return <TwoFactorAuthzPage />;
+  return <TwoFactorAuthnPage />;
 }
