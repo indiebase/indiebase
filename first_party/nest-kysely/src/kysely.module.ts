@@ -54,7 +54,7 @@ export class KyselyModule {
   ): DynamicModule {
     return {
       module: KyselyModule,
-      imports: [KyselyCoreModule.forRootAsync(options, connection)],
+      imports: [KyselyCoreModule.forRootAsync(options, connection!)],
     };
   }
 }

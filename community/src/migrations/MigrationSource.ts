@@ -21,10 +21,12 @@ export class MigrationSource implements Knex.MigrationSource<any> {
     return migration;
   }
 
-  async getMigration(migration: any) {
+  async getMigration(migration: any): Promise<any> {
     switch (migration) {
       case 'v001_mgr':
         return v001_mgr(this.#schema);
+      default:
+        throw new Error(`${migration} migration not found`);
     }
   }
 }

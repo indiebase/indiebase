@@ -62,7 +62,7 @@ const validAmount = function (n: any) {
 };
 
 const parsableUnit = function (u: string) {
-  return u.match(/\D*/).pop() === u;
+  return u.match(/\D*/)?.pop() === u;
 };
 
 const incrementBases: any = {
@@ -105,8 +105,8 @@ export const sizeParser = function (
   options: { base: number } = { base: 10 },
 ) {
   const parsed = input.toString().match(/^([0-9\.,]*)(?:\s*)?(.*)$/);
-  const amount: any = parsed[1].replace(',', '.');
-  const unit = parsed[2];
+  const amount: any = parsed![1].replace(',', '.');
+  const unit = parsed![2];
 
   const validUnit = function (sourceUnit: any) {
     return sourceUnit === unit;

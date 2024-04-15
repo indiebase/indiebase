@@ -9,8 +9,6 @@
     "skipDefaultLibCheck": true,
     "strictBindCallApply": false,
     "noImplicitAny": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": false,
     "noImplicitOverride": true,
     "noImplicitReturns": false,

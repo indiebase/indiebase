@@ -7,6 +7,7 @@ import {
   PasetoModuleOptions,
 } from './paseto.interface';
 import { PasetoService } from './paseto.service';
+import { NOP } from '@deskbtm/gadgets';
 
 @Module({})
 export class PasetoModule {
@@ -38,7 +39,7 @@ export class PasetoModule {
   ): Provider {
     return {
       provide: PASETO_MODULE_OPTIONS,
-      useFactory: options.useFactory,
+      useFactory: options.useFactory ?? NOP,
       inject: options.inject,
     };
   };

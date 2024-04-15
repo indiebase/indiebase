@@ -4,7 +4,7 @@ import { Knex } from 'knex';
 
 export class KnexSchemaEx {
   private schema: Knex.SchemaBuilder;
-  private schemaName: string;
+  private schemaName!: string;
 
   constructor(private readonly knex: Knex) {
     this.schema = knex.schema;

@@ -1,11 +1,11 @@
 import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
 import { FilesInterceptor, UploadedFiles } from '@indiebase/nest-fastify-file';
+import { ResultCode } from '@indiebase/sdk';
 import {
+  OkResponseSchema,
   // FilesSizeValidationPipe,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { BaseResponseSchema } from '@indiebase/trait';
-import { ResultCode } from '@indiebase/trait';
 import { Logger } from '@nestjs/common';
 import {
   Body,
@@ -126,8 +126,8 @@ export class StorageController {
   @UseGuards(PublicApiGuard)
   async createBucket(
     @Body() bucket: CreateBucketDTO,
-  ): Promise<BaseResponseSchema> {
-    await this.storage.createBucket(bucket.bucket, bucket.description);
+  ): Promise<OkResponseSchema> {
+    await this.storage.createBucket(bucket.bucket, bucket.description!);
 
     return {
       code: ResultCode.SUCCESS,
@@ -139,7 +139,7 @@ export class StorageController {
     summary: 'Get buckets list',
   })
   @UseGuards(PublicApiGuard)
-  async getBuckets(): Promise<BaseResponseSchema> {
+  async getBuckets(): Promise<OkResponseSchema> {
     return {
       code: ResultCode.SUCCESS,
     };

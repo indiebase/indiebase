@@ -12,6 +12,7 @@ import { CasbinService } from './casbin.service';
 @Global()
 export class CasbinModule {
   public static forRoot(options?: CasbinOptions): DynamicModule {
+    options = options!;
     const provider = createCasbinProvider(options);
     return {
       module: CasbinModule,
@@ -22,6 +23,7 @@ export class CasbinModule {
   }
 
   public static forRootAsync(options?: CasbinAsyncOptions): DynamicModule {
+    options = options!;
     const provider = createCasbinProviderAsync(options);
 
     return {

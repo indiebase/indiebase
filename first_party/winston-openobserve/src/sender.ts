@@ -106,12 +106,12 @@ export class Sender {
   };
 
   #cleanTmpData() {
-    this.#tmpData = null;
+    this.#tmpData = null as any;
     this.#tmpData = {};
   }
 
   public clean() {
-    this.#data = null;
+    this.#data = null as any;
     this.#data = {};
   }
 

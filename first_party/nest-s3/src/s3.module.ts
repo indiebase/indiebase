@@ -31,7 +31,7 @@ export class S3Module {
   ): DynamicModule {
     return {
       module: S3Module,
-      imports: [S3CoreModule.forRootAsync(options, connection)],
+      imports: [S3CoreModule.forRootAsync(options, connection!)],
       exports: [S3CoreModule],
     };
   }

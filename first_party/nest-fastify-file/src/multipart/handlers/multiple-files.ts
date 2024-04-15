@@ -47,7 +47,7 @@ export const handleMultipartMultipleFiles = async (
       }
     }
   } catch (error) {
-    await removeFiles(error);
+    await removeFiles(!!error);
     throw error;
   }
 

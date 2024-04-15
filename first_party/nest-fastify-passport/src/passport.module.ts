@@ -1,4 +1,5 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
+
 import {
   AuthModuleAsyncOptions,
   AuthModuleOptions,
@@ -16,7 +17,8 @@ export class PassportModule {
     };
   }
 
-  static registerAsync(options: AuthModuleAsyncOptions): DynamicModule {
+  static registerAsync(options?: AuthModuleAsyncOptions): DynamicModule {
+    options = options!;
     return {
       module: PassportModule,
       imports: options.imports || [],
@@ -34,8 +36,8 @@ export class PassportModule {
     return [
       this.createAsyncOptionsProvider(options),
       {
-        provide: options.useClass,
-        useClass: options.useClass,
+        provide: options.useClass!,
+        useClass: options.useClass!,
       },
     ];
   }
@@ -54,7 +56,7 @@ export class PassportModule {
       provide: AuthModuleOptions,
       useFactory: async (optionsFactory: AuthOptionsFactory) =>
         await optionsFactory.createAuthOptions(),
-      inject: [options.useExisting || options.useClass],
+      inject: [options.useExisting! || options.useClass],
     };
   }
 }

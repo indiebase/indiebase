@@ -29,7 +29,7 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
 
     const role = await this.useRole?.(context);
     const namespace = await this.useNamespace?.(context);
-    const query = this.ac.getNamespace(namespace).can(role);
+    const query = this.ac.getNamespace(namespace)!.can(role);
 
     for (const resource in meta) {
       if (Object.prototype.hasOwnProperty.call(meta, resource)) {

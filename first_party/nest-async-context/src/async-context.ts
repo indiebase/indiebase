@@ -7,7 +7,7 @@ export class AsyncContext<IRequest = any, IResponse = any> {
   static current<
     Req extends IncomingMessage = any,
     Res extends ServerResponse = any,
-  >(): AsyncContext<Req, Res> {
+  >(): AsyncContext<Req, Res> | undefined {
     return this.localStorage.getStore();
   }
 

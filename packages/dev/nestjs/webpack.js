@@ -108,7 +108,6 @@ exports.createWebpackConfig = async (options) => {
       nodeExternals({
         allowlist: ['webpack/hot/poll?100'].concat(
           options.externalsAllowList,
-          //@ts-ignore
           options.bundleWorkspace ? workspacePkgs : [],
         ),
         additionalModuleDirs: options.additionalExternals,

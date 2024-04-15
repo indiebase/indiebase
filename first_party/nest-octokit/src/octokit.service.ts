@@ -19,7 +19,7 @@ class OctokitExtend {
 
 @Injectable({ scope: Scope.REQUEST })
 export class OctokitService {
-  public octokit: Octokit;
+  public octokit!: Octokit;
   public request: Octokit['request'];
   public graphql: Octokit['graphql'];
   public log: Octokit['log'];

@@ -1,4 +1,4 @@
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import {
   ArgumentsHost,
   Catch,

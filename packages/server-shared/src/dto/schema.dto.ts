@@ -1,4 +1,4 @@
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';

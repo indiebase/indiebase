@@ -18,7 +18,7 @@ export class CreateHackersDTO {
     column: 'email',
   })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     description:
@@ -28,7 +28,7 @@ export class CreateHackersDTO {
   @IsHash('sha256', {
     message: 'Password needs to be converted to SHA256',
   })
-  password: string;
+  password!: string;
 }
 
 export class UpdateHackersDTO extends CreateHackersDTO {

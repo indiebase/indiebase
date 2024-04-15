@@ -1,6 +1,6 @@
 import { UseAccess } from '@indiebase/nest-accesscontrol';
 import { AccessGuard, ApiUnionResponse } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import {
   Body,
   Controller,

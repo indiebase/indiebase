@@ -33,7 +33,7 @@ export const v001_mgr_seed = async function (
 
       // Init OAA user.
       const { OAA_EMAIL, OAA_PASSWORD } = process.env;
-      const secret = createHash('sha256').update(OAA_PASSWORD).digest('hex');
+      const secret = createHash('sha256').update(OAA_PASSWORD!).digest('hex');
       const password = await hashSecret(secret);
       await knex
         .withSchema('mgr')

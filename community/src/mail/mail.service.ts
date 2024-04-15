@@ -1,6 +1,6 @@
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { CaptchaUtils } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import { Logger } from '@nestjs/common';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';

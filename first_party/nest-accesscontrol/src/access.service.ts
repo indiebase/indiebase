@@ -11,14 +11,14 @@ export class AccessService implements OnModuleInit, OnModuleDestroy {
 
   constructor(
     @Inject(ACCESS_CONTROL_OPTIONS)
-    private readonly options?: AccessOptions,
+    private readonly _options: AccessOptions,
   ) {}
 
   async onModuleInit() {}
 
   async onModuleDestroy() {
     this.#accessMap.clear();
-    this.#accessMap = null;
+    this.#accessMap = null as any;
   }
 
   public setNamespace(name: string, model: any = []) {

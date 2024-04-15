@@ -6,5 +6,5 @@ export class GetCaptchaDTO {
     default: 'dev@indiebase.com',
   })
   // @IsNotEmpty()
-  username: string;
+  username!: string;
 }

@@ -11,13 +11,13 @@ export class PasetoService {
   constructor(
     @Optional()
     @Inject(PASETO_MODULE_OPTIONS)
-    private readonly options?: PasetoModuleOptions,
+    private readonly options: PasetoModuleOptions,
   ) {
     this.options = Object.assign({}, { version: 'V3' }, options);
-    const ver = this.options.version;
+    const version = this.options.version!;
     assert.ok(
-      ['V1', 'V2', 'V3', 'V4'].includes(ver),
-      `Paseto doesn't support ${ver}`,
+      ['V1', 'V2', 'V3', 'V4'].includes(version),
+      `Paseto doesn't support ${version}`,
     );
   }
 
@@ -25,22 +25,22 @@ export class PasetoService {
     payload: Record<PropertyKey, unknown> | Buffer,
     options?: ProduceOptions,
   ) {
-    const version = this.options.version;
-    options = Object.assign(this.options.produceOptions, options);
+    options = Object.assign(this.options?.produceOptions ?? {}, options);
+    const version = this.options.version!;
 
-    return paseto[version].sign(payload, this.options.privateKey, options);
+    return paseto[version].sign(payload, this.options.privateKey!, options);
   }
 
   public verify<T extends boolean = any>(
     token: string,
     options?: ConsumeOptions<T> | ConsumeOptionsBuffer<T>,
   ) {
-    const version = this.options.version;
+    const version = this.options.version!;
     options = Object.assign({}, this.options.consumeOptions, options);
 
     return paseto[version].verify(
       token,
-      this.options.publicKey,
+      this.options.publicKey!,
       options as any,
     );
   }
@@ -49,7 +49,7 @@ export class PasetoService {
     payload: Record<PropertyKey, unknown> | Buffer,
     options?: ProduceOptions,
   ) {
-    const version = this.options.version;
+    const version = this.options.version!;
 
     if (['V2', 'V4'].includes(version)) {
       throw new Error(`Paseto ${version} doesn't support encrypt`);
@@ -68,7 +68,7 @@ export class PasetoService {
     token: string,
     options?: ConsumeOptions<T>,
   ) {
-    const version = this.options.version;
+    const version = this.options.version!;
 
     if (['V2', 'V4'].includes(version)) {
       throw new Error(`Paseto ${version} doesn't support decrypt`);

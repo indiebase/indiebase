@@ -15,6 +15,7 @@ import { NacosConfigService } from './nacos-config.service';
 @Global()
 export class NacosConfigModule {
   public static forRoot(options?: NacosConfigClientOptions): DynamicModule {
+    options = options!;
     const provider = createNacosConfigClientProvider(options);
     return {
       module: NacosConfigModule,
@@ -26,6 +27,7 @@ export class NacosConfigModule {
   public static forRootAsync(
     options?: NacosConfigClientAsyncOptions,
   ): DynamicModule {
+    options = options!;
     const provider = createNacosConfigClientAsyncProvider(options);
     return {
       module: NacosConfigModule,

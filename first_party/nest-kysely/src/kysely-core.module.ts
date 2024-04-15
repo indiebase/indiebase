@@ -26,7 +26,7 @@ export class KyselyCoreModule implements OnApplicationShutdown {
     private readonly moduleRef: ModuleRef,
   ) {}
 
-  static forRoot(options: KyselyOptions, connection?: string): DynamicModule {
+  static forRoot(options?: KyselyOptions, connection?: string): DynamicModule {
     const knexOptions = {
       provide: KYSELY_MODULE_OPTIONS,
       useValue: options,

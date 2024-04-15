@@ -9,6 +9,7 @@ import { AccessService } from './access.service';
 @Global()
 export class AccessControlModule {
   public static forRoot(options?: AccessOptions): DynamicModule {
+    options = options!;
     return {
       module: AccessControlModule,
       providers: [
@@ -24,6 +25,7 @@ export class AccessControlModule {
   }
 
   public static forRootAsync(options?: AccessAsyncOptions): DynamicModule {
+    options = options!;
     return {
       module: AccessControlModule,
       providers: [

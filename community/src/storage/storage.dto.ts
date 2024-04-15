@@ -4,7 +4,7 @@ import { IsBoolean, IsOptional, IsString } from 'class-validator';
 // Upload multiple files
 export class FilesUploadDTO {
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
-  files: any[];
+  files!: any[];
 
   @ApiPropertyOptional({
     description:
@@ -33,7 +33,7 @@ export class CreateBucketDTO {
   @ApiProperty({ type: 'string', default: 'indiebase-dev' })
   @IsString()
   // @IsEntityExisted(BucketsEntity, 'name', 'Bucket name')
-  bucket: string;
+  bucket!: string;
 
   @ApiPropertyOptional({ type: 'string', default: 'indiebase dev bucket' })
   @IsString()

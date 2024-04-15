@@ -9,6 +9,7 @@ import { createOctokitProvider, createOctokitProviderAsync } from './provider';
 @Global()
 export class OctokitModule {
   public static forRoot(options?: OctokitOptions): DynamicModule {
+    options = options!;
     const provider = createOctokitProvider(options);
     return {
       module: OctokitModule,
@@ -18,6 +19,7 @@ export class OctokitModule {
   }
 
   public static forRootAsync(options?: OctokitAsyncOptions): DynamicModule {
+    options = options!;
     const provider = createOctokitProviderAsync(options);
     return {
       module: OctokitModule,

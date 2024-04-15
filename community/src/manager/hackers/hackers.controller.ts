@@ -7,7 +7,7 @@ import {
   ManagerResources,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 

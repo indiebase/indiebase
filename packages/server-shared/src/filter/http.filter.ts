@@ -1,4 +1,4 @@
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import { ArgumentsHost, ExceptionFilter, Logger } from '@nestjs/common';
 import { Catch, HttpException } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';

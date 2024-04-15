@@ -45,6 +45,7 @@ export default tslint.config(
       'prefer-const': ['error', { destructuring: 'all' }],
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-var-requires': 'off',
       'no-unused-vars': 'off',
@@ -71,7 +72,19 @@ export default tslint.config(
     },
   },
   {
-    files: ['apps/**/*.{js,jsx,ts,tsx}'],
+    files: ['**/*.{js,mjs,cjs}'],
+    ...tslint.configs.disableTypeChecked,
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off',
+    },
+  },
+  {
+    files: ['apps/**/*.{ts,tsx}'],
     plugins: {
       react,
       'react-refresh': reactRefresh,
@@ -113,9 +126,5 @@ export default tslint.config(
       ...nextPlugin.configs['core-web-vitals'].rules,
       '@next/next/no-duplicate-head': 'off',
     },
-  },
-  {
-    files: ['*.{js,mjs,cjs}'],
-    ...tslint.configs.disableTypeChecked,
   },
 );

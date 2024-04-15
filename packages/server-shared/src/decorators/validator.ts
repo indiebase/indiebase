@@ -93,7 +93,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     switch (entity?.type) {
       case SpecificProjectType.fromHeader: {
         const e = entity as SpecificProjectFromHeader;
-        const req = AsyncContext.current().request;
+        const req = AsyncContext.current()?.request;
         const project = req.project;
         const projectId = req.headers[X_Indiebase_Project_ID];
 
@@ -128,7 +128,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       default: {
         const e = entity as SpecificProject;
         return this.entityExist(
-          e.schema,
+          e.schema!,
           e.table,
           e.column,
           value,
@@ -138,17 +138,16 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     }
   }
 
-  defaultMessage(validationArguments?: ValidationArguments): string {
+  defaultMessage(validationArguments: ValidationArguments): string {
     const opt = validationArguments
       .constraints?.[1] as ExtendedValidationOptions;
 
     const msg = is.function(opt.message)
-      ? opt.message(validationArguments.value)
+      ? opt.message(validationArguments!.value)
       : opt.message;
 
-    //T
     return opt.message
-      ? msg
+      ? msg!
       : `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟ ${
           opt.throwExistedMsg ? 'already existed.' : "doesn't exist."
         }`;

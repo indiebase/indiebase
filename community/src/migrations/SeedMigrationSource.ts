@@ -21,7 +21,7 @@ export class SeedMigrationSource implements Knex.MigrationSource<any> {
     return migration;
   }
 
-  async getMigration(migration: any) {
+  async getMigration(migration: any): Promise<any> {
     switch (migration) {
       case 'v001_mgr_seed':
         return v001_mgr_seed(this.#schema);

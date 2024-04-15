@@ -1,13 +1,10 @@
 import { did } from '@deskbtm/gadgets';
 import { InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
+import { ResultCode } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
 import { BusinessTags, RedisUtils } from '@indiebase/server-shared';
-import {
-  type PrimitiveProject,
-  type PrimitiveUser,
-  ResultCode,
-} from '@indiebase/trait';
+import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
 import {
   Injectable,
   InternalServerErrorException,

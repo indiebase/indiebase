@@ -6,7 +6,7 @@ import {
   User,
 } from '@indiebase/server-shared';
 import { PrimitiveUser } from '@indiebase/trait';
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import { PrimitiveProject } from '@indiebase/trait/mgr';
 import {
   Body,

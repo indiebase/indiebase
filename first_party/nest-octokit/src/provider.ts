@@ -4,7 +4,7 @@ import { OCTOKIT_OPTIONS } from './octokit.constants';
 import { OctokitAsyncOptions, OctokitOptions } from './octokit.interface';
 
 export const createOctokitProvider = function (
-  options?: OctokitOptions,
+  options: OctokitOptions,
 ): Provider {
   return {
     provide: OCTOKIT_OPTIONS,
@@ -13,11 +13,11 @@ export const createOctokitProvider = function (
 };
 
 export const createOctokitProviderAsync = function (
-  options?: OctokitAsyncOptions,
+  options: OctokitAsyncOptions,
 ): Provider {
   return {
     provide: OCTOKIT_OPTIONS,
-    useFactory: options.useFactory,
+    useFactory: options.useFactory!,
     inject: options.inject,
   };
 };

@@ -48,7 +48,7 @@ class Query {
     } else if (utils.type(roleOrInfo) === 'object') {
       // if this is a (permission) object, we directly build attributes
       // from grants.
-      if (Object.keys(roleOrInfo).length === 0) {
+      if (Object.keys(roleOrInfo!).length === 0) {
         throw new AccessControlError('Invalid IQueryInfo: {}');
       }
       this._ = roleOrInfo as IQueryInfo;

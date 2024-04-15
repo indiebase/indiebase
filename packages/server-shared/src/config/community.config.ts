@@ -24,7 +24,7 @@ const app = registerAs('app', () => {
 const redis = registerAs('redis', () => {
   return {
     host: process.env.DB_REDIS_HOST || '0.0.0.0',
-    port: parseInt(process.env.DB_REDIS_PORT) || 6379,
+    port: parseInt(process.env.DB_REDIS_PORT as string) || 6379,
     password: process.env.DB_REDIS_PASSWORD,
   };
 });
@@ -32,7 +32,7 @@ const redis = registerAs('redis', () => {
 // Get postgresql connection config.
 export const _getPGConnectionConfig = () => ({
   host: process.env.DB_PG_HOST || '0.0.0.0',
-  port: parseInt(process.env.DB_PG_PORT) || 5432,
+  port: parseInt(process.env.DB_PG_PORT as string) || 5432,
   user: process.env.DB_PG_USER,
   password: process.env.DB_PG_PWD,
   database: process.env.DB_PG_DB,

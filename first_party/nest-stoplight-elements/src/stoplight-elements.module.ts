@@ -136,7 +136,7 @@ export class StoplightElementsModule {
     path: string,
     app: INestApplication,
     document: OpenAPIObject,
-    options?: StoplightElementsModuleOptions,
+    options: StoplightElementsModuleOptions = {},
   ) {
     const formatPath = this.prefixSlug(pathLib.posix.normalize(path)),
       globalPrefix = this.getGlobalPrefix(app);

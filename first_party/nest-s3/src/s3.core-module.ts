@@ -16,7 +16,10 @@ import {
 @Module({})
 export class S3CoreModule {
   /* forRoot */
-  static forRoot(options: S3ModuleOptions, connection?: string): DynamicModule {
+  static forRoot(
+    options?: S3ModuleOptions,
+    connection?: string,
+  ): DynamicModule {
     const s3OptionsProvider: Provider = {
       provide: getS3OptionsToken(connection),
       useValue: options,

@@ -25,7 +25,7 @@ import { UsersModule } from './users/users.module';
 export const createCommunityModule = function (
   options: NonNullable<ModuleMetadata> & DepsDynamicOptions,
 ) {
-  const { imports, ...depsOptions } = options;
+  const { imports = [], providers = [], ...depsOptions } = options;
 
   @Module({
     imports: [
@@ -36,16 +36,11 @@ export const createCommunityModule = function (
       StorageModule,
       MigrationModule,
       PresetModule,
-      ...imports,
       PresetMiddlewareModule,
-
+      ...imports,
       createDependenciesModule(depsOptions),
     ],
-    providers: [
-      Logger,
-      IsEntityExistedConstraint,
-      ...(options.providers ?? []),
-    ],
+    providers: [Logger, IsEntityExistedConstraint, ...providers],
   })
   class CommunityModule implements OnModuleInit {
     constructor(

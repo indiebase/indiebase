@@ -6,7 +6,7 @@ import {
   ManagerResources,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/trait';
+import { ResultCode } from '@indiebase/sdk';
 import {
   Body,
   Controller,

@@ -15,7 +15,12 @@
   
  */
 export const grantsRecord2Array = function (o: Record<string, any>) {
-  const grants = [];
+  const grants: Array<{
+    role: string;
+    resource: string;
+    action: string;
+    attributes: string;
+  }> = [];
 
   for (const key in o) {
     if (Object.prototype.hasOwnProperty.call(o, key)) {

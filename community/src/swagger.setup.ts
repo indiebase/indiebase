@@ -16,7 +16,7 @@ const assetsPath = kDevMode
       require.resolve('@indiebase/nest-stoplight-elements'),
       '../views',
     )
-  : null;
+  : undefined;
 
 const contactName = 'deskbtm/indiebase',
   contactUrl = '',

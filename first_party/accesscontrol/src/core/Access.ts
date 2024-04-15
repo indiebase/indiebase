@@ -63,13 +63,13 @@ class Access {
     if (typeof roleOrInfo === 'string' || Array.isArray(roleOrInfo)) {
       this.role(roleOrInfo);
     } else if (utils.type(roleOrInfo) === 'object') {
-      if (Object.keys(roleOrInfo).length === 0) {
+      if (Object.keys(roleOrInfo!).length === 0) {
         throw new AccessControlError('Invalid IAccessInfo: {}');
       }
       // if an IAccessInfo instance is passed and it has 'action' defined, we
       // should directly commit it to grants.
-      roleOrInfo.denied = denied;
-      this._ = utils.resetAttributes(roleOrInfo);
+      roleOrInfo!.denied = denied;
+      this._ = utils.resetAttributes(roleOrInfo!);
       if (utils.isInfoFulfilled(this._))
         utils.commitToGrants(this._grants, this._, true);
     } else if (roleOrInfo !== undefined) {
@@ -86,13 +86,13 @@ class Access {
   // -------------------------------
 
   /**
-   *  Specifies whether this access is initally denied.
+   *  Specifies whether this access is initially denied.
    *  @name AccessControl~Access#denied
    *  @type {Boolean}
    *  @readonly
    */
   get denied(): boolean {
-    return this._.denied;
+    return this._.denied!;
   }
 
   // -------------------------------
@@ -159,7 +159,7 @@ class Access {
    *  console.log(permission.granted); // true
    */
   extend(roles: string | string[]): Access {
-    utils.extendRole(this._grants, this._.role, roles);
+    utils.extendRole(this._grants, this._.role!, roles);
     return this;
   }
 

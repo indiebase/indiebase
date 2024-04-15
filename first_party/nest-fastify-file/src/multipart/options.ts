@@ -11,7 +11,7 @@ export type UploadOptions = busboy.BusboyConfig & {
 };
 
 export const DEFAULT_UPLOAD_OPTIONS: Partial<UploadOptions> = {
-  storage: new MemoryStorage(),
+  storage: new MemoryStorage() as any,
 };
 
 export const transformUploadOptions = (opts?: UploadOptions) => {

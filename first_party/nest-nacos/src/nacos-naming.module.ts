@@ -26,6 +26,7 @@ export class NacosNamingModule {
   public static forRootAsync(
     options?: NacosNamingClientAsyncOptions,
   ): DynamicModule {
+    options = options!;
     const provider = createNacosNamingClientAsyncProvider(options);
 
     return {

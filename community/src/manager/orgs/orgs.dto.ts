@@ -3,9 +3,8 @@ import {
   IsEntityExisted,
   MgrMetaTables,
   OkResponseSchema,
-  SpecificProjectType,
 } from '@indiebase/server-shared';
-import { ApiProperty,ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateOrgDTO {
@@ -19,7 +18,7 @@ export class CreateOrgDTO {
     column: 'name',
   })
   @IsCommonLegalString()
-  name: string;
+  name!: string;
 }
 
 export class UpdateOrgDTO extends CreateOrgDTO {

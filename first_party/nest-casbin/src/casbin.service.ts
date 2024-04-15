@@ -8,11 +8,11 @@ import { CasbinOptions } from './casbin.interface';
 
 @Injectable()
 export class CasbinService implements OnModuleInit, OnModuleDestroy {
-  #enforcer: Enforcer;
+  #enforcer!: Enforcer | null;
 
   constructor(
     @Inject(CASBIN_OPTIONS)
-    private readonly options?: CasbinOptions,
+    private readonly options: CasbinOptions,
   ) {}
 
   async onModuleInit() {

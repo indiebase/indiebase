@@ -76,7 +76,7 @@ export class CommunityBootstrap {
     // Setup swagger api doc with.
     await setupApiDoc(this.app);
 
-    this.app.useStaticAssets(this.options?.staticAssets);
+    this.app.useStaticAssets(this.options?.staticAssets!);
     this.app.useLogger(nestWinston);
     this.app.useGlobalFilters(new GlobalExceptionFilter(nestWinston));
 
@@ -110,7 +110,7 @@ export class CommunityBootstrap {
 
     await this.app.register(fastifyMultipart, {
       limits: {
-        fileSize: sizeParser(this.config.get('storage.file.limit')),
+        fileSize: sizeParser(this.config.get('storage.file.limit')!),
       },
     });
   }

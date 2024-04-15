@@ -21,10 +21,12 @@ export class TmplMigrationSource implements Knex.MigrationSource<any> {
     return migration;
   }
 
-  async getMigration(migration: any) {
+  async getMigration(migration: any): Promise<any> {
     switch (migration) {
       case 'v001_tmpl':
         return v001_tmpl(this.#schema);
+      default:
+        throw new Error(`${migration} migration not found`);
     }
   }
 }

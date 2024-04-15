@@ -852,7 +852,7 @@ const utils = {
     let resource: Record<string, any>;
     const attrsList: Array<string[]> = [];
     // get roles and extended roles in a flat array
-    const roles: string[] = utils.getFlatRoles(grants, query.role);
+    const roles: string[] = utils.getFlatRoles(grants, query.role!);
     // iterate through roles and add permission attributes (array) of
     // each role to attrsList (array).
     roles.forEach((roleName: string, _index: number) => {
@@ -871,7 +871,7 @@ const utils = {
       }
 
       const resHasWildcard = Object.prototype.hasOwnProperty.call(role, '*');
-      resource = role[query.resource] ?? {};
+      resource = role[query.resource!] ?? {};
 
       if (resHasWildcard) {
         const wildcardResource = role['*'];
@@ -893,7 +893,7 @@ const utils = {
 
     // union all arrays of (permitted resource) attributes (for each role)
     // into a single array.
-    let attrs = [];
+    let attrs: string[] = [];
     const len: number = attrsList.length;
     if (len > 0) {
       attrs = attrsList[0];
