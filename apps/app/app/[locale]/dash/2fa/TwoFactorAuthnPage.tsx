@@ -269,6 +269,7 @@ const TwoFactorPreferences: FC = function () {
 
   return (
     <>
+      <Title order={4}>Two-factor authentication preferences</Title>
       <SuccessAlert />
       <PreferenceTile
         topBorder={false}
@@ -300,23 +301,26 @@ const CreateOtpStep = function () {
   const [active] = useAtom(stepperAtom);
 
   return (
-    <Stepper
-      color="pink.5"
-      size="xs"
-      mt={30}
-      completedIcon={<IconCheck size={20} />}
-      active={active}
-    >
-      <Stepper.Step label="Configure auth app">
-        <SetAuthnApp />
-      </Stepper.Step>
-      <Stepper.Step label="Save recovery codes">
-        <SaveRecoveryCode />
-      </Stepper.Step>
-      <Stepper.Step label="Complete">
-        <Complete />
-      </Stepper.Step>
-    </Stepper>
+    <>
+      <Title order={4}>Configure Two-factor authentication (2FA)</Title>
+      <Stepper
+        color="pink.5"
+        size="xs"
+        mt={30}
+        completedIcon={<IconCheck size={20} />}
+        active={active}
+      >
+        <Stepper.Step label="Configure auth app">
+          <SetAuthnApp />
+        </Stepper.Step>
+        <Stepper.Step label="Save recovery codes">
+          <SaveRecoveryCode />
+        </Stepper.Step>
+        <Stepper.Step label="Complete">
+          <Complete />
+        </Stepper.Step>
+      </Stepper>
+    </>
   );
 };
 
@@ -324,8 +328,7 @@ export default function TwoFactorAuthnPage() {
   // const [profile] = useAtom(userProfileQueryAtom[0]);
 
   return (
-    <Box maw={800}>
-      <Title order={4}>Configure Two-factor authentication (2FA)</Title>
+    <Box>
       {/* <CreateOtpStep /> */}
       <TwoFactorPreferences />
 

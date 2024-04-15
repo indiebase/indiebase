@@ -27,7 +27,7 @@ const PreferencesMenu = function () {
   return (
     <Menu width={200} position="bottom-end" withArrow>
       <Menu.Target>
-        <Avatar mr={10} src={''} radius="xl" size={rem(33)}>
+        <Avatar mr={10} src={''} radius="xl" size={33}>
           <IconUser size={20} />
         </Avatar>
       </Menu.Target>

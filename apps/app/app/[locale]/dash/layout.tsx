@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell, rem } from '@mantine/core';
+import { AppShell, Container, rem } from '@mantine/core';
 import { useAtom } from 'jotai';
 import { type FC } from 'react';
 
@@ -29,16 +29,13 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         breakpoint: 'sm',
         collapsed: { mobile: !opened.mobile, desktop: !opened.desktop },
       }}
-      px={{
-        base: 'md',
-        lg: 'xl',
-        sm: 'md',
-      }}
       pt="lg"
     >
       <DashboardHeader logo={<IndiebaseTextLogo size={160} />} />
       <DashboardNavbar />
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main>
+        <Container maw={800}>{children}</Container>
+      </AppShell.Main>
     </AppShell>
   );
 };

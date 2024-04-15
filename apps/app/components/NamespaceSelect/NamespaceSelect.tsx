@@ -10,32 +10,33 @@ import {
 } from '@mantine/core';
 import { IconBuildingCommunity, IconChevronDown } from '@tabler/icons-react';
 import type React from 'react';
-import { type FC } from 'react';
+import { type FC, useCallback } from 'react';
 import { useMemo, useState } from 'react';
 import { useProps } from 'reactgets';
 
-interface SelectMenuItem {
+interface NamespaceSelectTile {
   icon: string | React.ReactNode;
   label: string;
   value: string;
 }
 
-interface SelectMenuProps {
-  items: SelectMenuItem[];
+interface NamespaceSelectProps {
+  items: NamespaceSelectTile[];
   placeholder?: string | React.ReactNode;
   searchPlaceholder?: string;
-  onOptionSubmit?: (val: SelectMenuItem) => void;
+  onOptionSubmit?: (val: NamespaceSelectTile) => void;
 }
+
 const defaultProps = {
   searchPlaceholder: 'Search...',
 };
 
-export const SelectMenu: FC<SelectMenuProps> = function (_props) {
+export const NamespaceSelect: FC<NamespaceSelectProps> = function (_props) {
   const { items, placeholder, searchPlaceholder } = useProps(
     defaultProps,
     _props,
   );
-  const [value, setValue] = useState<SelectMenuItem | null>(null);
+  const [value, setValue] = useState<NamespaceSelectTile | null>(null);
   const combobox = useCombobox({
     onDropdownClose: () => {
       combobox.resetSelectedOption();
@@ -58,11 +59,13 @@ export const SelectMenu: FC<SelectMenuProps> = function (_props) {
     () =>
       filteredOptions.map(({ value, icon, label }) => (
         <Combobox.Option value={value} key={value}>
-          <Group wrap="nowrap" gap={'xs'}>
+          <Group wrap="nowrap" gap="xs">
             {icon &&
               (is.string(icon) ? (
-                <Avatar src={icon} radius="xl" size="sm">
-                  <IconBuildingCommunity size={14} />
+                <Avatar src={icon} radius="xl" size={18}>
+                  <IconBuildingCommunity
+                    style={{ width: '60%', height: '60%' }}
+                  />
                 </Avatar>
               ) : (
                 icon
@@ -76,20 +79,27 @@ export const SelectMenu: FC<SelectMenuProps> = function (_props) {
     [filteredOptions],
   );
 
+  const handleOptionsSubmit = useCallback(
+    (val) => {
+      setSearch(val);
+      const result = items.find((v) => v.value === val);
+      if (result) setValue(result);
+      combobox.closeDropdown();
+    },
+    [items, combobox],
+  );
+
   return (
-    <Combobox
-      store={combobox}
-      onOptionSubmit={(val) => {
-        setSearch(val);
-        const i = items.find((v) => v.value === val);
-        if (i) setValue(i);
-        combobox.closeDropdown();
-      }}
-    >
+    <Combobox store={combobox} onOptionSubmit={handleOptionsSubmit}>
       <Combobox.Target>
         <Group gap="xs">
-          <Avatar src={value?.icon as string} radius="xl" size={34}>
-            <IconBuildingCommunity size={14} />
+          <Avatar
+            src={value?.icon as string}
+            radius="xl"
+            size={30}
+            color="blue"
+          >
+            <IconBuildingCommunity style={{ width: '60%', height: '60%' }} />
           </Avatar>
           <Button
             p={0}
@@ -113,7 +123,7 @@ export const SelectMenu: FC<SelectMenuProps> = function (_props) {
         {options.length > 0 ? (
           options
         ) : (
-          <Combobox.Empty>Nothing found</Combobox.Empty>
+          <Combobox.Empty>Nothing found...</Combobox.Empty>
         )}
       </Combobox.Dropdown>
     </Combobox>
