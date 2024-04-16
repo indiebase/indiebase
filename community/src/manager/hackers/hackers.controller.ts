@@ -1,13 +1,13 @@
 import { AccessActions, UseAccess } from '@indiebase/nest-accesscontrol';
+import { ResultCode } from '@indiebase/sdk';
 import {
   AccessGuard,
-  ApiIndiebaseSecurity,
-  ApiProjectHeader,
   ApiUnionResponse,
+  ApiUnionType1Header,
+  data,
   ManagerResources,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/sdk';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -26,7 +26,7 @@ export class HackersController {
   @ApiOperation({
     summary: 'List hackers',
   })
-  @ApiIndiebaseSecurity()
+  @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @ApiUnionResponse('pagination')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -42,16 +42,16 @@ export class HackersController {
     summary: 'Sign up a hacker',
   })
   @ApiUnionResponse()
-  @ApiIndiebaseSecurity()
+  @ApiUnionType1Header()
   @UseGuards(PublicApiGuard)
   @Post('signup')
   async signup(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);
 
-    return {
+    return data({
       code: ResultCode.SUCCESS,
       message: 'Sign up successfully.',
-    };
+    });
   }
 
   @ApiOperation({
@@ -59,9 +59,8 @@ export class HackersController {
     description: 'Must have the create hacker permission',
   })
   @ApiUnionResponse()
-  @ApiIndiebaseSecurity()
+  @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
-  @ApiProjectHeader()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
     [ManagerResources.hackers]: [AccessActions.createAny],
@@ -70,9 +69,9 @@ export class HackersController {
   async create(@Body() body: CreateHackersDTO) {
     await this.hackers.create(body);
 
-    return {
+    return data({
       code: ResultCode.SUCCESS,
       message: 'Create successfully.',
-    };
+    });
   }
 }

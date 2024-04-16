@@ -50,7 +50,7 @@ services:
       # "username:password(Get MD5 from htpasswd or online tools NB:double all $ to $$ to avoid docker-compose)
       - traefik.http.middlewares.auth.basicauth.users=dev@indiebase.com:$$apr1$$xfe67svh$$7G6CSD45JeKHq9nxC.KZx1
       - traefik.http.routers.dashboard.middlewares=auth
-      - traefik.http.routers.dashboard.rule=Host(`traefik.indiebase-dev.deskbtm.com`)
+      - traefik.http.routers.dashboard.rule=Host(`traefik.api-dev.indiebase.deskbtm.com`)
       - traefik.http.routers.dashboard.entrypoints=https
       - traefik.http.routers.dashboard.service=api@internal
       - traefik.http.routers.dashboard.tls=true

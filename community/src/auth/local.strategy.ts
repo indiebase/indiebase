@@ -2,7 +2,6 @@ import { PassportStrategyFactory } from '@indiebase/nest-fastify-passport';
 import { PassportStrategy } from '@indiebase/nest-fastify-passport';
 import { Injectable } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
-import { FastifyReply } from 'fastify';
 import { IStrategyOptionsWithRequest } from 'passport-local';
 import { type IStrategyOptions, Strategy } from 'passport-local';
 

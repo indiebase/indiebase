@@ -42,12 +42,23 @@ export const ApiProjectHeader = () =>
   });
 
 /**
- * Need a paseto token to sign in and X-Indiebase-AP to protect API.
+ * Need a paseto token to Sign in and X-Indiebase-AP to protect API.
  * @returns
  */
 export const ApiIndiebaseSecurity = () =>
   // ApiSecurity('ap') provides api protection.
   applyDecorators(ApiSecurity('ap'), ApiProtectionHeader());
+
+/**
+ * Common API headers. Type 1.
+ *
+ * Includes
+ * - ApiSecurity('ap')
+ * - ApiProtectionHeader
+ * - ApiProjectHeader
+ */
+export const ApiUnionType1Header = () =>
+  applyDecorators(ApiProjectHeader(), ApiIndiebaseSecurity());
 
 export const ApiUnionResponse = (okType?: 'pagination') => {
   let okSchema;

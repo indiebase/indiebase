@@ -12,7 +12,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { FastifyRequest } from 'fastify';
 import { Redis } from 'ioredis';
 import { PasetoService } from 'nestjs-paseto';
@@ -48,8 +48,6 @@ export class AuthService {
     if (!user.password) {
       throw new UnauthorizedException('Please set password first');
     }
-
-    console.log(password, user.password);
 
     const result = await bcrypt.compare(password, user.password);
 

@@ -1,6 +1,6 @@
 import { type Permission } from '@indiebase/accesscontrol';
 import { CanActivate, ExecutionContext } from '@nestjs/common';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { ACCESS_META } from './access.constants';
@@ -10,13 +10,12 @@ import { action2CamelCase } from './utils';
 
 @Injectable()
 export abstract class PrimitiveAccessGuard implements CanActivate {
-  private readonly logger = new Logger('PrimitiveAccessGuard');
   protected abstract useRole(context: ExecutionContext): Promise<string>;
   protected abstract useNamespace(context: ExecutionContext): Promise<string>;
 
   constructor(
     private readonly reflector: Reflector,
-    private readonly ac: AccessService,
+    private readonly accessService: AccessService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -29,7 +28,9 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
 
     const role = await this.useRole?.(context);
     const namespace = await this.useNamespace?.(context);
-    const query = this.ac.getNamespace(namespace)!.can(role);
+    const query = this.accessService.getNamespace(namespace)?.can(role);
+
+    if (!query) return false;
 
     for (const resource in meta) {
       if (Object.prototype.hasOwnProperty.call(meta, resource)) {

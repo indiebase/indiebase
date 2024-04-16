@@ -53,7 +53,7 @@ export class UpdateHackersDTO extends CreateHackersDTO {
 
   @ApiPropertyOptional({
     description: 'Project icon url',
-    default: 'https://indiebase-dev.deskbtm.com/favicon.ico',
+    default: 'https://api-dev.indiebase.deskbtm.com/favicon.ico',
   })
   @IsOptional()
   @IsUrl({}, { message: 'Avatar url format error' })

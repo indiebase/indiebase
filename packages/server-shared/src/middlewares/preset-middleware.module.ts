@@ -9,6 +9,6 @@ import { MountProjectMiddleware } from './mount-project.middleware';
 })
 export class PresetMiddlewareModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(MountProjectMiddleware).forRoutes('*');
+    consumer.apply(MountProjectMiddleware).forRoutes('v1/(.*)');
   }
 }

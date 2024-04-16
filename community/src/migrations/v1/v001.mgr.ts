@@ -43,6 +43,7 @@ export const v001_mgr = async function (
             .defaultTo(OrgStatus.active)
             .comment('Organization status');
           table.timestamps(true, true);
+          table.timestamp('delete_at').comment('Soft deletion timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.orgs);
@@ -69,8 +70,9 @@ export const v001_mgr = async function (
             .string('package_name')
             .unique()
             .comment('Fallback package name');
-          table.timestamps(true, true);
           table.string('cover_url').comment('Project card cover url');
+          table.timestamps(true, true);
+          table.timestamp('delete_at').comment('Soft deletion timestamp');
 
           table
             .string('github_repo')
@@ -110,6 +112,7 @@ export const v001_mgr = async function (
           table.string('role').unique().index().notNullable();
           table.string('description');
           table.timestamps(true, true);
+          table.timestamp('delete_at').comment('Soft deletion timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.roles);
@@ -127,6 +130,7 @@ export const v001_mgr = async function (
           table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.timestamps(true, true);
+          table.timestamp('delete_at').comment('Soft deletion timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.grants);
@@ -175,6 +179,7 @@ export const v001_mgr = async function (
           table.datetime('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamps(true, true);
+          table.timestamp('delete_at').comment('Soft deletion timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.hackers);

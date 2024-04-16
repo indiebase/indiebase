@@ -1,6 +1,11 @@
 import { UseAccess } from '@indiebase/nest-accesscontrol';
-import { AccessGuard, ApiUnionResponse } from '@indiebase/server-shared';
 import { ResultCode } from '@indiebase/sdk';
+import {
+  AccessGuard,
+  ApiUnionResponse,
+  ApiUnionType1Header,
+  PublicApiGuard,
+} from '@indiebase/server-shared';
 import {
   Body,
   Controller,
@@ -34,7 +39,7 @@ export class ProjectsController {
     description: 'List all public projects',
   })
   @ApiUnionResponse()
-  @UseGuards(PasetoAuthGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Get('orgs/:org/projects')
   async list() {}
@@ -45,7 +50,7 @@ export class ProjectsController {
     description:
       'Lists repositories that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
-  @UseGuards(PasetoAuthGuard, AccessGuard)
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Get('user/projects')
   async listForUser() {}
@@ -56,7 +61,8 @@ export class ProjectsController {
       'Creating a project will create a postgresql schema and template tables',
   })
   @ApiUnionResponse()
-  @UseGuards(PasetoAuthGuard, AccessGuard)
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @UseAccess({})
   @Post('orgs/:org/projects')
@@ -66,6 +72,10 @@ export class ProjectsController {
     return { code: ResultCode.SUCCESS, message: 'Create successfully' };
   }
 
+  @ApiOperation({
+    summary: 'Delete a project',
+    description: '',
+  })
   @ApiParam({
     name: 'project',
     type: 'string',
@@ -73,7 +83,10 @@ export class ProjectsController {
       default: 'indiebase',
     },
   })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Delete('projects/:project')
   async delete(@Param('project') project: string) {
     return { code: ResultCode.SUCCESS, message: 'Create successfully' };

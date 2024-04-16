@@ -3,7 +3,7 @@ import { IncomingMessage, ServerResponse } from 'node:http';
 import { did } from '@deskbtm/gadgets';
 import { InjectKnexEx } from '@indiebase/nest-knex';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
-import { NestMiddleware } from '@nestjs/common';
+import { BadRequestException, NestMiddleware } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { type KnexEx } from '../knex/knex.ex';
@@ -36,6 +36,8 @@ export class MountProjectMiddleware<
       if (!req.project) {
         next(new NotFoundException(`Project ${prjId} not found`));
       }
+    } else {
+      next(new BadRequestException('Project ID is required in header'));
     }
 
     next();

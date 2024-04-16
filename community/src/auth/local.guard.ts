@@ -9,6 +9,7 @@ import {
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
+  private readonly logger = new Logger('LocalAuthGuard');
   constructor() {
     super();
   }
@@ -21,6 +22,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
 
   override handleRequest(err: any, user: any, _info: any, _context: any) {
     if (err) {
+      this.logger.error(err);
       if (err instanceof HttpException) {
         throw err;
       } else {

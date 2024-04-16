@@ -72,7 +72,9 @@ const auth = registerAs('auth', () => {
 
 const security = registerAs('security', () => {
   return {
-    publicApiGuardEnabled: process.env.PUBLIC_API_GUARD_ENABLED === 'true',
+    // Production ready env force on.
+    publicApiGuardEnabled:
+      process.env.PUBLIC_API_GUARD_ENABLED === 'true' || kProdMode,
     publicApiGuardSalt: process.env.PUBLIC_API_GUARD_SALT,
     publicApiGuardExpiresIn: process.env.PUBLIC_API_GUARD_EXPIRES_IN,
   };

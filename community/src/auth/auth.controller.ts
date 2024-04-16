@@ -1,12 +1,12 @@
+import { ResultCode } from '@indiebase/sdk';
 import {
-  ApiIndiebaseSecurity,
   ApiUnionResponse,
+  ApiUnionType1Header,
   Project,
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
 import { PrimitiveUser } from '@indiebase/trait';
-import { ResultCode } from '@indiebase/sdk';
 import { PrimitiveProject } from '@indiebase/trait/mgr';
 import {
   Body,
@@ -36,10 +36,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({
-    summary: 'SignIn with password',
+    summary: 'Sign in with password',
   })
   @ApiUnionResponse()
-  @ApiIndiebaseSecurity()
+  @ApiUnionType1Header()
   @UseGuards(PublicApiGuard, LocalAuthGuard)
   @Post('signin')
   async signIn(
@@ -59,7 +59,7 @@ export class AuthController {
 
   @Get('oauth/github')
   @ApiOperation({
-    summary: 'SignIn with github OAuth2',
+    summary: 'Sign in with github OAuth2',
   })
   @UseGuards(GithubGuard)
   async github() {}
@@ -79,7 +79,7 @@ export class AuthController {
 
   @Get('oauth/google')
   @ApiOperation({
-    summary: 'SignIn with google OAuth2',
+    summary: 'Sign in with google OAuth2',
     description: 'Must use this for first time',
   })
   @UseGuards(GoogleGuard)
@@ -130,6 +130,7 @@ export class AuthController {
 
   @Post('otp/verify')
   @UseGuards(PublicApiGuard)
+  @ApiUnionType1Header()
   @ApiOperation({
     summary: 'Verify one time password, token',
   })

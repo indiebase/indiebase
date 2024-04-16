@@ -11,8 +11,8 @@ Https for local.
 - Set hosts
 
 ```shell
-127.0.0.1 indiebase-dev.deskbtm.com
-127.0.0.1 *.indiebase-dev.deskbtm.com
+127.0.0.1 api-dev.indiebase.deskbtm.com
+127.0.0.1 *.api-dev.indiebase.deskbtm.com
 ```
 
 Development account
@@ -24,21 +24,21 @@ password: `dev@indiebase.com`
 
 Redis
 
-- indiebase-dev.deskbtm.com:6379 127.0.0.1:6379
+- api-dev.indiebase.deskbtm.com:6379 127.0.0.1:6379
 
 Postgres
 
-- indiebase-dev.deskbtm.com:5432 127.0.0.1:5432
+- api-dev.indiebase.deskbtm.com:5432 127.0.0.1:5432
 
 Traefik
 
-- Dashboard https://indiebase-dev.deskbtm.com:20801/dashboard https://127.0.0.1:20801
+- Dashboard https://api-dev.indiebase.deskbtm.com:20801/dashboard https://127.0.0.1:20801
 
 ### Optional
 
 Portainer
 
-- Dashboard https://indiebase-dev.deskbtm.com:19443
+- Dashboard https://api-dev.indiebase.deskbtm.com:19443
 
 ```shell
 cd docker/portainer
