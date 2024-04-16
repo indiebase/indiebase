@@ -53,6 +53,24 @@ export const v001_tmpl = async function (
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.roles);
         });
+
+      /**
+       * ib_grants
+       */
+      await knex.schema
+        .withSchema(schema)
+        .createTable(TmplMetaTables.grants, (table) => {
+          table.increments('id').primary();
+          table.string('role').index().notNullable();
+          table.string('resource').notNullable();
+          table.enum('action', Object.values(AccessActions)).notNullable();
+          table.string('attributes').notNullable();
+          table.timestamps(true, true);
+          table.timestamp('delete_at').comment('Soft delete timestamp');
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.grants);
+        });
     },
     async down(knex: Knex) {},
   };

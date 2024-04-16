@@ -43,7 +43,9 @@ export const v001_mgr = async function (
             .defaultTo(OrgStatus.active)
             .comment('Organization status');
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft deletion timestamp');
+          table
+            .timestamp('delete_at')
+            .comment('Soft delete organization timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.orgs);
@@ -72,7 +74,7 @@ export const v001_mgr = async function (
             .comment('Fallback package name');
           table.string('cover_url').comment('Project card cover url');
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft deletion timestamp');
+          table.timestamp('delete_at').comment('Soft delete project timestamp');
 
           table
             .string('github_repo')
@@ -112,7 +114,7 @@ export const v001_mgr = async function (
           table.string('role').unique().index().notNullable();
           table.string('description');
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft deletion timestamp');
+          table.timestamp('delete_at').comment('Soft delete role timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.roles);
@@ -130,7 +132,7 @@ export const v001_mgr = async function (
           table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft deletion timestamp');
+          table.timestamp('delete_at').comment('Soft delete timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.grants);
@@ -179,7 +181,7 @@ export const v001_mgr = async function (
           table.datetime('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft deletion timestamp');
+          table.timestamp('delete_at').comment('Soft delete hacker timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.hackers);
