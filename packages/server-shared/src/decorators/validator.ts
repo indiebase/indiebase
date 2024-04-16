@@ -45,6 +45,9 @@ interface SpecificProjectFromHeader {
   type: SpecificProjectType.fromHeader;
   table: string;
   column: string;
+  /**
+   * Specific project. key is the project id.
+   */
   $eq?: Record<string, Omit<SpecificProject, 'type'>>;
 }
 

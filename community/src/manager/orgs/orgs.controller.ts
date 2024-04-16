@@ -17,6 +17,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -26,7 +27,7 @@ import {
 } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import { CreateOrgDTO, UpdateOrgDTO } from './orgs.dto';
+import { CreateOrgDTO, UpdateOrgDTO, UpdateOrgParamsDTO } from './orgs.dto';
 import { OrgsService } from './orgs.service';
 
 @Controller({
@@ -57,6 +58,13 @@ export class OrgsController {
   @ApiOperation({
     summary: 'Query the organizations',
     description: 'Query the user-owned organizations',
+  })
+  @ApiParam({
+    name: 'org',
+    type: 'string',
+    schema: {
+      default: 'indiebase',
+    },
   })
   @ApiUnionResponse('pagination')
   @ApiUnionType1Header()
@@ -93,10 +101,6 @@ export class OrgsController {
   @ApiOperation({
     summary: 'Update an organization',
   })
-  @ApiUnionResponse()
-  @ApiUnionType1Header()
-  @ApiBearerAuth('paseto')
-  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiParam({
     name: 'org',
     type: 'string',
@@ -104,9 +108,24 @@ export class OrgsController {
       default: 'indiebase',
     },
   })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Patch('orgs/:org')
-  async update(@Body() body: UpdateOrgDTO) {
-    await this.orgsService.update(body);
+  async update(
+    @Param(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+        forbidNonWhitelisted: true,
+      }),
+    )
+    params: UpdateOrgParamsDTO,
+    @Body() body: UpdateOrgDTO,
+  ) {
+    const { org } = params;
+    await this.orgsService.update(org, body);
 
     return data({ code: ResultCode.SUCCESS, message: 'Create successfully' });
   }

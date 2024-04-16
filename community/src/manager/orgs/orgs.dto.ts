@@ -21,6 +21,25 @@ export class CreateOrgDTO {
   name!: string;
 }
 
+export class UpdateOrgParamsDTO {
+  @ApiProperty({
+    description: 'Update target name',
+    default: 'indiebase',
+  })
+  @IsEntityExisted(
+    {
+      schema: 'mgr',
+      table: MgrMetaTables.orgs,
+      column: 'name',
+    },
+    {
+      throwExistedMsg: false,
+    },
+  )
+  @IsCommonLegalString()
+  org!: string;
+}
+
 export class UpdateOrgDTO extends CreateOrgDTO {
   @ApiPropertyOptional({
     default: 'dev@indiebase.com',

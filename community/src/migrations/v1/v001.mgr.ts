@@ -132,7 +132,7 @@ export const v001_mgr = async function (
           table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft delete timestamp');
+          table.timestamp('delete_at').comment('Soft delete grants timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.grants);

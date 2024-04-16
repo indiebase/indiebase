@@ -28,13 +28,15 @@ export class OrgsService {
     return this.knex(`mgr.${MgrMetaTables.orgs}`).select();
   }
 
-  public async update(body: UpdateOrgDTO) {
+  public async update(targetOrgName: string, body: UpdateOrgDTO) {
     const { name, contactEmail, description, avatarUrl } = body;
 
     try {
       await this.knex
+        .withSchema('mgr')
+        .where({ name: targetOrgName })
         .update({ name, contactEmail, description, avatarUrl })
-        .into(`mgr.${MgrMetaTables.orgs}`);
+        .into(MgrMetaTables.orgs);
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();
