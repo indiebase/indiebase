@@ -11,7 +11,7 @@ export class AccessService implements OnModuleInit, OnModuleDestroy {
 
   constructor(
     @Inject(ACCESS_CONTROL_OPTIONS)
-    private readonly _options: AccessOptions,
+    private readonly options: AccessOptions,
   ) {}
 
   async onModuleInit() {}

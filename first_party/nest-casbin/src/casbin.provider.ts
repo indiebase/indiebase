@@ -24,7 +24,7 @@ export const createCasbinProviderAsync = function (
 ): Provider {
   return {
     provide: CASBIN_OPTIONS,
-    useFactory: options.useFactory,
-    inject: options.inject,
+    useFactory: options!.useFactory,
+    inject: options!.inject,
   };
 };

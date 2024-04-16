@@ -16,7 +16,7 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
 
   constructor(
     private readonly reflector: Reflector,
-    private readonly ac: AccessService,
+    private readonly accessService: AccessService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -27,9 +27,9 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
 
     if (!meta) return true;
 
-    const role = await this.useRole?.(context);
-    const namespace = await this.useNamespace?.(context);
-    const query = this.ac.getNamespace(namespace)!.can(role);
+    const role = await this.useRole(context);
+    const namespace = await this.useNamespace(context);
+    const query = this.accessService.getNamespace(namespace)!.can(role);
 
     for (const resource in meta) {
       if (Object.prototype.hasOwnProperty.call(meta, resource)) {

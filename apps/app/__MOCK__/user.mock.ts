@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+
 import { mock } from './request';
 
 export const FakeSingleUserProfile = () => ({
