@@ -109,6 +109,15 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
   })();
 };
 
+/**
+ * Get authenticated user info.
+ *
+ * @example
+ * ```ts
+ * demo(@User() user: PrimitiveUser){}
+ * demo(@User('name') name: string){}
+ * ```
+ */
 export const User = createParamDecorator(
   (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
@@ -117,6 +126,14 @@ export const User = createParamDecorator(
   },
 );
 
+/**
+ * Get authenticated role info.
+ *
+ * @example
+ * ```ts
+ * demo(@Role() role){}
+ * ```
+ */
 export const Role = createParamDecorator(
   (_property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
@@ -124,6 +141,14 @@ export const Role = createParamDecorator(
   },
 );
 
+/**
+ * Get authenticated role info.
+ *
+ * @example
+ * ```ts
+ * demo(@Project() project: PrimitiveProject){}
+ * ```
+ */
 export const Project = createParamDecorator(
   (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
@@ -133,7 +158,6 @@ export const Project = createParamDecorator(
 
 export const Domain = createParamDecorator((_, ctx: ExecutionContext) => {
   const request: any = ctx.switchToHttp().getRequest();
-
   return (
     request.body?.domain ??
     request.headers?.['domain'] ??

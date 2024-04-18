@@ -33,7 +33,7 @@ export const v001_tmpl = async function (
           table.timestamp('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft delete user timestamp');
+          table.timestamp('deleted_at').comment('Soft delete user timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.users);
@@ -50,7 +50,7 @@ export const v001_tmpl = async function (
           table.string('attributes').notNullable();
           table.string('description');
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft delete role timestamp');
+          table.timestamp('deleted_at').comment('Soft delete role timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.roles);
@@ -68,7 +68,7 @@ export const v001_tmpl = async function (
           table.enum('action', Object.values(AccessActions)).notNullable();
           table.string('attributes').notNullable();
           table.timestamps(true, true);
-          table.timestamp('delete_at').comment('Soft delete grants timestamp');
+          table.timestamp('deleted_at').comment('Soft delete grants timestamp');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.grants);

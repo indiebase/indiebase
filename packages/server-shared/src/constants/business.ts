@@ -1,4 +1,4 @@
 // Redis key prefix to differentiate business.
-export enum BusinessTags {
+export enum BusinessLabels {
   accessToken = 'access-token',
 }

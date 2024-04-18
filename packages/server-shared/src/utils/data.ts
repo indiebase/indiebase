@@ -9,3 +9,28 @@ export function data<T = any>(
 ) {
   return content;
 }
+
+export function paginationData(value: any): {
+  data: any;
+  total: number;
+  lastPage: number;
+  prevPage: number;
+  nextPage: number;
+  pageSize: number;
+  pageIndex;
+} {
+  const { data, pagination = {} } = value;
+
+  const { total, lastPage, prevPage, nextPage, pageSize, pageIndex } =
+    pagination;
+
+  return {
+    data,
+    total,
+    lastPage,
+    prevPage,
+    nextPage,
+    pageSize,
+    pageIndex,
+  };
+}

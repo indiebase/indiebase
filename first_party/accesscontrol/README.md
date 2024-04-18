@@ -43,7 +43,7 @@ With the idea of merging the best features of the two (see this [NIST paper][nis
 
 ## Indiebase new features
 
-### Role and resource wildcard.
+### Roles and resources support wildcard.
 
 ```js
 let grantWildcardList: any[] = [

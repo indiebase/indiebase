@@ -3,7 +3,7 @@ import { InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { ResultCode } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
-import { BusinessTags, RedisUtils } from '@indiebase/server-shared';
+import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
 import {
   Injectable,
@@ -104,7 +104,7 @@ export class AuthService {
     });
 
     await this.redis.set(
-      RedisUtils.formatNamespaceKey(BusinessTags.accessToken, namespace, id),
+      RedisUtils.formatNamespaceKey(BusinessLabels.accessToken, namespace, id),
       token,
     );
 

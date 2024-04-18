@@ -1,6 +1,8 @@
 /// <reference types="@indiebase/server-shared/extend" />
+/// <reference types="@indiebase/nest-knex/extend" />
 
 import '@deskbtm/gadgets/env';
+import '@indiebase/nest-knex/ex';
 
 import { Logger } from '@nestjs/common';
 import path from 'path';

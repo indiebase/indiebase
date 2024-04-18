@@ -4,6 +4,11 @@ export enum InvitationStatus {
   fulfilled = 'fulfilled',
 }
 
+/**
+ * Invitation source.
+ *
+ * Invite hacker into source.
+ */
 export enum InvitationSource {
   organization = 'organization',
   project = 'project',

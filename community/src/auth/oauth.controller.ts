@@ -28,8 +28,8 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
 import { GithubGuard, GoogleGuard } from './social';
 
-@Controller({ path: 'auth', version: '1' })
-@ApiTags('Auth/v1')
+@Controller({ path: 'oauth', version: '1' })
+@ApiTags('OAuth/v1')
 export class AuthController {
   private readonly logger = new Logger('AuthController');
 

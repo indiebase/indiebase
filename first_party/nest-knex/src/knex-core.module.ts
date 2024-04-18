@@ -6,11 +6,11 @@ import {
 } from '@nestjs/common';
 import { Global, Inject, Module } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { Knex } from 'knex';
+import { type Knex } from 'knex';
 import { knex } from 'knex';
 import { defer, lastValueFrom } from 'rxjs';
 
-import { KNEX_MODULE_OPTIONS, KNEX_SYNC } from './knex.constants';
+import { KNEX_MODULE_OPTIONS } from './knex.constants';
 import {
   KnexAsyncOptions,
   KnexOptions,
@@ -137,7 +137,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
   ): Promise<Knex> {
     return lastValueFrom(
       defer(async () => {
-        globalThis[KNEX_SYNC] = options.synchronize ?? false;
+        // globalThis[KNEX_SYNC] = options.synchronize ?? false;
         const k = knex(options.config);
 
         return ex && options.extend ? options.extend(k) : k;

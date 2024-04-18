@@ -41,12 +41,27 @@ export class PaginationResponseSchema extends OkResponseSchema {
   @ApiProperty({
     description: 'Current page',
   })
-  current!: number;
+  pageIndex!: number;
 
   @ApiProperty({
     description: 'Page size',
   })
   pageSize!: number;
+
+  @ApiProperty({
+    description: 'Last page',
+  })
+  lastPage!: number;
+
+  @ApiProperty({
+    description: 'Previous page',
+  })
+  prevPage!: number;
+
+  @ApiProperty({
+    description: 'Next page',
+  })
+  nextPage!: number;
 }
 
 export class ErrResponseSchema {

@@ -1,2 +1,2 @@
 import { PrimitiveUser } from '../../user';
-export interface Hackers extends PrimitiveUser {}
+export interface PrimitiveHacker extends PrimitiveUser {}

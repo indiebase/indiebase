@@ -7,7 +7,9 @@ import {
   data,
   ManagerResources,
   PublicApiGuard,
+  User,
 } from '@indiebase/server-shared';
+import { PrimitiveHacker } from '@indiebase/trait';
 import {
   Body,
   Controller,
@@ -16,6 +18,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -27,7 +30,12 @@ import {
 } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import { CreateOrgDTO, UpdateOrgDTO, UpdateOrgParamsDTO } from './orgs.dto';
+import {
+  CreateOrgDTO,
+  HackerOwnedOrgsDTO,
+  UpdateOrgDTO,
+  UpdateOrgParamsDTO,
+} from './orgs.dto';
 import { OrgsService } from './orgs.service';
 
 @Controller({
@@ -50,9 +58,21 @@ export class OrgsController {
     [ManagerResources.orgs]: [AccessActions.readOwn],
   })
   @Get('orgs')
-  async queryOwned() {
-    const result = await this.orgsService.list();
-    return result;
+  async queryOwned(
+    @User() hacker: PrimitiveHacker,
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+      }),
+    )
+    query: HackerOwnedOrgsDTO,
+  ) {
+    const result = await this.orgsService.list(hacker, query);
+    return data({
+      code: ResultCode.SUCCESS,
+      ...result,
+    });
   }
 
   @ApiOperation({
@@ -75,8 +95,8 @@ export class OrgsController {
   })
   @Get('orgs/query/:org')
   async query() {
-    const result = await this.orgsService.list();
-    return result;
+    // const result = await this.orgsService.list();
+    // return result;
   }
 
   @ApiOperation({
@@ -87,15 +107,15 @@ export class OrgsController {
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
-  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
-  @UseAccess({
-    [ManagerResources.orgs]: [AccessActions.createAny],
-  })
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
   @Post('orgs')
-  async create(@Body() body: CreateOrgDTO) {
-    await this.orgsService.create(body);
+  async create(@Body() body: CreateOrgDTO, @User() hacker: PrimitiveHacker) {
+    await this.orgsService.create(hacker, body);
 
-    return data({ code: ResultCode.SUCCESS, message: 'Create successfully' });
+    return data({
+      code: ResultCode.SUCCESS,
+      message: `${body.name} created successfully`,
+    });
   }
 
   @ApiOperation({
@@ -114,20 +134,17 @@ export class OrgsController {
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Patch('orgs/:org')
   async update(
-    @Param(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-        forbidNonWhitelisted: true,
-      }),
-    )
+    @Param(new ValidationPipe())
     params: UpdateOrgParamsDTO,
     @Body() body: UpdateOrgDTO,
   ) {
     const { org } = params;
     await this.orgsService.update(org, body);
 
-    return data({ code: ResultCode.SUCCESS, message: 'Create successfully' });
+    return data({
+      code: ResultCode.SUCCESS,
+      message: `Organization ${org} profile updated successfully`,
+    });
   }
 
   @ApiOperation({
@@ -150,8 +167,11 @@ export class OrgsController {
   })
   @Delete('orgs/:org')
   async delete(@Param('org') org: string) {
-    await this.orgsService.delete(org);
+    await this.orgsService.softDelete(org);
 
-    return data({ code: ResultCode.SUCCESS, message: 'Delete successfully' });
+    return data({
+      code: ResultCode.SUCCESS,
+      message: `${org} deleted successfully`,
+    });
   }
 }
