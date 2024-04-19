@@ -12,7 +12,7 @@
     "pnpm": "please-use-yarn"
   },
   "scripts": {
-    "lint": "yarn workspaces foreach -A run lint",
+    "lint": "eslint . --fix",
     "_stack:deploy": "docker stack deploy -c ./docker-compose.yaml indiebase",
     "preset:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
     "preset:dev": "dotenv -e .env -- yarn _stack:deploy",

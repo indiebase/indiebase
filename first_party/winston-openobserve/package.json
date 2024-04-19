@@ -48,7 +48,7 @@
     "winston"
   ],
   "scripts": {
-    "build": "shx rm -rf dist && tsc",
+    "build": "shx rm -rf dist&& tsc",
     "test": "jest",
     "prepack": "npm run build"
   },

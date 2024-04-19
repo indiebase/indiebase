@@ -1,5 +1,6 @@
-import { OnModuleInit } from '@nestjs/common';
 import passport from '@fastify/passport';
+import { OnModuleInit } from '@nestjs/common';
+
 import { Type } from '../interfaces';
 type UseStrategyHook = (
   strategy: (options) => Type<any>,
@@ -56,6 +57,7 @@ export function PassportStrategy<T extends Type<any> = any>(
       | Record<string, any>;
 
     async onModuleInit() {
+      // eslint-disable-next-line no-useless-catch
       try {
         const callback = async (...params: any[]) => {
           const done = params[params.length - 1];

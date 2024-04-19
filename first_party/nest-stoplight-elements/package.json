@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json && shx cp -r ./src/views ./dist/views",
     "start": "tsx watch ./example/main.ts",
-    "prepack": "shx rm -rf dist && npm run build",
+    "prepack": "shx rm -rf dist&& npm run build",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test:bundle": "ncc build ./example/main.ts -o dist -m",
     "test": "jest",
@@ -52,7 +52,6 @@
     "@nestjs/testing": "10.3.7",
     "@types/node": "20.12.7",
     "@types/supertest": "6.0.2",
-    "eslint": "9.0.0",
     "handlebars": "4.7.8",
     "prettier": "3.2.5",
     "reflect-metadata": "0.2.2",

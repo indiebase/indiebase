@@ -1,9 +1,12 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { IndiebaseMetaTables, KnexEx } from '@indiebase/server-shared';
-import { AccountStatus, OrgStatus, ProjectStatus } from '@indiebase/trait';
+import {
+  AccountStatus,
+  AvailableOAuthProviders,
+  OrgStatus,
+  ProjectStatus,
+} from '@indiebase/trait';
 import { Knex } from 'knex';
-
-import { SupportOAuthProviders } from '../../auth/social/support';
 
 export const v001_indiebase = async function (
   schema: string,
@@ -256,13 +259,12 @@ export const v001_indiebase = async function (
         .createTable(IndiebaseMetaTables.oauthProviders, (table) => {
           table.increments('id').primary();
           table
-            .enum('name', Object.values(SupportOAuthProviders))
+            .enum('name', Object.values(AvailableOAuthProviders))
             .notNullable()
             .comment('Provider name, e.g. google, microsoft');
           table
             .boolean('enabled')
             .defaultTo(false)
-            .notNullable()
             .comment('Enable the login method');
           table
             .string('client_id')
@@ -273,7 +275,7 @@ export const v001_indiebase = async function (
             .notNullable()
             .comment('Client secret for OAuth');
           table
-            .string('callback_url')
+            .specificType('callback_url', 'varchar[]')
             .notNullable()
             .comment('Callback URL for OAuth');
           table

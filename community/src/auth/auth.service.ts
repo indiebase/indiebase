@@ -13,7 +13,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
-import { FastifyRequest } from 'fastify';
 import { Redis } from 'ioredis';
 import { PasetoService } from 'nestjs-paseto';
 import { authenticator } from 'otplib';

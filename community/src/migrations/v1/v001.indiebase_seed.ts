@@ -51,10 +51,7 @@ export const v001_indiebase_seed = async function (
       if (kDevMode) {
         await knex
           .withSchema('indiebase')
-          .insert({
-            role: BuiltinIndiebaseRoles.OAA,
-            description: 'Site owner',
-          })
+          .insert({})
           .into(IndiebaseMetaTables.oauthProviders);
       }
     },
