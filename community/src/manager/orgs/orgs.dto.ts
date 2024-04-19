@@ -1,7 +1,7 @@
 import {
+  IndiebaseMetaTables,
   IsCommonLegalString,
   IsEntityExisted,
-  MgrMetaTables,
   OkResponseSchema,
   PaginationRequestSchema,
 } from '@indiebase/server-shared';
@@ -14,8 +14,8 @@ export class CreateOrgDTO {
     default: 'indiebase',
   })
   @IsEntityExisted({
-    schema: 'mgr',
-    table: MgrMetaTables.orgs,
+    schema: 'indiebase',
+    table: IndiebaseMetaTables.orgs,
     column: 'name',
   })
   @IsCommonLegalString()
@@ -29,8 +29,8 @@ export class UpdateOrgParamsDTO {
   })
   @IsEntityExisted(
     {
-      schema: 'mgr',
-      table: MgrMetaTables.orgs,
+      schema: 'indiebase',
+      table: IndiebaseMetaTables.orgs,
       column: 'name',
     },
     {

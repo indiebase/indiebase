@@ -1,6 +1,6 @@
 import {
+  IndiebaseMetaTables,
   IsEntityExisted,
-  MgrMetaTables,
   SpecificProjectType,
   TmplMetaTables,
 } from '@indiebase/server-shared';
@@ -18,8 +18,8 @@ export class LocalSignInDTO {
       table: TmplMetaTables.users,
       column: 'email',
       $eq: {
-        mgr: {
-          table: MgrMetaTables.hackers,
+        indiebase: {
+          table: IndiebaseMetaTables.hackers,
           column: 'email',
         },
       },

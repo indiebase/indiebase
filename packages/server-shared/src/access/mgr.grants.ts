@@ -1,10 +1,10 @@
 import { AccessControl } from '@indiebase/accesscontrol';
 import { AccessActions } from '@indiebase/nest-accesscontrol';
 
-import { BuiltinMgrRoles } from './built-in.roles';
+import { BuiltinIndiebaseRoles } from './built-in.roles';
 
-export const defaultMgrGrants = {
-  [BuiltinMgrRoles.OAA]: {
+export const defaultIndiebaseGrants = {
+  [BuiltinIndiebaseRoles.OAA]: {
     '*': {
       [AccessActions.createAny]: ['*'],
       [AccessActions.readAny]: ['*'],
@@ -13,7 +13,7 @@ export const defaultMgrGrants = {
       // [AccessActions.banAny]: ['*'],
     },
   },
-  // [BuiltinMgrRoles.admin]: {
+  // [BuiltinIndiebaseRoles.admin]: {
   //   [ManagerResources.projects]: {
   //     [AccessActions.createAny]: ['*'],
   //   },

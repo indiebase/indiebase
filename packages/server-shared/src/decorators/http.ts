@@ -34,10 +34,10 @@ export const ApiProjectHeader = () =>
   ApiHeader({
     name: X_Indiebase_Project_ID,
     description:
-      'Indiebase Project ID. e.g. 4b3643f67affc66d.`mgr` is a specific value for manager API',
+      'Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase` is a specific value for manager API',
     required: true,
     schema: {
-      default: 'mgr',
+      default: 'indiebase',
     },
   });
 

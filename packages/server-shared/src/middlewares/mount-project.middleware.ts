@@ -23,10 +23,10 @@ export class MountProjectMiddleware<
     const prjId = req.headers[X_Indiebase_Project_ID] as string;
 
     if (prjId) {
-      if (prjId === 'mgr') {
+      if (prjId === 'indiebase') {
         req.project = {
-          name: 'mgr',
-          namespace: 'mgr',
+          name: 'indiebase',
+          namespace: 'indiebase',
         } as any;
       } else {
         const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));

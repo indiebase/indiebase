@@ -22,7 +22,7 @@ export interface PrimitiveProject {
   avatarUrl?: string;
   pinnedOrder?: number;
   pinned?: boolean;
-  projectStatus?: ProjectStatus;
+  status?: ProjectStatus;
   packageName?: string;
   createAt: Date;
   updateAt: Date;

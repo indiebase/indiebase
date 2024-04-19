@@ -1,7 +1,7 @@
 import {
+  IndiebaseMetaTables,
   IsCommonLegalString,
   IsEntityExisted,
-  MgrMetaTables,
   OkResponseSchema,
   SpecificProjectType,
 } from '@indiebase/server-shared';
@@ -15,8 +15,8 @@ export class CreatePrjDTO {
   })
   @IsEntityExisted({
     type: SpecificProjectType.hardCode,
-    schema: 'mgr',
-    table: MgrMetaTables.projects,
+    schema: 'indiebase',
+    table: IndiebaseMetaTables.projects,
     column: 'name',
   })
   @IsCommonLegalString()

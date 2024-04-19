@@ -15,7 +15,7 @@ export class MigrationModule implements OnModuleInit {
 
   async onModuleInit() {
     try {
-      await this.migrationService.initMgr();
+      await this.migrationService.initIndiebase();
     } catch (error) {
       this.logger.error('Init:failed ' + error);
     }

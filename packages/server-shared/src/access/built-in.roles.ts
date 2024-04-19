@@ -1,4 +1,4 @@
-export enum BuiltinMgrRoles {
+export enum BuiltinIndiebaseRoles {
   /**
    * The ONE-ABOVE-ALL
    * @see {@link https://marvel.fandom.com/wiki/One_Above_All_(Multiverse)}

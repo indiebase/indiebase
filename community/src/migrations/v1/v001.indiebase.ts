@@ -1,9 +1,11 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import { IndiebaseMetaTables, KnexEx } from '@indiebase/server-shared';
 import { AccountStatus, OrgStatus, ProjectStatus } from '@indiebase/trait';
 import { Knex } from 'knex';
 
-export const v001_mgr = async function (
+import { SupportOAuthProviders } from '../../auth/social/support';
+
+export const v001_indiebase = async function (
   schema: string,
 ): Promise<Knex.Migration> {
   return {
@@ -18,7 +20,7 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.roles, (table) => {
+        .createTable(IndiebaseMetaTables.roles, (table) => {
           table.increments('id').primary();
           table.string('role').unique().index().notNullable();
           table.string('description');
@@ -26,7 +28,7 @@ export const v001_mgr = async function (
           table.timestamp('deleted_at').comment('Soft delete role timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.roles);
+          await knexExSchema.createUpdatedAtTrigger(IndiebaseMetaTables.roles);
         });
 
       /**
@@ -34,7 +36,7 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.hackers, (table) => {
+        .createTable(IndiebaseMetaTables.hackers, (table) => {
           table.increments('id').primary();
           table.string('email').unique().index().notNullable();
           table.string('nickname').comment('Nickname');
@@ -55,14 +57,16 @@ export const v001_mgr = async function (
           table
             .string('role')
             .references('role')
-            .inTable(`mgr.${MgrMetaTables.roles}`);
+            .inTable(`indiebase.${IndiebaseMetaTables.roles}`);
           table.datetime('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamps(true, true);
           table.timestamp('deleted_at').comment('Soft delete hacker timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.hackers);
+          await knexExSchema.createUpdatedAtTrigger(
+            IndiebaseMetaTables.hackers,
+          );
         });
 
       /*  *
@@ -70,7 +74,7 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.orgs, (table) => {
+        .createTable(IndiebaseMetaTables.orgs, (table) => {
           table.increments('id').primary();
           table.string('name').unique().index().notNullable();
           table.string('description');
@@ -88,10 +92,7 @@ export const v001_mgr = async function (
             .nullable()
             .comment('Organization homepage');
           table
-            .enum('status', Object.values(OrgStatus), {
-              useNative: true,
-              enumName: 'status',
-            })
+            .enum('status', Object.values(OrgStatus))
             .defaultTo(OrgStatus.active)
             .comment('Organization status');
           table
@@ -99,7 +100,7 @@ export const v001_mgr = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`mgr.${MgrMetaTables.hackers}`)
+            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`)
             .comment('The organization owner id');
 
           table.timestamps(true, true);
@@ -108,7 +109,7 @@ export const v001_mgr = async function (
             .comment('Soft delete organization timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.orgs);
+          await knexExSchema.createUpdatedAtTrigger(IndiebaseMetaTables.orgs);
         });
 
       /**
@@ -116,7 +117,7 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.projects, (table) => {
+        .createTable(IndiebaseMetaTables.projects, (table) => {
           table.increments('id').primary();
           table.string('name').unique().index().notNullable();
           table.string('description');
@@ -125,7 +126,7 @@ export const v001_mgr = async function (
           table.integer('pinned_order').comment('Project card pinned order');
           table.boolean('pinned').comment('Pin the project');
           table
-            .enum('project_status', Object.values(ProjectStatus))
+            .enum('status', Object.values(ProjectStatus))
             .defaultTo(ProjectStatus.wip)
             .comment('Project status');
           table
@@ -146,13 +147,19 @@ export const v001_mgr = async function (
             .unique()
             .index()
             .notNullable()
-            .comment('X-Indiebase-Project-Id');
+            .comment('X-Indiebase-Project-Id, the ID for business');
+          table
+            .integer('org_id')
+            .unsigned()
+            .index()
+            .references('id')
+            .inTable(`indiebase.${IndiebaseMetaTables.orgs}`);
           table
             .integer('owner_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`mgr.${MgrMetaTables.hackers}`)
+            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`)
             .comment('The project owner id');
 
           table.timestamps(true, true);
@@ -161,7 +168,9 @@ export const v001_mgr = async function (
             .comment('Soft delete project timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.projects);
+          await knexExSchema.createUpdatedAtTrigger(
+            IndiebaseMetaTables.projects,
+          );
         });
 
       /**
@@ -169,7 +178,7 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.grants, (table) => {
+        .createTable(IndiebaseMetaTables.grants, (table) => {
           table.increments('id').primary();
           table.string('role').index().notNullable();
           table.string('resource').notNullable();
@@ -179,7 +188,7 @@ export const v001_mgr = async function (
           table.timestamp('deleted_at').comment('Soft delete grants timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.grants);
+          await knexExSchema.createUpdatedAtTrigger(IndiebaseMetaTables.grants);
         });
 
       /**
@@ -188,25 +197,27 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.hackersOrgs, (table) => {
+        .createTable(IndiebaseMetaTables.hackersOrgs, (table) => {
           table.increments('id').primary();
           table
             .integer('hacker_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`mgr.${MgrMetaTables.hackers}`);
+            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`);
           table
             .integer('org_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`mgr.${MgrMetaTables.orgs}`);
+            .inTable(`indiebase.${IndiebaseMetaTables.orgs}`);
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.hackersOrgs);
+          await knexExSchema.createUpdatedAtTrigger(
+            IndiebaseMetaTables.hackersOrgs,
+          );
         });
       /**
        * Intermediate table
@@ -214,26 +225,26 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.hackersProjects, (table) => {
+        .createTable(IndiebaseMetaTables.hackersProjects, (table) => {
           table.increments('id').primary();
           table
             .integer('hacker_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`mgr.${MgrMetaTables.hackers}`);
+            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`);
           table
             .integer('project_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`mgr.${MgrMetaTables.projects}`);
+            .inTable(`indiebase.${IndiebaseMetaTables.projects}`);
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
-            MgrMetaTables.hackersProjects,
+            IndiebaseMetaTables.hackersProjects,
           );
         });
       /**
@@ -242,13 +253,10 @@ export const v001_mgr = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.oauthProviders, (table) => {
+        .createTable(IndiebaseMetaTables.oauthProviders, (table) => {
           table.increments('id').primary();
           table
-            .enum('name', Object.values(OrgStatus), {
-              useNative: true,
-              enumName: 'status',
-            })
+            .enum('name', Object.values(SupportOAuthProviders))
             .notNullable()
             .comment('Provider name, e.g. google, microsoft');
           table
@@ -278,18 +286,24 @@ export const v001_mgr = async function (
             .jsonb('extra_payload')
             .nullable()
             .comment('e.g. WorkOS WorkOS URL, gitlab Self Hosted GitLab URL');
+          table
+            .integer('project_id')
+            .unsigned()
+            .index()
+            .references('id')
+            .inTable(`indiebase.${IndiebaseMetaTables.projects}`);
 
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
-            MgrMetaTables.hackersProjects,
+            IndiebaseMetaTables.oauthProviders,
           );
         });
     },
     async down(knex: Knex) {
-      for (const tableName in MgrMetaTables) {
+      for (const tableName in IndiebaseMetaTables) {
         await knex.schema.withSchema(schema).dropTable(tableName);
       }
     },

@@ -1,4 +1,4 @@
-import { BusinessTags } from '../constants';
+import { BusinessLabels } from '../constants';
 
 export class RedisUtils {
   /**
@@ -6,10 +6,10 @@ export class RedisUtils {
    * e.g. namespace-xxx:1031
    */
   public static formatNamespaceKey(
-    tag: BusinessTags,
+    label: BusinessLabels,
     namespace: string,
     suffix: string | number,
   ) {
-    return `${tag}:${namespace}:${suffix}`;
+    return `${label}:${namespace}:${suffix}`;
   }
 }

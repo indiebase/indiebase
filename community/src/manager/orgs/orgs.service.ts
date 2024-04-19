@@ -1,6 +1,6 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx, paginationData } from '@indiebase/server-shared';
-import { MgrMetaTables } from '@indiebase/server-shared';
+import { IndiebaseMetaTables } from '@indiebase/server-shared';
 import { PrimitiveHacker } from '@indiebase/trait';
 import {
   Injectable,
@@ -32,18 +32,18 @@ export class OrgsService {
     { pageSize, pageIndex }: HackerOwnedOrgsDTO,
   ) {
     const result = await this.knex
-      .withSchema('mgr')
+      .withSchema('indiebase')
       .select('*')
-      .from(MgrMetaTables.orgs)
-      .leftJoin(MgrMetaTables.hackersOrgs, function () {
+      .from(IndiebaseMetaTables.orgs)
+      .leftJoin(IndiebaseMetaTables.hackersOrgs, function () {
         this.on(
-          `${MgrMetaTables.hackersOrgs}.hacker_id`,
+          `${IndiebaseMetaTables.hackersOrgs}.hacker_id`,
           '=',
           hacker.id as any,
         ).andOn(
-          `${MgrMetaTables.orgs}.id`,
+          `${IndiebaseMetaTables.orgs}.id`,
           '=',
-          `${MgrMetaTables.hackersOrgs}.org_id`,
+          `${IndiebaseMetaTables.hackersOrgs}.org_id`,
         );
       })
       .paginate({
@@ -62,10 +62,10 @@ export class OrgsService {
 
     try {
       await this.knex
-        .withSchema('mgr')
+        .withSchema('indiebase')
         .where({ name: targetOrgName })
         .update({ name, contactEmail, description, avatarUrl })
-        .into(MgrMetaTables.orgs);
+        .into(IndiebaseMetaTables.orgs);
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();
@@ -78,8 +78,8 @@ export class OrgsService {
    * @returns The number of rows affected by the deletion.
    */
   public async delete(name: string) {
-    return this.knex(MgrMetaTables.orgs)
-      .withSchema('mgr')
+    return this.knex(IndiebaseMetaTables.orgs)
+      .withSchema('indiebase')
       .where({
         name,
       })
@@ -94,8 +94,8 @@ export class OrgsService {
    * @returns The number of rows affected by the deletion.
    */
   public async softDelete(name: string) {
-    return this.knex(MgrMetaTables.orgs)
-      .withSchema('mgr')
+    return this.knex(IndiebaseMetaTables.orgs)
+      .withSchema('indiebase')
       .update('deleted_at', this.knex.fn.now())
       .where({
         name,
@@ -110,18 +110,18 @@ export class OrgsService {
     return this.knex
       .transaction(async (trx) => {
         const result = await trx
-          .withSchema('mgr')
+          .withSchema('indiebase')
           .insert({ name: org.name, ownerId: hacker.id })
-          .into(MgrMetaTables.orgs)
+          .into(IndiebaseMetaTables.orgs)
           .returning('id');
 
         return trx
-          .withSchema('mgr')
+          .withSchema('indiebase')
           .insert({
             orgId: result[0]?.id,
             hackerId: hacker.id,
           })
-          .into(MgrMetaTables.hackersOrgs);
+          .into(IndiebaseMetaTables.hackersOrgs);
       })
       .catch((err) => {
         this.logger.error(err);

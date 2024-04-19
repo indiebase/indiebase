@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
-import { MgrMetaTables } from '@indiebase/server-shared';
+import { IndiebaseMetaTables } from '@indiebase/server-shared';
 import {
   BadRequestException,
   Injectable,
@@ -42,13 +42,13 @@ export class ProjectsService {
     return this.knex
       .transaction(async (trx) => {
         await trx
-          .withSchema('mgr')
+          .withSchema('indiebase')
           .insert({
             name: prj.name,
             namespace,
             projectId: crypto.randomBytes(8).toString('hex'),
           })
-          .into(MgrMetaTables.projects);
+          .into(IndiebaseMetaTables.projects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({

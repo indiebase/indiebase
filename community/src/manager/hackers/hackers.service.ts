@@ -1,6 +1,6 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
-import { hashSecret, MgrMetaTables } from '@indiebase/server-shared';
+import { hashSecret, IndiebaseMetaTables } from '@indiebase/server-shared';
 import {
   Injectable,
   InternalServerErrorException,
@@ -22,10 +22,10 @@ export class HackersService {
   ) {}
 
   public async list() {
-    await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
+    await this.knex(IndiebaseMetaTables.orgs).withSchema('indiebase').insert({
       name: 'indiebase',
     });
-    return this.knex(`mgr.${MgrMetaTables.orgs}`).select();
+    return this.knex(`indiebase.${IndiebaseMetaTables.orgs}`).select();
   }
 
   public async update(body: UpdateHackersDTO) {
@@ -34,7 +34,7 @@ export class HackersService {
     // try {
     //   await this.knex
     //     .update({ name, contactEmail, description, avatarUrl })
-    //     .into(`mgr.${MgrMetaTables.orgs}`);
+    //     .into(`indiebase.${IndiebaseMetaTables.orgs}`);
     // } catch (error) {
     //   this.logger.error(error);
     //   throw new InternalServerErrorException();
@@ -42,7 +42,7 @@ export class HackersService {
 
     // this.knex.update().updateFrom
     // await this.knex.schema.createSchema(org.name);
-    // await this.knex(MgrMetaTables.orgs).withSchema('mgr').insert({
+    // await this.knex(IndiebaseMetaTables.orgs).withSchema('indiebase').insert({
     //   name: org.name,
     // });
     // await this.knex.migrate.up({
@@ -59,8 +59,8 @@ export class HackersService {
   public async create(org: CreateHackersDTO) {
     let { email, password } = org;
     password = await hashSecret(password);
-    await this.knex<CreateHackersDTO>(MgrMetaTables.hackers)
-      .withSchema('mgr')
+    await this.knex<CreateHackersDTO>(IndiebaseMetaTables.hackers)
+      .withSchema('indiebase')
       .insert({
         email,
         password,

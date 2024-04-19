@@ -2,6 +2,7 @@ import { ResultCode } from '@indiebase/sdk';
 import {
   ApiUnionResponse,
   ApiUnionType1Header,
+  data,
   Project,
   PublicApiGuard,
   User,
@@ -13,11 +14,10 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
+  Param,
   Post,
   Req,
   Res,
-  Session,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -31,8 +31,6 @@ import { GithubGuard, GoogleGuard } from './social';
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
 export class AuthController {
-  private readonly logger = new Logger('AuthController');
-
   constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({
@@ -50,11 +48,11 @@ export class AuthController {
   ) {
     const accessToken = await this.authService.signIn(user, project);
 
-    return {
+    return data({
       code: ResultCode.SUCCESS,
       message: 'Login Successfully',
       accessToken,
-    };
+    });
   }
 
   @Get('oauth/github')
@@ -64,16 +62,12 @@ export class AuthController {
   @UseGuards(GithubGuard)
   async github() {}
 
-  @Get('github/callback')
+  @Get('oauth/:project/github/callback')
   @ApiOperation({
     summary: 'OAuth2 github callback',
   })
   @UseGuards(GithubGuard)
-  async githubCallback(
-    @Req() req: FastifyRequest,
-    @Session() session: any,
-    @Res() res: FastifyReply,
-  ) {
+  async githubCallback(@Param('project') project: string) {
     // await this.authService.handleGithubCallback(req, session);
   }
 
@@ -90,11 +84,7 @@ export class AuthController {
     summary: 'OAuth2 google callback',
   })
   @UseGuards(GoogleGuard)
-  async googleCallback(
-    @Req() req: FastifyRequest,
-    @Session() session: any,
-    @Res() res: FastifyReply,
-  ) {
+  async googleCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
     // await this.authService.handleGithubCallback(req, session);
   }
 
@@ -111,11 +101,7 @@ export class AuthController {
     summary: 'OAuth2 microsoft callback',
   })
   @UseGuards(GoogleGuard)
-  async microsoftCallback(
-    @Req() req: FastifyRequest,
-    @Session() session: any,
-    @Res() res: FastifyReply,
-  ) {
+  async microsoftCallback() {
     // await this.authService.handleGithubCallback(req, session);
   }
 
@@ -132,11 +118,7 @@ export class AuthController {
     summary: 'OAuth2 apple callback',
   })
   @UseGuards(GoogleGuard)
-  async appleCallback(
-    @Req() req: FastifyRequest,
-    @Session() session: any,
-    @Res() res: FastifyReply,
-  ) {
+  async appleCallback() {
     // await this.authService.handleGithubCallback(req, session);
   }
 

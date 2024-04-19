@@ -60,10 +60,8 @@ export class AuthService {
     return user;
   }
 
-  public async handleGithubCallback(req: FastifyRequest, session: any) {
-    const { user } = req;
+  public async handleGithubCallback(user: PrimitiveUser) {
     // const { _json: json, username, profileUrl, id, displayName } = profile;
-
     // const r = await this.userService.signIn({
     //   username: username,
     //   profileUrl: profileUrl,
@@ -74,18 +72,15 @@ export class AuthService {
     //   bio: json?.bio,
     //   githubAccessToken: accessToken,
     // });
-
     // session.set('user', {
     //   loggedIn: true,
     //   id: r.id,
     //   username,
     //   githubAccessToken: user.accessToken,
     // });
-
     // session.cookie.expires = new Date(
     //   Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
     // );
-
     // session.cookie.domain = getSubdomain(
     //   new URL(`${req.protocol}://${req.hostname}`).hostname,
     //   2,

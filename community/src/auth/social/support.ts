@@ -1,4 +1,4 @@
-export enum SupportOAuthProviders {
+export enum AvailableOAuthProviders {
   google = 'google',
   microsoft = 'microsoft',
   github = 'github',

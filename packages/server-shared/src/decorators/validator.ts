@@ -46,7 +46,7 @@ interface SpecificProjectFromHeader {
   table: string;
   column: string;
   /**
-   * Specific project. key is the project id.
+   * Specific project. key is the project id(postgresql schema name).
    */
   $eq?: Record<string, Omit<SpecificProject, 'type'>>;
 }

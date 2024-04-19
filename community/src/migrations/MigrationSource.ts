@@ -1,12 +1,12 @@
 import { Knex } from 'knex';
 
-import { v001_mgr } from './v1/v001.mgr';
+import { v001_indiebase } from './v1/v001.indiebase';
 
 export class MigrationSource implements Knex.MigrationSource<any> {
   #schema: string;
 
   constructor(schema?: string) {
-    this.#schema = schema ?? 'mgr';
+    this.#schema = schema ?? 'indiebase';
   }
 
   // Must return a Promise containing a list of migrations.
@@ -14,7 +14,7 @@ export class MigrationSource implements Knex.MigrationSource<any> {
   // arguments to getMigrationName and getMigration
   getMigrations() {
     // In this run we are just returning migration names
-    return Promise.resolve(['v001_mgr']);
+    return Promise.resolve(['v001_indiebase']);
   }
 
   getMigrationName(migration: any) {
@@ -23,8 +23,8 @@ export class MigrationSource implements Knex.MigrationSource<any> {
 
   async getMigration(migration: any): Promise<any> {
     switch (migration) {
-      case 'v001_mgr':
-        return v001_mgr(this.#schema);
+      case 'v001_indiebase':
+        return v001_indiebase(this.#schema);
       default:
         throw new Error(`${migration} migration not found`);
     }

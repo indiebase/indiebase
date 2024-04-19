@@ -15,29 +15,11 @@ export class GithubStrategy
 
   async useStrategyOptions() {
     return {
-      clientID: '1111',
-      clientSecret: '1111',
-      callbackURL: 'http://indiebase.deskbtm.com:23331/v1/auth/github/callback',
+      clientID: '0a9aef8e6f3858f08ce5',
+      clientSecret: 'd61cfb4c48c93b80644320f013f6cf91debd8cdf',
+      callbackURL:
+        'http://api-dev.indiebase.deskbtm.com:8331/v1/auth/github/callback',
     };
-    // const subscriptions = [
-    //   {
-    //     dataId: 'mutable.json',
-    //     group: 'DEFAULT_GROUP',
-    //     getProperty(options: Record<string, any>) {
-    //       const {
-    //         github: { clientID, clientSecret, callbackURL },
-    //       } = options;
-    //       return { clientID, clientSecret, callbackURL };
-    //     },
-    //   },
-    // ];
-    // for await (const sub of subscriptions) {
-    //   const { getProperty, ...rest } = sub;
-    //   await this.nacosConfig.subscribe(rest, (config) => {
-    //     const options = getProperty(config);
-    //     use(appStrategy(options));
-    //   });
-    // }
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any) {
