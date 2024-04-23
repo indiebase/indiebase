@@ -8,7 +8,7 @@ export enum IndiebaseMetaTables {
   grants = 'ib_grants',
   migrations = '__knex_indiebase_migration',
   seedMigrations = '__knex_indiebase_seed_migration',
-  authzProviders = 'ib_authz_providers',
+  authProviders = 'ib_auth_providers',
 }
 
 export enum TmplMetaTables {

@@ -53,7 +53,7 @@ export class ProjectsService {
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({
           migrationSource: new TmplMigrationSource(namespace),
-          tableName: `knex_${namespace}_migration`,
+          tableName: `__knex_${namespace}_migration`,
           schemaName: namespace,
         });
       })

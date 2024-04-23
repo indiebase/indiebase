@@ -1,4 +1,4 @@
-export enum AvailableAuthzProviders {
+export enum AvailableAuthProviders {
   google = 'google',
   microsoft = 'microsoft',
   github = 'github',
@@ -9,11 +9,11 @@ export enum AvailableAuthzProviders {
   apple = 'apple',
 }
 
-export type OAuthProvider = {
+export type AuthProvider = {
   /**
    * Provider name, e.g. google, microsoft
    */
-  name: AvailableAuthzProviders;
+  name: AvailableAuthProviders;
   /**
    * Enable the login method
    */
@@ -21,11 +21,22 @@ export type OAuthProvider = {
   /**
    * Client ID for OAuth
    */
-  clientID: string;
+  clientID?: string;
   /**
    * Client secret for OAuth
    */
-  clientSecret: string;
+  clientSecret?: string;
+
+  /**
+   * Callback url path
+   * @example
+   * ```
+   * /auth/oauth/{projectId}/github/callback
+   *
+   * https://api-dev.indiebase.deskbtm.com/auth/oauth/{projectId}/github/callback
+   * ```
+   */
+  callbackPath: string;
   /**
    * Authorized Client IDs e.g. Apple (iOS, macOS, watchOS, tvOS bundle IDs or service IDs), Google (for Android, One Tap, and Chrome extensions)
    */

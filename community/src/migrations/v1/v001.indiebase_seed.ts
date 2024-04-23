@@ -8,6 +8,7 @@ import {
   IndiebaseMetaTables,
 } from '@indiebase/server-shared';
 import { Knex } from 'knex';
+import { createIndiebaseProviders } from './indiebase_providers';
 
 /**
  * Create organization template tables
@@ -46,13 +47,13 @@ export const v001_indiebase_seed = async function (
           role: BuiltinIndiebaseRoles.OAA,
         })
         .into(IndiebaseMetaTables.hackers);
-      // Init indiebase's OAuth providers.
-
       if (kDevMode) {
+        // Init indiebase's OAuth providers.
+        const indiebaseProviders = createIndiebaseProviders;
         await knex
           .withSchema('indiebase')
-          .insert({})
-          .into(IndiebaseMetaTables.authzProviders);
+          .insert(indiebaseProviders)
+          .into(IndiebaseMetaTables.authProviders);
       }
     },
     async down() {},

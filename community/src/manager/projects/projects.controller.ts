@@ -4,6 +4,7 @@ import {
   AccessGuard,
   ApiUnionResponse,
   ApiUnionType1Header,
+  data,
   PublicApiGuard,
 } from '@indiebase/server-shared';
 import {
@@ -44,12 +45,13 @@ export class ProjectsController {
   @Get('orgs/:org/projects')
   async list() {}
 
-  @ApiUnionResponse()
   @ApiOperation({
     summary: 'List projects for the authenticated user',
     description:
       'Lists repositories that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @Get('user/projects')
@@ -69,12 +71,11 @@ export class ProjectsController {
   async create(@Body() body: CreatePrjDTO, @Param('org') org: string) {
     await this.projectsService.create(org, body);
 
-    return { code: ResultCode.SUCCESS, message: 'Create successfully' };
+    return data({ code: ResultCode.SUCCESS, message: 'Create successfully' });
   }
 
   @ApiOperation({
     summary: 'Delete a project',
-    description: '',
   })
   @ApiParam({
     name: 'project',

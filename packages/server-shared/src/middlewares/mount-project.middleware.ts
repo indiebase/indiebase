@@ -27,6 +27,7 @@ export class MountProjectMiddleware<
         req.project = {
           name: 'indiebase',
           namespace: 'indiebase',
+          projectId: 'indiebase',
         } as any;
       } else {
         const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));

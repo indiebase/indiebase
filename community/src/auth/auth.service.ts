@@ -1,8 +1,8 @@
 import { did } from '@deskbtm/gadgets';
-import { InjectKnexEx } from '@indiebase/nest-knex';
+import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { ResultCode } from '@indiebase/sdk';
-import { KnexEx } from '@indiebase/server-shared';
+import { IndiebaseMetaTables, KnexEx } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
 import {
@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 import { Redis } from 'ioredis';
+import { Knex } from 'knex';
 import { PasetoService } from 'nestjs-paseto';
 import { authenticator } from 'otplib';
 import * as qrcode from 'qrcode';
@@ -25,6 +26,8 @@ export class AuthService {
   constructor(
     @InjectKnexEx()
     private readonly knexEx: KnexEx,
+    @InjectKnex()
+    private readonly knex: Knex,
     private readonly pasetoService: PasetoService,
     @InjectRedis()
     private readonly redis: Redis,
@@ -103,6 +106,13 @@ export class AuthService {
     );
 
     return token;
+  }
+
+  public getAuthProviders(project: PrimitiveProject) {
+    return this.knex
+      .withSchema(project.namespace)
+      .select('*')
+      .from(IndiebaseMetaTables.authProviders);
   }
 
   public async generateOtp(username: string) {

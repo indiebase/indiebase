@@ -2,7 +2,7 @@ import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { IndiebaseMetaTables, KnexEx } from '@indiebase/server-shared';
 import {
   AccountStatus,
-  AvailableAuthzProviders,
+  AvailableAuthProviders,
   OrgStatus,
   ProjectStatus,
 } from '@indiebase/trait';
@@ -256,10 +256,10 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(IndiebaseMetaTables.authzProviders, (table) => {
+        .createTable(IndiebaseMetaTables.authProviders, (table) => {
           table.increments('id').primary();
           table
-            .enum('name', Object.values(AvailableAuthzProviders))
+            .enum('name', Object.values(AvailableAuthProviders))
             .comment('Provider name, e.g. google, microsoft');
           table
             .boolean('enabled')
@@ -268,10 +268,10 @@ export const v001_indiebase = async function (
           table.string('client_id').comment('Client ID for OAuth');
           table.string('client_secret').comment('Client secret for OAuth');
           table
-            .specificType('callback_url', 'varchar[]')
-            .comment('Callback URL for OAuth');
+            .string('callback_path')
+            .comment('Callback URL for OAuth. Only the path is stored');
           table
-            .string('authorized_client_ids')
+            .specificType('authorized_client_ids', 'varchar[]')
             .comment(
               'Authorized Client IDs e.g. Apple (iOS, macOS, watchOS, tvOS bundle IDs or service IDs), Google (for Android, One Tap, and Chrome extensions)',
             );
@@ -290,7 +290,7 @@ export const v001_indiebase = async function (
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
-            IndiebaseMetaTables.authzProviders,
+            IndiebaseMetaTables.authProviders,
           );
         });
     },

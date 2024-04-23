@@ -22,6 +22,8 @@ type ExtendedValidationOptions = ValidationOptions & {
    */
   throwExistedMsg?: boolean;
 
+  caseSensitive?: boolean;
+
   entityAliasForMsg?: string;
   /**
    * Custom response message.
@@ -70,18 +72,22 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
   }
 
   private async entityExist(
+    caseSensitive: boolean,
     schema: string,
     table: string,
     column: string,
     value: any,
     handler: any,
   ): Promise<boolean> {
-    return this.knex
-      .withSchema(schema)
-      .select('*')
-      .from(table)
-      .where(column, value)
-      .then(handler);
+    let sql = this.knex.withSchema(schema).select('*').from(table);
+
+    if (caseSensitive) {
+      sql = sql.where(column, value);
+    } else {
+      sql = sql.whereILike(column, '%' + value + '%');
+    }
+
+    return sql.then(handler);
   }
 
   async validate(value: any, args: ValidationArguments) {
@@ -90,7 +96,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     }
 
     const entity: Entity = args.constraints[0];
-    const { throwExistedMsg } = args
+    const { throwExistedMsg, caseSensitive } = args
       .constraints[1] satisfies ExtendedValidationOptions;
 
     switch (entity?.type) {
@@ -109,6 +115,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
           for (const [name, cond] of conditions) {
             if (project.name === name) {
               return this.entityExist(
+                caseSensitive,
                 name,
                 cond.table,
                 cond.column,
@@ -120,6 +127,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
         }
 
         return this.entityExist(
+          caseSensitive,
           project.namespace,
           e.table,
           e.column,
@@ -131,6 +139,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
       default: {
         const e = entity as SpecificProject;
         return this.entityExist(
+          caseSensitive,
           e.schema!,
           e.table,
           e.column,
@@ -173,7 +182,11 @@ export function IsEntityExisted(
 ) {
   const opt = Object.assign(
     {},
-    { throwExistedMsg: true, entityAliasForMsg: 'Entity' },
+    {
+      throwExistedMsg: true,
+      entityAliasForMsg: 'Entity',
+      caseSensitive: false,
+    },
     validationOptions,
   );
 

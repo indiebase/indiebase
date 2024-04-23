@@ -52,6 +52,8 @@ export const setupApiDoc = async (app: INestApplication) => {
   try {
     const mgrOptions = new DocumentBuilder()
       .setTitle('Indiebase Management REST API')
+      .addTag('Hackers/v1', 'Indiebase user')
+      .addTag('Manager-Auth/v1', 'Manager authentication')
       .setDescription(desc)
       .setVersion('1.0.0')
       .setContact(contactName, contactUrl, contactEmail)

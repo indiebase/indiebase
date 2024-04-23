@@ -11,7 +11,7 @@ function handleOrigin(originRegex: string) {
 
 const app = registerAs('app', () => {
   return {
-    hostname: process.env.HTTP_HOSTNAME || '0.0.0.0',
+    hostname: process.env.HTTP_HOST || '0.0.0.0',
     port: process.env.HTTP_PORT || 23331,
     corsOrigin:
       process.env.CORS_ORIGINS_REGEX &&
