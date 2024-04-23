@@ -10,6 +10,7 @@ import {
   ApiHeader,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
+  ApiParam,
   ApiSecurity,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -41,6 +42,16 @@ export const ApiProjectHeader = () =>
     },
   });
 
+export const ApiProjectParam = () =>
+  ApiParam({
+    name: 'projectId',
+    description:
+      'Indiebase Project ID in URL Parameters. e.g. ?projectId=4b3643f67affc66d, `indiebase` is a specific value for manager API',
+    schema: {
+      default: 'indiebase',
+    },
+  });
+
 /**
  * Need a paseto token to Sign in and X-Indiebase-AP to protect API.
  * @returns
@@ -48,6 +59,14 @@ export const ApiProjectHeader = () =>
 export const ApiIndiebaseSecurity = () =>
   // ApiSecurity('ap') provides api protection.
   applyDecorators(ApiSecurity('ap'), ApiProtectionHeader());
+
+/**
+ * Required. specific project.
+ * @returns
+ */
+export const ApiProject = () =>
+  // ApiSecurity('ap') provides api protection.
+  applyDecorators(ApiProjectHeader(), ApiProjectParam());
 
 /**
  * Common API headers. Type 1.
@@ -58,7 +77,7 @@ export const ApiIndiebaseSecurity = () =>
  * - ApiProjectHeader
  */
 export const ApiUnionType1Header = () =>
-  applyDecorators(ApiProjectHeader(), ApiIndiebaseSecurity());
+  applyDecorators(ApiProject(), ApiIndiebaseSecurity());
 
 export const ApiUnionResponse = (okType?: 'pagination') => {
   let okSchema;
