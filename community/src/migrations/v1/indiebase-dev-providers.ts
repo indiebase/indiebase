@@ -1,9 +1,9 @@
-import { AvailableOAuthProviders } from '@indiebase/sdk';
+import { AvailableAuthzProviders } from '@indiebase/sdk';
 import { OAuthProvider } from '@indiebase/trait';
 
 export const indiebaseDevProviders: OAuthProvider[] = [
   {
-    name: AvailableOAuthProviders.google,
+    name: AvailableAuthzProviders.google,
     enabled: false,
     clientID: '',
     clientSecret: '',

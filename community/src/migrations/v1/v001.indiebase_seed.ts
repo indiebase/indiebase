@@ -52,7 +52,7 @@ export const v001_indiebase_seed = async function (
         await knex
           .withSchema('indiebase')
           .insert({})
-          .into(IndiebaseMetaTables.oauthProviders);
+          .into(IndiebaseMetaTables.authzProviders);
       }
     },
     async down() {},

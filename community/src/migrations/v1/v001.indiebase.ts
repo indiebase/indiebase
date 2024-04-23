@@ -2,7 +2,7 @@ import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { IndiebaseMetaTables, KnexEx } from '@indiebase/server-shared';
 import {
   AccountStatus,
-  AvailableOAuthProviders,
+  AvailableAuthzProviders,
   OrgStatus,
   ProjectStatus,
 } from '@indiebase/trait';
@@ -256,11 +256,10 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(IndiebaseMetaTables.oauthProviders, (table) => {
+        .createTable(IndiebaseMetaTables.authzProviders, (table) => {
           table.increments('id').primary();
           table
-            .enum('name', Object.values(AvailableOAuthProviders))
-            .notNullable()
+            .enum('name', Object.values(AvailableAuthzProviders))
             .comment('Provider name, e.g. google, microsoft');
           table
             .boolean('enabled')
@@ -300,7 +299,7 @@ export const v001_indiebase = async function (
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
-            IndiebaseMetaTables.oauthProviders,
+            IndiebaseMetaTables.authzProviders,
           );
         });
     },
