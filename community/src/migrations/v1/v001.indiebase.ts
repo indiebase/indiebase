@@ -265,27 +265,18 @@ export const v001_indiebase = async function (
             .boolean('enabled')
             .defaultTo(false)
             .comment('Enable the login method');
-          table
-            .string('client_id')
-            .notNullable()
-            .comment('Client ID for OAuth');
-          table
-            .string('client_secret')
-            .notNullable()
-            .comment('Client secret for OAuth');
+          table.string('client_id').comment('Client ID for OAuth');
+          table.string('client_secret').comment('Client secret for OAuth');
           table
             .specificType('callback_url', 'varchar[]')
-            .notNullable()
             .comment('Callback URL for OAuth');
           table
             .string('authorized_client_ids')
-            .nullable()
             .comment(
               'Authorized Client IDs e.g. Apple (iOS, macOS, watchOS, tvOS bundle IDs or service IDs), Google (for Android, One Tap, and Chrome extensions)',
             );
           table
             .jsonb('extra_payload')
-            .nullable()
             .comment('e.g. WorkOS WorkOS URL, gitlab Self Hosted GitLab URL');
           table
             .integer('project_id')
