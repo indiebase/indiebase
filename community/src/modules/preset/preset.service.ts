@@ -15,7 +15,7 @@ export class PresetService {
 
   private async setGrants(namespace: string) {
     const table =
-      namespace === 'indiebase'
+      namespace === 'indiebase_mgr'
         ? IndiebaseMetaTables.grants
         : TmplMetaTables.grants;
     const roles = await this.knex.withSchema(namespace).select('*').from(table);
@@ -26,7 +26,7 @@ export class PresetService {
   }
 
   public async initAcl() {
-    this.setGrants('indiebase');
+    this.setGrants('indiebase_mgr');
 
     const projects = await this.knexEx.listProjects();
     for await (const prj of projects) {

@@ -17,21 +17,21 @@ export class MigrationService {
   /**
    * Initialize manager tables.
    */
-  public async initIndiebase() {
-    if (!(await this.knexEx.hasSchema('indiebase'))) {
-      await this.knex.schema.createSchema('indiebase');
+  public async initIndiebaseMgr() {
+    if (!(await this.knexEx.hasSchema('indiebase_mgr'))) {
+      await this.knex.schema.createSchema('indiebase_mgr');
     }
 
     await this.knex.migrate.up({
-      migrationSource: new MigrationSource('indiebase'),
+      migrationSource: new MigrationSource('indiebase_mgr'),
       tableName: IndiebaseMetaTables.migrations,
-      schemaName: 'indiebase',
+      schemaName: 'indiebase_mgr',
     });
 
     await this.knex.migrate.up({
-      migrationSource: new SeedMigrationSource('indiebase'),
+      migrationSource: new SeedMigrationSource('indiebase_mgr'),
       tableName: IndiebaseMetaTables.seedMigrations,
-      schemaName: 'indiebase',
+      schemaName: 'indiebase_mgr',
     });
   }
 }

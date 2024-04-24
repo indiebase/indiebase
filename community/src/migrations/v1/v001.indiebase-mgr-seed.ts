@@ -7,8 +7,19 @@ import {
   hashSecret,
   IndiebaseMetaTables,
 } from '@indiebase/server-shared';
+import {
+  AuthProvider,
+  AvailableAuthProviders,
+  PrimitiveProject,
+} from '@indiebase/trait';
 import { Knex } from 'knex';
-import { createIndiebaseProviders } from './indiebase_providers';
+
+const indiebaseMgrProviders: Partial<AuthProvider>[] = Object.values(
+  AvailableAuthProviders,
+).map((name) => ({
+  name,
+  callbackPath: `oauth/indiebase/${name}/callback`,
+}));
 
 /**
  * Create organization template tables
@@ -21,14 +32,12 @@ export const v001_indiebase_seed = async function (
 ): Promise<Knex.Migration> {
   return {
     async up(knex: Knex): Promise<void> {
+      const mgrSchema = knex.withSchema('indiebase_mgr');
+
       // Init default roles.
       const arr = grantsRecord2Array(defaultIndiebaseGrants);
-      await knex
-        .withSchema('indiebase')
-        .insert(arr)
-        .into(IndiebaseMetaTables.grants);
-      await knex
-        .withSchema('indiebase')
+      await mgrSchema.insert(arr).into(IndiebaseMetaTables.grants);
+      await mgrSchema
         .insert({
           role: BuiltinIndiebaseRoles.OAA,
           description: 'Site owner',
@@ -39,22 +48,27 @@ export const v001_indiebase_seed = async function (
       const { OAA_EMAIL, OAA_PASSWORD } = process.env;
       const secret = createHash('sha256').update(OAA_PASSWORD!).digest('hex');
       const password = await hashSecret(secret);
-      await knex
-        .withSchema('indiebase')
+      await mgrSchema
         .insert({
           email: OAA_EMAIL,
           password,
           role: BuiltinIndiebaseRoles.OAA,
         })
         .into(IndiebaseMetaTables.hackers);
-      if (kDevMode) {
-        // Init indiebase's OAuth providers.
-        const indiebaseProviders = createIndiebaseProviders;
-        await knex
-          .withSchema('indiebase')
-          .insert(indiebaseProviders)
-          .into(IndiebaseMetaTables.authProviders);
-      }
+
+      // Init indiebase manager's OAuth providers.
+      await mgrSchema
+        .insert(indiebaseMgrProviders)
+        .into(IndiebaseMetaTables.authProviders);
+
+      // Init indiebase manager self.
+      await mgrSchema
+        .insert<PrimitiveProject>({
+          namespace: 'indiebase_mgr',
+          name: 'indiebase_mgr',
+          projectId: 'indiebase_mgr',
+        })
+        .into(IndiebaseMetaTables.projects);
     },
     async down() {},
   };

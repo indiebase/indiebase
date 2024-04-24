@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "async-exit-hook": "2.0.1",
-    "ky": "1.2.3",
+    "ky": "1.2.4",
     "triple-beam": "1.4.1",
     "winston-transport": "4.7.0"
   },

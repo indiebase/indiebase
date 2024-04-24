@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import * as bcrypt from 'bcrypt';
 import * as forge from 'node-forge';
 import * as path from 'path';
@@ -140,3 +141,11 @@ export const hashSecret = async function (content: string, rounds = 10) {
   const s = await bcrypt.genSalt(rounds);
   return bcrypt.hash(content, s);
 };
+
+/**
+ * Make name legal, Convert specific character to '_' by default.
+ * @param name
+ * @returns
+ */
+export const legalizeName = (name: string, char = '_') =>
+  name.replace(/[!-\/\s+]/g, char);

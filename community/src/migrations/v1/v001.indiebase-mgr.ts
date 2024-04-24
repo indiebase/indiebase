@@ -60,7 +60,7 @@ export const v001_indiebase = async function (
           table
             .string('role')
             .references('role')
-            .inTable(`indiebase.${IndiebaseMetaTables.roles}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.roles}`);
           table.datetime('password_updated_at').comment('Password update at');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamps(true, true);
@@ -72,7 +72,7 @@ export const v001_indiebase = async function (
           );
         });
 
-      /*  *
+      /**
        * ib_orgs
        */
       await knex.schema
@@ -103,7 +103,7 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`)
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.hackers}`)
             .comment('The organization owner id');
 
           table.timestamps(true, true);
@@ -156,13 +156,13 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.orgs}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.orgs}`);
           table
             .integer('owner_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`)
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.hackers}`)
             .comment('The project owner id');
 
           table.timestamps(true, true);
@@ -173,6 +173,31 @@ export const v001_indiebase = async function (
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
             IndiebaseMetaTables.projects,
+          );
+        });
+
+      /**
+       * ib_preferences
+       */
+      await knex.schema
+        .withSchema(schema)
+        .createTable(IndiebaseMetaTables.preferences, (table) => {
+          table.increments('id').primary();
+          table.string('key').unique().index().notNullable();
+          table.string('value');
+          table
+            .integer('owner_id')
+            .unsigned()
+            .index()
+            .references('id')
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.projects}`)
+            .comment('The project owner id');
+
+          table.timestamps(true, true);
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(
+            IndiebaseMetaTables.preferences,
           );
         });
 
@@ -207,13 +232,13 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.hackers}`);
           table
             .integer('org_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.orgs}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.orgs}`);
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
@@ -235,13 +260,13 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.hackers}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.hackers}`);
           table
             .integer('project_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.projects}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.projects}`);
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
@@ -283,7 +308,7 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`indiebase.${IndiebaseMetaTables.projects}`);
+            .inTable(`indiebase_mgr.${IndiebaseMetaTables.projects}`);
 
           table.timestamps(true, true);
           table.timestamp('deleted_at');

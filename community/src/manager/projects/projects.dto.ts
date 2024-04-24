@@ -11,11 +11,11 @@ import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
 export class CreatePrjDTO {
   @ApiProperty({
     description: 'Project name',
-    default: 'indiebase',
+    default: 'publish',
   })
   @IsEntityExisted({
     type: SpecificProjectType.hardCode,
-    schema: 'indiebase',
+    schema: 'indiebase_mgr',
     table: IndiebaseMetaTables.projects,
     column: 'name',
   })

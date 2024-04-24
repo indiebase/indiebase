@@ -73,6 +73,24 @@ export const v001_tmpl = async function (
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.grants);
         });
+
+      /**
+       * ib_preferences
+       */
+      await knex.schema
+        .withSchema(schema)
+        .createTable(TmplMetaTables.preferences, (table) => {
+          table.increments('id').primary();
+          table.string('key').unique().index().notNullable();
+          table.string('value');
+          table.timestamps(true, true);
+          table
+            .timestamp('deleted_at')
+            .comment('Soft delete preference timestamp');
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.preferences);
+        });
     },
     async down(_knex: Knex) {},
   };

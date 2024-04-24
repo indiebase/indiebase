@@ -1,14 +1,17 @@
 import { type PrimitiveProject } from '@indiebase/trait/mgr';
 import { Knex } from 'knex';
 
+import { KnexKV } from './knex.kv';
 import { KnexSchemaEx } from './schema.ex';
 import { IndiebaseMetaTables, TmplMetaTables } from './tables';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
+  public kv: KnexKV;
 
   constructor(private readonly knex: Knex) {
     this.schema = new KnexSchemaEx(knex);
+    this.kv = new KnexKV(knex);
   }
 
   public listSchemas(select: string = '*') {
@@ -25,7 +28,7 @@ export class KnexEx {
 
   public async hasOrg(orgName: string) {
     return this.knex
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .select('*')
       .from(IndiebaseMetaTables.orgs)
       .where('name', orgName)
@@ -36,7 +39,7 @@ export class KnexEx {
 
   public async listProjects(): Promise<PrimitiveProject[]> {
     return this.knex
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .select('*')
       .from(IndiebaseMetaTables.projects);
   }
@@ -49,7 +52,7 @@ export class KnexEx {
    */
   public async getProjectByReferenceId(projectId: string) {
     return this.knex
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .select('*')
       .from(IndiebaseMetaTables.projects)
       .where('project_id', projectId)
@@ -66,7 +69,7 @@ export class KnexEx {
    */
   public async getUserByEmail(
     email: string,
-    namespace: string = 'indiebase',
+    namespace: string = 'indiebase_mgr',
     options?: { exclude: string[] | boolean },
   ) {
     options = Object.assign(
@@ -79,7 +82,7 @@ export class KnexEx {
       .withSchema(namespace)
       .select('*')
       .from(
-        namespace === 'indiebase'
+        namespace === 'indiebase_mgr'
           ? IndiebaseMetaTables.hackers
           : TmplMetaTables.users,
       )

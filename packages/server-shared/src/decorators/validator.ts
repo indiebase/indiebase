@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { is } from '@deskbtm/gadgets/is';
 import { AsyncContext } from '@indiebase/nest-async-context';
 import { InjectKnex } from '@indiebase/nest-knex';
@@ -10,10 +11,10 @@ import {
 } from 'class-validator';
 import {
   IsString,
-  Matches,
   registerDecorator,
   ValidatorConstraint,
 } from 'class-validator';
+import { NotMatches } from 'class-validator-extended';
 import { Knex } from 'knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
@@ -214,13 +215,10 @@ export function IsCommonLegalString(options?: ValidationOptions) {
     //T
     {
       message:
-        '$value is illegal, only allow ASCII letters, digits, and the characters - and _',
+        '$value is illegal, only allow ASCII letters, digits, and the characters `-`, `_`',
     },
     options,
   );
 
-  return applyDecorators(
-    IsString(options),
-    Matches(/^[a-zA-Z0-9_-]+$/gi, options),
-  );
+  return applyDecorators(IsString(options), NotMatches(/[!-\/\s+]/gi, options));
 }

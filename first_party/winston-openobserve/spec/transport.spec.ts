@@ -13,7 +13,7 @@ describe('OpenObserve Transport', function () {
     defaultStream: 'default',
     basicAuth: {
       username: 'dev@indiebase.com',
-      password: 'indiebase',
+      password: 'indiebase_mgr',
     },
   };
 

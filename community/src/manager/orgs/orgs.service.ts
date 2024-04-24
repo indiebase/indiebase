@@ -32,7 +32,7 @@ export class OrgsService {
     { pageSize, pageIndex }: HackerOwnedOrgsDTO,
   ) {
     const result = await this.knex
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .select('*')
       .from(IndiebaseMetaTables.orgs)
       .leftJoin(IndiebaseMetaTables.hackersOrgs, function () {
@@ -62,7 +62,7 @@ export class OrgsService {
 
     try {
       await this.knex
-        .withSchema('indiebase')
+        .withSchema('indiebase_mgr')
         .where({ name: targetOrgName })
         .update({ name, contactEmail, description, avatarUrl })
         .into(IndiebaseMetaTables.orgs);
@@ -79,7 +79,7 @@ export class OrgsService {
    */
   public async delete(name: string) {
     return this.knex(IndiebaseMetaTables.orgs)
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .where({
         name,
       })
@@ -95,7 +95,7 @@ export class OrgsService {
    */
   public async softDelete(name: string) {
     return this.knex(IndiebaseMetaTables.orgs)
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .update('deleted_at', this.knex.fn.now())
       .where({
         name,
@@ -110,13 +110,13 @@ export class OrgsService {
     return this.knex
       .transaction(async (trx) => {
         const result = await trx
-          .withSchema('indiebase')
+          .withSchema('indiebase_mgr')
           .insert({ name: org.name, ownerId: hacker.id })
           .into(IndiebaseMetaTables.orgs)
           .returning('id');
 
         return trx
-          .withSchema('indiebase')
+          .withSchema('indiebase_mgr')
           .insert({
             orgId: result[0]?.id,
             hackerId: hacker.id,

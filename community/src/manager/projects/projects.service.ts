@@ -42,7 +42,7 @@ export class ProjectsService {
     return this.knex
       .transaction(async (trx) => {
         await trx
-          .withSchema('indiebase')
+          .withSchema('indiebase_mgr')
           .insert({
             name: prj.name,
             namespace,

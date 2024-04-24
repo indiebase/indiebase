@@ -9,10 +9,12 @@ export enum IndiebaseMetaTables {
   migrations = '__knex_indiebase_migration',
   seedMigrations = '__knex_indiebase_seed_migration',
   authProviders = 'ib_auth_providers',
+  preferences = 'ib_preferences',
 }
 
 export enum TmplMetaTables {
   users = 'ib_users',
   roles = 'ib_roles',
   grants = 'ib_grants',
+  preferences = 'ib_preferences',
 }

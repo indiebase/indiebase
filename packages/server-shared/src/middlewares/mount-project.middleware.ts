@@ -7,6 +7,7 @@ import { BadRequestException, NestMiddleware } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { type KnexEx } from '../knex/knex.ex';
+import { indiebaseMgr } from './project-indiebase-mgr';
 
 @Injectable()
 export class MountProjectMiddleware<
@@ -23,12 +24,8 @@ export class MountProjectMiddleware<
     const prjId = req.headers[X_Indiebase_Project_ID] as string;
 
     if (prjId) {
-      if (prjId === 'indiebase') {
-        req.project = {
-          name: 'indiebase',
-          namespace: 'indiebase',
-          projectId: 'indiebase',
-        } as any;
+      if (prjId === 'indiebase_mgr') {
+        req.project = indiebaseMgr;
       } else {
         const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));
         req.project = prj;

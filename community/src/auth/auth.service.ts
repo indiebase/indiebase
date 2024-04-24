@@ -90,13 +90,17 @@ export class AuthService {
   }
 
   public async signIn(user: PrimitiveUser, project: PrimitiveProject) {
-    const { namespace, name } = project;
+    const { namespace, name, projectId } = project;
     const { email, id, role } = user;
+
+    // this.knex.withSchema(namespace).
+
     const token = await this.pasetoService.sign({
       id,
       email,
       role,
       project: name,
+      projectId,
       namespace,
     });
 
@@ -117,7 +121,7 @@ export class AuthService {
 
   public async generateOtp(username: string) {
     const secret = authenticator.generateSecret(20);
-    const uri = authenticator.keyuri(username, 'indiebase', secret);
+    const uri = authenticator.keyuri(username, 'indiebase_mgr', secret);
     const qrcodeUri = await qrcode.toDataURL(uri);
 
     return {

@@ -81,7 +81,7 @@ export class ProjectsController {
     name: 'project',
     type: 'string',
     schema: {
-      default: 'indiebase',
+      default: 'publish',
     },
   })
   @ApiUnionResponse()

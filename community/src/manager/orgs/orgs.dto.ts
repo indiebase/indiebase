@@ -11,10 +11,10 @@ import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
 export class CreateOrgDTO {
   @ApiProperty({
     description: 'Organization name',
-    default: 'indiebase',
+    default: 'publish',
   })
   @IsEntityExisted({
-    schema: 'indiebase',
+    schema: 'indiebase_mgr',
     table: IndiebaseMetaTables.orgs,
     column: 'name',
   })
@@ -25,11 +25,11 @@ export class CreateOrgDTO {
 export class UpdateOrgParamsDTO {
   @ApiProperty({
     description: 'Update target name',
-    default: 'indiebase',
+    default: 'publish',
   })
   @IsEntityExisted(
     {
-      schema: 'indiebase',
+      schema: 'indiebase_mgr',
       table: IndiebaseMetaTables.orgs,
       column: 'name',
     },

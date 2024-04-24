@@ -83,7 +83,7 @@ export class OrgsController {
     name: 'org',
     type: 'string',
     schema: {
-      default: 'indiebase',
+      default: 'publish',
     },
   })
   @ApiUnionResponse('pagination')
@@ -125,7 +125,7 @@ export class OrgsController {
     name: 'org',
     type: 'string',
     schema: {
-      default: 'indiebase',
+      default: 'publish',
     },
   })
   @ApiUnionResponse()
@@ -155,7 +155,7 @@ export class OrgsController {
     name: 'org',
     type: 'string',
     schema: {
-      default: 'indiebase',
+      default: 'publish',
     },
   })
   @ApiUnionResponse()

@@ -18,7 +18,7 @@ export class LocalSignInDTO {
       table: TmplMetaTables.users,
       column: 'email',
       $eq: {
-        indiebase: {
+        indiebase_mgr: {
           table: IndiebaseMetaTables.hackers,
           column: 'email',
         },

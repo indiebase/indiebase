@@ -13,7 +13,7 @@ export class CreateHackersDTO {
     default: 'dev@indiebase.com',
   })
   @IsEntityExisted({
-    schema: 'indiebase',
+    schema: 'indiebase_mgr',
     table: IndiebaseMetaTables.hackers,
     column: 'email',
   })

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { did } from '@deskbtm/gadgets';
 import { KNEX_SYNC } from '@indiebase/nest-knex';
 import { Knex } from 'knex';
@@ -35,7 +36,7 @@ export class KnexSchemaEx {
     return this;
   }
 
-  public createUpdatedAtTrigger = (tableName: string) =>
+  public createUpdatedAtTrigger = (tableName: string) => {
     this.knex.raw(
       `
       CREATE TRIGGER ${this.schemaName}_${tableName}_updated_at
@@ -44,6 +45,7 @@ export class KnexSchemaEx {
       EXECUTE PROCEDURE ${this.schemaName}.on_update_timestamp();
     `,
     );
+  };
 
   public withSchema(schema: string) {
     this.schema = this.knex.schema.withSchema(schema);

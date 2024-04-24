@@ -22,10 +22,12 @@ export class HackersService {
   ) {}
 
   public async list() {
-    await this.knex(IndiebaseMetaTables.orgs).withSchema('indiebase').insert({
-      name: 'indiebase',
-    });
-    return this.knex(`indiebase.${IndiebaseMetaTables.orgs}`).select();
+    await this.knex(IndiebaseMetaTables.orgs)
+      .withSchema('indiebase_mgr')
+      .insert({
+        name: 'indiebase_mgr',
+      });
+    return this.knex(`indiebase_mgr.${IndiebaseMetaTables.orgs}`).select();
   }
 
   public async update(body: UpdateHackersDTO) {
@@ -34,7 +36,7 @@ export class HackersService {
     // try {
     //   await this.knex
     //     .update({ name, contactEmail, description, avatarUrl })
-    //     .into(`indiebase.${IndiebaseMetaTables.orgs}`);
+    //     .into(`indiebase_mgr.${IndiebaseMetaTables.orgs}`);
     // } catch (error) {
     //   this.logger.error(error);
     //   throw new InternalServerErrorException();
@@ -42,7 +44,7 @@ export class HackersService {
 
     // this.knex.update().updateFrom
     // await this.knex.schema.createSchema(org.name);
-    // await this.knex(IndiebaseMetaTables.orgs).withSchema('indiebase').insert({
+    // await this.knex(IndiebaseMetaTables.orgs).withSchema('indiebase_mgr').insert({
     //   name: org.name,
     // });
     // await this.knex.migrate.up({
@@ -60,7 +62,7 @@ export class HackersService {
     let { email, password } = org;
     password = await hashSecret(password);
     await this.knex<CreateHackersDTO>(IndiebaseMetaTables.hackers)
-      .withSchema('indiebase')
+      .withSchema('indiebase_mgr')
       .insert({
         email,
         password,

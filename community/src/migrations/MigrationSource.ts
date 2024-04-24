@@ -1,12 +1,12 @@
 import { Knex } from 'knex';
 
-import { v001_indiebase } from './v1/v001.indiebase';
+import { v001_indiebase } from './v1/v001.indiebase-mgr';
 
 export class MigrationSource implements Knex.MigrationSource<any> {
   #schema: string;
 
   constructor(schema?: string) {
-    this.#schema = schema ?? 'indiebase';
+    this.#schema = schema ?? 'indiebase_mgr';
   }
 
   // Must return a Promise containing a list of migrations.

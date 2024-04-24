@@ -1,6 +1,5 @@
 import { ResultCode } from '@indiebase/sdk';
 import {
-  AccessGuard,
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
@@ -21,14 +20,13 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
 import { GithubGuard, GoogleGuard } from './social';
-import { PasetoAuthGuard } from './paseto.guard';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
