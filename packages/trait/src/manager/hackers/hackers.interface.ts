@@ -1,2 +1,5 @@
 import { PrimitiveUser } from '../../user';
-export interface PrimitiveHacker extends PrimitiveUser {}
+import { Visibility } from '../common';
+export interface PrimitiveHacker extends PrimitiveUser {
+  visibility: Visibility;
+}

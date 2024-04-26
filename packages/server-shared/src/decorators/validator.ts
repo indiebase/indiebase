@@ -5,6 +5,7 @@ import { InjectKnex } from '@indiebase/nest-knex';
 import { X_Indiebase_Project_ID } from '@indiebase/sdk';
 import { applyDecorators, Injectable, NotFoundException } from '@nestjs/common';
 import {
+  Matches,
   ValidationArguments,
   ValidationOptions,
   ValidatorConstraintInterface,
@@ -14,7 +15,6 @@ import {
   registerDecorator,
   ValidatorConstraint,
 } from 'class-validator';
-import { NotMatches } from 'class-validator-extended';
 import { Knex } from 'knex';
 
 type ExtendedValidationOptions = ValidationOptions & {
@@ -209,16 +209,16 @@ export function IsEntityExisted(
  * @param {ValidationOptions} options
  * @returns
  */
-export function IsCommonLegalString(options?: ValidationOptions) {
+export function IsIndiebaseLegalName(options?: ValidationOptions) {
   options = Object.assign(
     {},
     //T
     {
       message:
-        '$value is illegal, only allow ASCII letters, digits, and the characters `-`, `_`',
+        '$value is illegal, only allow ASCII letters, digits, and the characters `-`, `_`, `.`',
     },
     options,
   );
 
-  return applyDecorators(IsString(options), NotMatches(/[!-\/\s+]/gi, options));
+  return applyDecorators(IsString(options), Matches(/^[\w-\.]+$/gi, options));
 }

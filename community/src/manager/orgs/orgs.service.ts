@@ -1,6 +1,6 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx, paginationData } from '@indiebase/server-shared';
-import { IndiebaseMetaTables } from '@indiebase/server-shared';
+import { IbMetaTables } from '@indiebase/server-shared';
 import { PrimitiveHacker } from '@indiebase/trait';
 import {
   Injectable,
@@ -22,35 +22,43 @@ export class OrgsService {
     private readonly knexEx: KnexEx,
   ) {}
 
-  // SELECT users.username
-  // FROM users
-  // JOIN user_organization ON users.id = user_organization.user_id
-  // JOIN organizations ON user_organization.org_id = organizations.id
-  // WHERE organizations.org_name = 'ABC';
   public async list(
     hacker: PrimitiveHacker,
     { pageSize, pageIndex }: HackerOwnedOrgsDTO,
   ) {
     const result = await this.knex
       .withSchema('indiebase_mgr')
-      .select('*')
-      .from(IndiebaseMetaTables.orgs)
-      .leftJoin(IndiebaseMetaTables.hackersOrgs, function () {
+      .select([
+        `${IbMetaTables.orgs}.name`,
+        `${IbMetaTables.orgs}.description`,
+        `${IbMetaTables.orgs}.contact_email`,
+        `${IbMetaTables.orgs}.avatar_url`,
+        `${IbMetaTables.orgs}.github_org`,
+        `${IbMetaTables.orgs}.homepage`,
+        `${IbMetaTables.orgs}.visibility`,
+        `${IbMetaTables.orgs}.owner_id`,
+        `${IbMetaTables.orgs}.created_at`,
+        `${IbMetaTables.orgs}.updated_at`,
+      ])
+      .from(IbMetaTables.orgs)
+      .whereNull(`${IbMetaTables.orgs}.deleted_at`)
+      .leftJoin(IbMetaTables.hackersOrgs, function () {
         this.on(
-          `${IndiebaseMetaTables.hackersOrgs}.hacker_id`,
+          `${IbMetaTables.hackersOrgs}.hacker_id`,
           '=',
           hacker.id as any,
         ).andOn(
-          `${IndiebaseMetaTables.orgs}.id`,
+          `${IbMetaTables.orgs}.id`,
           '=',
-          `${IndiebaseMetaTables.hackersOrgs}.org_id`,
+          `${IbMetaTables.hackersOrgs}.org_id`,
         );
       })
       .paginate({
         pageSize,
         pageIndex,
       })
-      .catch(() => {
+      .catch((err) => {
+        this.logger.error(err);
         throw new InternalServerErrorException();
       });
 
@@ -65,7 +73,7 @@ export class OrgsService {
         .withSchema('indiebase_mgr')
         .where({ name: targetOrgName })
         .update({ name, contactEmail, description, avatarUrl })
-        .into(IndiebaseMetaTables.orgs);
+        .into(IbMetaTables.orgs);
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();
@@ -78,7 +86,7 @@ export class OrgsService {
    * @returns The number of rows affected by the deletion.
    */
   public async delete(name: string) {
-    return this.knex(IndiebaseMetaTables.orgs)
+    return this.knex(IbMetaTables.orgs)
       .withSchema('indiebase_mgr')
       .where({
         name,
@@ -94,7 +102,7 @@ export class OrgsService {
    * @returns The number of rows affected by the deletion.
    */
   public async softDelete(name: string) {
-    return this.knex(IndiebaseMetaTables.orgs)
+    return this.knex(IbMetaTables.orgs)
       .withSchema('indiebase_mgr')
       .update('deleted_at', this.knex.fn.now())
       .where({
@@ -112,7 +120,7 @@ export class OrgsService {
         const result = await trx
           .withSchema('indiebase_mgr')
           .insert({ name: org.name, ownerId: hacker.id })
-          .into(IndiebaseMetaTables.orgs)
+          .into(IbMetaTables.orgs)
           .returning('id');
 
         return trx
@@ -121,7 +129,7 @@ export class OrgsService {
             orgId: result[0]?.id,
             hackerId: hacker.id,
           })
-          .into(IndiebaseMetaTables.hackersOrgs);
+          .into(IbMetaTables.hackersOrgs);
       })
       .catch((err) => {
         this.logger.error(err);

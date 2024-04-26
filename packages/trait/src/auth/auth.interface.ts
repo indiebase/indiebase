@@ -1,4 +1,5 @@
 export enum AvailableAuthProviders {
+  email = 'email',
   google = 'google',
   microsoft = 'microsoft',
   github = 'github',

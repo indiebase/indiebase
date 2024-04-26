@@ -174,4 +174,33 @@ export class OrgsController {
       message: `${org} deleted successfully`,
     });
   }
+
+  @ApiOperation({
+    summary: 'Delete an organization permanently',
+    description:
+      'Nota bene, Once you delete a org, there is no going back. Please be certain.',
+  })
+  @ApiParam({
+    name: 'org',
+    type: 'string',
+    schema: {
+      default: 'publish',
+    },
+  })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
+  @UseAccess({
+    [ManagerResources.orgs]: [AccessActions.deleteOwn, AccessActions.deleteAny],
+  })
+  @Delete('orgs/:org/permanent')
+  async deletePermanent(@Param('org') org: string) {
+    await this.orgsService.delete(org);
+
+    return data({
+      code: ResultCode.SUCCESS,
+      message: `${org} deleted successfully`,
+    });
+  }
 }

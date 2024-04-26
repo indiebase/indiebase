@@ -1,5 +1,5 @@
 import {
-  IndiebaseMetaTables,
+  IbMetaTables,
   IsEntityExisted,
   SpecificProjectType,
   TmplMetaTables,
@@ -19,7 +19,7 @@ export class LocalSignInDTO {
       column: 'email',
       $eq: {
         indiebase_mgr: {
-          table: IndiebaseMetaTables.hackers,
+          table: IbMetaTables.hackers,
           column: 'email',
         },
       },

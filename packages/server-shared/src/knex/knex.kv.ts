@@ -1,7 +1,5 @@
 import { Knex } from 'knex';
 
-import { KnexSchemaEx } from './schema.ex';
-
 export class KnexKV {
   private schema: Knex.SchemaBuilder;
   private schemaName!: string;
@@ -15,8 +13,4 @@ export class KnexKV {
     this.schemaName = schema;
     return this;
   }
-
-  set(key: string, value: string | number) {}
-
-  get() {}
 }

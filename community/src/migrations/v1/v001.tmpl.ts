@@ -28,10 +28,15 @@ export const v001_tmpl = async function (
           table.string('avatar_url').comment('User avatar url');
           table.string('bio').comment('User biography');
           table.string('password');
+          table
+            .string('sign_in_type')
+            .comment('User sign in type. oauth, local');
           table.boolean('enabled_otp').defaultTo(false).comment('Enable 2FA');
           table.string('opt_secret').comment('One time password secret');
-          table.timestamp('password_updated_at').comment('Password update at');
+
           table.datetime('email_confirmed_at').comment('Email confirmed at');
+          table.timestamp('sign_in_at').comment('User sign in timestamp');
+          table.timestamp('password_updated_at').comment('Password update at');
           table.timestamps(true, true);
           table.timestamp('deleted_at').comment('Soft delete user timestamp');
         })
@@ -72,24 +77,6 @@ export const v001_tmpl = async function (
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.grants);
-        });
-
-      /**
-       * ib_preferences
-       */
-      await knex.schema
-        .withSchema(schema)
-        .createTable(TmplMetaTables.preferences, (table) => {
-          table.increments('id').primary();
-          table.string('key').unique().index().notNullable();
-          table.string('value');
-          table.timestamps(true, true);
-          table
-            .timestamp('deleted_at')
-            .comment('Soft delete preference timestamp');
-        })
-        .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.preferences);
         });
     },
     async down(_knex: Knex) {},

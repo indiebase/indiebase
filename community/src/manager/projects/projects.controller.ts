@@ -36,7 +36,7 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @ApiOperation({
-    summary: 'List projects',
+    summary: 'Query projects',
     description: 'List all public projects',
   })
   @ApiUnionResponse()
@@ -46,7 +46,7 @@ export class ProjectsController {
   async list() {}
 
   @ApiOperation({
-    summary: 'List projects for the authenticated user',
+    summary: 'Query projects for the authenticated user',
     description:
       'Lists repositories that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
@@ -90,6 +90,6 @@ export class ProjectsController {
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Delete('projects/:project')
   async delete(@Param('project') project: string) {
-    return { code: ResultCode.SUCCESS, message: 'Create successfully' };
+    return data({ code: ResultCode.SUCCESS, message: 'Delete successfully' });
   }
 }

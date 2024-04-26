@@ -1,5 +1,5 @@
 import {
-  IndiebaseMetaTables,
+  IbMetaTables,
   IsEntityExisted,
   OkResponseSchema,
   PaginationRequestSchema,
@@ -14,7 +14,7 @@ export class CreateHackersDTO {
   })
   @IsEntityExisted({
     schema: 'indiebase_mgr',
-    table: IndiebaseMetaTables.hackers,
+    table: IbMetaTables.hackers,
     column: 'email',
   })
   @IsEmail()

@@ -1,8 +1,8 @@
 import crypto from 'node:crypto';
 
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx } from '@indiebase/server-shared';
-import { IndiebaseMetaTables } from '@indiebase/server-shared';
+import { KnexEx, legalizeName } from '@indiebase/server-shared';
+import { IbMetaTables } from '@indiebase/server-shared';
 import {
   BadRequestException,
   Injectable,
@@ -30,7 +30,7 @@ export class ProjectsService {
    * enabling data isolation.
    */
   public async create(org: string, prj: CreatePrjDTO) {
-    const namespace = org + '_' + prj.name;
+    const namespace = legalizeName(org + '_' + prj.name);
 
     if (!(await this.knexEx.hasOrg(org))) {
       //T
@@ -48,7 +48,7 @@ export class ProjectsService {
             namespace,
             projectId: crypto.randomBytes(8).toString('hex'),
           })
-          .into(IndiebaseMetaTables.projects);
+          .into(IbMetaTables.projects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({

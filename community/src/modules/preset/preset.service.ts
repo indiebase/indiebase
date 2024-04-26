@@ -1,7 +1,7 @@
 import { AccessService } from '@indiebase/nest-accesscontrol';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
-import { IndiebaseMetaTables, TmplMetaTables } from '@indiebase/server-shared';
+import { IbMetaTables, TmplMetaTables } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 
@@ -16,7 +16,7 @@ export class PresetService {
   private async setGrants(namespace: string) {
     const table =
       namespace === 'indiebase_mgr'
-        ? IndiebaseMetaTables.grants
+        ? IbMetaTables.grants
         : TmplMetaTables.grants;
     const roles = await this.knex.withSchema(namespace).select('*').from(table);
 

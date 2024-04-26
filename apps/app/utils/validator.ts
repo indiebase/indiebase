@@ -1,2 +1,2 @@
-export const isCommonLegalString = (value: string) =>
+export const IsIndiebaseLegalName = (value: string) =>
   !/[^a-zA-Z0-9-_]/g.test(value);

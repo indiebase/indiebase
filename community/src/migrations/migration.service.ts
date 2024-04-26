@@ -1,6 +1,6 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
-import { IndiebaseMetaTables } from '@indiebase/server-shared';
+import { IbMetaTables } from '@indiebase/server-shared';
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
 
@@ -24,13 +24,13 @@ export class MigrationService {
 
     await this.knex.migrate.up({
       migrationSource: new MigrationSource('indiebase_mgr'),
-      tableName: IndiebaseMetaTables.migrations,
+      tableName: IbMetaTables.migrations,
       schemaName: 'indiebase_mgr',
     });
 
     await this.knex.migrate.up({
       migrationSource: new SeedMigrationSource('indiebase_mgr'),
-      tableName: IndiebaseMetaTables.seedMigrations,
+      tableName: IbMetaTables.seedMigrations,
       schemaName: 'indiebase_mgr',
     });
   }

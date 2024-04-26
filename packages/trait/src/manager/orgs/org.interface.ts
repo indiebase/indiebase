@@ -1,27 +1,17 @@
-export interface OrgSelect {
-  logo: string;
-  label: string;
-  value: string;
-}
+import { Visibility } from '../common';
 
-export enum OrgStatus {
-  active = 'active',
-  inactive = 'inactive',
-}
-
-export interface Org {
+export interface PrimitiveOrg {
   id: number;
   name: string;
   githubOrg: string;
   avatarUrl?: string;
   domain: string;
   contactEmail: string;
-  status: OrgStatus;
+  visibility: Visibility;
   description?: string;
   homepage?: string;
   createTime: Date;
   updateTime: Date;
   creatorId: number;
   ownerId: number;
-  // members?: UserProfile[];
 }
