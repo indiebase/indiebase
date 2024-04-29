@@ -1,4 +1,4 @@
-import { X_Indiebase_AP, X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { X_Indiebase_AP, X_Indiebase_Reference_Id } from '@indiebase/sdk';
 import { applyDecorators } from '@nestjs/common';
 import {
   ApiForbiddenResponse,
@@ -31,7 +31,7 @@ export const ApiProtectionHeader = () =>
  */
 export const ApiProjectHeader = () =>
   ApiHeader({
-    name: X_Indiebase_Project_ID,
+    name: X_Indiebase_Reference_Id,
     description:
       'Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API',
     required: true,

@@ -47,8 +47,8 @@ export class OrgsController {
   constructor(private readonly orgsService: OrgsService) {}
 
   @ApiOperation({
-    summary: 'Query the user-owned all organizations',
-    description: 'Query the user-owned all organizations',
+    summary: 'Query the user-owned organizations',
+    description: 'Query the user-owned organizations',
   })
   @ApiUnionResponse('pagination')
   @ApiUnionType1Header()
@@ -76,8 +76,9 @@ export class OrgsController {
   }
 
   @ApiOperation({
-    summary: 'Query the organizations',
-    description: 'Query the user-owned organizations',
+    summary: 'Query organizations for the authenticated user',
+    description:
+      'Lists organizations that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
   @ApiParam({
     name: 'org',

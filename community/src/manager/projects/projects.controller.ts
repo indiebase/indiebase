@@ -6,15 +6,20 @@ import {
   ApiUnionType1Header,
   data,
   PublicApiGuard,
+  User,
 } from '@indiebase/server-shared';
+import { PrimitiveHacker } from '@indiebase/trait';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -48,7 +53,7 @@ export class ProjectsController {
   @ApiOperation({
     summary: 'Query projects for the authenticated user',
     description:
-      'Lists repositories that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
+      'Lists projects that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
   @ApiUnionResponse()
   @ApiUnionType1Header()
@@ -67,9 +72,19 @@ export class ProjectsController {
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
   @UseAccess({})
+  @UsePipes(
+    new ValidationPipe({
+      transform: true,
+      errorHttpStatusCode: HttpStatus.CONFLICT,
+    }),
+  )
   @Post('orgs/:org/projects')
-  async create(@Body() body: CreatePrjDTO, @Param('org') org: string) {
-    await this.projectsService.create(org, body);
+  async create(
+    @Body() body: CreatePrjDTO,
+    @Param('org') org: string,
+    @User() hacker: PrimitiveHacker,
+  ) {
+    await this.projectsService.create(hacker, org, body);
 
     return data({ code: ResultCode.SUCCESS, message: 'Create successfully' });
   }

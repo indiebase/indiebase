@@ -66,7 +66,7 @@ export const v001_indiebase_seed = async function (
         .insert<PrimitiveProject>({
           namespace: 'indiebase_mgr',
           name: 'indiebase_mgr',
-          projectId: 'indiebase_mgr',
+          referenceId: 'indiebase_mgr',
         })
         .into(IbMetaTables.projects);
     },
