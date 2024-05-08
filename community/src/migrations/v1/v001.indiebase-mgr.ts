@@ -159,11 +159,11 @@ export const v001_indiebase = async function (
             .unique()
             .comment('Projects namespace, postgres schema name');
           table
-            .string('project_id')
+            .string('reference_id')
             .unique()
             .index()
             .notNullable()
-            .comment('X-Indiebase-Project-Id, the ID for business');
+            .comment('X-Indiebase-Reference-Id, the ID for business');
           table
             .integer('org_id')
             .unsigned()

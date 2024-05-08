@@ -45,7 +45,7 @@ export class KnexEx {
   }
 
   /**
-   * Get get project by project_id(header:x-indiebase-project-id), not the primary key.
+   * Get get project by project_id(header:x-indiebase-reference-id), not the primary key.
    *
    * @param {String} projectId
    * @returns

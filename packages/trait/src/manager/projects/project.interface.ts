@@ -29,5 +29,5 @@ export interface PrimitiveProject {
   coverUrl?: string;
   githubRepo?: string;
   namespace: string;
-  projectId: string;
+  referenceId: string;
 }

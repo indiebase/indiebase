@@ -2,8 +2,14 @@
 import { is } from '@deskbtm/gadgets/is';
 import { AsyncContext } from '@indiebase/nest-async-context';
 import { InjectKnex } from '@indiebase/nest-knex';
-import { X_Indiebase_Project_ID } from '@indiebase/sdk';
-import { applyDecorators, Injectable, NotFoundException } from '@nestjs/common';
+import { X_Indiebase_Reference_Id } from '@indiebase/sdk';
+import {
+  applyDecorators,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import {
   Matches,
   ValidationArguments,
@@ -105,7 +111,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
         const e = entity as SpecificProjectFromHeader;
         const req = AsyncContext.current()?.request;
         const project = req.project;
-        const projectId = req.headers[X_Indiebase_Project_ID];
+        const projectId = req.headers[X_Indiebase_Reference_Id];
 
         if (!project) {
           throw new NotFoundException(`Project ${projectId} not found`);
@@ -155,15 +161,20 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
     const opt = validationArguments
       .constraints?.[1] as ExtendedValidationOptions;
 
-    const msg = is.function(opt.message)
-      ? opt.message(validationArguments!.value)
-      : opt.message;
+    if (opt.message) {
+      const msg = is.function(opt.message)
+        ? opt.message(validationArguments!.value)
+        : opt.message;
 
-    return opt.message
-      ? msg!
-      : `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟ ${
-          opt.throwExistedMsg ? 'already existed.' : "doesn't exist."
-        }`;
+      throw new BadRequestException(msg);
+    } else {
+      const pre = `${opt.entityAliasForMsg} ⌜${validationArguments.value}⌟`;
+      if (opt.throwExistedMsg) {
+        throw new ConflictException(pre + ' ' + 'already existed.');
+      } else {
+        throw new NotFoundException(pre + ' ' + "doesn't exist.");
+      }
+    }
   }
 }
 
@@ -171,7 +182,7 @@ export class IsEntityExistedConstraint implements ValidatorConstraintInterface {
  * Check if the target entity is existed.
  *
  * 1. Check entity from by hardcode database schema.
- * 2. Check entity through x-indiebase-project-id header to get database schema.
+ * 2. Check entity through x-indiebase-reference-id header to get database schema.
  *
  * @param {Entity} entity.
  * @param {ValidationOptions} validationOptions

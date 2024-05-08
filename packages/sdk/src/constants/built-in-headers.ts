@@ -25,7 +25,7 @@ export const X_Indiebase_Package_Name = 'x-indiebase-package-name';
 /**
  * This is the unique identifier for the project.
  */
-export const X_Indiebase_Project_ID = 'x-indiebase-project-id';
+export const X_Indiebase_Reference_Id = 'x-indiebase-reference-id';
 
 /**
  * Project API key

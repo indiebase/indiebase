@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'node:http';
 
 import { did } from '@deskbtm/gadgets';
 import { InjectKnexEx } from '@indiebase/nest-knex';
-import { X_Indiebase_Project_ID } from '@indiebase/sdk';
+import { X_Indiebase_Reference_Id } from '@indiebase/sdk';
 import { BadRequestException, NestMiddleware } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
@@ -21,18 +21,18 @@ export class MountProjectMiddleware<
   ) {}
 
   async use(req: Request, _: Response, next: (...params: any) => void) {
-    const prjId = req.headers[X_Indiebase_Project_ID] as string;
+    const prjUID = req.headers[X_Indiebase_Reference_Id] as string;
 
-    if (prjId) {
-      if (prjId === 'indiebase_mgr') {
+    if (prjUID) {
+      if (prjUID === 'indiebase_mgr') {
         req.project = indiebaseMgr;
       } else {
-        const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjId));
+        const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjUID));
         req.project = prj;
       }
 
       if (!req.project) {
-        next(new NotFoundException(`Project ${prjId} not found`));
+        next(new NotFoundException(`Project ${prjUID} not found`));
       }
     } else {
       next(new BadRequestException('Project ID is required in header'));

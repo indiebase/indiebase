@@ -3,11 +3,12 @@ import crypto from 'node:crypto';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx, legalizeName } from '@indiebase/server-shared';
 import { IbMetaTables } from '@indiebase/server-shared';
+import { PrimitiveHacker } from '@indiebase/trait';
 import {
-  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotAcceptableException,
 } from '@nestjs/common';
 import { Knex } from 'knex';
 
@@ -29,26 +30,36 @@ export class ProjectsService {
    * This function will create an organizational namespace by using schema,
    * enabling data isolation.
    */
-  public async create(org: string, prj: CreatePrjDTO) {
+  public async create(hacker: PrimitiveHacker, org: string, prj: CreatePrjDTO) {
     const namespace = legalizeName(org + '_' + prj.name);
 
     if (!(await this.knexEx.hasOrg(org))) {
       //T
-      throw new BadRequestException({
+      throw new NotAcceptableException({
         message: `Organization ⌜${org}⌟ doesn't exist.`,
       });
     }
 
     return this.knex
       .transaction(async (trx) => {
-        await trx
+        const result = await trx
           .withSchema('indiebase_mgr')
           .insert({
+            ownerId: hacker.id,
             name: prj.name,
             namespace,
-            projectId: crypto.randomBytes(8).toString('hex'),
+            referenceId: crypto.randomBytes(8).toString('hex'),
           })
-          .into(IbMetaTables.projects);
+          .into(IbMetaTables.projects)
+          .returning('id');
+
+        trx
+          .withSchema('indiebase_mgr')
+          .insert({
+            projectId: result[0]?.id,
+            hackerId: hacker.id,
+          })
+          .into(IbMetaTables.hackersProjects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({
