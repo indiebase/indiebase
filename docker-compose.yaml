@@ -106,6 +106,14 @@ services:
       - ${CONFIG_DIR:-./docker}/redis:/usr/local/etc/redis:ro
     command: redis-server --requirepass ${REDIS_PASSWORD}
 
+  # Security
+  # clamav:
+  #     image: clamav/clamav:1.2.3
+  #     <<: *x-logging
+  #     restart: unless-stopped
+  #     volumes:
+  #       - clamav_data:/storage
+
 networks:
   default:
     driver: overlay
@@ -115,6 +123,7 @@ networks:
 volumes:
   pg_data:
   redis_data:
+  # clamav_data:
 
 secrets:
   pg_password:

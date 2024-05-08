@@ -16,7 +16,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import * as path from 'path';
+import path from 'path';
 
 interface SaveBucketOptions {
   signedUrl?: boolean;

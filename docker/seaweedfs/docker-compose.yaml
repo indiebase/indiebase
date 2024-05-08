@@ -1,0 +1,49 @@
+services: 
+  seaweed-master:
+    image: chrislusf/seaweedfs:3.54
+    ports:
+      - 19333:9333
+      - 19334:19333
+      - 19324:9324
+    command: 'master -ip=seaweed-master -ip.bind=0.0.0.0 -metricsPort=9324'
+
+  seaweed-volume:
+    image: chrislusf/seaweedfs:3.54
+    ports:
+      - 18079:8080
+      - 18080:18080
+      - 19325:9325
+    command: '-v=4 volume -mserver=seaweed-master:9333 -ip=seaweed-volume -ip.bind=0.0.0.0 -port=8080 -metricsPort=9325 -dir=/data'
+    volumes:
+      - seaweed_data:/data
+    depends_on:
+      - seaweed-master
+
+  seaweed-filer:
+    image: chrislusf/seaweedfs:3.54
+    ports:
+      - 18887:8888
+      - 18890:18888
+      - 19326:9326
+    command: '-v=4 filer -master=seaweed-master:9333 -ip=seaweed-filer -ip.bind=0.0.0.0 -metricsPort=9326'
+    tty: true
+    stdin_open: true
+    depends_on:
+      - seaweed-master
+      - seaweed-volume
+
+  seaweed-s3:
+    image: chrislusf/seaweedfs:3.54
+    ports:
+      - 18333:8333
+      - 10327:9327
+    command: '-v=4 s3 -config="/etc/seaweedfs/s3.json" -filer=seaweed-filer:8888 -ip.bind=0.0.0.0 -metricsPort=9327'
+    volumes:
+      - ./s3.json:/etc/seaweedfs/s3.json
+    depends_on:
+      - seaweed-master
+      - seaweed-volume
+      - seaweed-filer
+
+volumes:
+  seaweed_data:

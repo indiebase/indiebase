@@ -4726,7 +4726,7 @@ __metadata:
     bcrypt: "npm:5.1.1"
     class-transformer: "npm:0.5.1"
     class-validator: "npm:0.14.1"
-    class-validator-extended: "npm:^4.0.0"
+    class-validator-extended: "npm:4.0.0"
     cross-env: "npm:7.0.3"
     dayjs: "npm:1.11.10"
     fastify: "npm:4.26.2"
@@ -4851,15 +4851,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-async-context@workspace:first_party/nest-async-context"
   dependencies:
-    "@aws-sdk/client-s3": "npm:3.556.0"
-    "@aws-sdk/s3-request-presigner": "npm:3.556.0"
     "@nestjs/common": "npm:10.3.8"
     "@nestjs/core": "npm:10.3.8"
     "@nestjs/testing": "npm:10.3.8"
     "@types/express": "npm:4.17.21"
     "@types/node": "npm:20.12.7"
     "@types/supertest": "npm:6.0.2"
-    aws-sdk: "npm:2.1601.0"
     jest: "npm:29.6.1"
     reflect-metadata: "npm:0.2.2"
     rxjs: "npm:7.8.1"
@@ -12134,7 +12131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-validator-extended@npm:^4.0.0":
+"class-validator-extended@npm:4.0.0":
   version: 4.0.0
   resolution: "class-validator-extended@npm:4.0.0"
   dependencies:
