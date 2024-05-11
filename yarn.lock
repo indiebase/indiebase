@@ -4698,6 +4698,7 @@ __metadata:
     "@indiebase/nest-knex": "workspace:^"
     "@indiebase/nest-kysely": "workspace:^"
     "@indiebase/nest-octokit": "workspace:^"
+    "@indiebase/nest-s3": "workspace:^"
     "@indiebase/nest-stoplight-elements": "workspace:^"
     "@indiebase/nestjs-redis": "npm:10.0.0"
     "@indiebase/sdk": "workspace:^"
@@ -5041,7 +5042,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-s3@workspace:first_party/nest-s3":
+"@indiebase/nest-s3@workspace:^, @indiebase/nest-s3@workspace:first_party/nest-s3":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-s3@workspace:first_party/nest-s3"
   dependencies:

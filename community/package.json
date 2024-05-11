@@ -56,6 +56,7 @@
     "@indiebase/nest-knex": "workspace:^",
     "@indiebase/nest-kysely": "workspace:^",
     "@indiebase/nest-octokit": "workspace:^",
+    "@indiebase/nest-s3": "workspace:^",
     "@indiebase/nest-stoplight-elements": "workspace:^",
     "@indiebase/nestjs-redis": "10.0.0",
     "@indiebase/sdk": "workspace:^",

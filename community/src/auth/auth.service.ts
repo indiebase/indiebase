@@ -90,7 +90,7 @@ export class AuthService {
   }
 
   public async signIn(user: PrimitiveUser, project: PrimitiveProject) {
-    const { namespace, name, projectId } = project;
+    const { namespace, name, referenceId } = project;
     const { email, id, role } = user;
 
     // this.knex.withSchema(namespace).
@@ -100,7 +100,7 @@ export class AuthService {
       email,
       role,
       project: name,
-      projectId,
+      referenceId,
       namespace,
     });
 

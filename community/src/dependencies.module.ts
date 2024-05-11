@@ -2,6 +2,7 @@ import { AccessControlModule } from '@indiebase/nest-accesscontrol';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
 import { KnexModule, knexSnakeCaseMappers } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
+import { S3Module } from '@indiebase/nest-s3';
 import { RedisClientOptions } from '@indiebase/nestjs-redis';
 import { RedisModule } from '@indiebase/nestjs-redis';
 import { X_Indiebase_Lang } from '@indiebase/sdk';
@@ -238,6 +239,25 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       //     };
       //   },
       // }),
+      S3Module.forRootAsync({
+        inject: [ConfigService],
+        useFactory: async (config) => {
+          const { region, endpoint, accessKey, secretKey } =
+            config.get('storage.s3');
+
+          return {
+            config: {
+              region,
+              endpoint: { url: new URL(endpoint) },
+              forcePathStyle: true,
+              credentials: {
+                accessKeyId: accessKey,
+                secretAccessKey: secretKey,
+              },
+            },
+          };
+        },
+      }),
       OctokitModule.forRootAsync({
         async useFactory() {
           return {

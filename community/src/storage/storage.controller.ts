@@ -2,6 +2,8 @@ import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
 import { FilesInterceptor, UploadedFiles } from '@indiebase/nest-fastify-file';
 import { ResultCode } from '@indiebase/sdk';
 import {
+  ApiUnionResponse,
+  ApiUnionType1Header,
   OkResponseSchema,
   // FilesSizeValidationPipe,
   PublicApiGuard,
@@ -68,32 +70,36 @@ export class StorageController {
   //   };
   // }
 
-  @Put(':bucket/upload/files')
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: FilesUploadDTO })
-  @UseInterceptors(FilesInterceptor('files', Infinity))
   @ApiOperation({
     summary: 'Upload multiple files',
     description:
       'Receives multiple files and an associated bucket for uploading the files into the specified bucket.',
   })
-  // @UseGuards(PublicApiGuard)
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: FilesUploadDTO })
+  @UseInterceptors(FilesInterceptor('files', Infinity))
+  @UseGuards(PublicApiGuard)
+  @Put(':bucket/upload/files')
   async uploadFiles(
     @Req() req: FastifyRequest,
     @UploadedFiles()
     files: MemoryStorageFile[],
     @Param('bucket') bucket: string,
   ) {
-    const d = await this.storage.save2Bucket(files, { bucket }).catch((err) => {
-      this.logger.error(err);
-      throw new InternalServerErrorException({
-        code: ResultCode.ERROR,
-        message: 'Upload file failed',
-      });
-    });
+    console.log(files);
+
+    // const d = await this.storage.save2Bucket(files, { bucket }).catch((err) => {
+    //   this.logger.error(err);
+    //   throw new InternalServerErrorException({
+    //     code: ResultCode.ERROR,
+    //     message: 'Upload file failed',
+    //   });
+    // });
     return {
       code: ResultCode.SUCCESS,
-      d,
+      // d,
     };
   }
 

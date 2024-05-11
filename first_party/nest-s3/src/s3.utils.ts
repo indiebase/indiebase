@@ -7,11 +7,11 @@ import {
 } from './s3.constants';
 import { S3ModuleOptions } from './s3.interfaces';
 
-export function getS3OptionsToken(connection: string): string {
+export function getS3OptionsToken(connection?: string): string {
   return `${connection || S3_MODULE_CONNECTION}_${S3_MODULE_OPTIONS_TOKEN}`;
 }
 
-export function getS3ConnectionToken(connection: string): string {
+export function getS3ConnectionToken(connection?: string): string {
   return `${connection || S3_MODULE_CONNECTION}_${S3_MODULE_CONNECTION_TOKEN}`;
 }
 

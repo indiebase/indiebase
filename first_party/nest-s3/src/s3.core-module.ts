@@ -16,10 +16,7 @@ import {
 @Module({})
 export class S3CoreModule {
   /* forRoot */
-  static forRoot(
-    options?: S3ModuleOptions,
-    connection?: string,
-  ): DynamicModule {
+  static forRoot(options: S3ModuleOptions, connection?: string): DynamicModule {
     const s3OptionsProvider: Provider = {
       provide: getS3OptionsToken(connection),
       useValue: options,
@@ -78,7 +75,7 @@ export class S3CoreModule {
 
     return [
       this.createAsyncOptionsProvider(options, connection),
-      { provide: options.useClass, useClass: options.useClass },
+      { provide: options.useClass!, useClass: options.useClass! },
     ];
   }
 
@@ -108,7 +105,7 @@ export class S3CoreModule {
       ): Promise<S3ModuleOptions> {
         return await optionsFactory.createS3ModuleOptions();
       },
-      inject: [options.useClass || options.useExisting],
+      inject: [options.useClass! || options.useExisting!],
     };
   }
 }

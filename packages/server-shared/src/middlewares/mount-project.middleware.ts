@@ -21,21 +21,23 @@ export class MountProjectMiddleware<
   ) {}
 
   async use(req: Request, _: Response, next: (...params: any) => void) {
-    const prjUID = req.headers[X_Indiebase_Reference_Id] as string;
+    const rId = req.headers[X_Indiebase_Reference_Id] as string;
 
-    if (prjUID) {
-      if (prjUID === 'indiebase_mgr') {
+    if (rId) {
+      if (rId === 'indiebase_mgr') {
         req.project = indiebaseMgr;
       } else {
-        const [_, prj] = await did(this.knexEx.getProjectByReferenceId(prjUID));
+        const [_, prj] = await did(this.knexEx.getProjectByReferenceId(rId));
         req.project = prj;
       }
 
       if (!req.project) {
-        next(new NotFoundException(`Project ${prjUID} not found`));
+        next(new NotFoundException(`Project ${rId} not found`));
       }
     } else {
-      next(new BadRequestException('Project ID is required in header'));
+      next(
+        new BadRequestException('Project Reference ID is required in header'),
+      );
     }
 
     next();
