@@ -1,5 +1,5 @@
 import {
-  IbMetaTables,
+  MgrMetaTables,
   IsEntityExisted,
   IsIndiebaseLegalName,
   OkResponseSchema,
@@ -16,7 +16,7 @@ export class CreatePrjDTO {
   @IsEntityExisted({
     type: SpecificProjectType.hardCode,
     schema: 'indiebase_mgr',
-    table: IbMetaTables.projects,
+    table: MgrMetaTables.projects,
     column: 'name',
   })
   @IsIndiebaseLegalName()

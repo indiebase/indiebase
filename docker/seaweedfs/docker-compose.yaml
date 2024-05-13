@@ -7,7 +7,9 @@ services:
       - 19333:9333
       - 19334:19333
       - 19324:9324
-    command: 'master -ip=seaweed-master -ip.bind=0.0.0.0 -metricsPort=9324'
+    command: 'master -ip=seaweed-master -ip.bind=0.0.0.0 -metricsPort=9324 -mdir=/data'
+    volumes:
+      - seaweed_master_data:/data
 
   seaweed-volume:
     image: chrislusf/seaweedfs:3.54
@@ -29,9 +31,9 @@ services:
       - 19326:9326
     environment:
       - HOST={{.Node.Hostname}}
-    command: '-v=4 filer -master=seaweed-master:9333 -ip=seaweed-filer -ip.bind=0.0.0.0 -metricsPort=9326 -dir='
+    command: '-v=4 filer -master=seaweed-master:9333 -ip=seaweed-filer -ip.bind=0.0.0.0 -metricsPort=9326 -encryptVolumeData'
     volumes:
-      - seaweed_filer_data:/data/filerdb
+      - ./filer.toml:/etc/seaweedfs/filer.toml
     tty: true
     stdin_open: true
     depends_on:
@@ -52,5 +54,5 @@ services:
       - seaweed-filer
 
 volumes:
-  seaweed_filer_data:
+  seaweed_master_data:
   seaweed_volume_data:

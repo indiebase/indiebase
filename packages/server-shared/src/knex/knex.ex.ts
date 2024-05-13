@@ -3,7 +3,7 @@ import { Knex } from 'knex';
 
 import { KnexKV } from './knex.kv';
 import { KnexSchemaEx } from './schema.ex';
-import { IbMetaTables, TmplMetaTables } from './tables';
+import { MgrMetaTables, TmplMetaTables } from './tables';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
@@ -30,7 +30,7 @@ export class KnexEx {
     return this.knex
       .withSchema('indiebase_mgr')
       .select('*')
-      .from(IbMetaTables.orgs)
+      .from(MgrMetaTables.orgs)
       .where('name', orgName)
       .then((v) => {
         return Array.isArray(v) && v.length > 0;
@@ -41,7 +41,7 @@ export class KnexEx {
     return this.knex
       .withSchema('indiebase_mgr')
       .select('*')
-      .from(IbMetaTables.projects);
+      .from(MgrMetaTables.projects);
   }
 
   /**
@@ -54,7 +54,7 @@ export class KnexEx {
     return this.knex
       .withSchema('indiebase_mgr')
       .select('*')
-      .from(IbMetaTables.projects)
+      .from(MgrMetaTables.projects)
       .where('project_id', projectId)
       .first();
   }
@@ -83,7 +83,7 @@ export class KnexEx {
       .select('*')
       .from(
         namespace === 'indiebase_mgr'
-          ? IbMetaTables.hackers
+          ? MgrMetaTables.hackers
           : TmplMetaTables.users,
       )
       .where('email', email)

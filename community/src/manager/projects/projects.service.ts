@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx, legalizeName } from '@indiebase/server-shared';
-import { IbMetaTables } from '@indiebase/server-shared';
+import { MgrMetaTables } from '@indiebase/server-shared';
 import { PrimitiveHacker } from '@indiebase/trait';
 import {
   Injectable,
@@ -50,7 +50,7 @@ export class ProjectsService {
             namespace,
             referenceId: crypto.randomBytes(8).toString('hex'),
           })
-          .into(IbMetaTables.projects)
+          .into(MgrMetaTables.projects)
           .returning('id');
 
         trx
@@ -59,7 +59,7 @@ export class ProjectsService {
             projectId: result[0]?.id,
             hackerId: hacker.id,
           })
-          .into(IbMetaTables.hackersProjects);
+          .into(MgrMetaTables.hackersProjects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({

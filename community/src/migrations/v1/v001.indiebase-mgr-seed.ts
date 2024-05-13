@@ -5,7 +5,7 @@ import {
   BuiltinIndiebaseRoles,
   defaultIndiebaseGrants,
   hashSecret,
-  IbMetaTables,
+  MgrMetaTables,
 } from '@indiebase/server-shared';
 import {
   AuthProvider,
@@ -36,13 +36,13 @@ export const v001_indiebase_seed = async function (
 
       // Init default roles.
       const arr = grantsRecord2Array(defaultIndiebaseGrants);
-      await mgrSchema.insert(arr).into(IbMetaTables.grants);
+      await mgrSchema.insert(arr).into(MgrMetaTables.grants);
       await mgrSchema
         .insert({
           role: BuiltinIndiebaseRoles.OAA,
           description: 'Site owner',
         })
-        .into(IbMetaTables.roles);
+        .into(MgrMetaTables.roles);
 
       // Init OAA user.
       const { OAA_EMAIL, OAA_PASSWORD } = process.env;
@@ -54,12 +54,12 @@ export const v001_indiebase_seed = async function (
           password,
           role: BuiltinIndiebaseRoles.OAA,
         })
-        .into(IbMetaTables.hackers);
+        .into(MgrMetaTables.hackers);
 
       // Init indiebase manager's OAuth providers.
       await mgrSchema
         .insert(indiebaseMgrProviders)
-        .into(IbMetaTables.authProviders);
+        .into(MgrMetaTables.authProviders);
 
       // Init indiebase manager self.
       await mgrSchema
@@ -68,7 +68,7 @@ export const v001_indiebase_seed = async function (
           name: 'indiebase_mgr',
           referenceId: 'indiebase_mgr',
         })
-        .into(IbMetaTables.projects);
+        .into(MgrMetaTables.projects);
     },
     async down() {},
   };

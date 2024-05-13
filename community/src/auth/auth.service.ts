@@ -2,7 +2,7 @@ import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { ResultCode } from '@indiebase/sdk';
-import { IbMetaTables, KnexEx } from '@indiebase/server-shared';
+import { MgrMetaTables, KnexEx } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
 import {
@@ -116,7 +116,7 @@ export class AuthService {
     return this.knex
       .withSchema(project.namespace)
       .select('*')
-      .from(IbMetaTables.authProviders);
+      .from(MgrMetaTables.authProviders);
   }
 
   public async generateOtp(username: string) {

@@ -14,7 +14,6 @@ import {
   Controller,
   Delete,
   Get,
-  InternalServerErrorException,
   Param,
   Post,
   Put,
@@ -23,9 +22,16 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { PasetoAuthGuard } from '../auth';
 import { CreateBucketDTO } from './storage.dto';
 import { FilesUploadDTO } from './storage.dto';
 import { StorageService } from './storage.service';
@@ -124,12 +130,15 @@ export class StorageController {
   //   };
   // }
 
-  @Post('bucket')
   @ApiOperation({
     summary: 'Create a bucket',
     description: 'Receives a bucket name and creates the bucket.',
   })
-  @UseGuards(PublicApiGuard)
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @ApiBearerAuth('paseto')
+  @Post('bucket')
   async createBucket(
     @Body() bucket: CreateBucketDTO,
   ): Promise<OkResponseSchema> {

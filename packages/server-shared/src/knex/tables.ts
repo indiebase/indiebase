@@ -1,4 +1,4 @@
-export enum IbMetaTables {
+export enum MgrMetaTables {
   hackers = 'ib_hackers',
   orgs = 'ib_orgs',
   projects = 'ib_projects',
