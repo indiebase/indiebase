@@ -42,15 +42,15 @@ export class OrgsService {
       ])
       .from(MgrMetaTables.orgs)
       .whereNull(`${MgrMetaTables.orgs}.deleted_at`)
-      .leftJoin(MgrMetaTables.hackersOrgs, function () {
+      .leftJoin(MgrMetaTables._hackersOrgs, function () {
         this.on(
-          `${MgrMetaTables.hackersOrgs}.hacker_id`,
+          `${MgrMetaTables._hackersOrgs}.hacker_id`,
           '=',
           hacker.id as any,
         ).andOn(
           `${MgrMetaTables.orgs}.id`,
           '=',
-          `${MgrMetaTables.hackersOrgs}.org_id`,
+          `${MgrMetaTables._hackersOrgs}.org_id`,
         );
       })
       .paginate({
@@ -129,7 +129,7 @@ export class OrgsService {
             orgId: result[0]?.id,
             hackerId: hacker.id,
           })
-          .into(MgrMetaTables.hackersOrgs);
+          .into(MgrMetaTables._hackersOrgs);
       })
       .catch((err) => {
         this.logger.error(err);

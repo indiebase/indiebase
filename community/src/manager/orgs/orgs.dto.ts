@@ -1,7 +1,7 @@
 import {
-  MgrMetaTables,
   IsEntityExisted,
   IsIndiebaseLegalName,
+  MgrMetaTables,
   OkResponseSchema,
   PaginationRequestSchema,
 } from '@indiebase/server-shared';

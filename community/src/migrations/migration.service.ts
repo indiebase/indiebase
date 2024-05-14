@@ -24,13 +24,13 @@ export class MigrationService {
 
     await this.knex.migrate.up({
       migrationSource: new MigrationSource('indiebase_mgr'),
-      tableName: MgrMetaTables.migrations,
+      tableName: MgrMetaTables._migrations,
       schemaName: 'indiebase_mgr',
     });
 
     await this.knex.migrate.up({
       migrationSource: new SeedMigrationSource('indiebase_mgr'),
-      tableName: MgrMetaTables.seedMigrations,
+      tableName: MgrMetaTables._seedMigrations,
       schemaName: 'indiebase_mgr',
     });
   }

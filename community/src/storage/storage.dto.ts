@@ -32,7 +32,6 @@ export class FileUploadDTO {
 export class CreateBucketDTO {
   @ApiProperty({ type: 'string', default: 'indiebase-dev' })
   @IsString()
-  // @IsEntityExisted(BucketsEntity, 'name', 'Bucket name')
   bucket!: string;
 
   @ApiPropertyOptional({ type: 'string', default: 'indiebase dev bucket' })

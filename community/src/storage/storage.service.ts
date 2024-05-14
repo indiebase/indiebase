@@ -1,6 +1,15 @@
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { did } from '@deskbtm/gadgets';
 import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
+import { InjectKnex } from '@indiebase/nest-knex';
+import {
+  CreateBucketCommand,
+  InjectS3,
+  PutObjectCommand,
+  S3Client,
+} from '@indiebase/nest-s3';
+import { TmplMetaTables } from '@indiebase/server-shared';
+import { PrimitiveProject } from '@indiebase/trait';
 // import {
 //   CreateBucketCommand,
 //   DeleteBucketCommand,
@@ -16,6 +25,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { Knex } from 'knex';
 import path from 'path';
 
 interface SaveBucketOptions {
@@ -24,18 +34,35 @@ interface SaveBucketOptions {
    * Save to the /tmp/ directory, if object not be used, will delete automatically.
    */
   tmp?: boolean;
-  bucket?: string;
 }
 
 @Injectable()
 export class StorageService {
   private readonly logger = new Logger('Storage');
-  constructor() {}
+  constructor(
+    @InjectS3()
+    private readonly s3: S3Client,
+    @InjectKnex()
+    private readonly knex: Knex,
+  ) {}
 
   public async save2Bucket(
+    bucket: string,
     files: MemoryStorageFile[],
     preOptions?: SaveBucketOptions,
-  ) {}
+  ) {
+    return Promise.all(
+      files.map((file) => {
+        this.s3.send(
+          new PutObjectCommand({
+            Body: file.buffer,
+            Bucket: bucket,
+            Key: file.filename,
+          }),
+        );
+      }),
+    );
+  }
 
   public async getFile(bucket: string, fileId: string) {
     // const getCommand = new GetObjectCommand({
@@ -47,24 +74,37 @@ export class StorageService {
 
   public persistTmpFile(keys: string[]) {}
 
-  public async createBucket(name: string, description: string) {
-    // const createBucketCommand = new CreateBucketCommand({
-    //   Bucket: name,
-    // });
-    // const [err] = await did(this.s3.send(createBucketCommand));
-    // if (err) {
-    //   this.logger.error(err);
-    //   if (err.name === 'BucketAlreadyExists') {
-    //     throw new ConflictException({
-    //       message:
-    //         'The requested bucket name is not available. The bucket name can not be an existing collection',
-    //     });
-    //   } else {
-    //     throw new InternalServerErrorException({
-    //       message: err.message,
-    //     });
-    //   }
-    // }
+  public async createBucket(
+    project: PrimitiveProject,
+    name: string,
+    description: string,
+  ) {
+    const createBucketCommand = new CreateBucketCommand({
+      Bucket: name,
+    });
+    const [err] = await did(this.s3.send(createBucketCommand));
+    if (err) {
+      this.logger.error(err);
+      if (err.name === 'BucketAlreadyExists') {
+        throw new ConflictException({
+          message:
+            'The requested bucket name is not available. The bucket name can not be an existing collection',
+        });
+      } else {
+        throw new InternalServerErrorException({
+          message: err.message,
+        });
+      }
+    }
+
+    return this.knex
+      .withSchema(project.namespace)
+      .insert({
+        name: name,
+        description,
+      })
+      .into(TmplMetaTables.buckets);
+
     // const entity = this.bucketsRepo.create({ name, description });
     // await this.bucketsRepo.save(entity);
   }

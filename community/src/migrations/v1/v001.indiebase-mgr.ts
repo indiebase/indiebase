@@ -1,5 +1,5 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
-import { MgrMetaTables, KnexEx } from '@indiebase/server-shared';
+import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import {
   AccountStatus,
   AvailableAuthProviders,
@@ -213,7 +213,7 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.hackersOrgs, (table) => {
+        .createTable(MgrMetaTables._hackersOrgs, (table) => {
           table.increments('id').primary();
           table
             .integer('hacker_id')
@@ -237,7 +237,7 @@ export const v001_indiebase = async function (
           table.timestamp('deleted_at');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.hackersOrgs);
+          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables._hackersOrgs);
         });
       /**
        * Intermediate table
@@ -245,7 +245,7 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.hackersProjects, (table) => {
+        .createTable(MgrMetaTables._hackersProjects, (table) => {
           table.increments('id').primary();
           table
             .integer('hacker_id')
@@ -268,7 +268,7 @@ export const v001_indiebase = async function (
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
-            MgrMetaTables.hackersProjects,
+            MgrMetaTables._hackersProjects,
           );
         });
       /**

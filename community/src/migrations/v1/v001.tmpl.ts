@@ -78,6 +78,24 @@ export const v001_tmpl = async function (
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.grants);
         });
+
+      /**
+       * ib_buckets
+       */
+      await knex.schema
+        .withSchema(schema)
+        .createTable(TmplMetaTables.buckets, (table) => {
+          table.increments('id').primary();
+          table.string('name').index().notNullable();
+          table.string('description').notNullable();
+          table.timestamps(true, true);
+          table
+            .timestamp('deleted_at')
+            .comment('Soft delete buckets timestamp');
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.buckets);
+        });
     },
     async down(_knex: Knex) {},
   };

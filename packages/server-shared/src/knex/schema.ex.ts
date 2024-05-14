@@ -71,17 +71,6 @@ export class KnexSchemaEx {
    * 8. create foreign keys which does not exist in the table yet
    * 9. create indices which are missing in db yet, and drops indices which exist in the db, but does not exist in the metadata anymore
    */
-  // {
-  //   grouping: 'columns',
-  //   builder: ColumnBuilder {
-  //     _method: 'add',
-  //     _single: {},
-  //     _modifiers: {},
-  //     _statements: [],
-  //     _type: 'increments',
-  //     _args: [],
-  //   }
-  // },
   public async createTableEx(
     tableName: string,
     callback: (
@@ -103,7 +92,7 @@ export class KnexSchemaEx {
         const r = callback.call(this, t);
         const newCols = r?.__statements;
         if (!newCols) return;
-        const oldCols = await this.knex(tableName).columnInfo();
+        const _oldCols = await this.knex(tableName).columnInfo();
 
         return this.schema.createTable(tableName, (table) => {
           Object.assign(table, r);

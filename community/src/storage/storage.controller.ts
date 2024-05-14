@@ -4,11 +4,14 @@ import { ResultCode } from '@indiebase/sdk';
 import {
   ApiUnionResponse,
   ApiUnionType1Header,
+  data,
   OkResponseSchema,
+  Project,
   // FilesSizeValidationPipe,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { Logger } from '@nestjs/common';
+import { PrimitiveProject } from '@indiebase/trait';
+import { InternalServerErrorException, Logger } from '@nestjs/common';
 import {
   Body,
   Controller,
@@ -90,19 +93,14 @@ export class StorageController {
   @Put(':bucket/upload/files')
   async uploadFiles(
     @Req() req: FastifyRequest,
+    @Project() project: PrimitiveProject,
     @UploadedFiles()
     files: MemoryStorageFile[],
     @Param('bucket') bucket: string,
   ) {
     console.log(files);
 
-    // const d = await this.storage.save2Bucket(files, { bucket }).catch((err) => {
-    //   this.logger.error(err);
-    //   throw new InternalServerErrorException({
-    //     code: ResultCode.ERROR,
-    //     message: 'Upload file failed',
-    //   });
-    // });
+    const d = await this.storage.save2Bucket(bucket, files);
     return {
       code: ResultCode.SUCCESS,
       // d,
@@ -140,13 +138,19 @@ export class StorageController {
   @ApiBearerAuth('paseto')
   @Post('bucket')
   async createBucket(
+    @Project() project: PrimitiveProject,
     @Body() bucket: CreateBucketDTO,
   ): Promise<OkResponseSchema> {
-    await this.storage.createBucket(bucket.bucket, bucket.description!);
+    await this.storage.createBucket(
+      project,
+      bucket.bucket,
+      bucket.description!,
+    );
 
-    return {
+    return data({
+      message: 'Create successfully',
       code: ResultCode.SUCCESS,
-    };
+    });
   }
 
   @Get('buckets')

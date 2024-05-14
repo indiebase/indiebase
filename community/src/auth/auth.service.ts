@@ -2,7 +2,7 @@ import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { ResultCode } from '@indiebase/sdk';
-import { MgrMetaTables, KnexEx } from '@indiebase/server-shared';
+import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
 import {

@@ -34,6 +34,7 @@ services:
     command: '-v=4 filer -master=seaweed-master:9333 -ip=seaweed-filer -ip.bind=0.0.0.0 -metricsPort=9326 -encryptVolumeData'
     volumes:
       - ./filer.toml:/etc/seaweedfs/filer.toml
+      - seaweed_filer_data:/data/filerldb3
     tty: true
     stdin_open: true
     depends_on:
@@ -56,3 +57,4 @@ services:
 volumes:
   seaweed_master_data:
   seaweed_volume_data:
+  seaweed_filer_data:

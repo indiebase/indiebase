@@ -53,13 +53,13 @@ export class ProjectsService {
           .into(MgrMetaTables.projects)
           .returning('id');
 
-        trx
+        await trx
           .withSchema('indiebase_mgr')
           .insert({
             projectId: result[0]?.id,
             hackerId: hacker.id,
           })
-          .into(MgrMetaTables.hackersProjects);
+          .into(MgrMetaTables._hackersProjects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({
