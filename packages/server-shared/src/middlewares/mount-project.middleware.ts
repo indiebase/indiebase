@@ -5,13 +5,14 @@ import { InjectKnexEx } from '@indiebase/nest-knex';
 import { X_Indiebase_Reference_Id } from '@indiebase/sdk';
 import { BadRequestException, NestMiddleware } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { FastifyRequest } from 'fastify';
 
 import { type KnexEx } from '../knex/knex.ex';
 import { indiebaseMgr } from './project-indiebase-mgr';
 
 @Injectable()
 export class MountProjectMiddleware<
-  Request extends IncomingMessage,
+  Request extends FastifyRequest,
   Response extends ServerResponse,
 > implements NestMiddleware<Request, Response>
 {
@@ -21,7 +22,9 @@ export class MountProjectMiddleware<
   ) {}
 
   async use(req: Request, _: Response, next: (...params: any) => void) {
-    const rId = req.headers[X_Indiebase_Reference_Id] as string;
+    const rId =
+      (req.headers[X_Indiebase_Reference_Id] as string) ??
+      req.query?.['referenceId'];
 
     if (rId) {
       if (rId === 'indiebase_mgr') {

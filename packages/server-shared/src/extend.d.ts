@@ -11,5 +11,6 @@ declare module 'node:http' {
 declare module 'fastify' {
   interface FastifyRequest {
     user: PrimitiveUser;
+    project: PrimitiveProject;
   }
 }

@@ -164,17 +164,30 @@ export class StorageController {
     };
   }
 
-  @Get('buckets/:bucket/files/:id')
   @ApiOperation({
-    summary: '',
+    summary: 'Get an object from Object-based storage device',
   })
+  @Get(':bucket/:key')
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
   @UseGuards(PublicApiGuard)
-  async getFile(
-    @Req() req: any,
+  async getObject(
     @Res() res: FastifyReply,
     @Param('bucket') bucket: string,
-    @Param('id') id: string,
-  ) {}
+    @Param('key') key: string,
+  ) {
+    const r = await this.storage.getObject(bucket, key);
+
+    if (r) {
+      res
+        .header('Content-Disposition', r.ContentDisposition)
+        .header('ETag', r.ETag)
+        .header('Content-Length', r.ContentLength)
+        .header('Accept-Ranges', r.AcceptRanges)
+        .type(r.ContentType!)
+        .send(r.Body);
+    }
+  }
 
   @Delete('buckets/:bucket')
   @ApiOperation({

@@ -1,9 +1,13 @@
+import { Readable } from 'node:stream';
+
+import { Upload } from '@aws-sdk/lib-storage';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { did } from '@deskbtm/gadgets';
 import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
 import { InjectKnex } from '@indiebase/nest-knex';
 import {
   CreateBucketCommand,
+  GetObjectCommand,
   InjectS3,
   PutObjectCommand,
   S3Client,
@@ -28,7 +32,7 @@ import {
 import { Knex } from 'knex';
 import path from 'path';
 
-interface SaveBucketOptions {
+interface UploadBucketOptions {
   signedUrl?: boolean;
   /**
    * Save to the /tmp/ directory, if object not be used, will delete automatically.
@@ -46,14 +50,38 @@ export class StorageService {
     private readonly knex: Knex,
   ) {}
 
+  private uploadFile(Key: string, Body: Readable): Upload {
+    const res = new Upload({
+      client: this.s3,
+      params: {
+        Bucket: '<your s3 bucket name here>',
+        Key,
+        Body,
+      },
+    });
+    return res;
+  }
+
   public async save2Bucket(
     bucket: string,
     files: MemoryStorageFile[],
-    preOptions?: SaveBucketOptions,
+    uploadOptions?: UploadBucketOptions,
   ) {
     return Promise.all(
-      files.map((file) => {
-        this.s3.send(
+      files.map(async (file) => {
+        // const parallelUploads3 = new Upload({
+        //   client: this.s3,
+        //   params: {
+        //     Bucket: bucket,
+        //     Key: file.filename,
+        //     Body: file.file,
+        //   },
+        // });
+        // parallelUploads3.on('httpUploadProgress', (progress) => {
+        //   console.log(progress);
+        // });
+        // await parallelUploads3.done();
+        return this.s3.send(
           new PutObjectCommand({
             Body: file.buffer,
             Bucket: bucket,
@@ -64,12 +92,13 @@ export class StorageService {
     );
   }
 
-  public async getFile(bucket: string, fileId: string) {
-    // const getCommand = new GetObjectCommand({
-    //   Key: fileId,
-    //   Bucket: bucket,
-    // });
-    // const [err, res] = await did(this.s3.send(getCommand));
+  public async getObject(bucket: string, key: string) {
+    const getCommand = new GetObjectCommand({
+      Key: key,
+      Bucket: bucket,
+    });
+    const [err, res] = await did(this.s3.send(getCommand));
+    return res;
   }
 
   public persistTmpFile(keys: string[]) {}
