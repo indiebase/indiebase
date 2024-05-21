@@ -1,0 +1,918 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/auth/signin": {
+      "post": {
+        "operationId": "signIn",
+        "summary": "Sign in with password",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalSignInDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "description": "Response data",
+                          "oneOf": []
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ],
+        "security": [
+          {
+            "ap": []
+          }
+        ]
+      }
+    },
+    "/v1/auth/oauth/github": {
+      "get": {
+        "operationId": "github",
+        "summary": "Sign in with github OAuth2",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/oauth/{project}/github/callback": {
+      "get": {
+        "operationId": "githubCallback",
+        "summary": "OAuth2 github callback",
+        "parameters": [
+          {
+            "name": "project",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/oauth/google": {
+      "get": {
+        "operationId": "google",
+        "summary": "Sign in with google OAuth2",
+        "description": "Must use this for first time",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/google/callback": {
+      "get": {
+        "operationId": "googleCallback",
+        "summary": "OAuth2 google callback",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/oauth/microsoft": {
+      "get": {
+        "operationId": "microsoft",
+        "summary": "Sign in with microsoft OAuth2",
+        "description": "Must use this for first time",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/microsoft/callback": {
+      "get": {
+        "operationId": "microsoftCallback",
+        "summary": "OAuth2 microsoft callback",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/oauth/apple": {
+      "get": {
+        "operationId": "apple",
+        "summary": "Sign in with apple OAuth2",
+        "description": "Must use this for first time",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/apple/callback": {
+      "get": {
+        "operationId": "appleCallback",
+        "summary": "OAuth2 apple callback",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/signout": {
+      "post": {
+        "operationId": "signout",
+        "summary": "Logout",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/otp": {
+      "post": {
+        "operationId": "generateOtp",
+        "summary": "Create one time password, QRCode",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteOtp",
+        "summary": "Remove 2FA",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/auth/otp/verify": {
+      "post": {
+        "operationId": "verifyOtp",
+        "summary": "Verify one time password, token",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptVerifyDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ],
+        "security": [
+          {
+            "ap": []
+          }
+        ]
+      }
+    },
+    "/v1/auth/otp/recovery-codes": {
+      "get": {
+        "operationId": "getRecoveryCodes",
+        "summary": "Get recovery codes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth/v1"
+        ]
+      }
+    },
+    "/v1/user/signup": {
+      "post": {
+        "operationId": "signUp",
+        "summary": "Sign up a user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "description": "Response data",
+                          "oneOf": []
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/storage/{bucket}/upload/files": {
+      "put": {
+        "operationId": "uploadFiles",
+        "summary": "Upload multiple files",
+        "description": "Receives multiple files and an associated bucket for uploading the files into the specified bucket.",
+        "parameters": [
+          {
+            "name": "bucket",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "default": "publish"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/FilesUploadDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/FileDTO"
+                          },
+                          "description": "Response data list"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Storage/v1"
+        ],
+        "security": [
+          {
+            "ap": []
+          }
+        ]
+      }
+    },
+    "/v1/storage/bucket": {
+      "post": {
+        "operationId": "createBucket",
+        "summary": "Create a bucket",
+        "description": "Receives a bucket name and creates the bucket.",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBucketDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "description": "Response data",
+                          "oneOf": []
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Storage/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          },
+          {
+            "ap": []
+          }
+        ]
+      }
+    },
+    "/v1/storage/buckets": {
+      "get": {
+        "operationId": "getBuckets",
+        "summary": "Get buckets",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Demo"
+                          },
+                          "description": "Response data list"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Storage/v1"
+        ],
+        "security": [
+          {
+            "ap": []
+          }
+        ]
+      }
+    },
+    "/v1/storage/{bucket}/{key}": {
+      "get": {
+        "operationId": "getFile",
+        "summary": "Get an object from Object-based storage device",
+        "parameters": [
+          {
+            "name": "bucket",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "default": "publish"
+            }
+          },
+          {
+            "name": "key",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "description": "Response data",
+                          "oneOf": []
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Storage/v1"
+        ],
+        "security": [
+          {
+            "ap": []
+          }
+        ]
+      }
+    },
+    "/v1/storage/buckets/{bucket}": {
+      "delete": {
+        "operationId": "deleteBucket",
+        "summary": "Delete a bucket",
+        "description": "Receives a bucket name and deletes the bucket.",
+        "parameters": [
+          {
+            "name": "bucket",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Storage/v1"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaginatedResponseSchema": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Total items"
+          },
+          "pageIndex": {
+            "type": "number",
+            "description": "Current page"
+          },
+          "pageSize": {
+            "type": "number",
+            "description": "Page size"
+          },
+          "lastPage": {
+            "type": "number",
+            "description": "Last page"
+          },
+          "prevPage": {
+            "type": "number",
+            "description": "Previous page"
+          },
+          "nextPage": {
+            "type": "number",
+            "description": "Next page"
+          },
+          "code": {
+            "type": "number",
+            "description": "Response logical code",
+            "default": 1
+          },
+          "message": {
+            "type": "object",
+            "description": "Response message"
+          }
+        },
+        "required": [
+          "total",
+          "pageIndex",
+          "pageSize",
+          "lastPage",
+          "prevPage",
+          "nextPage",
+          "code"
+        ]
+      },
+      "FileDTO": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "File location"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      }
+    }
+  }
+}

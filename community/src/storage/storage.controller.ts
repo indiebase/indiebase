@@ -1,17 +1,16 @@
-import { MemoryStorageFile } from '@indiebase/nest-fastify-file';
-import { FilesInterceptor, UploadedFiles } from '@indiebase/nest-fastify-file';
 import { ResultCode } from '@indiebase/sdk';
 import {
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
-  OkResponseSchema,
+  OkedResponseSchema,
+  PaginatedResponseSchema,
   Project,
   // FilesSizeValidationPipe,
   PublicApiGuard,
 } from '@indiebase/server-shared';
 import { PrimitiveProject } from '@indiebase/trait';
-import { InternalServerErrorException, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import {
   Body,
   Controller,
@@ -23,19 +22,19 @@ import {
   Req,
   Res,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
   ApiConsumes,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { PasetoAuthGuard } from '../auth';
-import { CreateBucketDTO } from './storage.dto';
+import { BucketDTO, CreateBucketDTO, FileDTO } from './storage.dto';
 import { FilesUploadDTO } from './storage.dto';
 import { StorageService } from './storage.service';
 
@@ -84,23 +83,26 @@ export class StorageController {
     description:
       'Receives multiple files and an associated bucket for uploading the files into the specified bucket.',
   })
-  @ApiUnionResponse()
+  @ApiParam({
+    name: 'bucket',
+    type: 'string',
+    schema: {
+      default: 'publish',
+    },
+  })
+  @ApiUnionResponse('paginated', FileDTO)
   @ApiUnionType1Header()
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FilesUploadDTO })
-  @UseInterceptors(FilesInterceptor('files', Infinity))
   @UseGuards(PublicApiGuard)
   @Put(':bucket/upload/files')
   async uploadFiles(
     @Req() req: FastifyRequest,
     @Project() project: PrimitiveProject,
-    @UploadedFiles()
-    files: MemoryStorageFile[],
     @Param('bucket') bucket: string,
   ) {
-    console.log(files);
-
-    const d = await this.storage.save2Bucket(bucket, files);
+    const files = await req.files();
+    const d = await this.storage.save(bucket, files);
     return {
       code: ResultCode.SUCCESS,
       // d,
@@ -140,7 +142,7 @@ export class StorageController {
   async createBucket(
     @Project() project: PrimitiveProject,
     @Body() bucket: CreateBucketDTO,
-  ): Promise<OkResponseSchema> {
+  ): Promise<OkedResponseSchema> {
     await this.storage.createBucket(
       project,
       bucket.bucket,
@@ -153,40 +155,51 @@ export class StorageController {
     });
   }
 
-  @Get('buckets')
   @ApiOperation({
-    summary: 'Get buckets list',
+    summary: 'Get buckets',
   })
-  @UseGuards(PublicApiGuard)
-  async getBuckets(): Promise<OkResponseSchema> {
-    return {
+  @ApiUnionResponse('paginated')
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Get('buckets')
+  async getBuckets(): Promise<PaginatedResponseSchema<BucketDTO>> {
+    return data({
       code: ResultCode.SUCCESS,
-    };
+      body: [],
+    }) as any;
   }
 
   @ApiOperation({
     summary: 'Get an object from Object-based storage device',
   })
+  @ApiParam({
+    name: 'bucket',
+    type: 'string',
+    schema: {
+      default: 'publish',
+    },
+  })
   @Get(':bucket/:key')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @UseGuards(PublicApiGuard)
-  async getObject(
+  async getFile(
     @Res() res: FastifyReply,
     @Param('bucket') bucket: string,
     @Param('key') key: string,
   ) {
-    const r = await this.storage.getObject(bucket, key);
+    const r = await this.storage.getFile(bucket, key);
 
-    if (r) {
-      res
-        .header('Content-Disposition', r.ContentDisposition)
-        .header('ETag', r.ETag)
-        .header('Content-Length', r.ContentLength)
-        .header('Accept-Ranges', r.AcceptRanges)
-        .type(r.ContentType!)
-        .send(r.Body);
-    }
+    return r;
+    // if (r) {
+    //   res
+    //     .header('Content-Disposition', r.ContentDisposition)
+    //     .header('ETag', r.ETag)
+    //     .header('Content-Length', r.ContentLength)
+    //     .header('Accept-Ranges', r.AcceptRanges)
+    //     .type(r.ContentType!)
+    //     .send(r.Body);
+    // }
   }
 
   @Delete('buckets/:bucket')
@@ -195,8 +208,8 @@ export class StorageController {
     description: 'Receives a bucket name and deletes the bucket.',
   })
   @UseGuards(PublicApiGuard)
-  async deleteBucket(@Param('bucket') name: string) {
-    await this.storage.deleteBucket(name);
+  async deleteBucket(@Param('bucket') bucket: string) {
+    // await this.storage.softDeleteBucket(name);
     return {
       code: ResultCode.SUCCESS,
     };

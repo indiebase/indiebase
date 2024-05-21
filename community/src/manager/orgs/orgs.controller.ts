@@ -50,7 +50,7 @@ export class OrgsController {
     summary: 'Query the user-owned organizations',
     description: 'Query the user-owned organizations',
   })
-  @ApiUnionResponse('pagination')
+  @ApiUnionResponse('paginated')
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -87,7 +87,7 @@ export class OrgsController {
       default: 'publish',
     },
   })
-  @ApiUnionResponse('pagination')
+  @ApiUnionResponse('paginated')
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)

@@ -1,7 +1,7 @@
 import type {
   Org,
   PaginationRequestSchema,
-  PaginationResponseSchema,
+  PaginatedResponseSchema,
   Resource,
 } from '@indiebase/trait';
 
@@ -35,7 +35,7 @@ export const searchUsersApi = async (
 
 export const fetchRolesApi = async (
   params: Partial<PaginationRequestSchema<Role>>,
-): Promise<PaginationResponseSchema<Role[]>> => {
+): Promise<PaginatedResponseSchema<Role[]>> => {
   const { data } = await req.get('/v1/user/role/list', {
     params,
   });
@@ -43,7 +43,7 @@ export const fetchRolesApi = async (
 };
 
 export const fetchResourceApi = async (): Promise<
-  PaginationResponseSchema<Resource[]>
+  PaginatedResponseSchema<Resource[]>
 > => {
   const { data } = await req.get('/v1/user/res');
   return data;

@@ -19,7 +19,7 @@ export class PaginationRequestSchema {
   pageSize: number = 20;
 }
 
-export class OkResponseSchema {
+export class OkedResponseSchema<TData = any> {
   @ApiProperty({
     description: 'Response logical code',
     default: ResultCode.SUCCESS,
@@ -30,9 +30,11 @@ export class OkResponseSchema {
     description: 'Response message',
   })
   message?: string | string[];
+
+  body?: TData;
 }
 
-export class PaginationResponseSchema extends OkResponseSchema {
+export class PaginatedResponseSchema<TData = any> {
   @ApiProperty({
     description: 'Total items',
   })
@@ -62,6 +64,19 @@ export class PaginationResponseSchema extends OkResponseSchema {
     description: 'Next page',
   })
   nextPage!: number;
+
+  @ApiProperty({
+    description: 'Response logical code',
+    default: ResultCode.SUCCESS,
+  })
+  code!: number;
+
+  @ApiPropertyOptional({
+    description: 'Response message',
+  })
+  message?: string | string[];
+
+  body?: TData[];
 }
 
 export class ErrResponseSchema {

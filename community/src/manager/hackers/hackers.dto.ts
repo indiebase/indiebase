@@ -1,7 +1,7 @@
 import {
   MgrMetaTables,
   IsEntityExisted,
-  OkResponseSchema,
+  OkedResponseSchema,
   PaginationRequestSchema,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -62,4 +62,4 @@ export class UpdateHackersDTO extends CreateHackersDTO {
 
 export class ListHackersRequestDTO extends PaginationRequestSchema {}
 
-export class CreateHackersResDTO extends OkResponseSchema {}
+export class CreateHackersResDTO extends OkedResponseSchema {}

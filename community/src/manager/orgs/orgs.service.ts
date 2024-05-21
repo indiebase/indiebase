@@ -1,5 +1,5 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx, paginationData } from '@indiebase/server-shared';
+import { KnexEx, paginatedData } from '@indiebase/server-shared';
 import { MgrMetaTables } from '@indiebase/server-shared';
 import { PrimitiveHacker } from '@indiebase/trait';
 import {
@@ -62,7 +62,7 @@ export class OrgsService {
         throw new InternalServerErrorException();
       });
 
-    return paginationData(result);
+    return paginatedData(result);
   }
 
   public async update(targetOrgName: string, body: UpdateOrgDTO) {

@@ -28,7 +28,7 @@ export class HackersController {
   })
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
-  @ApiUnionResponse('pagination')
+  @ApiUnionResponse('paginated')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
     [ManagerResources.hackers]: [AccessActions.readAny],

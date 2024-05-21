@@ -2,7 +2,7 @@ import {
   IsEntityExisted,
   IsIndiebaseLegalName,
   MgrMetaTables,
-  OkResponseSchema,
+  OkedResponseSchema,
   PaginationRequestSchema,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -70,6 +70,6 @@ export class UpdateOrgDTO extends CreateOrgDTO {
   avatarUrl?: string;
 }
 
-export class CreateOrgResDTO extends OkResponseSchema {}
+export class CreateOrgResDTO extends OkedResponseSchema {}
 
 export class HackerOwnedOrgsDTO extends PaginationRequestSchema {}

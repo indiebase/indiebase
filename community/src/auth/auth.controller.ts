@@ -180,6 +180,7 @@ export class AuthController {
   @UseGuards(PublicApiGuard)
   async getRecoveryCodes(@User('email') email: string) {
     const d = await this.authService.getOtpRecoveryCodes(email);
+
     return {
       code: ResultCode.SUCCESS,
       d,

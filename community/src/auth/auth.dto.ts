@@ -1,6 +1,6 @@
 import {
-  MgrMetaTables,
   IsEntityExisted,
+  MgrMetaTables,
   SpecificProjectType,
   TmplMetaTables,
 } from '@indiebase/server-shared';
@@ -11,6 +11,7 @@ export class LocalSignInDTO {
   @ApiProperty({
     description: 'Hacker account',
     default: 'dev@indiebase.com',
+    examples: ['one@email.com', 'two@email.com'],
   })
   @IsEntityExisted(
     {

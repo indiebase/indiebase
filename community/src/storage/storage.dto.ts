@@ -30,7 +30,7 @@ export class FileUploadDTO {
 }
 
 export class CreateBucketDTO {
-  @ApiProperty({ type: 'string', default: 'indiebase-dev' })
+  @ApiProperty({ type: 'string', default: 'publish' })
   @IsString()
   bucket!: string;
 
@@ -38,4 +38,11 @@ export class CreateBucketDTO {
   @IsString()
   @IsOptional()
   description?: string;
+}
+
+export class BucketDTO {}
+
+export class FileDTO {
+  @ApiProperty({ type: 'string', description: 'File location' })
+  url!: string;
 }

@@ -1,6 +1,6 @@
 version: '3.9'
 
-services: 
+services:
   seaweed-master:
     image: chrislusf/seaweedfs:3.54
     ports:
@@ -17,7 +17,7 @@ services:
       - 18079:8080
       - 18080:18080
       - 19325:9325
-    command: '-v=4 volume -mserver=seaweed-master:9333 -ip=seaweed-volume -ip.bind=0.0.0.0 -port=8080 -metricsPort=9325 -dir=/data'
+    command: '-v=4 volume -mserver=seaweed-master:9333 -ip=seaweed-volume -ip.bind=0.0.0.0 -port=8080 -max=0 -metricsPort=9325 -dir=/data'
     volumes:
       - seaweed_volume_data:/data
     depends_on:

@@ -7,7 +7,6 @@ import { IncomingMessage, Server } from 'http';
 
 import { StorageFile } from '../storage';
 import { UploadOptions } from './options';
-// import { MultipartFile } from './file';
 
 export type FastifyMultipartRequest = FastifyRequest<
   RouteGenericInterface,

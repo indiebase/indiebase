@@ -1,5 +1,9 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import {
+  KnexEx,
+  MgrMetaTables,
+  TmplMetaTables,
+} from '@indiebase/server-shared';
 import {
   AccountStatus,
   AvailableAuthProviders,
@@ -298,7 +302,7 @@ export const v001_indiebase = async function (
             );
           table
             .jsonb('extra_payload')
-            .comment('e.g. WorkOS WorkOS URL, gitlab Self Hosted GitLab URL');
+            .comment('e.g. WorkOS URL, gitlab Self Hosted GitLab URL');
           table
             .integer('project_id')
             .unsigned()
@@ -313,6 +317,24 @@ export const v001_indiebase = async function (
           await knexExSchema.createUpdatedAtTrigger(
             MgrMetaTables.authProviders,
           );
+        });
+
+      /**
+       * ib_buckets
+       */
+      await knex.schema
+        .withSchema(schema)
+        .createTable(TmplMetaTables.buckets, (table) => {
+          table.increments('id').primary();
+          table.string('name').index().notNullable();
+          table.string('description').notNullable();
+          table.timestamps(true, true);
+          table
+            .timestamp('deleted_at')
+            .comment('Soft delete buckets timestamp');
+        })
+        .then(async () => {
+          await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.buckets);
         });
     },
     async down(knex: Knex) {

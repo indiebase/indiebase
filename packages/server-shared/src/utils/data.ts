@@ -1,16 +1,21 @@
 import {
   type ErrResponseSchema,
-  type OkResponseSchema,
-  type PaginationResponseSchema,
+  type OkedResponseSchema,
+  type PaginatedResponseSchema,
 } from '../dto/schema.dto';
 
 export function data<T = any>(
-  content: OkResponseSchema | PaginationResponseSchema | ErrResponseSchema | T,
+  content: (
+    | OkedResponseSchema
+    | PaginatedResponseSchema
+    | ErrResponseSchema
+    | T
+  ) & { body?: any },
 ) {
   return content;
 }
 
-export function paginationData(value: any): {
+export function paginatedData(value: any): {
   data: any;
   total: number;
   lastPage: number;

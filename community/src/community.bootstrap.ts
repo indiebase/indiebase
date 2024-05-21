@@ -1,3 +1,4 @@
+import { NOP } from '@deskbtm/gadgets';
 import fastifyCookie from '@fastify/cookie';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyMultipart from '@fastify/multipart';
@@ -104,9 +105,7 @@ export class CommunityBootstrap {
     await this.app.register(fastifyPassport.initialize());
     await this.app.register(fastifyPassport.secureSession());
 
-    fastifyPassport.registerUserSerializer(async (user, request) => {
-      return {};
-    });
+    fastifyPassport.registerUserSerializer(NOP as any);
 
     await this.app.register(fastifyMultipart, {
       limits: {

@@ -3,7 +3,7 @@ export interface PaginationRequestSchema {
   pageSize: number;
 }
 
-export interface OkResponseSchema {
+export interface OkedResponseSchema {
   /**
    * Business logic code.
    */
@@ -14,7 +14,7 @@ export interface OkResponseSchema {
   message?: string | string[];
 }
 
-export interface PaginationResponseSchema extends OkResponseSchema {
+export interface PaginatedResponseSchema extends OkedResponseSchema {
   /**
    * Total pages;
    */

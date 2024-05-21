@@ -1,18 +1,21 @@
 import { X_Indiebase_AP, X_Indiebase_Reference_Id } from '@indiebase/sdk';
-import { applyDecorators } from '@nestjs/common';
+import { applyDecorators, Type } from '@nestjs/common';
 import {
+  ApiExtraModels,
   ApiForbiddenResponse,
   ApiHeader,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
+  ApiResponseOptions,
   ApiSecurity,
   ApiUnauthorizedResponse,
+  getSchemaPath,
 } from '@nestjs/swagger';
 
 import {
   ErrResponseSchema,
-  OkResponseSchema,
-  PaginationResponseSchema,
+  OkedResponseSchema,
+  PaginatedResponseSchema,
 } from '../dto';
 
 export const ApiProtectionHeader = () =>
@@ -49,6 +52,66 @@ export const ApiIndiebaseSecurity = () =>
   applyDecorators(ApiSecurity('ap'), ApiProtectionHeader());
 
 /**
+ * OpenAPI pagination response.
+ * @param model
+ * @returns
+ */
+export const ApiPaginatedResponse = <TModel extends Type<any>>(
+  model: TModel,
+) => {
+  return applyDecorators(
+    ApiExtraModels(PaginatedResponseSchema, model),
+    ApiOkResponse({
+      schema: {
+        allOf: [
+          { $ref: getSchemaPath(PaginatedResponseSchema) },
+          {
+            properties: {
+              body: {
+                type: 'array',
+                items: { $ref: getSchemaPath(model) },
+                description: 'Response data list',
+              },
+            },
+          },
+        ],
+      },
+    }),
+  );
+};
+
+export const ApiOkedResponse = <TModel extends Type<any>>(model: TModel) => {
+  return applyDecorators(
+    ApiExtraModels(OkedResponseSchema, model),
+    ApiOkResponse({
+      schema: {
+        allOf: [
+          { $ref: getSchemaPath(OkedResponseSchema) },
+          {
+            properties: {
+              body: {
+                description: 'Response data',
+                oneOf: [
+                  // {
+                  //   type: 'object',
+                  // },
+                  // {
+                  //   type: 'string',
+                  // },
+                  // {
+                  //   type: 'number',
+                  // },
+                ],
+              },
+            },
+          },
+        ],
+      },
+    }),
+  );
+};
+
+/**
  * Common API headers. Type 1.
  *
  * Includes
@@ -59,21 +122,36 @@ export const ApiIndiebaseSecurity = () =>
 export const ApiUnionType1Header = () =>
   applyDecorators(ApiProjectHeader(), ApiIndiebaseSecurity());
 
-export const ApiUnionResponse = (okType?: 'pagination') => {
-  let okSchema;
+export interface ApiUnionResponseOptions {
+  okType?: 'paginated' | 'created' | 'oked' | null;
+  dataSchema?: Type;
+}
+
+class Demo {
+  // @ApiProperty({ description: 'demo' })
+  // url?: string;
+}
+
+export const ApiUnionResponse = <TModel extends Type<any>>(
+  okType?: 'paginated' | 'created' | 'oked' | null,
+  model?: TModel,
+  options?: ApiResponseOptions,
+) => {
+  let ApiModelResponse;
   switch (okType) {
-    case 'pagination':
-      okSchema = PaginationResponseSchema;
+    case 'paginated':
+      ApiModelResponse = ApiPaginatedResponse;
       break;
     default:
-      okSchema = OkResponseSchema;
+      ApiModelResponse = ApiOkedResponse;
       break;
   }
 
   return applyDecorators(
-    ApiOkResponse({
-      type: okSchema,
-    }),
+    ApiModelResponse(model ?? Demo, options),
+    // ApiOkResponse({
+    //   type: okSchema,
+    // }),
     ApiUnauthorizedResponse({
       type: ErrResponseSchema,
     }),
