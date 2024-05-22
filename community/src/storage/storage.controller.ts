@@ -90,7 +90,7 @@ export class StorageController {
       default: 'publish',
     },
   })
-  @ApiUnionResponse('paginated', FileDTO)
+  @ApiUnionResponse('array', FileDTO)
   @ApiUnionType1Header()
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FilesUploadDTO })
@@ -100,13 +100,14 @@ export class StorageController {
     @Req() req: FastifyRequest,
     @Project() project: PrimitiveProject,
     @Param('bucket') bucket: string,
-  ) {
+  ): Promise<OkedResponseSchema<FileDTO[]>> {
     const files = await req.files();
-    const d = await this.storage.save(bucket, files);
-    return {
+    const results = await this.storage.save(bucket, files);
+
+    return data({
       code: ResultCode.SUCCESS,
-      // d,
-    };
+      body: results,
+    });
   }
 
   // @Put(':bucket/upload/file/')
@@ -134,7 +135,7 @@ export class StorageController {
     summary: 'Create a bucket',
     description: 'Receives a bucket name and creates the bucket.',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('created')
   @ApiUnionType1Header()
   @UseGuards(PublicApiGuard, PasetoAuthGuard)
   @ApiBearerAuth('paseto')

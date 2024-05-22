@@ -44,5 +44,11 @@ export class BucketDTO {}
 
 export class FileDTO {
   @ApiProperty({ type: 'string', description: 'File location' })
-  url!: string;
+  url?: string;
+
+  @ApiProperty({ type: 'string', description: 'Filename' })
+  name?: string;
+
+  @ApiProperty({ type: 'string', description: 'Bucket' })
+  bucket?: string;
 }

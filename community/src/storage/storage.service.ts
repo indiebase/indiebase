@@ -31,6 +31,8 @@ import { Knex } from 'knex';
 import path from 'path';
 import * as uuid from 'uuid';
 
+import { FileDTO } from './storage.dto';
+
 interface UploadBucketOptions {
   signedUrl?: boolean;
   /**
@@ -52,9 +54,8 @@ export class StorageService {
   public async save(
     bucket: string,
     files: AsyncIterableIterator<MultipartFile>,
-    uploadOptions?: UploadBucketOptions,
   ) {
-    const result = [];
+    const results: FileDTO[] = [];
 
     for await (const part of files) {
       const { filename, file } = part;
@@ -71,18 +72,21 @@ export class StorageService {
             },
           },
         });
-        const s3Res = await parallelUploads3.done();
 
-        console.log(s3Res.Location);
+        const { Location, Bucket, Key } = await parallelUploads3.done();
 
-        // result.push();
-
-        // return Array.prototype.map.call(s3Res, (r) => {});
+        results.push({
+          url: Location,
+          bucket: Bucket,
+          name: Key,
+        });
       } catch (error) {
         this.logger.error(error);
         throw new InternalServerErrorException();
       }
     }
+
+    return results;
   }
 
   public async getFile(bucket: string, key: string) {
