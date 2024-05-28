@@ -9,6 +9,7 @@ import { X_Indiebase_Lang } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { utilities, WinstonModule } from 'nest-winston';
 import {
   AcceptLanguageResolver,
@@ -211,34 +212,28 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       //     };
       //   },
       // }),
-      // MailerModule.forRootAsync({
-      //   inject: [ConfigService],
-      //   useFactory: async (config: ConfigService) => {
-      //     const { host, username, password, from } = config.get('smtp');
-      //     return {
-      //       transport: {
-      //         host,
-      //         ignoreTLS: false,
-      //         secure: true,
-      //         auth: {
-      //           user: username,
-      //           pass: password,
-      //         },
-      //       },
-      //       defaults: {
-      //         from: `${from} <${username}>`,
-      //       },
-      //       preview: true,
-      //       template: {
-      //         dir: path.resolve(process.cwd(), 'public/tpl/'),
-      //         adapter: new HandlebarsAdapter(),
-      //         options: {
-      //           strict: true,
-      //         },
-      //       },
-      //     };
-      //   },
-      // }),
+      MailerModule.forRootAsync({
+        inject: [ConfigService],
+        useFactory: async (config: ConfigService) => {
+          const { host, username, password, from } = config.get('smtp');
+          console.log(config.get('smtp'));
+          return {
+            transport: {
+              host,
+              ignoreTLS: false,
+              secure: true,
+              auth: {
+                user: username,
+                pass: password,
+              },
+            },
+            defaults: {
+              from: `${from} <${username}>`,
+            },
+            preview: true,
+          };
+        },
+      }),
       S3Module.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config) => {

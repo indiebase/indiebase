@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "removeComments": true,
     "baseUrl": ".",
+    "jsx": "react-jsx",
     "outDir": "./dist"
   },
   "include": [

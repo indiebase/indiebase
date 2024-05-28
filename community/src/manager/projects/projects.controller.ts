@@ -5,10 +5,11 @@ import {
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
+  Project,
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
-import { PrimitiveHacker } from '@indiebase/trait';
+import { PrimitiveHacker, PrimitiveProject } from '@indiebase/trait';
 import {
   Body,
   Controller,
@@ -17,6 +18,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -106,5 +108,19 @@ export class ProjectsController {
   @Delete('projects/:project')
   async delete(@Param('project') project: string) {
     return data({ code: ResultCode.SUCCESS, message: 'Delete successfully' });
+  }
+
+  @ApiOperation({
+    summary: 'Setup a project email configurations',
+  })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Put('preferences/mail')
+  async preferencesEmail(@Project() project: PrimitiveProject) {
+    return data({
+      code: ResultCode.SUCCESS,
+      message: 'Send successfully',
+    });
   }
 }

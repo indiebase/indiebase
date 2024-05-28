@@ -28,7 +28,7 @@ export class AuthService {
     private readonly knexEx: KnexEx,
     @InjectKnex()
     private readonly knex: Knex,
-    private readonly pasetoService: PasetoService,
+    private readonly paseto: PasetoService,
     @InjectRedis()
     private readonly redis: Redis,
   ) {}
@@ -95,7 +95,7 @@ export class AuthService {
 
     // this.knex.withSchema(namespace).
 
-    const token = await this.pasetoService.sign({
+    const token = await this.paseto.sign({
       id,
       email,
       role,

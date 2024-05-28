@@ -1,8 +1,8 @@
 import { Column, Link, Row, Section, Text } from '@react-email/components';
 
+import { PrimitiveEmailProps } from '../interface';
 import { link, text } from '../themes';
 import { SocialMedia } from './SocialMedia';
-import { PrimitiveEmailProps } from '../interface';
 
 const footerText = {
   ...text,

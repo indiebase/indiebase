@@ -20,6 +20,7 @@ interface VerifyCaptchaProps {
   verificationCode?: string;
   logoUrl?: string;
   serviceName?: string;
+  account?: string;
   validityDuration?: string;
   wisher?: string;
 }

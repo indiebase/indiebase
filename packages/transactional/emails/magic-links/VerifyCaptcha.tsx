@@ -97,20 +97,22 @@ const mainText = { ...text, marginBottom: '14px' };
 
 const cautionText = { ...text, margin: '0px' };
 
-export default function VerifyCaptchaEmail({
-  verificationCode = '596853',
-  account = '',
-  logo,
-  links,
-  service,
-  socialMedia,
-  validityDuration = '10 minutes',
-  wisher = '',
-}: VerifyCaptchaProps) {
+export default function VerifyCaptchaEmail(props?: VerifyCaptchaProps) {
+  const {
+    verificationCode = '596853',
+    account = '',
+    logo,
+    links,
+    service,
+    socialMedia,
+    validityDuration = '10 minutes',
+    wisher = '',
+  } = Object.assign({}, props);
+
   return (
     <Html>
       <Head />
-      <Preview>{service} Verification</Preview>
+      <Preview>{service!} Verification</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={coverSection}>

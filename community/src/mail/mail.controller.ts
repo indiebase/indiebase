@@ -1,9 +1,16 @@
 import { ResultCode } from '@indiebase/sdk';
-import { data } from '@indiebase/server-shared';
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiUnionResponse,
+  ApiUnionType1Header,
+  data,
+  Project,
+  PublicApiGuard,
+} from '@indiebase/server-shared';
+import { PrimitiveProject } from '@indiebase/trait';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { GetCaptchaDTO } from './mail.dto';
+import { SendCaptchaDTO } from './mail.dto';
 import { MailService } from './mail.service';
 
 @Controller({
@@ -12,11 +19,40 @@ import { MailService } from './mail.service';
 })
 @ApiTags('Mail/v1')
 export class MailController {
-  constructor(private readonly mailService: MailService) {}
+  constructor(private readonly mail: MailService) {}
 
+  @ApiOperation({
+    summary: 'Send captcha through email',
+  })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard)
   @Post('send-captcha')
-  async sendCaptcha(@Body() body: GetCaptchaDTO) {
-    await this.mailService.sendCaptchaEmail(body);
+  async sendCaptcha(
+    @Body() body: SendCaptchaDTO,
+    @Project() project: PrimitiveProject,
+  ) {
+    console.log('--------------');
+    await this.mail.sendCaptcha(body);
+
+    return data({
+      code: ResultCode.SUCCESS,
+      message: 'Send successfully',
+    });
+  }
+
+  @ApiOperation({
+    summary: 'Send captcha through email',
+  })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard)
+  @Post('broadcast')
+  async broadcast(
+    @Body() body: SendCaptchaDTO,
+    @Project() project: PrimitiveProject,
+  ) {
+    await this.mail.sendCaptcha(body);
 
     return data({
       code: ResultCode.SUCCESS,

@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-// import { IsNotEmpty } from 'class-validator';
+import { IsString } from 'class-validator';
 
-export class GetCaptchaDTO {
+export class SendCaptchaDTO {
   @ApiProperty({
     default: 'dev@indiebase.com',
   })
-  // @IsNotEmpty()
-  username!: string;
+  @IsString()
+  email!: string;
 }

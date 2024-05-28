@@ -6,6 +6,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AuthModule } from './auth';
+import { MailModule } from './mail';
 import { MgrModule } from './manager/mgr.module';
 import { ProbeModule } from './probe';
 import { StorageModule } from './storage';
@@ -87,7 +88,7 @@ export const setupApiDoc = async (app: INestApplication) => {
     const apiDoc = SwaggerModule.createDocument(app, options, {
       deepScanRoutes: true,
       operationIdFactory: (_, m) => m + '',
-      include: [UsersModule, StorageModule, AuthModule],
+      include: [UsersModule, StorageModule, AuthModule, MailModule],
     });
 
     await Promise.all([

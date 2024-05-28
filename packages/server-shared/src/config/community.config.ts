@@ -13,9 +13,7 @@ const app = registerAs('app', () => {
   return {
     hostname: process.env.HTTP_HOST || '0.0.0.0',
     port: process.env.HTTP_PORT || 23331,
-    corsOrigin:
-      process.env.CORS_ORIGINS_REGEX &&
-      handleOrigin(process.env.CORS_ORIGINS_REGEX),
+    corsOrigin: process.env.HOSTNAMES && handleOrigin(process.env.HOSTNAMES),
     packageName: process.env.PACKAGE_NAME,
     sessionSecret: process.env.SESSION_SECRET,
   };

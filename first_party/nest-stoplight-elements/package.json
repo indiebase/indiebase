@@ -58,7 +58,7 @@
     "rxjs": "7.8.1",
     "shx": "0.3.4",
     "supertest": "6.3.3",
-    "tsx": "4.10.1",
+    "tsx": "4.11.0",
     "typescript": "5.4.5"
   },
   "peerDependencies": {

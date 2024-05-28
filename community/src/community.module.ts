@@ -10,6 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth';
 import { DepsDynamicOptions } from './dependencies.module';
 import { createDependenciesModule } from './dependencies.module';
+import { MailModule } from './mail';
 import { MgrModule } from './manager/mgr.module';
 import { MigrationModule } from './migrations';
 import { PresetModule } from './modules';
@@ -32,6 +33,7 @@ export const createCommunityModule = function (
       ProbeModule,
       MgrModule,
       AuthModule,
+      MailModule,
       UsersModule,
       StorageModule,
       MigrationModule,

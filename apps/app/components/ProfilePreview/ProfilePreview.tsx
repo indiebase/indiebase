@@ -1,5 +1,10 @@
-import { Avatar, type AvatarProps, HoverCard, Text } from '@mantine/core';
-import { type PolymorphicComponentProps } from '@mantine/utils';
+import {
+  Avatar,
+  type AvatarProps,
+  HoverCard,
+  type PolymorphicComponentProps,
+  Text,
+} from '@mantine/core';
 import { IconUser } from '@tabler/icons-react';
 import { type FC, type PropsWithChildren } from 'react';
 
