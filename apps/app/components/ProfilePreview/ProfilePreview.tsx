@@ -19,11 +19,11 @@ export const ProfilePreview: FC<ProfilePreviewProps> = function ({
   src,
 }) {
   return (
-    <HoverCard position="top" withArrow closeDelay={100000} shadow="md">
+    <HoverCard position="top" withArrow closeDelay={1e5} shadow="md">
       <HoverCard.Target>
         <div>{children}</div>
       </HoverCard.Target>
-      <HoverCard.Dropdown style={{ zIndex: 1000 }}>
+      <HoverCard.Dropdown style={{ zIndex: 1e3 }}>
         <div>status</div>
         <Avatar m={0} src={src} style={{ border: 'none' }} size="lg">
           <IconUser size={24} />

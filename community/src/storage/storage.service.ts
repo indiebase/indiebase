@@ -1,7 +1,7 @@
+import path from 'node:path';
+
 import { Upload } from '@aws-sdk/lib-storage';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { did } from '@deskbtm/gadgets';
-import { MultipartFile } from '@fastify/multipart';
 import { InjectKnex } from '@indiebase/nest-knex';
 import {
   CreateBucketCommand,
@@ -10,16 +10,8 @@ import {
   InjectS3,
   S3Client,
 } from '@indiebase/nest-s3';
-import { TmplMetaTables } from '@indiebase/server-shared';
+import { TMP_BUCKET, TmplMetaTables } from '@indiebase/server-shared';
 import { PrimitiveProject } from '@indiebase/trait';
-// import {
-//   CreateBucketCommand,
-//   DeleteBucketCommand,
-//   GetObjectCommand,
-//   InjectS3,
-//   PutObjectCommand,
-//   S3,
-// } from '@indiebase/nest-s3';
 import {
   ConflictException,
   Injectable,
@@ -27,13 +19,13 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { FastifyRequest } from 'fastify';
 import { Knex } from 'knex';
-import path from 'path';
 import * as uuid from 'uuid';
 
-import { FileDTO } from './storage.dto';
+import { BucketDTO, FileDTO } from './storage.dto';
 
-interface UploadBucketOptions {
+export interface UploadBucketOptions {
   signedUrl?: boolean;
   /**
    * Save to the /tmp/ directory, if object not be used, will delete automatically.
@@ -51,15 +43,21 @@ export class StorageService {
     private readonly knex: Knex,
   ) {}
 
-  public async save(
-    bucket: string,
-    files: AsyncIterableIterator<MultipartFile>,
-  ) {
+  public async save(bucket: string, req: FastifyRequest) {
+    const files = await req.files();
+    const {
+      protocol,
+      raw: { project },
+      hostname,
+    } = req;
     const results: FileDTO[] = [];
 
     for await (const part of files) {
       const { filename, file } = part;
+      // const { temp } = fields;
       const key = uuid.v4() + path.extname(filename);
+      // const targetBucket =
+      //   Number((temp as any)?.value) === 1 ? TMP_BUCKET : bucket;
       try {
         const parallelUploads3 = new Upload({
           client: this.s3,
@@ -72,11 +70,17 @@ export class StorageService {
             },
           },
         });
+        const { Bucket, Key } = await parallelUploads3.done();
 
-        const { Location, Bucket, Key } = await parallelUploads3.done();
+        if (!(Bucket && Key)) {
+          continue;
+        }
+
+        const searchParams = new URLSearchParams();
+        searchParams.append('referenceId', project.namespace);
 
         results.push({
-          url: Location,
+          url: `${protocol}://${hostname}/v1/storage/${Bucket}/${Key}?${searchParams.toString()}`,
           bucket: Bucket,
           name: Key,
         });
@@ -89,25 +93,34 @@ export class StorageService {
     return results;
   }
 
+  public async getBuckets(project: PrimitiveProject): Promise<BucketDTO[]> {
+    const { namespace } = project;
+
+    return this.knex
+      .withSchema(namespace)
+      .select([
+        `${TmplMetaTables.buckets}.id`,
+        `${TmplMetaTables.buckets}.name`,
+        `${TmplMetaTables.buckets}.description`,
+        `${TmplMetaTables.buckets}.updatedAt`,
+        `${TmplMetaTables.buckets}.createdAt`,
+      ])
+      .from(TmplMetaTables.buckets);
+  }
+
   public async getFile(bucket: string, key: string) {
     const getCommand = new GetObjectCommand({
       Key: key,
       Bucket: bucket,
     });
-    const [err, res] = await did(this.s3.send(getCommand));
-    console.log(res?.Metadata);
-    const url = await getSignedUrl(this.s3, getCommand, { expiresIn: 3600 });
-    console.log(url);
-    // return res;
-    return url;
+    const res = await this.s3.send(getCommand);
+    return res;
   }
 
-  public persistTmpFile(keys: string[]) {}
-
-  public async createBucket(
-    project: PrimitiveProject,
+  public async create(
     name: string,
     description: string,
+    project: PrimitiveProject,
   ) {
     // If the insertion throws an error, the following creation of bucket will not be executed.
     // Should execute before seaweedfs.

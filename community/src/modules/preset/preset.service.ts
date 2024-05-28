@@ -1,16 +1,24 @@
+import { did } from '@deskbtm/gadgets';
 import { AccessService } from '@indiebase/nest-accesscontrol';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
+import { CreateBucketCommand, InjectS3, S3Client } from '@indiebase/nest-s3';
 import { KnexEx } from '@indiebase/server-shared';
 import { MgrMetaTables, TmplMetaTables } from '@indiebase/server-shared';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Knex } from 'knex';
 
 @Injectable()
 export class PresetService {
+  private readonly logger = new Logger('PresetService');
+
   constructor(
+    @InjectS3()
+    private readonly s3: S3Client,
     @InjectKnexEx() private readonly knexEx: KnexEx,
     @InjectKnex() private readonly knex: Knex,
     private readonly access: AccessService,
+    private readonly config: ConfigService,
   ) {}
 
   private async setGrants(namespace: string) {
@@ -32,5 +40,18 @@ export class PresetService {
     for await (const prj of projects) {
       await this.setGrants(prj.namespace);
     }
+  }
+
+  public async createTmpBucket() {
+    const createBucketCommand = new CreateBucketCommand({ Bucket: 'tmp' });
+    const [err] = await did(this.s3.send(createBucketCommand));
+
+    if (err?.name !== 'BucketAlreadyExists') {
+      this.logger.error(err);
+    }
+  }
+
+  public async intStorage() {
+    await this.createTmpBucket();
   }
 }

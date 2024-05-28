@@ -1,3 +1,5 @@
+import { ResultCode } from '@indiebase/sdk';
+import { data } from '@indiebase/server-shared';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -14,6 +16,11 @@ export class MailController {
 
   @Post('send-captcha')
   async sendCaptcha(@Body() body: GetCaptchaDTO) {
-    return this.mailService.sendCaptchaEmail(body);
+    await this.mailService.sendCaptchaEmail(body);
+
+    return data({
+      code: ResultCode.SUCCESS,
+      message: 'Send successfully',
+    });
   }
 }

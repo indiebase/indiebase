@@ -1,9 +1,4 @@
-import {
-  type BaseResSchema,
-  type Org,
-  PaginationRequestSchema,
-  type Project,
-} from '@indiebase/trait';
+import { type BaseResSchema, type Org, type Project } from '@indiebase/trait';
 
 import { req } from './request';
 

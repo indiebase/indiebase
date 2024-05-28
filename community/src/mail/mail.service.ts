@@ -1,6 +1,5 @@
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { CaptchaUtils } from '@indiebase/server-shared';
-import { ResultCode } from '@indiebase/sdk';
 import { Logger } from '@nestjs/common';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -37,11 +36,6 @@ export class MailService {
           3e3,
           captcha,
         );
-
-        return {
-          code: ResultCode.SUCCESS,
-          message: 'Send Successfully',
-        };
       })
       .catch((e) => {
         this.logger.error(e);

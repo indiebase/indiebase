@@ -1,6 +1,6 @@
 import { Avatar, type AvatarProps, HoverCard, Text } from '@mantine/core';
 import { type PolymorphicComponentProps } from '@mantine/utils';
-import { IconUser } from '@tabler/react-icon';
+import { IconUser } from '@tabler/icons-react';
 import { type FC, type PropsWithChildren } from 'react';
 
 interface ProfilePreviewCardProps extends PropsWithChildren {
@@ -18,11 +18,11 @@ export const ProfilePreviewCard: FC<ProfilePreviewCardProps> = function ({
   src,
 }) {
   return (
-    <HoverCard position="top" withArrow closeDelay={100000} shadow="md">
+    <HoverCard position="top" withArrow closeDelay={1e5} shadow="md">
       <HoverCard.Target>
         <div>{children}</div>
       </HoverCard.Target>
-      <HoverCard.Dropdown style={{ zIndex: 1000 }}>
+      <HoverCard.Dropdown style={{ zIndex: 1e3 }}>
         <div>status</div>
         <Avatar m={0} src={src} style={{ border: 'none' }} size="lg">
           <IconUser size={24} />

@@ -17,25 +17,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
-    "paths": {
-      "~/*": [
-        "./*"
-      ]
-    },
-    "allowJs": true,
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "jsx": "react-jsx",
+    "allowJs": true
   },
   "include": [
-    "./next-env.d.ts",
-    "./**/*.ts",
     "./**/*.tsx",
-    ".next/types/**/*.ts"
+    "./**/*.ts",
   ],
   "exclude": [
     "node_modules"

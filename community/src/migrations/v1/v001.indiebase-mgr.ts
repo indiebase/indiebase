@@ -326,7 +326,7 @@ export const v001_indiebase = async function (
         .withSchema(schema)
         .createTable(TmplMetaTables.buckets, (table) => {
           table.increments('id').primary();
-          table.string('name').index().notNullable();
+          table.string('name').unique().index().notNullable();
           table.string('description').notNullable();
           table.timestamps(true, true);
           table

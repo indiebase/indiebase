@@ -1,5 +1,10 @@
+import {
+  IsEntityExisted,
+  SpecificProjectType,
+  TmplMetaTables,
+} from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 // Upload multiple files
 export class FilesUploadDTO {
@@ -7,29 +12,19 @@ export class FilesUploadDTO {
   files!: any[];
 
   @ApiPropertyOptional({
-    description:
-      'Save to the /tmp/ directory, object will delete automatically when expire.',
+    description: 'Temp storage, object will delete automatically when expire.',
   })
   @IsOptional()
-  @IsBoolean()
-  temp?: boolean;
-}
-
-// Upload single file
-export class FileUploadDTO {
-  @ApiProperty({ type: 'string', format: 'binary' })
-  file: any;
-
-  @ApiPropertyOptional({
-    description:
-      'Save to the /tmp/ directory, object will delete automatically when expire.',
-  })
-  @IsOptional()
-  @IsBoolean()
-  temp?: boolean;
+  @IsNumber()
+  temp?: number;
 }
 
 export class CreateBucketDTO {
+  @IsEntityExisted({
+    type: SpecificProjectType.fromHeader,
+    table: TmplMetaTables.buckets,
+    column: 'name',
+  })
   @ApiProperty({ type: 'string', default: 'publish' })
   @IsString()
   bucket!: string;
@@ -40,7 +35,13 @@ export class CreateBucketDTO {
   description?: string;
 }
 
-export class BucketDTO {}
+export class BucketDTO {
+  @ApiProperty({ type: 'string', description: 'Bucket name' })
+  name?: string;
+
+  @ApiProperty({ type: 'string', description: 'Create timestamp' })
+  createdAt?: Date;
+}
 
 export class FileDTO {
   @ApiProperty({ type: 'string', description: 'File location' })

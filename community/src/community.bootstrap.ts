@@ -108,6 +108,7 @@ export class CommunityBootstrap {
     fastifyPassport.registerUserSerializer(NOP as any);
 
     await this.app.register(fastifyMultipart, {
+      // attachFieldsToBody: true,
       limits: {
         fileSize: sizeParser(this.config.get('storage.file.limit')!),
       },

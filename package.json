@@ -53,7 +53,6 @@
       "apps/*",
       "apps/first_party/*",
       "apps/packages/*",
-      "apps/packages/*",
       "community",
       "pro/*",
       "packages/*"

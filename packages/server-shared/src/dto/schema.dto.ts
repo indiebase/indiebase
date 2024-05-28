@@ -34,6 +34,8 @@ export class OkedResponseSchema<TData = any> {
   body?: TData;
 }
 
+export class PaginatedRequestSchema {}
+
 export class PaginatedResponseSchema<TData = any> {
   @ApiProperty({
     description: 'Total items',

@@ -1,4 +1,4 @@
-import { Logger,Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 
 import { MailController } from './mail.controller';

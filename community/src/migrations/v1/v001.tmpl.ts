@@ -33,7 +33,6 @@ export const v001_tmpl = async function (
             .comment('User sign in type. oauth, local');
           table.boolean('enabled_otp').defaultTo(false).comment('Enable 2FA');
           table.string('opt_secret').comment('One time password secret');
-
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamp('sign_in_at').comment('User sign in timestamp');
           table.timestamp('password_updated_at').comment('Password update at');
@@ -86,7 +85,7 @@ export const v001_tmpl = async function (
         .withSchema(schema)
         .createTable(TmplMetaTables.buckets, (table) => {
           table.increments('id').primary();
-          table.string('name').index().notNullable();
+          table.string('name').unique().index().notNullable();
           table.string('description').notNullable();
           table.timestamps(true, true);
           table
