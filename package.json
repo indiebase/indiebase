@@ -17,6 +17,7 @@
     "preset:prod": "docker stack deploy -c ./docker-compose.yaml -c ./docker-compose.production.yaml indiebase",
     "preset:dev": "dotenv -e .env -- yarn _stack:deploy",
     "release": "standard-version",
+    "start:community": "yarn workspace @indiebase/community start",
     "prepare": "husky install",
     "syncpack": "syncpack",
     "mismatches": "syncpack list-mismatches",

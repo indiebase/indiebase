@@ -47,8 +47,8 @@ export class ProjectsController {
     description: 'List all public projects',
   })
   @ApiUnionResponse()
-  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Get('orgs/:org/projects')
   async list() {}
 
@@ -59,8 +59,8 @@ export class ProjectsController {
   })
   @ApiUnionResponse()
   @ApiUnionType1Header()
-  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Get('user/projects')
   async listForUser() {}
 
@@ -71,8 +71,8 @@ export class ProjectsController {
   })
   @ApiUnionResponse()
   @ApiUnionType1Header()
-  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({})
   @UsePipes(
     new ValidationPipe({
@@ -92,10 +92,10 @@ export class ProjectsController {
   }
 
   @ApiOperation({
-    summary: 'Delete a project',
+    summary: 'Delete a project permanently',
   })
   @ApiParam({
-    name: 'project',
+    name: 'referenceId',
     type: 'string',
     schema: {
       default: 'publish',
@@ -105,8 +105,13 @@ export class ProjectsController {
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
-  @Delete('projects/:project')
-  async delete(@Param('project') project: string) {
+  @Delete('projects/:referenceId/permanent')
+  async delete(
+    @Param('referenceId') referenceId: string,
+    @User() hacker: PrimitiveHacker,
+  ) {
+    await this.projectsService.delete(referenceId, hacker);
+
     return data({ code: ResultCode.SUCCESS, message: 'Delete successfully' });
   }
 
@@ -116,7 +121,7 @@ export class ProjectsController {
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @UseGuards(PublicApiGuard, PasetoAuthGuard)
-  @Put('preferences/mail')
+  @Put('settings/mail')
   async preferencesEmail(@Project() project: PrimitiveProject) {
     return data({
       code: ResultCode.SUCCESS,

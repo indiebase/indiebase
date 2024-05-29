@@ -1,14 +1,15 @@
 import crypto from 'node:crypto';
 
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx, legalizeName } from '@indiebase/server-shared';
+import { INDIEBASE_MGR, KnexEx, legalizeName } from '@indiebase/server-shared';
 import { MgrMetaTables } from '@indiebase/server-shared';
-import { PrimitiveHacker } from '@indiebase/trait';
+import { PrimitiveHacker, PrimitiveProject } from '@indiebase/trait';
 import {
   Injectable,
   InternalServerErrorException,
   Logger,
   NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Knex } from 'knex';
 
@@ -43,7 +44,7 @@ export class ProjectsService {
     return this.knex
       .transaction(async (trx) => {
         const result = await trx
-          .withSchema('indiebase_mgr')
+          .withSchema(INDIEBASE_MGR)
           .insert({
             ownerId: hacker.id,
             name: prj.name,
@@ -54,7 +55,7 @@ export class ProjectsService {
           .returning('id');
 
         await trx
-          .withSchema('indiebase_mgr')
+          .withSchema(INDIEBASE_MGR)
           .insert({
             projectId: result[0]?.id,
             hackerId: hacker.id,
@@ -72,6 +73,38 @@ export class ProjectsService {
         this.logger.error(err);
         throw new InternalServerErrorException({
           message: 'An error occurred while creating the project',
+        });
+      });
+  }
+
+  public async delete(referenceId: string, hacker: PrimitiveHacker) {
+    const project = await this.knex
+      .withSchema(INDIEBASE_MGR)
+      .select<PrimitiveProject>('*')
+      .from(MgrMetaTables.projects)
+      .where('reference_id', referenceId)
+      .first();
+
+    if (!project) {
+      throw new NotFoundException({
+        message: `Not found project ${referenceId}`,
+      });
+    }
+    return this.knex
+      .transaction(async (trx) => {
+        await trx(MgrMetaTables.projects)
+          .withSchema(INDIEBASE_MGR)
+          .where({
+            id: project.id,
+          })
+          .del();
+
+        return trx.schema.dropSchema(project.namespace, true);
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          message: 'An error occurred while deleting the project',
         });
       });
   }

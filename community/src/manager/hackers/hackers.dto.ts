@@ -1,6 +1,7 @@
 import {
-  MgrMetaTables,
+  INDIEBASE_MGR,
   IsEntityExisted,
+  MgrMetaTables,
   OkedResponseSchema,
   PaginationRequestSchema,
 } from '@indiebase/server-shared';
@@ -13,7 +14,7 @@ export class CreateHackersDTO {
     default: 'dev@indiebase.com',
   })
   @IsEntityExisted({
-    schema: 'indiebase_mgr',
+    schema: INDIEBASE_MGR,
     table: MgrMetaTables.hackers,
     column: 'email',
   })

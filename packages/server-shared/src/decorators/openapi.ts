@@ -17,6 +17,7 @@ import {
   SchemaObject,
 } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
+import { INDIEBASE_MGR } from '../constants';
 import {
   ErrResponseSchema,
   OkedResponseSchema,
@@ -50,7 +51,7 @@ export const ApiProjectHeader = () =>
       'Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API',
     required: true,
     schema: {
-      default: 'indiebase_mgr',
+      default: INDIEBASE_MGR,
     },
   });
 

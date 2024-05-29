@@ -2,7 +2,7 @@ import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { ResultCode } from '@indiebase/sdk';
-import { KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import { INDIEBASE_MGR, KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
 import {
@@ -105,7 +105,7 @@ export class AuthService {
     });
 
     await this.redis.set(
-      RedisUtils.formatNamespaceKey(BusinessLabels.accessToken, namespace, id),
+      RedisUtils.createKey(BusinessLabels.accessToken, namespace, id),
       token,
     );
 
@@ -121,7 +121,7 @@ export class AuthService {
 
   public async generateOtp(username: string) {
     const secret = authenticator.generateSecret(20);
-    const uri = authenticator.keyuri(username, 'indiebase_mgr', secret);
+    const uri = authenticator.keyuri(username, INDIEBASE_MGR, secret);
     const qrcodeUri = await qrcode.toDataURL(uri);
 
     return {

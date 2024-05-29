@@ -149,7 +149,7 @@ export class OrgsController {
   }
 
   @ApiOperation({
-    summary: 'Delete an organization',
+    summary: 'Hide an organization',
     description: 'Soft delete',
   })
   @ApiParam({

@@ -2,7 +2,7 @@ import { did } from '@deskbtm/gadgets';
 import { AccessService } from '@indiebase/nest-accesscontrol';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { CreateBucketCommand, InjectS3, S3Client } from '@indiebase/nest-s3';
-import { KnexEx } from '@indiebase/server-shared';
+import { INDIEBASE_MGR, KnexEx } from '@indiebase/server-shared';
 import { MgrMetaTables, TmplMetaTables } from '@indiebase/server-shared';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -23,7 +23,7 @@ export class PresetService {
 
   private async setGrants(namespace: string) {
     const table =
-      namespace === 'indiebase_mgr'
+      namespace === INDIEBASE_MGR
         ? MgrMetaTables.grants
         : TmplMetaTables.grants;
     const roles = await this.knex.withSchema(namespace).select('*').from(table);
@@ -34,7 +34,7 @@ export class PresetService {
   }
 
   public async initAcl() {
-    this.setGrants('indiebase_mgr');
+    this.setGrants(INDIEBASE_MGR);
 
     const projects = await this.knexEx.listProjects();
     for await (const prj of projects) {

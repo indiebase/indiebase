@@ -1,4 +1,5 @@
 import {
+  INDIEBASE_MGR,
   IsEntityExisted,
   IsIndiebaseLegalName,
   MgrMetaTables,
@@ -14,7 +15,7 @@ export class CreateOrgDTO {
     default: 'publish',
   })
   @IsEntityExisted({
-    schema: 'indiebase_mgr',
+    schema: INDIEBASE_MGR,
     table: MgrMetaTables.orgs,
     column: 'name',
   })
@@ -29,7 +30,7 @@ export class UpdateOrgParamsDTO {
   })
   @IsEntityExisted(
     {
-      schema: 'indiebase_mgr',
+      schema: INDIEBASE_MGR,
       table: MgrMetaTables.orgs,
       column: 'name',
     },

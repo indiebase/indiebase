@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'node:http';
+import { ServerResponse } from 'node:http';
 
 import { did } from '@deskbtm/gadgets';
 import { InjectKnexEx } from '@indiebase/nest-knex';
@@ -7,6 +7,7 @@ import { BadRequestException, NestMiddleware } from '@nestjs/common';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
 
+import { INDIEBASE_MGR } from '../constants';
 import { type KnexEx } from '../knex/knex.ex';
 import { indiebaseMgr } from './project-indiebase-mgr';
 
@@ -27,7 +28,7 @@ export class MountProjectMiddleware<
       req.query?.['referenceId'];
 
     if (rId) {
-      if (rId === 'indiebase_mgr') {
+      if (rId === INDIEBASE_MGR) {
         req.project = indiebaseMgr;
       } else {
         const [_, prj] = await did(this.knexEx.getProjectByReferenceId(rId));

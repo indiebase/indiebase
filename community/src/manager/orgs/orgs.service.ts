@@ -1,5 +1,5 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { KnexEx, paginatedData } from '@indiebase/server-shared';
+import { INDIEBASE_MGR, KnexEx, paginatedData } from '@indiebase/server-shared';
 import { MgrMetaTables } from '@indiebase/server-shared';
 import { PrimitiveHacker } from '@indiebase/trait';
 import {
@@ -27,7 +27,7 @@ export class OrgsService {
     { pageSize, pageIndex }: HackerOwnedOrgsDTO,
   ) {
     const result = await this.knex
-      .withSchema('indiebase_mgr')
+      .withSchema(INDIEBASE_MGR)
       .select([
         `${MgrMetaTables.orgs}.name`,
         `${MgrMetaTables.orgs}.description`,
@@ -70,7 +70,7 @@ export class OrgsService {
 
     try {
       await this.knex
-        .withSchema('indiebase_mgr')
+        .withSchema(INDIEBASE_MGR)
         .where({ name: targetOrgName })
         .update({ name, contactEmail, description, avatarUrl })
         .into(MgrMetaTables.orgs);
@@ -87,7 +87,7 @@ export class OrgsService {
    */
   public async delete(name: string) {
     return this.knex(MgrMetaTables.orgs)
-      .withSchema('indiebase_mgr')
+      .withSchema(INDIEBASE_MGR)
       .where({
         name,
       })
@@ -103,7 +103,7 @@ export class OrgsService {
    */
   public async softDelete(name: string) {
     return this.knex(MgrMetaTables.orgs)
-      .withSchema('indiebase_mgr')
+      .withSchema(INDIEBASE_MGR)
       .update('deleted_at', this.knex.fn.now())
       .where({
         name,
@@ -118,13 +118,13 @@ export class OrgsService {
     return this.knex
       .transaction(async (trx) => {
         const result = await trx
-          .withSchema('indiebase_mgr')
+          .withSchema(INDIEBASE_MGR)
           .insert({ name: org.name, ownerId: hacker.id })
           .into(MgrMetaTables.orgs)
           .returning('id');
 
         return trx
-          .withSchema('indiebase_mgr')
+          .withSchema(INDIEBASE_MGR)
           .insert({
             orgId: result[0]?.id,
             hackerId: hacker.id,

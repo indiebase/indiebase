@@ -1,5 +1,6 @@
 import { InjectRedis } from '@indiebase/nestjs-redis';
-import { CaptchaUtils } from '@indiebase/server-shared';
+import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
+import { PrimitiveProject } from '@indiebase/trait';
 import { VerifyCaptchaEmail } from '@indiebase/transactional';
 import { Logger } from '@nestjs/common';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
@@ -8,6 +9,7 @@ import { render } from '@react-email/render';
 import { Redis } from 'ioredis';
 
 import { SendCaptchaDTO } from './mail.dto';
+
 @Injectable()
 export class MailService {
   constructor(
@@ -17,7 +19,10 @@ export class MailService {
     private readonly redis: Redis,
   ) {}
 
-  public async sendCaptcha({ email }: SendCaptchaDTO) {
+  public async sendCaptcha(
+    { email }: SendCaptchaDTO,
+    project: PrimitiveProject,
+  ) {
     const captcha = Math.random().toString().slice(2, 7);
     const subject = 'Captcha';
     const validityDuration = 10;
@@ -38,11 +43,12 @@ export class MailService {
         html,
       })
       .then(async () => {
-        await this.redis.setex(
-          CaptchaUtils.getSignupCaptchaToken(captcha, email),
-          validityDuration * 60,
-          captcha,
+        const key = RedisUtils.createKey(
+          BusinessLabels.captcha,
+          project.namespace,
+          email,
         );
+        await this.redis.setex(key, validityDuration * 60, captcha);
       })
       .catch((e) => {
         this.logger.error(e);

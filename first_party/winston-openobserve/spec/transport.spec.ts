@@ -1,13 +1,14 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createLogger, type Logger } from 'winston';
+
 import { OpenObserveTransport, OpenObserveTransportOptions } from '../src';
-import { type Logger, createLogger } from 'winston';
-import { describe, it, afterEach, expect, vi } from 'vitest';
 import { logs } from './fixtures.json';
 
 describe('OpenObserve Transport', function () {
   let logger: Logger;
   let bulkLogger: Logger;
 
-  let options: OpenObserveTransportOptions = {
+  const options: OpenObserveTransportOptions = {
     host: 'http://127.0.0.1:5080',
     defaultOrg: 'default',
     defaultStream: 'default',

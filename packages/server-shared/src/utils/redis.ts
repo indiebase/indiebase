@@ -5,7 +5,7 @@ export class RedisUtils {
    * Generate redis key with namespace.
    * e.g. namespace-xxx:1031
    */
-  public static formatNamespaceKey(
+  public static createKey(
     label: BusinessLabels,
     namespace: string,
     suffix: string | number,

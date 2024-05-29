@@ -5,6 +5,7 @@ import {
   BuiltinIndiebaseRoles,
   defaultIndiebaseGrants,
   hashSecret,
+  INDIEBASE_MGR,
   MgrMetaTables,
 } from '@indiebase/server-shared';
 import {
@@ -32,7 +33,7 @@ export const v001_indiebase_seed = async function (
 ): Promise<Knex.Migration> {
   return {
     async up(knex: Knex): Promise<void> {
-      const mgrSchema = knex.withSchema('indiebase_mgr');
+      const mgrSchema = knex.withSchema(INDIEBASE_MGR);
 
       // Init default roles.
       const arr = grantsRecord2Array(defaultIndiebaseGrants);
@@ -64,9 +65,9 @@ export const v001_indiebase_seed = async function (
       // Init indiebase manager self.
       await mgrSchema
         .insert<PrimitiveProject>({
-          namespace: 'indiebase_mgr',
-          name: 'indiebase_mgr',
-          referenceId: 'indiebase_mgr',
+          namespace: INDIEBASE_MGR,
+          name: INDIEBASE_MGR,
+          referenceId: INDIEBASE_MGR,
         })
         .into(MgrMetaTables.projects);
     },

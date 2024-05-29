@@ -1,7 +1,8 @@
 import {
-  MgrMetaTables,
+  INDIEBASE_MGR,
   IsEntityExisted,
   IsIndiebaseLegalName,
+  MgrMetaTables,
   OkedResponseSchema,
   SpecificProjectType,
 } from '@indiebase/server-shared';
@@ -15,7 +16,7 @@ export class CreatePrjDTO {
   })
   @IsEntityExisted({
     type: SpecificProjectType.hardCode,
-    schema: 'indiebase_mgr',
+    schema: INDIEBASE_MGR,
     table: MgrMetaTables.projects,
     column: 'name',
   })
