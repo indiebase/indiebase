@@ -329,8 +329,8 @@ export default function TwoFactorAuthnPage() {
 
   return (
     <Box>
-      {/* <CreateOtpStep /> */}
-      <TwoFactorPreferences />
+      <CreateOtpStep />
+      {/* <TwoFactorPreferences /> */}
 
       {/* {profile.d.enabled2FA ? <TwoFactorPreferences /> : <CreateOtpStep />} */}
     </Box>

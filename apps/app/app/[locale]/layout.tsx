@@ -18,7 +18,7 @@ import { locales } from '~/i18n';
 import { openGraphMetadata, twitterSummaryLargeImageMetadata } from '~/shared';
 import { cssVariablesResolver, theme } from '~/theme';
 
-import { JotaiDevtools } from './JotaiDevtools';
+// import { JotaiDevtools } from './JotaiDevtools';
 import { QueryClientProvider } from './QueryClientProvider';
 
 export function generateStaticParams() {
@@ -54,7 +54,7 @@ interface RootLayoutProps extends React.PropsWithChildren {
 const DevTools: FC = function () {
   return kDevMode ? (
     <>
-      <JotaiDevtools />
+      {/* <JotaiDevtools /> */}
       <ReactQueryDevtools initialIsOpen={kDevMode} position="bottom" />
     </>
   ) : null;
@@ -63,6 +63,7 @@ const DevTools: FC = function () {
 const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
   const providers: ComposeProps['providers'] = [
     <MantineProvider
+      classNamesPrefix="indiebase"
       key={uuid.v4()}
       theme={theme}
       cssVariablesResolver={cssVariablesResolver}

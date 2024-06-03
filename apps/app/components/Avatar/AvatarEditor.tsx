@@ -1,28 +1,29 @@
+import 'cropperjs/dist/cropper.css';
+
 import {
-  Text,
+  ActionIcon,
   Avatar,
   Box,
-  Modal,
-  useMantineTheme,
-  Group,
   Button,
-  ActionIcon,
-  rem,
   Flex,
+  Group,
+  Modal,
+  rem,
+  Text,
+  useMantineTheme,
 } from '@mantine/core';
-import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
-import {
-  type FC,
-  useCallback,
-  useState,
-  type ReactElement,
-  createRef,
-} from 'react';
 // import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useColorScheme } from '@mantine/hooks';
+import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
+import {
+  createRef,
+  type FC,
+  type ReactElement,
+  useCallback,
+  useState,
+} from 'react';
 import Cropper, { type ReactCropperElement } from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
 
 interface AvatarEditorProps {
   size?: number;

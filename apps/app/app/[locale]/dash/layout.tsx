@@ -2,6 +2,7 @@
 
 import { AppShell, Container, rem } from '@mantine/core';
 import { useAtom } from 'jotai';
+import Link from 'next/link';
 import { type FC } from 'react';
 
 import {
@@ -31,11 +32,15 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
       }}
       pt="lg"
     >
-      <DashboardHeader logo={<IndiebaseTextLogo size={160} />} />
+      <DashboardHeader
+        logo={
+          <Link href="/">
+            <IndiebaseTextLogo size={160} />
+          </Link>
+        }
+      />
       <DashboardNavbar />
-      <AppShell.Main>
-        <Container maw={800}>{children}</Container>
-      </AppShell.Main>
+      <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
 };

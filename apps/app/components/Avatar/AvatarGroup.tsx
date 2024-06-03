@@ -1,12 +1,17 @@
-import { Avatar } from '@mantine/core';
-import { type AvatarGroupProps } from '@mantine/core';
+import { Avatar, type AvatarGroupProps } from '@mantine/core';
 import React, { type FC } from 'react';
+import { useProps } from 'reactgets';
 
 export interface LimitAvatarGroupProps extends AvatarGroupProps {
   limit?: number;
 }
 
-export const LimitAvatarGroup: FC<LimitAvatarGroupProps> = function (props) {
+const avatarGroupDefaultProps = {
+  limit: 9,
+};
+
+export const AvatarGroup: FC<LimitAvatarGroupProps> = function (_props) {
+  const props = useProps(avatarGroupDefaultProps, _props);
   const children = React.Children.toArray(props.children);
 
   return (
@@ -21,8 +26,4 @@ export const LimitAvatarGroup: FC<LimitAvatarGroupProps> = function (props) {
       )}
     </Avatar.Group>
   );
-};
-
-LimitAvatarGroup.defaultProps = {
-  limit: 9,
 };

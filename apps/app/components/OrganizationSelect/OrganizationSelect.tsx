@@ -14,29 +14,31 @@ import { type FC, useCallback } from 'react';
 import { useMemo, useState } from 'react';
 import { useProps } from 'reactgets';
 
-interface NamespaceSelectTile {
+interface OrganizationSelectTile {
   icon: string | React.ReactNode;
   label: string;
   value: string;
 }
 
-interface NamespaceSelectProps {
-  items: NamespaceSelectTile[];
+interface OrganizationSelectProps {
+  items: OrganizationSelectTile[];
   placeholder?: string | React.ReactNode;
   searchPlaceholder?: string;
-  onOptionSubmit?: (val: NamespaceSelectTile) => void;
+  onOptionSubmit?: (val: OrganizationSelectTile) => void;
 }
 
 const defaultProps = {
   searchPlaceholder: 'Search...',
 };
 
-export const NamespaceSelect: FC<NamespaceSelectProps> = function (_props) {
+export const OrganizationSelect: FC<OrganizationSelectProps> = function (
+  _props,
+) {
   const { items, placeholder, searchPlaceholder } = useProps(
     defaultProps,
     _props,
   );
-  const [value, setValue] = useState<NamespaceSelectTile | null>(null);
+  const [value, setValue] = useState<OrganizationSelectTile | null>(null);
   const combobox = useCombobox({
     onDropdownClose: () => {
       combobox.resetSelectedOption();

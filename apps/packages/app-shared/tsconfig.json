@@ -24,6 +24,7 @@
     "outDir": "./dist"
   },
   "include": [
-    "src"
-  ]
+    "src",
+    "../../app/components/temp/SignIn"
+, "../../app/components/Avatar", "../../app/components/Profile", "src/components/SuperCowPower", "../../app/components/temp/components"  ]
 }

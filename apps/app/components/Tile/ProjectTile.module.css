@@ -1,0 +1,69 @@
+.dragHandle {
+  div {
+    @mixin hover {
+      cursor: grabbing;
+    }
+
+    touch-action: manipulation;
+    width: 50px;
+    height: 3px;
+    border-radius: 10px;
+    background-color: var(--mantine-color-gray-4);
+  }
+}
+
+.foreground {
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-xs);
+  padding-top: 0;
+  backdrop-filter: saturate(180%) blur(15px);
+  background-color: var(--indiebase-backdrop-blur-color);
+}
+
+.background {
+  overflow: hidden;
+
+  :where([data-shape-triangle]) {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-top: 120px solid #a6a1eb;
+    position: absolute;
+    transform: rotate(45deg);
+    top: -20px;
+  }
+
+  :where([data-shape-rectangle]) {
+    width: 80px;
+    height: 50px;
+    position: absolute;
+    background: #ff86aa;
+    transform: rotate(-20deg);
+    left: 35%;
+    bottom: 15px;
+  }
+
+  :where([data-shape-circle]) {
+    border-radius: 130px;
+    width: 80px;
+    height: 80px;
+    background: #81c9d1;
+    display: inline-block;
+    position: absolute;
+    bottom: -20px;
+    left: -10px;
+  }
+
+  :where([data-shape-square]) {
+    width: 120px;
+    height: 120px;
+    transform: rotate(45deg);
+    background: #fac37b;
+    display: inline-block;
+    position: absolute;
+    right: -20px;
+    top: 20px;
+  }
+}

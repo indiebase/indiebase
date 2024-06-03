@@ -96,4 +96,4 @@ export const ErrorDetail: FC<ErrorDetailProps> = memo((props) => {
   );
 });
 
-ErrorDetail.displayName = '@publish/desktop/ErrorDetail';
+ErrorDetail.displayName = '@indiebase/desktop/ErrorDetail';

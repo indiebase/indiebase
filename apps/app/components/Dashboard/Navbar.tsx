@@ -4,10 +4,9 @@ import { AppShell, Burger } from '@mantine/core';
 import { useAtom } from 'jotai';
 import { type FC } from 'react';
 
-import { NamespaceSelect } from '~/components/NamespaceSelect';
+import { OrganizationSelect } from '~/components/OrganizationSelect';
 
 import { navbarCollapseAtom } from './navbar.atom';
-import { NavMenu } from './NavMenu';
 
 export interface DashboardNavbarProps {
   // menu: NavbarMenuTile[];
@@ -26,7 +25,7 @@ export const DashboardNavbar: FC<DashboardNavbarProps> = function () {
         size="xs"
       />
 
-      <NamespaceSelect
+      <OrganizationSelect
         onOptionSubmit={(val) => {
           console.log(val);
         }}
@@ -42,7 +41,7 @@ export const DashboardNavbar: FC<DashboardNavbarProps> = function () {
       />
 
       {/* <SkeletonList /> */}
-      <NavMenu mt={20} />
+      {/* <NavMenu mt={20} /> */}
     </AppShell.Navbar>
   );
 };

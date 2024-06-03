@@ -7,7 +7,6 @@ import {
   Divider,
   Group,
   Menu,
-  rem,
   useMantineTheme,
 } from '@mantine/core';
 import {

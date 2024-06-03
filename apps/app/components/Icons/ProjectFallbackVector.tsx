@@ -1,7 +1,8 @@
-export const ProjectFallbackIcon = (props) => (
+export const ProjectFallbackVector = (props) => (
   <svg
     width={1920}
     height={551}
+    viewBox="0 0 1920 551"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
