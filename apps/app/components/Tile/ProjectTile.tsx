@@ -12,9 +12,7 @@ import {
   Center,
   Group,
   Text,
-  useMantineTheme,
 } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import {
   IconArrowNarrowUp,
   IconUser,
@@ -22,8 +20,7 @@ import {
   IconWallet,
 } from '@tabler/icons-react';
 import Link from 'next/link';
-import { type FC, type ReactElement, useEffect, useState } from 'react';
-import { NumericFormat } from 'react-number-format';
+import { type FC, memo, type ReactElement, useEffect, useState } from 'react';
 
 import { AvatarPreviewProfile } from '../Avatar';
 import { BoxEx } from '../BoxEx';
@@ -36,15 +33,64 @@ export interface PinnedProjectCardProps extends Partial<any> {
   actions?: ReactElement;
 }
 
-export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
+interface DeltaDataProps {
+  users: number;
+  usersDelta?: number;
+  revenue: number;
+  revenueDelta?: number;
+}
+
+const DeltaData: FC<DeltaDataProps> = function () {
+  return (
+    <Group mt={5} h={40}>
+      <Group>
+        <Group gap={0}>
+          <IconUsers size={13} />
+          <Text ml={3} lineClamp={1} fz={11}>
+            1011231211
+          </Text>
+        </Group>
+        <Group ml={3} gap={0}>
+          <IconArrowNarrowUp size={12} color="green" />
+          <Text c="green" fz={11} lineClamp={1}>
+            0
+          </Text>
+        </Group>
+      </Group>
+
+      <Group>
+        <Group gap={0}>
+          <IconWallet size={14} />
+          <Text ml={3} lineClamp={1} fz={11}>
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }).format(1000)}
+          </Text>
+        </Group>
+        <Group gap={0} ml={3}>
+          <IconArrowNarrowUp size={12} color="green" />
+          <Text c="green" fz={11} lineClamp={1}>
+            0
+          </Text>
+        </Group>
+      </Group>
+    </Group>
+  );
+};
+
+export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
   const { id, hiddenMember, actions } = props;
 
   const [isHover, setHover] = useState(false);
 
   const {
+    active,
     attributes,
     isDragging,
+    isSorting,
     listeners,
+    overIndex,
     setNodeRef,
     setActivatorNodeRef,
     transform,
@@ -66,17 +112,20 @@ export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
 
   // console.log(matches);
 
+  console.log(transform, transition);
+
   return (
     <BoxEx
+      p={5}
+      m={6}
       style={{
-        // Child above parent of the layer.
         borderRadius: 'var(--mantine-radius-default)',
+        // Child above parent of the layer.
         zIndex: isDragging ? 999 : isHover ? 300 : 0,
         opacity: isDragging ? 0.8 : 1,
         transform: CSS.Transform.toString(transform),
         transition,
       }}
-      // w={matches ? '100%' : undefined}
       bd="1px solid gray.3"
       ref={setNodeRef}
       p={5}
@@ -84,7 +133,7 @@ export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
       {...attributes}
     >
       <BoxEx.Foreground className={classes.foreground}>
-        <Center className={classes.dragHandle} style={{ height: 16 }}>
+        <Center className={classes.dragHandle} h={16}>
           <Box {...listeners} ref={setActivatorNodeRef} />
         </Center>
         <Group justify="space-between" mb={0} mt={4}>
@@ -92,7 +141,8 @@ export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
             href={props.name}
             component={Link}
             size="sm"
-            style={{ color: '#228be6', fontWeight: 700 }}
+            c="blue"
+            fw="bolder"
           >
             {props.name}
           </Anchor>
@@ -100,7 +150,7 @@ export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
           <ProjectStatusTip onHover={setHover}>
             <Badge
               style={{ cursor: 'default' }}
-              size="xs"
+              size="sm"
               color={projectStatusPalette[props.status]}
               variant="light"
             >
@@ -108,62 +158,16 @@ export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
             </Badge>
           </ProjectStatusTip>
         </Group>
-        <Group mt={5} h={40} className="data-preview">
-          <Center>
-            <Group color="dark" style={{ padding: 0 }} variant="white">
-              <IconUsers size={13} />
-              <Text ml={3} style={{ lineHeight: 1 }} lineClamp={1} size="xs">
-                1011231211
-              </Text>
-            </Group>
-            <Group ml={3} color="dark" style={{ padding: 0 }} variant="white">
-              <IconArrowNarrowUp size={12} color="green" />
-              <Text
-                c="green"
-                style={{ lineHeight: 1, fontSize: 10 }}
-                lineClamp={1}
-              >
-                0
-              </Text>
-            </Group>
-          </Center>
-          <Center>
-            <Group color="dark" style={{ padding: 0 }} variant="white">
-              <IconWallet size={14} />
-              <NumericFormat
-                value={132321}
-                displayType="text"
-                thousandSeparator
-                prefix={'$'}
-                renderText={(value) => (
-                  <Text
-                    ml={3}
-                    style={{ lineHeight: 1 }}
-                    lineClamp={1}
-                    size="xs"
-                  >
-                    {value}
-                  </Text>
-                )}
-              />
-            </Group>
-            <Group ml={3} color="dark" variant="white">
-              <IconArrowNarrowUp size={12} color="green" />
-              <Text c="green" fz="sm" style={{ lineHeight: 1 }} lineClamp={1}>
-                0
-              </Text>
-            </Group>
-          </Center>
-        </Group>
+        <DeltaData users={1} revenue={1} />
         <Box>
-          <Text lineClamp={2} mt={10} fz="xs" style={{ color: '#777777' }}>
+          <Text lineClamp={2} mt={10} fz={11} c="gray.6">
             {props.description}
           </Text>
         </Box>
         <Group mt={9} justify="space-between">
           {!hiddenMember &&
             (props.members.length < 1 ? (
-              <Box style={{ height: 26 }} />
+              <Box h={26} />
             ) : (
               <AvatarGroup ml={-2} spacing="xs">
                 {props.members.map((u, i) => {
@@ -195,13 +199,4 @@ export const ProjectTile: FC<PinnedProjectCardProps> = function (props) {
       </BoxEx.Background>
     </BoxEx>
   );
-};
-
-// {/* <Box style={{ position: 'absolute', top: 0, bottom: 0, left: 0 }} /> */}
-
-/* <BackgroundImage src="https://oss.turingsenseai.com/1717405268330931832.jpg"></BackgroundImage> */
-
-// PinnedProjectCard.defaultProps = {
-//   hiddenCover: false,
-//   hiddenMember: false,
-// };
+});

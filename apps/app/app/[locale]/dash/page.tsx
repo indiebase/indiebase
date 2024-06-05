@@ -17,11 +17,11 @@ import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { ProjectStatus } from '@indiebase/trait';
-import { Container, Grid, Group, Text, useMantineTheme } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
-import { useCallback, useMemo, useState } from 'react';
+import { Container, Grid, Group, Text } from '@mantine/core';
+import { useCallback, useState } from 'react';
 
 import { ProjectTile } from '~/components/Tile/ProjectTile';
+import { useDeviceQueryValue } from '~/hooks/use-device-query';
 
 const fake = [
   {
@@ -44,6 +44,38 @@ const fake = [
     cover: 'https://random.imagecdn.app/50/50',
     description: 'xxxxxx',
     members: [
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
+      {
+        avatar: 'https://random.imagecdn.app/50/50',
+        profileUrl: '',
+      },
       {
         avatar: 'https://random.imagecdn.app/50/50',
         profileUrl: '',
@@ -92,33 +124,17 @@ export default function Home() {
   );
   const [items, setItems] = useState<any[]>(fake ?? []);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-  const getIndex = useCallback(
-    (id: UniqueIdentifier) => items.findIndex((e) => e.id === id),
-    [items],
-  );
-  const theme = useMantineTheme();
+  const getIndex = (id: UniqueIdentifier) => items.indexOf(id);
   const [hideMore, setHideMore] = useState(true);
   const visibleItems = hideMore ? items.slice(0, 6) : items;
   const activeIndex = activeId ? getIndex(activeId) : -1;
-  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.md})`);
-
-  console.log(
-    `(min-width: ${theme.breakpoints.xs}) and (max-width: ${theme.breakpoints.sm})`,
-  );
-  const isTablet = useMediaQuery(
-    `(min-width: ${theme.breakpoints.md}) and (max-width: ${theme.breakpoints.xl})`,
-  );
-  console.log(isTablet);
-  const span = isMobile ? 12 : isTablet ? 6 : 4;
+  const span = useDeviceQueryValue({ tablet: 6, mobile: 12, desktop: 4 });
 
   return (
     <Container
       size="lg"
       style={{
-        visibility:
-          isMobile === undefined || isTablet === undefined
-            ? 'hidden'
-            : 'visible',
+        visibility: span ? 'visible' : 'hidden',
       }}
     >
       <DndContext
@@ -145,7 +161,7 @@ export default function Home() {
           <Grid mt={2}>
             {visibleItems.map((e, i) => {
               return (
-                <Grid.Col span={span} key={i} p={0}>
+                <Grid.Col span={span} p={0} key={i}>
                   <ProjectTile
                     id={e.id}
                     cover={e.cover}

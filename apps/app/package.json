@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev -H  172.20.10.9",
-    "dev:mock": "cross-env MOCK=true next dev -H 0.0.0.0",
+    "start": "next dev -H 0.0.0.0",
+    "start:mock": "cross-env MOCK=true next dev -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
+    "preview": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -31,15 +31,15 @@
     "@tanstack/react-query": "5.40.0",
     "@tanstack/react-query-devtools": "5.40.0",
     "@tanstack/react-table": "8.17.3",
+    "countries-list": "^3.1.0",
     "jotai": "2.8.2",
     "jotai-devtools": "0.9.1",
-    "million": "3.1.6",
+    "million": "3.1.9",
     "next": "14.2.3",
     "next-intl": "3.14.1",
     "react": "18.3.1",
     "react-cropper": "2.3.3",
     "react-dom": "18.3.1",
-    "react-number-format": "5.4.0",
     "reactgets": "0.0.1-alpha.4",
     "validator": "13.12.0"
   },

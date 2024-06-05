@@ -18,6 +18,11 @@
   padding-top: 0;
   backdrop-filter: saturate(180%) blur(15px);
   background-color: var(--indiebase-backdrop-blur-color);
+  box-shadow: var(--_foreground-shadow);
+
+  @mixin light {
+    --_foreground-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .background {
