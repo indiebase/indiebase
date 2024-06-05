@@ -85,12 +85,9 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
   const [isHover, setHover] = useState(false);
 
   const {
-    active,
     attributes,
     isDragging,
-    isSorting,
     listeners,
-    overIndex,
     setNodeRef,
     setActivatorNodeRef,
     transform,
@@ -110,17 +107,11 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
     };
   }, [isDragging]);
 
-  // console.log(matches);
-
-  console.log(transform, transition);
-
   return (
     <BoxEx
-      p={5}
-      m={6}
       style={{
         borderRadius: 'var(--mantine-radius-default)',
-        // Child above parent of the layer.
+        // Child   above parent of the layer.
         zIndex: isDragging ? 999 : isHover ? 300 : 0,
         opacity: isDragging ? 0.8 : 1,
         transform: CSS.Transform.toString(transform),

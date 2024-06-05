@@ -124,9 +124,12 @@ export default function Home() {
   );
   const [items, setItems] = useState<any[]>(fake ?? []);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-  const getIndex = (id: UniqueIdentifier) => items.indexOf(id);
   const [hideMore, setHideMore] = useState(true);
-  const visibleItems = hideMore ? items.slice(0, 6) : items;
+  // const visibleItems = hideMore ? items.slice(0, 6) : items;
+  const getIndex = useCallback(
+    (id: UniqueIdentifier) => items.findIndex((e) => e.id === id),
+    [items],
+  );
   const activeIndex = activeId ? getIndex(activeId) : -1;
   const span = useDeviceQueryValue({ tablet: 6, mobile: 12, desktop: 4 });
 
@@ -157,11 +160,11 @@ export default function Home() {
         }}
         onDragCancel={() => setActiveId(null)}
       >
-        <SortableContext items={visibleItems} strategy={rectSortingStrategy}>
+        <SortableContext items={items} strategy={rectSortingStrategy}>
           <Grid mt={2}>
-            {visibleItems.map((e, i) => {
+            {items.map((e) => {
               return (
-                <Grid.Col span={span} p={0} key={i}>
+                <Grid.Col span={span} p={0} key={e.id}>
                   <ProjectTile
                     id={e.id}
                     cover={e.cover}

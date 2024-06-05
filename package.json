@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start:community": "yarn workspace @indiebase/community start",
-    "start:app": "yarn workspace @indiebase/app dev",
+    "start:app": "yarn workspace @indiebase/app start",
     "start:docs": "yarn workspace @indiebase/docs start",
     "lint": "eslint . --fix",
     "_stack:deploy": "docker stack deploy -c ./docker-compose.yaml indiebase",
