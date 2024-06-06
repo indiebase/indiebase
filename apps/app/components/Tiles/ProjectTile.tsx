@@ -43,14 +43,14 @@ interface DeltaDataProps {
 const DeltaData: FC<DeltaDataProps> = function () {
   return (
     <Group mt={5} h={40}>
-      <Group>
+      <Group gap="xs">
         <Group gap={0}>
           <IconUsers size={13} />
           <Text ml={3} lineClamp={1} fz={11}>
             1011231211
           </Text>
         </Group>
-        <Group ml={3} gap={0}>
+        <Group gap={0}>
           <IconArrowNarrowUp size={12} color="green" />
           <Text c="green" fz={11} lineClamp={1}>
             0
@@ -58,7 +58,7 @@ const DeltaData: FC<DeltaDataProps> = function () {
         </Group>
       </Group>
 
-      <Group>
+      <Group gap="xs">
         <Group gap={0}>
           <IconWallet size={14} />
           <Text ml={3} lineClamp={1} fz={11}>
@@ -68,7 +68,7 @@ const DeltaData: FC<DeltaDataProps> = function () {
             }).format(1000)}
           </Text>
         </Group>
-        <Group gap={0} ml={3}>
+        <Group gap={0}>
           <IconArrowNarrowUp size={12} color="green" />
           <Text c="green" fz={11} lineClamp={1}>
             0
