@@ -1,6 +1,6 @@
 'use client';
 
-import { AppShell, Container, rem } from '@mantine/core';
+import { Anchor, AppShell, rem } from '@mantine/core';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
@@ -34,9 +34,9 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
     >
       <DashboardHeader
         logo={
-          <Link href="/">
+          <Anchor href="/" component={Link} display="flex">
             <IndiebaseTextLogo size={160} />
-          </Link>
+          </Anchor>
         }
       />
       <DashboardNavbar />

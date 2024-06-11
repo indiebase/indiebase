@@ -17,7 +17,7 @@ import * as uuid from 'uuid';
 import { fonts } from '~/fonts';
 import { locales } from '~/i18n';
 import { openGraphMetadata, twitterSummaryLargeImageMetadata } from '~/shared';
-import { cssVariablesResolver, theme } from '~/theme';
+import { colorSchemeManager, cssVariablesResolver, theme } from '~/theme';
 
 // import { JotaiDevtools } from './JotaiDevtools';
 import { QueryClientProvider } from './QueryClientProvider';
@@ -64,6 +64,7 @@ const DevTools: FC = function () {
 const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
   const providers: ComposeProps['providers'] = [
     <MantineProvider
+      colorSchemeManager={colorSchemeManager}
       classNamesPrefix="indiebase"
       key={uuid.v4()}
       theme={theme}

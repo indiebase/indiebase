@@ -8,12 +8,10 @@ export function save(filename: string, data: string) {
   document.body.removeChild(elem);
 }
 
-export const isEmailRegExp = (value) =>
-  // eslint-disable-next-line no-useless-escape
-  /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/.test(
-    value,
-  );
-
-export const isNormalStringRegExp = (value) => !/[^a-zA-Z0-9-_]/g.test(value);
-
-export const isDomainRegExp = (value) => /(?:^\w+|\w+\.\w+)+$/.test(value);
+export const validator = {
+  isNormalString: (value) => !/[^a-zA-Z0-9-_]/g.test(value),
+  isDomain: (message?: string) => (value) =>
+    /(?:^\w+|\w+\.\w+)+$/.test(value) ? null : message,
+  isIndiebaseLegalName: (message?: string) => (value: string) =>
+    !/[^a-zA-Z0-9-_]/g.test(value) ? null : message,
+};

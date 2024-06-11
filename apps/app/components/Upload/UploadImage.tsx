@@ -1,91 +1,60 @@
-'use client';
+import 'cropperjs/dist/cropper.css';
 
 import {
   ActionIcon,
   Avatar,
   Box,
   Button,
+  Flex,
   Group,
   Modal,
+  rem,
   Text,
   useMantineTheme,
 } from '@mantine/core';
+// import { uploadFile } from '../api/utils';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { useColorScheme } from '@mantine/hooks';
 import { IconBuildingCommunity, IconX } from '@tabler/icons-react';
-import { type FC, type ReactElement, useCallback, useState } from 'react';
-import Cropper from 'react-easy-crop';
+import {
+  createRef,
+  type FC,
+  type ReactElement,
+  useCallback,
+  useState,
+} from 'react';
+import Cropper, { type ReactCropperElement } from 'react-cropper';
 import { useProps } from 'reactgets';
 
 interface UploadImageProps {
   size?: number;
   src?: string;
-  onChange(url: string): void;
+  onChange?: (url: string) => void;
   /**
    * Unit KB
    */
   limit?: number;
-  croppable?: boolean;
+  editable?: boolean;
   clearable?: boolean;
-  cropTitle?: string;
+  title?: string;
   label?: string;
   bucket?: string;
-  icon?: (size) => ReactElement;
+  fallbackIcon?: (size: number) => ReactElement;
+  onUpload?: (file: File, blob?: Blob) => void;
+  confirmText?: string;
+  avatar?: boolean;
 }
 
-const createImage = (url) =>
-  new Promise<HTMLImageElement>((resolve, reject) => {
-    const image = new Image();
-    image.addEventListener('load', () => resolve(image));
-    image.addEventListener('error', (error) => reject(error));
-    image.setAttribute('crossOrigin', 'anonymous'); // needed to avoid cross-origin issues on CodeSandbox
-    image.src = url;
-  });
-
-/**
- * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
- * @param {File} image - Image File url
- * @param {Object} pixelCrop - pixelCrop Object provided by react-easy-crop
- */
-async function getCroppedImg(imageSrc, pixelCrop): Promise<Blob> {
-  const image = await createImage(imageSrc);
-  const canvas = document.createElement('canvas');
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(
-    image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height,
-  );
-
-  // As Base64 string
-  // return canvas.toDataURL('image/png');
-
-  // As a blob
-  return new Promise((resolve) => {
-    canvas.toBlob((file) => {
-      resolve(file);
-    }, 'image/png');
-  });
-}
-
-const defaultProps = {
+const defaultUploadImageProps = {
   size: 60,
   limit: 2048,
-  croppable: false,
-  cropTitle: 'Crop Image',
-  icon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
+  editable: false,
+  clearable: true,
+  title: 'Crop Image',
+  fallbackIcon: (size) => <IconBuildingCommunity size={size / 2 - 5} />,
   bucket: 'indiebase-community',
-};
+  confirmText: 'Crop',
+} satisfies UploadImageProps;
 
 export const UploadImage: FC<UploadImageProps> = function (_props) {
   const {
@@ -93,24 +62,24 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
     src,
     limit,
     label,
-    croppable,
+    editable,
     clearable,
-    cropTitle,
-    onChange,
-    icon,
-    bucket,
-  } = useProps(defaultProps, _props);
+    title,
+    confirmText,
+    fallbackIcon,
+  } = useProps(defaultUploadImageProps, _props);
 
-  const [cropped, setCropped] = useState<Blob>();
-  const [url, setUrl] = useState<string>();
-  const [errorMsg, setErrorMsg] = useState<string>();
+  const [blobData, setBlobData] = useState<Blob>();
+  const [url, setUrl] = useState<string | null>();
+  const [errorMsg, setErrorMsg] = useState<string | null>();
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [originalImage, setOriginalImage] = useState<{
-    file: File;
-    url: string;
+  const colorScheme = useColorScheme();
+  const cropperRef = createRef<ReactCropperElement>();
+
+  const [originalImg, setOriginalImage] = useState<{
+    file: File | null;
+    url: string | null;
   }>({
     file: null,
     url: null,
@@ -119,22 +88,22 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
   const upload = async function (file: File, blob?: Blob) {
     const formData = new FormData();
     formData.append('files', blob ?? file, file.name);
-    const result = await uploadFile(formData, bucket);
-    if (result.code > 0) {
-      setUrl(result.d);
-      onChange?.(result.d);
-    }
+    // const result = await uploadFile(formData, bucket);
+    // if (result.code > 0) {
+    //   setUrl(result.d);
+    //   onChange?.(result.d);
+    // }
   };
 
   const handleChange = async function (files: File[]) {
     const file = files[0];
     setErrorMsg(null);
-    if (file.size >= limit * 1024) {
+    if (file.size >= limit! * 1024) {
       setErrorMsg('Image size out of size');
       return;
     }
 
-    if (croppable) {
+    if (editable) {
       setOriginalImage({
         file,
         url: URL.createObjectURL(file),
@@ -145,24 +114,21 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
     setOpened(true);
   };
 
-  const onCropComplete = async (_croppedArea, croppedAreaPixels) => {
-    const u = await getCroppedImg(originalImage.url, croppedAreaPixels);
-    setCropped(u);
-  };
-
   const handleCrop = useCallback(async () => {
-    await upload(originalImage.file, cropped);
+    // setCropped(imgBlob);
+    // setUrl(URL.createObjectURL(imgBlob));
+    // await upload(originalImg.file!, imgBlob);
     setOpened(false);
-  }, [cropped, opened]);
+  }, []);
 
   return (
     <Box ml={30} style={{ position: 'relative', top: 20, height: 100 }}>
       {label ? (
-        <Text size="sm" color="#212529">
+        <Text size="sm" c="dark" fw={500}>
           {label}
         </Text>
       ) : null}
-      <div style={{ display: 'inline-block', position: 'relative' }}>
+      <Box style={{ display: 'inline-block', position: 'relative' }}>
         {clearable && url && (
           <ActionIcon
             size="xs"
@@ -190,47 +156,57 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
           accept={IMAGE_MIME_TYPE}
         >
           <Avatar src={url ?? src} size={size}>
-            {icon(size)}
+            {fallbackIcon?.(size)}
           </Avatar>
         </Dropzone>
-      </div>
-      {croppable && (
+      </Box>
+      {editable && (
         <Modal
-          overlayColor={
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[9]
-              : theme.colors.gray[2]
-          }
-          transition="pop"
-          transitionDuration={200}
-          transitionTimingFunction="ease"
+          size="lg"
+          transitionProps={{
+            transition: 'pop',
+            duration: 200,
+            timingFunction: 'ease',
+          }}
+          overlayProps={{
+            backgroundOpacity: 0.55,
+            blur: 3,
+            color:
+              colorScheme === 'dark'
+                ? theme.colors.dark[9]
+                : theme.colors.gray[2],
+          }}
           opened={opened}
           onClose={() => setOpened(false)}
-          title={cropTitle}
-          overlayOpacity={0.5}
-          overlayBlur={3}
+          title={title}
         >
-          <Box style={{ position: 'relative', width: 400, height: 400 }}>
+          <Flex>
             <Cropper
-              style={{
-                cropAreaStyle: {
-                  color: '#0000004d',
-                },
-              }}
-              objectFit="contain"
-              minZoom={0.3}
-              restrictPosition={false}
-              cropSize={{ width: 200, height: 200 }}
-              image={originalImage.url}
-              crop={crop}
-              zoom={zoom}
-              aspect={1}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
+              ref={cropperRef}
+              aspectRatio={1}
+              center={true}
+              preview=".avatar-editor-preview"
+              style={{ minWidth: rem(400), minHeight: rem(400) }}
+              data={{ width: 200, height: 200 }}
+              src={originalImg.url!}
+              viewMode={1}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              responsive={true}
+              autoCropArea={1}
+              movable={true}
+              checkOrientation={false}
+              guides={false}
             />
-          </Box>
-          <Group position="center">
+            <Box
+              ml={15}
+              miw={100}
+              mih={100}
+              className="avatar-editor-preview"
+              style={{ overflow: 'hidden', borderRadius: 1000 }}
+            />
+          </Flex>
+          <Group justify="center">
             <Button
               onClick={handleCrop}
               mt={40}
@@ -238,9 +214,9 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
               size="md"
               type="submit"
               style={{ width: '100%', height: 36 }}
-              gradient={theme.other.buttonGradient}
+              gradient={theme.other.gradients.peach}
             >
-              Crop
+              {confirmText}
             </Button>
           </Group>
         </Modal>

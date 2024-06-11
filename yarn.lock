@@ -5593,16 +5593,19 @@ __metadata:
     "@tanstack/react-query": "npm:5.40.0"
     "@tanstack/react-query-devtools": "npm:5.40.0"
     "@tanstack/react-table": "npm:8.17.3"
+    "@tsparticles/confetti": "npm:^3.4.0"
+    "@types/lodash.debounce": "npm:^4"
     "@types/postcss-flexbugs-fixes": "npm:^5"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
     "@types/uuid": "npm:9.0.8"
     autoprefixer: "npm:^10.4.19"
     axios-mock-adapter: "npm:1.22.0"
-    countries-list: "npm:^3.1.0"
+    countries-list: "npm:3.1.0"
     cross-env: "npm:7.0.3"
     jotai: "npm:2.8.2"
-    jotai-devtools: "npm:0.9.1"
+    jotai-devtools: "npm:0.10.0"
+    lodash.debounce: "npm:^4.0.8"
     million: "npm:3.1.9"
     next: "npm:14.2.3"
     next-intl: "npm:3.14.1"
@@ -6581,7 +6584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/code-highlight@npm:^7.8.1":
+"@mantine/code-highlight@npm:^7.10.1":
   version: 7.10.1
   resolution: "@mantine/code-highlight@npm:7.10.1"
   dependencies:
@@ -6596,7 +6599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/core@npm:7.10.1, @mantine/core@npm:^7.8.1":
+"@mantine/core@npm:7.10.1, @mantine/core@npm:^7.10.1":
   version: 7.10.1
   resolution: "@mantine/core@npm:7.10.1"
   dependencies:
@@ -6655,7 +6658,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mantine/hooks@npm:7.10.1, @mantine/hooks@npm:^7.8.1":
+"@mantine/hooks@npm:7.10.1, @mantine/hooks@npm:^7.10.1":
   version: 7.10.1
   resolution: "@mantine/hooks@npm:7.10.1"
   peerDependencies:
@@ -10192,6 +10195,232 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsparticles/basic@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/basic@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+    "@tsparticles/move-base": "npm:^3.4.0"
+    "@tsparticles/shape-circle": "npm:^3.4.0"
+    "@tsparticles/updater-color": "npm:^3.4.0"
+    "@tsparticles/updater-opacity": "npm:^3.4.0"
+    "@tsparticles/updater-out-modes": "npm:^3.4.0"
+    "@tsparticles/updater-size": "npm:^3.4.0"
+  checksum: 10/2068e0bf80acfeae84ee2c486ce5d7255ea0761519ba8f71007b781033e2060a194eeacd7e46335b9002805f5bc534c5c8b7f3f29610c9e12572179e22b0069f
+  languageName: node
+  linkType: hard
+
+"@tsparticles/confetti@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/confetti@npm:3.4.0"
+  dependencies:
+    "@tsparticles/basic": "npm:^3.4.0"
+    "@tsparticles/engine": "npm:^3.4.0"
+    "@tsparticles/plugin-emitters": "npm:^3.4.0"
+    "@tsparticles/plugin-motion": "npm:^3.4.0"
+    "@tsparticles/shape-cards": "npm:^3.4.0"
+    "@tsparticles/shape-emoji": "npm:^3.4.0"
+    "@tsparticles/shape-heart": "npm:^3.4.0"
+    "@tsparticles/shape-image": "npm:^3.4.0"
+    "@tsparticles/shape-polygon": "npm:^3.4.0"
+    "@tsparticles/shape-square": "npm:^3.4.0"
+    "@tsparticles/shape-star": "npm:^3.4.0"
+    "@tsparticles/updater-life": "npm:^3.4.0"
+    "@tsparticles/updater-roll": "npm:^3.4.0"
+    "@tsparticles/updater-rotate": "npm:^3.4.0"
+    "@tsparticles/updater-tilt": "npm:^3.4.0"
+    "@tsparticles/updater-wobble": "npm:^3.4.0"
+  checksum: 10/f33258a6b03cdc54ee6565eba7945e5b7da5ecef3e77cbe1f62019d1ea2d7237e86e6f84178f09c8815f29b4b8ea086ff8f938e6fd235e682482dbb031a7d61d
+  languageName: node
+  linkType: hard
+
+"@tsparticles/engine@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/engine@npm:3.4.0"
+  checksum: 10/9ab86d746a21a2e24fb737524d066cc0058f9bbccdfd7dad66cb4d6b79c107e4a8ddb5956699c62b89ae5f9854215db361e8500dae99c46dda52b00e4b37ce87
+  languageName: node
+  linkType: hard
+
+"@tsparticles/move-base@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/move-base@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/397c2300ebb088a330e991f8b966483a34246f02e7112f4b49f866221c37c42806d56ad41eee065619d435afd5138a1bc07805f31b8a309bf6a209dba0d70557
+  languageName: node
+  linkType: hard
+
+"@tsparticles/plugin-emitters@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/plugin-emitters@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/7655b0fed4093c6b490c500fbfa33a932d14b21050cb31aa0e0e9ef4c91a14ad5413428c4c506e15c793ac99d88657f780e68ec49bf16d490b5ee97ad1e3e800
+  languageName: node
+  linkType: hard
+
+"@tsparticles/plugin-motion@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/plugin-motion@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/94262ab00f34fcbd33110177e13cc8c272b37a0062202e53cd5495fbd58841a5b3ed2da66a9cbf8f9a3b2e000ee7c6b1a1b5dcf5d650c29dccae302b0a0a7745
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-cards@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-cards@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/5c62cb197ff9200a64cda15a7fe693ed9966ea8fd6ba3018069b7bd1b9c4db6cfc145e4761626f1024dc1514bf5c131d5df7a9a2e5955ca10e39d0720340faac
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-circle@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-circle@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/987d0a92a11139121b8ffba08dd2aa410e3845eaae7f5764113f67f0305d9f4d1a9f881caa7b6236b1a12c72bab4e086b481dbbe1c0ec10c5924c71fe403b804
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-emoji@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-emoji@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/b134ce8b823735d164f388a58a0025f41c762eac6aa5eefd4c458f3256f373d25ba3eee5415f56179d3e72e7eec1833e8b700bc3f224c9e8b71d5ee709e47334
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-heart@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-heart@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/2d2d363819a54cfee4af96da25ed8f88a0394a0df910a5c71873d129a5bf7e9efbf2a022397f7a1e04e37f35b204dcb0917cd0b48a94f14a2c4ae029e1df3e93
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-image@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-image@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/43a9048e5318cc372892cbaf12b6dd2f78aa35b607db3308c05d4e7eeac4407c31e38aa0e8611b7141393980008b1f7539539c685ca28db2cacfbe195c9d0535
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-polygon@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-polygon@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/e42bc55e4efcda4209d5151f601ac70687efc02ba2fadd521e5475373e17bd18588bd32062cfa34abec485caac1ccb67110c0fdc43071ba0d432fcbe8f5711f9
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-square@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-square@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/3c5ff521f1011a45da78146a64f05a622d53f811b0aa70f8226518baeff12917f59e7f870ba9146abc4c08b31f774c435efee9ae396fb3bbae5c4c8e1d90ee19
+  languageName: node
+  linkType: hard
+
+"@tsparticles/shape-star@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/shape-star@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/56e21c83990a6cb14b7b3bc45895c08562b9ae402ee73e4ddbc08bd51089b4e79c55c73bb5543fa6fe2b0863480facb2a453620ee7f2f208f1745384c7204ed6
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-color@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-color@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/640f3be9191a4b5c3af65a98fca663fad9e45ff2bfa7a2b3adc85e2325fed5eb56e819ba0bbad1e55d443dfa75e15d8fc1a62d381bbcf7e8ff5a8b07e37e1d1b
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-life@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-life@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/3120ed23d7f62675d47a1c44716ccfc2f442a1d9bbd9483abf86f2ee061fd90c981de87d23ead4b2185f0643db41d059717a0e69a0e7a7313f55560364e86b21
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-opacity@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-opacity@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/4e54fd29bf2a6d844981ead371308f130646187ba7ba4fbafd8aa0b67e814649f9489193cc9351f03eb837d8a04b8b8c22395bb39c7efd02db02515f1e846327
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-out-modes@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-out-modes@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/84acaca523c39105c7d4b607f7cd0c4f6cf42b0e8c1f7d016a02d999f7dd030ababe3aa59013dea542895598776fbb143180a838fe9d1a7b09f618aa26a68387
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-roll@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-roll@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/715793fd3e73a990f436a3c7ca04cba13fb5ba0dd4c8563dba4695499275f762b0a9bfa51a401cdd71fc0f88e2f07b832d3ff3100919b2af46de8ec00ffbde04
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-rotate@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-rotate@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/ae0055aed23d5c2f27ef4d6e185a22e3d1a932c8c4e045a61394d8e659b60f7f57d765dffaa22de43403b8e96b2464d6e4f6a43d4d5ca98c9ceef004c773cfad
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-size@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-size@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/a18f0a0bb74ed527d17d9b843f6f74c615cd9b61a099e94c80ad58ee70c5077d3fe39b9a5bb8b15af38bb5e574365fb5dbb90d5e5270177fa674a9e3234b7f07
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-tilt@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-tilt@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/f02ffd6a9395b964f7c022a725418ebcb1fe6bea85e60f76aea971ba023c0b08dee77a738e62db6860dd1a73ee4389230e0811bc9d9d72e5a42c6e7672bf0d32
+  languageName: node
+  linkType: hard
+
+"@tsparticles/updater-wobble@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@tsparticles/updater-wobble@npm:3.4.0"
+  dependencies:
+    "@tsparticles/engine": "npm:^3.4.0"
+  checksum: 10/fab3fbfd2b59788d5f6cb4edb510cc8eff72158084d50048d9d6f8073502fbc1ff07da6295e17e193349af5d0595d9f580d937071f7ac087dde8de63e0b3ba9f
+  languageName: node
+  linkType: hard
+
 "@types/acorn@npm:^4.0.0":
   version: 4.0.6
   resolution: "@types/acorn@npm:4.0.6"
@@ -10622,7 +10851,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.debounce@npm:4.0.9":
+"@types/lodash.debounce@npm:4.0.9, @types/lodash.debounce@npm:^4":
   version: 4.0.9
   resolution: "@types/lodash.debounce@npm:4.0.9"
   dependencies:
@@ -15482,7 +15711,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"countries-list@npm:^3.1.0":
+"countries-list@npm:3.1.0":
   version: 3.1.0
   resolution: "countries-list@npm:3.1.0"
   checksum: 10/119730d8249bb43baecc82afef432c72d4acfc897c1b82b83e4a68a7f6c94d129fec9e4d7e9e04c8b915aacd3981df6630a8cf56ccbad7f846ea3727e3cf7219
@@ -23485,13 +23714,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai-devtools@npm:0.9.1":
-  version: 0.9.1
-  resolution: "jotai-devtools@npm:0.9.1"
+"jotai-devtools@npm:0.10.0":
+  version: 0.10.0
+  resolution: "jotai-devtools@npm:0.10.0"
   dependencies:
-    "@mantine/code-highlight": "npm:^7.8.1"
-    "@mantine/core": "npm:^7.8.1"
-    "@mantine/hooks": "npm:^7.8.1"
+    "@mantine/code-highlight": "npm:^7.10.1"
+    "@mantine/core": "npm:^7.10.1"
+    "@mantine/hooks": "npm:^7.10.1"
     "@redux-devtools/extension": "npm:^3.3.0"
     clsx: "npm:^2.1.1"
     javascript-stringify: "npm:^2.1.0"
@@ -23502,7 +23731,7 @@ __metadata:
     react-resizable-panels: "npm:2.0.10"
   peerDependencies:
     react: ">=17.0.0"
-  checksum: 10/d3949ed4289cc5c66cd6a3f5cfb1c86e8d85a69cdb291690c66154c567b4fff2f999ccf713329fa7e27abab29897f41af5f8c745b65d1b508ba091a765f90c25
+  checksum: 10/67e5e3a15fca8d834c992a9df029d4b23f38e5139ecb570320f8899fd74453ac3f92b2db1560051ef2ef9662dc621773ee2140e2d0bd420b19ccc341e036d01a
   languageName: node
   linkType: hard
 

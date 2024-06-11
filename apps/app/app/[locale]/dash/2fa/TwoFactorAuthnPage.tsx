@@ -115,7 +115,7 @@ const SetAuthnApp: FC = function (props) {
       <Button
         mt={10}
         variant="gradient"
-        gradient={theme.other.peachGradient}
+        gradient={theme.other.gradients.peach}
         onClick={() => {
           setActive(1);
         }}
@@ -140,7 +140,7 @@ const SaveRecoveryCode: FC = function () {
         Recovery codes are used to access your account in case you can&apos;t
         access it with your authenticator app (e.g. lost your phone).
       </Text>
-      <Alert mt={10} icon={<IconAlertCircle size={18} />} color="red">
+      <Alert mt={10} icon={<IconAlertCircle size="1.125" />} color="red">
         <Title order={6}>
           Each code can only be used once. Save your 2FA recovery codes in a
           safe spot.
@@ -177,7 +177,7 @@ const SaveRecoveryCode: FC = function () {
         <Button
           // disabled={!downloaded}
           variant="gradient"
-          gradient={theme.other.peachGradient}
+          gradient={theme.other.gradients.peach}
           onClick={() => {
             setActive(2);
           }}
@@ -231,7 +231,7 @@ const PreferenceTile: FC<PreferenceTileProps> = function (_props) {
 
 const SuccessAlert = () => (
   <Alert
-    icon={<IconDiscountCheck size={18} />}
+    icon={<IconDiscountCheck size="1.125rem" />}
     title="You have enabled 2FA!"
     color="teal"
     mt={20}
@@ -252,7 +252,7 @@ const Complete: FC = function () {
       <Group mt={20} justify="right">
         <Button
           variant="gradient"
-          gradient={theme.other.successGradient}
+          gradient={theme.other.gradients.success}
           onClick={() => {
             // dispatch({ type: 'refetch' });
           }}
@@ -286,7 +286,7 @@ const TwoFactorPreferences: FC = function () {
         trailing={
           <Button
             variant="gradient"
-            gradient={theme.other.peachGradient}
+            gradient={theme.other.gradients.peach}
             onClick={() => {}}
           >
             Disable

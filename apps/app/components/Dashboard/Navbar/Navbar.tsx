@@ -6,7 +6,9 @@ import { type FC } from 'react';
 
 import { OrganizationSelect } from '~/components/OrganizationSelect';
 
+import { ActionsBar } from './ActionsBar';
 import { navbarCollapseAtom } from './navbar.atom';
+import { NavMenu } from './NavMenu';
 
 export interface DashboardNavbarProps {
   // menu: NavbarMenuTile[];
@@ -39,9 +41,9 @@ export const DashboardNavbar: FC<DashboardNavbarProps> = function () {
           },
         ]}
       />
+      <ActionsBar />
 
-      {/* <SkeletonList /> */}
-      {/* <NavMenu mt={20} /> */}
+      <NavMenu mt={5} />
     </AppShell.Navbar>
   );
 };

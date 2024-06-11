@@ -17,10 +17,11 @@ import {
   IconUser,
 } from '@tabler/icons-react';
 import { useAtom } from 'jotai';
+import Link from 'next/link';
 import { type FC } from 'react';
 
 import classes from './Dashboard.module.css';
-import { navbarCollapseAtom } from './navbar.atom';
+import { navbarCollapseAtom } from './Navbar';
 
 const PreferencesMenu = function () {
   return (
@@ -43,10 +44,9 @@ const PreferencesMenu = function () {
           Docs
         </Menu.Item>
         <Menu.Item
+          component={Link}
           leftSection={<IconPlus size={16} />}
-          onClick={() => {
-            // navigate('/create/org');
-          }}
+          href="/dash/create/org"
         >
           Create Organization
         </Menu.Item>
