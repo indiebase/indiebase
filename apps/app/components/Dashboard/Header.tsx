@@ -33,10 +33,9 @@ const PreferencesMenu = function () {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item
-          // onClick={() => {
-          //   navigate(`/users/${profile.username}/settings/profile`);
-          // }}
+          component={Link}
           leftSection={<IconSettings size={16} />}
+          href="/dash/my/settings"
         >
           Settings
         </Menu.Item>

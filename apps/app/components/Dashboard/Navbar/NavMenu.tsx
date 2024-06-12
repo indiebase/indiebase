@@ -84,7 +84,7 @@ export const NavMenu: FC<NavMenuProps> = function (props) {
       >
         <NavLink label="General" href="#required-for-focus" />
         <NavLink label="Members" href="#required-for-focus" />
-        <NavLink label="Third child link" href="#required-for-focus" />
+        <NavLink label="Security" href="#required-for-focus" />
       </NavLink>
     </Box>
   );

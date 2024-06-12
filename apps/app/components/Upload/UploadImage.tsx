@@ -4,10 +4,12 @@ import {
   ActionIcon,
   Avatar,
   Box,
+  type BoxComponentProps,
   Button,
   Flex,
   Group,
   Modal,
+  type PolymorphicComponentProps,
   rem,
   Text,
   useMantineTheme,
@@ -26,7 +28,11 @@ import {
 import Cropper, { type ReactCropperElement } from 'react-cropper';
 import { useProps } from 'reactgets';
 
-interface UploadImageProps {
+export interface UploadImageProps
+  extends Omit<
+    PolymorphicComponentProps<'div', BoxComponentProps>,
+    'onChange'
+  > {
   size?: number;
   src?: string;
   onChange?: (url: string) => void;
@@ -67,6 +73,7 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
     title,
     confirmText,
     fallbackIcon,
+    ...rest
   } = useProps(defaultUploadImageProps, _props);
 
   const [blobData, setBlobData] = useState<Blob>();
@@ -122,7 +129,7 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
   }, []);
 
   return (
-    <Box ml={30} style={{ position: 'relative', top: 20, height: 100 }}>
+    <Box {...rest}>
       {label ? (
         <Text size="sm" c="dark" fw={500}>
           {label}

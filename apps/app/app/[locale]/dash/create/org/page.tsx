@@ -8,6 +8,8 @@ import {
   Center,
   Container,
   Flex,
+  Group,
+  rem,
   Select,
   TextInput,
   Title,
@@ -83,38 +85,36 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
           // dispatch({ type: 'refetch' });
         })}
       >
-        <Flex align="flex-end">
+        <Group mt="md" gap={rem(100)} align="flex-end">
           <Select
             withAsterisk
-            leftSection={
-              <Avatar src={github?.logo} size={14}>
-                <IconBrandGithub size={17} />
-              </Avatar>
-            }
-            mt={16}
+            leftSection={<IconBrandGithub size={17} />}
             label="Pick github organization"
             data={[]}
             searchable
-            maxDropdownHeight={400}
+            maxDropdownHeight={rem(450)}
             clearable
             nothingFoundMessage="Nothing found..."
             onChange={handleChange}
           />
 
           <UploadImage
+            mt="md"
             src={github?.logo}
             label="Organization icon"
             onChange={(url) => {
               form.setFieldValue('avatarUrl', url);
             }}
           />
-        </Flex>
+        </Group>
+
         <TextInput
-          mt={20}
+          mt="md"
           withAsterisk
           label="Organization name"
           {...form.getInputProps('name')}
         />
+
         <TextInput
           mt="md"
           label="Domain"
