@@ -16,12 +16,13 @@ import {
   IconSettings,
   IconUser,
 } from '@tabler/icons-react';
+import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
 
 import classes from './Dashboard.module.css';
-import { navbarCollapseAtom } from './Navbar';
+import { NavbarMolecule } from './Navbar';
 
 const PreferencesMenu = function () {
   return (
@@ -61,7 +62,8 @@ export interface DashboardHeaderProps {
 }
 
 export const DashboardHeader: FC<DashboardHeaderProps> = function (props) {
-  const [opened, toggle] = useAtom(navbarCollapseAtom);
+  const navbarMolecule = useMolecule(NavbarMolecule);
+  const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
   useMantineTheme();
 
   return (

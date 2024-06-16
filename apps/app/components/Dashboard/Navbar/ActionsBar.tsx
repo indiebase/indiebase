@@ -1,12 +1,59 @@
-import { ActionIcon, Flex, Group, rem } from '@mantine/core';
-import { IconArrowsVertical } from '@tabler/icons-react';
+import { ActionIcon, Flex, Group, rem, Tooltip } from '@mantine/core';
+import {
+  IconAffiliate,
+  IconArrowsVertical,
+  IconCloud,
+} from '@tabler/icons-react';
+import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
-import type { FC } from 'react';
+import { type FC, useMemo } from 'react';
 
-import { expandedAllNavMenusAtom } from './navbar.atom';
+import { NavbarMolecule } from './navbar.molecule';
 
 export const ActionsBar: FC<any> = function () {
-  const [expended, toggle] = useAtom(expandedAllNavMenusAtom);
+  const navbarMolecule = useMolecule(NavbarMolecule);
+  const [expanded, toggle] = useAtom(navbarMolecule.expandedAllMenusAtom);
+  const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
+
+  const actions = useMemo(() => {
+    let modeOption;
+
+    switch (mode) {
+      case 'collaborate':
+        modeOption = {
+          label: 'Backend',
+          icon: <IconCloud size={13} />,
+          onClick() {
+            setMode('backend');
+          },
+        };
+
+        break;
+      case 'backend':
+        modeOption = {
+          label: 'Collaborate',
+          icon: <IconAffiliate size={13} />,
+          onClick() {
+            setMode('collaborate');
+          },
+        };
+        break;
+      default:
+        break;
+    }
+
+    return [
+      modeOption,
+      {
+        label: 'Expand all',
+        icon: <IconArrowsVertical size={13} />,
+        onClick() {
+          toggle(!expanded);
+        },
+      },
+    ];
+  }, [mode, expanded]);
+
   return (
     <Flex
       align="center"
@@ -17,16 +64,18 @@ export const ActionsBar: FC<any> = function () {
       px={rem(13)}
     >
       <Group gap="xs">
-        <ActionIcon
-          variant="default"
-          style={{ border: 'none' }}
-          size="xs"
-          onClick={() => {
-            toggle(!expended);
-          }}
-        >
-          <IconArrowsVertical size={13} />
-        </ActionIcon>
+        {actions.map((item, index) => (
+          <Tooltip key={item.label + index} label={item.label} openDelay={500}>
+            <ActionIcon
+              variant="default"
+              style={{ border: 'none' }}
+              size="xs"
+              onClick={item.onClick}
+            >
+              {item.icon}
+            </ActionIcon>
+          </Tooltip>
+        ))}
       </Group>
     </Flex>
   );

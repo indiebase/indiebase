@@ -9,6 +9,8 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tslint from 'typescript-eslint';
+import { fixupPluginRules } from '@eslint/compat';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default tslint.config(
   eslint.configs.recommended,
@@ -19,7 +21,13 @@ export default tslint.config(
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
-    ignores: ['**/dist', '**/node_modules', '**/.next'],
+    ignores: [
+      '**/dist',
+      '**/node_modules',
+      '**/.next',
+      '**/.yarn',
+      '**/.vscode',
+    ],
     languageOptions: {
       parser: tslintParser,
       ecmaVersion: 2022,
@@ -88,6 +96,7 @@ export default tslint.config(
     plugins: {
       react,
       'react-refresh': reactRefresh,
+      'react-hooks': fixupPluginRules(reactHooks),
     },
     ...reactRecommended,
     ...reactJsxRuntime,

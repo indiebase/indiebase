@@ -21,14 +21,14 @@ const assetsPath = kDevMode
 
 const contactName = 'deskbtm/indiebase',
   contactUrl = '',
-  contactEmail = 'indiebase@deskbtm',
+  contactEmail = 'reply@deskbtm.com',
   license = 'Apache-2.0',
   licenseUrl = 'https://github.com/indiebase/indiebase/blob/main/LICENSE',
   termsUrl = 'https://indiebase.deskbtm.com/terms',
   desc = `
   Indiebase Management REST API.
   Click "Export" button, you can use swagger-typescript-api to generate TypeScript API from OpenAPI.
-  Send Email to Indiebase (indiebase@deskbtm.com)
+  Send Email to Indiebase (reply@deskbtm.com)
 `;
 const commonApiKey = [
   {

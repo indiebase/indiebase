@@ -1,6 +1,7 @@
 'use client';
 
 import { Anchor, AppShell, rem } from '@mantine/core';
+import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
@@ -8,14 +9,15 @@ import { type FC } from 'react';
 import {
   DashboardHeader,
   DashboardNavbar,
-  navbarCollapseAtom,
+  NavbarMolecule,
 } from '~/components/Dashboard';
 import { IndiebaseTextLogo } from '~/components/Icons';
 
 export interface DashboardLayoutProps extends React.PropsWithChildren {}
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
-  const [opened] = useAtom(navbarCollapseAtom);
+  const navbarMolecule = useMolecule(NavbarMolecule);
+  const [opened] = useAtom(navbarMolecule.collapsedAtom);
 
   console.warn(
     '------------------------DashboardLayout re-render------------------------------',

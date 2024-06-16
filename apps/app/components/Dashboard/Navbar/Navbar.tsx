@@ -1,13 +1,14 @@
 'use client';
 
 import { AppShell, Burger } from '@mantine/core';
+import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import { type FC } from 'react';
 
 import { OrganizationSelect } from '~/components/OrganizationSelect';
 
 import { ActionsBar } from './ActionsBar';
-import { navbarCollapseAtom } from './navbar.atom';
+import { NavbarMolecule } from './navbar.molecule';
 import { NavMenu } from './NavMenu';
 
 export interface DashboardNavbarProps {
@@ -16,7 +17,8 @@ export interface DashboardNavbarProps {
 }
 
 export const DashboardNavbar: FC<DashboardNavbarProps> = function () {
-  const [opened, toggle] = useAtom(navbarCollapseAtom);
+  const navbarMolecule = useMolecule(NavbarMolecule);
+  const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
 
   return (
     <AppShell.Navbar p="md">
