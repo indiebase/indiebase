@@ -4,7 +4,7 @@ import {
   TmplMetaTables,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 // Upload multiple files
 export class FilesUploadDTO {
@@ -15,8 +15,8 @@ export class FilesUploadDTO {
     description: 'Temp storage, object will delete automatically when expire.',
   })
   @IsOptional()
-  @IsNumber()
-  temp?: number;
+  @IsBoolean()
+  temp?: boolean;
 }
 
 export class CreateBucketDTO {
@@ -52,4 +52,7 @@ export class FileDTO {
 
   @ApiProperty({ type: 'string', description: 'Bucket' })
   bucket?: string;
+
+  @ApiProperty({ type: 'string', description: 'Original filename' })
+  originalname?: string;
 }

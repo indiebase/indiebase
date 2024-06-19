@@ -3,22 +3,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';
 
-export class PaginationRequestSchema {
-  @ApiProperty({
-    default: 1,
-  })
-  @Type(() => Number)
-  @IsNumber()
-  pageIndex?: number = 1;
-
-  @ApiProperty({
-    default: 20,
-  })
-  @Type(() => Number)
-  @IsNumber()
-  pageSize: number = 20;
-}
-
 export class OkedResponseSchema<TData = any> {
   @ApiProperty({
     description: 'Response logical code',
@@ -34,7 +18,21 @@ export class OkedResponseSchema<TData = any> {
   body?: TData;
 }
 
-export class PaginatedRequestSchema {}
+export class PaginatedRequestSchema {
+  @ApiProperty({
+    default: 1,
+  })
+  @Type(() => Number)
+  @IsNumber()
+  pageIndex?: number = 1;
+
+  @ApiProperty({
+    default: 20,
+  })
+  @Type(() => Number)
+  @IsNumber()
+  pageSize: number = 20;
+}
 
 export class PaginatedResponseSchema<TData = any> {
   @ApiProperty({

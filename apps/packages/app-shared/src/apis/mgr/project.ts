@@ -1,6 +1,6 @@
 import {
   type BaseResSchema,
-  type PaginationRequestSchema,
+  type PaginatedRequestSchema,
   type Project,
 } from '@indiebase/trait';
 
@@ -25,7 +25,7 @@ export const createProjectApi = async function (body): Promise<BaseResSchema> {
 };
 
 export const queryOwnedProjectsApi = async function (
-  params: PaginationRequestSchema<QueryOwnedProjects>,
+  params: PaginatedRequestSchema<QueryOwnedProjects>,
 ): Promise<BaseResSchema<Project[]>> {
   const { data } = await req.get('/v1/project/list', {
     params,

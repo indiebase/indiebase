@@ -1,5 +1,6 @@
 import { ResultCode } from '@indiebase/sdk';
 import {
+  ApiPresetParam,
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
@@ -55,23 +56,25 @@ export class AuthController {
     });
   }
 
-  @Get('oauth/github')
+  @Get('oauth/:referenceId/github')
+  @ApiPresetParam()
   @ApiOperation({
     summary: 'Sign in with github OAuth2',
   })
   @UseGuards(GithubGuard)
   async github() {}
 
-  @Get('oauth/:project/github/callback')
+  @Get('oauth/:referenceId/github/callback')
   @ApiOperation({
     summary: 'OAuth2 github callback',
   })
   @UseGuards(GithubGuard)
-  async githubCallback(@Param('project') project: string) {
+  async githubCallback(@Param('referenceId') project: string) {
     // await this.authService.handleGithubCallback(req, session);
   }
 
-  @Get('oauth/google')
+  @Get('oauth/:referenceId/google')
+  @ApiPresetParam()
   @ApiOperation({
     summary: 'Sign in with google OAuth2',
     description: 'Must use this for first time',
@@ -88,7 +91,7 @@ export class AuthController {
     // await this.authService.handleGithubCallback(req, session);
   }
 
-  @Get('oauth/microsoft')
+  @Get('oauth/:referenceId/microsoft')
   @ApiOperation({
     summary: 'Sign in with microsoft OAuth2',
     description: 'Must use this for first time',
@@ -105,7 +108,7 @@ export class AuthController {
     // await this.authService.handleGithubCallback(req, session);
   }
 
-  @Get('oauth/apple')
+  @Get('oauth/:referenceId/apple')
   @ApiOperation({
     summary: 'Sign in with apple OAuth2',
     description: 'Must use this for first time',

@@ -37,7 +37,7 @@ export class MgrAuthController {
   }
 
   @ApiOperation({
-    summary: 'Get auth providers',
+    summary: 'Update auth providers',
   })
   @ApiUnionResponse()
   @ApiUnionType1Header()

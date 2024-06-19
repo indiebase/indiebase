@@ -10,7 +10,7 @@ import {
   InjectS3,
   S3Client,
 } from '@indiebase/nest-s3';
-import { TMP_BUCKET, TmplMetaTables } from '@indiebase/server-shared';
+import { TmplMetaTables } from '@indiebase/server-shared';
 import { PrimitiveProject } from '@indiebase/trait';
 import {
   ConflictException,
@@ -53,9 +53,10 @@ export class StorageService {
     const results: FileDTO[] = [];
 
     for await (const part of files) {
-      const { filename, file } = part;
-      // const { temp } = fields;
+      const { filename, file, fields } = part;
+      const { temp } = fields;
       const key = uuid.v4() + path.extname(filename);
+      const originalname = encodeURIComponent(filename);
       // const targetBucket =
       //   Number((temp as any)?.value) === 1 ? TMP_BUCKET : bucket;
       try {
@@ -66,7 +67,7 @@ export class StorageService {
             Key: key,
             Body: file,
             Metadata: {
-              originalname: filename,
+              originalname,
             },
           },
         });
@@ -83,6 +84,7 @@ export class StorageService {
           url: `${protocol}://${hostname}/v1/storage/${Bucket}/${Key}?${searchParams.toString()}`,
           bucket: Bucket,
           name: Key,
+          originalname: filename,
         });
       } catch (error) {
         this.logger.error(error);

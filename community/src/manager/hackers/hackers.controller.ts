@@ -12,7 +12,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import { CreateHackersDTO } from './hackers.dto';
+import { CreateHackersDTO, HackerDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
 
 @Controller({
@@ -28,7 +28,7 @@ export class HackersController {
   })
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
-  @ApiUnionResponse('paginated')
+  @ApiUnionResponse('paginated', HackerDTO)
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @UseAccess({
     [ManagerResources.hackers]: [AccessActions.readAny],
@@ -58,7 +58,7 @@ export class HackersController {
     summary: 'Create a hacker',
     description: 'Must have the create hacker permission',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('created')
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)

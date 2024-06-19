@@ -8,7 +8,7 @@ export enum MgrMetaTables {
   grants = 'ib_grants',
   _migrations = '__knex_indiebase_migration',
   _seedMigrations = '__knex_indiebase_seed_migration',
-  authProviders = 'ib_auth_providers',
+  oauthProviders = 'ib_oauth_providers',
 }
 
 export enum TmplMetaTables {

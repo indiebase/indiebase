@@ -4,7 +4,7 @@ import {
   IsIndiebaseLegalName,
   MgrMetaTables,
   OkedResponseSchema,
-  PaginationRequestSchema,
+  PaginatedRequestSchema,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, IsUrl } from 'class-validator';
@@ -71,6 +71,56 @@ export class UpdateOrgDTO extends CreateOrgDTO {
   avatarUrl?: string;
 }
 
-export class CreateOrgResDTO extends OkedResponseSchema {}
+export class HackerOwnedOrgsDTO extends PaginatedRequestSchema {}
 
-export class HackerOwnedOrgsDTO extends PaginationRequestSchema {}
+export class OrgDTO {
+  @ApiProperty({
+    description: 'Organization ID',
+  })
+  id!: number;
+
+  @ApiProperty({
+    description: 'Organization name',
+  })
+  name!: string;
+
+  @ApiPropertyOptional({
+    description: 'Organization description',
+  })
+  description?: string;
+
+  @ApiPropertyOptional({
+    description: 'Contact email',
+  })
+  contactEmail?: string;
+
+  @ApiPropertyOptional({
+    description: 'Organization avatar url',
+  })
+  avatarUrl?: string;
+
+  @ApiPropertyOptional({
+    description: 'Indiebase associated with the Github organization',
+  })
+  githubOrg?: string;
+
+  @ApiPropertyOptional({
+    description: 'Organization homepage website',
+  })
+  homepage?: string;
+
+  @ApiPropertyOptional({
+    description: 'Organization owner id',
+  })
+  ownerId?: string;
+
+  @ApiProperty({
+    description: 'Organization created timestamp',
+  })
+  createdAt!: Date;
+
+  @ApiProperty({
+    description: 'Organization updated timestamp',
+  })
+  updatedAt!: Date;
+}

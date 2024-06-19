@@ -28,10 +28,9 @@ export const v001_tmpl = async function (
           table.string('avatar_url').comment('User avatar url');
           table.string('bio').comment('User biography');
           table.string('password');
-          table
-            .string('sign_in_type')
-            .comment('User sign in type. oauth, local');
+          table.string('authn_type').comment('User sign in type. oauth, local');
           table.boolean('enabled_otp').defaultTo(false).comment('Enable 2FA');
+          table.string('location').comment("User's country");
           table.string('opt_secret').comment('One time password secret');
           table.datetime('email_confirmed_at').comment('Email confirmed at');
           table.timestamp('sign_in_at').comment('User sign in timestamp');

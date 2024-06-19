@@ -2,6 +2,7 @@ import { AccessActions, UseAccess } from '@indiebase/nest-accesscontrol';
 import { ResultCode } from '@indiebase/sdk';
 import {
   AccessGuard,
+  ApiPresetParam,
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
@@ -33,6 +34,7 @@ import { PasetoAuthGuard } from '../../auth';
 import {
   CreateOrgDTO,
   HackerOwnedOrgsDTO,
+  OrgDTO,
   UpdateOrgDTO,
   UpdateOrgParamsDTO,
 } from './orgs.dto';
@@ -50,7 +52,7 @@ export class OrgsController {
     summary: 'Query the user-owned organizations',
     description: 'Query the user-owned organizations',
   })
-  @ApiUnionResponse('paginated')
+  @ApiUnionResponse('paginated', OrgDTO)
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -80,14 +82,8 @@ export class OrgsController {
     description:
       'Lists organizations that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
-  @ApiParam({
-    name: 'org',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
-  @ApiUnionResponse('paginated')
+  @ApiPresetParam('org', 'publish')
+  @ApiUnionResponse('paginated', OrgDTO)
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -105,7 +101,7 @@ export class OrgsController {
     description:
       'Different than create a project. Create an organization will not create the postgresql schema',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('created')
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard)
@@ -122,13 +118,7 @@ export class OrgsController {
   @ApiOperation({
     summary: 'Update an organization',
   })
-  @ApiParam({
-    name: 'org',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('org', 'publish')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
@@ -152,13 +142,7 @@ export class OrgsController {
     summary: 'Hide an organization',
     description: 'Soft delete',
   })
-  @ApiParam({
-    name: 'org',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('org', 'publish')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
@@ -181,13 +165,7 @@ export class OrgsController {
     description:
       'Nota bene, Once you delete a org, there is no going back. Please be certain.',
   })
-  @ApiParam({
-    name: 'org',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('org', 'publish')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')

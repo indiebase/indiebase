@@ -9,17 +9,17 @@ import {
   MgrMetaTables,
 } from '@indiebase/server-shared';
 import {
-  AuthProvider,
-  AvailableAuthProviders,
+  OAuthProvider,
+  AvailableOAuthProviders,
   PrimitiveProject,
 } from '@indiebase/trait';
 import { Knex } from 'knex';
 
-const indiebaseMgrProviders: Partial<AuthProvider>[] = Object.values(
-  AvailableAuthProviders,
+const indiebaseMgrOAuthProviders: Partial<OAuthProvider>[] = Object.values(
+  AvailableOAuthProviders,
 ).map((name) => ({
   name,
-  callbackPath: `oauth/indiebase/${name}/callback`,
+  callbackPath: `auth/oauth/${INDIEBASE_MGR}/${name}/callback`,
 }));
 
 /**
@@ -59,8 +59,8 @@ export const v001_indiebase_seed = async function (
 
       // Init indiebase manager's OAuth providers.
       await mgrSchema
-        .insert(indiebaseMgrProviders)
-        .into(MgrMetaTables.authProviders);
+        .insert(indiebaseMgrOAuthProviders)
+        .into(MgrMetaTables.oauthProviders);
 
       // Init indiebase manager self.
       await mgrSchema

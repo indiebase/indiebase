@@ -7,6 +7,7 @@ import {
   ApiHeader,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
+  ApiParam,
   ApiResponseOptions,
   ApiSecurity,
   ApiUnauthorizedResponse,
@@ -25,10 +26,13 @@ import {
 } from '../dto';
 
 export type OkedType = 'paginated' | 'created' | 'oked' | 'array' | null;
-export type ApiUnionResponseOptions = ApiResponseOptions & {
-  bodyProperties?: SchemaObject | ReferenceObject | null;
-  okedType?: OkedType | null;
-};
+
+export type ApiUnionResponseOptions<TModel extends Type<any> = any> =
+  ApiResponseOptions & {
+    bodyProperties?: SchemaObject | ReferenceObject | null;
+    okedType?: OkedType | null;
+    model?: TModel;
+  };
 
 export const ApiProtectionHeader = () =>
   ApiHeader({
@@ -56,6 +60,25 @@ export const ApiProjectHeader = () =>
   });
 
 /**
+ * Preset project reference id for development
+ *
+ * @param name - parma name
+ * @param value - param value
+ * @returns
+ */
+export const ApiPresetParam = (
+  name: string = 'referenceId',
+  value: string = INDIEBASE_MGR,
+) =>
+  ApiParam({
+    name,
+    type: 'string',
+    schema: {
+      default: value,
+    },
+  });
+
+/**
  * Need a paseto token to Sign in and X-Indiebase-AP to protect API.
  * @returns
  */
@@ -67,66 +90,31 @@ export const ApiIndiebaseSecurity = () =>
  * OpenAPI pagination response.
  * @param model
  * @returns
+ *
+ * @deprecated
  */
-export const ApiPaginatedResponse = <TModel extends Type<any>>(
-  model: TModel,
-  options: ApiResponseOptions,
+export const ApiPaginatedResponse = <TModel extends Type<any> = any>(
+  options: ApiUnionResponseOptions<TModel>,
 ) => {
-  return applyDecorators(
-    ApiExtraModels(PaginatedResponseSchema, model),
+  let bodyProperties;
+  const { model, ...restOptions } = options;
+  const models = [PaginatedResponseSchema];
+  if (model) {
+    bodyProperties = {
+      type: 'array',
+      items: { $ref: getSchemaPath(model) },
+      description: 'Response data list',
+    };
+
+    models.push(model);
+  }
+
+  const decorators = [
+    ApiExtraModels(...models),
     ApiOkResponse({
       schema: {
         allOf: [
           { $ref: getSchemaPath(PaginatedResponseSchema) },
-          {
-            properties: {
-              body: {
-                type: 'array',
-                items: { $ref: getSchemaPath(model) },
-                description: 'Response data list',
-              },
-            },
-          },
-        ],
-      },
-      ...options,
-    }),
-  );
-};
-
-export const ApiOkedResponse = <TModel extends Type<any>>(
-  model: TModel,
-  options: ApiUnionResponseOptions,
-) => {
-  let { bodyProperties, okedType } = Object.assign({}, {}, options);
-
-  bodyProperties = Object.assign<
-    any,
-    SchemaObject | ReferenceObject,
-    SchemaObject | ReferenceObject | undefined | null
-  >(
-    {},
-    okedType === 'array'
-      ? {
-          type: 'array',
-          items: {
-            $ref: getSchemaPath(model),
-          },
-          description: 'Response data list',
-        }
-      : {
-          $ref: getSchemaPath(model),
-          description: 'Response data',
-        },
-    bodyProperties,
-  );
-
-  return applyDecorators(
-    ApiExtraModels(OkedResponseSchema, model),
-    ApiOkResponse({
-      schema: {
-        allOf: [
-          { $ref: getSchemaPath(OkedResponseSchema) },
           {
             properties: {
               body: {
@@ -136,9 +124,77 @@ export const ApiOkedResponse = <TModel extends Type<any>>(
           },
         ],
       },
-      ...options,
+      ...restOptions,
     }),
-  );
+  ].filter(Boolean);
+
+  return applyDecorators(...decorators);
+};
+
+export const ApiOkedResponse = <TModel extends Type<any> = any>(
+  options: ApiUnionResponseOptions<TModel>,
+) => {
+  const { model, okedType, ...restOptions } = options;
+  let schema: Type<any> = OkedResponseSchema;
+  let bodyProperties:
+    | { body: SchemaObject | ReferenceObject | undefined }
+    | undefined = model && {
+    body: {
+      $ref: getSchemaPath(model),
+      description: 'Response data',
+    },
+  };
+
+  let Api = ApiOkResponse;
+
+  switch (okedType) {
+    case 'created':
+      Api = ApiCreatedResponse;
+      break;
+    case 'array':
+      bodyProperties = model && {
+        body: {
+          type: 'array',
+          items: {
+            $ref: getSchemaPath(model),
+          },
+          description: 'Response data list',
+        },
+      };
+      break;
+    case 'paginated':
+      bodyProperties = model && {
+        body: {
+          type: 'array',
+          items: { $ref: getSchemaPath(model) },
+          description: 'Response paginated data list',
+        },
+      };
+      schema = PaginatedResponseSchema;
+      break;
+    default:
+      break;
+  }
+
+  const models = [schema, model].filter(Boolean) as Type<any>[];
+  const decorators = [
+    ApiExtraModels(...models),
+    Api({
+      schema: {
+        allOf: [
+          { $ref: getSchemaPath(schema) },
+          {
+            properties: {
+              ...bodyProperties,
+            },
+          },
+        ],
+      },
+      ...restOptions,
+    }),
+  ];
+
+  return applyDecorators(...decorators);
 };
 
 /**
@@ -152,32 +208,15 @@ export const ApiOkedResponse = <TModel extends Type<any>>(
 export const ApiUnionType1Header = () =>
   applyDecorators(ApiProjectHeader(), ApiIndiebaseSecurity());
 
-class Demo {
-  // @ApiProperty({ description: 'demo' })
-  // url?: string;
-}
-
 export const ApiUnionResponse = <TModel extends Type<any>>(
   okedType?: OkedType,
   model?: TModel,
-  options?: ApiUnionResponseOptions,
+  options?: ApiUnionResponseOptions<TModel>,
 ) => {
-  options = Object.assign({}, options, { okedType });
-  let ApiModelResponse;
-  switch (okedType) {
-    case 'paginated':
-      ApiModelResponse = ApiPaginatedResponse;
-      break;
-    case 'created':
-      ApiModelResponse = ApiCreatedResponse;
-      break;
-    default:
-      ApiModelResponse = ApiOkedResponse;
-      break;
-  }
+  options = Object.assign({}, { okedType, model }, options);
 
-  return applyDecorators(
-    ApiModelResponse(model ?? Demo, options),
+  const decorators = [
+    ApiOkedResponse(options),
     ApiUnauthorizedResponse({
       type: ErrResponseSchema,
     }),
@@ -187,5 +226,7 @@ export const ApiUnionResponse = <TModel extends Type<any>>(
     ApiInternalServerErrorResponse({
       type: ErrResponseSchema,
     }),
-  );
+  ].filter(Boolean);
+
+  return applyDecorators(...decorators);
 };

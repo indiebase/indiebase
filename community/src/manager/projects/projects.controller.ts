@@ -2,6 +2,7 @@ import { UseAccess } from '@indiebase/nest-accesscontrol';
 import { ResultCode } from '@indiebase/sdk';
 import {
   AccessGuard,
+  ApiPresetParam,
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
@@ -31,7 +32,7 @@ import {
 } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import { CreatePrjDTO } from './projects.dto';
+import { CreatePrjDTO, ProjectDTO } from './projects.dto';
 import { ProjectsService } from './projects.service';
 
 @Controller({
@@ -46,7 +47,7 @@ export class ProjectsController {
     summary: 'Query projects',
     description: 'List all public projects',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('paginated', ProjectDTO)
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Get('orgs/:org/projects')
@@ -57,7 +58,7 @@ export class ProjectsController {
     description:
       'Lists projects that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('paginated')
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -69,7 +70,7 @@ export class ProjectsController {
     description:
       'Creating a project will create a postgresql schema and template tables',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('created')
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -94,13 +95,7 @@ export class ProjectsController {
   @ApiOperation({
     summary: 'Delete a project permanently',
   })
-  @ApiParam({
-    name: 'referenceId',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('referenceId', 'publish')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')

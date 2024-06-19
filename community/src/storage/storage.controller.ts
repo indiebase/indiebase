@@ -1,11 +1,11 @@
 import { ResultCode } from '@indiebase/sdk';
 import {
+  ApiPresetParam,
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
   OkedResponseSchema,
   Project,
-  // FilesSizeValidationPipe,
   PublicApiGuard,
 } from '@indiebase/server-shared';
 import { PrimitiveProject } from '@indiebase/trait';
@@ -49,13 +49,7 @@ export class StorageController {
     description:
       'Receives multiple files and an associated bucket for uploading the files into the specified bucket.',
   })
-  @ApiParam({
-    name: 'bucket',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('bucket', 'publish')
   @ApiUnionResponse('array', FileDTO)
   @ApiUnionType1Header()
   @ApiConsumes('multipart/form-data')
@@ -118,13 +112,7 @@ export class StorageController {
   @ApiOperation({
     summary: 'Get an object from Object-based storage device',
   })
-  @ApiParam({
-    name: 'bucket',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('bucket', 'publish')
   @Get(':bucket/:key')
   @ApiUnionResponse()
   @ApiUnionType1Header()
@@ -151,13 +139,7 @@ export class StorageController {
     summary: 'Delete a bucket',
     description: 'Receives a bucket name and deletes the bucket.',
   })
-  @ApiParam({
-    name: 'bucket',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('bucket', 'publish')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
@@ -178,13 +160,7 @@ export class StorageController {
     summary: 'Permanently delete a bucket',
     description: 'Receives a bucket name and permanently deletes the bucket.',
   })
-  @ApiParam({
-    name: 'bucket',
-    type: 'string',
-    schema: {
-      default: 'publish',
-    },
-  })
+  @ApiPresetParam('bucket', 'publish')
   @ApiUnionResponse()
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')

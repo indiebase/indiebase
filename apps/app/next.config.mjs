@@ -1,4 +1,4 @@
-import million from 'million/compiler';
+// import million from 'million/compiler';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
@@ -8,6 +8,7 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   transpilePackages: ['jotai-devtools'],
   experimental: {
+    reactCompiler: true,
     optimizePackageImports: [
       '@mantine/core',
       '@mantine/hooks',
@@ -20,11 +21,11 @@ const nextConfig = {
   },
 };
 
-const millionConfig = {
-  // if you're using RSC: auto: { rsc: true },
-  auto: true,
-};
+// const millionConfig = {
+//   // if you're using RSC: auto: { rsc: true },
+//   auto: true,
+// };
 
-const withMillion = million.next(nextConfig, millionConfig);
+// const withMillion = million.next(nextConfig, millionConfig);
 
-export default withNextIntl(withMillion);
+export default withNextIntl(nextConfig);

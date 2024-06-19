@@ -116,7 +116,7 @@ export class AuthService {
     return this.knex
       .withSchema(project.namespace)
       .select('*')
-      .from(MgrMetaTables.authProviders);
+      .from(MgrMetaTables.oauthProviders);
   }
 
   public async generateOtp(username: string) {

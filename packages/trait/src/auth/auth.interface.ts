@@ -1,5 +1,4 @@
-export enum AvailableAuthProviders {
-  email = 'email',
+export enum AvailableOAuthProviders {
   google = 'google',
   microsoft = 'microsoft',
   github = 'github',
@@ -10,11 +9,15 @@ export enum AvailableAuthProviders {
   apple = 'apple',
 }
 
-export type AuthProvider = {
+export enum AvailableAuthProviders {
+  email = 'email',
+}
+
+export type OAuthProvider = {
   /**
    * Provider name, e.g. google, microsoft
    */
-  name: AvailableAuthProviders;
+  name: AvailableOAuthProviders;
   /**
    * Enable the login method
    */

@@ -6,7 +6,7 @@ import {
 } from '@indiebase/server-shared';
 import {
   AccountStatus,
-  AvailableAuthProviders,
+  AvailableOAuthProviders,
   ProjectStatus,
   Visibility,
 } from '@indiebase/trait';
@@ -50,12 +50,11 @@ export const v001_indiebase = async function (
           table.string('avatar_url').comment('User avatar url');
           table.string('bio').comment('User biography');
           table.string('password');
-          table.string('language');
-          table
-            .string('sign_in_type')
-            .comment('User sign in type. oauth, local');
+          table.string('language').comment('Prefer language');
+          table.string('authn_type').comment('Authentication Type');
           table.boolean('enabled_otp').comment('Enable 2FA');
           table.string('opt_secret').comment('One time password secret');
+          table.string('location').comment('Location of registration');
           table
             .enum('visibility', Object.values(Visibility))
             .defaultTo(Visibility.public)
@@ -67,7 +66,7 @@ export const v001_indiebase = async function (
             .string('homepage')
             .unique()
             .nullable()
-            .comment('Organization homepage');
+            .comment('Hacker homepage');
           table
             .string('github_username')
             .comment('Github username not nickname');
@@ -281,10 +280,10 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.authProviders, (table) => {
+        .createTable(MgrMetaTables.oauthProviders, (table) => {
           table.increments('id').primary();
           table
-            .enum('name', Object.values(AvailableAuthProviders))
+            .enum('name', Object.values(AvailableOAuthProviders))
             .comment('Provider name, e.g. google, microsoft');
           table
             .boolean('enabled')
@@ -315,7 +314,7 @@ export const v001_indiebase = async function (
         })
         .then(async () => {
           await knexExSchema.createUpdatedAtTrigger(
-            MgrMetaTables.authProviders,
+            MgrMetaTables.oauthProviders,
           );
         });
 

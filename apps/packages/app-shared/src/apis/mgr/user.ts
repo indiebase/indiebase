@@ -1,6 +1,6 @@
 import type {
   Org,
-  PaginationRequestSchema,
+  PaginatedRequestSchema,
   PaginatedResponseSchema,
   Resource,
 } from '@indiebase/trait';
@@ -34,7 +34,7 @@ export const searchUsersApi = async (
 };
 
 export const fetchRolesApi = async (
-  params: Partial<PaginationRequestSchema<Role>>,
+  params: Partial<PaginatedRequestSchema<Role>>,
 ): Promise<PaginatedResponseSchema<Role[]>> => {
   const { data } = await req.get('/v1/user/role/list', {
     params,

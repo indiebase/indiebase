@@ -1,6 +1,7 @@
-import { FC, PropsWithChildren, useMemo, useState } from 'react';
-import { AuthzContext, Possession } from './context';
 import { Authorizer } from 'casbin.js';
+import { type FC, type PropsWithChildren, useMemo, useState } from 'react';
+
+import { AuthzContext, type Possession } from './context';
 
 export interface AuthzProviderProps extends PropsWithChildren {
   possess?: Possession;

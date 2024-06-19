@@ -11,7 +11,6 @@ export enum BusinessLabels {
 export const TMP_BUCKET = 'tmp';
 
 /**
- * Database
+ * Indiebase manager's reference ID
  */
-
 export const INDIEBASE_MGR = 'indiebase_mgr';
