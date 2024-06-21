@@ -7,7 +7,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { PasetoStrategy } from './paseto.strategy';
-import { GithubStrategy, GoogleStrategy, MicrosoftStrategy } from './social';
+import { GoogleStrategy, MicrosoftStrategy } from './social';
 
 @Module({
   imports: [
@@ -31,7 +31,6 @@ import { GithubStrategy, GoogleStrategy, MicrosoftStrategy } from './social';
   controllers: [AuthController],
   providers: [
     Logger,
-    GithubStrategy,
     GoogleStrategy,
     MicrosoftStrategy,
     PasetoStrategy,

@@ -1,18 +1,63 @@
+import { AvailableOAuthProviders } from '@indiebase/sdk';
 import { IAuthModuleOptions } from '@indiebase/nest-fastify-passport';
 import { AuthGuard } from '@indiebase/nest-fastify-passport';
 import { ExecutionContext } from '@nestjs/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Strategy } from 'passport-github2';
+import { AuthService } from '../auth.service';
+import { FastifyRequest } from 'fastify';
+import url from 'node:url';
 
 @Injectable()
 export class GithubGuard extends AuthGuard('github') {
-  override canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> | any {
-    return super.canActivate(context);
+  constructor(private readonly auth: AuthService) {
+    super();
   }
 
-  override useAuthenticateOptions(): IAuthModuleOptions<any> {
+  override async useStrategy(context: ExecutionContext) {
+    const req = context.switchToHttp().getRequest<FastifyRequest>();
+
+    if (!req?.raw?.project) {
+      throw new UnauthorizedException();
+    }
+
+    const {
+      raw: { project },
+    } = req;
+
+    const { clientId, clientSecret } = await this.auth.getAuthProvider(
+      project.namespace,
+      AvailableOAuthProviders.github,
+    );
+
+    if (!clientId || !clientSecret) {
+      throw new UnauthorizedException();
+    }
+
+    return new Strategy(
+      {
+        clientID: clientId,
+        clientSecret,
+        callbackURL: url.format({
+          protocol: req.protocol,
+          pathname: '/v1/auth/oauth/github/callback',
+          query: {
+            referenceId: project.referenceId,
+          },
+        }),
+      },
+      function (
+        accessToken: string,
+        refreshToken: string,
+        profile: any,
+        done: any,
+      ) {
+        done(null, { accessToken, refreshToken, profile });
+      },
+    );
+  }
+
+  override useAuthenticateOptions(): IAuthModuleOptions {
     return {
       scope: ['user', 'repo', 'admin:org'],
     };

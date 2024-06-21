@@ -8,12 +8,9 @@ import {
   INDIEBASE_MGR,
   MgrMetaTables,
 } from '@indiebase/server-shared';
-import {
-  OAuthProvider,
-  AvailableOAuthProviders,
-  PrimitiveProject,
-} from '@indiebase/trait';
+import { OAuthProvider, PrimitiveProject } from '@indiebase/trait';
 import { Knex } from 'knex';
+import { AvailableOAuthProviders } from '@indiebase/sdk';
 
 const indiebaseMgrOAuthProviders: Partial<OAuthProvider>[] = Object.values(
   AvailableOAuthProviders,

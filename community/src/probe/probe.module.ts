@@ -9,7 +9,7 @@ import { ProbeController } from './probe.controller';
   imports: [
     HttpModule,
     TerminusModule.forRoot({
-      logger: ConsoleLogger,
+      // logger: ConsoleLogger,
       errorLogStyle: 'json',
     }),
   ],

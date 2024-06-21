@@ -1,15 +1,11 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
+import { AvailableOAuthProviders } from '@indiebase/sdk';
 import {
   KnexEx,
   MgrMetaTables,
   TmplMetaTables,
 } from '@indiebase/server-shared';
-import {
-  AccountStatus,
-  AvailableOAuthProviders,
-  ProjectStatus,
-  Visibility,
-} from '@indiebase/trait';
+import { AccountStatus, ProjectStatus, Visibility } from '@indiebase/trait';
 import { Knex } from 'knex';
 
 export const v001_indiebase = async function (

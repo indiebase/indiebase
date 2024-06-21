@@ -30,14 +30,7 @@ const contactName = 'deskbtm/indiebase',
   Click "Export" button, you can use swagger-typescript-api to generate TypeScript API from OpenAPI.
   Send Email to Indiebase (reply@deskbtm.com)
 `;
-const commonApiKey = [
-  {
-    type: 'apiKey',
-    in: 'header',
-    name: X_Indiebase_AP,
-  },
-  'ap',
-] as const;
+
 const commonBearerAuth = [
   {
     type: 'http',
@@ -53,8 +46,6 @@ export const setupApiDoc = async (app: INestApplication) => {
   try {
     const mgrOptions = new DocumentBuilder()
       .setTitle('Indiebase Management REST API')
-      .addTag('Hackers/v1', 'Indiebase user')
-      .addTag('Manager-Auth/v1', 'Manager authentication')
       .setDescription(desc)
       .setVersion('1.0.0')
       .setContact(contactName, contactUrl, contactEmail)
@@ -63,7 +54,6 @@ export const setupApiDoc = async (app: INestApplication) => {
       .addBearerAuth(...commonBearerAuth)
       .addServer('http://api-dev.indiebase.deskbtm.com:8331', 'Development')
       .addServer('https://api.indiebase.deskbtm.com', 'Production')
-      .addApiKey(...commonApiKey)
       .build();
 
     const options = new DocumentBuilder()
@@ -76,7 +66,6 @@ export const setupApiDoc = async (app: INestApplication) => {
       .setTermsOfService(termsUrl)
       .addServer('http://api-dev.indiebase.deskbtm.com:8331', 'Development')
       .addServer('https://api.indiebase.deskbtm.com', 'Production')
-      .addApiKey(...commonApiKey)
       .build();
 
     const mgrApiDoc = SwaggerModule.createDocument(app, mgrOptions, {

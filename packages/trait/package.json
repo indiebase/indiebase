@@ -23,5 +23,8 @@
   "description": "The common interface for indiebase both font-end and back-end",
   "engines": {
     "node": ">=16"
+  },
+  "dependencies": {
+    "@indiebase/sdk": "workspace:^"
   }
 }

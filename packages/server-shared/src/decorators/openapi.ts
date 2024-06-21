@@ -84,7 +84,7 @@ export const ApiPresetParam = (
  */
 export const ApiIndiebaseSecurity = () =>
   // ApiSecurity('ap') provides api protection.
-  applyDecorators(ApiSecurity('ap'), ApiProtectionHeader());
+  applyDecorators(ApiProtectionHeader());
 
 /**
  * OpenAPI pagination response.

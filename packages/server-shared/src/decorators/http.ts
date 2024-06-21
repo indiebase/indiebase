@@ -1,4 +1,4 @@
-import { ExecutionContext } from '@nestjs/common';
+import { ExecutionContext, Query, ValidationPipe } from '@nestjs/common';
 import { BadRequestException, createParamDecorator } from '@nestjs/common';
 
 export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
@@ -78,3 +78,11 @@ export const Domain = createParamDecorator((_, ctx: ExecutionContext) => {
     request.hostname?.split('.').reverse().join('.')
   );
 });
+
+export const QueryEx = () =>
+  Query(
+    new ValidationPipe({
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );

@@ -1,8 +1,7 @@
 import passport from '@fastify/passport';
-import { OnModuleInit } from '@nestjs/common';
+import { OnModuleInit, Type } from '@nestjs/common';
 
-import { Type } from '../interfaces';
-type UseStrategyHook = (
+export type UseStrategyHook = (
   strategy: (options) => Type<any>,
   fn: (p) => void,
 ) => Promise<void> | void;

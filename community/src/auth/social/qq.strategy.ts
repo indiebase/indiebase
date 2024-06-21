@@ -2,7 +2,7 @@ import { PassportStrategyFactory } from '@indiebase/nest-fastify-passport';
 import { PassportStrategy } from '@indiebase/nest-fastify-passport';
 import { Logger } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
-import { Strategy } from 'passport-github2';
+import { Strategy } from 'passport-qq';
 
 // Observable
 @Injectable()

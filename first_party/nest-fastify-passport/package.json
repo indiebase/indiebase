@@ -83,6 +83,7 @@
     "url": "https://github.com/nestjs/passport"
   },
   "dependencies": {
-    "@fastify/passport": "2.4.0"
+    "@fastify/passport": "2.4.0",
+    "socks-proxy-agent": "^8.0.3"
   }
 }

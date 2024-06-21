@@ -8,6 +8,7 @@ import {
   data,
   ManagerResources,
   PublicApiGuard,
+  QueryEx,
   User,
 } from '@indiebase/server-shared';
 import { PrimitiveHacker } from '@indiebase/trait';
@@ -19,16 +20,10 @@ import {
   Param,
   Patch,
   Post,
-  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
 import {
@@ -62,12 +57,7 @@ export class OrgsController {
   @Get('orgs')
   async queryOwned(
     @User() hacker: PrimitiveHacker,
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-      }),
-    )
+    @QueryEx()
     query: HackerOwnedOrgsDTO,
   ) {
     const result = await this.orgsService.list(hacker, query);

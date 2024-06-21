@@ -4,6 +4,10 @@ export interface IAuthModuleOptions<T = any> {
   defaultStrategy?: string | string[];
   session?: boolean;
   property?: string;
+  /**
+   * Proxy url.
+   */
+  oauthProxy?: string | false;
   [key: string]: any;
 }
 

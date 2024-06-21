@@ -16,4 +16,5 @@ export enum TmplMetaTables {
   roles = 'ib_roles',
   grants = 'ib_grants',
   buckets = 'ib_buckets',
+  oauthProviders = 'ib_oauth_providers',
 }

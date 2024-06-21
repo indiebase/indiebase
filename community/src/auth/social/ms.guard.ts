@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
-export class MicrosoftGuard extends AuthGuard('local') {
+export class MicrosoftGuard extends AuthGuard('microsoft') {
   constructor(private readonly logger: Logger) {
     super();
   }

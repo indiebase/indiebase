@@ -1,10 +1,14 @@
 import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
-import { ResultCode } from '@indiebase/sdk';
+import { AvailableOAuthProviders, ResultCode } from '@indiebase/sdk';
 import { INDIEBASE_MGR, KnexEx, MgrMetaTables } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
-import { type PrimitiveProject, type PrimitiveUser } from '@indiebase/trait';
+import {
+  OAuthProvider,
+  type PrimitiveProject,
+  type PrimitiveUser,
+} from '@indiebase/trait';
 import {
   Injectable,
   InternalServerErrorException,
@@ -112,11 +116,13 @@ export class AuthService {
     return token;
   }
 
-  public getAuthProviders(project: PrimitiveProject) {
+  public getAuthProvider(namespace, provider: AvailableOAuthProviders) {
     return this.knex
-      .withSchema(project.namespace)
+      .withSchema(namespace)
       .select('*')
-      .from(MgrMetaTables.oauthProviders);
+      .from(MgrMetaTables.oauthProviders)
+      .where('name', provider)
+      .first<OAuthProvider>();
   }
 
   public async generateOtp(username: string) {

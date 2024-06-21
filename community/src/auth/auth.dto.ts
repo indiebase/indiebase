@@ -1,4 +1,5 @@
 import {
+  INDIEBASE_MGR,
   IsEntityExisted,
   MgrMetaTables,
   SpecificProjectType,
@@ -41,6 +42,14 @@ export class LocalSignInDTO {
     message: 'Password needs to be converted to SHA256',
   })
   password!: string;
+}
+
+export class AuthDTO {
+  @ApiProperty({
+    description: 'X-Indiebase-Reference-Id, the ID for business',
+    default: INDIEBASE_MGR,
+  })
+  referenceId!: string;
 }
 
 export class OptVerifyDTO {

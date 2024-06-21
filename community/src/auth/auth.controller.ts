@@ -6,6 +6,7 @@ import {
   data,
   Project,
   PublicApiGuard,
+  QueryEx,
   User,
 } from '@indiebase/server-shared';
 import { PrimitiveUser } from '@indiebase/trait';
@@ -24,7 +25,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { LocalSignInDTO, OptVerifyDTO } from './auth.dto';
+import { AuthDTO, LocalSignInDTO, OptVerifyDTO } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
 import { GithubGuard, GoogleGuard } from './social';
@@ -56,25 +57,25 @@ export class AuthController {
     });
   }
 
-  @Get('oauth/:referenceId/github')
-  @ApiPresetParam()
+  @Get('oauth/github')
   @ApiOperation({
     summary: 'Sign in with github OAuth2',
   })
   @UseGuards(GithubGuard)
-  async github() {}
+  async github(@QueryEx() query: AuthDTO) {
+    
+  }
 
-  @Get('oauth/:referenceId/github/callback')
+  @Get('oauth/github/callback')
   @ApiOperation({
     summary: 'OAuth2 github callback',
   })
   @UseGuards(GithubGuard)
-  async githubCallback(@Param('referenceId') project: string) {
+  async githubCallback() {
     // await this.authService.handleGithubCallback(req, session);
   }
 
-  @Get('oauth/:referenceId/google')
-  @ApiPresetParam()
+  @Get('oauth/google')
   @ApiOperation({
     summary: 'Sign in with google OAuth2',
     description: 'Must use this for first time',
@@ -91,7 +92,7 @@ export class AuthController {
     // await this.authService.handleGithubCallback(req, session);
   }
 
-  @Get('oauth/:referenceId/microsoft')
+  @Get('oauth/microsoft')
   @ApiOperation({
     summary: 'Sign in with microsoft OAuth2',
     description: 'Must use this for first time',
@@ -108,7 +109,7 @@ export class AuthController {
     // await this.authService.handleGithubCallback(req, session);
   }
 
-  @Get('oauth/:referenceId/apple')
+  @Get('oauth/apple')
   @ApiOperation({
     summary: 'Sign in with apple OAuth2',
     description: 'Must use this for first time',

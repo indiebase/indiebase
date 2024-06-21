@@ -8,32 +8,35 @@ import {
   Logger,
   mixin,
   Optional,
+  Type,
   UnauthorizedException,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { Type } from './interfaces';
-import {
-  AuthModuleOptions,
-  IAuthModuleOptions,
-} from './interfaces/auth-module.options';
+import { AuthModuleOptions, IAuthModuleOptions } from './interfaces';
 import { defaultOptions } from './options';
 import { memoize } from './utils/memoize.util';
+import { SocksProxyAgent } from 'socks-proxy-agent';
 
-export type IAuthGuard = CanActivate & {
+export interface IAuthGuard extends CanActivate {
   logIn<TRequest extends { logIn: Function } = any>(
     request: TRequest,
   ): Promise<void>;
   handleRequest<TUser = any>(err, user, info, context, status): TUser;
   getRequest<T = any>(context: ExecutionContext): T;
-  useAuthenticateOptions(context): IAuthModuleOptions | undefined;
-};
+  getResponse<T = any>(context: ExecutionContext): T;
+  useAuthenticateOptions(
+    context: ExecutionContext,
+  ): IAuthModuleOptions | undefined;
+  useStrategy(context: ExecutionContext): Promise<object> | object;
+}
+
 export const AuthGuard: (type?: string | string[]) => Type<IAuthGuard> =
   memoize(createAuthGuard);
 
 const NO_STRATEGY_ERROR = `In order to use "defaultStrategy", please, ensure to import PassportModule in each place where AuthGuard() is being used. Otherwise, passport won't work correctly.`;
 
-function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
+function createAuthGuard(type?: string | string[]) {
   class MixinAuthGuard<TUser = any> implements CanActivate {
     @Optional()
     @Inject(AuthModuleOptions)
@@ -47,11 +50,28 @@ function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
     }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
+      const authenticateOption = await this.useAuthenticateOptions(context);
       const options = {
         ...defaultOptions,
         ...this.options,
-        ...(await this.useAuthenticateOptions(context)),
+        ...authenticateOption,
       };
+      const strategy = await this.useStrategy(context);
+      const proxy =
+        options.oauthProxy ||
+        process.env.OAUTH_PROXY ||
+        process.env.SOCKS5_PROXY ||
+        process.env.HTTPS_PROXY ||
+        process.env.HTTP_PROXY;
+
+      if (proxy && options.oauthProxy !== false && strategy) {
+        strategy._oauth2.setAgent(new SocksProxyAgent(proxy));
+      }
+
+      if (strategy) {
+        passport.use(strategy);
+      }
+
       const [request, response] = [
         this.getRequest(context),
         this.getResponse(context),
@@ -91,10 +111,12 @@ function createAuthGuard(type?: string | string[]): Type<IAuthGuard> {
       return user;
     }
 
-    useAuthenticateOptions(
-      context: ExecutionContext,
-    ): Promise<IAuthModuleOptions> | IAuthModuleOptions | undefined {
-      return undefined;
+    async useAuthenticateOptions(context: ExecutionContext) {
+      return undefined as unknown as IAuthModuleOptions;
+    }
+
+    async useStrategy(context: ExecutionContext) {
+      return undefined as any;
     }
   }
   const guard = mixin(MixinAuthGuard);
