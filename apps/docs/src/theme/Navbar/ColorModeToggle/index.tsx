@@ -41,7 +41,6 @@ export default function NavbarColorModeToggle({
 
   return (
     <ActionIcon
-      disabled={!isBrowser}
       className={className}
       variant="transparent"
       color="rgba(0, 0, 0, 1)"

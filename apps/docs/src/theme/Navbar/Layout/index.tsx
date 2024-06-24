@@ -9,7 +9,7 @@ import { translate } from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
 import type { Props } from '@theme/Navbar/Layout';
 
-import styles from './styles.module.css';
+import classes from './Layout.module.css';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {
   return (
@@ -39,15 +39,15 @@ export default function NavbarLayout({ children }: Props): JSX.Element {
         'navbar',
         'navbar--fixed-top',
         hideOnScroll && [
-          styles.navbarHideable,
-          !isNavbarVisible && styles.navbarHidden,
+          classes.navbarHideable,
+          !isNavbarVisible && classes.navbarHidden,
         ],
         {
           'navbar--dark': style === 'dark',
           'navbar--primary': style === 'primary',
           'navbar-sidebar--show': mobileSidebar.shown,
         },
-        styles.navbarOverride,
+        classes.navbarOverride,
       )}
     >
       {children}

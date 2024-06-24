@@ -5,7 +5,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AppleGuard extends AuthGuard('twitter') {
+export class XGuard extends AuthGuard('twitter') {
   override canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> | any {

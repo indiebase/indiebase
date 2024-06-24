@@ -7,7 +7,6 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { PasetoStrategy } from './paseto.strategy';
-import { GoogleStrategy, MicrosoftStrategy } from './social';
 
 @Module({
   imports: [
@@ -29,14 +28,7 @@ import { GoogleStrategy, MicrosoftStrategy } from './social';
     // forwardRef(() => UserModule),
   ],
   controllers: [AuthController],
-  providers: [
-    Logger,
-    GoogleStrategy,
-    MicrosoftStrategy,
-    PasetoStrategy,
-    LocalStrategy,
-    AuthService,
-  ],
+  providers: [Logger, PasetoStrategy, LocalStrategy, AuthService],
   exports: [PassportModule, AuthService],
 })
 export class AuthModule {}

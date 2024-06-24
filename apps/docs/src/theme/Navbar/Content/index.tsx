@@ -52,7 +52,7 @@ function NavbarContentLayout({
   right: ReactNode;
 }) {
   return (
-    <div className="navbar__inner">
+    <div className={clsx('navbar__inner', styles.navbarInner)}>
       <div className="navbar__items">{left}</div>
       <NavbarLogo />
       <div

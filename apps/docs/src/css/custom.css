@@ -61,6 +61,10 @@
   align-items: center;
 }
 
+.menu__link--sublist-caret::after {
+  display: none;
+}
+
 .pagination-nav__link {
   border: none;
 }

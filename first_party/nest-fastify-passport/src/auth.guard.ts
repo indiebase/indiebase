@@ -83,6 +83,7 @@ function createAuthGuard(type?: string | string[]) {
         (err, user, info, status) =>
           this.handleRequest(err, user, info, context, status),
       );
+
       request[options.property || defaultOptions.property] = user;
       return true;
     }

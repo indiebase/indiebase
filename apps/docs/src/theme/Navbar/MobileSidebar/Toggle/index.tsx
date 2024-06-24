@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
 import { translate } from '@docusaurus/Translate';
-import IconMenu from '@theme/Icon/Menu';
 import clsx from 'clsx';
 import * as styles from './styles.css.ts';
+import { IconMenu2 } from '@tabler/icons-react';
 
 export default function MobileSidebarToggle(): JSX.Element {
   const { toggle, shown } = useNavbarMobileSidebar();
@@ -20,7 +20,7 @@ export default function MobileSidebarToggle(): JSX.Element {
       className={clsx('navbar__toggle ', 'clean-btn', styles.toggle)}
       type="button"
     >
-      <IconMenu />
+      <IconMenu2 />
     </button>
   );
 }

@@ -25,3 +25,5 @@ export const navbarItemExt = style({
     opacity: 0.6,
   },
 });
+
+export const navbarInner = style({ zIndex: 1 });

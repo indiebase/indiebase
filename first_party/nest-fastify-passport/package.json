@@ -62,10 +62,10 @@
     "passport-local": "1.0.0",
     "prettier": "3.2.5",
     "reflect-metadata": "0.2.2",
-    "release-it": "17.3.0",
+    "release-it": "17.4.0",
     "rxjs": "7.8.1",
     "ts-jest": "29.1.1",
-    "typescript": "5.4.5"
+    "typescript": "5.5.2"
   },
   "lint-staged": {
     "*.ts": [
