@@ -62,26 +62,28 @@ export class AuthController {
     summary: 'Sign in with github OAuth2',
   })
   @UseGuards(GithubGuard)
-  async github(@QueryEx() query: AuthDTO) {
-    
-  }
+  async github(@QueryEx() _query: AuthDTO) {}
 
   @Get('oauth/github/callback')
   @ApiOperation({
     summary: 'OAuth2 github callback',
   })
   @UseGuards(GithubGuard)
-  async githubCallback() {
-    // await this.authService.handleGithubCallback(req, session);
+  async githubCallback(@Req() req: FastifyRequest) {
+    await this.authService.handleGithubCallback(req);
+
+    return {
+      name: '111',
+    };
   }
 
   @Get('oauth/google')
   @ApiOperation({
     summary: 'Sign in with google OAuth2',
-    description: 'Must use this for first time',
+    description: '',
   })
   @UseGuards(GoogleGuard)
-  async google() {}
+  async google(@QueryEx() query: AuthDTO) {}
 
   @Get('google/callback')
   @ApiOperation({
@@ -95,27 +97,27 @@ export class AuthController {
   @Get('oauth/microsoft')
   @ApiOperation({
     summary: 'Sign in with microsoft OAuth2',
-    description: 'Must use this for first time',
+    description: '',
   })
   @UseGuards(GoogleGuard)
-  async microsoft() {}
+  async microsoft(@QueryEx() query: AuthDTO) {}
 
   @Get('microsoft/callback')
   @ApiOperation({
     summary: 'OAuth2 microsoft callback',
   })
   @UseGuards(GoogleGuard)
-  async microsoftCallback() {
+  async microsoftCallback(@QueryEx() query: AuthDTO) {
     // await this.authService.handleGithubCallback(req, session);
   }
 
   @Get('oauth/apple')
   @ApiOperation({
     summary: 'Sign in with apple OAuth2',
-    description: 'Must use this for first time',
+    description: '',
   })
   @UseGuards(GoogleGuard)
-  async apple() {}
+  async apple(@QueryEx() query: AuthDTO) {}
 
   @Get('apple/callback')
   @ApiOperation({
@@ -123,6 +125,57 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async appleCallback() {
+    // await this.authService.handleGithubCallback(req, session);
+  }
+
+  @Get('oauth/wechat')
+  @ApiOperation({
+    summary: 'Sign in with wechat OAuth2',
+    description: '',
+  })
+  @UseGuards(GoogleGuard)
+  async wechat(@QueryEx() query: AuthDTO) {}
+
+  @Get('wechat/callback')
+  @ApiOperation({
+    summary: 'OAuth2 wechat callback',
+  })
+  @UseGuards(GoogleGuard)
+  async wechatCallback() {
+    // await this.authService.handleGithubCallback(req, session);
+  }
+
+  @Get('oauth/qq')
+  @ApiOperation({
+    summary: 'Sign in with qq OAuth2',
+    description: '',
+  })
+  @UseGuards(GoogleGuard)
+  async qq(@QueryEx() query: AuthDTO) {}
+
+  @Get('qq/callback')
+  @ApiOperation({
+    summary: 'OAuth2 qq callback',
+  })
+  @UseGuards(GoogleGuard)
+  async qqCallback() {
+    // await this.authService.handleGithubCallback(req, session);
+  }
+
+  @Get('oauth/facebook')
+  @ApiOperation({
+    summary: 'Sign in with facebook OAuth2',
+    description: '',
+  })
+  @UseGuards(GoogleGuard)
+  async facebook(@QueryEx() query: AuthDTO) {}
+
+  @Get('facebook/callback')
+  @ApiOperation({
+    summary: 'OAuth2 facebook callback',
+  })
+  @UseGuards(GoogleGuard)
+  async facebookCallback() {
     // await this.authService.handleGithubCallback(req, session);
   }
 

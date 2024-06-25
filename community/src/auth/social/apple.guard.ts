@@ -6,7 +6,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 import { FastifyRequest } from 'fastify';
 import { Profile, Strategy, VerifyCallback } from 'passport-apple';
-import url from 'node:url';
+import { formatAuthProviderCallbackURL } from '@indiebase/server-shared';
 
 @Injectable()
 export class AppleGuard extends AuthGuard('apple') {
@@ -42,13 +42,12 @@ export class AppleGuard extends AuthGuard('apple') {
         keyID: '',
         teamID: '',
         passReqToCallback: true,
-        callbackURL: url.format({
-          protocol: req.protocol,
-          pathname: '/v1/auth/oauth/github/callback',
-          query: {
-            referenceId: project.referenceId,
-          },
-        }),
+        callbackURL: formatAuthProviderCallbackURL(
+          AvailableOAuthProviders.apple,
+          req.protocol,
+          req.hostname,
+          project.referenceId,
+        ),
       },
       function (
         req: any,

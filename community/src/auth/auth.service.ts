@@ -2,7 +2,12 @@ import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { AvailableOAuthProviders, ResultCode } from '@indiebase/sdk';
-import { INDIEBASE_MGR, KnexEx, MgrMetaTables } from '@indiebase/server-shared';
+import {
+  INDIEBASE_MGR,
+  KnexEx,
+  MgrMetaTables,
+  TmplMetaTables,
+} from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import {
   OAuthProvider,
@@ -17,6 +22,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
+import { FastifyRequest } from 'fastify';
 import { Redis } from 'ioredis';
 import { Knex } from 'knex';
 import { PasetoService } from 'nestjs-paseto';
@@ -66,7 +72,18 @@ export class AuthService {
     return user;
   }
 
-  public async handleGithubCallback(user: PrimitiveUser) {
+  public async handleGithubCallback(req: FastifyRequest) {
+    console.log(req.project);
+    // This project is get from query params referenceId
+    const { project, user } = req;
+
+    console.log(user, project);
+
+    const result = this.knex
+      .withSchema(project.namespace)
+      .insert({})
+      .into(MgrMetaTables.projects);
+
     // const { _json: json, username, profileUrl, id, displayName } = profile;
     // const r = await this.userService.signIn({
     //   username: username,
@@ -120,7 +137,7 @@ export class AuthService {
     return this.knex
       .withSchema(namespace)
       .select('*')
-      .from(MgrMetaTables.oauthProviders)
+      .from(TmplMetaTables.oauthProviders)
       .where('name', provider)
       .first<OAuthProvider>();
   }

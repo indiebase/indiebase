@@ -6,7 +6,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Strategy } from 'passport-google-oauth20';
 import { AuthService } from '../auth.service';
 import { FastifyRequest } from 'fastify';
-import url from 'node:url';
+import { formatAuthProviderCallbackURL } from '@indiebase/server-shared';
 
 @Injectable()
 export class GoogleGuard extends AuthGuard('google') {
@@ -38,13 +38,12 @@ export class GoogleGuard extends AuthGuard('google') {
       {
         clientID: clientId,
         clientSecret,
-        callbackURL: url.format({
-          protocol: req.protocol,
-          pathname: '/v1/auth/oauth/google/callback',
-          query: {
-            referenceId: project.referenceId,
-          },
-        }),
+        callbackURL: formatAuthProviderCallbackURL(
+          AvailableOAuthProviders.google,
+          req.protocol,
+          req.hostname,
+          project.referenceId,
+        ),
       },
       function (
         accessToken: string,
