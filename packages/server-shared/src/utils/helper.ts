@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape */
+import { AvailableOAuthProviders } from '@indiebase/sdk';
 import * as bcrypt from 'bcrypt';
 import * as forge from 'node-forge';
 import * as path from 'path';
@@ -149,3 +150,13 @@ export const hashSecret = async function (content: string, rounds = 10) {
  */
 export const legalizeName = (name: string, char = '_') =>
   name.replace(/[!-\/\s+]/g, char);
+
+export const formatAuthProviderCallbackURL = function (
+  provider: AvailableOAuthProviders,
+  protocol: string,
+  hostname: string,
+  referenceId: string,
+  version = 1,
+) {
+  return `${protocol}://${hostname}/v${version}/auth/oauth/${provider}/callback?referenceId=${referenceId}`;
+};

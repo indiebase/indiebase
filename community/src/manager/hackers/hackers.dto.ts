@@ -1,9 +1,9 @@
 import {
   INDIEBASE_MGR,
   IsEntityExisted,
-  MgrMetaTables,
   OkedResponseSchema,
   PaginatedRequestSchema,
+  TmplMetaTables,
 } from '@indiebase/server-shared';
 import { AccountStatus, Visibility } from '@indiebase/trait';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -16,7 +16,7 @@ export class CreateHackersDTO {
   })
   @IsEntityExisted({
     schema: INDIEBASE_MGR,
-    table: MgrMetaTables.hackers,
+    table: TmplMetaTables.users,
     column: 'email',
   })
   @IsEmail()

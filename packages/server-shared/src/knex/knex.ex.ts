@@ -84,7 +84,7 @@ export class KnexEx {
       .select('*')
       .from(
         namespace === INDIEBASE_MGR
-          ? MgrMetaTables.hackers
+          ? TmplMetaTables.users
           : TmplMetaTables.users,
       )
       .where('email', email)

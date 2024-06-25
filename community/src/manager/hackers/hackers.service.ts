@@ -1,5 +1,9 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { INDIEBASE_MGR, KnexEx } from '@indiebase/server-shared';
+import {
+  INDIEBASE_MGR,
+  KnexEx,
+  TmplMetaTables,
+} from '@indiebase/server-shared';
 import { hashSecret, MgrMetaTables } from '@indiebase/server-shared';
 import {
   Injectable,
@@ -59,7 +63,7 @@ export class HackersService {
   public async create(org: CreateHackersDTO) {
     let { email, password } = org;
     password = await hashSecret(password);
-    await this.knex<CreateHackersDTO>(MgrMetaTables.hackers)
+    await this.knex<CreateHackersDTO>(TmplMetaTables.users)
       .withSchema(INDIEBASE_MGR)
       .insert({
         email,

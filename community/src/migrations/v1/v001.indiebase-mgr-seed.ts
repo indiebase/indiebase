@@ -7,6 +7,7 @@ import {
   hashSecret,
   INDIEBASE_MGR,
   MgrMetaTables,
+  TmplMetaTables,
 } from '@indiebase/server-shared';
 import { OAuthProvider, PrimitiveProject } from '@indiebase/trait';
 import { Knex } from 'knex';
@@ -16,7 +17,6 @@ const indiebaseMgrOAuthProviders: Partial<OAuthProvider>[] = Object.values(
   AvailableOAuthProviders,
 ).map((name) => ({
   name,
-  callbackPath: `auth/oauth/${INDIEBASE_MGR}/${name}/callback`,
 }));
 
 /**
@@ -52,12 +52,12 @@ export const v001_indiebase_seed = async function (
           password,
           role: BuiltinIndiebaseRoles.OAA,
         })
-        .into(MgrMetaTables.hackers);
+        .into(TmplMetaTables.users);
 
       // Init indiebase manager's OAuth providers.
       await mgrSchema
         .insert(indiebaseMgrOAuthProviders)
-        .into(MgrMetaTables.oauthProviders);
+        .into(TmplMetaTables.oauthProviders);
 
       // Init indiebase manager self.
       await mgrSchema

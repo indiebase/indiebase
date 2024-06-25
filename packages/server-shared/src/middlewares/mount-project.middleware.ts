@@ -23,7 +23,9 @@ export class MountProjectMiddleware<
   ) {}
 
   async use(req: Request, _: Response, next: (...params: any) => void) {
-    const rId = req.headers[X_Indiebase_Reference_Id] as string;
+    const rId =
+      (req.headers[X_Indiebase_Reference_Id] as string) ??
+      req.query?.['referenceId'];
 
     if (rId) {
       if (rId === INDIEBASE_MGR) {

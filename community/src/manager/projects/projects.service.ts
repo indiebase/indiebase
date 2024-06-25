@@ -60,7 +60,7 @@ export class ProjectsService {
             projectId: result[0]?.id,
             hackerId: hacker.id,
           })
-          .into(MgrMetaTables._hackersProjects);
+          .into(MgrMetaTables._usersProjects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({

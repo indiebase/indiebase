@@ -2,7 +2,7 @@ export enum AvailableOAuthProviders {
   google = 'google',
   microsoft = 'microsoft',
   github = 'github',
-  twitter = 'twitter',
+  x = 'x',
   facebook = 'facebook',
   qq = 'qq',
   wechat = 'wechat',

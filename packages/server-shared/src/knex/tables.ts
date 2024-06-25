@@ -1,14 +1,14 @@
 export enum MgrMetaTables {
-  hackers = 'ib_hackers',
   orgs = 'ib_orgs',
   projects = 'ib_projects',
-  _hackersOrgs = '__ib_hackers_orgs',
-  _hackersProjects = '__ib_hackers_projects',
+  _usersOrgs = '__ib_users_orgs',
+  _usersProjects = '__ib_users_projects',
   roles = 'ib_roles',
   grants = 'ib_grants',
   _migrations = '__knex_indiebase_migration',
   _seedMigrations = '__knex_indiebase_seed_migration',
   oauthProviders = 'ib_oauth_providers',
+  oauthUserInfo = 'ib_oauth_user_info',
 }
 
 export enum TmplMetaTables {
@@ -17,4 +17,5 @@ export enum TmplMetaTables {
   grants = 'ib_grants',
   buckets = 'ib_buckets',
   oauthProviders = 'ib_oauth_providers',
+  oauthUserInfo = 'ib_oauth_user_info',
 }
