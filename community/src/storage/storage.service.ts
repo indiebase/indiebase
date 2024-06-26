@@ -10,7 +10,7 @@ import {
   InjectS3,
   S3Client,
 } from '@indiebase/nest-s3';
-import { TmplMetaTables } from '@indiebase/server-shared';
+import { TmplTables } from '@indiebase/server-shared';
 import { PrimitiveProject } from '@indiebase/trait';
 import {
   ConflictException,
@@ -101,13 +101,13 @@ export class StorageService {
     return this.knex
       .withSchema(namespace)
       .select([
-        `${TmplMetaTables.buckets}.id`,
-        `${TmplMetaTables.buckets}.name`,
-        `${TmplMetaTables.buckets}.description`,
-        `${TmplMetaTables.buckets}.updatedAt`,
-        `${TmplMetaTables.buckets}.createdAt`,
+        `${TmplTables.buckets}.id`,
+        `${TmplTables.buckets}.name`,
+        `${TmplTables.buckets}.description`,
+        `${TmplTables.buckets}.updatedAt`,
+        `${TmplTables.buckets}.createdAt`,
       ])
-      .from(TmplMetaTables.buckets);
+      .from(TmplTables.buckets);
   }
 
   public async getFile(bucket: string, key: string) {
@@ -132,7 +132,7 @@ export class StorageService {
         name: name,
         description,
       })
-      .into(TmplMetaTables.buckets);
+      .into(TmplTables.buckets);
     const createBucketCommand = new CreateBucketCommand({
       Bucket: name,
     });
@@ -153,7 +153,7 @@ export class StorageService {
   }
 
   public async softDeleteBucket(name: string, project: PrimitiveProject) {
-    return this.knex(TmplMetaTables.buckets)
+    return this.knex(TmplTables.buckets)
       .withSchema(project.namespace)
       .update('deleted_at', this.knex.fn.now())
       .where({
@@ -162,7 +162,7 @@ export class StorageService {
   }
 
   public async deleteBucket(name: string, project: PrimitiveProject) {
-    await this.knex(TmplMetaTables.buckets)
+    await this.knex(TmplTables.buckets)
       .withSchema(project.namespace)
       .where({
         name,

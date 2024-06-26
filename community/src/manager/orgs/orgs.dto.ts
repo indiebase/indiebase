@@ -2,7 +2,7 @@ import {
   INDIEBASE_MGR,
   IsEntityExisted,
   IsIndiebaseLegalName,
-  MgrMetaTables,
+  MgrTables,
   OkedResponseSchema,
   PaginatedRequestSchema,
 } from '@indiebase/server-shared';
@@ -16,7 +16,7 @@ export class CreateOrgDTO {
   })
   @IsEntityExisted({
     schema: INDIEBASE_MGR,
-    table: MgrMetaTables.orgs,
+    table: MgrTables.orgs,
     column: 'name',
   })
   @IsIndiebaseLegalName()
@@ -31,7 +31,7 @@ export class UpdateOrgParamsDTO {
   @IsEntityExisted(
     {
       schema: INDIEBASE_MGR,
-      table: MgrMetaTables.orgs,
+      table: MgrTables.orgs,
       column: 'name',
     },
     {

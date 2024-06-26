@@ -1,13 +1,13 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { AuthnTypes, AvailableOAuthProviders } from '@indiebase/sdk';
-import {
-  KnexEx,
-  MgrMetaTables,
-  TmplMetaTables,
-} from '@indiebase/server-shared';
+import { KnexEx, MgrTables, TmplTables } from '@indiebase/server-shared';
 import { AccountStatus, ProjectStatus, Visibility } from '@indiebase/trait';
 import { Knex } from 'knex';
-import { v001_user_table } from './v001.tmpl';
+import {
+  v001_buckets_table,
+  v001_oauth_user_info_table,
+  v001_user_table,
+} from './v001.tmpl';
 
 export const v001_indiebase = async function (
   schema: string,
@@ -18,13 +18,12 @@ export const v001_indiebase = async function (
       const knexExSchema = await knexEx.schema
         .withSchema(schema)
         .initBuiltinFuncs();
-
       /**
        * ib_roles
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.roles, (table) => {
+        .createTable(MgrTables.roles, (table) => {
           table.increments('id').primary();
           table.string('role').unique().index().notNullable();
           table.string('description');
@@ -32,60 +31,34 @@ export const v001_indiebase = async function (
           table.timestamp('deleted_at').comment('Soft delete role timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.roles);
+          await knexExSchema.createUpdatedAtTrigger(MgrTables.roles);
         });
-
       /**
-       * ib_oauth_info
+       * ib_oauth_user_info
        */
-      knex.schema
-        .withSchema(schema)
-        .createTable(TmplMetaTables.oauthUserInfo, (table) => {
-          table.increments('id').primary();
-          table
-            .enum('provider', Object.values(AvailableOAuthProviders))
-            .notNullable();
-          table.string('access_token').notNullable();
-          table.string('refresh_token');
-          table
-            .jsonb('extra_payload')
-            .comment('Extra info get from oauth provider');
-          table
-            .integer('user_id')
-            .unsigned()
-            .index()
-            .references('id')
-            .inTable(`${schema}.${TmplMetaTables.users}`)
-            .comment('The user id');
-
-          table.timestamps(true, true);
-        })
-        .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(
-            TmplMetaTables.oauthUserInfo,
-          );
-        });
-
+      await v001_oauth_user_info_table(schema, knex, knexExSchema);
       /**
        * ib_users
        */
-
       await v001_user_table(schema, knex, knexExSchema, (table) => {
         table.string('bio').comment('User biography');
         table.string('homepage').unique().nullable().comment('Hacker homepage');
         table.string('github_username').comment('Github username not nickname');
         table
+          .string('role')
+          .references('role')
+          .inTable(`${schema}.${MgrTables.roles}`);
+        table
           .enum('visibility', Object.values(Visibility))
           .defaultTo(Visibility.public)
           .comment('User visibility');
       });
-
       /**
        * ib_orgs
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.orgs, (table) => {
+        .createTable(MgrTables.orgs, (table) => {
           table.increments('id').primary();
           table.string('name').unique().index().notNullable();
           table.string('description');
@@ -111,7 +84,7 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${TmplMetaTables.users}`)
+            .inTable(`${schema}.${TmplTables.users}`)
             .comment('The organization owner id');
 
           table.timestamps(true, true);
@@ -120,15 +93,14 @@ export const v001_indiebase = async function (
             .comment('Soft delete organization timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.orgs);
+          await knexExSchema.createUpdatedAtTrigger(MgrTables.orgs);
         });
-
       /**
        * ib_projects
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.projects, (table) => {
+        .createTable(MgrTables.projects, (table) => {
           table.increments('id').primary();
           table.string('name').unique().index().notNullable();
           table.string('description');
@@ -164,7 +136,7 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${MgrMetaTables.orgs}`)
+            .inTable(`${schema}.${MgrTables.orgs}`)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
           table
@@ -172,7 +144,7 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${TmplMetaTables.users}`)
+            .inTable(`${schema}.${TmplTables.users}`)
             .comment('The project owner id');
 
           table.timestamps(true, true);
@@ -181,15 +153,14 @@ export const v001_indiebase = async function (
             .comment('Soft delete project timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.projects);
+          await knexExSchema.createUpdatedAtTrigger(MgrTables.projects);
         });
-
       /**
        * ib_grants
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables.grants, (table) => {
+        .createTable(MgrTables.grants, (table) => {
           table.increments('id').primary();
           table.string('role').index().notNullable();
           table.string('resource').notNullable();
@@ -199,7 +170,7 @@ export const v001_indiebase = async function (
           table.timestamp('deleted_at').comment('Soft delete grants timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables.grants);
+          await knexExSchema.createUpdatedAtTrigger(MgrTables.grants);
         });
 
       /**
@@ -208,14 +179,14 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables._usersOrgs, (table) => {
+        .createTable(MgrTables._usersOrgs, (table) => {
           table.increments('id').primary();
           table
             .integer('user_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${TmplMetaTables.users}`)
+            .inTable(`${schema}.${TmplTables.users}`)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
 
@@ -224,7 +195,7 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${MgrMetaTables.orgs}`)
+            .inTable(`${schema}.${MgrTables.orgs}`)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
 
@@ -232,7 +203,7 @@ export const v001_indiebase = async function (
           table.timestamp('deleted_at');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(MgrMetaTables._usersOrgs);
+          await knexExSchema.createUpdatedAtTrigger(MgrTables._usersOrgs);
         });
       /**
        * Intermediate table
@@ -240,14 +211,14 @@ export const v001_indiebase = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(MgrMetaTables._usersProjects, (table) => {
+        .createTable(MgrTables._usersProjects, (table) => {
           table.increments('id').primary();
           table
             .integer('user_id')
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${TmplMetaTables.users}`)
+            .inTable(`${schema}.${TmplTables.users}`)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
           table
@@ -255,24 +226,23 @@ export const v001_indiebase = async function (
             .unsigned()
             .index()
             .references('id')
-            .inTable(`${schema}.${MgrMetaTables.projects}`)
+            .inTable(`${schema}.${MgrTables.projects}`)
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(
-            MgrMetaTables._usersProjects,
-          );
+          await knexExSchema.createUpdatedAtTrigger(MgrTables._usersProjects);
         });
+
       /**
        * OAuth provider infos.
        * ib_oauth_providers
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(TmplMetaTables.oauthProviders, (table) => {
+        .createTable(TmplTables.oauthProviders, (table) => {
           table.increments('id').primary();
           table
             .enum('name', Object.values(AvailableOAuthProviders))
@@ -294,42 +264,20 @@ export const v001_indiebase = async function (
           table
             .jsonb('extra_payload')
             .comment('e.g. WorkOS URL, gitlab Self Hosted GitLab URL');
-          table
-            .integer('project_id')
-            .unsigned()
-            .index()
-            .references('id')
-            .inTable(`${schema}.${MgrMetaTables.projects}`);
 
           table.timestamps(true, true);
           table.timestamp('deleted_at');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(
-            TmplMetaTables.oauthProviders,
-          );
+          await knexExSchema.createUpdatedAtTrigger(TmplTables.oauthProviders);
         });
-
       /**
        * ib_buckets
        */
-      await knex.schema
-        .withSchema(schema)
-        .createTable(TmplMetaTables.buckets, (table) => {
-          table.increments('id').primary();
-          table.string('name').unique().index().notNullable();
-          table.string('description').notNullable();
-          table.timestamps(true, true);
-          table
-            .timestamp('deleted_at')
-            .comment('Soft delete buckets timestamp');
-        })
-        .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(TmplMetaTables.buckets);
-        });
+      await v001_buckets_table(schema, knex, knexExSchema);
     },
     async down(knex: Knex) {
-      for (const tableName in MgrMetaTables) {
+      for (const tableName in MgrTables) {
         await knex.schema.withSchema(schema).dropTable(tableName);
       }
     },

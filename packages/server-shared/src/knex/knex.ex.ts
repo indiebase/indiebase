@@ -4,7 +4,7 @@ import { Knex } from 'knex';
 import { INDIEBASE_MGR } from '../constants';
 import { KnexKV } from './knex.kv';
 import { KnexSchemaEx } from './schema.ex';
-import { MgrMetaTables, TmplMetaTables } from './tables';
+import { MgrTables, TmplTables } from './tables';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
@@ -31,7 +31,7 @@ export class KnexEx {
     return this.knex
       .withSchema(INDIEBASE_MGR)
       .select('*')
-      .from(MgrMetaTables.orgs)
+      .from(MgrTables.orgs)
       .where('name', orgName)
       .then((v) => {
         return Array.isArray(v) && v.length > 0;
@@ -42,21 +42,21 @@ export class KnexEx {
     return this.knex
       .withSchema(INDIEBASE_MGR)
       .select('*')
-      .from(MgrMetaTables.projects);
+      .from(MgrTables.projects);
   }
 
   /**
-   * Get get project by project_id(header:x-indiebase-reference-id), not the primary key.
+   * Get get project by reference_id(header:x-indiebase-reference-id), not the primary key.
    *
-   * @param {String} projectId
+   * @param {String} referenceId
    * @returns
    */
-  public async getProjectByReferenceId(projectId: string) {
+  public async getProjectByReferenceId(referenceId: string) {
     return this.knex
       .withSchema(INDIEBASE_MGR)
       .select('*')
-      .from(MgrMetaTables.projects)
-      .where('project_id', projectId)
+      .from(MgrTables.projects)
+      .where('reference_id', referenceId)
       .first();
   }
 
@@ -82,11 +82,7 @@ export class KnexEx {
     const result = await this.knex
       .withSchema(namespace)
       .select('*')
-      .from(
-        namespace === INDIEBASE_MGR
-          ? TmplMetaTables.users
-          : TmplMetaTables.users,
-      )
+      .from(namespace === INDIEBASE_MGR ? TmplTables.users : TmplTables.users)
       .where('email', email)
       .first();
 

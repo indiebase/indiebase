@@ -2,28 +2,22 @@ import {
   INDIEBASE_MGR,
   IsEntityExisted,
   SpecificProjectType,
-  TmplMetaTables,
+  TmplTables,
 } from '@indiebase/server-shared';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsHash } from 'class-validator';
 
 export class LocalSignInDTO {
   @ApiProperty({
-    description: 'Hacker account',
+    description: 'Email as account name',
     default: 'dev@indiebase.com',
     examples: ['one@email.com', 'two@email.com'],
   })
   @IsEntityExisted(
     {
       type: SpecificProjectType.fromHeader,
-      table: TmplMetaTables.users,
+      table: TmplTables.users,
       column: 'email',
-      $eq: {
-        indiebase_mgr: {
-          table: TmplMetaTables.users,
-          column: 'email',
-        },
-      },
     },
     {
       throwExistedMsg: false,

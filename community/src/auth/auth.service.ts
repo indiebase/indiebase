@@ -5,8 +5,8 @@ import { AvailableOAuthProviders, ResultCode } from '@indiebase/sdk';
 import {
   INDIEBASE_MGR,
   KnexEx,
-  MgrMetaTables,
-  TmplMetaTables,
+  MgrTables,
+  TmplTables,
 } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import {
@@ -73,16 +73,15 @@ export class AuthService {
   }
 
   public async handleGithubCallback(req: FastifyRequest) {
-    console.log(req.project);
     // This project is get from query params referenceId
-    const { project, user } = req;
-
-    console.log(user, project);
-
+    const {
+      user,
+      raw: { project },
+    } = req;
     const result = this.knex
       .withSchema(project.namespace)
       .insert({})
-      .into(MgrMetaTables.projects);
+      .into(MgrTables.projects);
 
     // const { _json: json, username, profileUrl, id, displayName } = profile;
     // const r = await this.userService.signIn({
@@ -137,7 +136,7 @@ export class AuthService {
     return this.knex
       .withSchema(namespace)
       .select('*')
-      .from(TmplMetaTables.oauthProviders)
+      .from(TmplTables.oauthProviders)
       .where('name', provider)
       .first<OAuthProvider>();
   }

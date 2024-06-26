@@ -16,7 +16,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
   Req,
   Res,
@@ -44,7 +43,7 @@ export class AuthController {
   @Post('signin')
   async signIn(
     @Body()
-    _: LocalSignInDTO,
+    _body: LocalSignInDTO,
     @User() user: PrimitiveUser,
     @Project() project: PrimitiveProject,
   ) {
@@ -52,21 +51,21 @@ export class AuthController {
 
     return data({
       code: ResultCode.SUCCESS,
-      message: 'Login Successfully',
+      message: 'Sign in successfully',
       accessToken,
     });
   }
 
   @Get('oauth/github')
   @ApiOperation({
-    summary: 'Sign in with github OAuth2',
+    summary: 'Sign in with Github OAuth2',
   })
   @UseGuards(GithubGuard)
   async github(@QueryEx() _query: AuthDTO) {}
 
   @Get('oauth/github/callback')
   @ApiOperation({
-    summary: 'OAuth2 github callback',
+    summary: 'OAuth2 Github callback',
   })
   @UseGuards(GithubGuard)
   async githubCallback(@Req() req: FastifyRequest) {
@@ -79,7 +78,7 @@ export class AuthController {
 
   @Get('oauth/google')
   @ApiOperation({
-    summary: 'Sign in with google OAuth2',
+    summary: 'Sign in with Google OAuth2',
     description: '',
   })
   @UseGuards(GoogleGuard)
@@ -87,7 +86,7 @@ export class AuthController {
 
   @Get('google/callback')
   @ApiOperation({
-    summary: 'OAuth2 google callback',
+    summary: 'OAuth2 Google callback',
   })
   @UseGuards(GoogleGuard)
   async googleCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
@@ -96,7 +95,7 @@ export class AuthController {
 
   @Get('oauth/microsoft')
   @ApiOperation({
-    summary: 'Sign in with microsoft OAuth2',
+    summary: 'Sign in with Microsoft OAuth2',
     description: '',
   })
   @UseGuards(GoogleGuard)
@@ -104,7 +103,7 @@ export class AuthController {
 
   @Get('microsoft/callback')
   @ApiOperation({
-    summary: 'OAuth2 microsoft callback',
+    summary: 'OAuth2 Microsoft callback',
   })
   @UseGuards(GoogleGuard)
   async microsoftCallback(@QueryEx() query: AuthDTO) {
@@ -113,7 +112,7 @@ export class AuthController {
 
   @Get('oauth/apple')
   @ApiOperation({
-    summary: 'Sign in with apple OAuth2',
+    summary: 'Sign in with Apple OAuth2',
     description: '',
   })
   @UseGuards(GoogleGuard)
@@ -121,7 +120,7 @@ export class AuthController {
 
   @Get('apple/callback')
   @ApiOperation({
-    summary: 'OAuth2 apple callback',
+    summary: 'OAuth2 Apple callback',
   })
   @UseGuards(GoogleGuard)
   async appleCallback() {
@@ -130,7 +129,7 @@ export class AuthController {
 
   @Get('oauth/wechat')
   @ApiOperation({
-    summary: 'Sign in with wechat OAuth2',
+    summary: 'Sign in with WeChat OAuth2',
     description: '',
   })
   @UseGuards(GoogleGuard)
@@ -138,7 +137,7 @@ export class AuthController {
 
   @Get('wechat/callback')
   @ApiOperation({
-    summary: 'OAuth2 wechat callback',
+    summary: 'OAuth2 WeChat callback',
   })
   @UseGuards(GoogleGuard)
   async wechatCallback() {
@@ -147,7 +146,7 @@ export class AuthController {
 
   @Get('oauth/qq')
   @ApiOperation({
-    summary: 'Sign in with qq OAuth2',
+    summary: 'Sign in with QQ OAuth2',
     description: '',
   })
   @UseGuards(GoogleGuard)
@@ -155,7 +154,7 @@ export class AuthController {
 
   @Get('qq/callback')
   @ApiOperation({
-    summary: 'OAuth2 qq callback',
+    summary: 'OAuth2 QQ callback',
   })
   @UseGuards(GoogleGuard)
   async qqCallback() {
@@ -164,7 +163,7 @@ export class AuthController {
 
   @Get('oauth/facebook')
   @ApiOperation({
-    summary: 'Sign in with facebook OAuth2',
+    summary: 'Sign in with Facebook OAuth2',
     description: '',
   })
   @UseGuards(GoogleGuard)
@@ -172,7 +171,7 @@ export class AuthController {
 
   @Get('facebook/callback')
   @ApiOperation({
-    summary: 'OAuth2 facebook callback',
+    summary: 'OAuth2 Facebook callback',
   })
   @UseGuards(GoogleGuard)
   async facebookCallback() {
@@ -181,7 +180,7 @@ export class AuthController {
 
   @Post('signout')
   @ApiOperation({
-    summary: 'Logout',
+    summary: 'Sign out a user',
   })
   @UseGuards()
   async signout(@Req() req: FastifyRequest) {

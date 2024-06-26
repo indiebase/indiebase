@@ -1,4 +1,4 @@
-export enum MgrMetaTables {
+export enum MgrTables {
   orgs = 'ib_orgs',
   projects = 'ib_projects',
   _usersOrgs = '__ib_users_orgs',
@@ -11,7 +11,7 @@ export enum MgrMetaTables {
   oauthUserInfo = 'ib_oauth_user_info',
 }
 
-export enum TmplMetaTables {
+export enum TmplTables {
   users = 'ib_users',
   roles = 'ib_roles',
   grants = 'ib_grants',

@@ -6,8 +6,8 @@ import {
   defaultIndiebaseGrants,
   hashSecret,
   INDIEBASE_MGR,
-  MgrMetaTables,
-  TmplMetaTables,
+  MgrTables,
+  TmplTables,
 } from '@indiebase/server-shared';
 import { OAuthProvider, PrimitiveProject } from '@indiebase/trait';
 import { Knex } from 'knex';
@@ -34,13 +34,13 @@ export const v001_indiebase_seed = async function (
 
       // Init default roles.
       const arr = grantsRecord2Array(defaultIndiebaseGrants);
-      await mgrSchema.insert(arr).into(MgrMetaTables.grants);
+      await mgrSchema.insert(arr).into(MgrTables.grants);
       await mgrSchema
         .insert({
           role: BuiltinIndiebaseRoles.OAA,
           description: 'Site owner',
         })
-        .into(MgrMetaTables.roles);
+        .into(MgrTables.roles);
 
       // Init OAA user.
       const { OAA_EMAIL, OAA_PASSWORD } = process.env;
@@ -52,12 +52,12 @@ export const v001_indiebase_seed = async function (
           password,
           role: BuiltinIndiebaseRoles.OAA,
         })
-        .into(TmplMetaTables.users);
+        .into(TmplTables.users);
 
       // Init indiebase manager's OAuth providers.
       await mgrSchema
         .insert(indiebaseMgrOAuthProviders)
-        .into(TmplMetaTables.oauthProviders);
+        .into(TmplTables.oauthProviders);
 
       // Init indiebase manager self.
       await mgrSchema
@@ -66,7 +66,7 @@ export const v001_indiebase_seed = async function (
           name: INDIEBASE_MGR,
           referenceId: INDIEBASE_MGR,
         })
-        .into(MgrMetaTables.projects);
+        .into(MgrTables.projects);
     },
     async down() {},
   };

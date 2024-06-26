@@ -24,7 +24,9 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
       context.getHandler(),
     );
 
-    if (!meta) return true;
+    console.log(!meta, Object.keys(meta).length < 1);
+
+    if (!meta || Object.keys(meta).length < 1) return true;
 
     const role = await this.useRole?.(context);
     const namespace = await this.useNamespace?.(context);
