@@ -78,10 +78,15 @@ export class AuthService {
       user,
       raw: { project },
     } = req;
-    const result = this.knex
+    const result = await this.knex
       .withSchema(project.namespace)
-      .insert({})
-      .into(MgrTables.projects);
+      .insert({
+        provider: AvailableOAuthProviders.github,
+        accessToken: user['accessToken'],
+        refreshToken: user['refreshToken'],
+        extraPayload: user['profile'],
+      })
+      .into(TmplTables.oauthUserInfo);
 
     // const { _json: json, username, profileUrl, id, displayName } = profile;
     // const r = await this.userService.signIn({
