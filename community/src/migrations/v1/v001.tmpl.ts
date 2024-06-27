@@ -69,7 +69,9 @@ export const v001_oauth_user_info_table = async (
         .index()
         .references('id')
         .inTable(`${schema}.${TmplTables.users}`)
-        .comment('The user id');
+        .comment('The user id')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
 
       table.timestamps(true, true);
 
@@ -98,6 +100,50 @@ export const v001_buckets_table = async (
     })
     .then(async () => {
       await knexExSchema.createUpdatedAtTrigger(TmplTables.buckets);
+    });
+};
+
+export const v001_oauth_providers_table = async (
+  schema: string,
+  knex: Knex,
+  knexExSchema: KnexSchemaEx,
+  extend?: (table: Knex.CreateTableBuilder) => void,
+) => {
+  /**
+   * OAuth provider infos.
+   * ib_oauth_providers
+   */
+  await knex.schema
+    .withSchema(schema)
+    .createTable(TmplTables.oauthProviders, (table) => {
+      table.increments('id').primary();
+      table
+        .enum('name', Object.values(AvailableOAuthProviders))
+        .comment('Provider name, e.g. google, microsoft');
+      table
+        .boolean('enabled')
+        .defaultTo(false)
+        .comment('Enable the login method');
+      table.string('client_id').comment('Client ID for OAuth');
+      table.string('client_secret').comment('Client secret for OAuth');
+      table
+        .string('callback_path')
+        .comment('Callback URL for OAuth. Only the path is stored');
+      table
+        .specificType('authorized_client_ids', 'varchar[]')
+        .comment(
+          'Authorized Client IDs e.g. Apple (iOS, macOS, watchOS, tvOS bundle IDs or service IDs), Google (for Android, One Tap, and Chrome extensions)',
+        );
+      table
+        .jsonb('extra_payload')
+        .comment('e.g. WorkOS URL, gitlab Self Hosted GitLab URL');
+
+      table.timestamps(true, true);
+      table.timestamp('deleted_at');
+      extend?.(table);
+    })
+    .then(async () => {
+      await knexExSchema.createUpdatedAtTrigger(TmplTables.oauthProviders);
     });
 };
 
@@ -164,6 +210,8 @@ export const v001_tmpl = async function (
        * ib_buckets
        */
       await v001_buckets_table(schema, knex, knexExSchema);
+
+      await v001_oauth_providers_table(schema, knex, knexExSchema);
     },
     async down(_knex: Knex) {},
   };

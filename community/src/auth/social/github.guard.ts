@@ -30,6 +30,8 @@ export class GithubGuard extends AuthGuard('github') {
       AvailableOAuthProviders.github,
     );
 
+    console.log(clientId, clientSecret);
+
     if (!clientId || !clientSecret) {
       throw new UnauthorizedException();
     }

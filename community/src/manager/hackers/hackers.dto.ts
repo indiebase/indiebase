@@ -1,3 +1,4 @@
+import { UserDTO } from '../../users/users.dto';
 import {
   INDIEBASE_MGR,
   IsEntityExisted,
@@ -9,7 +10,7 @@ import { AccountStatus, Visibility } from '@indiebase/trait';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsHash, IsOptional, IsString, IsUrl } from 'class-validator';
 
-export class CreateHackersDTO {
+export class SignUpHackersDTO {
   @ApiProperty({
     description: 'Hacker account',
     default: 'dev@indiebase.com',
@@ -33,7 +34,7 @@ export class CreateHackersDTO {
   password!: string;
 }
 
-export class UpdateHackersDTO extends CreateHackersDTO {
+export class UpdateHackersDTO extends SignUpHackersDTO {
   @ApiPropertyOptional({
     default: 'dev@indiebase.com',
   })
@@ -66,66 +67,20 @@ export class ListHackersRequestDTO extends PaginatedRequestSchema {}
 
 export class CreateHackersResDTO extends OkedResponseSchema {}
 
-export class HackerDTO {
-  @ApiProperty({
-    description: 'Hacker ID',
-  })
-  id!: number;
-
-  @ApiProperty({
-    description: 'Hacker email',
-  })
-  email!: number;
-
-  @ApiPropertyOptional({
-    description: 'Hacker nickname',
-  })
-  nickname?: string;
-
-  @ApiPropertyOptional({
-    description: 'Hacker avatar url',
-  })
-  avatarUrl?: string;
-
+export class HackerDTO extends UserDTO {
   @ApiPropertyOptional({
     description: 'Biography',
   })
   bio?: string;
 
   @ApiPropertyOptional({
-    description: 'Prefer language',
-  })
-  language?: string;
-
-  @ApiPropertyOptional({
-    description: 'Authentication Type',
-  })
-  authnType?: string;
-
-  @ApiPropertyOptional({
-    description: 'One time password secret',
-  })
-  enabledOtp?: boolean;
-
-  @ApiPropertyOptional({
-    description: 'Location of registration',
-  })
-  location?: string;
-
-  @ApiPropertyOptional({
-    description: 'Hacker visibility',
+    description: 'User visibility',
     enum: Visibility,
   })
   visibility?: Visibility;
 
   @ApiPropertyOptional({
-    description: 'Account status',
-    enum: AccountStatus,
-  })
-  accountStatus?: AccountStatus;
-
-  @ApiPropertyOptional({
-    description: 'Hacker homepage',
+    description: 'User homepage',
   })
   homepage?: string;
 
@@ -133,24 +88,4 @@ export class HackerDTO {
     description: 'Github username not nickname',
   })
   githubUsername?: string;
-
-  @ApiPropertyOptional({
-    description: 'Role',
-  })
-  role?: string;
-
-  @ApiPropertyOptional({
-    description: 'User sign in timestamp',
-  })
-  signInAt?: string;
-
-  @ApiProperty({
-    description: 'Organization created timestamp',
-  })
-  createdAt!: Date;
-
-  @ApiProperty({
-    description: 'Organization updated timestamp',
-  })
-  updatedAt!: Date;
 }

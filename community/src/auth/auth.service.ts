@@ -1,16 +1,16 @@
 import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
-import { AvailableOAuthProviders, ResultCode } from '@indiebase/sdk';
 import {
-  INDIEBASE_MGR,
-  KnexEx,
-  MgrTables,
-  TmplTables,
-} from '@indiebase/server-shared';
+  AuthnTypes,
+  AvailableOAuthProviders,
+  ResultCode,
+} from '@indiebase/sdk';
+import { INDIEBASE_MGR, KnexEx, TmplTables } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import {
   OAuthProvider,
+  User,
   type PrimitiveProject,
   type PrimitiveUser,
 } from '@indiebase/trait';
@@ -78,47 +78,64 @@ export class AuthService {
       user,
       raw: { project },
     } = req;
-    const result = await this.knex
-      .withSchema(project.namespace)
-      .insert({
-        provider: AvailableOAuthProviders.github,
-        accessToken: user['accessToken'],
-        refreshToken: user['refreshToken'],
-        extraPayload: user['profile'],
-      })
-      .into(TmplTables.oauthUserInfo);
+    const { namespace, referenceId, name } = project;
 
-    // const { _json: json, username, profileUrl, id, displayName } = profile;
-    // const r = await this.userService.signIn({
-    //   username: username,
-    //   profileUrl: profileUrl,
-    //   githubId: id,
-    //   nickname: displayName,
-    //   email: json?.email,
-    //   avatar: json?.avatar_url,
-    //   bio: json?.bio,
-    //   githubAccessToken: accessToken,
-    // });
-    // session.set('user', {
-    //   loggedIn: true,
-    //   id: r.id,
-    //   username,
-    //   githubAccessToken: user.accessToken,
-    // });
-    // session.cookie.expires = new Date(
-    //   Date.now() + 60 * 60 * 1000 * 24 * 30 * 99,
-    // );
-    // session.cookie.domain = getSubdomain(
-    //   new URL(`${req.protocol}://${req.hostname}`).hostname,
-    //   2,
-    // );
+    if (!user?.profile?._json) {
+      throw new InternalServerErrorException('Can not get info from Github');
+    }
+    const { profile } = user;
+    const { _json } = profile;
+    return this.knex
+      .transaction(async (trx) => {
+        const result = await trx
+          .withSchema(namespace)
+          .insert({
+            nickname: profile.displayName,
+            email: _json.email,
+            authnType: AuthnTypes.oauth2,
+          })
+          .returning<Pick<User, 'id' | 'email'>[]>(['id', 'email'])
+          .into(TmplTables.users);
+
+        const { id, email } = result[0] ?? {};
+
+        await trx
+          .withSchema(namespace)
+          .insert({
+            provider: AvailableOAuthProviders.github,
+            accessToken: user['accessToken'],
+            refreshToken: user['refreshToken'],
+            extraPayload: user['profile'],
+            userId: id,
+          })
+          .into(TmplTables.oauthUserInfo);
+
+        const token = await this.paseto.sign({
+          id,
+          email,
+          project: name,
+          referenceId,
+          namespace,
+        });
+
+        await this.redis.set(
+          RedisUtils.createKey(BusinessLabels.accessToken, namespace, id),
+          token,
+        );
+
+        return token;
+      })
+      .catch((err) => {
+        this.logger.error(err);
+        throw new InternalServerErrorException({
+          message: 'An error occurred while sign in with Github',
+        });
+      });
   }
 
   public async signIn(user: PrimitiveUser, project: PrimitiveProject) {
     const { namespace, name, referenceId } = project;
     const { email, id, role } = user;
-
-    // this.knex.withSchema(namespace).
 
     const token = await this.paseto.sign({
       id,

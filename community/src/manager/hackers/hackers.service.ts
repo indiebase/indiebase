@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Knex } from 'knex';
 
-import { CreateHackersDTO, UpdateHackersDTO } from './hackers.dto';
+import { SignUpHackersDTO, UpdateHackersDTO } from './hackers.dto';
 
 @Injectable()
 export class HackersService {
@@ -53,13 +53,13 @@ export class HackersService {
   }
 
   /**
-   * This function will create an organizational namespace by using schema,
+   * This function will create an project namespace by using schema,
    * enabling data isolation.
    */
-  public async create(org: CreateHackersDTO) {
-    let { email, password } = org;
+  public async create(hacker: SignUpHackersDTO) {
+    let { email, password } = hacker;
     password = await hashSecret(password);
-    await this.knex<CreateHackersDTO>(TmplTables.users)
+    await this.knex<SignUpHackersDTO>(TmplTables.users)
       .withSchema(INDIEBASE_MGR)
       .insert({
         email,

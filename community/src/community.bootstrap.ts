@@ -1,4 +1,4 @@
-import { NOP } from '@deskbtm/gadgets';
+import { NOP } from '@deskbtm/gadgets/nop';
 import fastifyCookie from '@fastify/cookie';
 import fastifyHelmet from '@fastify/helmet';
 import fastifyMultipart from '@fastify/multipart';
@@ -108,7 +108,6 @@ export class CommunityBootstrap {
     fastifyPassport.registerUserSerializer(NOP as any);
 
     await this.app.register(fastifyMultipart, {
-      // attachFieldsToBody: true,
       limits: {
         fileSize: sizeParser(this.config.get('storage.file.limit')!),
       },

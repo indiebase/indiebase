@@ -69,11 +69,13 @@ export class AuthController {
   })
   @UseGuards(GithubGuard)
   async githubCallback(@Req() req: FastifyRequest) {
-    await this.authService.handleGithubCallback(req);
+    const accessToken = await this.authService.handleGithubCallback(req);
 
-    return {
-      name: '111',
-    };
+    return data({
+      code: ResultCode.SUCCESS,
+      message: 'Sign in successfully',
+      accessToken,
+    });
   }
 
   @Get('oauth/google')

@@ -1,15 +1,15 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
-import { AuthnTypes, AvailableOAuthProviders } from '@indiebase/sdk';
 import { KnexEx, MgrTables, TmplTables } from '@indiebase/server-shared';
-import { AccountStatus, ProjectStatus, Visibility } from '@indiebase/trait';
+import { ProjectStatus, Visibility } from '@indiebase/trait';
 import { Knex } from 'knex';
 import {
   v001_buckets_table,
+  v001_oauth_providers_table,
   v001_oauth_user_info_table,
   v001_user_table,
 } from './v001.tmpl';
 
-export const v001_indiebase = async function (
+export const v001_indiebase_mgr = async function (
   schema: string,
 ): Promise<Knex.Migration> {
   return {
@@ -44,10 +44,6 @@ export const v001_indiebase = async function (
         table.string('bio').comment('User biography');
         table.string('homepage').unique().nullable().comment('Hacker homepage');
         table.string('github_username').comment('Github username not nickname');
-        table
-          .string('role')
-          .references('role')
-          .inTable(`${schema}.${MgrTables.roles}`);
         table
           .enum('visibility', Object.values(Visibility))
           .defaultTo(Visibility.public)
@@ -240,37 +236,7 @@ export const v001_indiebase = async function (
        * OAuth provider infos.
        * ib_oauth_providers
        */
-      await knex.schema
-        .withSchema(schema)
-        .createTable(TmplTables.oauthProviders, (table) => {
-          table.increments('id').primary();
-          table
-            .enum('name', Object.values(AvailableOAuthProviders))
-            .comment('Provider name, e.g. google, microsoft');
-          table
-            .boolean('enabled')
-            .defaultTo(false)
-            .comment('Enable the login method');
-          table.string('client_id').comment('Client ID for OAuth');
-          table.string('client_secret').comment('Client secret for OAuth');
-          table
-            .string('callback_path')
-            .comment('Callback URL for OAuth. Only the path is stored');
-          table
-            .specificType('authorized_client_ids', 'varchar[]')
-            .comment(
-              'Authorized Client IDs e.g. Apple (iOS, macOS, watchOS, tvOS bundle IDs or service IDs), Google (for Android, One Tap, and Chrome extensions)',
-            );
-          table
-            .jsonb('extra_payload')
-            .comment('e.g. WorkOS URL, gitlab Self Hosted GitLab URL');
-
-          table.timestamps(true, true);
-          table.timestamp('deleted_at');
-        })
-        .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(TmplTables.oauthProviders);
-        });
+      await v001_oauth_providers_table(schema, knex, knexExSchema);
       /**
        * ib_buckets
        */

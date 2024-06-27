@@ -12,7 +12,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import { CreateHackersDTO, HackerDTO } from './hackers.dto';
+import { SignUpHackersDTO, HackerDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
 
 @Controller({
@@ -45,7 +45,7 @@ export class HackersController {
   @ApiUnionType1Header()
   @UseGuards(PublicApiGuard)
   @Post('signup')
-  async signup(@Body() body: CreateHackersDTO) {
+  async signup(@Body() body: SignUpHackersDTO) {
     await this.hackers.create(body);
 
     return data({
@@ -66,7 +66,7 @@ export class HackersController {
     [ManagerResources.hackers]: [AccessActions.createAny],
   })
   @Post('hacker')
-  async create(@Body() body: CreateHackersDTO) {
+  async create(@Body() body: SignUpHackersDTO) {
     await this.hackers.create(body);
 
     return data({

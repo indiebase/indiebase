@@ -72,7 +72,7 @@ const utils = {
    *  @returns {string[]}
    */
   toStringArray(value: any): string[] {
-    if (Array.isArray(value)) return value;
+    if (Array.isArray(value)) return value as string[];
     if (typeof value === 'string') return value.trim().split(/\s*[;,]\s*/);
     // throw new Error('Expected a string or array of strings, got ' + utils.type(value));
     return [];

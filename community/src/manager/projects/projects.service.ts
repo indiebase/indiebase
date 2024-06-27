@@ -13,12 +13,12 @@ import {
 } from '@nestjs/common';
 import { Knex } from 'knex';
 
-import { TmplMigrationSource } from '../../migrations/TmplMigrationSource';
+import { TmplMigrationSource, TmplSeedMigrationSource } from '../../migrations';
 import { CreatePrjDTO } from './projects.dto';
 
 @Injectable()
 export class ProjectsService {
-  private readonly logger = new Logger('MgrProjectsService');
+  private readonly logger = new Logger('ProjectsService');
 
   constructor(
     @InjectKnex()
@@ -66,6 +66,11 @@ export class ProjectsService {
         await trx.migrate.up({
           migrationSource: new TmplMigrationSource(namespace),
           tableName: `__knex_${namespace}_migration`,
+          schemaName: namespace,
+        });
+        await trx.migrate.up({
+          migrationSource: new TmplSeedMigrationSource(namespace),
+          tableName: `__knex_${namespace}_seed_migration`,
           schemaName: namespace,
         });
       })

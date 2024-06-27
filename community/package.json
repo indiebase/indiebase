@@ -75,6 +75,7 @@
     "@nestjs/terminus": "10.2.3",
     "@react-email/render": "0.0.15",
     "@superfaceai/passport-twitter-oauth2": "1.2.4",
+    "@total-typescript/ts-reset": "^0.5.1",
     "bcrypt": "5.1.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",

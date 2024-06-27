@@ -13,11 +13,10 @@ import { OAuthProvider, PrimitiveProject } from '@indiebase/trait';
 import { Knex } from 'knex';
 import { AvailableOAuthProviders } from '@indiebase/sdk';
 
-const indiebaseMgrOAuthProviders: Partial<OAuthProvider>[] = Object.values(
-  AvailableOAuthProviders,
-).map((name) => ({
-  name,
-}));
+export const indiebaseMgrOAuthProvidersV1: Partial<OAuthProvider>[] =
+  Object.values(AvailableOAuthProviders).map((name) => ({
+    name,
+  }));
 
 /**
  * Create organization template tables
@@ -25,17 +24,17 @@ const indiebaseMgrOAuthProviders: Partial<OAuthProvider>[] = Object.values(
  * @param schema
  * @returns
  */
-export const v001_indiebase_seed = async function (
-  _schema: string,
+export const v001_indiebase_mgr_seed = async function (
+  schema: string,
 ): Promise<Knex.Migration> {
   return {
     async up(knex: Knex): Promise<void> {
-      const mgrSchema = knex.withSchema(INDIEBASE_MGR);
+      const knexSchema = knex.withSchema(schema);
 
       // Init default roles.
       const arr = grantsRecord2Array(defaultIndiebaseGrants);
-      await mgrSchema.insert(arr).into(MgrTables.grants);
-      await mgrSchema
+      await knexSchema.insert(arr).into(MgrTables.grants);
+      await knexSchema
         .insert({
           role: BuiltinIndiebaseRoles.OAA,
           description: 'Site owner',
@@ -46,21 +45,21 @@ export const v001_indiebase_seed = async function (
       const { OAA_EMAIL, OAA_PASSWORD } = process.env;
       const secret = createHash('sha256').update(OAA_PASSWORD!).digest('hex');
       const password = await hashSecret(secret);
-      await mgrSchema
+      await knexSchema
         .insert({
           email: OAA_EMAIL,
           password,
-          role: BuiltinIndiebaseRoles.OAA,
+          // role: BuiltinIndiebaseRoles.OAA,
         })
         .into(TmplTables.users);
 
       // Init indiebase manager's OAuth providers.
-      await mgrSchema
-        .insert(indiebaseMgrOAuthProviders)
+      await knexSchema
+        .insert(indiebaseMgrOAuthProvidersV1)
         .into(TmplTables.oauthProviders);
 
       // Init indiebase manager self.
-      await mgrSchema
+      await knexSchema
         .insert<PrimitiveProject>({
           namespace: INDIEBASE_MGR,
           name: INDIEBASE_MGR,

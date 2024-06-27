@@ -11,7 +11,7 @@ export class FilesSizeValidationPipe implements PipeTransform {
   transform(value: any, _metadata: ArgumentMetadata) {
     if (Array.isArray(value)) {
       for (const val of value) {
-        console.log(val.size);
+        // console.log(val.size);
       }
     }
 
