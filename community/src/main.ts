@@ -1,4 +1,3 @@
-/// <reference types="@indiebase/server-shared/extend" />
 /// <reference types="@indiebase/nest-knex/extend" />
 
 import '@total-typescript/ts-reset';

@@ -1,4 +1,4 @@
-import './extend.d';
+/// <reference path="extend.d.ts" />
 
 export * from './access';
 export * from './config';

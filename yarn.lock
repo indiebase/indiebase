@@ -7231,9 +7231,7 @@ __metadata:
     "@swc/core": "npm:1.5.5"
     "@types/node": "npm:20.12.7"
     cross-env: "npm:7.0.3"
-    file-loader: "npm:6.2.0"
     fork-ts-checker-webpack-plugin: "npm:9.0.2"
-    node-loader: "npm:2.0.0"
     run-script-webpack-plugin: "npm:0.2.0"
     swc-loader: "npm:0.2.6"
     ts-loader: "npm:9.5.1"
@@ -7601,7 +7599,6 @@ __metadata:
     typescript: "npm:5.5.2"
     unplugin-swc: "npm:1.4.5"
     vitest: "npm:1.6.0"
-    webpack: "npm:5.92.1"
     webpack-cli: "npm:5.1.4"
   dependenciesMeta:
     "@nestjs/common":
@@ -20839,7 +20836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-loader@npm:6.2.0, file-loader@npm:^6.2.0":
+"file-loader@npm:^6.2.0":
   version: 6.2.0
   resolution: "file-loader@npm:6.2.0"
   dependencies:
@@ -29388,17 +29385,6 @@ __metadata:
   version: 0.4.0
   resolution: "node-int64@npm:0.4.0"
   checksum: 10/b7afc2b65e56f7035b1a2eec57ae0fbdee7d742b1cdcd0f4387562b6527a011ab1cbe9f64cc8b3cca61e3297c9637c8bf61cec2e6b8d3a711d4b5267dfafbe02
-  languageName: node
-  linkType: hard
-
-"node-loader@npm:2.0.0":
-  version: 2.0.0
-  resolution: "node-loader@npm:2.0.0"
-  dependencies:
-    loader-utils: "npm:^2.0.0"
-  peerDependencies:
-    webpack: ^5.0.0
-  checksum: 10/3deae08203cc841f8bccb9025e6267d8f103c6e3fe9fceaafce93c99937a249d93b25ed3f4e19cf1779bb97d55101be87197835e9246d93f832fea9a3b136818
   languageName: node
   linkType: hard
 
