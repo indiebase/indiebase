@@ -1,3 +1,4 @@
+import { IQueryInfo } from '@indiebase/accesscontrol';
 import { PrimitiveAccessGuard } from '@indiebase/nest-accesscontrol';
 import { ExecutionContext } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
@@ -5,9 +6,11 @@ import { type FastifyRequest } from 'fastify';
 
 @Injectable()
 export class AccessGuard extends PrimitiveAccessGuard {
-  protected override async useRole(context: ExecutionContext): Promise<string> {
+  protected override async useRole(
+    context: ExecutionContext,
+  ): Promise<string | string[] | IQueryInfo> {
     const request = context.switchToHttp().getRequest<FastifyRequest>();
-    return request.user?.role;
+    return request.user?.role!;
   }
 
   protected override async useNamespace(

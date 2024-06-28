@@ -16,6 +16,7 @@ import { Footer } from '../../components';
 import { baseUrl } from '../../constants';
 import { PrimitiveEmailProps } from '../../interface';
 import { dashedBorder, solidBorder, text } from '../../themes';
+import * as React from 'react';
 
 interface VerifyCaptchaProps extends PrimitiveEmailProps {
   verificationCode?: string;

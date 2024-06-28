@@ -15,6 +15,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
 
   return packageNames.map((p) => new RegExp(p));
 }
+const __dev = process.env.NODE_ENV === 'development';
 
 /**
  *
@@ -129,9 +130,9 @@ exports.createWebpackConfig = async (options) => {
         },
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new RunScriptWebpackPlugin(options.startOptions),
+      __dev && new RunScriptWebpackPlugin(options.startOptions),
       ...options.additionalPlugins,
-    ],
+    ].filter(Boolean),
     output: options.output,
     optimization: {
       concatenateModules: true,

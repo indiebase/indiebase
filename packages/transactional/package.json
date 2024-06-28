@@ -8,7 +8,8 @@
     ".": "./emails/index.ts"
   },
   "scripts": {
-    "start": "email dev"
+    "start": "email dev",
+    "build": "email build"
   },
   "description": "The common interface for indiebase both font-end and back-end",
   "engines": {

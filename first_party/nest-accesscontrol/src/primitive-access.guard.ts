@@ -1,4 +1,4 @@
-import { type Permission } from '@indiebase/accesscontrol';
+import { IQueryInfo, type Permission } from '@indiebase/accesscontrol';
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -10,7 +10,9 @@ import { action2CamelCase } from './utils';
 
 @Injectable()
 export abstract class PrimitiveAccessGuard implements CanActivate {
-  protected abstract useRole(context: ExecutionContext): Promise<string>;
+  protected abstract useRole(
+    context: ExecutionContext,
+  ): Promise<string | string[] | IQueryInfo>;
   protected abstract useNamespace(context: ExecutionContext): Promise<string>;
 
   constructor(
@@ -23,8 +25,6 @@ export abstract class PrimitiveAccessGuard implements CanActivate {
       ACCESS_META,
       context.getHandler(),
     );
-
-    console.log(!meta, Object.keys(meta).length < 1);
 
     if (!meta || Object.keys(meta).length < 1) return true;
 

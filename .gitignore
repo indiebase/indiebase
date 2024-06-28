@@ -11,6 +11,8 @@
 **/dist/*
 **/build/*
 /**/*.tsbuildinfo
+
+.react-email
 temp
 
 .turbo

@@ -5,7 +5,7 @@ import { VerifyCaptchaEmail } from '@indiebase/transactional';
 import { Logger } from '@nestjs/common';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { render } from '@react-email/render';
+import { renderAsync } from '@react-email/render';
 import { Redis } from 'ioredis';
 
 import { SendCaptchaDTO } from './mail.dto';
@@ -27,7 +27,7 @@ export class MailService {
     const subject = 'Captcha';
     const validityDuration = 10;
 
-    const html = render(
+    const html = await renderAsync(
       VerifyCaptchaEmail({
         service: 'Indiebase',
         verificationCode: captcha,

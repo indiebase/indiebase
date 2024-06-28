@@ -21,6 +21,7 @@ export interface PrimitiveUser {
   updateAt: Date;
   signInAt: Date;
   emailConfirmedAt: Date;
+  [key: string]: any;
 }
 
 export interface User extends PrimitiveUser {}

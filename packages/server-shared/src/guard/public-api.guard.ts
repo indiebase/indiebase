@@ -77,7 +77,6 @@ export class PublicApiGuard implements CanActivate {
     );
 
     if (!r) {
-      console.log('----------------------------------------------');
       throw new ForbiddenException();
     }
 
