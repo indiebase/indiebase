@@ -1,7 +1,6 @@
 import path from 'node:path';
 
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
-import { X_Indiebase_AP } from '@indiebase/sdk';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 

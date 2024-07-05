@@ -9,7 +9,7 @@ import { X_Indiebase_Lang } from '@indiebase/sdk';
 import { KnexEx } from '@indiebase/server-shared';
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { MailerModule } from '@nestjs-modules/mailer';
+import { MailerModule, MailerOptions } from '@nestjs-modules/mailer';
 import { utilities, WinstonModule } from 'nest-winston';
 import {
   AcceptLanguageResolver,
@@ -215,11 +215,12 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       MailerModule.forRootAsync({
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {
-          const { host, username, password, from } = config.get('smtp');
+          const { host, username, password, from, port } = config.get('smtp');
           console.log(config.get('smtp'));
           return {
             transport: {
               host,
+              port,
               ignoreTLS: false,
               secure: true,
               auth: {
@@ -231,7 +232,7 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
               from: `${from} <${username}>`,
             },
             preview: true,
-          };
+          } satisfies MailerOptions;
         },
       }),
       S3Module.forRootAsync({
