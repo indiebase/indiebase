@@ -25,7 +25,10 @@ export class PasetoService {
     payload: Record<PropertyKey, unknown> | Buffer,
     options?: ProduceOptions,
   ) {
-    options = Object.assign(this.options?.produceOptions ?? {}, options);
+    options = Object.assign(
+      this.options?.produceOptions ?? Object.create(null),
+      options,
+    );
     const version = this.options.version!;
 
     return paseto[version].sign(payload, this.options.privateKey!, options);

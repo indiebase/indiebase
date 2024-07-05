@@ -2,12 +2,8 @@
 
 import { validator } from '@indiebase/app-shared';
 import {
-  Avatar,
-  Box,
   Button,
-  Center,
   Container,
-  Flex,
   Group,
   rem,
   Select,
@@ -85,7 +81,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
           // dispatch({ type: 'refetch' });
         })}
       >
-        <Group mt="md" gap={rem(100)} align="flex-end">
+        <Group mt="lg" align="center">
           <Select
             withAsterisk
             leftSection={<IconBrandGithub size={17} />}
@@ -96,10 +92,10 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
             clearable
             nothingFoundMessage="Nothing found..."
             onChange={handleChange}
+            mr={40}
           />
-
           <UploadImage
-            mt="md"
+            editable
             src={github?.logo}
             label="Organization icon"
             onChange={(url) => {
@@ -129,8 +125,9 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
         />
         <Button
           mt={50}
+          w="23%"
           variant="gradient"
-          size="md"
+          size="sm"
           type="submit"
           gradient={theme.other.gradients.peach}
         >

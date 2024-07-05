@@ -35,7 +35,6 @@ export const Cookies = (key: string, signed = false, throwUnsigned = false) => {
 export const User = createParamDecorator(
   (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    //
     return property ? request.user?.[property] : request.user;
   },
 );
@@ -66,7 +65,7 @@ export const Role = createParamDecorator(
 export const Project = createParamDecorator(
   (property: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return property ? request.raw.project?.[property] : request?.raw.project;
+    return property ? request.raw.project?.[property] : request.raw?.project;
   },
 );
 

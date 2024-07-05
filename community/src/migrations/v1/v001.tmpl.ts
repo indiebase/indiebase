@@ -22,15 +22,15 @@ export const v001_user_table = async (
       table
         .enum('authn_type', Object.values(AuthnTypes))
         .comment('Authentication Type');
-      table.boolean('enabled_otp').comment('Enable 2FA');
-      table.string('opt_secret').comment('One time password secret');
+      table.boolean('enabled_2fa').comment('Enable 2FA');
+      table.string('otp_secret').comment('One time password secret');
       table.string('location').comment('Location of registration');
       table
         .enum('account_status', Object.values(AccountStatus))
         .defaultTo(AccountStatus.active);
       table
-        .string('opt_recovery_codes')
-        .comment('simple-array OPT recovery codes');
+        .specificType('otp_recovery_codes', 'varchar[]')
+        .comment('simple-array OTp recovery codes');
 
       table.datetime('email_confirmed_at').comment('Email confirmed at');
 
@@ -164,7 +164,9 @@ export const v001_tmpl = async function (
         .initBuiltinFuncs();
 
       /** ib_users */
-      await v001_user_table(schema, knex, knexExSchema);
+      await v001_user_table(schema, knex, knexExSchema, (table) => {
+        table.string('username').unique().index();
+      });
 
       /**
        * ib_oauth_user_info

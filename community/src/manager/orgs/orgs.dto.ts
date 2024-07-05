@@ -76,11 +76,13 @@ export class HackerOwnedOrgsDTO extends PaginatedRequestSchema {}
 export class OrgDTO {
   @ApiProperty({
     description: 'Organization ID',
+    type: Number,
   })
   id!: number;
 
   @ApiProperty({
     description: 'Organization name',
+    type: String,
   })
   name!: string;
 

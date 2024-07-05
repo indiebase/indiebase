@@ -9,7 +9,6 @@ import {
   ApiOkResponse,
   ApiParam,
   ApiResponseOptions,
-  ApiSecurity,
   ApiUnauthorizedResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
@@ -27,7 +26,7 @@ import {
 
 export type OkedType = 'paginated' | 'created' | 'oked' | 'array' | null;
 
-export type ApiUnionResponseOptions<TModel extends Type<any> = any> =
+export type ApiUnionResponseOptions<TModel extends Type<any> | string = any> =
   ApiResponseOptions & {
     bodyProperties?: SchemaObject | ReferenceObject | null;
     okedType?: OkedType | null;
@@ -131,7 +130,19 @@ export const ApiPaginatedResponse = <TModel extends Type<any> = any>(
   return applyDecorators(...decorators);
 };
 
-export const ApiOkedResponse = <TModel extends Type<any> = any>(
+const getItems = <T extends Type<any> | string>(
+  model?: T,
+): ReferenceObject | SchemaObject => {
+  const items =
+    typeof model === 'function'
+      ? Object.create({
+          $ref: getSchemaPath(model),
+        })
+      : Object.create({ type: model });
+  return items;
+};
+
+export const ApiOkedResponse = <TModel extends Type<any> | string = any>(
   options: ApiUnionResponseOptions<TModel>,
 ) => {
   const { model, okedType, ...restOptions } = options;
@@ -146,6 +157,7 @@ export const ApiOkedResponse = <TModel extends Type<any> = any>(
   };
 
   let Api = ApiOkResponse;
+  const items = getItems(model);
 
   switch (okedType) {
     case 'created':
@@ -155,9 +167,7 @@ export const ApiOkedResponse = <TModel extends Type<any> = any>(
       bodyProperties = model && {
         body: {
           type: 'array',
-          items: {
-            $ref: getSchemaPath(model),
-          },
+          items,
           description: 'Response data list',
         },
       };
@@ -166,7 +176,7 @@ export const ApiOkedResponse = <TModel extends Type<any> = any>(
       bodyProperties = model && {
         body: {
           type: 'array',
-          items: { $ref: getSchemaPath(model) },
+          items,
           description: 'Response paginated data list',
         },
       };
@@ -208,7 +218,7 @@ export const ApiOkedResponse = <TModel extends Type<any> = any>(
 export const ApiUnionType1Header = () =>
   applyDecorators(ApiProjectHeader(), ApiIndiebaseSecurity());
 
-export const ApiUnionResponse = <TModel extends Type<any>>(
+export const ApiUnionResponse = <TModel extends Type<any> | string>(
   okedType?: OkedType,
   model?: TModel,
   options?: ApiUnionResponseOptions<TModel>,

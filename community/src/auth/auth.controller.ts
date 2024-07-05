@@ -1,3 +1,4 @@
+import { PasetoAuthGuard } from './paseto.guard';
 import { ResultCode } from '@indiebase/sdk';
 import {
   ApiPresetParam,
@@ -16,15 +17,22 @@ import {
   Controller,
   Delete,
   Get,
+  Patch,
   Post,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { AuthDTO, LocalSignInDTO, OptVerifyDTO } from './auth.dto';
+import {
+  AuthDTO,
+  CreateOtpDTO,
+  LocalSignInDTO,
+  VerifyOtpDTO,
+  OtpDTO,
+} from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
 import { GithubGuard, GoogleGuard } from './social';
@@ -32,7 +40,7 @@ import { GithubGuard, GoogleGuard } from './social';
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly auth: AuthService) {}
 
   @ApiOperation({
     summary: 'Sign in with password',
@@ -47,7 +55,7 @@ export class AuthController {
     @User() user: PrimitiveUser,
     @Project() project: PrimitiveProject,
   ) {
-    const accessToken = await this.authService.signIn(user, project);
+    const accessToken = await this.auth.signIn(user, project);
 
     return data({
       code: ResultCode.SUCCESS,
@@ -69,7 +77,7 @@ export class AuthController {
   })
   @UseGuards(GithubGuard)
   async githubCallback(@Req() req: FastifyRequest) {
-    const accessToken = await this.authService.handleGithubCallback(req);
+    const accessToken = await this.auth.handleGithubCallback(req);
 
     return data({
       code: ResultCode.SUCCESS,
@@ -92,7 +100,7 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async googleCallback(@Req() req: FastifyRequest, @Res() res: FastifyReply) {
-    // await this.authService.handleGithubCallback(req, session);
+    // await this.auth.handleGithubCallback(req, session);
   }
 
   @Get('oauth/microsoft')
@@ -109,7 +117,7 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async microsoftCallback(@QueryEx() query: AuthDTO) {
-    // await this.authService.handleGithubCallback(req, session);
+    // await this.auth.handleGithubCallback(req, session);
   }
 
   @Get('oauth/apple')
@@ -126,7 +134,7 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async appleCallback() {
-    // await this.authService.handleGithubCallback(req, session);
+    // await this.auth.handleGithubCallback(req, session);
   }
 
   @Get('oauth/wechat')
@@ -143,7 +151,7 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async wechatCallback() {
-    // await this.authService.handleGithubCallback(req, session);
+    // await this.auth.handleGithubCallback(req, session);
   }
 
   @Get('oauth/qq')
@@ -160,7 +168,7 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async qqCallback() {
-    // await this.authService.handleGithubCallback(req, session);
+    // await this.auth.handleGithubCallback(req, session);
   }
 
   @Get('oauth/facebook')
@@ -177,14 +185,16 @@ export class AuthController {
   })
   @UseGuards(GoogleGuard)
   async facebookCallback() {
-    // await this.authService.handleGithubCallback(req, session);
+    // await this.auth.handleGithubCallback(req, session);
   }
 
-  @Post('signout')
   @ApiOperation({
     summary: 'Sign out a user',
   })
-  @UseGuards()
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Post('signout')
   async signout(@Req() req: FastifyRequest) {
     // await req
     //   .logOut()
@@ -196,52 +206,89 @@ export class AuthController {
     return { code: ResultCode.SUCCESS };
   }
 
-  @Post('otp')
   @ApiOperation({
-    summary: 'Create one time password, QRCode',
+    summary: 'Create one time password',
   })
-  @UseGuards(PublicApiGuard)
-  async generateOtp(@User('username') username: string) {
-    const d = await this.authService.generateOtp(username);
+  @ApiUnionResponse('created', OtpDTO)
+  @ApiUnionType1Header()
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @ApiBearerAuth('paseto')
+  @Post('otp')
+  async createOtp(
+    @Body() _body: CreateOtpDTO,
+    @User('username') username: string,
+    @Project('referenceId') referenceId: string,
+  ) {
+    const body = await this.auth.createOtp(username, referenceId);
 
-    return {
+    return data({
       code: ResultCode.SUCCESS,
-      d,
-    };
+      body,
+    });
   }
 
-  @Post('otp/verify')
-  @UseGuards(PublicApiGuard)
-  @ApiUnionType1Header()
   @ApiOperation({
     summary: 'Verify one time password, token',
   })
-  async verifyOtp(@User('email') email: string, @Body() body: OptVerifyDTO) {
-    // return this.authService.otpVerify(username, body.secret, body.token);
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Post('otp/enable/verify')
+  async enableOtpVerify(
+    @User() user: PrimitiveUser,
+    @Body() { secret, token }: VerifyOtpDTO,
+    @Project('namespace') namespace: string,
+  ) {
+    const isValid = await this.auth.enableOtpVerify(
+      user,
+      namespace,
+      secret,
+      token,
+    );
+
+    return data(
+      Object.assign(
+        {},
+        { code: isValid ? ResultCode.SUCCESS : ResultCode.ERROR },
+        !isValid && {
+          message: `${token} is unavailable, and then try again please.`,
+        },
+      ),
+    );
   }
 
-  @Delete('otp')
-  @UseGuards(PublicApiGuard)
   @ApiOperation({
-    summary: 'Remove 2FA',
+    summary: 'Disable 2FA',
   })
+  @ApiUnionResponse()
+  @ApiUnionType1Header()
+  @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Patch('otp')
   async deleteOtp(@User('email') email: string) {
-    await this.authService.removeOtp(email);
+    await this.auth.removeOtp(email);
 
     return { code: ResultCode.SUCCESS };
   }
 
-  @Get('otp/recovery-codes')
   @ApiOperation({
     summary: 'Get recovery codes',
   })
-  @UseGuards(PublicApiGuard)
-  async getRecoveryCodes(@User('email') email: string) {
-    const d = await this.authService.getOtpRecoveryCodes(email);
+  @ApiUnionResponse('array', 'string')
+  @ApiUnionType1Header()
+  @ApiBearerAuth('paseto')
+  @UseGuards(PublicApiGuard, PasetoAuthGuard)
+  @Get('otp/recovery-codes')
+  async getRecoveryCodes(
+    @User('id') id: number,
+    @Project('namespace') namespace: string,
+  ) {
+    const body = await this.auth.getOtpRecoveryCodes(id, namespace);
 
     return {
       code: ResultCode.SUCCESS,
-      d,
+      body,
     };
   }
 }

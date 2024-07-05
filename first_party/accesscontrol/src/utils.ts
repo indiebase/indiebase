@@ -856,7 +856,7 @@ const utils = {
     // iterate through roles and add permission attributes (array) of
     // each role to attrsList (array).
     roles.forEach((roleName: string, _index: number) => {
-      role = structuredClone(grants[roleName]) ?? {};
+      role = structuredClone(grants[roleName]) ?? Object.create(null);
       // no need to check role existence #getFlatRoles() does that.
       const roleHasWildcard = Object.prototype.hasOwnProperty.call(grants, '*');
 
@@ -871,7 +871,7 @@ const utils = {
       }
 
       const resHasWildcard = Object.prototype.hasOwnProperty.call(role, '*');
-      resource = role[query.resource!] ?? {};
+      resource = role[query.resource!] ?? Object.create(null);
 
       if (resHasWildcard) {
         const wildcardResource = role['*'];

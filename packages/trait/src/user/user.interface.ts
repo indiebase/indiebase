@@ -16,7 +16,7 @@ export interface PrimitiveUser {
   location?: string;
   authnType: AuthnTypes;
   accountStatus: AccountStatus;
-  enabledOtp: boolean;
+  enabled2FA: boolean;
   createAt: Date;
   updateAt: Date;
   signInAt: Date;
@@ -24,7 +24,13 @@ export interface PrimitiveUser {
   [key: string]: any;
 }
 
-export interface User extends PrimitiveUser {}
+export interface InternalUser extends PrimitiveUser {
+  password: string;
+  passwordUpdatedAt: Date;
+  deletedAt: Date;
+  otpRecoveryCodes: string[];
+  otpSecret: string;
+}
 
 export interface Hacker extends PrimitiveUser {
   bio?: string;

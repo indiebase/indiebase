@@ -41,6 +41,7 @@ export const v001_indiebase_mgr = async function (
        * ib_users
        */
       await v001_user_table(schema, knex, knexExSchema, (table) => {
+        table.string('username').unique().notNullable().index();
         table.string('bio').comment('User biography');
         table.string('homepage').unique().nullable().comment('Hacker homepage');
         table.string('github_username').comment('Github username not nickname');

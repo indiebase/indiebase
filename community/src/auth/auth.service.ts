@@ -1,16 +1,12 @@
 import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
-import {
-  AuthnTypes,
-  AvailableOAuthProviders,
-  ResultCode,
-} from '@indiebase/sdk';
-import { INDIEBASE_MGR, KnexEx, TmplTables } from '@indiebase/server-shared';
+import { AuthnTypes, AvailableOAuthProviders } from '@indiebase/sdk';
+import { KnexEx, TmplTables } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import {
+  InternalUser,
   OAuthProvider,
-  User,
   type PrimitiveProject,
   type PrimitiveUser,
 } from '@indiebase/trait';
@@ -94,10 +90,10 @@ export class AuthService {
             email: _json.email,
             authnType: AuthnTypes.oauth2,
           })
-          .returning<Pick<User, 'id' | 'email'>[]>(['id', 'email'])
+          .returning<Pick<InternalUser, 'id' | 'email'>[]>(['id', 'email'])
           .into(TmplTables.users);
 
-        const { id, email } = result[0] ?? {};
+        const { id, email } = result[0] ?? Object.create(null);
 
         await trx
           .withSchema(namespace)
@@ -163,9 +159,9 @@ export class AuthService {
       .first<OAuthProvider>();
   }
 
-  public async generateOtp(username: string) {
+  public async createOtp(username: string, referenceId: string) {
     const secret = authenticator.generateSecret(20);
-    const uri = authenticator.keyuri(username, INDIEBASE_MGR, secret);
+    const uri = authenticator.keyuri(username, referenceId, secret);
     const qrcodeUri = await qrcode.toDataURL(uri);
 
     return {
@@ -175,20 +171,25 @@ export class AuthService {
     };
   }
 
-  private createRecoveryCode(length = 8) {
-    return Array.from({ length }).map(() => authenticator.generateSecret(16));
+  private createOtpRecoveryCodes(length = 8) {
+    return Array.from({ length }).map(() => authenticator.generateSecret(20));
   }
 
-  public async getOtpRecoveryCodes(username: string) {
-    // const user = await this.userService.getUser({ username });
-    // return user.optRecoveryCode;
+  public async getOtpRecoveryCodes(userId: number, namespace: string) {
+    const user = await this.knex
+      .withSchema(namespace)
+      .where('id', userId)
+      .into(TmplTables.users)
+      .first<InternalUser>();
+
+    return user.otpRecoveryCodes;
   }
 
   public async removeOtp(username: string) {
     // return this.userService.repo
     //   .update(
     //     { username },
-    //     { optRecoveryCode: null, optSecret: null, enabled2FA: false },
+    //     { optRecoveryCodes: null, optSecret: null, enabled2FA: false },
     //   )
     //   .catch((err) => {
     //     this.logger.error(err);
@@ -196,24 +197,26 @@ export class AuthService {
     //   });
   }
 
-  public async otpVerify(username: string, secret: string, token: string) {
+  public async enableOtpVerify(
+    user: PrimitiveUser,
+    namespace: string,
+    secret: string,
+    token: string,
+  ) {
     try {
       const isValid = authenticator.check(token, secret);
-      let optRecoveryCode;
 
       if (isValid) {
-        optRecoveryCode = this.createRecoveryCode();
-        // await this.userService.updateUser(
-        //   { username },
-        //   { optSecret: secret, optRecoveryCode, enabled2FA: true },
-        // );
+        let otpRecoveryCodes = this.createOtpRecoveryCodes();
+
+        await this.knex
+          .withSchema(namespace)
+          .update({ enabled2FA: true, otpSecret: secret, otpRecoveryCodes })
+          .where('id', user.id)
+          .into(TmplTables.users);
       }
-      return {
-        code: isValid ? ResultCode.SUCCESS : ResultCode.ERROR,
-        d: {
-          optRecoveryCode,
-        },
-      };
+
+      return isValid;
     } catch (err) {
       this.logger.error(err);
       throw new InternalServerErrorException();

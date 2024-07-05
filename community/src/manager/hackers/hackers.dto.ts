@@ -6,13 +6,13 @@ import {
   PaginatedRequestSchema,
   TmplTables,
 } from '@indiebase/server-shared';
-import { AccountStatus, Visibility } from '@indiebase/trait';
+import { Visibility } from '@indiebase/trait';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsHash, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class SignUpHackersDTO {
   @ApiProperty({
-    description: 'Hacker account',
+    description: 'Hacker account email',
     default: 'dev@indiebase.com',
   })
   @IsEntityExisted({
@@ -22,6 +22,18 @@ export class SignUpHackersDTO {
   })
   @IsEmail()
   email!: string;
+
+  @ApiProperty({
+    description: 'Hacker account username',
+    default: 'indiebase-dev',
+  })
+  @IsEntityExisted({
+    schema: INDIEBASE_MGR,
+    table: TmplTables.users,
+    column: 'username',
+  })
+  @IsEmail()
+  username!: string;
 
   @ApiProperty({
     description:

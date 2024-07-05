@@ -38,7 +38,7 @@ export class UserDTO {
   @ApiPropertyOptional({
     description: 'One time password secret',
   })
-  enabledOtp?: boolean;
+  enabled2FA?: boolean;
 
   @ApiPropertyOptional({
     description: 'Location of registration',

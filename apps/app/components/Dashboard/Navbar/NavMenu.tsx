@@ -20,13 +20,9 @@ import { type FC } from 'react';
 
 import { NavbarMolecule } from './navbar.molecule';
 
-// import { expandedNavMenusAtom } from './navbar.atom';
-
 interface NavMenuProps extends MantineStyleProps {}
 
-const BaaSMenu = function () {
-  
-};
+const BaaSMenu = function () {};
 
 export const NavMenu: FC<NavMenuProps> = function (props) {
   const navbarMolecule = useMolecule(NavbarMolecule);

@@ -1,11 +1,18 @@
 'use client';
 
 import { Container, Text } from '@mantine/core';
+import { useEffect } from 'react';
 
 import { InviteSelect } from '~/components/InviteSelect';
 import { confetti } from '~/utils';
 
 export default function Page() {
+  useEffect(() => {
+    setTimeout(() => {
+      confetti.burst();
+    }, 1000);
+  }, []);
+
   return (
     <Container>
       <Text

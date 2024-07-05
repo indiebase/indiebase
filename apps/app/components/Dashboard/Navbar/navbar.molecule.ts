@@ -1,4 +1,6 @@
-import { createScope, molecule, use } from 'bunshi/react';
+'use client';
+
+import { createScope, molecule } from 'bunshi/react';
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
@@ -26,8 +28,8 @@ export const NavbarScope = createScope<NavbarScope>({
   mode: 'backend',
 });
 
-export const NavbarMolecule = molecule(() => {
-  const { collapsed, menus, expandedAllMenus } = use(NavbarScope);
+export const NavbarMolecule = molecule((_mol, scope) => {
+  const { collapsed, menus, expandedAllMenus } = scope(NavbarScope);
 
   const collapsedAtom = atom(collapsed);
   const menusAtom = atom(menus);

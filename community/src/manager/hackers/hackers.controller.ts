@@ -41,7 +41,7 @@ export class HackersController {
   @ApiOperation({
     summary: 'Sign up a hacker',
   })
-  @ApiUnionResponse()
+  @ApiUnionResponse('created')
   @ApiUnionType1Header()
   @UseGuards(PublicApiGuard)
   @Post('signup')

@@ -42,7 +42,6 @@ const pg = registerAs('pg', () => {
 
 const smtp = registerAs('smtp', () => {
   return {
-    provider: process.env.SMTP_PROVIDER,
     host: process.env.SMTP_HOST,
     username: process.env.SMTP_USERNAME,
     password: process.env.SMTP_PASSWORD,

@@ -4,12 +4,11 @@ import {
   ActionIcon,
   Avatar,
   Box,
-  type BoxComponentProps,
+  type BoxProps,
   Button,
   Flex,
   Group,
   Modal,
-  type PolymorphicComponentProps,
   rem,
   Text,
   useMantineTheme,
@@ -28,11 +27,7 @@ import {
 import Cropper, { type ReactCropperElement } from 'react-cropper';
 import { useProps } from 'reactgets';
 
-export interface UploadImageProps
-  extends Omit<
-    PolymorphicComponentProps<'div', BoxComponentProps>,
-    'onChange'
-  > {
+export interface UploadImageProps extends BoxProps {
   size?: number;
   src?: string;
   onChange?: (url: string) => void;
@@ -73,6 +68,7 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
     title,
     confirmText,
     fallbackIcon,
+    onChange,
     ...rest
   } = useProps(defaultUploadImageProps, _props);
 
@@ -187,7 +183,7 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
           onClose={() => setOpened(false)}
           title={title}
         >
-          <Flex>
+          <Flex justify="space-around">
             <Cropper
               ref={cropperRef}
               aspectRatio={1}
@@ -206,7 +202,7 @@ export const UploadImage: FC<UploadImageProps> = function (_props) {
               guides={false}
             />
             <Box
-              ml={15}
+              ml={-10}
               miw={100}
               mih={100}
               className="avatar-editor-preview"

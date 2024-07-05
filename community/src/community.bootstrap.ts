@@ -33,9 +33,11 @@ export class CommunityBootstrap {
    * @returns
    */
   async create(EntryModule: any) {
+    const fastifyAdapter = new FastifyAdapter();
+
     this.app = await NestFactory.create<NestFastifyApplication>(
       EntryModule,
-      new FastifyAdapter(),
+      fastifyAdapter,
       {
         bodyParser: true,
         logger: kDevMode ? ['verbose'] : ['error', 'warn'],
@@ -68,7 +70,6 @@ export class CommunityBootstrap {
       defaultVersion: '1',
       type: VersioningType.URI,
     });
-
     this.app.enableCors({
       origin: this.config.get('app.corsOrigin'),
       credentials: true,
@@ -95,7 +96,6 @@ export class CommunityBootstrap {
         policy: 'origin',
       },
     });
-
     await this.app.register(fastifyCookie, {
       secret: sessionSecret,
     });

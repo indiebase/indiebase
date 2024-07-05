@@ -9,13 +9,14 @@ export const shoot = () => {
     ticks: 50,
     gravity: 0.4,
     decay: 0.97,
-    startVelocity: 30,
+    startVelocity: 26,
+    origin: { y: 0.3 },
   } satisfies ConfettiOptions;
 
   confettiLib({
     ...defaults,
     particleCount: 80,
-    scalar: 2,
+    scalar: 1.7,
     shapes: ['circle', 'square'],
     colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
   });
@@ -23,7 +24,7 @@ export const shoot = () => {
   confettiLib({
     ...defaults,
     particleCount: 50,
-    scalar: 2.5,
+    scalar: 2,
     shapes: ['emoji'],
     shapeOptions: {
       emoji: {
@@ -35,7 +36,6 @@ export const shoot = () => {
 
 const burst = () => {
   setTimeout(shoot, 0);
-  setTimeout(shoot, 100);
   setTimeout(shoot, 200);
   setTimeout(shoot, 300);
 };

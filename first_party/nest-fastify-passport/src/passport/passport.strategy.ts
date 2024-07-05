@@ -85,7 +85,8 @@ export function PassportStrategy<T extends Type<any> = any>(
         if (this.useStrategy) {
           this.useStrategy((options) => new Strategy(options, callback), use);
         } else {
-          const options = (await this.useStrategyOptions?.()) ?? {};
+          const options =
+            (await this.useStrategyOptions?.()) ?? Object.create(null);
           const strategy = new Strategy(options, callback);
           use(strategy);
         }
