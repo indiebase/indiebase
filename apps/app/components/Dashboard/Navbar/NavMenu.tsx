@@ -23,11 +23,61 @@ import { NavbarMolecule } from './navbar.molecule';
 interface NavMenuProps extends MantineStyleProps {}
 
 const BaaSMenu = function () {};
+export interface NavMenuItem {
+  href: string;
+  label: string;
+  leftSection?: JSX.Element;
+  children?: NavMenuItem[];
+}
 
 export const NavMenu: FC<NavMenuProps> = function (props) {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [expanded, toggle] = useAtom(navbarMolecule.expandedAllMenusAtom);
   const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
+  const navMenus = [
+    {
+      href: '/dash',
+      label: 'Auth',
+      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+    },
+    {
+      href: '/functions',
+      label: 'Functions',
+      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+    },
+    {
+      href: '/messaging',
+      label: 'Messaging',
+      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+    },
+    {
+      href: '/data',
+      label: 'Data',
+      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+      children: [
+        {
+          href: '/storage',
+          label: 'Storage',
+          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+        },
+        {
+          href: '/database',
+          label: 'Storage',
+          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+        },
+        {
+          href: '/kv',
+          label: 'Key-Value',
+          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+        },
+        {
+          href: '/sync',
+          label: 'Sync',
+          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+        },
+      ],
+    },
+  ] satisfies NavMenuItem[];
 
   return (
     <Box {...props}>
