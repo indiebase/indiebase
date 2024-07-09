@@ -12,7 +12,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
-import { SignUpHackersDTO, HackerDTO } from './hackers.dto';
+import { HackerDTO, SignUpHackersDTO } from './hackers.dto';
 import { HackersService } from './hackers.service';
 
 @Controller({

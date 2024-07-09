@@ -1,4 +1,3 @@
-import { UserDTO } from '../../users/users.dto';
 import {
   INDIEBASE_MGR,
   IsEntityExisted,
@@ -9,6 +8,8 @@ import {
 import { Visibility } from '@indiebase/trait';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsHash, IsOptional, IsString, IsUrl } from 'class-validator';
+
+import { UserDTO } from '../../users/users.dto';
 
 export class SignUpHackersDTO {
   @ApiProperty({

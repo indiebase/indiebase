@@ -5744,6 +5744,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@indiebase/app@workspace:apps/app"
   dependencies:
+    "@aws-crypto/sha256-browser": "npm:5.2.0"
     "@deskbtm/gadgets": "workspace:^"
     "@dnd-kit/core": "npm:6.1.0"
     "@dnd-kit/sortable": "npm:8.0.0"
@@ -5779,6 +5780,7 @@ __metadata:
     cross-env: "npm:7.0.3"
     jotai: "npm:2.8.3"
     jotai-devtools: "npm:0.10.0"
+    js-sha256: "npm:0.11.0"
     lodash.debounce: "npm:^4.0.8"
     million: "npm:3.1.11"
     next: "npm:^15.0.0-rc.0"
@@ -24212,6 +24214,13 @@ __metadata:
   version: 3.0.5
   resolution: "js-cookie@npm:3.0.5"
   checksum: 10/366494b1630b9fb8abaef3659748db5dfd52c58c6fc3459b9f0a03b492593bc1b01c6dfcc066b46f6413c28edb3a00cc68fb61ea8cdf6991bedf1f100f8a389d
+  languageName: node
+  linkType: hard
+
+"js-sha256@npm:0.11.0":
+  version: 0.11.0
+  resolution: "js-sha256@npm:0.11.0"
+  checksum: 10/3adc208452302838136f1464ea331bae3b4d4c95afa9314fa6446d755059ff37114cb209fe9ed166c460ffe720d4875aa955e4f4c7aacab2d99858dd3e008b93
   languageName: node
   linkType: hard
 

@@ -1,4 +1,3 @@
-import { PasetoAuthGuard } from './paseto.guard';
 import { ResultCode } from '@indiebase/sdk';
 import {
   ApiPresetParam,
@@ -30,11 +29,12 @@ import {
   AuthDTO,
   CreateOtpDTO,
   LocalSignInDTO,
-  VerifyOtpDTO,
   OtpDTO,
+  VerifyOtpDTO,
 } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
+import { PasetoAuthGuard } from './paseto.guard';
 import { GithubGuard, GoogleGuard } from './social';
 
 @Controller({ path: 'auth', version: '1' })

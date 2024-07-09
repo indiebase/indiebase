@@ -116,10 +116,10 @@ export const ProjectTileGroup: FC<any> = function () {
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {
-      scrollBehavior:
-        typeof window !== 'undefined' && 'Cypress' in window
-          ? 'auto'
-          : undefined,
+      // scrollBehavior:
+      // typeof window !== 'undefined' && 'Cypress' in window
+      //   ? 'auto'
+      //   : undefined,
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );

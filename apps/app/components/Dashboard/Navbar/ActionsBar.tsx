@@ -12,7 +12,7 @@ import { NavbarMolecule } from './navbar.molecule';
 
 export const ActionsBar: FC<any> = function () {
   const navbarMolecule = useMolecule(NavbarMolecule);
-  const [expanded, toggle] = useAtom(navbarMolecule.expandedAllMenusAtom);
+  const [expanded, toggle] = useAtom(navbarMolecule.expandedMenusAtom);
   const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
 
   const actions = useMemo(() => {

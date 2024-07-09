@@ -3,7 +3,6 @@ import {
   IsEntityExisted,
   IsIndiebaseLegalName,
   MgrTables,
-  OkedResponseSchema,
   PaginatedRequestSchema,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';

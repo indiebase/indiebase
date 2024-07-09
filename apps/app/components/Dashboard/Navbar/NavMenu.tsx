@@ -3,7 +3,6 @@
 import { Box, type MantineStyleProps, NavLink } from '@mantine/core';
 import {
   IconApps,
-  IconCloud,
   IconCloudCog,
   IconDatabase,
   IconDatabaseSmile,
@@ -16,13 +15,17 @@ import {
 } from '@tabler/icons-react';
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { type FC } from 'react';
+
+import { KEYS } from '~/constants';
+import { LocalStore } from '~/utils';
 
 import { NavbarMolecule } from './navbar.molecule';
 
 interface NavMenuProps extends MantineStyleProps {}
 
-const BaaSMenu = function () {};
 export interface NavMenuItem {
   href: string;
   label: string;
@@ -30,50 +33,114 @@ export interface NavMenuItem {
   children?: NavMenuItem[];
 }
 
+const BaaSMenu = function () {};
+
+export const MenuList: FC<{ items: NavMenuItem[]; defaultOpened?: boolean }> =
+  function ({ items, defaultOpened }) {
+    const { expandedMenusAtom } = useMolecule(NavbarMolecule);
+    const [include, mutex] = useAtom(expandedMenusAtom);
+    const pathname = usePathname();
+    return items?.map((item) => {
+      const isDirectory = item.children;
+
+      return (
+        <NavLink
+          component={Link}
+          key={item.href}
+          href={item.href}
+          label={item.label}
+          onChange={async (value) => {
+            if (value) {
+              LocalStore.concat(KEYS.v0_expanded_all_nav_menus, item.href);
+            } else {
+              LocalStore.remove(KEYS.v0_expanded_all_nav_menus, item.href);
+            }
+          }}
+          defaultOpened={LocalStore.get<string[]>(
+            KEYS.v0_expanded_all_nav_menus,
+          )?.includes(item.href)}
+          leftSection={item.leftSection}
+          childrenOffset={13}
+          children={
+            isDirectory ? (
+              <MenuList
+                defaultOpened={new RegExp(item.href).test(pathname)}
+                items={item.children}
+              />
+            ) : null
+          }
+        />
+      );
+    });
+  };
+
 export const NavMenu: FC<NavMenuProps> = function (props) {
   const navbarMolecule = useMolecule(NavbarMolecule);
-  const [expanded, toggle] = useAtom(navbarMolecule.expandedAllMenusAtom);
   const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
-  const navMenus = [
+  const baasMenus = [
     {
-      href: '/dash',
+      href: 'auth',
       label: 'Auth',
       leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
     },
     {
-      href: '/functions',
+      href: '/dash/functions',
       label: 'Functions',
-      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+      leftSection: <IconFunction size="1.1rem" stroke={1.5} />,
     },
     {
-      href: '/messaging',
+      href: '/dash/messaging',
       label: 'Messaging',
-      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+      leftSection: <IconMessage size="1.1rem" stroke={1.5} />,
     },
     {
-      href: '/data',
+      href: '/dash/data',
       label: 'Data',
-      leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+      leftSection: <IconDatabaseSmile size="1.1rem" stroke={1.5} />,
       children: [
         {
-          href: '/storage',
+          href: '/dash/data/storage',
           label: 'Storage',
-          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+          leftSection: <IconFileDatabase size="1.1rem" stroke={1.5} />,
         },
         {
-          href: '/database',
-          label: 'Storage',
-          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+          href: '/dash/data/database',
+          label: 'Database',
+          leftSection: <IconDatabase size="1.1rem" stroke={1.5} />,
         },
         {
-          href: '/kv',
+          href: '/dash/data/kv',
           label: 'Key-Value',
-          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+          leftSection: <IconCloudCog size="1.1rem" stroke={1.5} />,
         },
         {
-          href: '/sync',
+          href: '/dash/data/sync',
           label: 'Sync',
-          leftSection: <IconUserSquareRounded size="1.1rem" stroke={1.5} />,
+          leftSection: <IconServerBolt size="1.1rem" stroke={1.5} />,
+        },
+      ],
+    },
+    {
+      href: '/dash/extensions',
+      label: 'Extensions',
+      leftSection: <IconApps size="1.1rem" stroke={1.5} />,
+    },
+    {
+      href: '/dash/settings',
+      label: 'Settings',
+      leftSection: <IconSettings2 size="1.1rem" stroke={1.5} />,
+      children: [
+        {
+          href: '/dash/settings/general',
+          label: 'General',
+        },
+        {
+          href: '/dash/settings/members',
+          label: 'Members',
+        },
+        {
+          href: '/settings/security',
+          label: 'Security',
         },
       ],
     },
@@ -81,7 +148,8 @@ export const NavMenu: FC<NavMenuProps> = function (props) {
 
   return (
     <Box {...props}>
-      <NavLink
+      <MenuList items={baasMenus} />
+      {/* <NavLink
         style={{ borderRadius: 'var(--mantine-radius-default)' }}
         href="/dash"
         label="Auth"
@@ -149,7 +217,7 @@ export const NavMenu: FC<NavMenuProps> = function (props) {
         <NavLink label="General" href="#required-for-focus" />
         <NavLink label="Members" href="#required-for-focus" />
         <NavLink label="Security" href="#required-for-focus" />
-      </NavLink>
+      </NavLink> */}
     </Box>
   );
 };
