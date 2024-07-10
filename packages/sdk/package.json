@@ -52,6 +52,6 @@
     "swagger-typescript-api": "13.0.5",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.5.3",
-    "vitest": "1.6.0"
+    "vitest": "2.0.1"
   }
 }

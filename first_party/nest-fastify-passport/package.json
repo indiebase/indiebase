@@ -60,7 +60,7 @@
     "passport": "0.7.0",
     "passport-jwt": "4.0.1",
     "passport-local": "1.0.0",
-    "prettier": "3.2.5",
+    "prettier": "3.3.2",
     "reflect-metadata": "0.2.2",
     "release-it": "17.4.0",
     "rxjs": "7.8.1",
@@ -84,6 +84,6 @@
   },
   "dependencies": {
     "@fastify/passport": "2.5.0",
-    "socks-proxy-agent": "^8.0.3"
+    "socks-proxy-agent": "^8.0.4"
   }
 }

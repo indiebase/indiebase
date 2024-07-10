@@ -9,7 +9,7 @@
     "main": "dist/index.js"
   },
   "dependencies": {
-    "casbin.js": "0.4.1"
+    "casbin.js": "0.5.1"
   },
   "peerDependencies": {
     "react": "18.2.0",

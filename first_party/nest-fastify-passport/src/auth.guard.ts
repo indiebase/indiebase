@@ -12,11 +12,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { SocksProxyAgent } from 'socks-proxy-agent';
 
 import { AuthModuleOptions, IAuthModuleOptions } from './interfaces';
 import { defaultOptions } from './options';
 import { memoize } from './utils/memoize.util';
-import { SocksProxyAgent } from 'socks-proxy-agent';
 
 export interface IAuthGuard extends CanActivate {
   logIn<TRequest extends { logIn: Function } = any>(
