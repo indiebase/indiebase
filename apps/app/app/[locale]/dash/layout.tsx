@@ -6,18 +6,18 @@ import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
 
-import {
-  DashboardHeader,
-  DashboardNavbar,
-  NavbarMolecule,
-} from '~/components/Dashboard';
+import { DashboardHeader, NavbarMolecule } from '~/components/Dashboard';
 import { IndiebaseTextLogo } from '~/components/Icons';
 
-export interface DashboardLayoutProps extends React.PropsWithChildren {}
+export interface DashboardLayoutProps extends React.PropsWithChildren {
+  navbar: React.ReactNode;
+}
 
-const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
+const DashboardLayout: FC<DashboardLayoutProps> = ({ children, navbar }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened] = useAtom(navbarMolecule.collapsedAtom);
+
+  console.log(navbar);
 
   console.warn(
     '------------------------DashboardLayout re-render------------------------------',
@@ -32,7 +32,6 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         breakpoint: 'sm',
         collapsed: { mobile: !opened.mobile, desktop: !opened.desktop },
       }}
-      pt="lg"
     >
       <DashboardHeader
         logo={
@@ -41,7 +40,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
           </Anchor>
         }
       />
-      <DashboardNavbar />
+      {navbar}
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );

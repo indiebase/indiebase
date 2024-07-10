@@ -13,5 +13,5 @@ export const validator = {
   isDomain: (message?: string) => (value) =>
     /(?:^\w+|\w+\.\w+)+$/.test(value) ? null : message,
   isIndiebaseLegalName: (message?: string) => (value: string) =>
-    !/[^a-zA-Z0-9-_]/g.test(value) ? null : message,
+    !/[^a-zA-Z0-9-_]|^$/g.test(value) ? null : message,
 };

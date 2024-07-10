@@ -2,17 +2,20 @@
 
 import { validator } from '@indiebase/app-shared';
 import {
+  Box,
   Button,
   Container,
   Group,
   rem,
   Select,
+  Text,
   TextInput,
   Title,
   useMantineTheme,
 } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
 import { IconBrandGithub } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 import { type FC, useState } from 'react';
 
 import { UploadImage } from '~/components/Upload';
@@ -25,19 +28,18 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
   onSuccess,
 }) {
   const [github, setGithub] = useState<any>();
+  const router = useRouter();
   const theme = useMantineTheme();
   const form = useForm({
     initialValues: {
       name: '',
       contactEmail: '',
-      domain: '',
       avatarUrl: '',
       githubOrgName: '',
     },
     validate: {
       name: validator.isIndiebaseLegalName('Invalid organization name'),
       contactEmail: isEmail('Invalid email'),
-      domain: validator.isDomain('Invalid domain'),
     },
   });
 
@@ -70,15 +72,17 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
     // form.setFieldValue('avatarUrl', d.avatar_url);
   };
 
+  //github.com/account/organizations/new?plan=free&ref_cta=Create%2520a%2520free%2520organization&ref_loc=cards&ref_page=%2Forganizations%2Fplan
   return (
-    <>
-      <Title order={4}>Create your organization</Title>
+    <Container mt="xl">
+      <Title order={4}>Set up your organization</Title>
       <form
         onSubmit={form.onSubmit(async (values) => {
           // const { code } = await createOrgApi(values);
           // if (code > 0) onSuccess(form.values.name);
           // Refresh the Header or other Components.
           // dispatch({ type: 'refetch' });
+          router.replace('/dash/invite');
         })}
       >
         <Group mt="lg" align="center">
@@ -103,23 +107,15 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
             }}
           />
         </Group>
-
         <TextInput
           mt="md"
           withAsterisk
           label="Organization name"
           {...form.getInputProps('name')}
         />
-
         <TextInput
-          mt="md"
-          label="Domain"
-          placeholder="Example com.deskbtm.letscollab"
-          {...form.getInputProps('domain')}
-        />
-
-        <TextInput
-          mt="md"
+          mt="xl"
+          withAsterisk
           label="Contact email"
           {...form.getInputProps('contactEmail')}
         />
@@ -134,7 +130,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
           Create
         </Button>
       </form>
-    </>
+    </Container>
   );
 };
 

@@ -26,13 +26,7 @@ export const ErrorFallback: FC<ErrorFallbackProps> = function (props) {
 
   return (
     <Flex direction="column" justify="center" align="center" h={height}>
-      <Box
-        w={{
-          base: '100%',
-          lg: '55%',
-          sm: '100%',
-        }}
-      >
+      <Box w="100%">
         <ErrorDetail error={error} onRetry={resetErrorBoundary} {...content} />
       </Box>
     </Flex>

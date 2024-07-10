@@ -6,7 +6,7 @@ import { ProjectTileGroup } from '~/components/Tiles';
 
 export default function Home() {
   return (
-    <Container size="lg">
+    <Container mt="xl" size="lg">
       <ProjectTileGroup />
     </Container>
   );

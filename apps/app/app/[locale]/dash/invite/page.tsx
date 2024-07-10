@@ -10,7 +10,7 @@ export default function Page() {
   useEffect(() => {
     setTimeout(() => {
       confetti.burst();
-    }, 1000);
+    }, 200);
   }, []);
 
   return (
@@ -22,9 +22,8 @@ export default function Page() {
         fz="h1"
         mb="xl"
       >
-        Create Organization Successfully !
+        Set up organization successfully !
       </Text>
-      <button onClick={confetti.burst}>clc</button>
       <InviteSelect
         data={[
           { label: 'name', value: 'wanghan' },
