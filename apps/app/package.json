@@ -57,6 +57,7 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "^10.4.19",
     "axios-mock-adapter": "1.22.0",
+    "babel-plugin-react-compiler": "0.0.0-experimental-696af53-20240625",
     "cross-env": "7.0.3",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^9.5.14",
