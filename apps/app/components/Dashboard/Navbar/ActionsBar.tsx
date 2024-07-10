@@ -1,3 +1,5 @@
+'use client';
+
 import { ActionIcon, Flex, Group, rem, Tooltip } from '@mantine/core';
 import {
   IconAffiliate,

@@ -1,15 +1,16 @@
 'use client';
 
 import { Box, type MantineStyleProps, NavLink } from '@mantine/core';
+import { useMolecule } from 'bunshi/react';
+import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { type FC } from 'react';
 
 import { KEYS } from '~/constants';
 import { LocalStore } from '~/utils';
+
 import { NavbarMolecule } from './navbar.molecule';
-import { useMolecule } from 'bunshi/react';
-import { useAtom } from 'jotai';
 
 interface NavMenuProps extends MantineStyleProps {}
 
