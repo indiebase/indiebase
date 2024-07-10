@@ -8,11 +8,15 @@ import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import { type FC, useMemo } from 'react';
 
+import { useSetStorageAtom } from '~/utils/atoms';
+
 import { NavbarMolecule } from './navbar.molecule';
 
 export const ActionsBar: FC<any> = function () {
   const navbarMolecule = useMolecule(NavbarMolecule);
-  const [expanded, toggle] = useAtom(navbarMolecule.expandedMenusAtom);
+  const [_, { concat, has }] = useSetStorageAtom(
+    navbarMolecule.expandedMenusAtom,
+  );
   const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
 
   const actions = useMemo(() => {
@@ -48,11 +52,11 @@ export const ActionsBar: FC<any> = function () {
         label: 'Expand all',
         icon: <IconArrowsVertical size={13} />,
         onClick() {
-          toggle(!expanded);
+          // toggle(!expanded);
         },
       },
     ];
-  }, [mode, expanded]);
+  }, [mode]);
 
   return (
     <Flex
@@ -64,18 +68,25 @@ export const ActionsBar: FC<any> = function () {
       px={rem(13)}
     >
       <Group gap="xs">
-        {actions.map((item, index) => (
-          <Tooltip key={item.label + index} label={item.label} openDelay={500}>
-            <ActionIcon
-              variant="default"
-              style={{ border: 'none' }}
-              size="xs"
-              onClick={item.onClick}
-            >
-              {item.icon}
-            </ActionIcon>
-          </Tooltip>
-        ))}
+        {actions.map(
+          (item, index) =>
+            item && (
+              <Tooltip
+                key={item.label + index}
+                label={item.label}
+                openDelay={500}
+              >
+                <ActionIcon
+                  variant="default"
+                  style={{ border: 'none' }}
+                  size="xs"
+                  onClick={item.onClick}
+                >
+                  {item.icon}
+                </ActionIcon>
+              </Tooltip>
+            ),
+        )}
       </Group>
     </Flex>
   );

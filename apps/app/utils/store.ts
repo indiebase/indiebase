@@ -1,7 +1,9 @@
 import { is } from '@deskbtm/gadgets/is';
 
+type StoreType = object | string | number | StoreType[];
+
 export class LocalStore {
-  static set<T extends object>(key: string, value: T) {
+  static set<T extends StoreType>(key: string, value: T) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
@@ -11,15 +13,15 @@ export class LocalStore {
     void this.set(key, v ? Object.assign({}, v, value) : value);
   }
 
-  static concat<T extends object | string | number>(
+  static concat<T extends StoreType>(
     key: string,
     value: T,
     options?: { duplicate?: boolean },
   ) {
     const { duplicate } = Object.assign({}, { duplicate: false }, options);
-    const v = this.get(key);
+    let v = this.get<T[]>(key);
     if (!Array.isArray(v)) {
-      return;
+      v = Array.of();
     }
 
     if (!duplicate && v.includes(value)) {
@@ -29,12 +31,12 @@ export class LocalStore {
     void this.set(key, v.length > 0 ? v.concat(value) : Array.of(value));
   }
 
-  static get<T extends object>(
+  static get<T extends StoreType>(
     key: string,
     fallback?: Record<string, unknown>,
   ): T {
     try {
-      return JSON.parse(localStorage.getItem(key)!) ?? ((fallback ?? {}) as T);
+      return JSON.parse(localStorage.getItem(key)) ?? ((fallback ?? {}) as T);
     } catch (error) {
       return {} as T;
     }

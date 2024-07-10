@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  AppShell,
-  Avatar,
-  Burger,
-  Divider,
-  Group,
-  Menu,
-  useMantineTheme,
-} from '@mantine/core';
+import { AppShell, Avatar, Burger, Divider, Group, Menu } from '@mantine/core';
 import {
   IconFileDescription,
   IconLogout,
@@ -64,7 +56,6 @@ export interface DashboardHeaderProps {
 export const DashboardHeader: FC<DashboardHeaderProps> = function (props) {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
-  useMantineTheme();
 
   return (
     <AppShell.Header className={classes.header}>
