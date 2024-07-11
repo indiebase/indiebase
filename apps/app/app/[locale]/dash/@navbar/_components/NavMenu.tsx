@@ -5,10 +5,12 @@ import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { type FC } from 'react';
+import { type FC, useState } from 'react';
 
 import { KEYS } from '~/constants';
 import { LocalStore } from '~/utils';
+import { useSetStorageAtom } from '~/utils/atoms';
+import { isWithinPath } from '~/utils/helper';
 
 import { NavbarMolecule } from './navbar.molecule';
 import { type NavMenuItem } from './types';
@@ -23,14 +25,14 @@ export const MenuList: FC<{
   index?: number;
 }> = function ({ items, index }) {
   const pathname = usePathname();
+  const molecule = useMolecule(NavbarMolecule);
+  const [_, { remove, add, has }] = useSetStorageAtom(
+    molecule.expandedMenusAtom,
+  );
 
   return items?.map((item) => {
-    const isDirectory = item.children;
-    const opened =
-      isDirectory &&
-      LocalStore.get<string[]>(KEYS.v0_expanded_nav_menus)?.includes?.(
-        item.href,
-      );
+    const isDirectory = item.children && item.children.length > 0;
+    const opened = isDirectory && has(item.href);
 
     return (
       <NavLink
@@ -40,11 +42,14 @@ export const MenuList: FC<{
         key={item.href}
         href={item.href}
         label={item.label}
-        onChange={async (value) => {
-          if (value) {
-            LocalStore.concat(KEYS.v0_expanded_nav_menus, item.href);
-          } else {
-            LocalStore.remove(KEYS.v0_expanded_nav_menus, item.href);
+        opened={opened}
+        onClick={() => {
+          if (isDirectory) {
+            if (opened) {
+              remove(item.href);
+            } else {
+              add(item.href);
+            }
           }
         }}
         // defaultOpened={opened}
@@ -60,9 +65,9 @@ export const NavMenu: FC<NavMenuProps> = function (props) {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [value] = useAtom(navbarMolecule.menusAtom);
 
-  return value.state === 'hasData' ? (
+  return (
     <Box {...props}>
-      <MenuList items={value.data} index={0} />
+      <MenuList items={value} index={0} />
     </Box>
-  ) : null;
+  );
 };

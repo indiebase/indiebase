@@ -6,8 +6,12 @@ import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
 
-import { DashboardHeader, NavbarMolecule } from '~/components/Dashboard';
+import { ClientOnly } from '~/components/ClientOnly/ClientOnly';
+import { DashboardHeader } from '~/components/Dashboard';
 import { IndiebaseTextLogo } from '~/components/Icons';
+import { reRenderPrint } from '~/utils/helper';
+
+import { NavbarMolecule } from './@navbar/navbar.molecule';
 
 export interface DashboardLayoutProps extends React.PropsWithChildren {
   navbar: React.ReactNode;
@@ -15,13 +19,11 @@ export interface DashboardLayoutProps extends React.PropsWithChildren {
 
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children, navbar }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
-  const [opened] = useAtom(navbarMolecule.collapsedAtom);
+  const [collapsed] = useAtom(navbarMolecule.collapsedAtom);
 
-  console.log(navbar);
+  reRenderPrint('DashboardLayout');
 
-  console.warn(
-    '------------------------DashboardLayout re-render------------------------------',
-  );
+  console.log(children, navbar, '----------------------------');
 
   return (
     <AppShell
@@ -30,7 +32,10 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children, navbar }) => {
       navbar={{
         width: rem(300),
         breakpoint: 'sm',
-        collapsed: { mobile: !opened.mobile, desktop: !opened.desktop },
+        collapsed: {
+          mobile: !collapsed.mobile,
+          desktop: !collapsed.desktop,
+        },
       }}
     >
       <DashboardHeader
@@ -40,7 +45,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children, navbar }) => {
           </Anchor>
         }
       />
-      {navbar}
+      {/* {navbar} */}
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );

@@ -1,21 +1,17 @@
 'use client';
 
-import { useMolecule } from 'bunshi/react';
 import { type FC } from 'react';
 
 import { OrganizationSelect } from '~/components/OrganizationSelect';
 
-import { ActionsBar } from './ActionsBar';
-import { NavbarMolecule } from './navbar.molecule';
-import { NavMenu } from './NavMenu';
+import { ActionsBar } from './_components/ActionsBar';
+import { NavMenu } from './_components/NavMenu';
 
 export interface DashboardNavbarProps {
   semver?: string;
 }
 
-const DashboardNavbar: FC<DashboardNavbarProps> = function ({ children }) {
-  const navbarMolecule = useMolecule(NavbarMolecule);
-
+const DashboardNavbar: FC<DashboardNavbarProps> = function () {
   return (
     <>
       <OrganizationSelect

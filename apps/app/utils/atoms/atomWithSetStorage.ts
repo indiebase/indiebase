@@ -4,9 +4,9 @@ import { atomWithStorage } from 'jotai/utils';
 export type SetStorageType = string | number | boolean;
 
 export interface AtomWithSetStorage {
-  setAtom: ReturnType<typeof atomWithStorage>;
-  concatAtom: WritableAtom<SetStorageType, [SetStorageType?], void>;
-  removeAtom: WritableAtom<SetStorageType, [SetStorageType?], void>;
+  setAtom: any;
+  addAtom: WritableAtom<null, [SetStorageType?], void>;
+  removeAtom: WritableAtom<null, [SetStorageType?], void>;
   hasAtom: Atom<(key: any) => boolean>;
 }
 
@@ -23,51 +23,49 @@ export function atomWithSetStorage(
       getOnInit: true,
     },
   );
-  const concatAtom = atom<SetStorageType, [SetStorageType?], void>(
+
+  const addAtom = atom<null, [SetStorageType?], void>(
     null,
     async (get, set, nextValue?: SetStorageType) => {
       const values = get(setAtom) as SetStorageType[];
-      if (values.includes(nextValue)) {
-        values.splice(values.indexOf(nextValue), 1);
-        void set(setAtom, values);
-      } else {
+      if (!values.includes(nextValue)) {
         void set(setAtom, [...values, nextValue]);
       }
     },
   );
-  const removeAtom = atom<SetStorageType, [SetStorageType?], void>(
+  const removeAtom = atom<null, [SetStorageType?], void>(
     null,
     async (get, set, nextValue?: SetStorageType) => {
       const values = get(setAtom) as SetStorageType[];
       if (values.includes(nextValue)) {
         values.splice(values.indexOf(nextValue), 1);
-        void set(setAtom, values);
+        void set(setAtom, [...values]);
       }
     },
   );
 
-  const hasAtom = atom(
-    (get) => (key) => (get(setAtom) as SetStorageType[]).includes(key),
-  );
+  const hasAtom = atom((get) => (key) => {
+    return (get(setAtom) as SetStorageType[]).includes(key);
+  });
 
   return {
     setAtom,
-    concatAtom,
+    addAtom,
     removeAtom,
     hasAtom,
   } as const;
 }
 
 export const useSetStorageAtom = function (atom: AtomWithSetStorage) {
-  const [set] = useAtom(atom.setAtom);
-  const concat = useSetAtom(atom.concatAtom);
+  const [data] = useAtom<SetStorageType[]>(atom.setAtom);
+  const add = useSetAtom(atom.addAtom);
   const remove = useSetAtom(atom.removeAtom);
   const [has] = useAtom(atom.hasAtom);
 
   return [
-    set,
+    data,
     {
-      concat,
+      add,
       remove,
       has,
     },

@@ -5,16 +5,17 @@ import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import { type FC } from 'react';
 
-import { NavbarMolecule } from './navbar.molecule';
+import { reRenderPrint } from '~/utils/helper';
+
+import { NavbarMolecule } from './_components/navbar.molecule';
+
 export interface NavbarLayoutProps extends React.PropsWithChildren {}
 
 const NavbarLayout: FC<NavbarLayoutProps> = ({ children }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
 
-  console.warn(
-    '------------------------NavbarLayout re-render------------------------------',
-  );
+  reRenderPrint('NavbarLayout');
 
   return (
     <AppShell.Navbar p="md">

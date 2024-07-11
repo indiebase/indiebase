@@ -2,7 +2,7 @@
 
 import { createScope, molecule } from 'bunshi/react';
 import { atom } from 'jotai';
-import { atomWithStorage, loadable } from 'jotai/utils';
+import { atomWithStorage } from 'jotai/utils';
 
 import { KEYS } from '~/constants';
 import { atomWithSetStorage } from '~/utils/atoms';
@@ -23,6 +23,7 @@ export type NavbarScope = {
   collapsed: { mobile: boolean; desktop: boolean } | null;
   menus: any[] | null;
   expandedMenus: string[];
+  expandedAllMenus: boolean;
   mode: NavMode | null;
 };
 
@@ -30,7 +31,8 @@ export const NavbarScope = createScope<NavbarScope>({
   collapsed: { mobile: false, desktop: true },
   menus: [],
   expandedMenus: [],
-  mode: null,
+  expandedAllMenus: false,
+  mode: 'backend',
 });
 
 export const NavbarMolecule = molecule((_mol, scope) => {
@@ -38,6 +40,7 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     collapsed: _collapsed,
     menus: _menus,
     expandedMenus: _expandedMenus,
+    expandedAllMenus: _expandedAllMenus,
     mode: _mode,
   } = scope(NavbarScope);
 
@@ -45,7 +48,9 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     KEYS.v0_nav_collapsed,
     _collapsed,
     undefined,
-    { getOnInit: true },
+    {
+      getOnInit: true,
+    },
   );
 
   const _modeAtom = atomWithStorage<NavMode>(
@@ -57,19 +62,17 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     },
   );
 
-  const menusAtom = loadable(
-    atom<Promise<NavMenuItem[]>>(async (get) => {
-      const mode = await get(_modeAtom);
-      switch (mode) {
-        case 'backend':
-          return baasMenus;
-        case 'collaborate':
-          return collaborateMenus;
-        default:
-          break;
-      }
-    }),
-  );
+  const menusAtom = atom<NavMenuItem[]>((get) => {
+    const mode = get(_modeAtom);
+    switch (mode) {
+      case 'backend':
+        return baasMenus;
+      case 'collaborate':
+        return collaborateMenus;
+      default:
+        break;
+    }
+  });
 
   const modeAtom = atom(
     (get) => {

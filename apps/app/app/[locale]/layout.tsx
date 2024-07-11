@@ -4,6 +4,7 @@ import '@mantine/nprogress/styles.css';
 import '@mantine/notifications/styles.css';
 import './global.css';
 
+import { Partytown } from '@builder.io/partytown/react';
 import { SuperCowPower } from '@indiebase/app-shared';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
@@ -78,6 +79,7 @@ const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
     <html lang={locale}>
       <head>
         <ColorSchemeScript />
+        <Partytown debug={kDevMode} forward={['dataLayer.push']} />
       </head>
       <body className={fonts.className}>
         <Compose providers={providers}>
