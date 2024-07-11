@@ -15,7 +15,7 @@ Indiebase is a self-hosted platform explicitly designed for indie developers or 
 - What's Indiebase?  
   Indiebase is a self-hosted platform explicitly designed for indie hackers or teams. Providing financial services and BaaS. It is similar to a private OpenCollective + Firebase. The initial purpose of Indiebase was to serve [deskbtm](https://deskbtm.com), used for managing [Nawb](https://nawb.deskbtm.com/), [PlugKit](https://github.com/deskbtm-plugkit/plugkit), etc.
 - What's Indiebase Community?  
-  Indiebase Community is the FOSS version of Indiebase. It provides basic functions like financial services and basic BaaS.
+  Indiebase Community is the FOSS edition of Indiebase. It provides basic functions like financial services and basic BaaS.
 - What's Indiebase Pro?  
   Indiebase Pro is the paid version of Indiebase. It provides more functions.
 - Does Indiebase provide an online service?  
