@@ -6,49 +6,49 @@ import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
 
-import { ClientOnly } from '~/components/ClientOnly/ClientOnly';
-import { DashboardHeader } from '~/components/Dashboard';
+import { ClientOnly } from '~/components/ClientOnly';
+import { AppShellHeader } from '~/components/Dashboard';
+import { AppShellNavbar, NavbarMolecule } from '~/components/Dashboard/Navbar';
 import { IndiebaseTextLogo } from '~/components/Icons';
 import { reRenderPrint } from '~/utils/helper';
 
-import { NavbarMolecule } from './@navbar/navbar.molecule';
-
-export interface DashboardLayoutProps extends React.PropsWithChildren {
+export interface AppShellProps extends React.PropsWithChildren {
   navbar: React.ReactNode;
 }
 
-const DashboardLayout: FC<DashboardLayoutProps> = ({ children, navbar }) => {
+const AppShellLayout: FC<AppShellProps> = ({ children, navbar }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [collapsed] = useAtom(navbarMolecule.collapsedAtom);
 
-  reRenderPrint('DashboardLayout');
-
-  console.log(children, navbar, '----------------------------');
+  console.log(navbar);
+  reRenderPrint('AppShellLayout');
 
   return (
-    <AppShell
-      layout="alt"
-      header={{ height: rem(65) }}
-      navbar={{
-        width: rem(300),
-        breakpoint: 'sm',
-        collapsed: {
-          mobile: !collapsed.mobile,
-          desktop: !collapsed.desktop,
-        },
-      }}
-    >
-      <DashboardHeader
-        logo={
-          <Anchor href="/" component={Link} display="flex">
-            <IndiebaseTextLogo size={160} />
-          </Anchor>
-        }
-      />
-      {/* {navbar} */}
-      <AppShell.Main>{children}</AppShell.Main>
-    </AppShell>
+    <ClientOnly>
+      <AppShell
+        layout="alt"
+        header={{ height: rem(65) }}
+        navbar={{
+          width: rem(300),
+          breakpoint: 'sm',
+          collapsed: {
+            mobile: !collapsed.mobile,
+            desktop: !collapsed.desktop,
+          },
+        }}
+      >
+        <AppShellHeader
+          logo={
+            <Anchor href="/" component={Link} display="flex">
+              <IndiebaseTextLogo size={160} />
+            </Anchor>
+          }
+        />
+        {navbar}
+        <AppShell.Main>{children}</AppShell.Main>
+      </AppShell>
+    </ClientOnly>
   );
 };
 
-export default DashboardLayout;
+export default AppShellLayout;

@@ -7,8 +7,8 @@ import { atomWithStorage } from 'jotai/utils';
 import { KEYS } from '~/constants';
 import { atomWithSetStorage } from '~/utils/atoms';
 
-import { baasMenus } from './baas.menu';
-import { collaborateMenus } from './collaborate.menu';
+import { baasMenus } from './backend.menu';
+import { collaborateMenus } from './collective.menu';
 import { type NavMenuItem } from './types';
 
 /**
@@ -17,7 +17,7 @@ import { type NavMenuItem } from './types';
  * `backend` is the BaaS.
  * `collaborate` provides the financial services for your project.
  */
-export type NavMode = 'backend' | 'collaborate';
+export type NavMode = 'backend' | 'collective';
 
 export type NavbarScope = {
   collapsed: { mobile: boolean; desktop: boolean } | null;
@@ -67,7 +67,7 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     switch (mode) {
       case 'backend':
         return baasMenus;
-      case 'collaborate':
+      case 'collective':
         return collaborateMenus;
       default:
         break;

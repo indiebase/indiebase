@@ -13,9 +13,8 @@ import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
 
-import { NavbarMolecule } from '~/app/[locale]/dash/@navbar/navbar.molecule';
-
 import classes from './Dashboard.module.css';
+import { NavbarMolecule } from './Navbar';
 
 const PreferencesMenu = function () {
   return (
@@ -50,11 +49,11 @@ const PreferencesMenu = function () {
   );
 };
 
-export interface DashboardHeaderProps {
+export interface AppShellHeaderProps {
   logo: React.ReactNode;
 }
 
-export const DashboardHeader: FC<DashboardHeaderProps> = function (props) {
+export const AppShellHeader: FC<AppShellHeaderProps> = function (props) {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
 

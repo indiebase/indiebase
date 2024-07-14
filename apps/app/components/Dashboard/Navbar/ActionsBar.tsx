@@ -25,7 +25,7 @@ export const ActionsBar: FC<any> = function () {
     let modeOption;
 
     switch (mode) {
-      case 'collaborate':
+      case 'collective':
         modeOption = {
           label: 'Backend',
           icon: <IconCloud size={13} />,
@@ -37,10 +37,10 @@ export const ActionsBar: FC<any> = function () {
         break;
       case 'backend':
         modeOption = {
-          label: 'Collaborate',
+          label: 'Collective',
           icon: <IconAffiliate size={13} />,
           onClick() {
-            setMode('collaborate');
+            setMode('collective');
           },
         };
         break;
