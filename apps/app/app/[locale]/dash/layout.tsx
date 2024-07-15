@@ -8,7 +8,7 @@ import { type FC } from 'react';
 
 import { ClientOnly } from '~/components/ClientOnly';
 import { AppShellHeader } from '~/components/Dashboard';
-import { AppShellNavbar, NavbarMolecule } from '~/components/Dashboard/Navbar';
+import { NavbarMolecule } from '~/components/Dashboard/Navbar';
 import { IndiebaseTextLogo } from '~/components/Icons';
 import { reRenderPrint } from '~/utils/helper';
 
@@ -20,7 +20,6 @@ const AppShellLayout: FC<AppShellProps> = ({ children, navbar }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [collapsed] = useAtom(navbarMolecule.collapsedAtom);
 
-  console.log(navbar);
   reRenderPrint('AppShellLayout');
 
   return (
