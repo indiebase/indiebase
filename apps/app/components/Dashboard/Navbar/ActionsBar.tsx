@@ -3,8 +3,9 @@
 import { ActionIcon, Flex, Group, rem, Tooltip } from '@mantine/core';
 import {
   IconAffiliate,
-  IconArrowsVertical,
   IconCloud,
+  IconFolder,
+  IconFolderOpen,
 } from '@tabler/icons-react';
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
@@ -13,13 +14,54 @@ import { type FC, useMemo } from 'react';
 import { useSetStorageAtom } from '~/utils/atoms';
 
 import { NavbarMolecule } from './navbar.molecule';
+import { type NavMenuItem } from './types';
+
+export function walkChildren(
+  menus: NavMenuItem[],
+  callback: (menu: NavMenuItem) => void,
+) {
+  const stack = [menus];
+
+  while (stack.length > 0) {
+    const currentMenus = stack.shift()!;
+
+    for (const m of currentMenus) {
+      if (m) {
+        if (Array.isArray(m.children)) {
+          stack.push(m.children);
+        }
+
+        callback(m);
+      }
+    }
+  }
+}
 
 export const ActionsBar: FC<any> = function () {
   const navbarMolecule = useMolecule(NavbarMolecule);
-  const [_, { concat, has }] = useSetStorageAtom(
+  const [expandedAllMenus, setExpandedAllMenus] = useAtom(
+    navbarMolecule.expandedAllMenusAtom,
+  );
+  const [menus] = useAtom(navbarMolecule.menusAtom);
+  const [_, { add, has, remove, clear }] = useSetStorageAtom(
     navbarMolecule.expandedMenusAtom,
   );
   const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
+
+  function toggle() {
+    if (expandedAllMenus) {
+      clear();
+    } else {
+      const dirs = [];
+      walkChildren(menus, (e) => {
+        if (Array.isArray(e.children)) {
+          dirs.push(e.href);
+        }
+      });
+      add(dirs);
+    }
+    setExpandedAllMenus(!expandedAllMenus);
+  }
 
   const actions = useMemo(() => {
     let modeOption;
@@ -50,15 +92,19 @@ export const ActionsBar: FC<any> = function () {
 
     return [
       modeOption,
-      {
-        label: 'Expand all',
-        icon: <IconArrowsVertical size={13} />,
-        onClick() {
-          // toggle(!expanded);
-        },
-      },
+      expandedAllMenus
+        ? {
+            label: 'Collapse all',
+            icon: <IconFolderOpen size={13} />,
+            onClick: toggle,
+          }
+        : {
+            label: 'Expand all',
+            icon: <IconFolder size={13} />,
+            onClick: toggle,
+          },
     ];
-  }, [mode]);
+  }, [mode, expandedAllMenus]);
 
   return (
     <Flex

@@ -16,7 +16,7 @@ export interface AppShellProps extends React.PropsWithChildren {
   navbar: React.ReactNode;
 }
 
-const AppShellLayout: FC<AppShellProps> = ({ children, navbar }) => {
+const AppShellLayout: FC<AppShellProps> = ({ children }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [collapsed] = useAtom(navbarMolecule.collapsedAtom);
 
@@ -43,7 +43,6 @@ const AppShellLayout: FC<AppShellProps> = ({ children, navbar }) => {
             </Anchor>
           }
         />
-        {navbar}
         <AppShell.Main>{children}</AppShell.Main>
       </AppShell>
     </ClientOnly>

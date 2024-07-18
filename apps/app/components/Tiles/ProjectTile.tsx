@@ -160,7 +160,7 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
             (props.members.length < 1 ? (
               <Box h={26} />
             ) : (
-              <AvatarGroup ml={-2} spacing="xs">
+              <AvatarGroup style={{ flexWrap: 'wrap' }} ml={-2} spacing="xs">
                 {props.members.map((u, i) => {
                   return (
                     <AvatarPreviewProfile

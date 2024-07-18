@@ -5,8 +5,9 @@ export type SetStorageType = string | number | boolean;
 
 export interface AtomWithSetStorage {
   setAtom: any;
-  addAtom: WritableAtom<null, [SetStorageType?], void>;
-  removeAtom: WritableAtom<null, [SetStorageType?], void>;
+  addAtom: WritableAtom<null, [(SetStorageType | SetStorageType[])?], void>;
+  removeAtom: WritableAtom<null, [(SetStorageType | 'all')?], void>;
+  clearAtom: WritableAtom<null, [unknown?], void>;
   hasAtom: Atom<(key: any) => boolean>;
 }
 
@@ -24,10 +25,16 @@ export function atomWithSetStorage(
     },
   );
 
-  const addAtom = atom<null, [SetStorageType?], void>(
+  const addAtom = atom<null, [(SetStorageType | SetStorageType[])?], void>(
     null,
-    async (get, set, nextValue?: SetStorageType) => {
+    async (get, set, nextValue?: SetStorageType | SetStorageType[]) => {
       const values = get(setAtom) as SetStorageType[];
+
+      if (Array.isArray(nextValue)) {
+        void set(setAtom, Array.from(new Set([...values, ...nextValue])));
+        return;
+      }
+
       if (!values.includes(nextValue)) {
         void set(setAtom, [...values, nextValue]);
       }
@@ -37,10 +44,17 @@ export function atomWithSetStorage(
     null,
     async (get, set, nextValue?: SetStorageType) => {
       const values = get(setAtom) as SetStorageType[];
+
       if (values.includes(nextValue)) {
         values.splice(values.indexOf(nextValue), 1);
         void set(setAtom, [...values]);
       }
+    },
+  );
+  const clearAtom = atom<null, [SetStorageType?], void>(
+    null,
+    async (_get, set) => {
+      void set(setAtom, []);
     },
   );
 
@@ -53,6 +67,7 @@ export function atomWithSetStorage(
     addAtom,
     removeAtom,
     hasAtom,
+    clearAtom,
   } as const;
 }
 
@@ -60,6 +75,7 @@ export const useSetStorageAtom = function (atom: AtomWithSetStorage) {
   const [data] = useAtom<SetStorageType[]>(atom.setAtom);
   const add = useSetAtom(atom.addAtom);
   const remove = useSetAtom(atom.removeAtom);
+  const clear = useSetAtom(atom.clearAtom);
   const [has] = useAtom(atom.hasAtom);
 
   return [
@@ -68,6 +84,7 @@ export const useSetStorageAtom = function (atom: AtomWithSetStorage) {
       add,
       remove,
       has,
+      clear,
     },
   ] as const;
 };

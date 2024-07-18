@@ -62,6 +62,15 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     },
   );
 
+  const expandedAllMenusAtom = atomWithStorage<boolean>(
+    KEYS.v0_expanded_all_nav_menus,
+    _expandedAllMenus,
+    undefined,
+    {
+      getOnInit: true,
+    },
+  );
+
   const menusAtom = atom<NavMenuItem[]>((get) => {
     const mode = get(_modeAtom);
     switch (mode) {
@@ -92,6 +101,7 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     collapsedAtom,
     menusAtom,
     expandedMenusAtom,
+    expandedAllMenusAtom,
     modeAtom,
   } as const;
 });

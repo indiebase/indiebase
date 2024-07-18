@@ -8,8 +8,13 @@ export interface AppShellProps extends React.PropsWithChildren {
   navbar: React.ReactNode;
 }
 
-const NavbarLayout: FC<AppShellProps> = ({ children }) => {
-  return <AppShellNavbar />;
+const BackendLayout: FC<AppShellProps> = ({ children }) => {
+  return (
+    <>
+      <AppShellNavbar />
+      {children}
+    </>
+  );
 };
 
-export default NavbarLayout;
+export default BackendLayout;
