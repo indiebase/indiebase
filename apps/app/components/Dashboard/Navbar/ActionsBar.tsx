@@ -9,12 +9,15 @@ import {
 } from '@tabler/icons-react';
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
+import { useRouter } from 'next/router';
 import { type FC, useMemo } from 'react';
 
 import { useSetStorageAtom } from '~/utils/atoms';
 
-import { NavbarMolecule } from './navbar.molecule';
+import { getMenus } from './menus';
+import { NavbarMolecule, type NavMode } from './navbar.molecule';
 import { type NavMenuItem } from './types';
+import Link from 'next/link';
 
 export function walkChildren(
   menus: NavMenuItem[],
@@ -37,16 +40,15 @@ export function walkChildren(
   }
 }
 
-export const ActionsBar: FC<any> = function () {
+export const ActionsBar: FC<{ mode: NavMode }> = function ({ mode }) {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [expandedAllMenus, setExpandedAllMenus] = useAtom(
     navbarMolecule.expandedAllMenusAtom,
   );
-  const [menus] = useAtom(navbarMolecule.menusAtom);
-  const [_, { add, has, remove, clear }] = useSetStorageAtom(
+  const [_, { add, clear }] = useSetStorageAtom(
     navbarMolecule.expandedMenusAtom,
   );
-  const [mode, setMode] = useAtom(navbarMolecule.modeAtom);
+  const menus = getMenus(mode);
 
   function toggle() {
     if (expandedAllMenus) {
@@ -69,21 +71,19 @@ export const ActionsBar: FC<any> = function () {
     switch (mode) {
       case 'collective':
         modeOption = {
+          component: Link,
           label: 'Backend',
           icon: <IconCloud size={13} />,
-          onClick() {
-            setMode('backend');
-          },
+          href: '/dash/backend',
         };
 
         break;
       case 'backend':
         modeOption = {
+          component: Link,
           label: 'Collective',
           icon: <IconAffiliate size={13} />,
-          onClick() {
-            setMode('collective');
-          },
+          href: '/dash/collective',
         };
         break;
       default:
@@ -125,9 +125,11 @@ export const ActionsBar: FC<any> = function () {
                 openDelay={500}
               >
                 <ActionIcon
+                  component={item.component}
                   variant="default"
                   style={{ border: 'none' }}
                   size="xs"
+                  href={item.href}
                   onClick={item.onClick}
                 >
                   {item.icon}

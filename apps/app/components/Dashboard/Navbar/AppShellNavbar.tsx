@@ -6,19 +6,21 @@ import { useAtom } from 'jotai';
 import { type FC } from 'react';
 
 import { OrganizationSelect } from '~/components/OrganizationSelect';
-import { reRenderPrint } from '~/utils/helper';
+import { reRenderProbe } from '~/utils/helper';
 
 import { ActionsBar } from './ActionsBar';
-import { NavbarMolecule } from './navbar.molecule';
+import { NavbarMolecule, type NavMode } from './navbar.molecule';
 import { NavMenu } from './NavMenu';
 
-export interface AppShellNavbarProps extends React.PropsWithChildren {}
+export interface AppShellNavbarProps extends React.PropsWithChildren {
+  mode: NavMode;
+}
 
-export const AppShellNavbar: FC<AppShellNavbarProps> = ({ children }) => {
+export const AppShellNavbar: FC<AppShellNavbarProps> = ({ mode }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
 
-  reRenderPrint('NavbarLayout');
+  reRenderProbe('AppShellNavbar');
 
   return (
     <AppShell.Navbar p="md">
@@ -40,8 +42,8 @@ export const AppShellNavbar: FC<AppShellNavbarProps> = ({ children }) => {
           },
         ]}
       />
-      <ActionsBar />
-      <NavMenu mt={5} />
+      <ActionsBar mode={mode} />
+      <NavMenu mode={mode} mt={5} />
     </AppShell.Navbar>
   );
 };

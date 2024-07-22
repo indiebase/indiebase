@@ -15,9 +15,13 @@ import {
 } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
 import { IconBrandGithub } from '@tabler/icons-react';
+import { useMolecule } from 'bunshi/react';
+import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { type FC, useState } from 'react';
+import { useBirth } from 'reactgets';
 
+import { NavbarMolecule } from '~/components/Dashboard/Navbar';
 import { UploadImage } from '~/components/Upload';
 
 export interface CreateOrganizationProps {
@@ -30,6 +34,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
   const [github, setGithub] = useState<any>();
   const router = useRouter();
   const theme = useMantineTheme();
+
   const form = useForm({
     initialValues: {
       name: '',

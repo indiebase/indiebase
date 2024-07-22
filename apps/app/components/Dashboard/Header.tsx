@@ -12,6 +12,7 @@ import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
+import React from 'react';
 
 import classes from './Dashboard.module.css';
 import { NavbarMolecule } from './Navbar';
@@ -51,9 +52,13 @@ const PreferencesMenu = function () {
 
 export interface AppShellHeaderProps {
   logo: React.ReactNode;
+  burger?: boolean | React.ReactNode;
 }
 
-export const AppShellHeader: FC<AppShellHeaderProps> = function (props) {
+export const AppShellHeader: FC<AppShellHeaderProps> = function ({
+  burger,
+  logo,
+}) {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
 
@@ -61,19 +66,25 @@ export const AppShellHeader: FC<AppShellHeaderProps> = function (props) {
     <AppShell.Header className={classes.header}>
       <Group h="100%" px="md" wrap="nowrap" justify="space-between">
         <Group h="100%">
-          <Burger
-            opened={opened.mobile}
-            onClick={() => toggle({ ...opened, mobile: !opened.mobile })}
-            hiddenFrom="sm"
-            size="xs"
-          />
-          <Burger
-            opened={opened.desktop}
-            onClick={() => toggle({ ...opened, desktop: !opened.desktop })}
-            visibleFrom="sm"
-            size="xs"
-          />
-          {props.logo}
+          {typeof burger === 'boolean' && burger ? (
+            <>
+              <Burger
+                opened={opened.mobile}
+                onClick={() => toggle({ ...opened, mobile: !opened.mobile })}
+                hiddenFrom="sm"
+                size="xs"
+              />
+              <Burger
+                opened={opened.desktop}
+                onClick={() => toggle({ ...opened, desktop: !opened.desktop })}
+                visibleFrom="sm"
+                size="xs"
+              />
+            </>
+          ) : (
+            React.isValidElement(burger) && burger
+          )}
+          {logo}
         </Group>
 
         <Group h="100%" justify="flex-end">

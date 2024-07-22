@@ -6,7 +6,7 @@ import {
 
 import { type NavMenuItem } from './types';
 
-export const collaborateMenus = [
+export const collectiveMenus = [
   {
     href: '/dash/auth',
     label: 'Auth',

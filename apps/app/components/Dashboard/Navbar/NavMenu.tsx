@@ -2,16 +2,18 @@
 
 import { Box, type MantineStyleProps, NavLink } from '@mantine/core';
 import { useMolecule } from 'bunshi/react';
-import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { type FC } from 'react';
 
 import { useSetStorageAtom } from '~/utils/atoms';
 
-import { NavbarMolecule } from './navbar.molecule';
+import { getMenus } from './menus';
+import { NavbarMolecule, type NavMode } from './navbar.molecule';
 import { type NavMenuItem } from './types';
 
-interface NavMenuProps extends MantineStyleProps {}
+interface NavMenuProps extends MantineStyleProps {
+  mode: NavMode;
+}
 
 export const MenuList: FC<{
   items: NavMenuItem[];
@@ -56,12 +58,12 @@ export const MenuList: FC<{
 };
 
 export const NavMenu: FC<NavMenuProps> = function (props) {
-  const navbarMolecule = useMolecule(NavbarMolecule);
-  const [value] = useAtom(navbarMolecule.menusAtom);
+  const { mode, ...containerProps } = props;
+  const menus = getMenus(mode);
 
   return (
-    <Box {...props}>
-      <MenuList items={value} index={0} />
+    <Box {...containerProps}>
+      <MenuList items={menus} index={0} />
     </Box>
   );
 };

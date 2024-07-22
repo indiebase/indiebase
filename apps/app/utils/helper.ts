@@ -1,9 +1,10 @@
 import { relative } from 'path';
 
 /* eslint-disable no-console */
-export const reRenderPrint = function (message?: any) {
+export const reRenderProbe = function (message?: any) {
   console.debug(
-    `------------------------------ ${message} - re-render ---------------------------------`,
+    `%c [Indiebase] 🤯${message} - re-render `,
+    'background: #350091; color: #FFFFFF',
   );
 };
 
