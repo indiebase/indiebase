@@ -18,8 +18,8 @@ export const SuperCowPower = function () {
             | O_O | \\                            |
              \\ _ /   \\________________           |
                         | |  | |      \\         /
-  I also have           / |  / |       \\______/
-super cow power...      \\ |  \\ |        \\ |  \\ |
+Indiebase also has      / |  / |       \\______/
+ super cow powers...    \\ |  \\ |        \\ |  \\ |
                       __| |__| |      __| |__| |
                       |___||___|      |___||___|
     `);
