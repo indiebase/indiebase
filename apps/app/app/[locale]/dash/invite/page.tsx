@@ -1,12 +1,14 @@
 'use client';
 
-import { Container, Text } from '@mantine/core';
+import { Container, rem, Text, useMantineTheme } from '@mantine/core';
 import { useEffect } from 'react';
 
-import { InviteSelect } from '~/components/InviteSelect';
+import { InviteInput } from '~/components/InviteInput';
 import { confetti } from '~/utils';
 
 export default function Page() {
+  const theme = useMantineTheme();
+
   useEffect(() => {
     setTimeout(() => {
       confetti.burst();
@@ -14,17 +16,11 @@ export default function Page() {
   }, []);
 
   return (
-    <Container>
-      <Text
-        variant="gradient"
-        gradient={{ from: '#018d63', to: 'lime', deg: 45 }}
-        fw={700}
-        fz="h1"
-        mb="xl"
-      >
+    <Container mt={120}>
+      <Text variant="gradient" fw={700} fz="h1" mb={60}>
         Set up organization successfully !
       </Text>
-      <InviteSelect
+      <InviteInput
         data={[
           { label: 'name', value: 'wanghan' },
           { label: 'kkkkk', value: 'wanghan' },
