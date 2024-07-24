@@ -1,12 +1,13 @@
 import { IAuthModuleOptions } from '@indiebase/nest-fastify-passport';
 import { AuthGuard } from '@indiebase/nest-fastify-passport';
 import { AvailableOAuthProviders } from '@indiebase/sdk';
+import { formatAuthProviderCallbackURL } from '@indiebase/server-shared';
 import { ExecutionContext } from '@nestjs/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from '../auth.service';
 import { FastifyRequest } from 'fastify';
 import { Profile, Strategy, VerifyCallback } from 'passport-apple';
-import { formatAuthProviderCallbackURL } from '@indiebase/server-shared';
+
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class MicrosoftGuard extends AuthGuard('microsoft') {
@@ -62,7 +63,7 @@ export class MicrosoftGuard extends AuthGuard('microsoft') {
     );
   }
 
-  override useAuthenticateOptions(): IAuthModuleOptions<any> {
+  override useAuthenticateOptions(): IAuthModuleOptions {
     return {
       scope: ['user', 'repo', 'admin:org'],
     };

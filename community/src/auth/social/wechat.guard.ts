@@ -62,7 +62,7 @@ export class WeChatGuard extends AuthGuard('wechat') {
     );
   }
 
-  override useAuthenticateOptions(): IAuthModuleOptions<any> {
+  override useAuthenticateOptions(): IAuthModuleOptions {
     return {
       scope: ['user', 'repo', 'admin:org'],
     };

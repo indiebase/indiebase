@@ -14,7 +14,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
     super();
   }
 
-  override useAuthenticateOptions(): IAuthModuleOptions<any> {
+  override useAuthenticateOptions(): IAuthModuleOptions {
     return {
       session: false,
     };

@@ -1,218 +1,127 @@
-// 'use client';
+'use client';
 
-// import {
-//   Avatar,
-//   Button,
-//   Group,
-//   MultiSelect,
-//   type MultiSelectProps,
-//   Text,
-// } from '@mantine/core';
-// import { useDebouncedState } from '@mantine/hooks';
-// import { IconBuildingCommunity } from '@tabler/icons-react';
-// import debounce from 'lodash.debounce';
-// import { type FC, useState } from 'react';
-
-// interface SelectItem {
-//   value: string;
-//   label: string;
-//   leadingImage?: string;
-//   subLabel?: string;
-//   [key: string]: any;
-// }
-
-export const renderOptionWithDetail: MultiSelectProps['renderOption'] = (
-  props,
-) => {
-  const { option } = props;
-  const { leadingImage, subLabel, label } = option as any;
-
-  console.log(props);
-
-  return (
-    <Group gap={7}>
-      {leadingImage && (
-        <Avatar src={leadingImage} radius="xl" size={18}>
-          <IconBuildingCommunity size={12} />
-        </Avatar>
-      )}
-      <Text lineClamp={1} fz="sm">
-        {label}
-      </Text>
-      {subLabel && (
-        <Text lineClamp={1} fz="xs" c="gray">
-          {subLabel}
-        </Text>
-      )}
-    </Group>
-  );
-};
-
-// export interface InviteInputProps extends MultiSelectProps {
-//   data: SelectItem[];
-// }
-
-// export const InviteInput: FC<InviteInputProps> = function (props) {
-//   const { data } = props;
-//   const [members, setMembers] = useDebouncedState<any[]>([], 100);
-//   const [value, setValue] = useState<string[]>([]);
-
-//   async function searchUsersApi() {
-//     return [
-//       {
-//         avatar: 'https://random.imagecdn.app/50/50',
-//         email: 'random',
-//         username: 'random',
-//         label: 'HanHan',
-//         value: 'hanhan',
-//       },
-//       {
-//         avatar: 'https://random.imagecdn.app/50/50',
-//         email: 'random',
-//         username: 'random',
-//         label: 'hanhan1',
-//         value: 'hanhan1',
-//       },
-//       {
-//         avatar: ' https://random.imagecdn.app/50/50',
-//         username: 'random',
-//         email: 'random',
-//         label: 'hanhan2',
-//         value: 'hanhan2',
-//       },
-//     ];
-//   }
-
-//   const handleSearch = debounce((val: string) => {
-//     searchUsersApi().then((d) => {
-//       const items = d.map((val) => ({
-//         leadingImage: val.avatar,
-//         subLabel: val.username,
-//         value: val.value,
-//         label: val.label,
-//       }));
-//       setMembers(items);
-//     });
-//   }, 500);
-
-//   return (
-//     <MultiSelect
-//       clearable
-//       size="md"
-//       searchable
-//       hidePickedOptions
-//       dropdownOpened
-//       limit={20}
-//       value={value}
-//       data={members}
-//       renderOption={renderOptionWithDetail}
-//       placeholder="Enter the email. Unregistered users will be sent an invitation to register."
-//       onSearchChange={handleSearch}
-//       nothingFoundMessage={
-//         <Button onClick={() => {}} style={{ cursor: 'default' }}>
-//           Create
-//         </Button>
-//       }
-//       onChange={(value) => {
-//         setValue(value);
-//       }}
-//     />
-//   );
-// };
 import {
   Avatar,
   Combobox,
   Group,
-  type MultiSelectProps,
   Pill,
   PillsInput,
+  type PillsInputProps,
   Text,
   useCombobox,
 } from '@mantine/core';
-import { IconBuildingCommunity } from '@tabler/icons-react';
-import { useState } from 'react';
-
-const groceries = [
-  {
-    avatar: 'https://random.imagecdn.app/50/50',
-    email: 'random',
-    username: 'random',
-    label: 'HanHan',
-    value: 'hanhan',
-  },
-  {
-    avatar: 'https://random.imagecdn.app/50/50',
-    email: 'random',
-    username: 'random',
-    label: 'hanhan1',
-    value: 'hanhan1',
-  },
-  {
-    avatar: ' https://random.imagecdn.app/50/50',
-    username: 'random',
-    email: 'random',
-    label: 'hanhan2',
-    value: 'hanhan2',
-  },
-];
-
-export interface InviteInputItem {
+import { IconBuildingCommunity, IconCheck } from '@tabler/icons-react';
+import {
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
+  useState,
+} from 'react';
+import { useProps } from 'reactgets';
+import { IF } from 'reactgets/components/IF';
+export interface MultiInputItem {
   value: string;
   label: string;
-  leadingImage?: string;
-  subLabel?: string;
+  leadingImage?: string | undefined;
+  subLabel?: string | undefined;
   [key: string]: any;
 }
 
-export function MultiInput() {
+export interface MultiInputProps extends PillsInputProps {
+  data: MultiInputItem[];
+  placeholder?: string | undefined;
+}
+
+const defaultMultiInputProps = {
+  placeholder: 'Search...',
+};
+
+export function MultiInput(_props: MultiInputProps) {
+  const { data, placeholder, ...pillsInputProps } = useProps(
+    defaultMultiInputProps,
+    _props,
+  );
   const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
   });
 
   const [search, setSearch] = useState('');
-  const [value, setValue] = useState<InviteInputItem[]>([]);
+  const [pills, setPills] = useState<MultiInputItem[]>([]);
 
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val)
-        ? current.filter((v) => v !== val)
-        : [...current, val],
-    );
+  const handleValueSelect = (val: string) => {
+    setPills((current) => {
+      const d = data.find((v) => v.value === val);
+      const c = current.find((v) => v.value === val);
+      return c
+        ? current.filter((v) => v.value !== c.value)
+        : [...current, d].filter(Boolean);
+    });
+  };
 
   const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v.value !== val));
+    setPills((current) => current.filter((v) => v.value !== val));
 
-  const values = value.map(({ value, label }) => (
+  const values = pills.map(({ value, label, leadingImage }) => (
     <Pill
       key={value}
       withRemoveButton
       onRemove={() => handleValueRemove(value)}
+      radius="sm"
     >
-      {label}
+      <Group wrap="nowrap" gap={5} mr={5}>
+        {leadingImage && (
+          <Avatar src={leadingImage} radius="xl" size={16}>
+            <IconBuildingCommunity size={12} />
+          </Avatar>
+        )}
+        {label}
+      </Group>
     </Pill>
   ));
 
-  const options = groceries
-    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
-    .map((item) => {
-      const { leadingImage, subLabel, label } = item;
+  const handleKeydown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.key === 'Backspace' && search.length === 0) {
+      event.preventDefault();
+      handleValueRemove(pills[pills.length - 1]?.value);
+    }
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    combobox.updateSelectedOptionIndex();
+    setSearch(event.currentTarget.value);
+  };
+
+  const options = data
+    .filter((item) =>
+      item.value.toLowerCase().includes(search.trim().toLowerCase()),
+    )
+    .map((item: MultiInputItem) => {
+      const { leadingImage, subLabel, label, value } = item;
       return (
-        <Combobox.Option value={item} key={item} active={value.includes(item)}>
-          <Group gap={7}>
-            {leadingImage && (
-              <Avatar src={leadingImage} radius="xl" size={18}>
-                <IconBuildingCommunity size={12} />
-              </Avatar>
-            )}
-            <Text lineClamp={1} fz="sm">
-              {label}
-            </Text>
-            {subLabel && (
-              <Text lineClamp={1} fz="xs" c="gray">
-                {subLabel}
+        <Combobox.Option
+          onClick={() => combobox.closeDropdown()}
+          value={value}
+          key={value}
+          active={pills.some((v) => v.value === value)}
+        >
+          <Group justify="space-between" mih={30}>
+            <Group gap={7}>
+              {leadingImage && (
+                <Avatar src={leadingImage} radius="xl" size={18}>
+                  <IconBuildingCommunity size={12} />
+                </Avatar>
+              )}
+              <Text lineClamp={1} fz="sm">
+                {label}
               </Text>
-            )}
+              {subLabel && (
+                <Text lineClamp={1} fz="xs" c="gray">
+                  {subLabel}
+                </Text>
+              )}
+            </Group>
+            <IF is={pills.some((v) => v.value === value)}>
+              <IconCheck size={14} />
+            </IF>
           </Group>
         </Combobox.Option>
       );
@@ -221,26 +130,21 @@ export function MultiInput() {
   return (
     <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
       <Combobox.DropdownTarget>
-        <PillsInput onClick={() => combobox.openDropdown()}>
+        <PillsInput
+          size="md"
+          onClick={() => combobox.openDropdown()}
+          {...pillsInputProps}
+        >
           <Pill.Group>
             {values}
-
             <Combobox.EventsTarget>
               <PillsInput.Field
                 onFocus={() => combobox.openDropdown()}
                 onBlur={() => combobox.closeDropdown()}
                 value={search}
-                placeholder="Search values"
-                onChange={(event) => {
-                  combobox.updateSelectedOptionIndex();
-                  setSearch(event.currentTarget.value);
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Backspace' && search.length === 0) {
-                    event.preventDefault();
-                    handleValueRemove(value[value.length - 1]);
-                  }
-                }}
+                placeholder={placeholder}
+                onChange={handleChange}
+                onKeyDown={handleKeydown}
               />
             </Combobox.EventsTarget>
           </Pill.Group>

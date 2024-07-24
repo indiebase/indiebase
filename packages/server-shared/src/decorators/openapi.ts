@@ -130,16 +130,15 @@ export const ApiPaginatedResponse = <TModel extends Type<any> = any>(
   return applyDecorators(...decorators);
 };
 
-const getItems = <T extends Type<any> | string>(
-  model?: T,
-): ReferenceObject | SchemaObject => {
+const getItems = <T extends Type<any> | string>(model?: T) => {
   const items =
     typeof model === 'function'
-      ? Object.create({
+      ? {
           $ref: getSchemaPath(model),
-        })
-      : Object.create({ type: model });
-  return items;
+        }
+      : { type: model };
+
+  return items as SchemaObject | ReferenceObject;
 };
 
 export const ApiOkedResponse = <TModel extends Type<any> | string = any>(
