@@ -9,6 +9,7 @@
     "build": "next build",
     "preview": "next start",
     "lint": "next lint",
+    "demo": "kubb",
     "partytown": "partytown copylib public/~partytown"
   },
   "dependencies": {
@@ -52,6 +53,13 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.4.1",
+    "@kubb/cli": "^2.23.3",
+    "@kubb/plugin-oas": "^2.23.3",
+    "@kubb/swagger": "^2.23.3",
+    "@kubb/swagger-client": "^2.23.3",
+    "@kubb/swagger-faker": "^2.23.3",
+    "@kubb/swagger-tanstack-query": "^2.23.3",
+    "@kubb/swagger-ts": "^2.23.3",
     "@swc-jotai/react-refresh": "0.1.1",
     "@types/lodash.debounce": "^4",
     "@types/postcss-flexbugs-fixes": "^5",

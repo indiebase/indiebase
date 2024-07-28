@@ -1,0 +1,1 @@
+{"type":"object","properties":{"name":{"description":"Organization name","type":"string","default":"publish"}},"required":["name"],"x-readme-ref-name":"CreateOrgDTO"}

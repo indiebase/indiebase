@@ -3,6 +3,7 @@ import path from 'node:path';
 import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 import { AuthModule } from './auth';
 import { MailModule } from './mail';
@@ -32,12 +33,13 @@ const contactName = 'deskbtm/indiebase',
 
 const commonBearerAuth = [
   {
+    name: 'BearerAuth',
     type: 'http',
     scheme: 'bearer',
     bearerFormat: 'paseto',
     description: 'Default paseto token Authorization',
     in: 'header',
-  },
+  } satisfies SecuritySchemeObject,
   'paseto',
 ] as const;
 

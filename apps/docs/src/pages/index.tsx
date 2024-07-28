@@ -176,7 +176,7 @@ const Screen1 = function () {
   );
 };
 
-export default function Home(): JSX.Element {
+export default function Page(): JSX.Element {
   // const { siteConfig } = useDocusaurusContext();
 
   return (

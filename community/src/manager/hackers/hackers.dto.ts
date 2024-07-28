@@ -33,7 +33,6 @@ export class SignUpHackersDTO {
     table: TmplTables.users,
     column: 'username',
   })
-  @IsEmail()
   username!: string;
 
   @ApiProperty({

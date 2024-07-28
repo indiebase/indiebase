@@ -1,0 +1,1 @@
+{"type":"object","properties":{"code":{"description":"Response logical code","type":"number","default":1},"message":{"description":"Response message","type":"object"}},"required":["code"],"x-readme-ref-name":"OkedResponseSchema"}

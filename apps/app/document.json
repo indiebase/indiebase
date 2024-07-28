@@ -1,0 +1,2083 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/probe/liveness": {
+      "get": {
+        "operationId": "liveness",
+        "summary": "Liveness probe includes http, storage, memory, database",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The Health Check is successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "info": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "example": {},
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "details": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The Health Check is not successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "info": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "example": {
+                        "redis": {
+                          "status": "down",
+                          "message": "Could not connect"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": true
+                      },
+                      "nullable": true
+                    },
+                    "details": {
+                      "type": "object",
+                      "example": {
+                        "database": {
+                          "status": "up"
+                        },
+                        "redis": {
+                          "status": "down",
+                          "message": "Could not connect"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Probe/v1"
+        ]
+      }
+    },
+    "/v1/mgr/hackers": {
+      "get": {
+        "operationId": "list",
+        "summary": "List hackers",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/HackerDTO"
+                          },
+                          "description": "Response paginated data list"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Hackers/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/hackers/signup": {
+      "post": {
+        "operationId": "signup",
+        "summary": "Sign up a hacker",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpHackersDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Hackers/v1"
+        ]
+      }
+    },
+    "/v1/mgr/hackers/hacker": {
+      "post": {
+        "operationId": "create",
+        "summary": "Create a hacker",
+        "description": "Must have the create hacker permission",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpHackersDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Hackers/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/orgs": {
+      "get": {
+        "operationId": "queryOwned",
+        "summary": "Query the user-owned organizations",
+        "description": "Query the user-owned organizations",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/OrgDTO"
+                          },
+                          "description": "Response paginated data list"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organizations/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "create",
+        "summary": "Create an organization",
+        "description": "Different than create a project. Create an organization will not create the postgresql schema",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrgDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organizations/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/orgs/query/{org}": {
+      "get": {
+        "operationId": "query",
+        "summary": "Query organizations for the authenticated user",
+        "description": "Lists organizations that the authenticated user has explicit permission (:read, :write, or :admin) to access. ",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          },
+          {
+            "name": "org",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "default": "publish"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/OrgDTO"
+                          },
+                          "description": "Response paginated data list"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organizations/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/orgs/{org}": {
+      "patch": {
+        "operationId": "update",
+        "summary": "Update an organization",
+        "parameters": [
+          {
+            "name": "org",
+            "required": true,
+            "in": "path",
+            "description": "Update target name",
+            "schema": {
+              "default": "publish"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrgDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organizations/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete",
+        "summary": "Hide an organization",
+        "description": "Soft delete",
+        "parameters": [
+          {
+            "name": "org",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "default": "publish"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organizations/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/orgs/{org}/permanent": {
+      "delete": {
+        "operationId": "deletePermanent",
+        "summary": "Delete an organization permanently",
+        "description": "Nota bene, Once you delete a org, there is no going back. Please be certain.",
+        "parameters": [
+          {
+            "name": "org",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "default": "publish"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Organizations/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/orgs/{org}/projects": {
+      "get": {
+        "operationId": "list",
+        "summary": "Query projects",
+        "description": "List all public projects",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProjectDTO"
+                          },
+                          "description": "Response paginated data list"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Projects/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "create",
+        "summary": "Create a project",
+        "description": "Creating a project will create a postgresql schema and template tables",
+        "parameters": [
+          {
+            "name": "org",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePrjDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Projects/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/user/projects": {
+      "get": {
+        "operationId": "listForUser",
+        "summary": "Query projects for the authenticated user",
+        "description": "Lists projects that the authenticated user has explicit permission (:read, :write, or :admin) to access. ",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PaginatedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Projects/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/projects/{referenceId}/permanent": {
+      "delete": {
+        "operationId": "delete",
+        "summary": "Delete a project permanently",
+        "parameters": [
+          {
+            "name": "referenceId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "default": "publish"
+            }
+          },
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Projects/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    },
+    "/v1/mgr/settings/mail": {
+      "put": {
+        "operationId": "preferencesEmail",
+        "summary": "Setup a project email configurations",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Projects/v1"
+        ]
+      }
+    },
+    "/v1/mgr/auth/providers": {
+      "get": {
+        "operationId": "getAuthProviders",
+        "summary": "Get auth providers",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Manager-Auth/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "updateAuthProviders",
+        "summary": "Update auth providers",
+        "parameters": [
+          {
+            "name": "x-indiebase-reference-id",
+            "in": "header",
+            "description": "Indiebase Project ID. e.g. 4b3643f67affc66d. `indiebase_mgr` is a specific value for manager API",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "indiebase_mgr"
+            }
+          },
+          {
+            "name": "x-indiebase-ap",
+            "in": "header",
+            "description": "Protect public APIs",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "1711726948199;dev;057a041a310de100868068c2ab3b30dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OkedResponseSchema"
+                    },
+                    {
+                      "properties": {}
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Manager-Auth/v1"
+        ],
+        "security": [
+          {
+            "paseto": []
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Indiebase Management REST API",
+    "description": "\n  Indiebase Management REST API.\n  Click \"Export\" button, you can use swagger-typescript-api to generate TypeScript API from OpenAPI.\n  Send Email to Indiebase (reply@deskbtm.com)\n",
+    "version": "1.0.0",
+    "contact": {
+      "name": "deskbtm/indiebase",
+      "url": "",
+      "email": "reply@deskbtm.com"
+    },
+    "license": {
+      "name": "Apache-2.0",
+      "url": "https://github.com/indiebase/indiebase/blob/main/LICENSE"
+    },
+    "termsOfService": "https://indiebase.deskbtm.com/terms"
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "http://api-dev.indiebase.deskbtm.com:8331",
+      "description": "Development"
+    },
+    {
+      "url": "https://api.indiebase.deskbtm.com",
+      "description": "Production"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "paseto": {
+        "scheme": "bearer",
+        "bearerFormat": "paseto",
+        "name": "BearerAuth",
+        "type": "http",
+        "description": "Default paseto token Authorization",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "PaginatedResponseSchema": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Total items"
+          },
+          "pageIndex": {
+            "type": "number",
+            "description": "Current page"
+          },
+          "pageSize": {
+            "type": "number",
+            "description": "Page size"
+          },
+          "lastPage": {
+            "type": "number",
+            "description": "Last page"
+          },
+          "prevPage": {
+            "type": "number",
+            "description": "Previous page"
+          },
+          "nextPage": {
+            "type": "number",
+            "description": "Next page"
+          },
+          "code": {
+            "type": "number",
+            "description": "Response logical code",
+            "default": 1
+          },
+          "message": {
+            "type": "object",
+            "description": "Response message"
+          }
+        },
+        "required": [
+          "total",
+          "pageIndex",
+          "pageSize",
+          "lastPage",
+          "prevPage",
+          "nextPage",
+          "code"
+        ]
+      },
+      "HackerDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "User ID"
+          },
+          "email": {
+            "type": "number",
+            "description": "User email"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "User nickname"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "User avatar url"
+          },
+          "language": {
+            "type": "string",
+            "description": "Prefer language"
+          },
+          "authnType": {
+            "type": "string",
+            "description": "Authentication Type"
+          },
+          "enabled2FA": {
+            "type": "boolean",
+            "description": "One time password secret"
+          },
+          "location": {
+            "type": "string",
+            "description": "Location of registration"
+          },
+          "accountStatus": {
+            "type": "string",
+            "description": "Account status",
+            "enum": [
+              "inactive",
+              "active"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "description": "Role"
+          },
+          "signInAt": {
+            "type": "string",
+            "description": "User sign in timestamp"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Organization created timestamp"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Organization updated timestamp"
+          },
+          "bio": {
+            "type": "string",
+            "description": "Biography"
+          },
+          "visibility": {
+            "type": "string",
+            "description": "User visibility",
+            "enum": [
+              "public",
+              "protected",
+              "private"
+            ]
+          },
+          "homepage": {
+            "type": "string",
+            "description": "User homepage"
+          },
+          "githubUsername": {
+            "type": "string",
+            "description": "Github username not nickname"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ErrResponseSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Response logical code",
+            "default": 0
+          },
+          "statusCode": {
+            "type": "number",
+            "description": "Response http code"
+          },
+          "message": {
+            "type": "object",
+            "description": "Error responses message"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Error responses timestamp"
+          },
+          "path": {
+            "type": "string",
+            "description": "Error responses api path"
+          }
+        },
+        "required": [
+          "code",
+          "statusCode",
+          "timestamp",
+          "path"
+        ]
+      },
+      "OkedResponseSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number",
+            "description": "Response logical code",
+            "default": 1
+          },
+          "message": {
+            "type": "object",
+            "description": "Response message"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "SignUpHackersDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Hacker account email",
+            "default": "dev@indiebase.com"
+          },
+          "username": {
+            "type": "string",
+            "description": "Hacker account username",
+            "default": "indiebase-dev"
+          },
+          "password": {
+            "type": "string",
+            "description": "Hacker account password, the password needs to be converted to SHA256 for transfer",
+            "default": "9b1ddbbcf45a850c792465c816bb43423fe9dc6383b6fbc3a16d25be907e3988"
+          }
+        },
+        "required": [
+          "email",
+          "username",
+          "password"
+        ]
+      },
+      "OrgDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Organization ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Organization name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Organization description"
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "Contact email"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "Organization avatar url"
+          },
+          "githubOrg": {
+            "type": "string",
+            "description": "Indiebase associated with the Github organization"
+          },
+          "homepage": {
+            "type": "string",
+            "description": "Organization homepage website"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "Organization owner id"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Organization created timestamp"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Organization updated timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreateOrgDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Organization name",
+            "default": "publish"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateOrgDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Organization name",
+            "default": "publish"
+          },
+          "contactEmail": {
+            "type": "string",
+            "default": "dev@indiebase.com"
+          },
+          "description": {
+            "type": "string",
+            "default": "xxxxxx"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "Organization icon url",
+            "default": "https://api-dev.indiebase.deskbtm.com/favicon.ico"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ProjectDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Project ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Project name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Project description"
+          },
+          "contactEmail": {
+            "type": "string",
+            "description": "Contact email"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "Project avatar url "
+          },
+          "pinnedOrder": {
+            "type": "number",
+            "description": "Project card pinned order"
+          },
+          "pinned": {
+            "type": "boolean",
+            "description": "Pin the project"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "poc",
+              "wip",
+              "archive",
+              "operating",
+              "closed"
+            ],
+            "description": "Project status"
+          },
+          "packageName": {
+            "type": "string",
+            "description": "Fallback package name"
+          },
+          "githubRepo": {
+            "type": "string",
+            "description": "Project github repository"
+          },
+          "referenceId": {
+            "type": "string",
+            "description": "X-Indiebase-Reference-Id, the ID for business"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Project created timestamp"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Project updated timestamp"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "referenceId",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreatePrjDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Project name",
+            "default": "publish"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    }
+  }
+}

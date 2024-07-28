@@ -13,7 +13,7 @@ export class UserDTO {
   @ApiProperty({
     description: 'User email',
   })
-  email!: number;
+  email!: string;
 
   @ApiPropertyOptional({
     description: 'User nickname',
