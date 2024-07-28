@@ -2,26 +2,20 @@
 
 import { validator } from '@indiebase/app-shared';
 import {
-  Box,
   Button,
   Container,
   Group,
   rem,
   Select,
-  Text,
   TextInput,
   Title,
   useMantineTheme,
 } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
 import { IconBrandGithub } from '@tabler/icons-react';
-import { useMolecule } from 'bunshi/react';
-import { useAtom } from 'jotai';
 import { useRouter } from 'next/navigation';
 import { type FC, useState } from 'react';
-import { useBirth } from 'reactgets';
 
-import { NavbarMolecule } from '~/components/Dashboard/Navbar';
 import { UploadImage } from '~/components/Upload';
 
 export interface CreateOrganizationProps {
@@ -79,7 +73,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
 
   //github.com/account/organizations/new?plan=free&ref_cta=Create%2520a%2520free%2520organization&ref_loc=cards&ref_page=%2Forganizations%2Fplan
   return (
-    <Container mt="xl">
+    <Container size="sm" mt="xl">
       <Title order={4}>Set up your organization</Title>
       <form
         onSubmit={form.onSubmit(async (values) => {

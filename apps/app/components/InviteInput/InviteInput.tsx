@@ -52,7 +52,7 @@ export function InviteInput(_props: InviteInputProps) {
   return (
     <Group gap={7} wrap="nowrap" align="flex-start">
       <MultiInput
-        w="90%"
+        w="100%"
         placeholder="Invite members, search by username or email address ..."
         data={groceries.map((v) => ({
           leadingImage: v.avatar,

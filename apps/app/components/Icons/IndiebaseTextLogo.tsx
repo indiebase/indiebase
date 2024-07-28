@@ -1,4 +1,5 @@
 import { rem } from '@mantine/core';
+import { type FC } from 'react';
 
 interface IndiebaseTextLogoProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number;
@@ -68,7 +69,7 @@ export const IndiebaseTextLogo = ({
   </svg>
 );
 
-export const IndiebaseTextDevLogo = ({
+export const IndiebaseDevTextLogo = ({
   size,
   style,
   ...rest
@@ -137,7 +138,7 @@ export const IndiebaseTextDevLogo = ({
   </svg>
 );
 
-export const IndiebaseTextBetaLogo = ({
+export const IndiebaseBetaTextLogo = ({
   size,
   style,
   ...rest
@@ -206,7 +207,7 @@ export const IndiebaseTextBetaLogo = ({
   </svg>
 );
 
-export const IndiebaseTextCanaryLogo = ({
+export const IndiebaseCanaryTextLogo = ({
   size,
   style,
   ...rest
@@ -274,3 +275,20 @@ export const IndiebaseTextCanaryLogo = ({
     />
   </svg>
 );
+
+export const IndiebaseEnvTextLogo: FC<{
+  env: 'development' | 'production' | 'canary' | 'beta';
+}> = ({ env }) => {
+  switch (env) {
+    case 'development':
+      return <IndiebaseDevTextLogo size={160} />;
+    case 'production':
+      return <IndiebaseTextLogo size={160} />;
+    case 'canary':
+      return <IndiebaseCanaryTextLogo size={160} />;
+    case 'beta':
+      return <IndiebaseBetaTextLogo size={160} />;
+    default:
+      return <IndiebaseTextLogo size={160} />;
+  }
+};

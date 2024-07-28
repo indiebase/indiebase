@@ -9,7 +9,7 @@ import {
 } from '@tabler/icons-react';
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { type FC, useMemo } from 'react';
 
 import { useSetStorageAtom } from '~/utils/atoms';
@@ -17,7 +17,6 @@ import { useSetStorageAtom } from '~/utils/atoms';
 import { getMenus } from './menus';
 import { NavbarMolecule, type NavMode } from './navbar.molecule';
 import { type NavMenuItem } from './types';
-import Link from 'next/link';
 
 export function walkChildren(
   menus: NavMenuItem[],
@@ -79,6 +78,7 @@ export const ActionsBar: FC<{ mode: NavMode }> = function ({ mode }) {
 
         break;
       case 'backend':
+        ``;
         modeOption = {
           component: Link,
           label: 'Collective',

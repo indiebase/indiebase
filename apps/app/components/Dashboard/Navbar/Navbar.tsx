@@ -12,18 +12,18 @@ import { ActionsBar } from './ActionsBar';
 import { NavbarMolecule, type NavMode } from './navbar.molecule';
 import { NavMenu } from './NavMenu';
 
-export interface AppShellNavbarProps extends React.PropsWithChildren {
+export interface NavbarProps extends React.PropsWithChildren {
   mode: NavMode;
 }
 
-export const AppShellNavbar: FC<AppShellNavbarProps> = ({ mode }) => {
+export const Navbar: FC<NavbarProps> = ({ mode }) => {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
 
-  reRenderProbe('AppShellNavbar');
+  reRenderProbe('Navbar');
 
   return (
-    <AppShell.Navbar p="md">
+    <AppShell.Navbar p="md" data-dash-navbar>
       <Burger
         opened={opened.mobile}
         onClick={() => toggle({ ...opened, mobile: !opened.mobile })}

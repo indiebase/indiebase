@@ -1,65 +1,44 @@
 'use client';
 
-import { Anchor, AppShell, rem } from '@mantine/core';
+import { AppShell, rem } from '@mantine/core';
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
-import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { type FC } from 'react';
 
 import { AppShellHeader } from '~/components/Dashboard';
 import { NavbarMolecule } from '~/components/Dashboard/Navbar';
-import { IndiebaseTextLogo } from '~/components/Icons';
 import { reRenderProbe } from '~/utils/helper';
 
-export interface DashboardLayoutProps extends React.PropsWithChildren {
-  navbar?: React.ReactNode;
-  header?: React.ReactNode;
-}
-
-export const IndiebaseEnvLogo: FC<any> = () => {
-  switch (process.env.NODE_ENV) {
-    case 'development':
-      return <IndiebaseTextLogo size={160} />;
-    default:
-      break;
-  }
-};
+export interface DashboardLayoutProps extends React.PropsWithChildren {}
 
 export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
-  const { navbar, header, children } = props;
-  const appShellHeader = header ?? (
-    <AppShellHeader
-      burger={!!navbar}
-      logo={
-        <Anchor href="/" component={Link} display="flex">
-          <IndiebaseTextLogo size={160} />
-        </Anchor>
-      }
-    />
-  );
+  const { children } = props;
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [collapsed] = useAtom(navbarMolecule.collapsedAtom);
-
+  const [haveNavbar, setHaveNavbar] = useState(false);
+  const ref = useRef<HTMLDivElement>();
   reRenderProbe('DashboardLayout');
+  useEffect(() => {
+    setHaveNavbar(!!ref.current.querySelector('[data-dash-navbar]'));
+  });
+  const navbarProps = haveNavbar && {
+    width: rem(300),
+    breakpoint: 'sm',
+    collapsed: {
+      mobile: !collapsed.mobile,
+      desktop: !collapsed.desktop,
+    },
+  };
 
   return (
     <AppShell
+      ref={ref}
       layout="alt"
       header={{ height: rem(65) }}
-      navbar={
-        React.isValidElement(navbar) && {
-          width: rem(300),
-          breakpoint: 'sm',
-          collapsed: {
-            mobile: !collapsed.mobile,
-            desktop: !collapsed.desktop,
-          },
-        }
-      }
+      navbar={navbarProps}
     >
-      {appShellHeader}
-      {navbar}
+      <AppShellHeader />
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );

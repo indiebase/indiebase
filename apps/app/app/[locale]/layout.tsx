@@ -8,7 +8,6 @@ import { Partytown } from '@builder.io/partytown/react';
 import { SuperCowPower } from '@indiebase/app-shared';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
-import { NavigationProgress } from '@mantine/nprogress';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata, Viewport } from 'next';
 import { type FC } from 'react';
@@ -83,7 +82,7 @@ const RootLayout: FC<RootLayoutProps> = ({ children, params: { locale } }) => {
       </head>
       <body className={fonts.className}>
         <Compose providers={providers}>
-          <NavigationProgress />
+          {/* <NavigationProgress /> */}
           <SuperCowPower />
           <DevTools />
           <Notifications />

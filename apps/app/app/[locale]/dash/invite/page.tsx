@@ -7,19 +7,13 @@ import { InviteInput } from '~/components/InviteInput';
 export default function Page() {
   const theme = useMantineTheme();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     confetti.burst();
-  //   }, 200);
-  // }, []);
-
   return (
     <Container mt={120} size="sm">
       <Text fw={700} fz="h1" mb={10}>
         Welcome to xxxxxxxxx !
       </Text>
       <Text fw={700} mb={60}>
-        Now invite peoples to your new organization.
+        Invite some peoples to your new organization.
       </Text>
       <InviteInput />
       <Stack mt="xl">
