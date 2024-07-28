@@ -28,7 +28,7 @@
     "prettier": "prettier --check ."
   },
   "devDependencies": {
-    "@eslint/compat": "^1.1.1",
+    "@eslint/compat": "1.1.1",
     "@eslint/config-inspector": "0.5.2",
     "@next/eslint-plugin-next": "14.2.5",
     "@typescript-eslint/parser": "7.17.0",

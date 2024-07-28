@@ -1,6 +1,6 @@
 import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
-import tslintParser from '@typescript-eslint/parser';
+import tsEslintParser from '@typescript-eslint/parser';
 // import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
@@ -9,14 +9,14 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import prettierConfig from 'eslint-config-prettier';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import tsEslint from 'typescript-eslint';
 import { fixupPluginRules } from '@eslint/compat';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-export default tseslint.config(
+export default tsEslint.config(
   eslint.configs.recommended,
-  ...tseslint.configs.strict,
-  ...tseslint.configs.stylistic,
+  ...tsEslint.configs.strict,
+  ...tsEslint.configs.stylistic,
   prettierConfig,
   // eslintPluginPrettierRecommended,
   {
@@ -32,18 +32,17 @@ export default tseslint.config(
       '**/.vscode',
     ],
     languageOptions: {
-      parser: tslintParser,
+      parser: tsEslintParser,
       ecmaVersion: 2022,
       sourceType: 'module',
       parserOptions: {
-        project: ['./tsconfig.eslint.json'],
-        // project: [
-        //   './tsconfig.json',
-        //   './first_party/*/tsconfig.json',
-        //   './packages/*/tsconfig.json',
-        //   './community/tsconfig.json',
-        //   './apps/*/tsconfig.json',
-        // ],
+        project: [
+          './tsconfig.json',
+          './first_party/*/tsconfig.json',
+          './packages/*/tsconfig.json',
+          './community/tsconfig.json',
+          './apps/*/tsconfig.json',
+        ],
         tsconfigRootDir: import.meta.dirname,
       },
       globals: {
@@ -85,7 +84,7 @@ export default tseslint.config(
   },
   {
     files: ['**/*.{js,mjs,cjs}'],
-    ...tseslint.configs.disableTypeChecked,
+    ...tsEslint.configs.disableTypeChecked,
     languageOptions: {
       globals: {
         ...globals.node,

@@ -56,7 +56,6 @@
     "@indiebase/nest-fastify-file": "workspace:^",
     "@indiebase/nest-fastify-passport": "workspace:^",
     "@indiebase/nest-knex": "workspace:^",
-    "@indiebase/nest-kysely": "workspace:^",
     "@indiebase/nest-octokit": "workspace:^",
     "@indiebase/nest-s3": "workspace:^",
     "@indiebase/nest-stoplight-elements": "workspace:^",

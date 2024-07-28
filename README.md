@@ -51,8 +51,8 @@ Email: [indiebase@deskbtm.com](mailto://indiebase@deskbtm.com)
 - [@indiebase/nest-stoplight-elements](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-knex](https://github.com/indiebase/indiebase)
 - [@indiebase/nest-octokit](https://github.com/indiebase/indiebase)
-- [@indiebase/nest-nacos](https://github.com/indiebase/indiebase) deprecated
-- [@indiebase/nest-casbin](https://github.com/indiebase/indiebase) deprecated
+- [@indiebase/nest-nacos](https://github.com/indiebase/nest-nacos) deprecated
+- [@indiebase/nest-casbin](https://github.com/indiebase/nest-casbin) deprecated
 
 #### Sub-Projects
 
