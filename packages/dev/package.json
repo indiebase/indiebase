@@ -25,7 +25,7 @@
     "run-script-webpack-plugin": "0.2.0",
     "swc-loader": "0.2.6",
     "ts-loader": "9.5.1",
-    "webpack": "5.92.1",
+    "webpack": "5.93.0",
     "webpack-node-externals": "3.0.0",
     "workspace-tools": "0.36.4"
   },

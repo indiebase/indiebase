@@ -1,0 +1,32 @@
+{
+  // extend your base config to share compilerOptions, etc
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+  },
+  "include": [
+    "first_party/accesscontrol",
+    "first_party/gadgets",
+    "first_party/nest-accesscontrol",
+    "first_party/nest-async-context",
+    "first_party/nest-fastify-file",
+    "first_party/nest-fastify-passport",
+    "first_party/nest-knex",
+    "first_party/nest-octokit",
+    "first_party/nest-s3",
+    "first_party/nest-stoplight-elements",
+    "first_party/nestjs-paseto",
+    "first_party/winston-openobserve",
+    "packages/dev",
+    "packages/sdk",
+    "packages/server-shared",
+    "packages/trait",
+    "packages/transactional",
+    "community",
+    "apps/app",
+    "apps/docs",
+    "apps/first_party/authz",
+    "apps/first_party/table",
+    "apps/packages/app-shared"
+  ],
+}

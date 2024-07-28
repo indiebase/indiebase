@@ -1,21 +1,24 @@
 import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 import tslintParser from '@typescript-eslint/parser';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+// import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import prettierConfig from 'eslint-config-prettier';
 import globals from 'globals';
-import tslint from 'typescript-eslint';
+import tseslint from 'typescript-eslint';
 import { fixupPluginRules } from '@eslint/compat';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-export default tslint.config(
+export default tseslint.config(
   eslint.configs.recommended,
-  ...tslint.configs.recommended,
-  eslintPluginPrettierRecommended,
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
+  prettierConfig,
+  // eslintPluginPrettierRecommended,
   {
     files: ['**/*.{ts,mts,cts,tsx}'],
     plugins: {
@@ -33,13 +36,14 @@ export default tslint.config(
       ecmaVersion: 2022,
       sourceType: 'module',
       parserOptions: {
-        project: [
-          './tsconfig.json',
-          './first_party/*/tsconfig.json',
-          './packages/*/tsconfig.json',
-          './community/tsconfig.json',
-          './apps/*/tsconfig.json',
-        ],
+        project: ['./tsconfig.eslint.json'],
+        // project: [
+        //   './tsconfig.json',
+        //   './first_party/*/tsconfig.json',
+        //   './packages/*/tsconfig.json',
+        //   './community/tsconfig.json',
+        //   './apps/*/tsconfig.json',
+        // ],
         tsconfigRootDir: import.meta.dirname,
       },
       globals: {
@@ -81,7 +85,7 @@ export default tslint.config(
   },
   {
     files: ['**/*.{js,mjs,cjs}'],
-    ...tslint.configs.disableTypeChecked,
+    ...tseslint.configs.disableTypeChecked,
     languageOptions: {
       globals: {
         ...globals.node,
@@ -128,12 +132,13 @@ export default tslint.config(
   {
     files: ['apps/app/**/*.{ts,tsx}'],
     plugins: {
-      '@next/next': nextPlugin,
+      '@next/next': fixupPluginRules(nextPlugin),
     },
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
       '@next/next/no-duplicate-head': 'off',
+      '@next/next/no-html-link-for-pages': 'off',
     },
   },
 );
