@@ -19,7 +19,7 @@
   "devDependencies": {
     "@swc/cli": "0.4.0",
     "@swc/core": "1.6.13",
-    "@types/node": "20.12.7",
+    "@types/node": "20.14.13",
     "cross-env": "7.0.3",
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "run-script-webpack-plugin": "0.2.0",
