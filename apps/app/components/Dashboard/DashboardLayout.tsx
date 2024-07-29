@@ -3,12 +3,13 @@
 import { AppShell, rem } from '@mantine/core';
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { type FC } from 'react';
 
 import { AppShellHeader } from '~/components/Dashboard';
 import { NavbarMolecule } from '~/components/Dashboard/Navbar';
 import { reRenderProbe } from '~/utils/helper';
+import { useHasElement } from '~/utils/hooks';
 
 export interface DashboardLayoutProps extends React.PropsWithChildren {}
 
@@ -16,13 +17,11 @@ export const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
   const { children } = props;
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [collapsed] = useAtom(navbarMolecule.collapsedAtom);
-  const [haveNavbar, setHaveNavbar] = useState(false);
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
+  const { has } = useHasElement('[data-dash-navbar]', ref.current);
   reRenderProbe('DashboardLayout');
-  useEffect(() => {
-    setHaveNavbar(!!ref.current.querySelector('[data-dash-navbar]'));
-  });
-  const navbarProps = haveNavbar && {
+
+  const navbarProps = has && {
     width: rem(300),
     breakpoint: 'sm',
     collapsed: {

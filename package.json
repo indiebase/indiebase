@@ -31,7 +31,7 @@
     "@eslint/compat": "1.1.1",
     "@eslint/config-inspector": "0.5.2",
     "@next/eslint-plugin-next": "14.2.5",
-    "@typescript-eslint/parser": "7.17.0",
+    "@typescript-eslint/parser": "^8.0.0-alpha.55",
     "@vitest/ui": "2.0.4",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
@@ -50,7 +50,7 @@
     "standard-version": "9.5.0",
     "syncpack": "12.3.2",
     "typescript": "5.5.4",
-    "typescript-eslint": "7.17.0"
+    "typescript-eslint": "^8.0.0-alpha.55"
   },
   "workspaces": {
     "packages": [

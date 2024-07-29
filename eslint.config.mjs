@@ -1,7 +1,6 @@
 import eslint from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
 import tsEslintParser from '@typescript-eslint/parser';
-// import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import react from 'eslint-plugin-react';
 import reactJsxRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
@@ -36,13 +35,7 @@ export default tsEslint.config(
       ecmaVersion: 2022,
       sourceType: 'module',
       parserOptions: {
-        project: [
-          './tsconfig.json',
-          './first_party/*/tsconfig.json',
-          './packages/*/tsconfig.json',
-          './community/tsconfig.json',
-          './apps/*/tsconfig.json',
-        ],
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
       globals: {
@@ -70,15 +63,7 @@ export default tsEslint.config(
           argsIgnorePattern: '^_',
         },
       ],
-      '@typescript-eslint/ban-types': [
-        'error',
-        {
-          types: {
-            Function: false,
-          },
-          extendDefaults: true,
-        },
-      ],
+      '@typescript-eslint/no-unsafe-function-type': 'error',
       'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     },
   },

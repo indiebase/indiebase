@@ -22,6 +22,8 @@ import Link from 'next/link';
 import { type FC } from 'react';
 import React from 'react';
 
+import { useHasElement } from '~/utils/hooks';
+
 import { IndiebaseEnvTextLogo } from '../Icons';
 import classes from './Dashboard.module.css';
 import { NavbarMolecule } from './Navbar';
@@ -64,23 +66,28 @@ export interface AppShellHeaderProps {}
 export const AppShellHeader: FC<AppShellHeaderProps> = function () {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
+  const { has } = useHasElement<HTMLDivElement>('[data-dash-navbar]');
 
   return (
     <AppShell.Header className={classes.header}>
       <Group h="100%" px="md" wrap="nowrap" justify="space-between">
         <Group h="100%">
-          <Burger
-            opened={opened.mobile}
-            onClick={() => toggle({ ...opened, mobile: !opened.mobile })}
-            hiddenFrom="sm"
-            size="xs"
-          />
-          <Burger
-            opened={opened.desktop}
-            onClick={() => toggle({ ...opened, desktop: !opened.desktop })}
-            visibleFrom="sm"
-            size="xs"
-          />
+          {has && (
+            <>
+              <Burger
+                opened={opened.mobile}
+                onClick={() => toggle({ ...opened, mobile: !opened.mobile })}
+                hiddenFrom="sm"
+                size="xs"
+              />
+              <Burger
+                opened={opened.desktop}
+                onClick={() => toggle({ ...opened, desktop: !opened.desktop })}
+                visibleFrom="sm"
+                size="xs"
+              />
+            </>
+          )}
           <Anchor href="/" component={Link} display="flex">
             <IndiebaseEnvTextLogo env={process.env.NEXT_PUBLIC_RELEASE_ENV} />
           </Anchor>

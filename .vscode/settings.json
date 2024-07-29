@@ -1,6 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "eslint.experimental.useFlatConfig": true,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
