@@ -37,7 +37,7 @@ export class LocalStore {
   ): T {
     try {
       return JSON.parse(localStorage.getItem(key)) ?? ((fallback ?? {}) as T);
-    } catch (error) {
+    } catch (_error) {
       return {} as T;
     }
   }

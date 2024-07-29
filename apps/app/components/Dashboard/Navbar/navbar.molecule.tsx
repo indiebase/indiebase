@@ -14,29 +14,25 @@ import { atomWithSetStorage } from '~/utils/atoms';
  */
 export type NavMode = 'backend' | 'collective';
 
-export type NavbarScope = {
+export interface NavbarScope {
   collapsed: { mobile: boolean; desktop: boolean } | null;
-  menus: any[] | null;
   expandedMenus: string[];
   expandedAllMenus: boolean;
-  // mode: NavMode | null;
-};
+  shouldRender: boolean;
+}
 
 export const NavbarScope = createScope<NavbarScope>({
   collapsed: { mobile: false, desktop: true },
-  menus: [],
   expandedMenus: [],
   expandedAllMenus: false,
-  // mode: 'backend',
+  shouldRender: false,
 });
 
 export const NavbarMolecule = molecule((_mol, scope) => {
   const {
     collapsed: _collapsed,
-    menus: _menus,
     expandedMenus: _expandedMenus,
     expandedAllMenus: _expandedAllMenus,
-    // mode: _mode,
   } = scope(NavbarScope);
 
   const collapsedAtom = atomWithStorage(
@@ -48,15 +44,6 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     },
   );
 
-  // const _modeAtom = atomWithStorage<NavMode>(
-  //   KEYS.v0_nav_mode,
-  //   _mode,
-  //   undefined,
-  //   {
-  //     getOnInit: true,
-  //   },
-  // );
-
   const expandedAllMenusAtom = atomWithStorage<boolean>(
     KEYS.v0_expanded_all_nav_menus,
     _expandedAllMenus,
@@ -66,27 +53,6 @@ export const NavbarMolecule = molecule((_mol, scope) => {
     },
   );
 
-  // const menusAtom = atom<NavMenuItem[]>((get) => {
-  //   const mode = get(_modeAtom);
-  //   switch (mode) {
-  //     case 'backend':
-  //       return baasMenus;
-  //     case 'collective':
-  //       return collaborateMenus;
-  //     default:
-  //       break;
-  //   }
-  // });
-
-  // const modeAtom = atom(
-  //   (get) => {
-  //     return get(_modeAtom);
-  //   },
-  //   (_get, set, nextValue?: NavMode) => {
-  //     set(_modeAtom, nextValue);
-  //   },
-  // );
-
   const expandedMenusAtom = atomWithSetStorage(
     KEYS.v0_expanded_nav_menus,
     _expandedMenus,
@@ -94,9 +60,7 @@ export const NavbarMolecule = molecule((_mol, scope) => {
 
   return {
     collapsedAtom,
-    // menusAtom,
     expandedMenusAtom,
     expandedAllMenusAtom,
-    // modeAtom,
   } as const;
 });

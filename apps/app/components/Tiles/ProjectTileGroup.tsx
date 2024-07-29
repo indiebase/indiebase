@@ -111,7 +111,12 @@ const fake = [
   },
 ];
 
-export const ProjectTileGroup: FC<any> = function () {
+export interface ProjectTileGroupProps {
+  backgroundStyle?: 1 | 2 | 3;
+}
+
+export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
+  const { backgroundStyle } = props;
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
@@ -167,14 +172,12 @@ export const ProjectTileGroup: FC<any> = function () {
                 <Grid.Col span={span} p={0} key={e.id}>
                   <ProjectTile
                     id={e.id}
-                    cover={e.cover}
                     name={e.name}
                     members={e.members}
-                    updateTime={e.updateTime}
                     status={e.status}
                     description={e.description}
-                    hiddenCover={false}
-                    hiddenMember={false}
+                    backgroundStyle={backgroundStyle}
+                    hiddenMembers={false}
                   />
                 </Grid.Col>
               );
@@ -186,7 +189,7 @@ export const ProjectTileGroup: FC<any> = function () {
         <Group mt={15} justify="flex-end">
           <Text
             size="sm"
-            color="blue"
+            c="blue"
             style={{
               cursor: 'pointer',
             }}

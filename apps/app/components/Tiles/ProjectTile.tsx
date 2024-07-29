@@ -21,16 +21,22 @@ import {
 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { type FC, memo, type ReactElement, useEffect, useState } from 'react';
+import { useProps } from 'reactgets';
 
 import { AvatarPreviewProfile } from '../Avatar';
 import { BoxEx } from '../BoxEx';
 import { projectStatusPalette, ProjectStatusTip } from '../Tips';
 import classes from './ProjectTile.module.css';
 
-export interface PinnedProjectCardProps extends Partial<any> {
-  hiddenCover?: boolean;
-  hiddenMember?: boolean;
+export interface ProjectTileProps {
+  hiddenMembers?: boolean;
   actions?: ReactElement;
+  backgroundStyle?: 1 | 2 | 3;
+  name?: string;
+  description?: string;
+  status?: number;
+  id?: number;
+  members?: any[];
 }
 
 interface DeltaDataProps {
@@ -79,8 +85,48 @@ const DeltaData: FC<DeltaDataProps> = function () {
   );
 };
 
-export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
-  const { id, hiddenMember, actions } = props;
+export const ProjectTileBackgroundStyle1 = () => (
+  <BoxEx.Background className={classes.background1}>
+    <Box data-shape-triangle />
+    <Box data-shape-circle />
+    <Box data-shape-square />
+    <Box data-shape-rectangle />
+  </BoxEx.Background>
+);
+
+export const ProjectTileBackgroundStyle2 = () => (
+  <BoxEx.Background className={classes.background2}>
+    <Box data-shape-circle1 />
+    <Box data-shape-circle2 />
+    <Box data-shape-circle3 />
+    <Box data-shape-circle4 />
+  </BoxEx.Background>
+);
+
+export const ProjectTileBackgroundStyle3 = () => (
+  <BoxEx.Background className={classes.background3}>
+    <Box bg="#00DC12" />
+    <Box bg="#FF0088" />
+    <Box bg="#00FFE5" />
+    <Box bg="#FF6F00" />
+  </BoxEx.Background>
+);
+
+export const ProjectTile: FC<ProjectTileProps> = memo(function (_props) {
+  const defaultProjectTileProps = {
+    backgroundStyle: 1,
+  } satisfies ProjectTileProps;
+
+  const {
+    id,
+    hiddenMembers,
+    actions,
+    name,
+    status,
+    members,
+    description,
+    backgroundStyle,
+  } = useProps(defaultProjectTileProps, _props);
 
   const [isHover, setHover] = useState(false);
 
@@ -95,6 +141,19 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
   } = useSortable({
     id,
   });
+
+  let background;
+  switch (backgroundStyle) {
+    case 2:
+      background = <ProjectTileBackgroundStyle2 />;
+      break;
+    case 3:
+      background = <ProjectTileBackgroundStyle3 />;
+      break;
+    default:
+      background = <ProjectTileBackgroundStyle1 />;
+      break;
+  }
 
   useEffect(() => {
     if (!isDragging) {
@@ -111,7 +170,7 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
     <BoxEx
       style={{
         borderRadius: 'var(--mantine-radius-default)',
-        // Child   above parent of the layer.
+        // Child  above parent of the layer.
         zIndex: isDragging ? 999 : isHover ? 300 : 0,
         opacity: isDragging ? 0.8 : 1,
         transform: CSS.Transform.toString(transform),
@@ -128,40 +187,34 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
           <Box {...listeners} ref={setActivatorNodeRef} />
         </Center>
         <Group justify="space-between" mb={0} mt={4}>
-          <Anchor
-            href={props.name}
-            component={Link}
-            size="sm"
-            c="blue"
-            fw="bolder"
-          >
-            {props.name}
+          <Anchor href={name} component={Link} size="sm" c="blue" fw="bolder">
+            {name}
           </Anchor>
 
           <ProjectStatusTip onHover={setHover}>
             <Badge
               style={{ cursor: 'default' }}
               size="sm"
-              color={projectStatusPalette[props.status]}
+              color={projectStatusPalette[status]}
               variant="light"
             >
-              {props.status}
+              {status}
             </Badge>
           </ProjectStatusTip>
         </Group>
         <DeltaData users={1} revenue={1} />
         <Box>
           <Text lineClamp={2} mt={10} fz={11} c="gray.6">
-            {props.description}
+            {description}
           </Text>
         </Box>
         <Group mt={9} justify="space-between">
-          {!hiddenMember &&
-            (props.members.length < 1 ? (
+          {!hiddenMembers &&
+            (members.length < 1 ? (
               <Box h={26} />
             ) : (
               <AvatarGroup style={{ flexWrap: 'wrap' }} ml={-2} spacing="xs">
-                {props.members.map((u, i) => {
+                {members.map((u, i) => {
                   return (
                     <AvatarPreviewProfile
                       key={i}
@@ -182,12 +235,7 @@ export const ProjectTile: FC<PinnedProjectCardProps> = memo(function (props) {
           {actions && <Center>{actions}</Center>}
         </Group>
       </BoxEx.Foreground>
-      <BoxEx.Background className={classes.background}>
-        <Box data-shape-triangle />
-        <Box data-shape-circle />
-        <Box data-shape-square />
-        <Box data-shape-rectangle />
-      </BoxEx.Background>
+      {background}
     </BoxEx>
   );
 });

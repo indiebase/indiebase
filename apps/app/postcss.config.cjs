@@ -4,7 +4,17 @@ module.exports = {
   plugins: Object.assign(
     {},
     {
-      'postcss-preset-mantine': {},
+      'postcss-preset-mantine': {
+        mixins: {
+          clearfix: {
+            '&::after': {
+              content: '""',
+              display: 'table',
+              clear: 'both',
+            },
+          },
+        },
+      },
     },
     process.env.NODE_ENV !== 'development' && {
       'postcss-flexbugs-fixes': {},

@@ -25,7 +25,7 @@
   }
 }
 
-.background {
+.background1 {
   overflow: hidden;
 
   :where([data-shape-triangle]) {
@@ -70,5 +70,69 @@
     position: absolute;
     right: -20px;
     top: 20px;
+  }
+}
+
+.background2 {
+  overflow: hidden;
+  :where([data-shape-circle1]) {
+    border-radius: 130px;
+    width: 80px;
+    height: 80px;
+    background: #81c9d1;
+    display: inline-block;
+    position: absolute;
+    bottom: -20px;
+    left: -10px;
+  }
+
+  :where([data-shape-circle2]) {
+    border-radius: 130px;
+    width: 160px;
+    height: 160px;
+    background: #ff9b30;
+    display: inline-block;
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+  }
+  :where([data-shape-circle3]) {
+    border-radius: 130px;
+    width: 100px;
+    height: 100px;
+    background: #dbf609;
+    display: inline-block;
+    position: absolute;
+    bottom: 10px;
+    left: 200px;
+  }
+  :where([data-shape-circle4]) {
+    border-radius: 130px;
+    width: 250px;
+    height: 250px;
+    background: #00bad2;
+    display: inline-block;
+    position: absolute;
+    bottom: -100px;
+    right: -200px;
+  }
+  :where([data-shape-circle5]) {
+    border-radius: 130px;
+    width: 100px;
+    height: 100px;
+    background: #dbf609;
+    display: inline-block;
+    position: absolute;
+    top: 60px;
+    left: 200px;
+  }
+}
+
+.background3 {
+  div {
+    width: 25%;
+    height: 100%;
+    float: right;
+    @mixin clearfix;
   }
 }
