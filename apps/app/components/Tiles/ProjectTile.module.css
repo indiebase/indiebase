@@ -77,8 +77,8 @@
   overflow: hidden;
   :where([data-shape-circle1]) {
     border-radius: 130px;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     background: #81c9d1;
     display: inline-block;
     position: absolute;
@@ -88,13 +88,14 @@
 
   :where([data-shape-circle2]) {
     border-radius: 130px;
-    width: 160px;
-    height: 160px;
+    width: 200px;
+    height: 200px;
     background: #ff9b30;
     display: inline-block;
     position: absolute;
-    bottom: 40px;
-    left: 40px;
+    bottom: 30px;
+    left: 32px;
+    z-index: 1;
   }
   :where([data-shape-circle3]) {
     border-radius: 130px;

@@ -96,19 +96,19 @@ const fake = [
       },
     ],
   },
-  {
-    id: 4,
-    name: 'Publish',
-    status: ProjectStatus.operating,
-    cover: 'https://random.imagecdn.app/50/50',
-    description: 'xxxxxx',
-    members: [
-      {
-        avatar: 'https://random.imagecdn.app/50/50',
-        profileUrl: '',
-      },
-    ],
-  },
+  // {
+  //   id: 4,
+  //   name: 'Publish',
+  //   status: ProjectStatus.operating,
+  //   cover: 'https://random.imagecdn.app/50/50',
+  //   description: 'xxxxxx',
+  //   members: [
+  //     {
+  //       avatar: 'https://random.imagecdn.app/50/50',
+  //       profileUrl: '',
+  //     },
+  //   ],
+  // },
 ];
 
 export interface ProjectTileGroupProps {
@@ -141,6 +141,7 @@ export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
 
   return (
     <Box
+      mt="lg"
       style={{
         visibility: span ? 'visible' : 'hidden',
       }}

@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import {
   IconFileDescription,
+  IconInfoCircle,
   IconLogout,
   IconPlus,
   IconSettings,
@@ -45,7 +46,7 @@ const PreferencesMenu = function () {
           Settings
         </Menu.Item>
         <Menu.Item leftSection={<IconFileDescription size={16} />}>
-          Docs
+          {'</Docs>'}
         </Menu.Item>
         <Menu.Item
           component={Link}
@@ -55,6 +56,7 @@ const PreferencesMenu = function () {
           Create Organization
         </Menu.Item>
         <Divider my="xs" variant="dashed" labelPosition="center" />
+        <Menu.Item leftSection={<IconInfoCircle size={16} />}>About</Menu.Item>
         <Menu.Item leftSection={<IconLogout size={16} />}>Sign Out</Menu.Item>
       </Menu.Dropdown>
     </Menu>
@@ -89,7 +91,7 @@ export const AppShellHeader: FC<AppShellHeaderProps> = function () {
             </>
           )}
           <Anchor href="/" component={Link} display="flex">
-            <IndiebaseEnvTextLogo env={process.env.NEXT_PUBLIC_RELEASE_ENV} />
+            <IndiebaseEnvTextLogo />
           </Anchor>
         </Group>
 
