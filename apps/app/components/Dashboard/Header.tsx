@@ -46,7 +46,7 @@ const PreferencesMenu = function () {
           Settings
         </Menu.Item>
         <Menu.Item leftSection={<IconFileDescription size={16} />}>
-          {'</Docs>'}
+          Docs
         </Menu.Item>
         <Menu.Item
           component={Link}

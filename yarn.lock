@@ -3442,7 +3442,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@deskbtm/gadgets@workspace:first_party/gadgets"
   dependencies:
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     shx: "npm:0.3.4"
     ts-node: "npm:10.9.2"
     tsconfig-paths: "npm:4.2.0"
@@ -5579,7 +5579,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@indiebase/accesscontrol@workspace:first_party/accesscontrol"
   dependencies:
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     core-js-pure: "npm:3.37.1"
     jest-cli: "npm:22.4.4"
     ncp: "npm:2.0.0"
@@ -5599,7 +5599,7 @@ __metadata:
     "@mantine/core": "npm:7.11.2"
     "@mantine/form": "npm:7.11.2"
     "@mantine/hooks": "npm:7.11.2"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/node-forge": "npm:1.3.11"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
@@ -5709,7 +5709,7 @@ __metadata:
     "@superfaceai/passport-twitter-oauth2": "npm:1.2.4"
     "@total-typescript/ts-reset": "npm:0.5.1"
     "@types/bcrypt": "npm:5.0.2"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/passport": "npm:1.0.16"
     "@types/passport-apple": "npm:2.0.3"
     "@types/passport-facebook": "npm:3.0.3"
@@ -5773,7 +5773,7 @@ __metadata:
     "@nestjs/cli": "npm:10.3.2"
     "@swc/cli": "npm:0.4.0"
     "@swc/core": "npm:1.6.13"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     cross-env: "npm:7.0.3"
     fork-ts-checker-webpack-plugin: "npm:9.0.2"
     run-script-webpack-plugin: "npm:0.2.0"
@@ -5837,7 +5837,7 @@ __metadata:
     "@nestjs/common": "npm:10.3.9"
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     jest: "npm:29.6.1"
     reflect-metadata: "npm:0.2.2"
@@ -5859,7 +5859,7 @@ __metadata:
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
     "@types/express": "npm:4.17.21"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     jest: "npm:29.6.1"
     reflect-metadata: "npm:0.2.2"
@@ -5881,7 +5881,7 @@ __metadata:
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/platform-fastify": "npm:10.3.9"
     "@types/busboy": "npm:1.5.3"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     fastify: "npm:4.27.0"
     reflect-metadata: "npm:0.2.2"
     rxjs: "npm:7.8.1"
@@ -5904,7 +5904,7 @@ __metadata:
     "@nestjs/platform-express": "npm:10.3.9"
     "@nestjs/platform-fastify": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/passport": "npm:1.0.16"
     "@types/passport-jwt": "npm:4.0.1"
     "@types/passport-local": "npm:1.0.38"
@@ -5938,7 +5938,7 @@ __metadata:
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
     "@types/express": "npm:4.17.21"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     jest: "npm:29.6.1"
     reflect-metadata: "npm:0.2.2"
@@ -5959,7 +5959,7 @@ __metadata:
     "@nestjs/common": "npm:10.3.9"
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     jest: "npm:29.6.1"
     octokit: "npm:4.0.2"
@@ -5983,7 +5983,7 @@ __metadata:
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
     "@types/express": "npm:4.17.21"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     jest: "npm:29.6.1"
     reflect-metadata: "npm:0.2.2"
@@ -6007,7 +6007,7 @@ __metadata:
     "@nestjs/platform-fastify": "npm:10.3.9"
     "@nestjs/swagger": "npm:7.3.1"
     "@nestjs/testing": "npm:10.3.9"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     handlebars: "npm:4.7.8"
     prettier: "npm:3.3.3"
@@ -6056,7 +6056,7 @@ __metadata:
     "@nestjs/swagger": "npm:7.3.1"
     "@nestjs/testing": "npm:10.3.9"
     "@types/bcrypt": "npm:5.0.2"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/pg": "npm:8.11.6"
     "@types/qrcode": "npm:1.5.5"
     "@types/supertest": "npm:6.0.2"
@@ -6090,7 +6090,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@indiebase/react-authz@workspace:apps/first_party/authz"
   dependencies:
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
     casbin.js: "npm:0.5.1"
@@ -6107,7 +6107,7 @@ __metadata:
   dependencies:
     "@deskbtm/gadgets": "workspace:^"
     "@types/lodash.debounce": "npm:4.0.9"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/react": "npm:18.3.3"
     "@types/react-dom": "npm:18.3.0"
     lodash.debounce: "npm:4.0.8"
@@ -6125,7 +6125,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@indiebase/sdk@workspace:packages/sdk"
   dependencies:
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     swagger-typescript-api: "npm:13.0.14"
     tsconfig-paths: "npm:4.2.0"
     typescript: "npm:5.5.4"
@@ -6142,7 +6142,7 @@ __metadata:
     "@nestjs/testing": "npm:10.3.9"
     "@types/connect-redis": "npm:0.0.23"
     "@types/fs-extra": "npm:11.0.4"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/node-forge": "npm:1.3.11"
     "@types/supertest": "npm:6.0.2"
     "@types/validator": "npm:13.12.0"
@@ -11051,12 +11051,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.14.13":
-  version: 20.14.13
-  resolution: "@types/node@npm:20.14.13"
+"@types/node@npm:22.0.2":
+  version: 22.0.2
+  resolution: "@types/node@npm:22.0.2"
   dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10/749160b6bd9866e6169cb1a222e75aaf81da3868af1fda1e1e66d33c7e182be381f98a42b7d231fddf470f6389f2052ee842e776b3fdc677df798b933617866d
+    undici-types: "npm:~6.11.1"
+  checksum: 10/7f5937f22d5171df6d1764b838b64f03fd2686e0ebee15bb64eb609ee5280cfd8cbbb78efdf163bb49eee11c77de461ef8b85e2781e508d231777390ddf0e8ec
   languageName: node
   linkType: hard
 
@@ -27240,7 +27240,7 @@ __metadata:
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
     "@types/express": "npm:4.17.21"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/supertest": "npm:6.0.2"
     paseto: "npm:3.1.4"
     reflect-metadata: "npm:0.2.2"
@@ -36015,6 +36015,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~6.11.1":
+  version: 6.11.1
+  resolution: "undici-types@npm:6.11.1"
+  checksum: 10/bdee4c3d67626bf45f1502b817b96e328ff9c3c006ecafa3708bc39ba66d6cecc2d5d69d3148667bb833d3fb457c0e715bfeed0b7b6767fa4d3044f5c1036ba9
+  languageName: node
+  linkType: hard
+
 "undici@npm:^5.28.4":
   version: 5.28.4
   resolution: "undici@npm:5.28.4"
@@ -37510,7 +37517,7 @@ __metadata:
   resolution: "winston-openobserve@workspace:first_party/winston-openobserve"
   dependencies:
     "@types/async-exit-hook": "npm:2.0.2"
-    "@types/node": "npm:20.14.13"
+    "@types/node": "npm:22.0.2"
     "@types/triple-beam": "npm:1.3.5"
     async-exit-hook: "npm:2.0.1"
     ky: "npm:1.3.0"
