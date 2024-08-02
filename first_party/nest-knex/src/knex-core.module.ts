@@ -27,8 +27,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
     private readonly moduleRef: ModuleRef,
   ) {}
 
-  static forRoot(options?: KnexOptions, connection?: string): DynamicModule {
-    options = options!;
+  static forRoot(options: KnexOptions, connection?: string): DynamicModule {
     const KnexOptions = {
       provide: KNEX_MODULE_OPTIONS,
       useValue: options,
@@ -87,7 +86,9 @@ export class KnexCoreModule implements OnApplicationShutdown {
     const connection = this.moduleRef.get<Knex>(
       getConnectionToken(this.options) as unknown as Type<Knex>,
     );
-    connection && (await connection.destroy());
+    if (connection) {
+      await connection.destroy();
+    }
   }
 
   public static createAsyncProviders(options: KnexAsyncOptions): Provider[] {
@@ -133,7 +134,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
 
   private static async createConnectionFactory(
     options: KnexOptions,
-    ex: boolean = false,
+    ex = false,
   ): Promise<Knex> {
     return lastValueFrom(
       defer(async () => {

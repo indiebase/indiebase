@@ -216,7 +216,6 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
         inject: [ConfigService],
         useFactory: async (config: ConfigService) => {
           const { host, username, password, from, port } = config.get('smtp');
-          console.log(config.get('smtp'));
           return {
             transport: {
               host,
@@ -257,7 +256,7 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
       OctokitModule.forRootAsync({
         async useFactory() {
           return {
-            optionsFactory(req) {
+            optionsFactory(_req) {
               return {
                 auth: '',
               };

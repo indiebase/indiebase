@@ -54,6 +54,7 @@ export default tsEslint.config(
       '@typescript-eslint/no-var-requires': 'off',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-extraneous-class': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -61,6 +62,8 @@ export default tsEslint.config(
           varsIgnorePattern: '^_',
           args: 'after-used',
           argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
         },
       ],
       '@typescript-eslint/no-unsafe-function-type': 'error',

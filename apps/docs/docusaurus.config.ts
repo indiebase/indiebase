@@ -1,9 +1,10 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-import { Config } from '@docusaurus/types';
-import { themes } from 'prism-react-renderer';
 import type * as Preset from '@docusaurus/preset-classic';
+import { type Config } from '@docusaurus/types';
+import { themes } from 'prism-react-renderer';
+
 import i18n from './i18n';
 
 const lightTheme = themes.github;
@@ -46,6 +47,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           remarkPlugins: [
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
           ],
           editUrl:
