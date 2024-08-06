@@ -1,8 +1,8 @@
 {
   "name": "indiebase",
   "version": "0.0.2-alpha.0",
-  "description": "",
-  "author": "Han",
+  "description": "A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and Close Collective services.",
+  "author": "Han <han@deskbtm.com>",
   "private": true,
   "license": "AGPL-3.0",
   "engines": {
@@ -37,6 +37,7 @@
     "cz-conventional-changelog": "3.3.0",
     "dotenv-cli": "7.4.2",
     "eslint": "9.8.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react": "7.35.0",

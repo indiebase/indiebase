@@ -17,7 +17,6 @@ export class ConfigurableError extends Error {
   showDetails?: boolean;
   description?: string;
   title?: string;
-  digest?: string;
 
   constructor(options: ConfigurableErrorOptions | string = {}) {
     super();
@@ -27,7 +26,7 @@ export class ConfigurableError extends Error {
     } else {
       this.title = options.title;
       this.description = options.description;
-      this.message = options.message!;
+      this.message = options.message as string;
       this.retryable = options.retryable ?? true;
       this.exportable = options.exportable ?? true;
       this.reportable = options.reportable ?? true;
