@@ -11,6 +11,7 @@ import {
   Box,
   Center,
   Group,
+  type PolymorphicComponentProps,
   Text,
 } from '@mantine/core';
 import {
@@ -28,7 +29,8 @@ import { BoxEx } from '../BoxEx';
 import { projectStatusPalette, ProjectStatusTip } from '../Tips';
 import classes from './ProjectTile.module.css';
 
-export interface ProjectTileProps {
+export interface ProjectTileProps
+  extends Omit<PolymorphicComponentProps<'div'>, 'id'> {
   hiddenMembers?: boolean;
   actions?: ReactElement;
   backgroundStyle?: 1 | 2 | 3;
@@ -126,6 +128,7 @@ export const ProjectTile: FC<ProjectTileProps> = memo(function (_props) {
     members,
     description,
     backgroundStyle,
+    ...restProps
   } = useProps(defaultProjectTileProps, _props);
 
   const [isHover, setHover] = useState(false);
@@ -181,6 +184,7 @@ export const ProjectTile: FC<ProjectTileProps> = memo(function (_props) {
       p={5}
       m={6}
       {...attributes}
+      {...restProps}
     >
       <BoxEx.Foreground className={classes.foreground}>
         <Center className={classes.dragHandle} h={16}>

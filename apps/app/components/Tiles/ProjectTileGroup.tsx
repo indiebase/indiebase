@@ -96,27 +96,15 @@ const fake = [
       },
     ],
   },
-  // {
-  //   id: 4,
-  //   name: 'Publish',
-  //   status: ProjectStatus.operating,
-  //   cover: 'https://random.imagecdn.app/50/50',
-  //   description: 'xxxxxx',
-  //   members: [
-  //     {
-  //       avatar: 'https://random.imagecdn.app/50/50',
-  //       profileUrl: '',
-  //     },
-  //   ],
-  // },
 ];
 
 export interface ProjectTileGroupProps {
   backgroundStyle?: 1 | 2 | 3;
+  onTileClick?: (id: number) => void;
 }
 
 export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
-  const { backgroundStyle } = props;
+  const { backgroundStyle, onTileClick } = props;
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
@@ -168,7 +156,7 @@ export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
       >
         <SortableContext items={items} strategy={rectSortingStrategy}>
           <Grid mt={2}>
-            {items.map((e) => {
+            {items.map((e, i) => {
               return (
                 <Grid.Col span={span} p={0} key={e.id}>
                   <ProjectTile
@@ -179,6 +167,7 @@ export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
                     description={e.description}
                     backgroundStyle={backgroundStyle}
                     hiddenMembers={false}
+                    onClick={() => onTileClick?.(i)}
                   />
                 </Grid.Col>
               );
