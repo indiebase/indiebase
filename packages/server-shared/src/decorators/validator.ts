@@ -12,11 +12,11 @@ import {
 import { BadRequestException } from '@nestjs/common';
 import {
   IsString,
-  registerDecorator,
-  ValidatorConstraint,
   Matches,
+  registerDecorator,
   ValidationArguments,
   ValidationOptions,
+  ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Knex } from 'knex';

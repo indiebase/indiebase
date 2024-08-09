@@ -5685,7 +5685,6 @@ __metadata:
     "@indiebase/dev": "workspace:^"
     "@indiebase/nest-accesscontrol": "workspace:^"
     "@indiebase/nest-async-context": "workspace:^"
-    "@indiebase/nest-fastify-file": "workspace:^"
     "@indiebase/nest-fastify-passport": "workspace:^"
     "@indiebase/nest-knex": "workspace:^"
     "@indiebase/nest-octokit": "workspace:^"
@@ -5756,6 +5755,7 @@ __metadata:
     supertest: "npm:7.0.0"
     ts-node: "npm:10.9.2"
     tsconfig-paths: "npm:4.2.0"
+    tsx: "npm:4.16.5"
     typescript: "npm:5.5.4"
     unplugin-swc: "npm:1.5.1"
     vitest: "npm:2.0.4"
@@ -5873,7 +5873,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@indiebase/nest-fastify-file@workspace:^, @indiebase/nest-fastify-file@workspace:first_party/nest-fastify-file":
+"@indiebase/nest-fastify-file@workspace:first_party/nest-fastify-file":
   version: 0.0.0-use.local
   resolution: "@indiebase/nest-fastify-file@workspace:first_party/nest-fastify-file"
   dependencies:
@@ -6013,7 +6013,7 @@ __metadata:
     rxjs: "npm:7.8.1"
     shx: "npm:0.3.4"
     supertest: "npm:7.0.0"
-    tsx: "npm:4.16.2"
+    tsx: "npm:4.16.5"
     typescript: "npm:5.5.4"
   peerDependencies:
     "@fastify/static": "*"
@@ -35649,9 +35649,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsx@npm:4.16.2":
-  version: 4.16.2
-  resolution: "tsx@npm:4.16.2"
+"tsx@npm:4.16.5":
+  version: 4.16.5
+  resolution: "tsx@npm:4.16.5"
   dependencies:
     esbuild: "npm:~0.21.5"
     fsevents: "npm:~2.3.3"
@@ -35661,7 +35661,7 @@ __metadata:
       optional: true
   bin:
     tsx: dist/cli.mjs
-  checksum: 10/841ccbace3dc0c42704bb5c4cea47e1f4cd313aa4719fd4531e5ed40bb862b02349c76f7c56c53b64207eebbb1c2ac2e117482aabfbf197a30fbc0b2584b60be
+  checksum: 10/a9addbd9825bf54b1c401f0f1d6d5090ae48e6ade22e3821d6a0c9189945980fda33887f496796739be551aaccc3de7ae5d09aeade3bf010b34b53ad2c587e19
   languageName: node
   linkType: hard
 

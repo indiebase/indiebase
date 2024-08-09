@@ -2,6 +2,7 @@ import path from 'node:path';
 
 import { Upload } from '@aws-sdk/lib-storage';
 import { did } from '@deskbtm/gadgets';
+import { MultipartFile } from '@fastify/multipart';
 import { InjectKnex } from '@indiebase/nest-knex';
 import {
   CreateBucketCommand,
@@ -33,6 +34,12 @@ export interface UploadBucketOptions {
   tmp?: boolean;
 }
 
+export interface StorageSaveOptions {
+  protocol: FastifyRequest['protocol'];
+  namespace: PrimitiveProject['namespace'];
+  hostname: FastifyRequest['hostname'];
+}
+
 @Injectable()
 export class StorageService {
   private readonly logger = new Logger('Storage');
@@ -43,22 +50,18 @@ export class StorageService {
     private readonly knex: Knex,
   ) {}
 
-  public async save(bucket: string, req: FastifyRequest) {
-    const files = await req.files();
-    const {
-      protocol,
-      raw: { project },
-      hostname,
-    } = req;
+  public async save(
+    bucket: string,
+    files: AsyncIterableIterator<MultipartFile>,
+    options: StorageSaveOptions,
+  ) {
+    const { protocol, namespace, hostname } = options;
     const results: FileDTO[] = [];
 
     for await (const part of files) {
-      const { filename, file, fields } = part;
-      const { temp } = fields;
+      const { filename, file } = part;
       const key = uuid.v4() + path.extname(filename);
       const originalname = encodeURIComponent(filename);
-      // const targetBucket =
-      //   Number((temp as any)?.value) === 1 ? TMP_BUCKET : bucket;
       try {
         const parallelUploads3 = new Upload({
           client: this.s3,
@@ -78,7 +81,7 @@ export class StorageService {
         }
 
         const searchParams = new URLSearchParams();
-        searchParams.append('referenceId', project.namespace);
+        searchParams.append('referenceId', namespace);
 
         results.push({
           url: `${protocol}://${hostname}/v1/storage/${Bucket}/${Key}?${searchParams.toString()}`,
@@ -119,11 +122,7 @@ export class StorageService {
     return res;
   }
 
-  public async create(
-    name: string,
-    description: string,
-    project: PrimitiveProject,
-  ) {
+  public async create(project: PrimitiveProject, name: string, description?: string) {
     // If the insertion throws an error, the following creation of bucket will not be executed.
     // Should execute before seaweedfs.
     await this.knex

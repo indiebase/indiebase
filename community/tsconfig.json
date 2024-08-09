@@ -13,5 +13,10 @@
   ],
   "exclude": [
     "dist"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
   ]
 }

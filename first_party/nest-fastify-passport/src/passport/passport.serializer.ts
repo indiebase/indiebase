@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import passport from '@fastify/passport';
 
 export abstract class PassportSerializer {

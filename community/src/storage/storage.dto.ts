@@ -4,7 +4,7 @@ import {
   TmplTables,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 // Upload multiple files
 export class FilesUploadDTO {

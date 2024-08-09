@@ -55,6 +55,7 @@ export default tsEslint.config(
       'no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

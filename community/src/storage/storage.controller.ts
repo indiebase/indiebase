@@ -21,14 +21,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiConsumes,
-  ApiOperation,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { PasetoAuthGuard } from '../auth';
@@ -60,7 +53,20 @@ export class StorageController {
     @Req() req: FastifyRequest,
     @Param('bucket') bucket: string,
   ): Promise<OkedResponseSchema<FileDTO[]>> {
-    const results = await this.storage.save(bucket, req);
+    const files = await req.files();
+    const {
+      protocol,
+      raw: {
+        project: { namespace },
+      },
+      hostname,
+    } = req;
+    const options = {
+      namespace,
+      protocol,
+      hostname,
+    };
+    const results = await this.storage.save(bucket, files, options);
 
     return data({
       code: ResultCode.SUCCESS,
@@ -81,7 +87,7 @@ export class StorageController {
     @Project() project: PrimitiveProject,
     @Body() bucket: CreateBucketDTO,
   ): Promise<OkedResponseSchema> {
-    await this.storage.create(bucket.bucket, bucket.description!, project);
+    await this.storage.create(project, bucket.bucket, bucket.description);
 
     return data({
       code: ResultCode.SUCCESS,
@@ -98,9 +104,7 @@ export class StorageController {
   @UseGuards(PublicApiGuard, PasetoAuthGuard)
   @ApiBearerAuth('paseto')
   @Get('buckets')
-  async getBuckets(
-    @Project() project: PrimitiveProject,
-  ): Promise<OkedResponseSchema<BucketDTO[]>> {
+  async getBuckets(@Project() project: PrimitiveProject): Promise<OkedResponseSchema<BucketDTO[]>> {
     const buckets = await this.storage.getBuckets(project);
 
     return data({
@@ -130,7 +134,7 @@ export class StorageController {
         .header('ETag', result.ETag)
         .header('Content-Length', result.ContentLength)
         .header('Accept-Ranges', result.AcceptRanges)
-        .type(result.ContentType!)
+        .type(result.ContentType as string)
         .send(result.Body);
     }
   }
