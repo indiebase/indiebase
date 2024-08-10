@@ -1,4 +1,3 @@
-// import million from 'million/compiler';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
@@ -19,16 +18,13 @@ const nextConfig = {
     ],
     // swcPlugins: [['@swc-jotai/react-refresh', {}]],
   },
+  compiler: {
+    removeConsole:
+      process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
 };
-
-// const millionConfig = {
-//   // if you're using RSC: auto: { rsc: true },
-//   auto: true,
-// };
-
-// const withMillion = million.next(nextConfig, millionConfig);
 
 export default withNextIntl(nextConfig);

@@ -48,6 +48,8 @@ export const metadata: Metadata = {
   openGraph: openGraphMetadata,
 };
 
+export const runtime = 'edge';
+
 interface RootLayoutProps extends React.PropsWithChildren {
   params: { locale: string };
 }

@@ -22,13 +22,15 @@ export const IndiebaseEnvTextLogo: FC<unknown> = () => {
       alt = 'Indiebase';
       break;
   }
+  const name1 = isBackend ? '-backend' : '',
+    name2 = env === 'production' || !env ? '' : '-' + env;
 
   return (
     <Image
       priority
       width={isBackend ? 210 : 170}
       height={isBackend ? 61.1 : 49.46}
-      src={`/text-logo${isBackend ? '-backend' : ''}-${env}.svg`}
+      src={`/text-logo${name1}${name2}.svg`}
       alt={alt}
     />
   );

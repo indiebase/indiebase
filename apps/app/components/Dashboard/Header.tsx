@@ -68,13 +68,13 @@ export interface AppShellHeaderProps {}
 export const AppShellHeader: FC<AppShellHeaderProps> = function () {
   const navbarMolecule = useMolecule(NavbarMolecule);
   const [opened, toggle] = useAtom(navbarMolecule.collapsedAtom);
-  const { has } = useHasElement<HTMLDivElement>('[data-dash-navbar]');
+  const [hide] = useAtom(navbarMolecule.hiddenAtom);
 
   return (
     <AppShell.Header className={classes.header}>
       <Group h="100%" px="md" wrap="nowrap" justify="space-between">
         <Group h="100%">
-          {has && (
+          {!hide && (
             <>
               <Burger
                 opened={opened.mobile}

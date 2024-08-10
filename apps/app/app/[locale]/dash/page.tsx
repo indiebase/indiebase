@@ -12,7 +12,9 @@ export default function Page() {
       My Home Page
       <ProjectTileGroup
         onTileClick={() => {
-          location.href = '/dash/indiebase/backend';
+          router.push('/dash/indiebase/backend');
+          // router.push('/dash/indiebase/backend');
+          // location.href = '/dash/indiebase/backend';
         }}
       />
       <ProjectTileGroup

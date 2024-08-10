@@ -2,12 +2,10 @@
 
 import { type FC } from 'react';
 
-import { DashboardLayout } from '~/components/Dashboard';
+export type BackendLayoutProps = React.PropsWithChildren;
 
-export interface BackendLayoutProps extends React.PropsWithChildren {}
-
-const InviteLayout: FC<BackendLayoutProps> = ({ children }) => {
-  return <DashboardLayout>{children}</DashboardLayout>;
+const Layout: FC<BackendLayoutProps> = ({ children }) => {
+  return <>{children}</>;
 };
 
-export default InviteLayout;
+export default Layout;

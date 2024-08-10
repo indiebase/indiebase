@@ -9,7 +9,6 @@ export default function Page() {
   const router = useRouter();
 
   const { org } = router.query;
-  console.log(org);
 
   return (
     <Container mt="xl" size="lg">

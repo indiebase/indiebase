@@ -6,9 +6,9 @@ import { ClientOnly } from '~/components/ClientOnly';
 import { DashboardLayout } from '~/components/Dashboard';
 import { reRenderProbe } from '~/utils/helper';
 
-export interface DashboardProps extends React.PropsWithChildren {}
+export type DashboardProps = React.PropsWithChildren;
 
-const Dashboard: FC<DashboardProps> = ({ children }) => {
+const Layout: FC<DashboardProps> = ({ children }) => {
   reRenderProbe('Dashboard');
 
   return (
@@ -18,4 +18,4 @@ const Dashboard: FC<DashboardProps> = ({ children }) => {
   );
 };
 
-export default Dashboard;
+export default Layout;
