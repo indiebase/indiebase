@@ -87,7 +87,7 @@ export function camelCase(str, { upperCase = false } = {}) {
 
   if (upperCase && isAllUpperCaseSnakeCase(str)) {
     // Only convert to lower case if the string is all upper
-    // case snake_case. This allowes camelCase strings to go
+    // case snake_case. This allows camelCase strings to go
     // through without changing.
     str = str.toLowerCase();
   }

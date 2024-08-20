@@ -1,8 +1,8 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
-import { KnexEx, KnexSchemaEx, TmplTables } from '@indiebase/server-shared';
-import { Knex } from 'knex';
 import { AuthnTypes, AvailableOAuthProviders } from '@indiebase/sdk';
+import { KnexEx, KnexSchemaEx, TmplTables } from '@indiebase/server-shared';
 import { AccountStatus } from '@indiebase/trait';
+import { Knex } from 'knex';
 
 export const v001_user_table = async (
   schema: string,

@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 
 import { grantsRecord2Array } from '@indiebase/nest-accesscontrol';
+import { AvailableOAuthProviders } from '@indiebase/sdk';
 import {
   BuiltinIndiebaseRoles,
   defaultIndiebaseGrants,
@@ -11,7 +12,6 @@ import {
 } from '@indiebase/server-shared';
 import { OAuthProvider, PrimitiveProject } from '@indiebase/trait';
 import { Knex } from 'knex';
-import { AvailableOAuthProviders } from '@indiebase/sdk';
 
 export const indiebaseMgrOAuthProvidersV1: Partial<OAuthProvider>[] =
   Object.values(AvailableOAuthProviders).map((name) => ({
@@ -49,7 +49,6 @@ export const v001_indiebase_mgr_seed = async function (
         .insert({
           email: OAA_EMAIL,
           password,
-          // role: BuiltinIndiebaseRoles.OAA,
         })
         .into(TmplTables.users);
 
@@ -67,6 +66,7 @@ export const v001_indiebase_mgr_seed = async function (
         })
         .into(MgrTables.projects);
     },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     async down() {},
   };
 };

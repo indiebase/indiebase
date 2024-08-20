@@ -1,7 +1,7 @@
+import { AvailableOAuthProviders } from '@indiebase/sdk';
 import { TmplTables } from '@indiebase/server-shared';
 import { OAuthProvider } from '@indiebase/trait';
 import { Knex } from 'knex';
-import { AvailableOAuthProviders } from '@indiebase/sdk';
 
 export const tmplOAuthProvidersV1: Partial<OAuthProvider>[] = Object.values(
   AvailableOAuthProviders,

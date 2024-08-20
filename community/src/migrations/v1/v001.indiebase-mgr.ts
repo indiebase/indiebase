@@ -2,6 +2,7 @@ import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { KnexEx, MgrTables, TmplTables } from '@indiebase/server-shared';
 import { ProjectStatus, Visibility } from '@indiebase/trait';
 import { Knex } from 'knex';
+
 import {
   v001_buckets_table,
   v001_oauth_providers_table,

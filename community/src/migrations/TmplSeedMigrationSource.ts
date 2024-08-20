@@ -1,5 +1,6 @@
-import { v001_tmpl_seed } from './v1/v001.tmpl-seed';
 import { Knex } from 'knex';
+
+import { v001_tmpl_seed } from './v1/v001.tmpl-seed';
 
 export class TmplSeedMigrationSource implements Knex.MigrationSource<any> {
   #schema: string;

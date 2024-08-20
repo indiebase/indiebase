@@ -138,7 +138,6 @@ export class KnexCoreModule implements OnApplicationShutdown {
   ): Promise<Knex> {
     return lastValueFrom(
       defer(async () => {
-        // globalThis[KNEX_SYNC] = options.synchronize ?? false;
         const k = knex(options.config);
 
         return ex && options.extend ? options.extend(k) : k;

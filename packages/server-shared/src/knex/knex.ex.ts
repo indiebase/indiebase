@@ -15,11 +15,11 @@ export class KnexEx {
     this.kv = new KnexKV(knex);
   }
 
-  public listSchemas(select: string = '*') {
+  public listSchemas(select = '*') {
     return this.knex.select(select).from('information_schema.schemata');
   }
 
-  public async hasSchema(schema: string = '*') {
+  public async hasSchema(schema = '*') {
     const schemas = await this.knex
       .select('*')
       .from('information_schema.schemata')
