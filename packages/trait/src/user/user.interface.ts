@@ -1,12 +1,14 @@
-import { Visibility } from '../manager';
 import { AuthnTypes } from '@indiebase/sdk';
+
+import { Visibility } from '../manager';
+import { Primordials } from '../primordials.interface';
 
 export enum AccountStatus {
   inactive = 'inactive',
   active = 'active',
 }
 
-export interface PrimitiveUser {
+export interface PrimitiveUser extends Primordials {
   id: number;
   email: string;
   role?: string;
@@ -17,8 +19,6 @@ export interface PrimitiveUser {
   authnType: AuthnTypes;
   accountStatus: AccountStatus;
   enabled2FA: boolean;
-  createAt: Date;
-  updateAt: Date;
   signInAt: Date;
   emailConfirmedAt: Date;
   [key: string]: any;

@@ -1,3 +1,5 @@
+import { Primordials } from '../../primordials.interface';
+
 /**
  * Project Status Enum
  */
@@ -14,7 +16,7 @@ export enum ProjectStatus {
   closed = 'closed',
 }
 
-export interface PrimitiveProject {
+export interface PrimitiveProject extends Primordials {
   id: number;
   name: string;
   description?: string;
@@ -24,8 +26,6 @@ export interface PrimitiveProject {
   pinned?: boolean;
   status?: ProjectStatus;
   packageName?: string;
-  createAt: Date;
-  updateAt: Date;
   coverUrl?: string;
   githubRepo?: string;
   namespace: string;
