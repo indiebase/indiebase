@@ -70,7 +70,7 @@
     "ncp": "2.0.0",
     "snyk": "1.1291.1",
     "typescript": "5.5.4",
-    "vitest": "2.0.4"
+    "vitest": "2.0.5"
   },
   "dependencies": {
     "core-js-pure": "3.37.1",
