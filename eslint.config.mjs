@@ -11,9 +11,11 @@ import globals from 'globals';
 import tsEslint from 'typescript-eslint';
 import { fixupPluginRules } from '@eslint/compat';
 import reactHooks from 'eslint-plugin-react-hooks';
+import eslintSecurity from 'eslint-plugin-security';
 
 export default tsEslint.config(
   eslint.configs.recommended,
+  eslintSecurity.configs.recommended,
   ...tsEslint.configs.strict,
   ...tsEslint.configs.stylistic,
   prettierConfig,

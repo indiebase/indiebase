@@ -22,6 +22,9 @@ export class OrgsService {
     private readonly knexEx: KnexEx,
   ) {}
 
+  /**
+   * Lists organizations owned by a specific hacker, supporting pagination.
+   */
   public async list(
     hacker: PrimitiveHacker,
     { pageSize, pageIndex }: HackerOwnedOrgsDTO,
@@ -61,6 +64,13 @@ export class OrgsService {
     return paginatedData(result);
   }
 
+  /**
+   * Updates an organization's details in the database with the given name
+   *
+   * @param {string} targetOrgName - The name of the organization to be updated
+   * @param {UpdateOrgDTO} body - An object containing the updated information, including the new organization name, contact email, description, and avatar URL
+   * @throws {InternalServerErrorException} Throws this exception when an error occurs during the update process
+   */
   public async update(targetOrgName: string, body: UpdateOrgDTO) {
     const { name, contactEmail, description, avatarUrl } = body;
 
