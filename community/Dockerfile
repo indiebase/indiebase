@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:22-alpine
 
 LABEL org.opencontainers.image.authors="dev@indiebase.com"
 
@@ -9,7 +9,6 @@ ENV NODE_ENV=$RUNTIME_ENV
 WORKDIR /opt/indiebase-community
 
 COPY ./dist ./dist
-COPY ./model ./model
 COPY ./package.json ./package.json
 COPY ./.env.${RUNTIME_ENV:-production} ./
 

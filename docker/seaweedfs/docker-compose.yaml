@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   seaweed-master:
-    image: chrislusf/seaweedfs:3.54
+    image: chrislusf/seaweedfs:3.72
     ports:
       - 19333:9333
       - 19334:19333
@@ -12,7 +12,7 @@ services:
       - seaweed_master_data:/data
 
   seaweed-volume:
-    image: chrislusf/seaweedfs:3.54
+    image: chrislusf/seaweedfs:3.72
     ports:
       - 18079:8080
       - 18080:18080
@@ -24,7 +24,7 @@ services:
       - seaweed-master
 
   seaweed-filer:
-    image: chrislusf/seaweedfs:3.54
+    image: chrislusf/seaweedfs:3.72
     ports:
       - 18887:8888
       - 18890:18888
@@ -42,7 +42,7 @@ services:
       - seaweed-volume
 
   seaweed-s3:
-    image: chrislusf/seaweedfs:3.54
+    image: chrislusf/seaweedfs:3.72
     ports:
       - 18333:8333
       - 10327:9327

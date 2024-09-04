@@ -11,11 +11,6 @@
       "require": "./src/*.ts"
     }
   },
-  "files": [
-    "index.js",
-    "lib",
-    "LICENSE"
-  ],
   "scripts": {
     "build": "npm run clean && mkdirp ./lib && tsc",
     "test": "vitest",
@@ -23,6 +18,11 @@
     "cover!": "jest --coverage --verbose --no-cache",
     "report": "open ./test/.coverage/lcov-report/index.html"
   },
+  "files": [
+    "index.js",
+    "lib",
+    "LICENSE"
+  ],
   "repository": {
     "url": "git+https://github.com/indiebase/indiebase.git",
     "directory": "first_party/gadgets",
@@ -65,7 +65,7 @@
   },
   "homepage": "https://github.com/onury/accesscontrol#readme",
   "devDependencies": {
-    "@types/node": "22.0.2",
+    "@types/node": "22.5.3",
     "jest-cli": "22.4.4",
     "ncp": "2.0.0",
     "snyk": "1.1291.1",

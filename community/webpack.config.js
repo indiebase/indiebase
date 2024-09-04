@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const { createWebpackConfig } = require('@indiebase/dev/nestjs/webpack');
 const path = require('node:path');
 

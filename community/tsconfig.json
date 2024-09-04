@@ -9,14 +9,12 @@
     "outDir": "./dist"
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "specs/**/*.spec.ts",
+    "vitest.config.ts"
   ],
   "exclude": [
-    "dist"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
+    "dist",
+    "node_modules"
   ]
 }

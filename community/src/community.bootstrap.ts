@@ -109,14 +109,14 @@ export class CommunityBootstrap {
 
     await this.app.register(fastifyMultipart, {
       limits: {
-        fileSize: sizeParser(this.config.get('storage.file.limit')!),
+        fileSize: sizeParser(this.config.get('storage.file.limit') ?? '500000m'),
       },
     });
   }
 
   async start(port?: number, hostname?: string) {
-    const p = port ?? this.config.get('app.port');
-    const h = hostname ?? this.config.get('app.hostname');
+    const p = port ?? this.config.get('app.port') ?? 3000;
+    const h = hostname ?? this.config.get('app.hostname') ?? '0.0.0.0';
 
     if (kDevMode && module.hot) {
       module.hot.accept();
@@ -127,6 +127,6 @@ export class CommunityBootstrap {
 
     Logger.log(`\n\n\n🚀 Indiebase is running on: http://${h}:${p}\n\n`);
 
-    return this.app.listen(p!, h!);
+    return this.app.listen(p, h);
   }
 }
