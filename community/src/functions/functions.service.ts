@@ -1,3 +1,4 @@
+import { DockerService } from '@indiebase/nest-docker';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { KnexEx } from '@indiebase/server-shared';
 import { Injectable, Logger } from '@nestjs/common';
@@ -12,5 +13,8 @@ export class FunctionsService {
     private readonly knex: Knex,
     @InjectKnexEx()
     private readonly knexEx: KnexEx,
+    private readonly docker: DockerService,
   ) {}
+
+  demo() {}
 }

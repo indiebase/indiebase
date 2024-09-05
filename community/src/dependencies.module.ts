@@ -1,5 +1,6 @@
 import { AccessControlModule } from '@indiebase/nest-accesscontrol';
 import { AsyncContextModule } from '@indiebase/nest-async-context';
+import { DockerModule } from '@indiebase/nest-docker';
 import { KnexModule, knexSnakeCaseMappers } from '@indiebase/nest-knex';
 import { OctokitModule } from '@indiebase/nest-octokit';
 import { S3Module } from '@indiebase/nest-s3';
@@ -261,6 +262,13 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
                 auth: '',
               };
             },
+          };
+        },
+      }),
+      DockerModule.forRootAsync({
+        useFactory() {
+          return {
+            socketPath: '/var/run/docker.sock',
           };
         },
       }),

@@ -17,7 +17,7 @@ export const createOctokitProviderAsync = function (
 ): Provider {
   return {
     provide: OCTOKIT_OPTIONS,
-    useFactory: options.useFactory!,
+    useFactory: options.useFactory,
     inject: options.inject,
   };
 };

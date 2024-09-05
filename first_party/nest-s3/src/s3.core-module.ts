@@ -14,7 +14,7 @@ import {
 
 @Global()
 @Module({})
-export class S3CoreModule {
+export class DockerCoreModule {
   /* forRoot */
   static forRoot(options: S3ModuleOptions, connection?: string): DynamicModule {
     const s3OptionsProvider: Provider = {
@@ -28,7 +28,7 @@ export class S3CoreModule {
     };
 
     return {
-      module: S3CoreModule,
+      module: DockerCoreModule,
       providers: [s3OptionsProvider, s3ConnectionProvider],
       exports: [s3OptionsProvider, s3ConnectionProvider],
     };
@@ -48,7 +48,7 @@ export class S3CoreModule {
     };
 
     return {
-      module: S3CoreModule,
+      module: DockerCoreModule,
       imports: options.imports,
       providers: [
         ...this.createAsyncProviders(options, connection),
@@ -73,10 +73,13 @@ export class S3CoreModule {
       return [this.createAsyncOptionsProvider(options, connection)];
     }
 
-    return [
-      this.createAsyncOptionsProvider(options, connection),
-      { provide: options.useClass!, useClass: options.useClass! },
-    ];
+    const p = [this.createAsyncOptionsProvider(options, connection)];
+
+    if (options.useClass) {
+      p.push({ provide: options.useClass, useClass: options.useClass });
+    }
+
+    return p;
   }
 
   /* createAsyncOptionsProvider */
@@ -105,7 +108,7 @@ export class S3CoreModule {
       ): Promise<S3ModuleOptions> {
         return await optionsFactory.createS3ModuleOptions();
       },
-      inject: [options.useClass! || options.useExisting!],
+      inject: [options.useClass || options.useExisting!],
     };
   }
 }

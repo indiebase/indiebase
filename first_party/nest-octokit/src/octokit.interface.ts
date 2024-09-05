@@ -1,4 +1,5 @@
 import { ModuleMetadata } from '@nestjs/common';
+//@ts-ignore
 import { Octokit } from 'octokit';
 
 export interface OctokitOptions {
@@ -7,6 +8,6 @@ export interface OctokitOptions {
 }
 
 export interface OctokitAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
-  useFactory?: (...args: any[]) => Promise<OctokitOptions> | OctokitOptions;
+  useFactory: (...args: any[]) => Promise<OctokitOptions> | OctokitOptions;
   inject?: any[];
 }

@@ -1,5 +1,6 @@
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
+//@ts-ignore
 import { Octokit } from 'octokit';
 
 import { OCTOKIT_OPTIONS } from './octokit.constants';

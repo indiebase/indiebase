@@ -9,7 +9,7 @@
 import { DynamicModule } from '@nestjs/common';
 import { Module } from '@nestjs/common';
 
-import { S3CoreModule } from './s3.core-module';
+import { DockerCoreModule } from './s3.core-module';
 import { S3ModuleAsyncOptions, S3ModuleOptions } from './s3.interfaces';
 
 @Module({})
@@ -20,8 +20,8 @@ export class S3Module {
   ): DynamicModule {
     return {
       module: S3Module,
-      imports: [S3CoreModule.forRoot(options, connection)],
-      exports: [S3CoreModule],
+      imports: [DockerCoreModule.forRoot(options, connection)],
+      exports: [DockerCoreModule],
     };
   }
 
@@ -31,8 +31,8 @@ export class S3Module {
   ): DynamicModule {
     return {
       module: S3Module,
-      imports: [S3CoreModule.forRootAsync(options, connection!)],
-      exports: [S3CoreModule],
+      imports: [DockerCoreModule.forRootAsync(options, connection!)],
+      exports: [DockerCoreModule],
     };
   }
 }

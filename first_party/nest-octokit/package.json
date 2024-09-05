@@ -10,6 +10,11 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "scripts": {
+    "prebuild": "shx rm -rf dist",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
@@ -27,19 +32,6 @@
     "type": "git",
     "url": "https://github.com/indiebase/mbdpay.git"
   },
-  "scripts": {
-    "prebuild": "shx rm -rf dist",
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npm run prebuild && nest build --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
-  },
   "dependencies": {
     "octokit": "4.0.2"
   },
@@ -55,7 +47,6 @@
     "supertest": "7.0.0",
     "ts-jest": "29.1.1",
     "ts-loader": "9.5.1",
-    "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.5.4"
   },

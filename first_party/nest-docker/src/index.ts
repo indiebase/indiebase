@@ -1,12 +1,12 @@
 /**
- * Copyright (C)  svtslv (https://github.com/svtslv)
- * License-Identifier: MIT
  *
  * Copyright (C) 2022 Han
+ * License-Identifier: MIT
  */
 
-export * from './docker.decorators';
+export * from './docker.core-module';
 export * from './docker.interfaces';
 export * from './docker.module';
-export * from './docker.utils';
-export * from '@aws-sdk/client-s3';
+export * from './docker.providers';
+export * from './docker.service';
+export * from 'dockerode';
