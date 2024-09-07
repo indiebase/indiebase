@@ -94,9 +94,7 @@ exports.createWebpackConfig = async (options) => {
       use: {
         loader: 'ts-loader',
         options: {
-          configFile: 'tsconfig.json',
           projectReferences: true,
-          experimentalWatchApi: true,
           transpileOnly: true,
         },
       },
