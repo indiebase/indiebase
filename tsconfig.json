@@ -34,8 +34,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     // Modules
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true
   },
   "exclude": [

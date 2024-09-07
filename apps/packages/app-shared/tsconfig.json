@@ -14,7 +14,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node10",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -25,6 +25,10 @@
   },
   "include": [
     "src",
-    "../../app/components/temp/SignIn"
-, "../../app/components/Avatar", "../../app/components/Profile", "src/components/SuperCowPower", "../../app/components/temp/components"  ]
+    "../../app/components/temp/SignIn",
+    "../../app/components/Avatar",
+    "../../app/components/Profile",
+    "src/components/SuperCowPower",
+    "../../app/components/temp/components"
+  ]
 }

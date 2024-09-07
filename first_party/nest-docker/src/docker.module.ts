@@ -14,13 +14,10 @@ import { DockerModuleAsyncOptions } from './docker.interfaces';
 
 @Module({})
 export class DockerModule {
-  public static forRootAsync(
-    options: DockerModuleAsyncOptions,
-    connection?: string,
-  ): DynamicModule {
+  public static forRootAsync(options: DockerModuleAsyncOptions): DynamicModule {
     return {
       module: DockerModule,
-      imports: [DockerCoreModule.forRootAsync(options, connection)],
+      imports: [DockerCoreModule.forRootAsync(options)],
       exports: [DockerCoreModule],
     };
   }

@@ -14,6 +14,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
   const ws = workspaceTools.getWorkspaces(cwd);
   const packageNames = ws.map((p) => p.name);
 
+  // eslint-disable-next-line security/detect-non-literal-regexp
   return packageNames.map((p) => new RegExp(p));
 }
 const __dev = process.env.NODE_ENV === 'development';
@@ -109,8 +110,8 @@ exports.createWebpackConfig = async (options) => {
     externals: [
       nodeExternals({
         allowlist: ['webpack/hot/poll?100'].concat(
-          options.externalsAllowList,
           options.bundleWorkspace ? workspacePkgs : [],
+          options.externalsAllowList,
         ),
         additionalModuleDirs: options.additionalExternals,
       }),

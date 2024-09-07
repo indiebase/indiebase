@@ -9,4 +9,5 @@ export * from './docker.interfaces';
 export * from './docker.module';
 export * from './docker.providers';
 export * from './docker.service';
+//@ts-ignore
 export * from 'dockerode';

@@ -49,7 +49,6 @@
   ],
   "scripts": {
     "build": "shx rm -rf dist && tsc",
-    "test": "jest",
     "prepack": "npm run build"
   },
   "dependencies": {

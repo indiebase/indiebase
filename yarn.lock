@@ -6092,8 +6092,6 @@ __metadata:
     reflect-metadata: "npm:0.2.2"
     rxjs: "npm:7.8.1"
     supertest: "npm:7.0.0"
-    ts-jest: "npm:29.1.1"
-    ts-loader: "npm:9.5.1"
     tsconfig-paths: "npm:4.2.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -6113,8 +6111,6 @@ __metadata:
     reflect-metadata: "npm:0.2.2"
     rxjs: "npm:7.8.1"
     supertest: "npm:7.0.0"
-    ts-jest: "npm:29.1.1"
-    ts-loader: "npm:9.5.1"
     tsconfig-paths: "npm:4.2.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -6229,8 +6225,6 @@ __metadata:
     reflect-metadata: "npm:0.2.2"
     rxjs: "npm:7.8.1"
     supertest: "npm:7.0.0"
-    ts-jest: "npm:29.1.1"
-    ts-loader: "npm:9.5.1"
     tsconfig-paths: "npm:4.2.0"
     typescript: "npm:5.5.4"
   languageName: unknown
@@ -6244,7 +6238,6 @@ __metadata:
     "@nestjs/common": "npm:10.3.9"
     "@nestjs/core": "npm:10.3.9"
     "@nestjs/testing": "npm:10.3.9"
-    "@types/express": "npm:4.17.21"
     "@types/node": "npm:22.5.3"
     "@types/supertest": "npm:6.0.2"
     jest: "npm:29.6.1"
@@ -6252,8 +6245,6 @@ __metadata:
     rxjs: "npm:7.8.1"
     supertest: "npm:7.0.0"
     ts-jest: "npm:29.1.1"
-    ts-loader: "npm:9.5.1"
-    tsconfig-paths: "npm:4.2.0"
     typescript: "npm:5.5.4"
   languageName: unknown
   linkType: soft
