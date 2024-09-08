@@ -12,9 +12,9 @@ import { defer, lastValueFrom } from 'rxjs';
 
 import { KNEX_MODULE_OPTIONS } from './knex.constants';
 import {
-  KnexAsyncOptions,
-  KnexOptions,
-  KnexOptionsFactory,
+  type KnexAsyncOptions,
+  type KnexOptions,
+  type KnexOptionsFactory,
 } from './knex.interfaces';
 import { getConnectionToken, handleRetry } from './knex.utils';
 

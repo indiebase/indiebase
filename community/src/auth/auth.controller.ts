@@ -1,6 +1,5 @@
 import { ResultCode } from '@indiebase/sdk';
 import {
-  ApiPresetParam,
   ApiUnionResponse,
   ApiUnionType1Header,
   data,
@@ -9,12 +8,11 @@ import {
   QueryEx,
   User,
 } from '@indiebase/server-shared';
-import { PrimitiveUser } from '@indiebase/trait';
-import { PrimitiveProject } from '@indiebase/trait/mgr';
+import { type PrimitiveUser } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait/mgr';
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Patch,
   Post,

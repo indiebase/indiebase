@@ -1,6 +1,6 @@
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
-import { PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait';
 import { VerifyCaptchaEmail } from '@indiebase/transactional';
 import { Logger } from '@nestjs/common';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';

@@ -82,12 +82,14 @@ export class Sender {
         json: body,
       })
       .then(this.#swapData)
-      .catch((err) => {
+      .catch((err: Error) => {
         console.error(err);
-        if (err?.cause?.code === 'ECONNREFUSED') {
+        if ((err?.cause as any).code === 'ECONNREFUSED') {
           this.#options.onConnectionError?.(err, this.close.bind(this));
         }
-        this.#options.cleanOnRequestError && this.clean();
+        if (this.#options.cleanOnRequestError) {
+          this.clean();
+        }
         this.#options.onRequestError?.(err);
       })
       .finally(() => {

@@ -18,7 +18,7 @@
     "dayjs": "*",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.1.6"
+    "typescript": "5.5.3"
   },
   "devDependencies": {
     "@types/lodash.debounce": "4.0.9",

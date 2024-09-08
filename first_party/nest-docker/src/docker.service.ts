@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import Docker from 'dockerode';
 
 import { DOCKER_CLIENT } from './docker.constants';
-import { DockerClient } from './docker.providers';
+import { type DockerClient } from './docker.providers';
 
 @Injectable()
 export class DockerService {

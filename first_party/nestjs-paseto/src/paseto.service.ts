@@ -4,7 +4,7 @@ import { ConsumeOptions, ConsumeOptionsBuffer, ProduceOptions } from 'paseto';
 import * as paseto from 'paseto';
 
 import { PASETO_MODULE_OPTIONS } from './paseto.constants';
-import { PasetoModuleOptions } from './paseto.interface';
+import { type PasetoModuleOptions } from './paseto.interface';
 
 @Injectable()
 export class PasetoService {

@@ -11,7 +11,7 @@ import {
   QueryEx,
   User,
 } from '@indiebase/server-shared';
-import { PrimitiveHacker } from '@indiebase/trait';
+import { type PrimitiveHacker } from '@indiebase/trait';
 import {
   Body,
   Controller,

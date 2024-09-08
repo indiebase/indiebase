@@ -1,4 +1,4 @@
-import { PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait';
 
 import { INDIEBASE_MGR } from '../constants';
 

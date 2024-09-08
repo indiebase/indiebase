@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { INDIEBASE_MGR, KnexEx, legalizeName } from '@indiebase/server-shared';
 import { MgrTables } from '@indiebase/server-shared';
-import { PrimitiveHacker, PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveHacker, PrimitiveProject } from '@indiebase/trait';
 import {
   Injectable,
   InternalServerErrorException,

@@ -8,7 +8,7 @@ import {
   Project,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait';
 import {
   Body,
   Controller,
@@ -21,7 +21,13 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { PasetoAuthGuard } from '../auth';
@@ -104,7 +110,9 @@ export class StorageController {
   @UseGuards(PublicApiGuard, PasetoAuthGuard)
   @ApiBearerAuth('paseto')
   @Get('buckets')
-  async getBuckets(@Project() project: PrimitiveProject): Promise<OkedResponseSchema<BucketDTO[]>> {
+  async getBuckets(
+    @Project() project: PrimitiveProject,
+  ): Promise<OkedResponseSchema<BucketDTO[]>> {
     const buckets = await this.storage.getBuckets(project);
 
     return data({

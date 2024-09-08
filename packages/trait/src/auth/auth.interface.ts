@@ -4,7 +4,7 @@ export enum AvailableAuthProviders {
   email = 'email',
 }
 
-export type OAuthProvider = {
+export interface OAuthProvider {
   /**
    * Provider name, e.g. google, microsoft
    */
@@ -30,4 +30,4 @@ export type OAuthProvider = {
    * e.g. WorkOS WorkOS URL, gitlab Self Hosted GitLab URL
    */
   extraPayload?: Record<string, any>;
-};
+}

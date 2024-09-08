@@ -6,7 +6,7 @@ import {
   Project,
   PublicApiGuard,
 } from '@indiebase/server-shared';
-import { PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait';
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 

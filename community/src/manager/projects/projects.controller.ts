@@ -10,7 +10,7 @@ import {
   PublicApiGuard,
   User,
 } from '@indiebase/server-shared';
-import { PrimitiveHacker, PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveHacker, type PrimitiveProject } from '@indiebase/trait';
 import {
   Body,
   Controller,
@@ -24,12 +24,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiParam,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { PasetoAuthGuard } from '../../auth';
 import { CreatePrjDTO, ProjectDTO } from './projects.dto';

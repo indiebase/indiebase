@@ -12,7 +12,7 @@ import {
   S3Client,
 } from '@indiebase/nest-s3';
 import { TmplTables } from '@indiebase/server-shared';
-import { PrimitiveProject } from '@indiebase/trait';
+import { type PrimitiveProject } from '@indiebase/trait';
 import {
   ConflictException,
   Injectable,
@@ -122,7 +122,11 @@ export class StorageService {
     return res;
   }
 
-  public async create(project: PrimitiveProject, name: string, description?: string) {
+  public async create(
+    project: PrimitiveProject,
+    name: string,
+    description?: string,
+  ) {
     // If the insertion throws an error, the following creation of bucket will not be executed.
     // Should execute before seaweedfs.
     await this.knex

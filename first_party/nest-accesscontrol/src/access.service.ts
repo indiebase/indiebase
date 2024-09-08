@@ -3,7 +3,7 @@ import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Inject, Injectable } from '@nestjs/common';
 
 import { ACCESS_CONTROL_OPTIONS } from './access.constants';
-import { AccessOptions } from './access.interface';
+import { type AccessOptions } from './access.interface';
 
 @Injectable()
 export class AccessService implements OnModuleInit, OnModuleDestroy {
