@@ -266,9 +266,15 @@ export function createDependenciesModule(options: DepsDynamicOptions) {
         },
       }),
       DockerModule.forRootAsync({
-        useFactory() {
+        inject: [ConfigService],
+        useFactory: async (config) => {
+          const { host, port, socket } = config.get('docker_engine');
+
+          if (socket) return { socketPath: socket };
+
           return {
-            socketPath: '/var/run/docker.sock',
+            host,
+            port,
           };
         },
       }),

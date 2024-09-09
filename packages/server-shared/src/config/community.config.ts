@@ -92,9 +92,18 @@ const storage = registerAs('storage', () => {
   };
 });
 
+const docker = registerAs('docker_engine', () => {
+  return {
+    host: process.env.DOCKER_ENGINE_HOST,
+    port: process.env.DOCKER_ENGINE_PORT,
+    socket: process.env.DOCKER_ENGINE_SOCKET,
+  };
+});
+
 export const communityDefaultConfigs = [
   app,
   redis,
+  docker,
   pg,
   smtp,
   auth,

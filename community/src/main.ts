@@ -10,15 +10,24 @@ import path from 'path';
 import { AppModule } from './app.module';
 import { CommunityBootstrap } from './community.bootstrap';
 
+declare const module: any;
+
 async function main() {
   try {
-    const boot = new CommunityBootstrap({
+    const booter = new CommunityBootstrap({
       staticAssets: {
         root: path.resolve(__dirname, '../public'),
       },
     });
-    const app = await boot.create(AppModule);
+    const app = await booter.create(AppModule);
     await app.start();
+
+    if (kDevMode && module.hot) {
+      module.hot.accept();
+      module.hot.dispose(async () => {
+        await app.close();
+      });
+    }
   } catch (error) {
     Logger.error(error);
   }

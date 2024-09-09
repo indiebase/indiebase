@@ -33,7 +33,15 @@ import {
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.guard';
 import { PasetoAuthGuard } from './paseto.guard';
-import { GithubGuard, GoogleGuard } from './social';
+import {
+  AppleGuard,
+  FacebookGuard,
+  GithubGuard,
+  GoogleGuard,
+  MicrosoftGuard,
+  QQGuard,
+  WeChatGuard,
+} from './social';
 
 @Controller({ path: 'auth', version: '1' })
 @ApiTags('Auth/v1')
@@ -106,14 +114,14 @@ export class AuthController {
     summary: 'Sign in with Microsoft OAuth2',
     description: '',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(MicrosoftGuard)
   async microsoft(@QueryEx() query: AuthDTO) {}
 
   @Get('microsoft/callback')
   @ApiOperation({
     summary: 'OAuth2 Microsoft callback',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(MicrosoftGuard)
   async microsoftCallback(@QueryEx() query: AuthDTO) {
     // await this.auth.handleGithubCallback(req, session);
   }
@@ -123,14 +131,14 @@ export class AuthController {
     summary: 'Sign in with Apple OAuth2',
     description: '',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(AppleGuard)
   async apple(@QueryEx() query: AuthDTO) {}
 
   @Get('apple/callback')
   @ApiOperation({
     summary: 'OAuth2 Apple callback',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(AppleGuard)
   async appleCallback() {
     // await this.auth.handleGithubCallback(req, session);
   }
@@ -140,14 +148,14 @@ export class AuthController {
     summary: 'Sign in with WeChat OAuth2',
     description: '',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(WeChatGuard)
   async wechat(@QueryEx() query: AuthDTO) {}
 
   @Get('wechat/callback')
   @ApiOperation({
     summary: 'OAuth2 WeChat callback',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(WeChatGuard)
   async wechatCallback() {
     // await this.auth.handleGithubCallback(req, session);
   }
@@ -157,14 +165,14 @@ export class AuthController {
     summary: 'Sign in with QQ OAuth2',
     description: '',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(QQGuard)
   async qq(@QueryEx() query: AuthDTO) {}
 
   @Get('qq/callback')
   @ApiOperation({
     summary: 'OAuth2 QQ callback',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(QQGuard)
   async qqCallback() {
     // await this.auth.handleGithubCallback(req, session);
   }
@@ -174,14 +182,14 @@ export class AuthController {
     summary: 'Sign in with Facebook OAuth2',
     description: '',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(FacebookGuard)
   async facebook(@QueryEx() query: AuthDTO) {}
 
   @Get('facebook/callback')
   @ApiOperation({
     summary: 'OAuth2 Facebook callback',
   })
-  @UseGuards(GoogleGuard)
+  @UseGuards(FacebookGuard)
   async facebookCallback() {
     // await this.auth.handleGithubCallback(req, session);
   }

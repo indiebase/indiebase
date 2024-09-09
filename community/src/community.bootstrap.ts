@@ -16,8 +16,6 @@ import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 import { setupApiDoc } from './swagger.setup';
 
-declare const module: any;
-
 interface BootstrapOptions {
   staticAssets?: FastifyStaticOptions;
 }
@@ -32,7 +30,7 @@ export class CommunityBootstrap {
    * @param EntryModule - Indiebase pro app or community app module class
    * @returns
    */
-  async create(EntryModule: any) {
+  public async create(EntryModule: any) {
     const fastifyAdapter = new FastifyAdapter();
 
     this.app = await NestFactory.create<NestFastifyApplication>(
@@ -109,24 +107,23 @@ export class CommunityBootstrap {
 
     await this.app.register(fastifyMultipart, {
       limits: {
-        fileSize: sizeParser(this.config.get('storage.file.limit') ?? '500000m'),
+        fileSize: sizeParser(
+          this.config.get('storage.file.limit') ?? '500000m',
+        ),
       },
     });
   }
 
-  async start(port?: number, hostname?: string) {
+  public async start(port?: number, hostname?: string) {
     const p = port ?? this.config.get('app.port') ?? 3000;
     const h = hostname ?? this.config.get('app.hostname') ?? '0.0.0.0';
-
-    if (kDevMode && module.hot) {
-      module.hot.accept();
-      module.hot.dispose(async () => {
-        await this.app.close();
-      });
-    }
 
     Logger.log(`\n\n\n🚀 Indiebase is running on: http://${h}:${p}\n\n`);
 
     return this.app.listen(p, h);
+  }
+
+  public async close() {
+    return this.app.close;
   }
 }
