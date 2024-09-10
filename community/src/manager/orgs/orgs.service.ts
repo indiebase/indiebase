@@ -1,5 +1,10 @@
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
-import { INDIEBASE_MGR, KnexEx, paginatedData } from '@indiebase/server-shared';
+import {
+  INDIEBASE_MGR,
+  KnexEx,
+  paginatedData,
+  TmplTables,
+} from '@indiebase/server-shared';
 import { MgrTables } from '@indiebase/server-shared';
 import { type PrimitiveHacker } from '@indiebase/trait';
 import {
@@ -45,23 +50,58 @@ export class OrgsService {
       ])
       .from(MgrTables.orgs)
       .whereNull(`${MgrTables.orgs}.deleted_at`)
-      .leftJoin(MgrTables._usersOrgs, function () {
-        this.on(`${MgrTables._usersOrgs}.user_id`, '=', hacker.id as any).andOn(
-          `${MgrTables.orgs}.id`,
-          '=',
-          `${MgrTables._usersOrgs}.org_id`,
-        );
+      // .leftJoin(
+      //   `${MgrTables._usersOrgs} as uo`,
+      //   `${MgrTables.orgs}.id`,
+      //   `uo.org_id`,
+      // )
+
+      .leftJoin(`${MgrTables._usersOrgs} as uo`, function () {
+        this.on(`uo.org_id`, '=', `${MgrTables.orgs}.id`).onExists(function () {
+          this.select('*').from(TmplTables.users).where({
+            id: `uo.user_id`,
+          });
+        });
       })
-      .paginate({
-        pageSize,
-        pageIndex,
-      })
+      // .paginate({
+      //   pageSize,
+      //   pageIndex,
+      // })
       .catch((err) => {
         this.logger.error(err);
         throw new InternalServerErrorException();
       });
 
+    console.log(result);
     return paginatedData(result);
+  }
+
+  public async query(org: string, hacker: PrimitiveHacker) {
+    const result = await this.knex
+      .withSchema(INDIEBASE_MGR)
+      .select([
+        `${MgrTables.orgs}.name`,
+        `${MgrTables.orgs}.description`,
+        `${MgrTables.orgs}.contact_email`,
+        `${MgrTables.orgs}.avatar_url`,
+        `${MgrTables.orgs}.github_org`,
+        `${MgrTables.orgs}.homepage`,
+        `${MgrTables.orgs}.visibility`,
+        `${MgrTables.orgs}.owner_id`,
+        `${MgrTables.orgs}.created_at`,
+        `${MgrTables.orgs}.updated_at`,
+      ])
+      .from(MgrTables.orgs)
+      .where({
+        name: org,
+      })
+      .leftJoin(MgrTables._usersOrgs, function () {
+        this.on(`${MgrTables._usersOrgs}.user_id`, '=', hacker.id as any);
+      })
+      .catch((err) => {
+        this.logger.error(err);
+      });
+    return result;
   }
 
   /**

@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@swc/cli": "0.4.0",
-    "@swc/core": "1.7.23",
-    "@types/node": "22.5.3",
+    "@swc/core": "1.7.24",
+    "@types/node": "22.5.4",
     "cross-env": "7.0.3",
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "run-script-webpack-plugin": "0.2.0",
@@ -33,6 +33,6 @@
     "webpack": "5.90.3"
   },
   "dependencies": {
-    "@nestjs/cli": "10.3.2"
+    "@nestjs/cli": "10.4.5"
   }
 }

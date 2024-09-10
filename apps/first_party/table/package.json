@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@types/lodash.debounce": "4.0.9",
-    "@types/node": "22.5.3",
+    "@types/node": "22.5.4",
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0"
   },

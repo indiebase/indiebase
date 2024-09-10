@@ -57,12 +57,13 @@ export class HackersService {
    * enabling data isolation.
    */
   public async create(hacker: SignUpHackersDTO) {
-    let { email, password } = hacker;
+    let { email, username, password } = hacker;
     password = await hashSecret(password);
     await this.knex<SignUpHackersDTO>(TmplTables.users)
       .withSchema(INDIEBASE_MGR)
       .insert({
         email,
+        username,
         password,
       })
       .catch((err) => {

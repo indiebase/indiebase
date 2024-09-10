@@ -1,22 +1,25 @@
 {
-  "name": "@indiebase/nest-knex",
-  "version": "0.0.1",
-  "description": "Nestjs knex module for Indiebase",
-  "author": "Han",
-  "private": true,
-  "license": "Apache-2.0",
+  "name": "knex-hydration",
+  "version": "0.0.1-alpha.11",
+  "description": "Takes knex query return nested object with types using NestHydration.",
+  "author": "Han <deskbtm@outlook.com>",
   "main": "./src/index.ts",
-  "module": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./extend": "./src/extend.d.ts",
-    "./ex": "./src/knex.ex.ts"
+    "./*": {
+      "default": "./src/*.ts"
+    }
   },
   "scripts": {
-    "prebuild": "shx rm -rf dist",
+    "build": "shx rm -rf dist&& tsc",
+    "prepack": "npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
+  "files": [
+    "dist/**/*",
+    "src"
+  ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public",
@@ -33,22 +36,21 @@
       }
     }
   },
-  "dependencies": {
-    "@nestjs/common": "10.4.1",
-    "@nestjs/core": "10.4.1",
-    "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.1"
+  "repository": {
+    "url": "https://github.com/indiebase/indiebase",
+    "directory": "first_party/gadgets",
+    "type": "git"
+  },
+  "engines": {
+    "node": ">=12.0.0"
   },
   "devDependencies": {
-    "@nestjs/testing": "10.4.1",
-    "@types/express": "4.17.21",
     "@types/node": "22.5.4",
-    "@types/supertest": "6.0.2",
-    "supertest": "7.0.0",
+    "shx": "0.3.4",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.5.3"
   },
-  "peerDependencies": {
-    "knex": "3.1.0"
+  "dependencies": {
+    "nesthydrationjs": "2.0.0"
   }
 }

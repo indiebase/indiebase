@@ -51,11 +51,11 @@ export class OrgsController {
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
-  @UseAccess({
-    [ManagerResources.orgs]: [AccessActions.readOwn],
-  })
+  // @UseAccess({
+  //   [ManagerResources.orgs]: [AccessActions.readOwn],
+  // })
   @Get('orgs')
-  async queryOwned(
+  async queryOwnedOrgs(
     @User() hacker: PrimitiveHacker,
     @QueryEx()
     query: HackerOwnedOrgsDTO,
@@ -73,7 +73,6 @@ export class OrgsController {
       'Lists organizations that the authenticated user has explicit permission (:read, :write, or :admin) to access. ',
   })
   @ApiPresetParam('org', 'publish')
-  @ApiUnionResponse('paginated', OrgDTO)
   @ApiUnionType1Header()
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
@@ -81,9 +80,10 @@ export class OrgsController {
     [ManagerResources.orgs]: [AccessActions.readAny],
   })
   @Get('orgs/query/:org')
-  async query() {
-    // const result = await this.orgsService.list();
-    // return result;
+  async query(@Param('org') org: string, @User() hacker: PrimitiveHacker) {
+    const result = await this.orgsService.query(org, hacker);
+
+    return result;
   }
 
   @ApiOperation({
