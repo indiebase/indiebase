@@ -2,7 +2,7 @@ import {
   INDIEBASE_MGR,
   IsEntityExisted,
   SpecificProjectType,
-  TmplTables,
+  T,
 } from '@indiebase/server-shared';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsHash, IsString } from 'class-validator';
@@ -16,7 +16,7 @@ export class LocalSignInDTO {
   @IsEntityExisted(
     {
       type: SpecificProjectType.fromHeader,
-      table: TmplTables.users,
+      table: T.users,
       column: 'email',
     },
     {

@@ -1,4 +1,4 @@
-export enum MgrTables {
+export enum M {
   orgs = 'ib_orgs',
   projects = 'ib_projects',
   _usersOrgs = '__ib_users_orgs',
@@ -11,7 +11,7 @@ export enum MgrTables {
   oauthUserInfo = 'ib_oauth_user_info',
 }
 
-export enum TmplTables {
+export enum T {
   users = 'ib_users',
   roles = 'ib_roles',
   grants = 'ib_grants',

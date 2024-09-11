@@ -3,16 +3,17 @@ import {
   INDIEBASE_MGR,
   KnexEx,
   paginatedData,
-  TmplTables,
+  T,
 } from '@indiebase/server-shared';
-import { MgrTables } from '@indiebase/server-shared';
+import { M } from '@indiebase/server-shared';
 import { type PrimitiveHacker } from '@indiebase/trait';
 import {
   Injectable,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { Knex } from 'knex';
+import knex, { Knex } from 'knex';
+import * as n from 'knex-hydration';
 
 import { CreateOrgDTO, HackerOwnedOrgsDTO, UpdateOrgDTO } from './orgs.dto';
 
@@ -34,69 +35,143 @@ export class OrgsService {
     hacker: PrimitiveHacker,
     { pageSize, pageIndex }: HackerOwnedOrgsDTO,
   ) {
-    const result = await this.knex
-      .withSchema(INDIEBASE_MGR)
-      .select([
-        `${MgrTables.orgs}.name`,
-        `${MgrTables.orgs}.description`,
-        `${MgrTables.orgs}.contact_email`,
-        `${MgrTables.orgs}.avatar_url`,
-        `${MgrTables.orgs}.github_org`,
-        `${MgrTables.orgs}.homepage`,
-        `${MgrTables.orgs}.visibility`,
-        `${MgrTables.orgs}.owner_id`,
-        `${MgrTables.orgs}.created_at`,
-        `${MgrTables.orgs}.updated_at`,
-      ])
-      .from(MgrTables.orgs)
-      .whereNull(`${MgrTables.orgs}.deleted_at`)
-      // .leftJoin(
-      //   `${MgrTables._usersOrgs} as uo`,
-      //   `${MgrTables.orgs}.id`,
-      //   `uo.org_id`,
-      // )
+    const schema = this.knex.withSchema(INDIEBASE_MGR);
 
-      .leftJoin(`${MgrTables._usersOrgs} as uo`, function () {
-        this.on(`uo.org_id`, '=', `${MgrTables.orgs}.id`).onExists(function () {
-          this.select('*').from(TmplTables.users).where({
-            id: `uo.user_id`,
-          });
-        });
-      })
-      // .paginate({
-      //   pageSize,
-      //   pageIndex,
-      // })
-      .catch((err) => {
-        this.logger.error(err);
-        throw new InternalServerErrorException();
-      });
+    // const result = await schema
+    //   .select([
+    //     `mo.name`,
+    //     `mo.description`,
+    //     `mo.contact_email`,
+    //     `mo.avatar_url`,
+    //     `mo.github_org`,
+    //     `mo.homepage`,
+    //     `mo.visibility`,
+    //     `mo.owner_id`,
+    //     `mo.created_at`,
+    //     `mo.updated_at`,
+    //     `uou.password`,
+    //   ])
+    //   .fromRaw(
+    //     `indiebase_mgr.${M.orgs} mo join (
+    //       select *
+    //       from indiebase_mgr.${M._usersOrgs} muo
+    //         join indiebase_mgr.${T.users} tu on tu.id = ${hacker.id}
+    //       where
+    //         muo.user_id = ${hacker.id}
+    //     ) uou on uou.org_id = mo.id`,
+    //   );
+    // .select([
+    //   `o.name`,
+    //   `o.description`,
+    //   `o.contact_email`,
+    //   `o.avatar_url`,
+    //   `o.github_org`,
+    //   `o.homepage`,
+    //   `o.visibility`,
+    //   `o.owner_id`,
+    //   `o.created_at`,
+    //   `o.updated_at`,
+    // ])
+    // .select('*')
+    // // .fromRaw(
+    // //   `indiebase_mgr.${M.orgs} o join (select * from indiebase_mgr.${M._usersOrgs} uo join indiebase_mgr.${T.users} u on u.id = ${hacker.id} where uo.user_id = ${hacker.id}) as uou on uou.org_id = o.id`,
+    // // )
+    // // .whereNull(`o.deleted_at`);
+    // .from(`${M.orgs} o`)
+    // .join(
+    //   schema
+    //     .select('*')
+    //     .from(`${M._usersOrgs} uo`)
+    //     .join(`${T.users} u`, function () {
+    //       this.on('u.id', '=', hacker.id as any);
+    //     })
+    //     .where('uo.user_id', '=', hacker.id as any)
+    //     .as('uou')
+    //     .toSQL().sql,
+    //   function () {
+    //     this.on('uou.org_id', '=', 'o.id');
+    //   },
+    // );
+
+    // .where('uo.user_id', '=', hacker.id as any)
+    // .toSQL().sql;
+
+    const result = await schema
+      // .whereNull(`o.deleted_at`)
+      // .from(`${M.orgs} orgs`)
+      // .joinRaw(
+      //   `(?) as iu on orgs.id = iu.org_id`,
+      //   schema
+      //     .select('*')
+      //     .from(`${M._usersOrgs} usersOrgs`)
+      //     .join(`${T.users} users`, function () {
+      //       this.on('users.id', '=', hacker.id as any);
+      //     })
+      //     .where(`usersOrgs.user_id`, '=', hacker.id),
+      // );
+
+      // .join(`${M._usersOrgs} uo`, function () {
+      //   this.on(`o.id`, '=', 'ww.org_id').onExists(function () {
+      //     this.select('*')
+      //       .from(`${M._usersOrgs} uo1`)
+      //       .join(`${T.users} u`, function () {
+      //         this.on('u.id', '=', hacker.id as any);
+      //       })
+      //       .where('uo1.user_id', '=', hacker.id as any);
+      //   });
+      // });
+      .select('*')
+      .from('ib_orgs')
+      .join(
+        schema
+          .select('*')
+          .from(`indiebase_mgr.__ib_users_orgs uo`)
+          .join(`indiebase_mgr.ib_users u`, function () {
+            this.on('u.id', '=', hacker.id as any);
+          })
+          .where('uo.user_id', '=', hacker.id as any)
+          .as('uou'),
+        'uou.org_id',
+        'o.id',
+        // function () {
+        //   // this.on('uou.org_id', '=', 'o.id');
+        // },
+      );
+    // .toSQL().sql;
+    // .paginate({
+    //   pageSize,
+    //   pageIndex,
+    // })
+    // .catch((err) => {
+    //   this.logger.error(err);
+    //   throw new InternalServerErrorException();
+    // });
 
     console.log(result);
-    return paginatedData(result);
+    // return paginatedData(result);
   }
 
   public async query(org: string, hacker: PrimitiveHacker) {
     const result = await this.knex
       .withSchema(INDIEBASE_MGR)
       .select([
-        `${MgrTables.orgs}.name`,
-        `${MgrTables.orgs}.description`,
-        `${MgrTables.orgs}.contact_email`,
-        `${MgrTables.orgs}.avatar_url`,
-        `${MgrTables.orgs}.github_org`,
-        `${MgrTables.orgs}.homepage`,
-        `${MgrTables.orgs}.visibility`,
-        `${MgrTables.orgs}.owner_id`,
-        `${MgrTables.orgs}.created_at`,
-        `${MgrTables.orgs}.updated_at`,
+        `${M.orgs}.name`,
+        `${M.orgs}.description`,
+        `${M.orgs}.contact_email`,
+        `${M.orgs}.avatar_url`,
+        `${M.orgs}.github_org`,
+        `${M.orgs}.homepage`,
+        `${M.orgs}.visibility`,
+        `${M.orgs}.owner_id`,
+        `${M.orgs}.created_at`,
+        `${M.orgs}.updated_at`,
       ])
-      .from(MgrTables.orgs)
+      .from(M.orgs)
       .where({
         name: org,
       })
-      .leftJoin(MgrTables._usersOrgs, function () {
-        this.on(`${MgrTables._usersOrgs}.user_id`, '=', hacker.id as any);
+      .leftJoin(M._usersOrgs, function () {
+        this.on(`${M._usersOrgs}.user_id`, '=', hacker.id as any);
       })
       .catch((err) => {
         this.logger.error(err);
@@ -119,7 +194,7 @@ export class OrgsService {
         .withSchema(INDIEBASE_MGR)
         .where({ name: targetOrgName })
         .update({ name, contactEmail, description, avatarUrl })
-        .into(MgrTables.orgs);
+        .into(M.orgs);
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();
@@ -132,7 +207,7 @@ export class OrgsService {
    * @returns The number of rows affected by the deletion.
    */
   public async delete(name: string) {
-    return this.knex(MgrTables.orgs)
+    return this.knex(M.orgs)
       .withSchema(INDIEBASE_MGR)
       .where({
         name,
@@ -148,7 +223,7 @@ export class OrgsService {
    * @returns The number of rows affected by the deletion.
    */
   public async softDelete(name: string) {
-    return this.knex(MgrTables.orgs)
+    return this.knex(M.orgs)
       .withSchema(INDIEBASE_MGR)
       .update('deleted_at', this.knex.fn.now())
       .where({
@@ -166,7 +241,7 @@ export class OrgsService {
         const result = await trx
           .withSchema(INDIEBASE_MGR)
           .insert({ name: org.name, ownerId: hacker.id })
-          .into(MgrTables.orgs)
+          .into(M.orgs)
           .returning('id');
 
         return trx
@@ -175,7 +250,7 @@ export class OrgsService {
             orgId: result[0]?.id,
             userId: hacker.id,
           })
-          .into(MgrTables._usersOrgs);
+          .into(M._usersOrgs);
       })
       .catch((err) => {
         this.logger.error(err);

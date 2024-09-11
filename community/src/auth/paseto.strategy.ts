@@ -30,8 +30,8 @@ export class PasetoStrategy
   }
 
   async validate(payload): Promise<any> {
-    const user = await this.knexEx.getUserByEmail(
-      payload.email,
+    const user = await this.knexEx.getUser(
+      { email: payload.email },
       payload.namespace,
     );
 

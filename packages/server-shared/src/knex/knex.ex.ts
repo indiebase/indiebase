@@ -4,7 +4,7 @@ import { Knex } from 'knex';
 import { INDIEBASE_MGR } from '../constants';
 import { KnexKV } from './knex.kv';
 import { KnexSchemaEx } from './schema.ex';
-import { MgrTables, TmplTables } from './tables';
+import { M, T } from './tables';
 
 export class KnexEx {
   public schema: KnexSchemaEx;
@@ -31,7 +31,7 @@ export class KnexEx {
     return this.knex
       .withSchema(INDIEBASE_MGR)
       .select('*')
-      .from(MgrTables.orgs)
+      .from(M.orgs)
       .where('name', orgName)
       .then((v) => {
         return Array.isArray(v) && v.length > 0;
@@ -39,10 +39,7 @@ export class KnexEx {
   }
 
   public async listProjects(): Promise<PrimitiveProject[]> {
-    return this.knex
-      .withSchema(INDIEBASE_MGR)
-      .select('*')
-      .from(MgrTables.projects);
+    return this.knex.withSchema(INDIEBASE_MGR).select('*').from(M.projects);
   }
 
   /**
@@ -55,7 +52,7 @@ export class KnexEx {
     return this.knex
       .withSchema(INDIEBASE_MGR)
       .select('*')
-      .from(MgrTables.projects)
+      .from(M.projects)
       .where('reference_id', referenceId)
       .first();
   }
@@ -68,8 +65,8 @@ export class KnexEx {
    * @param {Array<string>|boolean} options.exclude - if set to false will include all, default ['password']
    * @returns
    */
-  public async getUserByEmail(
-    email: string,
+  public async getUser(
+    cond: { email?: string; id?: number },
     namespace: string = INDIEBASE_MGR,
     options?: { exclude: string[] | boolean },
   ) {
@@ -82,8 +79,8 @@ export class KnexEx {
     const result = await this.knex
       .withSchema(namespace)
       .select('*')
-      .from(namespace === INDIEBASE_MGR ? TmplTables.users : TmplTables.users)
-      .where('email', email)
+      .from(T.users)
+      .where(cond)
       .first();
 
     if (!options.exclude) {

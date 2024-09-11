@@ -11,7 +11,7 @@ import {
   InjectS3,
   S3Client,
 } from '@indiebase/nest-s3';
-import { TmplTables } from '@indiebase/server-shared';
+import { T } from '@indiebase/server-shared';
 import { type PrimitiveProject } from '@indiebase/trait';
 import {
   ConflictException,
@@ -104,13 +104,13 @@ export class StorageService {
     return this.knex
       .withSchema(namespace)
       .select([
-        `${TmplTables.buckets}.id`,
-        `${TmplTables.buckets}.name`,
-        `${TmplTables.buckets}.description`,
-        `${TmplTables.buckets}.updatedAt`,
-        `${TmplTables.buckets}.createdAt`,
+        `${T.buckets}.id`,
+        `${T.buckets}.name`,
+        `${T.buckets}.description`,
+        `${T.buckets}.updatedAt`,
+        `${T.buckets}.createdAt`,
       ])
-      .from(TmplTables.buckets);
+      .from(T.buckets);
   }
 
   public async getFile(bucket: string, key: string) {
@@ -135,7 +135,7 @@ export class StorageService {
         name: name,
         description,
       })
-      .into(TmplTables.buckets);
+      .into(T.buckets);
     const createBucketCommand = new CreateBucketCommand({
       Bucket: name,
     });
@@ -156,7 +156,7 @@ export class StorageService {
   }
 
   public async softDeleteBucket(name: string, project: PrimitiveProject) {
-    return this.knex(TmplTables.buckets)
+    return this.knex(T.buckets)
       .withSchema(project.namespace)
       .update('deleted_at', this.knex.fn.now())
       .where({
@@ -165,7 +165,7 @@ export class StorageService {
   }
 
   public async deleteBucket(name: string, project: PrimitiveProject) {
-    await this.knex(TmplTables.buckets)
+    await this.knex(T.buckets)
       .withSchema(project.namespace)
       .where({
         name,

@@ -1,9 +1,8 @@
 import {
   INDIEBASE_MGR,
   IsEntityExisted,
-  IsIndiebaseLegalName,
-  MgrTables,
-  OkedResponseSchema,
+  IsLegalName,
+  M,
   SpecificProjectType,
 } from '@indiebase/server-shared';
 import { ProjectStatus } from '@indiebase/trait';
@@ -18,10 +17,10 @@ export class CreatePrjDTO {
   @IsEntityExisted({
     type: SpecificProjectType.hardCode,
     schema: INDIEBASE_MGR,
-    table: MgrTables.projects,
+    table: M.projects,
     column: 'name',
   })
-  @IsIndiebaseLegalName()
+  @IsLegalName()
   name!: string;
 }
 

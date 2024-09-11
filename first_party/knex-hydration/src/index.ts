@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import knex from 'knex';
+import { type Knex } from 'knex';
 import nestHydrationJS from 'nesthydrationjs';
 
 const NestHydrationJS = nestHydrationJS();
@@ -11,7 +11,7 @@ const NestHydrationJS = nestHydrationJS();
 abstract class Type<A> {
   public readonly _A: A | undefined;
 
-  public withQuery(q: knex.QueryBuilder): Promise<A> {
+  public withQuery(q: Knex.QueryBuilder): Promise<A> {
     return q
       .select(this.getSelect())
       .then((x) => NestHydrationJS.nest(x, this.getDefinition()));
@@ -24,7 +24,6 @@ abstract class Type<A> {
 type TypeOf<C extends Type<any>> = C['_A'];
 
 const alias = (field: string): string => field.replace(/\./g, '_');
-const flatten = <A>(arr: A[][]): A[] => [].concat.apply([], arr);
 
 export type Props = Record<string, Type<any>>;
 
@@ -97,9 +96,9 @@ class NullableType<P extends Props> extends Type<
   }
 
   public getSelect() {
-    return flatten(
-      Object.keys(this.value).map((k) => this.value[k].getSelect()),
-    );
+    return Object.keys(this.value)
+      .map((k) => this.value[k].getSelect())
+      .flat();
   }
 }
 

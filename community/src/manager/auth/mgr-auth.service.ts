@@ -1,5 +1,5 @@
 import { InjectKnex } from '@indiebase/nest-knex';
-import { MgrTables } from '@indiebase/server-shared';
+import { M } from '@indiebase/server-shared';
 import { type PrimitiveProject } from '@indiebase/trait';
 import { Injectable, Logger } from '@nestjs/common';
 import { Knex } from 'knex';
@@ -17,6 +17,6 @@ export class MgrAuthService {
     return this.knex
       .withSchema(project.namespace)
       .select('*')
-      .from(MgrTables.oauthProviders);
+      .from(M.oauthProviders);
   }
 }

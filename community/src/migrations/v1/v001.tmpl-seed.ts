@@ -1,5 +1,5 @@
 import { AvailableOAuthProviders } from '@indiebase/sdk';
-import { TmplTables } from '@indiebase/server-shared';
+import { T } from '@indiebase/server-shared';
 import { OAuthProvider } from '@indiebase/trait';
 import { Knex } from 'knex';
 
@@ -23,9 +23,7 @@ export const v001_tmpl_seed = async function (
       const knexSchema = knex.withSchema(schema);
 
       // Init indiebase manager's OAuth providers.
-      await knexSchema
-        .insert(tmplOAuthProvidersV1)
-        .into(TmplTables.oauthProviders);
+      await knexSchema.insert(tmplOAuthProvidersV1).into(T.oauthProviders);
     },
     async down() {},
   };

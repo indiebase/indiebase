@@ -1,8 +1,8 @@
 import {
   INDIEBASE_MGR,
   IsEntityExisted,
-  IsIndiebaseLegalName,
-  MgrTables,
+  IsLegalName,
+  M,
   PaginatedRequestSchema,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -15,10 +15,10 @@ export class CreateOrgDTO {
   })
   @IsEntityExisted({
     schema: INDIEBASE_MGR,
-    table: MgrTables.orgs,
+    table: M.orgs,
     column: 'name',
   })
-  @IsIndiebaseLegalName()
+  @IsLegalName()
   name!: string;
 }
 
@@ -30,14 +30,14 @@ export class UpdateOrgParamsDTO {
   @IsEntityExisted(
     {
       schema: INDIEBASE_MGR,
-      table: MgrTables.orgs,
+      table: M.orgs,
       column: 'name',
     },
     {
       throwExistedMsg: false,
     },
   )
-  @IsIndiebaseLegalName()
+  @IsLegalName()
   org!: string;
 }
 

@@ -1,7 +1,7 @@
 import {
   IsEntityExisted,
   SpecificProjectType,
-  TmplTables,
+  T,
 } from '@indiebase/server-shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
@@ -22,7 +22,7 @@ export class FilesUploadDTO {
 export class CreateBucketDTO {
   @IsEntityExisted({
     type: SpecificProjectType.fromHeader,
-    table: TmplTables.buckets,
+    table: T.buckets,
     column: 'name',
   })
   @ApiProperty({ type: 'string', default: 'publish' })

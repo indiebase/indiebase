@@ -63,7 +63,7 @@ export class OrgsController {
     const result = await this.orgsService.list(hacker, query);
     return data({
       code: ResultCode.SUCCESS,
-      ...result,
+      // ...result,
     });
   }
 

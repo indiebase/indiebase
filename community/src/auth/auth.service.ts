@@ -2,7 +2,7 @@ import { did } from '@deskbtm/gadgets';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { InjectRedis } from '@indiebase/nestjs-redis';
 import { AuthnTypes, AvailableOAuthProviders } from '@indiebase/sdk';
-import { KnexEx, TmplTables } from '@indiebase/server-shared';
+import { KnexEx, T } from '@indiebase/server-shared';
 import { BusinessLabels, RedisUtils } from '@indiebase/server-shared';
 import {
   InternalUser,
@@ -45,7 +45,7 @@ export class AuthService {
     password: string,
   ) {
     const [err, user] = await did(
-      this.knexEx.getUserByEmail(email, namespace, { exclude: false }),
+      this.knexEx.getUser({ email }, namespace, { exclude: false }),
     );
 
     if (err) {
@@ -91,7 +91,7 @@ export class AuthService {
             authnType: AuthnTypes.oauth2,
           })
           .returning<Pick<InternalUser, 'id' | 'email'>[]>(['id', 'email'])
-          .into(TmplTables.users);
+          .into(T.users);
 
         const { id, email } = result[0] ?? Object.create(null);
 
@@ -104,7 +104,7 @@ export class AuthService {
             extraPayload: user['profile'],
             userId: id,
           })
-          .into(TmplTables.oauthUserInfo);
+          .into(T.oauthUserInfo);
 
         const token = await this.paseto.sign({
           id,
@@ -154,7 +154,7 @@ export class AuthService {
     return this.knex
       .withSchema(namespace)
       .select('*')
-      .from(TmplTables.oauthProviders)
+      .from(T.oauthProviders)
       .where('name', provider)
       .first<OAuthProvider>();
   }
@@ -179,7 +179,7 @@ export class AuthService {
     const user = await this.knex
       .withSchema(namespace)
       .where('id', userId)
-      .into(TmplTables.users)
+      .into(T.users)
       .first<InternalUser>();
 
     return user.otpRecoveryCodes;
@@ -207,13 +207,13 @@ export class AuthService {
       const isValid = authenticator.check(token, secret);
 
       if (isValid) {
-        let otpRecoveryCodes = this.createOtpRecoveryCodes();
+        const otpRecoveryCodes = this.createOtpRecoveryCodes();
 
         await this.knex
           .withSchema(namespace)
           .update({ enabled2FA: true, otpSecret: secret, otpRecoveryCodes })
           .where('id', user.id)
-          .into(TmplTables.users);
+          .into(T.users);
       }
 
       return isValid;

@@ -3,7 +3,7 @@ import { AccessService } from '@indiebase/nest-accesscontrol';
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { CreateBucketCommand, InjectS3, S3Client } from '@indiebase/nest-s3';
 import { INDIEBASE_MGR, KnexEx } from '@indiebase/server-shared';
-import { MgrTables, TmplTables } from '@indiebase/server-shared';
+import { M, T } from '@indiebase/server-shared';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Knex } from 'knex';
@@ -22,8 +22,7 @@ export class PresetService {
   ) {}
 
   private async setGrants(namespace: string) {
-    const table =
-      namespace === INDIEBASE_MGR ? MgrTables.grants : TmplTables.grants;
+    const table = namespace === INDIEBASE_MGR ? M.grants : T.grants;
     const roles = await this.knex.withSchema(namespace).select('*').from(table);
 
     if (Array.isArray(roles) && roles.length > 0) {

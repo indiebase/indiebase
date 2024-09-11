@@ -37,7 +37,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
       githubOrgName: '',
     },
     validate: {
-      name: validator.isIndiebaseLegalName('Invalid organization name'),
+      name: validator.isLegalName('Invalid organization name'),
       contactEmail: isEmail('Invalid email'),
     },
   });

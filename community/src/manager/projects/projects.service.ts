@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 
 import { InjectKnex, InjectKnexEx } from '@indiebase/nest-knex';
 import { INDIEBASE_MGR, KnexEx, legalizeName } from '@indiebase/server-shared';
-import { MgrTables } from '@indiebase/server-shared';
+import { M } from '@indiebase/server-shared';
 import { type PrimitiveHacker, PrimitiveProject } from '@indiebase/trait';
 import {
   Injectable,
@@ -51,7 +51,7 @@ export class ProjectsService {
             namespace,
             referenceId: crypto.randomBytes(8).toString('hex'),
           })
-          .into(MgrTables.projects)
+          .into(M.projects)
           .returning('id');
 
         await trx
@@ -60,7 +60,7 @@ export class ProjectsService {
             projectId: result[0]?.id,
             userId: hacker.id,
           })
-          .into(MgrTables._usersProjects);
+          .into(M._usersProjects);
 
         await trx.schema.createSchema(namespace);
         await trx.migrate.up({
@@ -86,7 +86,7 @@ export class ProjectsService {
     const project = await this.knex
       .withSchema(INDIEBASE_MGR)
       .select<PrimitiveProject>('*')
-      .from(MgrTables.projects)
+      .from(M.projects)
       .where('reference_id', referenceId)
       .first();
 
@@ -97,7 +97,7 @@ export class ProjectsService {
     }
     return this.knex
       .transaction(async (trx) => {
-        await trx(MgrTables.projects)
+        await trx(M.projects)
           .withSchema(INDIEBASE_MGR)
           .where({
             id: project.id,

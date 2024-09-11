@@ -218,7 +218,7 @@ export function IsEntityExisted(
  * @param {ValidationOptions} options
  * @returns
  */
-export function IsIndiebaseLegalName(options?: ValidationOptions) {
+export function IsLegalName(options?: ValidationOptions) {
   options = Object.assign(
     {},
     //T

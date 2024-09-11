@@ -21177,6 +21177,7 @@ __metadata:
     eslint-plugin-simple-import-sort: "npm:12.1.1"
     globals: "npm:15.9.0"
     husky: "npm:9.1.5"
+    knex-hydration: "workspace:^"
     prettier: "npm:3.3.3"
     shx: "npm:0.3.4"
     standard-version: "npm:9.5.0"
@@ -23490,7 +23491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knex-hydration@workspace:first_party/knex-hydration":
+"knex-hydration@workspace:^, knex-hydration@workspace:first_party/knex-hydration":
   version: 0.0.0-use.local
   resolution: "knex-hydration@workspace:first_party/knex-hydration"
   dependencies:

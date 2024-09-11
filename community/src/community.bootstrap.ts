@@ -32,6 +32,7 @@ export class CommunityBootstrap {
    */
   public async create(EntryModule: any) {
     const fastifyAdapter = new FastifyAdapter();
+    const opt = this.options;
 
     this.app = await NestFactory.create<NestFastifyApplication>(
       EntryModule,
@@ -76,7 +77,9 @@ export class CommunityBootstrap {
     // Setup swagger api doc with.
     await setupApiDoc(this.app);
 
-    this.app.useStaticAssets(this.options?.staticAssets!);
+    if (opt?.staticAssets) {
+      this.app.useStaticAssets(opt.staticAssets);
+    }
     this.app.useLogger(nestWinston);
     this.app.useGlobalFilters(new GlobalExceptionFilter(nestWinston));
 

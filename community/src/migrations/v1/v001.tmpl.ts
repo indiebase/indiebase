@@ -1,6 +1,6 @@
 import { AccessActions } from '@indiebase/nest-accesscontrol';
 import { AuthnTypes, AvailableOAuthProviders } from '@indiebase/sdk';
-import { KnexEx, KnexSchemaEx, TmplTables } from '@indiebase/server-shared';
+import { KnexEx, KnexSchemaEx, T } from '@indiebase/server-shared';
 import { AccountStatus } from '@indiebase/trait';
 import { Knex } from 'knex';
 
@@ -12,7 +12,7 @@ export const v001_user_table = async (
 ) => {
   return knex.schema
     .withSchema(schema)
-    .createTable(TmplTables.users, (table) => {
+    .createTable(T.users, (table) => {
       table.increments('id').primary();
       table.string('email').unique().index();
       table.string('nickname').comment('Nickname');
@@ -41,7 +41,7 @@ export const v001_user_table = async (
       extend?.(table);
     })
     .then(async () => {
-      await knexExSchema.createUpdatedAtTrigger(TmplTables.users);
+      await knexExSchema.createUpdatedAtTrigger(T.users);
     });
 };
 
@@ -53,7 +53,7 @@ export const v001_oauth_user_info_table = async (
 ) => {
   knex.schema
     .withSchema(schema)
-    .createTable(TmplTables.oauthUserInfo, (table) => {
+    .createTable(T.oauthUserInfo, (table) => {
       table.increments('id').primary();
       table
         .enum('provider', Object.values(AvailableOAuthProviders))
@@ -68,7 +68,7 @@ export const v001_oauth_user_info_table = async (
         .unsigned()
         .index()
         .references('id')
-        .inTable(`${schema}.${TmplTables.users}`)
+        .inTable(`${schema}.${T.users}`)
         .comment('The user id')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
@@ -78,7 +78,7 @@ export const v001_oauth_user_info_table = async (
       extend?.(table);
     })
     .then(async () => {
-      await knexExSchema.createUpdatedAtTrigger(TmplTables.oauthUserInfo);
+      await knexExSchema.createUpdatedAtTrigger(T.oauthUserInfo);
     });
 };
 
@@ -90,7 +90,7 @@ export const v001_buckets_table = async (
 ) => {
   return knex.schema
     .withSchema(schema)
-    .createTable(TmplTables.buckets, (table) => {
+    .createTable(T.buckets, (table) => {
       table.increments('id').primary();
       table.string('name').unique().index().notNullable();
       table.string('description').notNullable();
@@ -99,7 +99,7 @@ export const v001_buckets_table = async (
       extend?.(table);
     })
     .then(async () => {
-      await knexExSchema.createUpdatedAtTrigger(TmplTables.buckets);
+      await knexExSchema.createUpdatedAtTrigger(T.buckets);
     });
 };
 
@@ -115,7 +115,7 @@ export const v001_oauth_providers_table = async (
    */
   await knex.schema
     .withSchema(schema)
-    .createTable(TmplTables.oauthProviders, (table) => {
+    .createTable(T.oauthProviders, (table) => {
       table.increments('id').primary();
       table
         .enum('name', Object.values(AvailableOAuthProviders))
@@ -143,7 +143,7 @@ export const v001_oauth_providers_table = async (
       extend?.(table);
     })
     .then(async () => {
-      await knexExSchema.createUpdatedAtTrigger(TmplTables.oauthProviders);
+      await knexExSchema.createUpdatedAtTrigger(T.oauthProviders);
     });
 };
 
@@ -176,7 +176,7 @@ export const v001_tmpl = async function (
       /** ib_roles */
       await knex.schema
         .withSchema(schema)
-        .createTable(TmplTables.roles, (table) => {
+        .createTable(T.roles, (table) => {
           table.increments('id').primary();
           table.string('role').notNullable();
           table.string('resource').notNullable();
@@ -187,7 +187,7 @@ export const v001_tmpl = async function (
           table.timestamp('deleted_at').comment('Soft delete role timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(TmplTables.roles);
+          await knexExSchema.createUpdatedAtTrigger(T.roles);
         });
 
       /**
@@ -195,7 +195,7 @@ export const v001_tmpl = async function (
        */
       await knex.schema
         .withSchema(schema)
-        .createTable(TmplTables.grants, (table) => {
+        .createTable(T.grants, (table) => {
           table.increments('id').primary();
           table.string('role').index().notNullable();
           table.string('resource').notNullable();
@@ -205,7 +205,7 @@ export const v001_tmpl = async function (
           table.timestamp('deleted_at').comment('Soft delete grants timestamp');
         })
         .then(async () => {
-          await knexExSchema.createUpdatedAtTrigger(TmplTables.grants);
+          await knexExSchema.createUpdatedAtTrigger(T.grants);
         });
 
       /**
