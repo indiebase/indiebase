@@ -95,6 +95,17 @@ export class OrgsService {
 
     // .where('uo.user_id', '=', hacker.id as any)
     // .toSQL().sql;
+    console.log(
+      schema
+        .select('*')
+        .from(`indiebase_mgr.__ib_users_orgs uo`)
+        .join(`indiebase_mgr.ib_users u`, function () {
+          this.on('u.id', '=', hacker.id as any);
+        })
+        .where('uo.user_id', '=', hacker.id as any)
+        .as('uou')
+        .toSQL().sql,
+    );
 
     const result = await schema
       // .whereNull(`o.deleted_at`)
@@ -133,9 +144,6 @@ export class OrgsService {
           .as('uou'),
         'uou.org_id',
         'o.id',
-        // function () {
-        //   // this.on('uou.org_id', '=', 'o.id');
-        // },
       );
     // .toSQL().sql;
     // .paginate({

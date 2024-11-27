@@ -17,8 +17,6 @@ export const theme: PartialDeep<MantineTheme> = createTheme({
       peach: { from: '#ed6ea0', to: '#ec8c69', deg: 35 },
       success: { from: '#16BC88', to: '#009C63', deg: 35 },
     },
-    peachGradient: { from: '#ed6ea0', to: '#ec8c69', deg: 35 },
-    successGradient: { from: '#16BC88', to: '#009C63', deg: 35 },
     dashBorder: `${rem(1.5)} dashed var()`,
     backdropFilter: 'saturate(180%) blur(10px)',
     backdropBlurColorLight: 'hsla(0,0%,100%,.6)',
