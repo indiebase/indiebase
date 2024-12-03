@@ -41,6 +41,12 @@ export interface ProjectTileProps
   members?: any[];
 }
 
+export enum TileStyle {
+  style1 = 1,
+  style2 = 2,
+  style3 = 3,
+}
+
 interface DeltaDataProps {
   users: number;
   usersDelta?: number;
@@ -107,10 +113,10 @@ export const ProjectTileBackgroundStyle2 = () => (
 
 export const ProjectTileBackgroundStyle3 = () => (
   <BoxEx.Background className={classes.background3}>
-    <Box bg="#00DC12" />
-    <Box bg="#FF0088" />
-    <Box bg="#00FFE5" />
-    <Box bg="#FF6F00" />
+    <Box bg="#B3FFA9FF" />
+    <Box bg="#F5B4FFFF" />
+    <Box bg="#7EF0EBFF" />
+    <Box bg="#FFDC9CFF" />
   </BoxEx.Background>
 );
 
@@ -147,12 +153,13 @@ export const ProjectTile: FC<ProjectTileProps> = memo(function (_props) {
 
   let background;
   switch (backgroundStyle) {
-    case 2:
+    case TileStyle.style2:
       background = <ProjectTileBackgroundStyle2 />;
       break;
-    case 3:
+    case TileStyle.style3:
       background = <ProjectTileBackgroundStyle3 />;
       break;
+    case TileStyle.style1:
     default:
       background = <ProjectTileBackgroundStyle1 />;
       break;

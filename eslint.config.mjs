@@ -70,7 +70,7 @@ export default tsEslint.config(
         },
       ],
       '@typescript-eslint/no-unsafe-function-type': 'error',
-      'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+      'no-console': ['error', { allow: ['warn', 'error', 'info', 'debug'] }],
     },
   },
   {

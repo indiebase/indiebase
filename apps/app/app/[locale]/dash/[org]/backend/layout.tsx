@@ -1,11 +1,11 @@
 'use client';
 
-import { Navbar } from '~/components/Dashboard/Navbar';
+import { BackendNavbar } from '~/components/Dashboard/Navbar';
 
 export default function Layout({ children }) {
   return (
     <>
-      <Navbar mode="backend" />
+      <BackendNavbar />
       {children}
     </>
   );

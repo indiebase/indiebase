@@ -7,9 +7,7 @@ import {
   type MantineColor,
   Stack,
   Text,
-  useMantineTheme,
 } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { type FC, type PropsWithChildren } from 'react';
 
 export const projectStatusPalette: Record<ProjectStatus, MantineColor> = {
@@ -36,39 +34,11 @@ export interface ProjectStatusTipProps extends PropsWithChildren {
 export const ProjectStatusTip: FC<ProjectStatusTipProps> = function ({
   children,
   position,
-  onHover,
 }) {
-  // const [opened, { close, open }] = useDisclosure(false);
-  const theme = useMantineTheme();
-  const matches = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
-
   return (
-    <HoverCard
-      position={position}
-      withArrow
-      shadow="md"
-      // {...Object.assign({}, matches ? null : { opened })}
-    >
+    <HoverCard position={position} withArrow shadow="md" openDelay={400}>
       <HoverCard.Target>
-        <Flex
-        // {...Object.assign(
-        //   {},
-        //   matches
-        //     ? null
-        //     : {
-        //         onMouseEnter: () => {
-        //           open();
-        //           onHover?.(true);
-        //         },
-        //         onMouseLeave: () => {
-        //           close();
-        //           onHover?.(false);
-        //         },
-        //       },
-        // )}
-        >
-          {children}
-        </Flex>
+        <Flex>{children}</Flex>
       </HoverCard.Target>
       <HoverCard.Dropdown style={{ zIndex: 100 }}>
         <Stack>

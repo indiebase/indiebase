@@ -23,8 +23,6 @@ import Link from 'next/link';
 import { type FC } from 'react';
 import React from 'react';
 
-import { useHasElement } from '~/utils/hooks';
-
 import { IndiebaseEnvTextLogo } from '../Icons';
 import classes from './Dashboard.module.css';
 import { NavbarMolecule } from './Navbar';
@@ -45,7 +43,11 @@ const PreferencesMenu = function () {
         >
           Settings
         </Menu.Item>
-        <Menu.Item leftSection={<IconFileDescription size={16} />}>
+        <Menu.Item
+          component={Link}
+          leftSection={<IconFileDescription size={16} />}
+          href={process.env.NEXT_PUBLIC_DOC_URI}
+        >
           Docs
         </Menu.Item>
         <Menu.Item

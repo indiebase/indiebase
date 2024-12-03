@@ -1,4 +1,4 @@
-import { useEffect, type DependencyList } from 'react';
+import { type DependencyList, useEffect } from 'react';
 
 export function useDebounceEffect(
   fn: () => void,
@@ -14,6 +14,5 @@ export function useDebounceEffect(
     return () => {
       clearTimeout(t);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

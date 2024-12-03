@@ -13,7 +13,7 @@ import { atomWithSetStorage } from '~/utils/atoms';
  * `backend` is the BaaS.
  * `collaborate` provides the financial services for your project.
  */
-export type NavMode = 'backend' | 'collective';
+export type NavMode = 'backend' | 'collective' | 'personal';
 
 export interface NavbarScope {
   collapsed: { mobile: boolean; desktop: boolean } | null;

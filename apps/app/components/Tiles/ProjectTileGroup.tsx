@@ -22,7 +22,7 @@ import { type FC, useCallback, useState } from 'react';
 
 import { useDeviceQueryValue } from '~/hooks/use-device-query';
 
-import { ProjectTile } from './ProjectTile';
+import { ProjectTile, type TileStyle } from './ProjectTile';
 
 const fake = [
   {
@@ -99,7 +99,7 @@ const fake = [
 ];
 
 export interface ProjectTileGroupProps {
-  backgroundStyle?: 1 | 2 | 3;
+  backgroundStyle?: TileStyle;
   onTileClick?: (id: number) => void;
 }
 
@@ -109,10 +109,10 @@ export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {
-      // scrollBehavior:
-      // typeof window !== 'undefined' && 'Cypress' in window
-      //   ? 'auto'
-      //   : undefined,
+      scrollBehavior:
+        typeof window !== 'undefined' && 'Cypress' in window
+          ? 'auto'
+          : undefined,
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );

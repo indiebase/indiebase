@@ -2,10 +2,17 @@
 
 import { type FC } from 'react';
 
-export interface CollectiveLayoutProps extends React.PropsWithChildren {}
+import { CollectiveNavbar } from '~/components/Dashboard/Navbar';
+
+export type CollectiveLayoutProps = React.PropsWithChildren;
 
 const CollectiveLayout: FC<CollectiveLayoutProps> = ({ children }) => {
-  return <>{children}</>;
+  return (
+    <>
+      <CollectiveNavbar />
+      {children}
+    </>
+  );
 };
 
 export default CollectiveLayout;

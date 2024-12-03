@@ -12,7 +12,7 @@ export const ProfilePreviewCard: FC<ProfilePreviewCardProps> = function ({
   src,
 }) {
   return (
-    <HoverCard width={300} position="top" withArrow shadow="md">
+    <HoverCard width={300} position="top" withArrow shadow="md" openDelay={400}>
       <HoverCard.Target>
         <div>{children}</div>
       </HoverCard.Target>

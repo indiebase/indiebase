@@ -17,22 +17,22 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "devDependencies": {
-    "@swc/cli": "0.4.0",
-    "@swc/core": "1.7.24",
+    "@swc/cli": "0.5.1",
+    "@swc/core": "1.9.3",
     "@types/node": "22.5.4",
     "cross-env": "7.0.3",
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "run-script-webpack-plugin": "0.2.0",
     "swc-loader": "0.2.6",
     "ts-loader": "9.5.1",
-    "webpack": "5.94.0",
+    "webpack": "5.96.1",
     "webpack-node-externals": "3.0.0",
-    "workspace-tools": "0.36.4"
+    "workspace-tools": "0.38.1"
   },
   "peerDependencies": {
     "webpack": "5.90.3"
   },
   "dependencies": {
-    "@nestjs/cli": "10.4.5"
+    "@nestjs/cli": "10.4.8"
   }
 }

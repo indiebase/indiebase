@@ -120,7 +120,7 @@ const CreateOrganization: FC<CreateOrganizationProps> = function ({
         />
         <Button
           mt={50}
-          w="23%"
+          w="100%"
           variant="gradient"
           size="sm"
           type="submit"

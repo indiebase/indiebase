@@ -193,7 +193,7 @@ const config: Config = {
         {
           name: 'description',
           content:
-            'A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
+            'Indiebase - A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
         },
         {
           name: 'keywords',
@@ -205,14 +205,17 @@ const config: Config = {
         {
           property: 'og:title',
           content:
-            'A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
+            'Indiebase - A self-hosted platform explicitly designed for indie hackers or teams. Providing BaaS and financial services.',
         },
         {
           property: 'og:description',
           content:
             'Private Open Collective + Firebase Successor. Make revenue generation easier for indie hackers and teams with software projects.',
         },
-        { property: 'og:image', content: 'https://' },
+        {
+          property: 'og:image',
+          content: 'https://indiebase.deskbtm.com/img/og.png',
+        },
         { property: 'og:site_name', content: 'Indiebase' },
         { property: 'og:url', content: 'https://indiebase.deskbtm.com' },
         // X
@@ -226,7 +229,10 @@ const config: Config = {
           content:
             'Private Open Collective + Firebase Successor. Make revenue generation easier for indie hackers and teams with software projects.',
         },
-        { name: 'twitter:image', content: 'https://indiebase.deskbtm.com' },
+        {
+          name: 'twitter:image',
+          content: 'https://indiebase.deskbtm.com/img/og.png',
+        },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:creator', content: '@deskbtm' },
         { name: 'twitter:site', content: '@deskbtm' },

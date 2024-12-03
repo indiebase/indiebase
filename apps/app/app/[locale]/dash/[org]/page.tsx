@@ -7,7 +7,6 @@ import { ProjectTileGroup } from '~/components/Tiles';
 
 export default function Page() {
   const router = useRouter();
-
   const { org } = router.query;
 
   return (

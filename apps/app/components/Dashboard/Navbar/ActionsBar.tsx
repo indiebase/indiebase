@@ -10,6 +10,7 @@ import {
 import { useMolecule } from 'bunshi/react';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { type FC, useMemo } from 'react';
 
 import { useSetStorageAtom } from '~/utils/atoms';
@@ -25,7 +26,7 @@ export function walkChildren(
   const stack = [menus];
 
   while (stack.length > 0) {
-    const currentMenus = stack.shift()!;
+    const currentMenus = stack.shift();
 
     for (const m of currentMenus) {
       if (m) {
@@ -44,6 +45,7 @@ export const ActionsBar: FC<{ mode: NavMode }> = function ({ mode }) {
   const [expandedAllMenus, setExpandedAllMenus] = useAtom(
     navbarMolecule.expandedAllMenusAtom,
   );
+  const { org } = useParams();
   const [_, { add, clear }] = useSetStorageAtom(
     navbarMolecule.expandedMenusAtom,
   );
@@ -73,17 +75,16 @@ export const ActionsBar: FC<{ mode: NavMode }> = function ({ mode }) {
           component: Link,
           label: 'Backend',
           icon: <IconCloud size={13} />,
-          href: '/dash/backend',
+          href: `/dash/${org}/backend`,
         };
 
         break;
       case 'backend':
-        ``;
         modeOption = {
           component: Link,
           label: 'Collective',
           icon: <IconAffiliate size={13} />,
-          href: '/dash/collective',
+          href: `/dash/${org}/collective`,
         };
         break;
       default:
