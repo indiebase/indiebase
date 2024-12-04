@@ -13,7 +13,8 @@ export default function Page() {
       {/* <Navbar mode="personal" /> */}
       My Home Page
       <ProjectTileGroup
-        onTileClick={() => {
+        onTileClick={(p) => {
+          console.log(p);
           router.push('/dash/indiebase/backend');
           // router.push('/dash/indiebase/backend');
           // location.href = '/dash/indiebase/backend';

@@ -78,7 +78,6 @@
     "class-validator": "0.14.1",
     "class-validator-extended": "4.0.1",
     "dayjs": "1.11.13",
-    "fastify": "5.1.0",
     "hyperid": "3.3.0",
     "ioredis": "5.4.1",
     "knex": "3.1.0",

@@ -1,6 +1,6 @@
 {
   "name": "@indiebase/nest-stoplight-elements",
-  "version": "0.0.1-alpha.13",
+  "version": "0.0.1-alpha.14",
   "description": "Stoplight elements for Nestjs",
   "author": "Han <han@deskbtm.com> ",
   "license": "Apache-2.0",

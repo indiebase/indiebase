@@ -6452,7 +6452,6 @@ __metadata:
     class-validator-extended: "npm:4.0.1"
     cross-env: "npm:7.0.3"
     dayjs: "npm:1.11.13"
-    fastify: "npm:5.1.0"
     hyperid: "npm:3.3.0"
     ioredis: "npm:5.4.1"
     knex: "npm:3.1.0"

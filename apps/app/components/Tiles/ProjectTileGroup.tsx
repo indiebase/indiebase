@@ -100,7 +100,7 @@ const fake = [
 
 export interface ProjectTileGroupProps {
   backgroundStyle?: TileStyle;
-  onTileClick?: (id: number) => void;
+  onTileClick?: (e, id: number) => void;
 }
 
 export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
@@ -167,7 +167,7 @@ export const ProjectTileGroup: FC<ProjectTileGroupProps> = function (props) {
                     description={e.description}
                     backgroundStyle={backgroundStyle}
                     hiddenMembers={false}
-                    onClick={() => onTileClick?.(i)}
+                    onClick={() => onTileClick?.(e, i)}
                   />
                 </Grid.Col>
               );
