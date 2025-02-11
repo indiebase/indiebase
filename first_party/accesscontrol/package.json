@@ -65,7 +65,7 @@
   },
   "homepage": "https://github.com/onury/accesscontrol#readme",
   "devDependencies": {
-    "@types/node": "22.5.4",
+    "@types/node": "22.13.1",
     "jest-cli": "29.7.0",
     "ncp": "2.0.0",
     "snyk": "1.1294.2",
