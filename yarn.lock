@@ -6375,9 +6375,7 @@ __metadata:
     lodash.debounce: "npm:4.0.8"
     next: "npm:^15.0.3"
     next-intl: "npm:3.25.3"
-    next-nprogress-bar: "npm:^2.3.15"
     nextjs-toploader: "npm:^3.7.15"
-    nprogress: "npm:^0.2.0"
     postcss-flexbugs-fixes: "npm:5.0.2"
     postcss-preset-env: "npm:10.1.1"
     postcss-preset-mantine: "npm:1.17.0"
@@ -26665,15 +26663,6 @@ __metadata:
     next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=19.0.0-rc <19.0.0
   checksum: 10/1aa00e0be56b5734ab7dd83182dae55c0fdeb1e0bb1aeb2d2c730114be7c4d24d77b5c68693cb85ba0638651c75ec523305bbf3b59a16349b0a878e314463de6
-  languageName: node
-  linkType: hard
-
-"next-nprogress-bar@npm:^2.3.15":
-  version: 2.3.15
-  resolution: "next-nprogress-bar@npm:2.3.15"
-  dependencies:
-    nprogress: "npm:^0.2.0"
-  checksum: 10/18fbfa3af615782d91a1ca5454e2e0e99f29a4f0073c20210d1d4e383d9fe59041a9812c6983b2419b5d485eb0e9b70c2bbc0fca505da055062ec9c5ea429a28
   languageName: node
   linkType: hard
 

@@ -1,4 +1,4 @@
-import { is } from '@deskbtm/gadgets';
+import { is } from '@deskbtm/gadgets/is';
 import {
   Avatar,
   Button,

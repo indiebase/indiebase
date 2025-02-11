@@ -1,1 +1,1 @@
-export * from './SuperCorePower';
+export * from './SuperCowPower';
