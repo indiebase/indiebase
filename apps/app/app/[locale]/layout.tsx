@@ -1,4 +1,3 @@
-// eslint-disable-next-line simple-import-sort/imports
 import '@deskbtm/gadgets/env';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
@@ -10,11 +9,11 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
-
 import { type FC } from 'react';
 import { Compose, type ComposeProps } from 'reactgets';
 import * as uuid from 'uuid';
 
+import { RouterProgress } from '~/components/RouterProgress';
 import { fonts } from '~/fonts';
 import { routing } from '~/i18n/routing';
 import { openGraphMetadata, twitterSummaryLargeImageMetadata } from '~/shared';
@@ -22,7 +21,6 @@ import { colorSchemeManager, cssVariablesResolver, theme } from '~/theme';
 
 import { DevTools } from './DevTools';
 import { QueryClientProvider } from './QueryClientProvider';
-import { RouterProgress } from '~/components/RouterProgress';
 
 export const viewport: Viewport = {
   themeColor: [
@@ -76,7 +74,7 @@ const RootLayout: FC<RootLayoutProps> = async ({ children, params }) => {
     <html lang={locale}>
       <head>
         <ColorSchemeScript />
-        <Partytown debug={kDevMode} forward={['dataLayer.push']} />
+        <Partytown debug={true} forward={['dataLayer.push']} />
       </head>
       <body className={fonts.className}>
         <Compose providers={providers}>

@@ -48,10 +48,10 @@
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
   },
   "devDependencies": {
-    "@types/node": "22.13.1",
-    "swagger-typescript-api": "13.0.23",
+    "@types/node": "22.14.0",
+    "swagger-typescript-api": "13.0.28",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.7.2",
-    "vitest": "2.1.6"
+    "typescript": "5.8.3",
+    "vitest": "3.1.1"
   }
 }

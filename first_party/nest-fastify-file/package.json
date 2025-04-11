@@ -37,15 +37,15 @@
     "blazity"
   ],
   "devDependencies": {
-    "@nestjs/common": "11.0.9",
-    "@nestjs/core": "11.0.9",
-    "@nestjs/platform-fastify": "11.0.9",
+    "@nestjs/common": "11.0.14",
+    "@nestjs/core": "11.0.14",
+    "@nestjs/platform-fastify": "11.0.14",
     "@types/busboy": "1.5.4",
-    "@types/node": "22.13.1",
-    "fastify": "5.1.0",
+    "@types/node": "22.14.0",
+    "fastify": "5.2.2",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.1",
-    "typescript": "5.7.2"
+    "rxjs": "7.8.2",
+    "typescript": "5.8.3"
   },
   "peerDependencies": {
     "@fastify/multipart": "*"

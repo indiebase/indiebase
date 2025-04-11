@@ -36,17 +36,17 @@
   },
   "dependencies": {
     "@indiebase/accesscontrol": "workspace:^",
-    "@nestjs/common": "11.0.9",
-    "@nestjs/core": "11.0.9",
+    "@nestjs/common": "11.0.14",
+    "@nestjs/core": "11.0.14",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.1"
+    "rxjs": "7.8.2"
   },
   "devDependencies": {
-    "@nestjs/testing": "11.0.9",
-    "@types/node": "22.13.1",
-    "@types/supertest": "6.0.2",
-    "supertest": "7.0.0",
+    "@nestjs/testing": "11.0.14",
+    "@types/node": "22.14.0",
+    "@types/supertest": "6.0.3",
+    "supertest": "7.1.0",
     "tsconfig-paths": "4.2.0",
-    "typescript": "5.7.2"
+    "typescript": "5.8.3"
   }
 }

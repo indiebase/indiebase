@@ -1,6 +1,7 @@
 'use client';
 
 import 'jotai-devtools/styles.css';
+import '@deskbtm/gadgets/env';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { DevTools as JotaiDevTools } from 'jotai-devtools';

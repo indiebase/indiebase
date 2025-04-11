@@ -47,6 +47,8 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+*.local
+
 package-lock.json
 self_hosted
 

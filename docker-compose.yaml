@@ -67,7 +67,7 @@ services:
       - traefik_proxy
 
   postgres:
-    image: postgres:16.2-alpine3.19
+    image: postgres:17.4-alpine3.21
     <<: *x-logging
     restart: unless-stopped
     env_file:
