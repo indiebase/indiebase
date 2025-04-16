@@ -96,7 +96,7 @@ export class OrgsController {
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard)
   @Post('orgs')
-  async create(@Body() body: CreateOrgDTO, @User() hacker: PrimitiveHacker) {
+  async createOrganization(@Body() body: CreateOrgDTO, @User() hacker: PrimitiveHacker) {
     await this.orgsService.create(hacker, body);
 
     return data({
@@ -114,7 +114,7 @@ export class OrgsController {
   @ApiBearerAuth('paseto')
   @UseGuards(PublicApiGuard, PasetoAuthGuard, AccessGuard)
   @Patch('orgs/:org')
-  async update(
+  async updateOrganization(
     @Param(new ValidationPipe())
     params: UpdateOrgParamsDTO,
     @Body() body: UpdateOrgDTO,
@@ -141,7 +141,7 @@ export class OrgsController {
     [ManagerResources.orgs]: [AccessActions.deleteOwn, AccessActions.deleteAny],
   })
   @Delete('orgs/:org')
-  async delete(@Param('org') org: string) {
+  async deleteOrganization(@Param('org') org: string) {
     await this.orgsService.softDelete(org);
 
     return data({

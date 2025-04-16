@@ -66,7 +66,7 @@ export class HackersController {
     [ManagerResources.hackers]: [AccessActions.createAny],
   })
   @Post('hacker')
-  async create(@Body() body: SignUpHackersDTO) {
+  async createHacker(@Body() body: SignUpHackersDTO) {
     await this.hackers.create(body);
 
     return data({

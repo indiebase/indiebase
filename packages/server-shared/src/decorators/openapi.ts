@@ -66,7 +66,7 @@ export const ApiProjectHeader = () =>
  * @returns
  */
 export const ApiPresetParam = (
-  name: string = 'referenceId',
+  name = 'referenceId',
   value: string = INDIEBASE_MGR,
 ) =>
   ApiParam({

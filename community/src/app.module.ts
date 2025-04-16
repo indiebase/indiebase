@@ -16,7 +16,7 @@ import { createCommunityModule } from './community.module';
         ConfigModule.forRoot({
           envFilePath: path.resolve(
             __dirname,
-            `../.env.${process.env.NODE_ENV}`,
+            `../.env.${process.env.MODE}`,
           ),
           isGlobal: true,
           load: [...communityDefaultConfigs],

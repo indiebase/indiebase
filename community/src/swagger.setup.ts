@@ -71,13 +71,11 @@ export const setupApiDoc = async (app: INestApplication) => {
 
     const mgrApiDoc = SwaggerModule.createDocument(app, mgrOptions, {
       deepScanRoutes: true,
-      operationIdFactory: (_, m) => m + '',
       include: [MgrModule, ProbeModule],
     });
 
     const apiDoc = SwaggerModule.createDocument(app, options, {
       deepScanRoutes: true,
-      operationIdFactory: (_, m) => m + '',
       include: [UsersModule, StorageModule, AuthModule, MailModule],
     });
 
