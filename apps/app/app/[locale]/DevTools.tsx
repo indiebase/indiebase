@@ -19,7 +19,7 @@ export const DevTools: FC = function () {
   return kDevMode ? (
     <>
       <JotaiDevTools />
-      <ReactQueryDevtools initialIsOpen={kDevMode} position="bottom" />
+      <ReactQueryDevtools initialIsOpen={kDevMode} />
     </>
   ) : null;
 };
