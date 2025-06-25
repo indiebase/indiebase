@@ -42,15 +42,16 @@ export const v001_indiebase_mgr_seed = async function (
         .into(M.roles);
 
       // Init OAA user.
-      const { OAA_EMAIL, OAA_PASSWORD } = process.env;
+      const { OAA_EMAIL, OAA_PASSWORD, OAA_USERNAME } = process.env;
       const secret = createHash('sha256').update(OAA_PASSWORD!).digest('hex');
       const password = await hashSecret(secret);
       await knexSchema
         .insert({
           email: OAA_EMAIL,
           password,
+          username: OAA_USERNAME,
         })
-        .into(T.users);
+        .into(M.users);
 
       // Init indiebase manager's OAuth providers.
       await knexSchema

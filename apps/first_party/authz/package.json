@@ -17,9 +17,9 @@
     "typescript": "5.5.3"
   },
   "devDependencies": {
-    "@types/node": "22.14.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.2"
+    "@types/node": "24.0.0",
+    "@types/react": "^19.1.7",
+    "@types/react-dom": "^19.1.6"
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",

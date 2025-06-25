@@ -65,15 +65,15 @@
   },
   "homepage": "https://github.com/onury/accesscontrol#readme",
   "devDependencies": {
-    "@types/node": "22.14.0",
-    "jest-cli": "29.7.0",
+    "@types/node": "24.0.0",
+    "jest-cli": "30.0.0",
     "ncp": "2.0.0",
-    "snyk": "1.1296.1",
+    "snyk": "1.1297.1",
     "typescript": "5.8.3",
-    "vitest": "3.1.1"
+    "vitest": "3.2.3"
   },
   "dependencies": {
-    "core-js-pure": "3.41.0",
+    "core-js-pure": "3.43.0",
     "notation": "2.0.0"
   }
 }

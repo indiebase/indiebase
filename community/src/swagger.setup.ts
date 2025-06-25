@@ -4,6 +4,7 @@ import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { apiReference } from '@scalar/nestjs-api-reference';
 
 import { AuthModule } from './auth';
 import { MailModule } from './mail';
@@ -79,18 +80,33 @@ export const setupApiDoc = async (app: INestApplication) => {
       include: [UsersModule, StorageModule, AuthModule, MailModule],
     });
 
-    await Promise.all([
-      StoplightElementsModule.setup('/docs/mgr/api', app, mgrApiDoc, {
-        favicon: '/favicon.ico',
-        logo: '/logo.svg',
-        assetsPath,
+    app.use(
+      '/docs/mgr/api',
+      apiReference({
+        withFastify: true,
+        content: mgrApiDoc,
       }),
-      StoplightElementsModule.setup('/docs/api', app, apiDoc, {
-        favicon: '/favicon.ico',
-        logo: '/logo.svg',
-        assetsPath,
-      }),
-    ]);
+    );
+
+    app.use('/docs/api', (req, res) => {
+      return apiReference({
+        withFastify: true,
+        content: apiDoc,
+      })(req, res);
+    });
+
+    // await Promise.all([
+    //   StoplightElementsModule.setup('/docs/mgr/api', app, mgrApiDoc, {
+    //     favicon: '/favicon.ico',
+    //     logo: '/logo.svg',
+    //     assetsPath,
+    //   }),
+    //   StoplightElementsModule.setup('/docs/api', app, apiDoc, {
+    //     favicon: '/favicon.ico',
+    //     logo: '/logo.svg',
+    //     assetsPath,
+    //   }),
+    // ]);
   } catch (e) {
     console.error(e);
   }

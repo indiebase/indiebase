@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const {
+  swcDefaultsFactory,
+} = require('@nestjs/cli/lib/compiler/defaults/swc-defaults');
+const rspack = require('@rspack/core');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const path = require('path');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const workspaceTools = require('workspace-tools');
-const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const swcDefaultConfig =
-  require('@nestjs/cli/lib/compiler/defaults/swc-defaults').swcDefaultsFactory()
-    .swcOptions;
-const rspack = require('@rspack/core');
+
+const swcDefaultConfig = swcDefaultsFactory().swcOptions;
 
 async function getWorkspacesPackageNameRegExps(cwd) {
   const ws = workspaceTools.getWorkspaces(cwd);
@@ -16,7 +19,7 @@ async function getWorkspacesPackageNameRegExps(cwd) {
   return packageNames.map((p) => new RegExp(p));
 }
 
-/** @type {()=>import('@rspack/cli').Configuration} */
+/**@import {}*/
 const config = async () => {
   const cwd = process.cwd();
   const workspacePkgs = await getWorkspacesPackageNameRegExps(cwd);
@@ -31,24 +34,24 @@ const config = async () => {
       extensions: ['...', '.ts', '.tsx', '.mjs', '.js', '.jsx'],
     },
     module: {
-      // hot: true,
       rules: [
+        {
+          test: /\.node$/,
+          use: [
+            {
+              loader: 'node-loader',
+              options: {
+                name: '[path][name].[ext]',
+              },
+            },
+          ],
+        },
         {
           test: /.([jt])sx?$/,
           use: {
             loader: 'builtin:swc-loader',
             options: {
               ...swcDefaultConfig,
-              // jsc: {
-              //   parser: {
-              //     syntax: 'typescript',
-              //     decorators: true,
-              //   },
-              //   transform: {
-              //     legacyDecorator: true,
-              //     decoratorMetadata: true,
-              //   },
-              // },
             },
           },
         },
@@ -69,27 +72,32 @@ const config = async () => {
       }),
       new rspack.HotModuleReplacementPlugin(),
     ],
-    // devServer: {
-    //   devMiddleware: {
-    //     writeToDisk: true,
-    //   },
-    // },
     externalsPresets: {
       node: true,
     },
+    devServer: {
+      devMiddleware: {
+        writeToDisk: true,
+      },
+    },
+    externalsType: 'commonjs',
     externals: [
       nodeExternals({
-        allowlist: ['@rspack/core/hot/poll?100'].concat(workspacePkgs, [
-          /^ky/,
-          '@octokit/core',
-          /^octokit/,
-          /^universal-user-agent/,
-          /^before-after-hook/,
-          /^universal-github-app-jwt/,
+        allowlist: [
+          '@rspack/core/hot/poll?100',
+          /\.(?!(?:jsx?|json)$).{1,5}$/i,
+        ].concat(workspacePkgs, [
+          /^ky/i,
+          /octokit/i,
+          /@octokit/i,
+          /^universal-user-agent/i,
+          /^before-after-hook/i,
+          /^universal-github-app-jwt/i,
         ]),
-        modulesDir: path.resolve(cwd, '../node_modules'),
+        additionalModuleDirs: [path.resolve(cwd, '../node_modules')],
       }),
     ],
   };
 };
+
 module.exports = config;
