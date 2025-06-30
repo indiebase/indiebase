@@ -26,7 +26,7 @@ export class CreatePrjDTO {
 
 export class UpdatePrjDTO extends CreatePrjDTO {
   @ApiPropertyOptional({
-    default: 'dev@indiebase.com',
+    default: 'dev@deskbtm.com',
   })
   @IsEmail(
     {},

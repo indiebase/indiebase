@@ -14,7 +14,7 @@ import { UserDTO } from '../../users/users.dto';
 export class SignUpHackersDTO {
   @ApiProperty({
     description: 'Hacker account email',
-    default: 'dev@indiebase.com',
+    default: 'dev@deskbtm.com',
   })
   @IsEntityExisted({
     schema: INDIEBASE_MGR,
@@ -48,7 +48,7 @@ export class SignUpHackersDTO {
 
 export class UpdateHackersDTO extends SignUpHackersDTO {
   @ApiPropertyOptional({
-    default: 'dev@indiebase.com',
+    default: 'dev@deskbtm.com',
   })
   @IsEmail(
     {},

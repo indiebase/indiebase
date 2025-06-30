@@ -43,7 +43,7 @@ export class UpdateOrgParamsDTO {
 
 export class UpdateOrgDTO extends CreateOrgDTO {
   @ApiPropertyOptional({
-    default: 'dev@indiebase.com',
+    default: 'dev@deskbtm.com',
   })
   @IsEmail(
     {},

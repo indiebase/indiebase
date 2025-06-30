@@ -10,9 +10,6 @@ import {
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
   private readonly logger = new Logger('LocalAuthGuard');
-  constructor() {
-    super();
-  }
 
   override useAuthenticateOptions(): IAuthModuleOptions {
     return {

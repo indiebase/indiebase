@@ -3,7 +3,7 @@ import { IsString } from 'class-validator';
 
 export class SendCaptchaDTO {
   @ApiProperty({
-    default: 'dev@indiebase.com',
+    default: 'dev@deskbtm.com',
   })
   @IsString()
   email!: string;

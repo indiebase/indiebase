@@ -10,8 +10,8 @@ import { IsEmail, IsHash, IsString } from 'class-validator';
 export class LocalSignInDTO {
   @ApiProperty({
     description: 'Email as account name',
-    default: 'dev@indiebase.com',
-    examples: ['one@email.com', 'two@email.com'],
+    default: 'dev@deskbtm.com',
+    examples: ['dev@deskbtm.com', 'two@email.com'],
   })
   @IsEntityExisted(
     {
