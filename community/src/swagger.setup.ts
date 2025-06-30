@@ -1,6 +1,6 @@
-import path from 'node:path';
+// import path from 'node:path';
 
-import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
+// import { StoplightElementsModule } from '@indiebase/nest-stoplight-elements';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
@@ -13,12 +13,12 @@ import { ProbeModule } from './probe';
 import { StorageModule } from './storage';
 import { UsersModule } from './users/users.module';
 
-const assetsPath = kDevMode
-  ? path.resolve(
-      require.resolve('@indiebase/nest-stoplight-elements'),
-      '../views',
-    )
-  : undefined;
+// const assetsPath = kDevMode
+//   ? path.resolve(
+//       require.resolve('@indiebase/nest-stoplight-elements'),
+//       '../views',
+//     )
+//   : undefined;
 
 const contactName = 'deskbtm/indiebase',
   contactUrl = '',
@@ -85,6 +85,10 @@ export const setupApiDoc = async (app: INestApplication) => {
       apiReference({
         withFastify: true,
         content: mgrApiDoc,
+        favicon: '/favicon.ico',
+        metaData: {
+          title: 'Indiebase Management API',
+        },
       }),
     );
 
@@ -92,6 +96,10 @@ export const setupApiDoc = async (app: INestApplication) => {
       return apiReference({
         withFastify: true,
         content: apiDoc,
+        favicon: '/favicon.ico',
+        metaData: {
+          title: 'Indiebase API',
+        },
       })(req, res);
     });
 
